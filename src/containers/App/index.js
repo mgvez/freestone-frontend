@@ -9,16 +9,16 @@ import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 
 export class App extends Component {
-  static propTypes = {
-    children: React.PropTypes.any,
-  }
-  render() {
-    return (
-      <section>
-        <Header />
-        {this.props.children}
-        <Footer />
-      </section>
-    );
-  }
+	static propTypes = {
+		children: React.PropTypes.any,
+	}
+	render() {
+		return (
+			<section>
+				<Header />
+				{this.props.children}
+				<Footer />
+			</section>
+		);
+	}
 }

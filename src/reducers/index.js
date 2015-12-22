@@ -4,10 +4,10 @@ import { reducer as formReducer } from 'redux-form';
 import { items } from './items';
 
 const rootReducer = combineReducers({
-  form: formReducer,
-  routing: routeReducer,
-  /* your reducers */
-  items,
+	form: formReducer,
+	routing: routeReducer,
+	/* your reducers */
+	items,
 });
 
 export default rootReducer;

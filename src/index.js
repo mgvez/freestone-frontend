@@ -13,11 +13,11 @@ const history = createHistory();
 syncReduxAndRouter(history, store);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Redirect from="/" to="home" />
-      {routes}
-    </Router>
-  </Provider>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<Router history={history}>
+			<Redirect from="/" to="home" />
+			{routes}
+		</Router>
+	</Provider>,
+	document.getElementById('root')
 );
