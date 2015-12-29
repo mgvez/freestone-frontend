@@ -5,9 +5,11 @@ import { Route } from 'react-router';
 import { App } from 'containers/App';
 import { Home } from 'containers/Home';
 import { List } from 'containers/List';
+import { Login } from 'containers/Login';
 
 export default (
 	<Route path="/" component={App}>
+		<Route path="login" component={Login}/>
 		<Route path="home" component={Home} />
 		<Route path="list" component={List} />
 	</Route>

@@ -2,13 +2,11 @@ const initialState = {
 	items: [{
 		text: 'React',
 		done: true,
-	}, {
-		text: 'Redux',
-		done: true,
 	}],
 };
 
 export function items(state = initialState, action) {
+	// console.log(state);
 	switch (action.type) {
 	case 'ADD_ITEM':
 		return {

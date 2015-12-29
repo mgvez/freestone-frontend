@@ -20,6 +20,19 @@ module.exports = {
 		publicPath: '/dist/',
 	},
 
+	quiet: false,
+	noInfo: false,
+	stats: {
+		// Config for minimal console.log mess.
+		assets: false,
+		colors: true,
+		version: true,
+		hash: false,
+		timings: true,
+		chunks: false,
+		chunkModules: false
+	},
+
 	plugins: [
 		new webpack.DefinePlugin({
 			__DEVELOPMENT__: true

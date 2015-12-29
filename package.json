@@ -61,6 +61,7 @@
     "bootstrap": "^3.3.6",
     "history": "^1.16.0",
     "jquery": "^2.1.4",
+    "jwt-decode": "^1.4.0",
     "react": "^0.14.3",
     "react-document-meta": "^2.0.0",
     "react-dom": "^0.14.3",
@@ -70,6 +71,7 @@
     "redux-form": "^4.0.3",
     "redux-logger": "^2.3.1",
     "redux-simple-router": "^1.0.1",
-    "redux-thunk": "^1.0.2"
+    "redux-thunk": "^1.0.2",
+    "reqwest": "^2.0.5"
   }
 }
