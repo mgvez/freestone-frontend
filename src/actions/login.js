@@ -51,16 +51,17 @@ export function loginUser(username, password, redirect = '/home') {
 	return (dispatch) => {
 		dispatch(loginUserRequest());
 		return reqwest({
-			url: 'http://freestone_dev.freestone-2/admin/auth',
+			url: 'http://freestone_dev.freestone-2/admin/',
 			method: 'post',
 			credentials: 'include',
+			crossOrigin: true,
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ freestoneuser: username, freestonepass: password }),
+			data: { freestoneuser: username, freestonepass: password },
 		})
 		.then(response => {
+			console.log(response.responseText);
 			try {
 				jwtDecode(response.token);
 				dispatch(loginUserSuccess(response.token));
@@ -75,6 +76,8 @@ export function loginUser(username, password, redirect = '/home') {
 			}
 		})
 		.catch(error => {
+			console.log(error);
+			console.log(error.responseText);
 			dispatch(loginUserFailure(error));
 		});
 	};
