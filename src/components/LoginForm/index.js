@@ -3,14 +3,18 @@ import React, { Component } from 'react';
 export class LoginForm extends Component {
 	static propTypes = {
 		location: React.PropTypes.object,
-		auth: React.PropTypes.object,
+		statusText: React.PropTypes.string,
+		jwt: React.PropTypes.string,
+		username: React.PropTypes.string,
+		isAuthenticating: React.PropTypes.bool,
 		loginUser: React.PropTypes.func,
 	}
 
 	constructor(props) {
-		// console.log(props);
+		console.log('login comp props');
+		console.log(props);
 		super(props);
-		const redirectRoute = this.props.location.query.next || '/login';
+		const redirectRoute = this.props.location.query.next || '/home';
 		this.login = this.login.bind(this);
 		this.state = {
 			username: 'mvezina',
@@ -29,7 +33,8 @@ export class LoginForm extends Component {
 		return (
 			<div className="col-xs-12 col-md-6 col-md-offset-3">
 				<h3>Log in</h3>
-				{this.props.auth.statusText ? <div className="alert alert-info">{this.props.auth.statusText}</div> : ''}
+				<p>JWT id {this.props.jwt}</p>
+				{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : ''}
 				<form role="form">
 					<div className="form-group">
 						<input type="text"
@@ -47,7 +52,7 @@ export class LoginForm extends Component {
 					</div>
 					<button type="submit"
 						className="btn btn-lg"
-						disabled={this.props.auth.isAuthenticating}
+						disabled={this.props.isAuthenticating}
 						onClick={this.login}
 					>
 						Submit

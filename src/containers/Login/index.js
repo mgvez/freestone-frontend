@@ -7,7 +7,7 @@ import DocumentMeta from 'react-document-meta';
 import { LoginForm } from 'components/LoginForm';
 
 /* actions */
-import * as actionCreators from 'actions/login';
+import * as actionCreators from 'actions/auth';
 
 const metaData = {
 	title: 'Freestone',

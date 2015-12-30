@@ -7,22 +7,23 @@ import configureStore from './store/configureStore';
 import routes from './routes';
 import { syncReduxAndRouter } from 'redux-simple-router';
 
-import { loginUserSuccess, TOKEN_NAME } from './actions/login';
+import { receiveToken, getJWT } from './actions/auth';
 
 const store = configureStore();
 const history = createHistory();
 syncReduxAndRouter(history, store);
 
 
-const jwt = localStorage.getItem(TOKEN_NAME);
+const jwt = getJWT();
 if (jwt) {
-	store.dispatch(loginUserSuccess(jwt));
+	// console.log(jwt);
+	receiveToken(jwt, store.dispatch);
 }
 
 ReactDOM.render(
 	<Provider store={store}>
 		<Router history={history}>
-			<Redirect from="/" to="login" />
+			<Redirect from="/" to="home" />
 			{routes}
 		</Router>
 	</Provider>,
