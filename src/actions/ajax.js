@@ -25,7 +25,7 @@ export function ajax(route, data) {
 
 		const adminPath = getAdminPath();
 		const jwt = getJWT();
-		// console.log(adminPath);
+		console.log(data);
 
 		const method = data ? 'post' : 'get';
 		const headers = { 'Accept': 'application/json' };
@@ -42,12 +42,13 @@ export function ajax(route, data) {
 			headers,
 		})
 		.then(response => {
-			// console.log(response);
+			console.log(response);
 			receiveToken(response.jwt, dispatch);
-			return response;
+			return response.data;
 		})
 		.catch(error => {
-			if (error.response.status === 401) {
+			console.error(error.responseText);
+			if (error.status === 401) {
 				dispatch(loginUserFailure(error));
 				dispatch(pushPath('/login'));
 			} else {

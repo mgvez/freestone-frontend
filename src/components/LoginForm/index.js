@@ -11,8 +11,6 @@ export class LoginForm extends Component {
 	}
 
 	constructor(props) {
-		console.log('login comp props');
-		console.log(props);
 		super(props);
 		const redirectRoute = this.props.location.query.next || '/home';
 		this.login = this.login.bind(this);

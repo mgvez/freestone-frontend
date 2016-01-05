@@ -11,7 +11,6 @@ export function requireAuthentication(Component) {
 			location: React.PropTypes.object,
 		}
 		componentWillMount() {
-			console.log(this.props);
 			this.checkAuth();
 		}
 
@@ -40,7 +39,6 @@ export function requireAuthentication(Component) {
 	}
 
 	const mapStateToProps = (state) => ({
-		what: state,
 		userName: state.auth.userName,
 		isAuthenticated: state.auth.isAuthenticated,
 	});
