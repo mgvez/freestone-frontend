@@ -25,7 +25,6 @@ export function ajax(route, data) {
 
 		const adminPath = getAdminPath();
 		const jwt = getJWT();
-		console.log(data);
 
 		const method = data ? 'post' : 'get';
 		const headers = { 'Accept': 'application/json' };
