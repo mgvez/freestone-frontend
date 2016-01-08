@@ -17,6 +17,7 @@ const metaData = {
 };
 
 @connect(
+	state => state.freestone,
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
 export class Freestone extends Component {
