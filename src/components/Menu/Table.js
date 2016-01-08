@@ -14,9 +14,8 @@ export class Table extends Component {
 	}
 
 	render() {
-		console.log('table rendered', this.oldtable, this.oldtable === this.props);
-
-		this.oldtable = this.props;
+		// console.log('table rendered', this.oldtable, this.oldtable === this.props);
+		// this.oldtable = this.props;
 		return (
 			<li>
 				<Link to={`/table/${this.props.name}`} activeClassName="active" className="btn btn-xs">{this.props.actionLabel}</Link>

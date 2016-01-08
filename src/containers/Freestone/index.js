@@ -17,7 +17,6 @@ const metaData = {
 };
 
 @connect(
-	state => state.freestone,
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
 export class Freestone extends Component {
@@ -45,7 +44,7 @@ export class Freestone extends Component {
 	}
 
 	render() {
-		console.log(this.props);
+		// console.log(this.props);
 
 		let groups = this.props.navGroups.map((group) => {
 			const groupId = group.id;
@@ -73,7 +72,7 @@ export class Freestone extends Component {
 		});
 
 		groups = groups.filter(group => group.parent_id === 0);
-		console.log(groups);
+		// console.log(groups);
 
 		return (
 			<section className="container">
@@ -82,7 +81,7 @@ export class Freestone extends Component {
 					<div className="col-md-3">
 						{
 							groups.map((item) => {
-								return <NavGroup key={item.id} data={item}/>;
+								return <NavGroup key={item.id} data={item} level={0}/>;
 							})
 						}
 					</div>

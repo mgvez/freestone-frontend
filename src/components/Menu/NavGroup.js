@@ -7,20 +7,26 @@ export class NavGroup extends Component {
 	static propTypes = {
 		childrenGroups: React.PropTypes.array,
 		data: React.PropTypes.object,
+		level: React.PropTypes.number,
 	}
 
 	constructor(props) {
 		super(props);
 	}
 
+	shouldComponentUpdate() {
+		return false;
+	}
+
 	render() {
-		// console.log('nav group rendered', this.props.data);
+		console.log(this.props.level + ' nav group rendered', this.props.data);
+		const level = this.props.level + 1;
 		return (
 			<div>
-				<h2>{this.props.data.name}</h2>
+				<h2>{this.props.level}. {this.props.data.name}</h2>
 				{
 					this.props.data.childrenGroups.map((item) => {
-						return <NavGroup key={item.id} data={item}/>;
+						return <NavGroup key={item.id} data={item} level={level}/>;
 					})
 				}
 				<ul>

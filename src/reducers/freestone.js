@@ -1,5 +1,8 @@
 const initialState = {
 	navGroups: [],
+	tables: [],
+	modules: [],
+	pages: [],
 };
 
 export function freestone(state = initialState, action) {
@@ -8,7 +11,7 @@ export function freestone(state = initialState, action) {
 	case 'ADD_FREESTONE':
 		return {
 			...state,
-			navGroups: action.data,
+			...action.data,
 		};
 	case 'ADD_TABLE':
 		return {
@@ -27,6 +30,7 @@ export function freestone(state = initialState, action) {
 			],
 		};
 	default:
+		// console.log('no change');
 		return state;
 	}
 }

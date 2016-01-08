@@ -2,37 +2,37 @@
 import { ajax } from './ajax';
 
 function addFreestone(data) {
-	const freestone = data.freestone;
-	let groups = freestone.navGroups.map((group) => {
-		const groupId = group.id;
+	// const freestone = data.freestone;
+	// let groups = freestone.navGroups.map((group) => {
+	// 	const groupId = group.id;
 
-		return {
-			...group,
-			tables: freestone.tables.filter((table) => {
-				return table.group_id === groupId;
-			}),
-			modules: freestone.modules.filter((module) => {
-				return module.group_id === groupId;
-			}),
-			pages: freestone.pages.filter((page) => {
-				return page.group_id === groupId;
-			}),
-			childrenGroups: [],
-		};
-	});
+	// 	return {
+	// 		...group,
+	// 		tables: freestone.tables.filter((table) => {
+	// 			return table.group_id === groupId;
+	// 		}),
+	// 		modules: freestone.modules.filter((module) => {
+	// 			return module.group_id === groupId;
+	// 		}),
+	// 		pages: freestone.pages.filter((page) => {
+	// 			return page.group_id === groupId;
+	// 		}),
+	// 		childrenGroups: [],
+	// 	};
+	// });
 
-	groups.filter(group => group.parent_id !== 0).forEach((group) => {
-		const parent = groups.find(candidate => candidate.id === group.parent_id);
-		if (parent) {
-			parent.childrenGroups.push(group);
-		}
-	});
+	// groups.filter(group => group.parent_id !== 0).forEach((group) => {
+	// 	const parent = groups.find(candidate => candidate.id === group.parent_id);
+	// 	if (parent) {
+	// 		parent.childrenGroups.push(group);
+	// 	}
+	// });
 
-	groups = groups.filter(group => group.parent_id === 0);
+	// groups = groups.filter(group => group.parent_id === 0);
 
 	return {
 		type: 'ADD_FREESTONE',
-		data: groups,
+		data: data.freestone,
 	};
 }
 
