@@ -1,12 +1,12 @@
 
 import { pushPath } from 'redux-simple-router';
-import { receiveToken, loginUserFailure, unauthorized } from 'actions/auth';
+import { unauthorized } from 'actions/auth';
 
 
 export default store => next => action => {
 
 	function gotoLogin() {
-		console.log(store.getState());
+		// console.log(store.getState());
 		const redirectAfterLogin = store.getState().routing.path;
 		store.dispatch(pushPath(`/login?next=${redirectAfterLogin}`));
 		return next(action);

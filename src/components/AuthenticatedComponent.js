@@ -19,7 +19,7 @@ export function requireAuthentication(Component) {
 		}
 
 		checkAuth() {
-			console.log('AUTHENTICATED:: ' + this.props.isAuthenticated);
+			// console.log('AUTHENTICATED:: ' + this.props.isAuthenticated);
 			if (!this.props.isAuthenticated) {
 				this.props.dispatch(unauthorized());
 			}

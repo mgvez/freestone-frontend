@@ -24,7 +24,7 @@ export function receiveToken(jwt) {
 	if (jwt) {
 		try {
 			const token = jwtDecode(jwt);
-			console.log(`received token ${token}`);
+			// console.log(`received token ${token}`);
 			return loginUserSuccess(jwt, token);
 		} catch (e) {
 			return loginUserFailure({
@@ -60,7 +60,9 @@ export const AJAX_FAILURE = 'AJAX_FAILURE';
 
 export function loginUser(username, password, redirect = '/home') {
 	return (dispatch) => {
-		const action = {
+		// console.log(redirect);
+		// console.log(action);
+		return dispatch({
 			[FREESTONE_API]: {
 				types: ['LOGIN_REQUEST', 'LOGIN_SUCCESS', 'LOGIN_FAILURE'],
 				route: '',
@@ -69,16 +71,11 @@ export function loginUser(username, password, redirect = '/home') {
 					freestonepass: password,
 				},
 			},
-		};
-		// console.log(redirect);
-		// console.log(action);
-		const d = dispatch(action);
-		d.then(res => {
-			console.log(res);
-			console.log('redirect to' + redirect);
+		}).then(() => {
+			// console.log(res);
+			// console.log('redirect to' + redirect);
 			dispatch(pushPath(redirect));
 		});
-		return d;
 	};
 
 }

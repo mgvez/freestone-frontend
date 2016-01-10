@@ -19,7 +19,7 @@ export class NavGroup extends Component {
 	}
 
 	render() {
-		console.log(this.props.level + ' nav group rendered', this.props.data);
+		// console.log(this.props.level + ' nav group rendered', this.props.data);
 		const level = this.props.level + 1;
 		return (
 			<div>

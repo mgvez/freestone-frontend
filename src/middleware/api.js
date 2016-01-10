@@ -1,6 +1,5 @@
 
 import reqwest from 'reqwest';
-import { pushPath } from 'redux-simple-router';
 import { receiveToken, loginUserFailure } from 'actions/auth';
 
 function getEndpoint(route) {
@@ -75,7 +74,7 @@ export default store => next => action => {
 		error => {
 			// console.log(`ERROR ${error.status} ${error.statusText}`);
 			if (error.status === 401) {
-				store.dispatch(loginUserFailure(error));
+				next(loginUserFailure(error));
 			} else {
 				next(actionWith({
 					type: failureType,

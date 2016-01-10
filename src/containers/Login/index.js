@@ -27,7 +27,6 @@ export class Login extends Component {
 	}
 
 	render() {
-		console.log(this.props);
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
