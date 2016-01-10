@@ -70,6 +70,7 @@
     "redux": "^3.0.5",
     "redux-form": "^4.0.3",
     "redux-logger": "^2.3.1",
+    "redux-simple-localstorage": "^1.0.2",
     "redux-simple-router": "^1.0.1",
     "redux-thunk": "^1.0.2",
     "reqwest": "^2.0.5"

@@ -8,10 +8,12 @@ const initialState = {
 export function freestone(state = initialState, action) {
 	// console.log(action);
 	switch (action.type) {
+	case 'UNAUTHORIZED':
+		return initialState;
 	case 'ADD_FREESTONE':
 		return {
 			...state,
-			...action.data,
+			...action.data.freestone,
 		};
 	case 'ADD_TABLE':
 		return {

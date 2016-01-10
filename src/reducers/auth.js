@@ -10,6 +10,14 @@ const initialState = {
 export function auth(state = initialState, action) {
 	// console.log(state);
 	switch (action.type) {
+	case 'UNAUTHORIZED':
+		return {
+			...state,
+			isAuthenticated: false,
+			jwt: null,
+			userName: null,
+			statusText: 'Unauthorized',
+		};
 	case 'LOGIN_USER_REQUEST':
 		return {
 			...state,
