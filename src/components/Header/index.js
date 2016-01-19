@@ -7,7 +7,7 @@ import styles from './styles';
 export class Header extends Component {
 	static propTypes = {
 		logout: React.PropTypes.func,
-	}
+	};
 
 	constructor(props) {
 		super(props);

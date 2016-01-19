@@ -8,7 +8,7 @@ export class LoginForm extends Component {
 		username: React.PropTypes.string,
 		isAuthenticating: React.PropTypes.bool,
 		loginUser: React.PropTypes.func,
-	}
+	};
 
 	constructor(props) {
 		super(props);

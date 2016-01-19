@@ -9,7 +9,9 @@ export function requireAuthentication(Component) {
 			isAuthenticated: React.PropTypes.bool,
 			dispatch: React.PropTypes.func,
 			location: React.PropTypes.object,
-		}
+		};
+
+
 		componentWillMount() {
 			this.checkAuth();
 		}
@@ -30,7 +32,7 @@ export function requireAuthentication(Component) {
 				<div>
 					{this.props.isAuthenticated === true
 						? <Component {...this.props}/>
-						: null
+						: <div>Not permitted</div>
 					}
 				</div>
 			);

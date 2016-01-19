@@ -1,4 +1,6 @@
 
+//basé sur redux-api-middleware, mais comme pas de release depuis un bout, pis que le official release fonctionne pas (as of 2016-01-13), j'ai réécrit
+
 import reqwest from 'reqwest';
 import { receiveToken, loginUserFailure } from 'actions/auth';
 
@@ -31,22 +33,16 @@ function callApi(route, data, jwt) {
 }
 
 export const FREESTONE_API = Symbol('Freestone API');
+export const FREESTONE_API_REQUEST = 'FREESTONE_API_REQUEST';
+export const FREESTONE_API_SUCCESS = 'FREESTONE_API_SUCCESS';
+export const FREESTONE_API_FAILURE = 'FREESTONE_API_FAILURE';
+export const FREESTONE_API_FATAL_FAILURE = 'FREESTONE_API_FATAL_FAILURE';
 
 export default store => next => action => {
 	const callAPI = action[FREESTONE_API];
 	if (typeof callAPI === 'undefined') {
 		// console.log(action);
 		return next(action);
-	}
-
-	const { route, data, types } = callAPI;
-
-	if (!Array.isArray(types) || types.length !== 3) {
-		throw new Error('Expected an array of three action types.');
-	}
-	if (!types.every(type => typeof type === 'string')) {
-		// console.log(types);
-		throw new Error('Expected action types to be strings.');
 	}
 
 	function actionWith(vals) {
@@ -56,7 +52,36 @@ export default store => next => action => {
 		return finalAction;
 	}
 
-	const [requestType, successType, failureType] = types;
+	const { route, data, types, bailout } = callAPI;
+
+
+	if (!Array.isArray(types) || types.length !== 3) {
+		throw new Error('Expected an array of three action types.');
+	}
+
+	let [requestType, successType, failureType] = types;
+	requestType = requestType || FREESTONE_API_REQUEST;
+	successType = successType || FREESTONE_API_SUCCESS;
+	failureType = failureType || FREESTONE_API_FAILURE;
+
+	try {
+		if ((typeof bailout === 'boolean' && bailout) || (typeof bailout === 'function' && bailout(store.getState()))) {
+			throw new Error('Bailout');
+		}
+
+		if (!types.every(type => typeof type === 'string')) {
+			// console.log(types);
+			// throw new Error('Expected action types to be strings.');
+		}
+
+	} catch (e) {
+		next(actionWith({
+			type: requestType,
+			data: e,
+		}));
+		return Promise.reject(e);
+	}
+
 	next(actionWith({ data, type: requestType }));
 	const jwt = store.getState().auth.jwt;
 
@@ -79,7 +104,7 @@ export default store => next => action => {
 				next(actionWith({
 					type: failureType,
 					data,
-					error: error || 'Something bad happened',
+					error,
 				}));
 			}
 			return error;

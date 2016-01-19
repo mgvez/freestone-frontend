@@ -3,6 +3,7 @@ import { pushPath } from 'redux-simple-router';
 import jwtDecode from 'jwt-decode';
 import { FREESTONE_API } from 'middleware/api';
 
+
 function loginUserSuccess(jwt, token) {
 	return {
 		type: 'LOGIN_USER_SUCCESS',
@@ -52,10 +53,6 @@ export function unauthorized() {
 		type: 'UNAUTHORIZED',
 	};
 }
-
-export const AJAX_REQUEST = 'AJAX_REQUEST';
-export const AJAX_SUCCESS = 'AJAX_SUCCESS';
-export const AJAX_FAILURE = 'AJAX_FAILURE';
 
 
 export function loginUser(username, password, redirect = '/home') {

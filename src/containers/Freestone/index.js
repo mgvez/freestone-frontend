@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
 import { NavGroup } from 'components/Menu/NavGroup';
+import { Errors } from 'components/Errors';
 
 import * as actionCreators from 'actions/nav';
 
@@ -17,31 +18,31 @@ const metaData = {
 };
 
 @connect(
-	state => state.freestone,
+	state => {
+		return {
+			...state.freestone,
+			...state.ajax,
+		};
+	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
 export class Freestone extends Component {
 	static propTypes = {
 		fetchFreestone: React.PropTypes.func,
-		testAddGroup: React.PropTypes.func,
 		tables: React.PropTypes.array,
 		modules: React.PropTypes.array,
 		pages: React.PropTypes.array,
 		navGroups: React.PropTypes.array,
 		children: React.PropTypes.any,
-	}
+		errors: React.PropTypes.array,
+	};
 
 	constructor(props) {
 		super(props);
-		this.onTest = this.onTest.bind(this);
 	}
 
 	componentWillMount() {
 		this.props.fetchFreestone();
-	}
-
-	onTest() {
-		this.props.testAddGroup();
 	}
 
 	render() {
@@ -87,7 +88,7 @@ export class Freestone extends Component {
 						}
 					</div>
 					<div className="col-md-9">
-						<button onClick={this.onTest}>Add Test Group</button>
+						<Errors errors={this.props.errors}/>
 						{this.props.children}
 					</div>
 				</div>

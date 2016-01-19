@@ -18,7 +18,7 @@ export function fetchFreestone() {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['AJAX_REQUEST', 'ADD_FREESTONE', 'AJAX_FAILURE'],
+				types: [null, 'ADD_FREESTONE', null],
 				route: 'main',
 			},
 		});

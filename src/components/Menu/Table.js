@@ -7,7 +7,7 @@ export class Table extends Component {
 		name: React.PropTypes.string,
 		actionLabel: React.PropTypes.string,
 		id: React.PropTypes.number,
-	}
+	};
 
 	constructor(props) {
 		super(props);

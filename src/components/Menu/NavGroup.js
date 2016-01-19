@@ -8,7 +8,7 @@ export class NavGroup extends Component {
 		childrenGroups: React.PropTypes.array,
 		data: React.PropTypes.object,
 		level: React.PropTypes.number,
-	}
+	};
 
 	constructor(props) {
 		super(props);

@@ -15,7 +15,7 @@ export function freestone(state = initialState, action) {
 			...state,
 			...action.data.freestone,
 		};
-	case 'ADD_TABLE':
+	case 'ADD_NAV_TABLE':
 		return {
 			...state,
 			tables: [

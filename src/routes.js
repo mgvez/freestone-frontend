@@ -15,7 +15,7 @@ export default (
 		<Route path="login" component={Login}/>
 		<Route path="" component={requireAuthentication(Freestone)}>
 			<Route path="home" component={Home}/>
-			<Route path="table/:name" component={List}/>
+			<Route path="table/:tableName" component={List}/>
 		</Route>
 	</Route>
 );
