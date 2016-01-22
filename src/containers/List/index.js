@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import * as actionCreators from 'actions/schema';
 
 
-let tried = false;
-
 @connect(
 	state => state.schema,
 	dispatch => bindActionCreators(actionCreators, dispatch)
@@ -22,30 +20,36 @@ export class List extends Component {
 	}
 
 	componentWillMount() {
-		this.requireTable();
+		this.requireTable(this.props);
 	}
 
-	componentWillReceiveProps() {
-		this.requireTable();
+	componentWillReceiveProps(nextProps) {
+		this.requireTable(nextProps);
 	}
 
-	requireTable() {
+	requireTable(props) {
 		const { tableName } = this.props.params;
-		console.log(tableName);
-		if (tableName && !tried && !this.props.tables[tableName]) {
+		if (tableName && !props.tables[tableName]) {
 			this.props.fetchTable(tableName);
-			return null;
 		}
-		return this.props.tables[tableName];
 	}
 
 	render() {
-		const table = this.requireTable();
+		const { tableName } = this.props.params;
+		const table = this.props.tables[tableName];
 		// console.log(this.props);
+		let recordList;
+		if (table) {
+			recordList = (
+				<div>
+					<h1>List records from {this.props.params.name}</h1>
+					<h2>{table.actionLabel}</h2>
+				</div>
+			);
+		}
 		return (
 			<section>
-				<h1>List records from {this.props.params.name}</h1>
-				<h2>{table.actionLabel}</h2>
+				{ recordList }
 			</section>
 		);
 	}
