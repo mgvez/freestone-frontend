@@ -5,7 +5,7 @@ function tables(state = {}, action) {
 	case 'UNAUTHORIZED':
 		return {};
 	case 'RECEIVE_SCHEMA':
-		console.log(action);
+		// console.log(action);
 		if (!action.data.tables) return state;
 		return {
 			...state,
@@ -13,7 +13,10 @@ function tables(state = {}, action) {
 				newState[table.name] = table;
 				return newState;
 			}, {}),
-		};		
+		};
+	//TEMPORAIRE POUR DEBUG
+	case 'CLEAR_ERRORS':
+		return {};
 	default:
 		// console.log('no change');
 		return state;
@@ -34,6 +37,9 @@ function fields(state = {}, action) {
 				return newState;
 			}, {}),
 		};
+	//TEMPORAIRE POUR DEBUG
+	case 'CLEAR_ERRORS':
+		return {};
 	default:
 		// console.log('no change');
 		return state;

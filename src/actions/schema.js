@@ -5,7 +5,7 @@ export function fetchTable(name) {
 		return dispatch({
 			[FREESTONE_API]: {
 				types: [null, 'RECEIVE_SCHEMA', FREESTONE_API_FATAL_FAILURE],
-				route: `table/schema/${name}`,
+				route: `table/${name}`,
 			},
 		});
 	};

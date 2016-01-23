@@ -5,6 +5,7 @@ import { freestone } from './freestone';
 import { default as schema } from './schema';
 import { auth } from './auth';
 import { ajax } from './ajax';
+import { recordList } from './record-list';
 
 const rootReducer = combineReducers({
 	form: formReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	auth,
 	schema,
 	ajax,
+	recordList,
 });
 
 export default rootReducer;

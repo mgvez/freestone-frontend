@@ -6,7 +6,8 @@ import DocumentMeta from 'react-document-meta';
 import { NavGroup } from 'components/Menu/NavGroup';
 import { Errors } from 'components/Errors';
 
-import * as actionCreators from 'actions/nav';
+import * as navActionCreators from 'actions/nav';
+import * as errorActionCreators from 'actions/errors';
 
 const metaData = {
 	title: 'Freestone',
@@ -16,6 +17,8 @@ const metaData = {
 		charset: 'utf-8',
 	},
 };
+
+const actionCreators = { ...navActionCreators, ...errorActionCreators };
 
 @connect(
 	state => {
@@ -29,7 +32,9 @@ const metaData = {
 export class Freestone extends Component {
 	static propTypes = {
 		fetchFreestone: React.PropTypes.func,
+		clearAll: React.PropTypes.func,
 		tables: React.PropTypes.array,
+		fields: React.PropTypes.object,
 		modules: React.PropTypes.array,
 		pages: React.PropTypes.array,
 		navGroups: React.PropTypes.array,
@@ -88,7 +93,7 @@ export class Freestone extends Component {
 						}
 					</div>
 					<div className="col-md-9">
-						<Errors errors={this.props.errors}/>
+						<Errors errors={this.props.errors} clearAll={this.props.clearAll}/>
 						{this.props.children}
 					</div>
 				</div>
