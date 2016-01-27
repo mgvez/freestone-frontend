@@ -9,5 +9,4 @@ export function fetchTable(name) {
 			},
 		});
 	};
-
 }

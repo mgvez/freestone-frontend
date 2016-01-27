@@ -34,11 +34,27 @@ https://github.com/wangzuo/input-moment
 ### Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
 
+### implementer
+- implementer https://github.com/rackt/reselect
+- implementer immutable
+
 ### Freestone
-- menu
-- header menu
-- recherche
-- liste
-- form
-- modules
-- pages
+#### General
+- settings generaux, i.e. nom du site, url
+
+#### Menu
+- n records
+
+#### Header menu
+#### Recherche
+#### Liste
+- field types images
+- field types file
+- self joins
+- grouped records
+- paging
+- link vers adresse du site pour chaque record
+
+#### Form
+#### Modules
+#### Pages

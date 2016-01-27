@@ -18,7 +18,7 @@ export class Table extends Component {
 		// this.oldtable = this.props;
 		return (
 			<li>
-				<Link to={`/table/${this.props.name}`} activeClassName="active" className="btn btn-xs">{this.props.actionLabel}</Link>
+				<Link to={`/list/${this.props.name}`} activeClassName="active" className="btn btn-xs">{this.props.actionLabel}</Link>
 			</li>
 		);
 	}

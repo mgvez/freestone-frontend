@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from 'actions/auth';
+
+import * as authActionCreators from 'actions/auth';
+import * as devActionCreators from 'actions/dev';
+
 import 'bootstrap-webpack';
 
 /* global styles for app */
@@ -11,8 +14,11 @@ import 'style!./styles/app.scss';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
 
+const actionCreators = { ...authActionCreators, ...devActionCreators };
+
+
 @connect(
-	null,
+	state => state,
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
 export class App extends Component {
@@ -21,6 +27,7 @@ export class App extends Component {
 	};
 
 	render() {
+		console.log('%cRENDER ==========================', 'color: #4C50A9; font-weight: bold');
 		return (
 			<section>
 				<Header {...this.props} />

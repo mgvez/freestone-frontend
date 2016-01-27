@@ -7,7 +7,6 @@ import { NavGroup } from 'components/Menu/NavGroup';
 import { Errors } from 'components/Errors';
 
 import * as navActionCreators from 'actions/nav';
-import * as errorActionCreators from 'actions/errors';
 
 const metaData = {
 	title: 'Freestone',
@@ -18,7 +17,6 @@ const metaData = {
 	},
 };
 
-const actionCreators = { ...navActionCreators, ...errorActionCreators };
 
 @connect(
 	state => {
@@ -27,12 +25,11 @@ const actionCreators = { ...navActionCreators, ...errorActionCreators };
 			...state.ajax,
 		};
 	},
-	dispatch => bindActionCreators(actionCreators, dispatch)
+	dispatch => bindActionCreators(navActionCreators, dispatch)
 )
 export class Freestone extends Component {
 	static propTypes = {
 		fetchFreestone: React.PropTypes.func,
-		clearAll: React.PropTypes.func,
 		tables: React.PropTypes.array,
 		fields: React.PropTypes.object,
 		modules: React.PropTypes.array,
@@ -93,7 +90,7 @@ export class Freestone extends Component {
 						}
 					</div>
 					<div className="col-md-9">
-						<Errors errors={this.props.errors} clearAll={this.props.clearAll}/>
+						<Errors errors={this.props.errors}/>
 						{this.props.children}
 					</div>
 				</div>

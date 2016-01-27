@@ -6,6 +6,7 @@ import { default as schema } from './schema';
 import { auth } from './auth';
 import { ajax } from './ajax';
 import { recordList } from './record-list';
+import { default as recordForm } from './record-form';
 
 const rootReducer = combineReducers({
 	form: formReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 	schema,
 	ajax,
 	recordList,
+	recordForm,
 });
 
 export default rootReducer;

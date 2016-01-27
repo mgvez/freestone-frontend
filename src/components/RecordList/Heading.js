@@ -13,7 +13,7 @@ export class Heading extends Component {
 	render() {
 		return (
 			<tr>
-				<th>No.</th>
+				<th>Fcn</th>
 				{
 					this.props.fields.map((field, index) => {
 						return <th key={index}>{ field.label }</th>;

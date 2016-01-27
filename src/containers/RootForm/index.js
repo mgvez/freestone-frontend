@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { Heading } from 'components/RecordList/Heading';
-import { Row } from 'components/RecordList/Row';
 
 @connect(
-	state => { return { ...state.schema, ...state.recordList }; },
+	state => { return { ...state.schema, ...state.records }; },
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
-export class List extends Component {
+export class RootForm extends Component {
 	static propTypes = {
 		params: React.PropTypes.object,
 		tables: React.PropTypes.object,
@@ -19,7 +17,7 @@ export class List extends Component {
 		records: React.PropTypes.array,
 		table: React.PropTypes.string,
 		fetchTable: React.PropTypes.func,
-		fetchList: React.PropTypes.func,
+		fetchRecord: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -28,12 +26,12 @@ export class List extends Component {
 
 	componentWillMount() {
 		this.requireTable(this.props);
-		this.requireRecords(this.props);
+		this.requireRecord(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.requireTable(nextProps);
-		this.requireRecords(nextProps);
+		this.requireRecord(nextProps);
 	}
 
 	requireTable(props) {
@@ -44,43 +42,22 @@ export class List extends Component {
 		}
 	}
 
-	requireRecords(props) {
-		// console.log(props);
-		const { tableName } = props.params;
-		if (tableName && props.table !== tableName) {
-			this.props.fetchList(tableName);
+	requireRecord(props) {
+		console.log(props);
+		const { tableName, recordId } = props.params;
+		if (tableName && props.table !== tableName && recordId) {
+			this.props.fetchRecord(tableName, recordId);
 		}
 	}
 
 	render() {
 		const { tableName } = this.props.params;
 		const table = this.props.tables[tableName];
-		// console.log(table);
+		console.log(table);
 		let output;
 		if (table) {
-
-			const searchableFields = Object.keys(this.props.fields).map(fieldId => {
-				return this.props.fields[fieldId];
-			}).filter(field => {
-				return field.isSearch && field.table_id === table.id;
-			});
-			// console.log(this.props.records);
-			console.log(searchableFields);
-
 			output = (
-				<div>
-					<h1>List records from {this.props.params.name} {table.actionLabel}</h1>
-					<table className="table">
-						<tbody>
-							<Heading fields={searchableFields} />
-							{
-								this.props.records.map((record, idx) => {
-									return <Row key={idx} fields={searchableFields} values={record} table={table} />;
-								})
-							}
-						</tbody>
-					</table>
-				</div>
+				<div>{tableName}</div>
 			);
 		}
 		return (

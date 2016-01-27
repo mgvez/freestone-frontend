@@ -17,6 +17,8 @@ function tables(state = {}, action) {
 	//TEMPORAIRE POUR DEBUG
 	case 'CLEAR_ERRORS':
 		return {};
+	case 'CLEAR_DATA':
+		return {};
 	default:
 		// console.log('no change');
 		return state;
@@ -39,6 +41,8 @@ function fields(state = {}, action) {
 		};
 	//TEMPORAIRE POUR DEBUG
 	case 'CLEAR_ERRORS':
+		return {};
+	case 'CLEAR_DATA':
 		return {};
 	default:
 		// console.log('no change');
