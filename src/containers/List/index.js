@@ -7,19 +7,32 @@ import * as recordActionCreators from 'actions/record';
 import { Heading } from 'components/RecordList/Heading';
 import { Row } from 'components/RecordList/Row';
 
+import { listSchemaSelector } from 'selectors/ListSchema';
+import { listRecordsSelector } from 'selectors/ListRecords';
+
+const attempts = {
+	records: 0,
+	schema: 0,
+};
+const MAX_ATTEMPTS = 3;
+
 @connect(
-	state => { return { ...state.schema, ...state.recordList }; },
+	(state, props) => {
+		return {
+			...listSchemaSelector(state, props),
+			records: listRecordsSelector(state, props),
+		};
+	},
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 export class List extends Component {
 	static propTypes = {
 		params: React.PropTypes.object,
-		tables: React.PropTypes.object,
-		fields: React.PropTypes.object,
-		records: React.PropTypes.array,
-		table: React.PropTypes.string,
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
+		table: React.PropTypes.object,
+		searchableFields: React.PropTypes.array,
+		records: React.PropTypes.array,
 	};
 
 	constructor(props) {
@@ -37,45 +50,43 @@ export class List extends Component {
 	}
 
 	requireTable(props) {
+		attempts.schema++;
 		const { tableName } = props.params;
-		// console.log(props.tables, tableName);
-		if (tableName && !props.tables[tableName]) {
-			this.props.fetchTable(tableName);
+		// console.log(props.table, tableName);
+		if (!props.table) {
+			if (attempts.schema < MAX_ATTEMPTS) this.props.fetchTable(tableName);
+		} else {
+			attempts.schema = 0;
 		}
 	}
 
 	requireRecords(props) {
-		// console.log(props);
+		// console.log(props.records);
+		attempts.records++;
+
 		const { tableName } = props.params;
-		if (tableName && props.table !== tableName) {
-			this.props.fetchList(tableName);
+		if (!props.records) {
+			// console.log('require records ' + tableName);
+			if (attempts.records < MAX_ATTEMPTS) this.props.fetchList(tableName);
+		} else {
+			attempts.records = 0;
 		}
 	}
 
 	render() {
-		const { tableName } = this.props.params;
-		const table = this.props.tables[tableName];
 		// console.log(table);
 		let output;
-		if (table) {
-
-			const searchableFields = Object.keys(this.props.fields).map(fieldId => {
-				return this.props.fields[fieldId];
-			}).filter(field => {
-				return field.isSearch && field.table_id === table.id;
-			});
-			// console.log(this.props.records);
-			console.log(searchableFields);
+		if (this.props.table && this.props.records) {
 
 			output = (
 				<div>
-					<h1>List records from {this.props.params.name} {table.actionLabel}</h1>
+					<h1>List records from {this.props.params.name} {this.props.table.actionLabel}</h1>
 					<table className="table">
 						<tbody>
-							<Heading fields={searchableFields} />
+							<Heading fields={this.props.searchableFields} />
 							{
 								this.props.records.map((record, idx) => {
-									return <Row key={idx} fields={searchableFields} values={record} table={table} />;
+									return <Row key={idx} fields={this.props.searchableFields} values={record} table={this.props.table} />;
 								})
 							}
 						</tbody>

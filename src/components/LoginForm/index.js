@@ -13,7 +13,6 @@ export class LoginForm extends Component {
 	constructor(props) {
 		super(props);
 		const redirectRoute = this.props.location.query.next || '/home';
-		this.login = this.login.bind(this);
 		this.state = {
 			username: 'mvezina',
 			password: 'aaa',
@@ -21,10 +20,10 @@ export class LoginForm extends Component {
 		};
 	}
 
-	login(e) {
+	login = (e) => {
 		e.preventDefault();
 		this.props.loginUser(this.state.username, this.state.password, this.state.redirectTo);
-	}
+	};
 
 	render() {
 		// console.log(this.props);

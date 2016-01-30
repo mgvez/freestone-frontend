@@ -18,8 +18,10 @@ function childrenAreLoaded(state = {}, action) {
 				[action.data.parentId]: !!action.data.records,
 			},
 		};
-		console.log(newState);
+		// console.log(newState);
 		return newState;
+	case 'CLEAR_DATA':
+		return {};
 	default:
 		// console.log('no change');
 		return state;
@@ -43,10 +45,16 @@ function records(state = {}, action) {
 		const tableName = action.data.tableName;
 		const newState = {
 			...state,
-			[tableName]: singleTableRecords(state[tableName], action.data.records || []),
+			[tableName]: (action.data.records || []).reduce((carry, current) => {
+				const key = current.prikey;
+				carry[key] = current;
+				return carry;
+			}, state[tableName] || {}),
 		};
-		console.log(newState);
+		// console.log(newState);
 		return newState;
+	case 'CLEAR_DATA':
+		return {};
 	default:
 		// console.log('no change');
 		return state;

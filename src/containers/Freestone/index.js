@@ -7,6 +7,7 @@ import { NavGroup } from 'components/Menu/NavGroup';
 import { Errors } from 'components/Errors';
 
 import * as navActionCreators from 'actions/nav';
+import { menuTreeSelector } from 'selectors/MenuTree';
 
 const metaData = {
 	title: 'Freestone',
@@ -17,12 +18,11 @@ const metaData = {
 	},
 };
 
-
 @connect(
 	state => {
 		return {
-			...state.freestone,
-			...state.ajax,
+			tree: menuTreeSelector(state),
+			errors: state.errors,
 		};
 	},
 	dispatch => bindActionCreators(navActionCreators, dispatch)
@@ -30,12 +30,8 @@ const metaData = {
 export class Freestone extends Component {
 	static propTypes = {
 		fetchFreestone: React.PropTypes.func,
-		tables: React.PropTypes.array,
-		fields: React.PropTypes.object,
-		modules: React.PropTypes.array,
-		pages: React.PropTypes.array,
-		navGroups: React.PropTypes.array,
 		children: React.PropTypes.any,
+		tree: React.PropTypes.array,
 		errors: React.PropTypes.array,
 	};
 
@@ -49,42 +45,13 @@ export class Freestone extends Component {
 
 	render() {
 		// console.log(this.props);
-
-		let groups = this.props.navGroups.map((group) => {
-			const groupId = group.id;
-
-			return {
-				...group,
-				tables: this.props.tables.filter((table) => {
-					return table.group_id === groupId;
-				}),
-				modules: this.props.modules.filter((module) => {
-					return module.group_id === groupId;
-				}),
-				pages: this.props.pages.filter((page) => {
-					return page.group_id === groupId;
-				}),
-				childrenGroups: [],
-			};
-		});
-
-		groups.filter(group => group.parent_id !== 0).forEach((group) => {
-			const parent = groups.find(candidate => candidate.id === group.parent_id);
-			if (parent) {
-				parent.childrenGroups.push(group);
-			}
-		});
-
-		groups = groups.filter(group => group.parent_id === 0);
-		// console.log(groups);
-
 		return (
 			<section className="container">
 				<DocumentMeta {...metaData} />
 				<div className="row">
 					<div className="col-md-3">
 						{
-							groups.map((item) => {
+							this.props.tree.map((item) => {
 								return <NavGroup key={item.id} data={item} level={0}/>;
 							})
 						}

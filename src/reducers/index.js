@@ -4,7 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import { freestone } from './freestone';
 import { default as schema } from './schema';
 import { auth } from './auth';
-import { ajax } from './ajax';
+import { errors } from './errors';
 import { recordList } from './record-list';
 import { default as recordForm } from './record-form';
 
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 	freestone,
 	auth,
 	schema,
-	ajax,
+	errors,
 	recordList,
 	recordForm,
 });
