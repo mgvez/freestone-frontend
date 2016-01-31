@@ -28,12 +28,19 @@ function childrenAreLoaded(state = {}, action) {
 	}
 }
 
-function singleTableRecords(state = {}, newRecords = []) {
-	return newRecords.reduce((carry, current) => {
-		const key = current.prikey;
-		carry[key] = current;
-		return carry;
-	}, { ...state });
+
+function setFieldValue(state, data) {
+	const { tableName, recordId, fieldName, val } = data;
+	return {
+		...state,
+		[tableName]: {
+			...state[tableName],
+			[recordId]: {
+				...state[tableName][recordId],
+				[fieldName]: val,
+			},
+		},
+	};
 }
 
 function records(state = {}, action) {
@@ -53,6 +60,8 @@ function records(state = {}, action) {
 		};
 		// console.log(newState);
 		return newState;
+	case 'SET_FIELD_VALUE':
+		return setFieldValue(state, action.data);
 	case 'CLEAR_DATA':
 		return {};
 	default:

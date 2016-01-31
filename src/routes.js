@@ -9,7 +9,7 @@ import { Freestone } from 'containers/Freestone';
 import { Home } from 'containers/Home';
 import { Login } from 'containers/Login';
 import { List } from 'containers/List';
-import { RootForm } from 'containers/RootForm';
+import { RootForm } from 'containers/Form/Root';
 
 export default (
 	<Route path="/" component={App}>

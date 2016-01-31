@@ -6,15 +6,10 @@ import * as recordActionCreators from 'actions/record';
 
 import { Heading } from 'components/RecordList/Heading';
 import { Row } from 'components/RecordList/Row';
+import { RequireApiData } from 'containers/common/RequireApiData';
 
 import { listSchemaSelector } from 'selectors/ListSchema';
 import { listRecordsSelector } from 'selectors/ListRecords';
-
-const attempts = {
-	records: 0,
-	schema: 0,
-};
-const MAX_ATTEMPTS = 3;
 
 @connect(
 	(state, props) => {
@@ -37,40 +32,22 @@ export class List extends Component {
 
 	constructor(props) {
 		super(props);
+		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
-		this.requireTable(this.props);
-		this.requireRecords(this.props);
+		this.requireData(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.requireTable(nextProps);
-		this.requireRecords(nextProps);
+		this.requireData(nextProps);
 	}
 
-	requireTable(props) {
-		attempts.schema++;
+	requireData(props) {
 		const { tableName } = props.params;
-		// console.log(props.table, tableName);
-		if (!props.table) {
-			if (attempts.schema < MAX_ATTEMPTS) this.props.fetchTable(tableName);
-		} else {
-			attempts.schema = 0;
-		}
-	}
 
-	requireRecords(props) {
-		// console.log(props.records);
-		attempts.records++;
-
-		const { tableName } = props.params;
-		if (!props.records) {
-			// console.log('require records ' + tableName);
-			if (attempts.records < MAX_ATTEMPTS) this.props.fetchList(tableName);
-		} else {
-			attempts.records = 0;
-		}
+		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
+		this.requireDataCtrl.requireProp('records', props, this.props.fetchList, [tableName]);
 	}
 
 	render() {

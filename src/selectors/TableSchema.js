@@ -8,5 +8,9 @@ const tableNameSelector = (state, props) => props.params.tableName;
 export const tableSchemaSelector = createSelector(
 	tablesSelector,
 	tableNameSelector,
-	(tables, tableName) => tables[tableName],
+	(tables, tableName) => {
+		return {
+			table: tables[tableName],
+		};
+	}
 );

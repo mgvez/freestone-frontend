@@ -6,7 +6,8 @@ const recordsTableSelector = state => state.recordList.table;
 
 export const listRecordsSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, recordsTableSelector],
-	(table, records, recordsTable) => {
+	(tableSchema, records, recordsTable) => {
+		const { table } = tableSchema;
 		// console.log(table.name, recordsTable, records);
 		if (table && recordsTable === table.name) {
 			return records;

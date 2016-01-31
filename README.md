@@ -53,8 +53,12 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - self joins
 - grouped records
 - paging
+- self-join trees
 - link vers adresse du site pour chaque record
 
 #### Form
+- children
+- record last modif
+
 #### Modules
 #### Pages
