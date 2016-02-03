@@ -81,7 +81,7 @@ export class SingleRecord extends Component {
 					}
 				</article>
 			);
-			if (this.props.children) {
+			if (this.props.children && false) {
 
 				sub = (
 					<div>

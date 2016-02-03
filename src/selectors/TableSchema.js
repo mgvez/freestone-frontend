@@ -10,7 +10,7 @@ export const tableSchemaSelector = createSelector(
 	[tablesSelector, tableNameSelector, tableIdSelector],
 	(tables, tableName, tableId) => {
 		//les tables sont dans le store selon leur ID
-		console.log(`select ${tableId}`);
+		console.log(`select table ${tableId} / ${tableName}`);
 		let table;
 		if (tableId) {
 			table = tables[tableId];
