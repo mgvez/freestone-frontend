@@ -10,7 +10,32 @@ function tables(state = {}, action) {
 		return {
 			...state,
 			...action.data.tables.reduce((newState, table) => {
-				newState[table.name] = table;
+				newState[table.id] = table;
+				return newState;
+			}, {}),
+		};
+	//TEMPORAIRE POUR DEBUG
+	case 'CLEAR_ERRORS':
+		return {};
+	case 'CLEAR_DATA':
+		return {};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
+function children(state = {}, action) {
+	switch (action.type) {
+	case 'UNAUTHORIZED':
+		return {};
+	case 'RECEIVE_SCHEMA':
+		// console.log(action);
+		if (!action.data.children) return state;
+		return {
+			...state,
+			...action.data.children.reduce((newState, childrenDef) => {
+				newState[childrenDef.tableId] = childrenDef.children;
 				return newState;
 			}, {}),
 		};
@@ -54,4 +79,5 @@ function fields(state = {}, action) {
 export default combineReducers({
 	tables,
 	fields,
+	children,
 });

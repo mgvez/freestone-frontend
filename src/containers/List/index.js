@@ -26,7 +26,7 @@ export class List extends Component {
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
 		table: React.PropTypes.object,
-		searchableFields: React.PropTypes.array,
+		fieldsSearchable: React.PropTypes.array,
 		records: React.PropTypes.array,
 	};
 
@@ -60,10 +60,10 @@ export class List extends Component {
 					<h1>List records from {this.props.params.name} {this.props.table.actionLabel}</h1>
 					<table className="table">
 						<tbody>
-							<Heading fields={this.props.searchableFields} />
+							<Heading fields={this.props.fieldsSearchable} />
 							{
 								this.props.records.map((record, idx) => {
-									return <Row key={idx} fields={this.props.searchableFields} values={record} table={this.props.table} />;
+									return <Row key={idx} fields={this.props.fieldsSearchable} values={record} table={this.props.table} />;
 								})
 							}
 						</tbody>

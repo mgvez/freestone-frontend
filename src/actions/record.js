@@ -45,6 +45,7 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 		// 		],
 		// 	},
 		// });
+		console.log('fetch', tableName, id, parentTable);
 
 		return dispatch({
 			[FREESTONE_API]: {

@@ -1,17 +1,16 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
+import { fieldsSearchableSelector } from 'selectors/FieldsSearchable';
 
-const fieldsSelector = state => state.schema.fields;
 
 export const listSchemaSelector = createSelector(
-	[tableSchemaSelector, fieldsSelector],
-	(tableSchema, fields) => {
+	[tableSchemaSelector, fieldsSearchableSelector],
+	(tableSchema, fieldsSearchableSchema) => {
 		const { table } = tableSchema;
+		const { fieldsSearchable } = fieldsSearchableSchema;
 		return {
 			table,
-			searchableFields: Object.keys(fields).map(fieldId => fields[fieldId]).filter(field => {
-				return table && field.isSearch && field.table_id === table.id;
-			}),
+			fieldsSearchable,
 		};
 	}
 );

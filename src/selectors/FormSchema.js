@@ -1,17 +1,19 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
+import { fieldsSchemaSelector } from 'selectors/FieldsSchema';
 
-const fieldsSelector = state => state.schema.fields;
+const childrenSelector = state => state.schema.children;
 
 export const formSchemaSelector = createSelector(
-	[tableSchemaSelector, fieldsSelector],
-	(tableSchema, fields) => {
+	[tableSchemaSelector, fieldsSchemaSelector, childrenSelector],
+	(tableSchema, fieldsSchema, unfilteredChildren) => {
 		const { table } = tableSchema;
+		const { fields } = fieldsSchema;
+		const children = table && unfilteredChildren[table.id];
 		return {
 			table,
-			fields: Object.keys(fields).map(fieldId => fields[fieldId]).filter(field => {
-				return table && field.table_id === table.id;
-			}),
+			children,
+			fields,
 		};
 	}
 );

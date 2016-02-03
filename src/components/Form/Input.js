@@ -14,7 +14,7 @@ export class Input extends Component {
 	};
 
 	render() {
-		console.log(`render input ${this.props.field.name}`);
+		// console.log(`render input ${this.props.field.name}`);
 		return (
 			<div>
 				<label>{this.props.field.label}</label>

@@ -35,10 +35,12 @@ https://github.com/wangzuo/input-moment
 https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ### implementer
-- implementer https://github.com/rackt/reselect
 - implementer immutable
 
 ### Freestone
+#### Redux
+- Les children table sont un array pour chaque table. Ramener ca flat dans le reducer.
+
 #### General
 - settings generaux, i.e. nom du site, url
 
