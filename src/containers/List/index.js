@@ -20,7 +20,7 @@ export class List extends Component {
 
 		table: React.PropTypes.object,
 		searchableFields: React.PropTypes.array,
-		records: React.PropTypes.array,
+		groupedRecords: React.PropTypes.array,
 		
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
@@ -43,26 +43,61 @@ export class List extends Component {
 		const { tableName } = props.params;
 
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
-		this.requireDataCtrl.requireProp('records', props, this.props.fetchList, [tableName]);
+		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName]);
 	}
 
 	render() {
-		// console.log(table);
+		// console.log(this.props.table);
+		console.log('render list');
+		console.log(this.props.groupedRecords);
 		let output;
-		if (this.props.table && this.props.records) {
+		if (this.props.table && this.props.groupedRecords) {
 
 			output = (
 				<div>
 					<h1>List records from {this.props.params.name} {this.props.table.actionLabel}</h1>
 					<table className="table">
-						<tbody>
-							<Heading fields={this.props.searchableFields} />
-							{
-								this.props.records.map((record, idx) => {
-									return <Row key={idx} fields={this.props.searchableFields} values={record} table={this.props.table} />;
-								})
-							}
-						</tbody>
+						<thead>
+							<Heading 
+								fields={this.props.searchableFields}
+								hasOrder={this.props.table.hasOrder}
+								isSelfTree={this.props.table.isSelfTree}
+							/>
+
+						</thead>
+						{
+							this.props.groupedRecords.map((group, groupIdx) => {
+								let groupHeading;
+								if (group.label) {
+									groupHeading = (
+										<tr>
+											<td colSpan="20">
+											<strong>{group.label}</strong>
+											</td>
+										</tr>
+									);
+								}
+
+								return (
+									<tbody key={groupIdx}>
+									{ groupHeading }
+									{
+										group.records.map((record, idx) => {
+											return (
+												<Row
+													key={idx}
+													fields={this.props.searchableFields}
+													values={record}
+													table={this.props.table}
+												/>
+											);
+										})
+									}
+									</tbody>
+								);
+
+							})
+						}
 					</table>
 				</div>
 			);

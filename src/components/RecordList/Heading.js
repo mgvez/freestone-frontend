@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 export class Heading extends Component {
 	static propTypes = {
 		fields: React.PropTypes.array,
+		hasOrder: React.PropTypes.bool,
+		isSelfTree: React.PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -11,16 +13,38 @@ export class Heading extends Component {
 	}
 
 	render() {
+
+		let orderCell;
+		if (this.props.hasOrder) {
+			orderCell = (<th>Order</th>);
+		}
+
+		let fieldsCells;
+		//si self tree, cells par defaut
+		if (this.props.isSelfTree) {
+			return (
+				<tr>
+					<th>Level</th>
+					<th>Item</th>
+					<th>Fcn</th>
+					{ orderCell }
+					<th>Modification</th>
+				</tr>
+			);
+		}
+		//sinon, une cell pour chaque field de recherche
 		return (
 			<tr>
-				<th>Fcn</th>
 				{
 					this.props.fields.map((field, index) => {
 						return <th key={index}>{ field.label }</th>;
 					})
 				}
+				<th>Fcn</th>
+				{ orderCell }
 				<th>Modification</th>
 			</tr>
 		);
+
 	}
 }

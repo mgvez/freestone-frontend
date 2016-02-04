@@ -8,6 +8,7 @@
 		"spaced-comment": 0,
 		"react/jsx-indent-props": [2, "tab"],
 		"padded-blocks": [0],
+		"camelcase": [0],
 		"no-unused-vars": [1],
 		"no-trailing-spaces": [1],
 	},

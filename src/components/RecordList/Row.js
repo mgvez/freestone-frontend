@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
+import { OrderFcn } from 'components/RecordList/OrderFcn';
+import { ModifFcn } from 'components/RecordList/ModifFcn';
+import { InfosFcn } from 'components/RecordList/InfosFcn';
 
 export class Row extends Component {
 	static propTypes = {
@@ -15,25 +17,51 @@ export class Row extends Component {
 
 	render() {
 		// console.log(this.props.values);
-		const recordLink = `../main.php?i=${this.props.values.prikey}&t=${this.props.table.name}`;
-		const created = this.props.values.createddate || 'unknown';
-		const modified = this.props.values.lastmodifdate || 'unknown';
+		
+		let orderCell;
+		if (this.props.table.hasOrder) {
+			orderCell = <OrderFcn />;
+		}
+
+		const modifCell = <ModifFcn tableName={this.props.table.name} prikey={this.props.values.prikey} />;
+		const infoCell = (
+			<InfosFcn
+				tableName={this.props.table.name}
+				prikey={this.props.values.prikey}
+				lastmodifdate={this.props.values.lastmodifdate}
+				createddate={this.props.values.createddate}
+			/>
+		);
+
+		if (this.props.table.isSelfTree) {
+			const level = this.props.values.breadcrumb ? this.props.values.breadcrumb : '0';
+			return (
+				<tr>
+					<td>{level}</td>
+					<td>
+						{
+							this.props.fields.map((field, index) => {
+								return <span key={index}>{ this.props.values[field.listAlias] }</span>;
+							})
+						}
+					</td>
+					{ orderCell }
+					{ modifCell }
+					{ infoCell }
+				</tr>
+			);
+		}
+
 		return (
 			<tr>
-				<td>
-					<Link to={`/edit/${this.props.table.name}/${this.props.values.prikey}`} activeClassName="active" className="btn btn-xs">Edit</Link>
-					<button className="btn btn-xs">Delete</button>
-				</td>
 				{
 					this.props.fields.map((field, index) => {
 						return <td key={index}>{ this.props.values[field.listAlias] }</td>;
 					})
 				}
-				<td>
-					created { created }<br/>
-					modified { modified },
-					<em><a target="_blank" href={recordLink}>{ this.props.values.prikey }</a></em>
-				</td>
+				{ orderCell }
+				{ modifCell }
+				{ infoCell }
 			</tr>
 		);
 	}

@@ -6,6 +6,7 @@ const tablesSelector = state => state.schema.tables;
 const fieldsSelector = state => state.schema.fields;
 
 const PRIMARY_TYPE = 'pri';
+const ORDER_TYPE = 'order';
 const PARENT_LINK_TYPES = ['rel', 'oto', 'mtm'];
 
 export const schemaSelector = createSelector(
@@ -21,6 +22,9 @@ export const schemaSelector = createSelector(
 				searchableFields: [],
 				prikey: null,
 				parentLink: null,
+				groupField: null,
+				isSelfTree: false,
+				hasOrder: false,
 			};
 			carry[table.name] = tableId;
 			return carry;
@@ -30,11 +34,27 @@ export const schemaSelector = createSelector(
 
 			const field = fields[fieldId];
 			const { table_id } = field;
-			carry[table_id].fields.push(field);
+			const table = carry[table_id];
+			table.fields.push(field);
 
-			if (field.isSearch) carry[table_id].searchableFields.push(field);
-			if (field.type === PRIMARY_TYPE) carry[table_id].prikey = field;
-			if (~PARENT_LINK_TYPES.indexOf(field.type)) carry[table_id].parentLink = field;
+			if (field.isSearch) {
+				
+				if (field.isGroup) {
+					table.groupField = field;
+					//self join? si oui, affiche le tree
+					if (field.foreign && table_id === field.foreign.foreignTableId) {
+						table.isSelfTree = true;
+					}
+				} else {
+					table.searchableFields.push(field);
+				}
+				
+			}
+			if (field.type === ORDER_TYPE) {
+				table.hasOrder = true;
+			}
+			if (field.type === PRIMARY_TYPE) table.prikey = field;
+			if (~PARENT_LINK_TYPES.indexOf(field.type)) table.parentLink = field;
 
 			return carry;
 		}, schema);

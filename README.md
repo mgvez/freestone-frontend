@@ -39,7 +39,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ### Freestone
 #### Redux
-- Les children table sont un array pour chaque table. Ramener ca flat dans le reducer.
 
 #### General
 - settings generaux, i.e. nom du site, url
@@ -56,11 +55,14 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - grouped records
 - paging
 - self-join trees
-- link vers adresse du site pour chaque record
+- delete
+- change order
 
 #### Form
-- children
+- mtm
 - record last modif
+- types de input
+- subform add record
 
 #### Modules
 #### Pages
