@@ -20,32 +20,19 @@ export function setFieldVal(tableName, recordId, fieldName, val) {
 	};
 }
 
+export function setShownRecord(tableName, parentRecordId, recordId) {
+	return (dispatch) => {
+		return dispatch({
+			type: 'SET_SHOWN_RECORD',
+			data: { tableName, parentRecordId, recordId },
+		});
+	};
+}
+
 export function fetchRecord(tableName, id, parentTable = 0) {
 	return (dispatch) => {
-		// console.log(`FETCH ${table}.${id}`);
-		//dbg
-		// dispatch({
-		// 	type: 'RECEIVE_RECORD',
-		// 	data: {
-		// 		tableName: 'typical_rel',
-		// 		parentId: 30,
-		// 		records: null,
-		// 	},
-		// });
-		// dispatch({
-		// 	type: 'RECEIVE_RECORD',
-		// 	data: {
-		// 		tableName: 'typical_rel',
-		// 		parentId: 32,
-		// 		records: [
-		// 			{
-		// 				prikey: 20,
-		// 				val: 'ok',
-		// 			},
-		// 		],
-		// 	},
-		// });
-		console.log('fetch', tableName, id, parentTable);
+
+		// console.log('fetch', tableName, id, parentTable);
 
 		return dispatch({
 			[FREESTONE_API]: {

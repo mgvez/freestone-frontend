@@ -15,7 +15,9 @@ import { SingleRecord } from 'containers/Form/SingleRecord';
 export class RootForm extends Component {
 	static propTypes = {
 		params: React.PropTypes.object,
+
 		table: React.PropTypes.object,
+		
 		fetchTable: React.PropTypes.func,
 	};
 
@@ -49,7 +51,7 @@ export class RootForm extends Component {
 				</header>
 			);
 			form = (
-				<SingleRecord params={this.props.params} />
+				<SingleRecord tableName={this.props.params.tableName} recordId={this.props.params.recordId} />
 			);
 		}
 		return (

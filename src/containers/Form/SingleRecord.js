@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { formSchemaSelector } from 'selectors/FormSchema';
 import { formRecordSelector } from 'selectors/FormRecord';
 
 import { RequireApiData } from 'containers/common/RequireApiData';
@@ -14,21 +13,19 @@ import { Children } from 'containers/Form/Children';
 import { Input } from 'components/Form/Input';
 
 @connect(
-	(state, props) => {
-		return {
-			...formSchemaSelector(state, props),
-			record: formRecordSelector(state, props),
-		};
-	},
+	formRecordSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 export class SingleRecord extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		tableName: React.PropTypes.string,
+		recordId: React.PropTypes.string,
+
 		table: React.PropTypes.object,
 		children: React.PropTypes.array,
 		record: React.PropTypes.object,
 		fields: React.PropTypes.array,
+		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
 		setFieldVal: React.PropTypes.func,
@@ -48,7 +45,7 @@ export class SingleRecord extends Component {
 	}
 
 	requireData(props) {
-		const { tableName, recordId } = props.params;
+		const { tableName, recordId } = props;
 		// console.log(props.record);
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
 		this.requireDataCtrl.requireProp('record', props, this.props.fetchRecord, [tableName, recordId]);
@@ -73,7 +70,7 @@ export class SingleRecord extends Component {
 								key={field.id} 
 								field={field}
 								tableName={this.props.table.name}
-								recordId={this.props.params.recordId}
+								recordId={this.props.recordId}
 								val={this.props.record[field.name]}
 								setFieldVal={this.props.setFieldVal}
 							/>);
@@ -81,7 +78,7 @@ export class SingleRecord extends Component {
 					}
 				</article>
 			);
-			if (this.props.children && false) {
+			if (this.props.children) {
 
 				sub = (
 					<div>
@@ -92,7 +89,7 @@ export class SingleRecord extends Component {
 										key={tableId}
 										tableId={tableId}
 										parentTableName={this.props.table.name}
-										parentRecordId={this.props.params.recordId}
+										parentRecordId={this.props.recordId}
 									/>
 								);
 							})

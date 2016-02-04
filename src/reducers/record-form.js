@@ -70,7 +70,27 @@ function records(state = {}, action) {
 	}
 }
 
+function shownRecords(state = {}, action) {
+	switch (action.type) {
+	case 'SET_SHOWN_RECORD':
+		const tableName = action.data.tableName;
+		const newState = {
+			...state,
+			[tableName]: {
+				...state[tableName],
+				[action.data.parentRecordId]: action.data.recordId,
+			},
+		};
+		// console.log(action.data);
+		// console.log(newState);
+		return newState;
+	default:
+		return state;
+	}
+}
+
 export default combineReducers({
 	records,
 	childrenAreLoaded,
+	shownRecords,
 });

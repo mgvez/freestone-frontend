@@ -6,12 +6,16 @@ const recordsTableSelector = state => state.recordList.table;
 
 export const listRecordsSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, recordsTableSelector],
-	(tableSchema, records, recordsTable) => {
-		const { table } = tableSchema;
-		// console.log(table.name, recordsTable, records);
+	(schema, stateRecords, recordsTable) => {
+		const { table } = schema;
+		let records;
 		if (table && recordsTable === table.name) {
-			return records;
+			records = stateRecords;
 		}
-		return null;
+		return {
+			table,
+			searchableFields: table && table.searchableFields,
+			records,
+		};
 	}
 );

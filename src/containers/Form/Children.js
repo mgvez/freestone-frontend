@@ -5,18 +5,14 @@ import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { formSchemaSelector } from 'selectors/FormSchema';
 import { formChildrenRecordsSelector } from 'selectors/FormChildrenRecords';
 
 import { RequireApiData } from 'containers/common/RequireApiData';
+import { SingleRecord } from 'containers/Form/SingleRecord';
+import { Tab } from 'components/Form/Tab';
 
 @connect(
-	(state, props) => {
-		return {
-			...formSchemaSelector(state, props),
-			childrenRecords: formChildrenRecordsSelector(state, props),
-		};
-	},
+	formChildrenRecordsSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 export class Children extends Component {
@@ -26,10 +22,12 @@ export class Children extends Component {
 		parentRecordId: React.PropTypes.string,
 
 		childrenRecords: React.PropTypes.array,
+		activeRecord: React.PropTypes.string,
 		table: React.PropTypes.object,
 
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
+		setShownRecord: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -67,9 +65,38 @@ export class Children extends Component {
 				</header>
 			);
 		}
+		let tabs;
+		let form;
+		if (this.props.childrenRecords) {
+			let activeRecordId;
+			tabs = (
+				<div>
+					{
+						this.props.childrenRecords.map((record, index) => {
+							const active = record.id === this.props.activeRecord || (index === 0 && !this.props.activeRecord);
+							if (active) activeRecordId = record.id;
+							return (<Tab 
+								key={record.id}
+								displayLabel={record.label}
+								isActive={active}
+								recordId={record.id}
+								tableName={this.props.table.name}
+								parentRecordId={this.props.parentRecordId}
+								setShownRecord={this.props.setShownRecord}
+							/>);
+						})
+					}
+				</div>
+			);
+			form = (
+				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />
+			);
+		}
 		return (
 			<section>
 				{ header }
+				{ tabs }
+				{ form }
 			</section>
 		);
 	}
