@@ -1,5 +1,5 @@
 
-const MAX_ATTEMPTS = 3;
+const MAX_ATTEMPTS = 1;
 
 export class RequireApiData {
 	constructor() {
@@ -13,11 +13,11 @@ export class RequireApiData {
 		this.attempts[propName]++;
 		// console.log(props.table, tableName);
 		if (!props[propName]) {
-			if (this.attempts[propName] < MAX_ATTEMPTS) {
+			if (this.attempts[propName] <= MAX_ATTEMPTS) {
 				return fetchCallback.apply(null, fetchArgs);
 			}
-			const args = JSON.stringify(fetchArgs);
-			throw new Error(`Attempted ${MAX_ATTEMPTS} times to fetch ${propName}. It's too damn high... ${fetchArgs}`);
+			// const args = JSON.stringify(fetchArgs);
+			// throw new Error(`Attempted ${MAX_ATTEMPTS} times to fetch ${propName}. It's too damn high... ${fetchArgs}`);
 		} else {
 			this.attempts[propName] = 0;
 		}

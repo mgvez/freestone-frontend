@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { Input } from 'components/Form/InputTypes/Input';
 import { RequireApiData } from 'utils/RequireApiData';
 import Autocomplete from 'react-autocomplete';
-
+// import { FreestoneAutocomplete } from 'components/Form/InputTypes/FreestoneAutocomplete';
 
 const styles = {
 	item: {
@@ -23,32 +23,19 @@ const styles = {
 	},
 };
 
+
 function getItemValue(item) {
 	return item.label;
 }
 
 function renderItem(item, isHighlighted) {
 	return (
-		<div style={isHighlighted ? styles.highlightedItem : styles.item} key={item.value} id={ item.value } >
+		<div style={isHighlighted ? styles.highlightedItem : styles.item} key={item.value}>
 			{item.label}
 		</div>
 	);
 }
 
-function renderMenu(items, value, style) {
-	console.log(this);
-	return (
-		<div style={{ ...styles.menu, ...style }}>
-			{value === '' ? (
-				<div style={{ padding: 6 }}>Type of the name of a United State</div>
-			) : (this.state && this.state.loading) ? (
-				<div style={{ padding: 6 }}>Loading...</div>
-			) : items.length === 0 ? (
-				<div style={{ padding: 6 }}>No matches for {value}</div>
-			) : this.renderItems(items)}
-		</div>
-	);
-}
 
 export class AutocompleteInput extends Input {
 	static propTypes = {
@@ -73,31 +60,34 @@ export class AutocompleteInput extends Input {
 		this.requireDataCtrl.requireProp('foreignOptions', props, this.props.fetchForeignOptions, [props.field.id]);
 	}
 
+	onSelect = (value, item) => {
+		// console.log('set val');
+		// console.log(`select ${item.value}`);
+		//this.setState({ unitedStates: [ item ] })
+		this.changeVal(item.value);
+	};
+	
 	fetchAutocomplete = (event, value) => {
 		//this.setState({loading: true})
+		// console.log('change...');
 		this.props.fetchForeignOptions(this.props.field.id, value);
 	};
 
-	onSelect = (value, item) => {
-		// console.log('set val');
-		console.log(`select ${item.value}`);
-		//this.setState({ unitedStates: [ item ] })
-		this.changeVal(null, value);
-	};
-	
 	render() {
 		const options = this.props.foreignOptions && this.props.foreignOptions.values;
 		// console.log(options);
+		const current = (options && options.find((option) => option.value === String(this.props.val))) || {};
+		// console.log(this.props.val, current);
+
 		return (
 			<Autocomplete
-				initialValue={this.props.val}
+				initialValue={current.label}
 				ref="autocomplete"
 				items={options}
 				getItemValue={getItemValue}
 				onSelect={this.onSelect}
 				onChange={this.fetchAutocomplete}
 				renderItem={renderItem}
-				renderMenu={renderMenu}
 			/>
 		);
 	}

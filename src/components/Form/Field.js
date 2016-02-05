@@ -43,8 +43,8 @@ export class Field extends Component {
 			break;
 		case 'foreign':
 		case 'enum':
-			input = <SelectInput {...this.props} />;
-			break;
+			// input = <SelectInput {...this.props} />;
+			// break;
 		case 'selfcascade':
 		case 'cascade':
 		case 'foreigntext':
