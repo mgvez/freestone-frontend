@@ -12,7 +12,7 @@ const PARENT_LINK_TYPES = ['rel', 'oto', 'mtm'];
 export const schemaSelector = createSelector(
 	[tablesSelector, fieldsSelector],
 	(tables, fields) => {
-		console.log('%c build schema', 'font-weight:bold;color:#ff4444;');
+		console.log('%cBUILD SCHEMA ======', 'font-weight:bold;color:#44ff44;');
 
 		let schema = Object.keys(tables).reduce((carry, tableId) => {
 			const table = tables[tableId];
@@ -58,6 +58,12 @@ export const schemaSelector = createSelector(
 
 			return carry;
 		}, schema);
+
+		Object.keys(schema).map((tableId) => {
+			const table = schema[tableId];
+			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank > b.rank);
+		});
+
 		// console.log(schema);
 		return schema;
 	}

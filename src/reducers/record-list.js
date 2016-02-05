@@ -11,7 +11,7 @@ export function recordList(state = initialState, action) {
 	case 'UNAUTHORIZED':
 		return initialState;
 	case 'RECEIVE_RECORD_LIST':
-		console.log(action.data.qstr);
+		// console.log(action.data.qstr);
 		if (!action.data) return state;
 		return action.data;
 	default:

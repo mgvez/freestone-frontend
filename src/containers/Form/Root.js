@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 
-import { RequireApiData } from 'containers/common/RequireApiData';
+import { RequireApiData } from 'utils/RequireApiData';
 import { tableSchemaSelector } from 'selectors/TableSchema';
 
 import { SingleRecord } from 'containers/Form/SingleRecord';

@@ -6,7 +6,7 @@ import * as recordActionCreators from 'actions/record';
 
 import { Heading } from 'components/RecordList/Heading';
 import { Row } from 'components/RecordList/Row';
-import { RequireApiData } from 'containers/common/RequireApiData';
+import { RequireApiData } from 'utils/RequireApiData';
 
 import { listRecordsSelector } from 'selectors/ListRecords';
 
@@ -48,8 +48,8 @@ export class List extends Component {
 
 	render() {
 		// console.log(this.props.table);
-		console.log('render list');
-		console.log(this.props.groupedRecords);
+		// console.log('render list');
+		// console.log(this.props.groupedRecords);
 		let output;
 		if (this.props.table && this.props.groupedRecords) {
 

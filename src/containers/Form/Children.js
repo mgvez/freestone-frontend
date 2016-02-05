@@ -7,7 +7,7 @@ import * as recordActionCreators from 'actions/record';
 
 import { formChildrenRecordsSelector } from 'selectors/FormChildrenRecords';
 
-import { RequireApiData } from 'containers/common/RequireApiData';
+import { RequireApiData } from 'utils/RequireApiData';
 import { SingleRecord } from 'containers/Form/SingleRecord';
 import { Tab } from 'components/Form/Tab';
 

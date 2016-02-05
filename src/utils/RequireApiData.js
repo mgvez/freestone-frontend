@@ -16,7 +16,8 @@ export class RequireApiData {
 			if (this.attempts[propName] < MAX_ATTEMPTS) {
 				return fetchCallback.apply(null, fetchArgs);
 			}
-			throw new Error(`Attempted ${MAX_ATTEMPTS} times to fetch ${propName}. It's too damn high.`);
+			const args = JSON.stringify(fetchArgs);
+			throw new Error(`Attempted ${MAX_ATTEMPTS} times to fetch ${propName}. It's too damn high... ${fetchArgs}`);
 		} else {
 			this.attempts[propName] = 0;
 		}

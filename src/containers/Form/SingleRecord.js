@@ -4,17 +4,18 @@ import { connect } from 'react-redux';
 
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
+import * as optionsActionCreators from 'actions/foreign-options';
 
 import { formRecordSelector } from 'selectors/FormRecord';
 
-import { RequireApiData } from 'containers/common/RequireApiData';
+import { RequireApiData } from 'utils/RequireApiData';
 import { Children } from 'containers/Form/Children';
 
-import { Input } from 'components/Form/Input';
+import { Field } from 'components/Form/Field';
 
 @connect(
 	formRecordSelector,
-	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
+	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators, ...optionsActionCreators }, dispatch)
 )
 export class SingleRecord extends Component {
 	static propTypes = {
@@ -25,10 +26,12 @@ export class SingleRecord extends Component {
 		children: React.PropTypes.array,
 		record: React.PropTypes.object,
 		fields: React.PropTypes.array,
+		foreignOptions: React.PropTypes.object,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
 		setFieldVal: React.PropTypes.func,
+		fetchForeignOptions: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -66,13 +69,15 @@ export class SingleRecord extends Component {
 				<article>
 					{
 						this.props.fields.map((field) => {
-							return (<Input
+							return (<Field
 								key={field.id} 
 								field={field}
 								tableName={this.props.table.name}
 								recordId={this.props.recordId}
 								val={this.props.record[field.name]}
 								setFieldVal={this.props.setFieldVal}
+								fetchForeignOptions={this.props.fetchForeignOptions}
+								foreignOptions={this.props.foreignOptions[field.id]}
 							/>);
 						})
 					}

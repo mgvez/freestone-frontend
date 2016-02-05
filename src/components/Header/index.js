@@ -9,6 +9,8 @@ export class Header extends Component {
 		logout: React.PropTypes.func,
 		clearErrors: React.PropTypes.func,
 		clearData: React.PropTypes.func,
+		startPerf: React.PropTypes.func,
+		stopPerf: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -48,6 +50,12 @@ export class Header extends Component {
 							</button>
 							<button className="btn btn-xs" onClick={this.props.clearErrors}>
 								Clear errors
+							</button>
+							<button className="btn btn-xs" onClick={this.props.startPerf}>
+								Start perf
+							</button>
+							<button className="btn btn-xs" onClick={this.props.stopPerf}>
+								Stop perf
 							</button>
 						</div>
 					</div>

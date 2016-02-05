@@ -42,6 +42,9 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 #### General
 - settings generaux, i.e. nom du site, url
+- strategie de invalidate du data
+- liste des records en cours de modif par le user dans un widget
+- essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
 
 #### Menu
 - n records
@@ -51,18 +54,27 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 #### Liste
 - field types images
 - field types file
-- self joins
-- grouped records
 - paging
-- self-join trees
-- delete
-- change order
 
 #### Form
 - mtm
 - record last modif
 - types de input
+	- autocomplete
+	- file
 - subform add record
+- champ type ajax? (voir field format form)
+- champ type tag
+- champs en/fr séparés
 
 #### Modules
 #### Pages
+
+
+### Semi-done
+
+#### Liste
+- self-join trees
+- grouped records
+- delete
+- change order
