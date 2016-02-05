@@ -11,7 +11,7 @@ export class Input extends Component {
 		fetchForeignOptions: React.PropTypes.func,
 	};
 
-	changeVal = (e) => {
-		this.props.setFieldVal(this.props.tableName, this.props.recordId, this.props.field.name, e.target.value);
+	changeVal = (e, v) => {
+		this.props.setFieldVal(this.props.tableName, this.props.recordId, this.props.field.name, v || e.target.value);
 	};
 }

@@ -4,6 +4,7 @@ import { TextInput } from 'components/Form/InputTypes/TextInput';
 import { BoolInput } from 'components/Form/InputTypes/BoolInput';
 import { SelectInput } from 'components/Form/InputTypes/SelectInput';
 import { NoEditInput } from 'components/Form/InputTypes/NoEditInput';
+import { AutocompleteInput } from 'components/Form/InputTypes/AutocompleteInput';
 
 
 export class Field extends Component {
@@ -47,7 +48,7 @@ export class Field extends Component {
 		case 'selfcascade':
 		case 'cascade':
 		case 'foreigntext':
-			input = <TextInput {...this.props} />;
+			input = <AutocompleteInput {...this.props} />;
 			break;
 		case 'img':
 		case 'file':
