@@ -11,11 +11,11 @@ const PARENT_LINK_TYPES = ['rel', 'oto', 'mtm'];
 
 export const schemaSelector = createSelector(
 	[tablesSelector, fieldsSelector],
-	(tables, fields) => {
+	(rawTables, fields) => {
 		console.log('%cBUILD SCHEMA ======', 'font-weight:bold;color:#44ff44;');
 
-		let schema = Object.keys(tables).reduce((carry, tableId) => {
-			const table = tables[tableId];
+		let tables = Object.keys(rawTables).reduce((carry, tableId) => {
+			const table = rawTables[tableId];
 			carry[tableId] = {
 				...table,
 				fields: [],
@@ -30,7 +30,13 @@ export const schemaSelector = createSelector(
 			return carry;
 		}, {});
 
-		schema = Object.keys(fields).reduce((carry, fieldId) => {
+		const byName = Object.keys(rawTables).reduce((carry, tableId) => {
+			const table = rawTables[tableId];
+			carry[table.name] = tableId;
+			return carry;
+		}, {});
+
+		tables = Object.keys(fields).reduce((carry, fieldId) => {
 
 			const field = fields[fieldId];
 			const { table_id } = field;
@@ -57,14 +63,17 @@ export const schemaSelector = createSelector(
 			if (~PARENT_LINK_TYPES.indexOf(field.type)) table.parentLink = field;
 
 			return carry;
-		}, schema);
+		}, tables);
 
-		Object.keys(schema).map((tableId) => {
-			const table = schema[tableId];
+		Object.keys(tables).map((tableId) => {
+			const table = tables[tableId];
 			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank > b.rank);
 		});
 
-		// console.log(schema);
-		return schema;
+		// console.log(tables);
+		return {
+			tables,
+			byName,
+		};
 	}
 );
