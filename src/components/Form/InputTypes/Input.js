@@ -12,6 +12,6 @@ export class Input extends Component {
 
 	changeVal = (e) => {
 		const v = (e && e.target && e.target.value) || e;
-		this.props.setFieldVal(this.props.field.table_id, this.props.recordId, this.props.field.name, v);
+		this.props.setFieldVal(this.props.field.table_id, this.props.recordId, this.props.field.id, v);
 	};
 }

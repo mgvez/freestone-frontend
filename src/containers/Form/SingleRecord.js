@@ -74,7 +74,7 @@ export class SingleRecord extends Component {
 								field={field}
 								tableName={this.props.table.name}
 								recordId={this.props.recordId}
-								val={this.props.record[field.name]}
+								val={this.props.record[field.id]}
 								setFieldVal={this.props.setFieldVal}
 								fetchForeignOptions={this.props.fetchForeignOptions}
 								foreignOptions={this.props.foreignOptions[field.id]}

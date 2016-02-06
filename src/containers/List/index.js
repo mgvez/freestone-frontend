@@ -21,7 +21,7 @@ export class List extends Component {
 		table: React.PropTypes.object,
 		searchableFields: React.PropTypes.array,
 		groupedRecords: React.PropTypes.array,
-		
+
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
 	};
@@ -58,7 +58,7 @@ export class List extends Component {
 					<h1>List records from {this.props.params.name} {this.props.table.actionLabel}</h1>
 					<table className="table">
 						<thead>
-							<Heading 
+							<Heading
 								fields={this.props.searchableFields}
 								hasOrder={this.props.table.hasOrder}
 								isSelfTree={this.props.table.isSelfTree}

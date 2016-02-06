@@ -11,8 +11,7 @@ import { RequireApiData } from 'utils/RequireApiData';
 import { SingleRecord } from 'containers/Form/SingleRecord';
 import { Tab } from 'components/Form/Tab';
 
-import { PRIKEY_ALIAS, PARENTKEY_ALIAS } from 'freestone/SchemaProps';
-import uniqueId from 'utils/UniqueId';
+import createRecord from 'freestone/createRecord';
 
 @connect(
 	formChildrenRecordsSelector,
@@ -62,15 +61,8 @@ export class Children extends Component {
 
 	addRecord = () => {
 		// console.log(this.props.table);
-
-		const newRecord = this.props.table.fields.reduce((record, field) => {
-			// console.log(field);
-			record[field.name] = field.default;
-			return record;
-		}, {});
-		const newRecordId = uniqueId();
-		newRecord[PRIKEY_ALIAS] = newRecord[this.props.table.priName] = newRecordId;
-		newRecord[PARENTKEY_ALIAS] = newRecord[this.props.table.parentLink.name] = this.props.parentRecordId;
+		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentRecordId);
+		
 		// console.log(newRecord);
 		this.props.addRecord(this.props.table.id, newRecord);
 		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);

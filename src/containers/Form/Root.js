@@ -17,7 +17,7 @@ export class RootForm extends Component {
 		params: React.PropTypes.object,
 
 		table: React.PropTypes.object,
-		
+
 		fetchTable: React.PropTypes.func,
 	};
 

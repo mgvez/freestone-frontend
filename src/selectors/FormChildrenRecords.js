@@ -15,9 +15,9 @@ function getRecords(records, parentRecordId, prikey, searchableFields) {
 		return record[PARENTKEY_ALIAS] === parentRecordId && record;
 	}).filter(record => record).map(record => {
 		return {
-			id: record[prikey.name],
+			id: record[prikey.id],
 			label: searchableFields.map(field => {
-				return record[field.name];
+				return record[field.id];
 			}).join(' '),
 		};
 	});
