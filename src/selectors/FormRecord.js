@@ -12,7 +12,7 @@ export const formRecordSelector = createSelector(
 	(schema, records, recordId, unfilteredChildren, foreignOptionsAll) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = schema;
-		const record = recordId && table && records[table.name] && records[table.name][recordId];
+		const record = recordId && table && records[table.id] && records[table.id][recordId];
 		const children = table && unfilteredChildren[table.id];
 
 		let foreignOptions;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class Tab extends Component {
 	static propTypes = {
-		tableName: React.PropTypes.string,
+		tableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		recordId: React.PropTypes.string,
 		isActive: React.PropTypes.bool,
@@ -13,7 +13,7 @@ export class Tab extends Component {
 	};
 
 	setShownRecord = (e) => {
-		this.props.setShownRecord(this.props.tableName, this.props.parentRecordId, this.props.recordId);
+		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.recordId);
 	};
 
 	render() {

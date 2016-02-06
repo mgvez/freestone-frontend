@@ -11,12 +11,12 @@ function childrenAreLoaded(state = {}, action) {
 	case 'UNAUTHORIZED':
 		return {};
 	case 'RECEIVE_RECORD':
-		if (!action.data || !action.data.tableName) return state;
-		const tableName = action.data.tableName;
+		if (!action.data || !action.data.tableId) return state;
+		const tableId = action.data.tableId;
 		const newState = {
 			...state,
-			[tableName]: {
-				...state[tableName],
+			[tableId]: {
+				...state[tableId],
 				[action.data.parentId]: !!action.data.records,
 			},
 		};
@@ -32,13 +32,13 @@ function childrenAreLoaded(state = {}, action) {
 
 
 function setFieldValue(state, data) {
-	const { tableName, recordId, fieldName, val } = data;
+	const { tableId, recordId, fieldName, val } = data;
 	return {
 		...state,
-		[tableName]: {
-			...state[tableName],
+		[tableId]: {
+			...state[tableId],
 			[recordId]: {
-				...state[tableName][recordId],
+				...state[tableId][recordId],
 				[fieldName]: val,
 			},
 		},
@@ -50,15 +50,16 @@ function records(state = {}, action) {
 	case 'UNAUTHORIZED':
 		return {};
 	case 'RECEIVE_RECORD':
-		if (!action.data || !action.data.tableName) return state;
-		const tableName = action.data.tableName;
+		// console.log(action.data);
+		if (!action.data || !action.data.tableId) return state;
+		const tableId = action.data.tableId;
 		const newState = {
 			...state,
-			[tableName]: (action.data.records || []).reduce((carry, current) => {
+			[tableId]: (action.data.records || []).reduce((carry, current) => {
 				const key = current[PRIKEY_ALIAS];
 				carry[key] = current;
 				return carry;
-			}, state[tableName] || {}),
+			}, state[tableId] || {}),
 		};
 		// console.log(newState);
 		return newState;
@@ -75,11 +76,11 @@ function records(state = {}, action) {
 function shownRecords(state = {}, action) {
 	switch (action.type) {
 	case 'SET_SHOWN_RECORD':
-		const tableName = action.data.tableName;
+		const tableId = action.data.tableId;
 		const newState = {
 			...state,
-			[tableName]: {
-				...state[tableName],
+			[tableId]: {
+				...state[tableId],
 				[action.data.parentRecordId]: action.data.recordId,
 			},
 		};

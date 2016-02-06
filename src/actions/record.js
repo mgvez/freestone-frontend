@@ -11,29 +11,29 @@ export function fetchList(tableName, search = '', page = 1) {
 	};
 }
 
-export function setFieldVal(tableName, recordId, fieldName, val) {
+export function setFieldVal(tableId, recordId, fieldName, val) {
 	return (dispatch) => {
 		return dispatch({
 			type: 'SET_FIELD_VALUE',
-			data: { tableName, recordId, fieldName, val },
+			data: { tableId, recordId, fieldName, val },
 		});
 	};
 }
 
-export function setShownRecord(tableName, parentRecordId, recordId) {
+export function setShownRecord(tableId, parentRecordId, recordId) {
 	return (dispatch) => {
 		return dispatch({
 			type: 'SET_SHOWN_RECORD',
-			data: { tableName, parentRecordId, recordId },
+			data: { tableId, parentRecordId, recordId },
 		});
 	};
 }
 
-export function addRecord(tableName, newRecord) {
+export function addRecord(tableId, newRecord) {
 	return (dispatch) => {
 		return dispatch({
 			type: 'RECEIVE_RECORD',
-			data: { tableName, records: [newRecord] },
+			data: { tableId, records: [newRecord] },
 		});
 	};
 }

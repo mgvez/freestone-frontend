@@ -28,16 +28,16 @@ export const formChildrenRecordsSelector = createSelector(
 	(schema, records, recordsAreLoaded, parentRecordId, shownRecords) => {
 		
 		const { table } = schema;
-		const areLoaded = parentRecordId && table && recordsAreLoaded[table.name] && recordsAreLoaded[table.name][parentRecordId];
+		const areLoaded = parentRecordId && table && recordsAreLoaded[table.id] && recordsAreLoaded[table.id][parentRecordId];
 		// console.log(parentRecordId, table, recordsAreLoaded);
-		const tableRecords = table && records[table.name];
+		const tableRecords = table && records[table.id];
 
 		let childrenRecords;
 		if (areLoaded) {
 			childrenRecords = getRecords(tableRecords, parentRecordId, table.prikey, table.searchableFields);
 		}
 
-		const activeRecord = shownRecords && table && shownRecords[table.name] && (shownRecords[table.name][parentRecordId] || null);
+		const activeRecord = shownRecords && table && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
 
 		// console.log(activeRecord);
 		return {

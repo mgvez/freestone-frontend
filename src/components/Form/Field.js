@@ -10,7 +10,6 @@ import { AutocompleteInput } from 'components/Form/InputTypes/AutocompleteInput'
 
 export class Field extends Component {
 	static propTypes = {
-		tableName: React.PropTypes.string,
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,
 		val: React.PropTypes.string,

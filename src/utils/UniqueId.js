@@ -1,8 +1,7 @@
 
 const prefix = '__freestone__';
-let incr = 0;
 
 export default () => {
-	incr++;
+	const incr = Number(new Date);
 	return `${prefix}${incr}`;
 };

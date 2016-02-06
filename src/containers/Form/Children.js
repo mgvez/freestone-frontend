@@ -61,7 +61,7 @@ export class Children extends Component {
 	}
 
 	addRecord = () => {
-		console.log(this.props.table);
+		// console.log(this.props.table);
 
 		const newRecord = this.props.table.fields.reduce((record, field) => {
 			// console.log(field);
@@ -72,8 +72,8 @@ export class Children extends Component {
 		newRecord[PRIKEY_ALIAS] = newRecord[this.props.table.priName] = newRecordId;
 		newRecord[PARENTKEY_ALIAS] = newRecord[this.props.table.parentLink.name] = this.props.parentRecordId;
 		// console.log(newRecord);
-		this.props.addRecord(this.props.table.name, newRecord);
-		this.props.setShownRecord(this.props.table.name, this.props.parentRecordId, newRecordId);
+		this.props.addRecord(this.props.table.id, newRecord);
+		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);
 	};
 
 	render() {
@@ -103,7 +103,7 @@ export class Children extends Component {
 								isActive={active}
 								recordId={record.id}
 								index={index}
-								tableName={this.props.table.name}
+								tableId={this.props.table.id}
 								parentRecordId={this.props.parentRecordId}
 								setShownRecord={this.props.setShownRecord}
 							/>);
