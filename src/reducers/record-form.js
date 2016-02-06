@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
+import { PRIKEY_ALIAS } from 'freestone/SchemaProps';
+
 /**
 	Bien que pas idéal, les infos reçues doivent comporter quelques infos de structure (table name, prikey, parent field, etc.) qui, bien que théoriquement disponibles dans un autre state, sont inclus au action data, même si ça ajoute de la complexité à l'action. Ajouter un link sur un autre state aurait encore plus compliqué.
 */
@@ -53,7 +55,7 @@ function records(state = {}, action) {
 		const newState = {
 			...state,
 			[tableName]: (action.data.records || []).reduce((carry, current) => {
-				const key = current.prikey;
+				const key = current[PRIKEY_ALIAS];
 				carry[key] = current;
 				return carry;
 			}, state[tableName] || {}),

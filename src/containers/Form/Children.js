@@ -11,6 +11,7 @@ import { RequireApiData } from 'utils/RequireApiData';
 import { SingleRecord } from 'containers/Form/SingleRecord';
 import { Tab } from 'components/Form/Tab';
 
+import { PRIKEY_ALIAS, PARENTKEY_ALIAS } from 'freestone/SchemaProps';
 import uniqueId from 'utils/UniqueId';
 
 @connect(
@@ -68,8 +69,8 @@ export class Children extends Component {
 			return record;
 		}, {});
 		const newRecordId = uniqueId();
-		newRecord.prikey = newRecord[this.props.table.priName] = newRecordId;
-		newRecord.parentkey = newRecord[this.props.table.parentLink.name] = this.props.parentRecordId;
+		newRecord[PRIKEY_ALIAS] = newRecord[this.props.table.priName] = newRecordId;
+		newRecord[PARENTKEY_ALIAS] = newRecord[this.props.table.parentLink.name] = this.props.parentRecordId;
 		// console.log(newRecord);
 		this.props.addRecord(this.props.table.name, newRecord);
 		this.props.setShownRecord(this.props.table.name, this.props.parentRecordId, newRecordId);
