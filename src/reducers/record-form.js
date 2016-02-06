@@ -77,6 +77,7 @@ function shownRecords(state = {}, action) {
 	switch (action.type) {
 	case 'SET_SHOWN_RECORD':
 		const tableId = action.data.tableId;
+		// console.log(action);
 		const newState = {
 			...state,
 			[tableId]: {

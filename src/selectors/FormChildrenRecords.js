@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
 
-import { PARENTKEY_ALIAS } from 'freestone/SchemaProps';
+import { PARENTKEY_ALIAS, PRIKEY_ALIAS } from 'freestone/SchemaProps';
 
 const recordsSelector = state => state.recordForm.records;
 const recordsAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
@@ -14,8 +14,9 @@ function getRecords(records, parentRecordId, prikey, searchableFields) {
 		// console.log(record);
 		return record[PARENTKEY_ALIAS] === parentRecordId && record;
 	}).filter(record => record).map(record => {
+		// console.log(record);
 		return {
-			id: record[prikey.id],
+			id: record[PRIKEY_ALIAS],
 			label: searchableFields.map(field => {
 				return record[field.id];
 			}).join(' '),
@@ -39,7 +40,7 @@ export const formChildrenRecordsSelector = createSelector(
 
 		const activeRecord = shownRecords && table && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
 
-		// console.log(activeRecord);
+		// console.log(shownRecords);
 		return {
 			table,
 			childrenRecords,

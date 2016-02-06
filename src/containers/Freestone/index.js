@@ -45,6 +45,7 @@ export class Freestone extends Component {
 
 	render() {
 		console.log('%cRender menu', 'font-weight: bold');
+		// console.log(this.props.errors);
 		return (
 			<section className="container">
 				<DocumentMeta {...metaData} />

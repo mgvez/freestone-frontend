@@ -13,6 +13,6 @@ export default (table, parentRecordId) => {
 	newRecord[PARENTKEY_ALIAS] = newRecord[table.parentLink.id] = parentRecordId;
 	return {
 		newRecord,
-		parentRecordId,
+		newRecordId,
 	};
 };

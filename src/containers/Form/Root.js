@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
@@ -45,7 +46,7 @@ export class RootForm extends Component {
 		if (this.props.table) {
 			header = (
 				<header>
-					<button>Save</button>
+					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} activeClassName="active" className="btn btn-xs">Save</Link>
 					<button>Cancel</button>
 					<div>lastmodif</div>
 				</header>

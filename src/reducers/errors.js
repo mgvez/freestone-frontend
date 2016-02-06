@@ -8,9 +8,10 @@ export function errors(state = [], action) {
 			action.error.responseText,
 		];
 	case 'FREESTONE_API_FATAL_FAILURE':
+		// console.log(action.error);
 		return [
 			...state,
-			action.error.responseText,
+			action.error.responseText || action.error.statusText,
 		];
 	case 'CLEAR_ERRORS':
 		return [];
