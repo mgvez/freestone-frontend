@@ -7,6 +7,7 @@ export class Tab extends Component {
 		recordId: React.PropTypes.string,
 		isActive: React.PropTypes.bool,
 		displayLabel: React.PropTypes.string,
+		index: React.PropTypes.number,
 
 		setShownRecord: React.PropTypes.func,
 	};
@@ -21,7 +22,7 @@ export class Tab extends Component {
 		className = `btn ${className} btn-xs`;
 		return (
 			<a className={className} onClick={this.setShownRecord}>
-				{this.props.recordId}. {this.props.displayLabel}
+				{this.props.index + 1}. {this.props.displayLabel}
 			</a>
 		);
 	}

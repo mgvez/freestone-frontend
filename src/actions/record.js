@@ -29,6 +29,15 @@ export function setShownRecord(tableName, parentRecordId, recordId) {
 	};
 }
 
+export function addRecord(tableName, newRecord) {
+	return (dispatch) => {
+		return dispatch({
+			type: 'RECEIVE_RECORD',
+			data: { tableName, records: [newRecord] },
+		});
+	};
+}
+
 export function fetchRecord(tableName, id, parentTable = 0) {
 	return (dispatch) => {
 

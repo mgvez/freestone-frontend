@@ -49,6 +49,10 @@ module.exports = {
 	resolve: {
 		extensions: ['', '.js', '.json'],
 		modulesDirectories: ['node_modules', 'src'],
+		alias: {
+			// require('tinymce') will do require('tinymce/tinymce') 
+			tinymce: 'tinymce/tinymce',
+		},
 	},
 
 	module: {
@@ -58,6 +62,12 @@ module.exports = {
 			loaders: ['react-hot', 'babel-loader', 'eslint-loader'],
 			exclude: /node_modules/,
 		},
+		// {
+		// 	// Only apply on tinymce/tinymce
+		// 	include: require.resolve('tinymce/tinymce'),
+		// 	// Export window.tinymce
+		// 	loader: 'exports?window.tinymce',
+	 //    },
 		{
 			test: /bootstrap\/js\//,
 			loader: 'imports?jQuery=jquery',

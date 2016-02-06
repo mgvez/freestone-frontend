@@ -29,8 +29,6 @@ https://github.com/wangzuo/input-moment
 
 ### Plugin freestone tinymce
 
-### Autocomplete
-
 ### Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
 
@@ -45,6 +43,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - strategie de invalidate du data
 - liste des records en cours de modif par le user dans un widget
 - essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
+- toute faire linker par table_id au lieu de des fois table_name dans les recucers/selectors
 
 #### Menu
 - n records
@@ -60,12 +59,17 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - mtm
 - record last modif
 - types de input
-	- autocomplete
 	- file
+	- tinymce
+		- link styles site
+		- insert freestone image
+		- insert freestone link
+	- date
 - subform add record
 - champ type ajax? (voir field format form)
 - champ type tag
 - champs en/fr séparés
+- liste des anciennes révisions du record
 
 #### Modules
 #### Pages
@@ -78,3 +82,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - grouped records
 - delete
 - change order
+
+#### Forms
+- autocomplete

@@ -11,6 +11,8 @@ import { RequireApiData } from 'utils/RequireApiData';
 import { SingleRecord } from 'containers/Form/SingleRecord';
 import { Tab } from 'components/Form/Tab';
 
+import uniqueId from 'utils/UniqueId';
+
 @connect(
 	formChildrenRecordsSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
@@ -24,10 +26,12 @@ export class Children extends Component {
 		childrenRecords: React.PropTypes.array,
 		activeRecord: React.PropTypes.string,
 		table: React.PropTypes.object,
+		newRecord: React.PropTypes.object,
 
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
+		addRecord: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -55,6 +59,22 @@ export class Children extends Component {
 		}
 	}
 
+	addRecord = () => {
+		console.log(this.props.table);
+
+		const newRecord = this.props.table.fields.reduce((record, field) => {
+			// console.log(field);
+			record[field.name] = field.default;
+			return record;
+		}, {});
+		const newRecordId = uniqueId();
+		newRecord.prikey = newRecord[this.props.table.priName] = newRecordId;
+		newRecord.parentkey = newRecord[this.props.table.parentLink.name] = this.props.parentRecordId;
+		// console.log(newRecord);
+		this.props.addRecord(this.props.table.name, newRecord);
+		this.props.setShownRecord(this.props.table.name, this.props.parentRecordId, newRecordId);
+	};
+
 	render() {
 		let header;
 		if (this.props.table) {
@@ -62,24 +82,26 @@ export class Children extends Component {
 				<header>
 					<h1>{this.props.table.displayLabel}</h1>
 					<div>{this.props.table.help}</div>
+					<button className="btn btn-sm btn-default" onClick={this.addRecord}>Add record</button>
 				</header>
 			);
 		}
 		let tabs;
 		let form;
 		if (this.props.childrenRecords) {
-			let activeRecordId;
+			const activeRecord = this.props.childrenRecords.find(rec => rec.id === this.props.activeRecord) || this.props.childrenRecords[0];
+			const activeRecordId = activeRecord && activeRecord.id;
 			tabs = (
 				<div>
 					{
 						this.props.childrenRecords.map((record, index) => {
-							const active = record.id === this.props.activeRecord || (index === 0 && !this.props.activeRecord);
-							if (active) activeRecordId = record.id;
+							const active = record.id === activeRecordId;
 							return (<Tab 
 								key={record.id}
 								displayLabel={record.label}
 								isActive={active}
 								recordId={record.id}
+								index={index}
 								tableName={this.props.table.name}
 								parentRecordId={this.props.parentRecordId}
 								setShownRecord={this.props.setShownRecord}

@@ -4,6 +4,7 @@ import { TextInput } from 'components/Form/InputTypes/TextInput';
 import { BoolInput } from 'components/Form/InputTypes/BoolInput';
 import { SelectInput } from 'components/Form/InputTypes/SelectInput';
 import { NoEditInput } from 'components/Form/InputTypes/NoEditInput';
+import { HtmlInput } from 'components/Form/InputTypes/HtmlInput';
 import { AutocompleteInput } from 'components/Form/InputTypes/AutocompleteInput';
 
 
@@ -28,12 +29,14 @@ export class Field extends Component {
 		case 'datetime':
 		case 'int':
 		case 'text':
-		case 'html':
 		case 'char':
 		case 'note':
 		case 'url':
 		case 'password':
 			input = <TextInput {...this.props} />;
+			break;
+		case 'html':
+			input = <HtmlInput {...this.props} />;
 			break;
 		case 'internal_url':
 			input = <TextInput {...this.props} />;
