@@ -25,6 +25,7 @@ export class Save extends Component {
 
 	componentWillMount() {
 		console.log(this.props);
+		this.props.saveRecord(this.props.params.tableName, this.props.record);
 	}
 
 	componentWillReceiveProps(nextProps) {

@@ -63,6 +63,7 @@
     "jquery": "^2.2.0",
     "jwt-decode": "^1.5.0",
     "less": "^2.5.3",
+    "normalizr": "^2.0.0",
     "react": "^0.14.6",
     "react-addons-perf": "^0.14.7",
     "react-autocomplete": "^0.1.4",

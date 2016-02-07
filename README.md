@@ -32,8 +32,11 @@ https://github.com/wangzuo/input-moment
 ### Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
 
-### implementer
-- implementer immutable
+### implementer / refactor
+[https://blog.risingstack.com/react-js-best-practices-for-2016/](https://blog.risingstack.com/react-js-best-practices-for-2016/)
+
+- immutable
+- normalizr
 
 ### Freestone
 #### Redux
@@ -57,6 +60,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 #### Form
 - mtm
+- oto
 - record last modif
 - types de input
 	- file
@@ -70,6 +74,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - champs en/fr séparés
 - liste des anciennes révisions du record
 - save
+- comment enlever un record et ses children du store (aussi les children are loaded)
+	- quand save
+	- quand cancel
+
 
 #### Modules
 #### Pages
@@ -85,3 +93,4 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 #### Forms
 - autocomplete
+

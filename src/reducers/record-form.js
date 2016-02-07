@@ -11,7 +11,7 @@ function childrenAreLoaded(state = {}, action) {
 	case 'UNAUTHORIZED':
 		return {};
 	case 'RECEIVE_RECORD':
-		if (!action.data || !action.data.tableId) return state;
+		if (!action.data || !action.data.tableId || !action.data.parentId) return state;
 		const tableId = action.data.tableId;
 		const newState = {
 			...state,
