@@ -15,7 +15,7 @@ export class LoginForm extends Component {
 		const redirectRoute = this.props.location.query.next || '/home';
 		this.state = {
 			username: 'mvezina',
-			password: 'wLT9GOCG62', //'aaa',
+			password: 'aaa', //'aaa',wLT9GOCG62
 			redirectTo: redirectRoute,
 		};
 	}

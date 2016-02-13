@@ -13,9 +13,14 @@ import { Children } from 'containers/Form/Children';
 
 import { Field } from 'components/Form/Field';
 
+const mapStateToProps = formRecordSelector;
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators({ ...schemaActionCreators, ...recordActionCreators, ...optionsActionCreators }, dispatch);
+};
+
 @connect(
-	formRecordSelector,
-	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators, ...optionsActionCreators }, dispatch)
+	mapStateToProps,
+	mapDispatchToProps
 )
 export class SingleRecord extends Component {
 	static propTypes = {
@@ -25,6 +30,7 @@ export class SingleRecord extends Component {
 		table: React.PropTypes.object,
 		children: React.PropTypes.array,
 		record: React.PropTypes.object,
+		recordUnaltered: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		foreignOptions: React.PropTypes.object,
 		
@@ -44,8 +50,15 @@ export class SingleRecord extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		// console.log('receive', nextProps.table.id, nextProps.table === this.props.table);
 		this.requireData(nextProps);
 	}
+
+	// shouldComponentUpdate(nextProps) {
+	// 	console.log('should ', nextProps.table.id, nextProps.table === this.props.table);
+	// 	return true;
+	// 	//return nextProps.id !== this.props.id;
+	// }
 
 	requireData(props) {
 		const { tableName, recordId } = props;
@@ -58,6 +71,7 @@ export class SingleRecord extends Component {
 		let header;
 		let form;
 		let sub;
+		// console.log('render', this.props.table.id);
 		if (this.props.table && this.props.record) {
 			header = (
 				<header>
@@ -75,6 +89,7 @@ export class SingleRecord extends Component {
 								tableName={this.props.table.name}
 								recordId={this.props.recordId}
 								val={this.props.record[field.id]}
+								origVal={this.props.recordUnaltered[field.id]}
 								setFieldVal={this.props.setFieldVal}
 								fetchForeignOptions={this.props.fetchForeignOptions}
 								foreignOptions={this.props.foreignOptions[field.id]}

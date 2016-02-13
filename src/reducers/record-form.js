@@ -32,17 +32,33 @@ function childrenAreLoaded(state = {}, action) {
 
 
 function setFieldValue(state, data) {
-	const { tableId, recordId, fieldName, val } = data;
+	const { tableId, recordId, fieldId, val } = data;
 	return {
 		...state,
 		[tableId]: {
 			...state[tableId],
 			[recordId]: {
 				...state[tableId][recordId],
-				[fieldName]: val,
+				[fieldId]: val,
 			},
 		},
 	};
+}
+
+function receiveRecord(state, data) {
+	// console.log(action.data);
+	if (!data || !data.tableId || !data.records) return state;
+	const tableId = data.tableId;
+	const newState = {
+		...state,
+		[tableId]: data.records.reduce((tableRecords, record) => {
+			const key = record[PRIKEY_ALIAS];
+			tableRecords[key] = record;
+			return tableRecords;
+		}, state[tableId] || {}),
+	};
+	// console.log(newState);
+	return newState;
 }
 
 function records(state = {}, action) {
@@ -50,21 +66,24 @@ function records(state = {}, action) {
 	case 'UNAUTHORIZED':
 		return {};
 	case 'RECEIVE_RECORD':
-		// console.log(action.data);
-		if (!action.data || !action.data.tableId) return state;
-		const tableId = action.data.tableId;
-		const newState = {
-			...state,
-			[tableId]: (action.data.records || []).reduce((carry, current) => {
-				const key = current[PRIKEY_ALIAS];
-				carry[key] = current;
-				return carry;
-			}, state[tableId] || {}),
-		};
-		// console.log(newState);
-		return newState;
+		return receiveRecord(state, action.data);
 	case 'SET_FIELD_VALUE':
 		return setFieldValue(state, action.data);
+	case 'CLEAR_DATA':
+		return {};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
+// garde les records tels que loadés de la db, sans alteration (donc ne repond pas au set field value)
+function recordsUnaltered(state = {}, action) {
+	switch (action.type) {
+	case 'UNAUTHORIZED':
+		return {};
+	case 'RECEIVE_RECORD':
+		return receiveRecord(state, action.data);
 	case 'CLEAR_DATA':
 		return {};
 	default:
@@ -95,6 +114,7 @@ function shownRecords(state = {}, action) {
 
 export default combineReducers({
 	records,
+	recordsUnaltered,
 	childrenAreLoaded,
 	shownRecords,
 });

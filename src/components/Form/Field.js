@@ -5,6 +5,7 @@ import { BoolInput } from 'components/Form/InputTypes/BoolInput';
 import { SelectInput } from 'components/Form/InputTypes/SelectInput';
 import { NoEditInput } from 'components/Form/InputTypes/NoEditInput';
 import { HtmlInput } from 'components/Form/InputTypes/HtmlInput';
+import { FileInput } from 'components/Form/InputTypes/FileInput';
 import { AutocompleteInput } from 'components/Form/InputTypes/AutocompleteInput';
 
 
@@ -13,6 +14,7 @@ export class Field extends Component {
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,
 		val: React.PropTypes.string,
+		origVal: React.PropTypes.string,
 		foreignOptions: React.PropTypes.object,
 		
 		setFieldVal: React.PropTypes.func,
@@ -54,7 +56,7 @@ export class Field extends Component {
 			break;
 		case 'img':
 		case 'file':
-			input = <TextInput {...this.props} />;
+			input = <FileInput {...this.props} />;
 			break;
 		case 'bool':
 			input = <BoolInput {...this.props} />;

@@ -7,8 +7,8 @@ import { receiveToken, loginUserFailure } from 'actions/auth';
 function getEndpoint(route) {
 	let hostname = window.location.hostname;
 	if (hostname === 'localhost') {
-		hostname = 'celeste.freestone-2';
-		// hostname = 'freestone_dev.freestone-2';
+		// hostname = 'celeste.freestone-2';
+		hostname = 'freestone_dev.freestone-2';
 	}
 	// console.log(window.location);
 	return `${window.location.protocol}//${hostname}/admin/${route}`;

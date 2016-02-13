@@ -11,6 +11,8 @@ export const tableSchemaSelector = createSelector(
 		//les tables sont dans le store selon leur ID, mais dans le schema buildé, il y a une entrée par nom de table qui contient le ID (schema[tableName] = id)
 		// console.log(`select table ${tableId} / ${tableName}`);
 		const resolvedTableId = tableId || schema.byName[tableName];
+		// console.log(`select table ${resolvedTableId}`);
+
 		return {
 			table: schema.tables[resolvedTableId],
 		};

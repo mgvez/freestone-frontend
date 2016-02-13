@@ -5,9 +5,11 @@ const rawForeignOptionsSelector = state => state.foreignOptions;
 export const foreignOptionsSelector = createSelector(
 	[rawForeignOptionsSelector],
 	(rawOptions) => {
-		// console.log('parse options');
+		// console.log('parse foreigns');
 		const options = Object.keys(rawOptions).reduce((carry, fieldId) => {
 			const current = rawOptions[fieldId];
+			//enums : deja au bon format
+			if (!current.options) return current;
 			const rawLabel = current.display && current.display.label;
 			const values = current.options.map(rawOption => {
 				const row = rawOption.row;

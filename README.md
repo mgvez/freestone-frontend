@@ -1,6 +1,4 @@
-Basé sur Redux Easy Boilerplate
-=========================
-
+## Notes
 
 ### eslint
 
@@ -17,17 +15,13 @@ et voir ensuite dans .babelrc
 
 ## Todo
 
-### Drag & drop tabs
+### next
 
-http://webcloud.se/sortable-list-component-react-js/
-
-### Datepicker
-
-https://github.com/wangzuo/input-moment
-
-### Tinymce
-
-### Plugin freestone tinymce
+- file inputs
+- remove record from redux quand saved
+- delete children (php)
+- order dans lst
+- tab order
 
 ### Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
@@ -40,23 +34,37 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ### Freestone
 #### Redux
+- essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
+- strategie de invalidate du data
 
 #### General
 - settings generaux, i.e. nom du site, url
-- strategie de invalidate du data
 - liste des records en cours de modif par le user dans un widget
-- essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
 - createddate && modifdate dans constantes des alias de champs
+- pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
+- pouvoir mettre une page par défaut au login (e.g. liste d'une table en particulier)
+- standardiser les noms de fichiers (record-form, formRecord, etc)
+
+#### PHP
+- verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
+	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
+- bank (et toutes les instances de cet classe)
+- traduire les erreurs (VException)
+- Save files
+- delete children
+- remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
 
 #### Menu
 - n records
 
 #### Header menu
-#### Recherche
 #### Liste
 - field types images
 - field types file
+- recherche
+	- chercher aussi dans les foreign keys
 - paging
+- order buttons. Mettre à la position du champ dans les colonnes selon son rank (ou immediatement à droite des fcn)
 
 #### Form
 - mtm
@@ -68,7 +76,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 		- link styles css site
 		- insert freestone image
 		- insert freestone link
-	- date
+	- date https://github.com/wangzuo/input-moment
 - champ type ajax? (voir field format form)
 - champ type tag
 - champs en/fr séparés
@@ -77,6 +85,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - comment enlever un record et ses children du store (aussi les children are loaded)
 	- quand save
 	- quand cancel
+-- drag & drop tabs http://webcloud.se/sortable-list-component-react-js/
+
 
 
 #### Modules

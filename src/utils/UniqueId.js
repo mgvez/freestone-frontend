@@ -1,7 +1,11 @@
 
-const prefix = '__freestone__';
+const prefix = '_freestone';
+const lst = 'abcdefghijklmnopqrstuvwxyz';
 
 export default () => {
-	const incr = Number(new Date);
-	return `${prefix}${incr}`;
+	let id = '';
+	while (id.length < 8) {
+		id += lst.charAt(Math.floor(Math.random() * lst.length));
+	}
+	return `${prefix}${id}_`;
 };

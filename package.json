@@ -69,7 +69,7 @@
     "react-autocomplete": "^0.1.4",
     "react-document-meta": "^2.0.1",
     "react-dom": "^0.14.6",
-    "react-redux": "^4.0.6",
+    "react-redux": "^4.4.0",
     "react-router": "^1.0.3",
     "react-tinymce-input": "^1.1.0",
     "redux": "^3.0.5",

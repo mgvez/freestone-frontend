@@ -5,6 +5,7 @@ export class Input extends Component {
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,
 		val: React.PropTypes.string,
+		origVal: React.PropTypes.string,
 		
 		setFieldVal: React.PropTypes.func,
 		fetchForeignOptions: React.PropTypes.func,
