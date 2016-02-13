@@ -9,24 +9,14 @@ const childrenSelector = state => state.schema.children;
 
 
 export const formRecordSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordsUnalteredSelector, recordIdSelector, childrenSelector, foreignOptionsSelector],
-	(schema, records, recordsUnaltered, recordId, unfilteredChildren, foreignOptionsAll) => {
+	[tableSchemaSelector, recordsSelector, recordIdSelector, recordsUnalteredSelector, childrenSelector, foreignOptionsSelector],
+	(schema, records, recordId, recordsUnaltered, unfilteredChildren, foreignOptions) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = schema;
 		const record = recordId && table && records[table.id] && records[table.id][recordId];
 		const recordUnaltered = recordId && table && recordsUnaltered[table.id] && recordsUnaltered[table.id][recordId];
 		const children = table && unfilteredChildren[table.id];
 
-		let foreignOptions;
-		if (table) {
-			foreignOptions = foreignOptionsAll;
-		// 	foreignOptions = table.fields.map((field) => {
-		// 		return foreignOptionsAll[field.id];
-		// 	}).filter(options => options).reduce((carry, current) => {
-		// 		carry[current.fieldId] = current;
-		// 		return carry;
-		// 	}, {});
-		}
 		// console.log(foreignOptions);
 		// console.log(tableSchema, records, recordId);
 		return {

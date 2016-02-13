@@ -33,6 +33,7 @@ function childrenAreLoaded(state = {}, action) {
 
 function setFieldValue(state, data) {
 	const { tableId, recordId, fieldId, val } = data;
+	// console.log(tableId, recordId, fieldId, val);
 	return {
 		...state,
 		[tableId]: {

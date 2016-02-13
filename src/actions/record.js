@@ -11,11 +11,11 @@ export function fetchList(tableName, search = '', page = 1) {
 	};
 }
 
-export function setFieldVal(tableId, recordId, fieldName, val) {
+export function setFieldVal(tableId, recordId, fieldId, val) {
 	return (dispatch) => {
 		return dispatch({
 			type: 'SET_FIELD_VALUE',
-			data: { tableId, recordId, fieldName, val },
+			data: { tableId, recordId, fieldId, val },
 		});
 	};
 }

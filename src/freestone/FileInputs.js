@@ -1,19 +1,28 @@
 
 const inputs = {};
 
-const key = (t, r) => `${t}__${r}`;
+export function showFileInputs() {
+	// console.log(inputs);
+	Object.keys(inputs).forEach(k => {
+		console.log(k, inputs[k], inputs[k].value);
+	});
+}
 
-export default {
-	setInput(tableId, recordId, input) {
-		inputs[k(tableId, recordId)] = input;
-	},
-
-	getInput(tableId, recordId) {
-		return inputs[k(tableId, recordId)];
+export class SavedFileInput {
+	constructor(fId, rId) {
+		this.key = `${fId}__${rId}`;
 	}
 
-	deleteInput(tableId, recordId) {
-		inputs[k(tableId, recordId)] = null;
+	setInput(input) {
+		inputs[this.key] = input;
+		showFileInputs();
 	}
 
+	getInput() {
+		return inputs[this.key];
+	}
+
+	deleteInput() {
+		inputs[this.key] = null;
+	}
 }

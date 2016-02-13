@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { Input } from 'components/Form/InputTypes/Input';
 import { RequireApiData } from 'utils/RequireApiData';
