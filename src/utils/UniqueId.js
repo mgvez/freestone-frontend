@@ -7,5 +7,5 @@ export default () => {
 	while (id.length < 8) {
 		id += lst.charAt(Math.floor(Math.random() * lst.length));
 	}
-	return `${prefix}${id}_`;
+	return `${prefix}_${id}_`;
 };

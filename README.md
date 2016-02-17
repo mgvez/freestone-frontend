@@ -32,7 +32,12 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - immutable
 - normalizr
 
+### BUGS
+- quand login marche pas, ?next s'append à chauqe login manqué
+
 ### Freestone
+
+
 #### Redux
 - essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
 - strategie de invalidate du data
@@ -44,6 +49,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - pouvoir mettre une page par défaut au login (e.g. liste d'une table en particulier)
 - standardiser les noms de fichiers (record-form, formRecord, etc)
+- mettre les actions dans des constantes, les types de champs aussi
 
 #### PHP
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
@@ -91,6 +97,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 #### Modules
 #### Pages
+
+### Refactor
+	- upload des records en tree, et des files. Rencre plus clair, peut etre en flat, et mettre les files aussi plus clair (voir le loop qui build les ids de champs file)
+
 
 
 ### Semi-done

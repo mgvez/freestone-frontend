@@ -8,6 +8,7 @@ import { errors } from './errors';
 import { foreignOptions } from './foreign-options';
 import { recordList } from './record-list';
 import { default as recordForm } from './record-form';
+import save from './save';
 
 const rootReducer = combineReducers({
 	form: formReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
 	recordList,
 	recordForm,
 	foreignOptions,
+	save,
 });
 
 export default rootReducer;

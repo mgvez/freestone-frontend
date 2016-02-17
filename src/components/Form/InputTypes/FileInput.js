@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Input } from 'components/Form/InputTypes/Input';
 import { SavedFileInput } from 'freestone/FileInputs';
-import UniqueId from 'utils/UniqueId';
-
 
 export class FileInput extends Input {
 	constructor(props) {

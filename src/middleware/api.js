@@ -24,10 +24,13 @@ function callApi(route, data, jwt) {
 		headers.Authorization = `Bearer ${jwt}`;
 	}
 
+	// console.log(data instanceof FormData);
+
 	return reqwest({
 		url: getEndpoint(route),
 		crossOrigin: true,
-		method,
+		processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
+		method,		
 		data,
 		headers,
 	});
@@ -96,7 +99,8 @@ export default store => next => action => {
 				data: res.data,
 			}));
 			return res.data;
-		},
+		}
+	).catch(
 		error => {
 			// console.log(`ERROR ${error.status} ${error.statusText}`);
 			if (error.status === 401) {
