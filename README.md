@@ -50,6 +50,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - pouvoir mettre une page par défaut au login (e.g. liste d'une table en particulier)
 - standardiser les noms de fichiers (record-form, formRecord, etc)
 - mettre les actions dans des constantes, les types de champs aussi
+- mettre des icones/couleurs pour les groupes dans le menu
 
 #### PHP
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
@@ -91,9 +92,9 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - comment enlever un record et ses children du store (aussi les children are loaded)
 	- quand save
 	- quand cancel
--- drag & drop tabs http://webcloud.se/sortable-list-component-react-js/
-
-
+- drag & drop tabs http://webcloud.se/sortable-list-component-react-js/
+- limiter le nombre de characteres dans les tabs
+- remettre le champ rewrite.current
 
 #### Modules
 #### Pages

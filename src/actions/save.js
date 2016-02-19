@@ -2,18 +2,20 @@ import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 import { Promise } from 'bluebird';
 import { sendFile } from 'actions/send-file';
 
-export function saveRecord(tableName, record, fileInputIds) {
+export function saveRecord(tableName, tree, records) {
 	return (dispatch) => {
 
-		const fileUploads = Promise.all(fileInputIds.map((field) => {
+		//traverse le tree et retrieve les input file
 
-			return sendFile(field.fieldId, field.recId)(dispatch);
+		// const fileUploads = Promise.all(fileInputIds.map((field) => {
 
-		}).filter(p => p));
+		// 	return sendFile(field.fieldId, field.recId)(dispatch);
 
-		fileUploads.then((uploadRes) => {
-			console.log(uploadRes);
-		});
+		// }).filter(p => p));
+
+		// fileUploads.then((uploadRes) => {
+		// 	console.log(uploadRes);
+		// });
 
 		// console.log('fetch', tableName, id, parentTable);
 

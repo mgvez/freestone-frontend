@@ -14,9 +14,9 @@ export class Save extends Component {
 		params: React.PropTypes.object,
 
 		table: React.PropTypes.object,
-		record: React.PropTypes.object,
+		tree: React.PropTypes.object,
+		records: React.PropTypes.object,
 		fields: React.PropTypes.array,
-		fileInputIds: React.PropTypes.array,
 		saveState: React.PropTypes.object,
 
 		saveRecord: React.PropTypes.func,
@@ -29,7 +29,7 @@ export class Save extends Component {
 
 	componentWillMount() {
 		console.log(this.props);
-		this.props.saveRecord(this.props.params.tableName, this.props.record, this.props.fileInputIds);
+		this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records);
 	}
 
 	componentWillReceiveProps(nextProps) {

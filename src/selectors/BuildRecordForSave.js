@@ -18,62 +18,53 @@ function getChildrenRecordIds(records, parentRecordId) {
 	}).filter(record => record).map(record => record[PRIKEY_ALIAS]);
 }
 
-function buildRecord(tableId, recordId, allRecords, unfilteredChildren) {
-	const values = recordId && tableId && allRecords[tableId] && allRecords[tableId][recordId];
-
+//get un tree de IDs de records et de ses children
+function buildTree(tableId, recordId, allRecords, unfilteredChildren) {
 	const childrenTables = unfilteredChildren[tableId];
 	// children = 
 	const children = childrenTables && childrenTables.reduce((carry, childTableId) => {
 		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId);
-		carry[childTableId] = childrenRecordIds && childrenRecordIds.map(childRecId => {
-			return buildRecord(childTableId, childRecId, allRecords, unfilteredChildren);
+		const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
+			return buildTree(childTableId, childRecId, allRecords, unfilteredChildren);
 		});
-		return carry;
-	}, {});
+		return carry && childrenRecords && carry.concat(childrenRecords);
+	}, []);
 	// console.log(children);
-	const record = {
-		values,
+	const branch = {
+		recordId,
+		tableId,
 		children,
 	};
-	return record;
+	return branch;
 }
 
-function getFileInputIds(tableId, recordId, allRecords, unfilteredChildren, allTables) {
-	const table = allTables[tableId];
-
-	let fileFields = table.fields.filter(field => ~fileTypes.indexOf(field.type)).map(field => {
-		return { fieldId: field.id, recId: recordId };
-	});
-	const childrenTables = unfilteredChildren[tableId];
-	if (childrenTables) {
-		fileFields = childrenTables.reduce((carry, childTableId) => {
-			const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId);
-			if (childrenRecordIds) {
-				return carry.concat(childrenRecordIds.reduce((childrenFileFields, childRecId) => {
-					return childrenFileFields.concat(getFileInputIds(childTableId, childRecId, allRecords, unfilteredChildren, allTables));
-				}, []));
-			}
-			return carry;
-		}, fileFields);
-	}
-	return fileFields;
-	// const childrenTables = unfilteredChildren[tableId];
+//utilise le tree pour retriever les records référencés dans ce tree
+function getRecords(branch, allRecords, records = {}) {
+	// console.log(branch);
+	const { tableId, recordId, children } = branch;
+	const record = allRecords[tableId] && allRecords[tableId][recordId];
+	records[tableId] = records[tableId] || {};
+	records[tableId][recordId] = record;
+	return children.reduce((carry, childBranch) => {
+		return getRecords(childBranch, allRecords, carry);
+	}, records);
 }
 
 export const saveRecordSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, recordIdSelector, childrenSelector, schemaSelector],
-	(mainTableSchema, records, recordId, unfilteredChildren, schema) => {
+	(mainTableSchema, allRecords, recordId, unfilteredChildren, schema) => {
 		console.log(`build record for ${recordId}`);
 		const { table } = mainTableSchema;
-		const record = buildRecord(table && table.id, recordId, records, unfilteredChildren);
-		const fileInputIds = getFileInputIds(table && table.id, recordId, records, unfilteredChildren, schema.tables);
-		// console.log(record);
+		const tree = buildTree(table && table.id, recordId, allRecords, unfilteredChildren);
+		const records = getRecords(tree, allRecords);
+		// console.log(tree);
+		// console.log(records);
 		// console.log(fileInputIds);
 
 		return {
-			record,
+			tree,
+			records,
 			table,
-			fileInputIds,
 			fields: table && table.fields,
 		};
 	}
