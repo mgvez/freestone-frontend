@@ -15,16 +15,19 @@ export class SavedFileInput {
 	}
 
 	setInput(input, fieldId, recId) {
+		this.deleteInput();
+		this.key = uniqueId();
 		inputs[this.key] = {
 			input,
 			fieldId,
 			recId,
 			id: this.key,
 		};
-		showFileInputs();
+		// showFileInputs();
 	}
 
 	getInput() {
+		// console.log(this.key, inputs[this.key]);
 		return inputs[this.key] && inputs[this.key].input;
 	}
 
@@ -35,4 +38,9 @@ export class SavedFileInput {
 	deleteInput() {
 		if (inputs[this.key]) delete inputs[this.key];
 	}
+}
+
+
+export function getHtmlInput(val) {
+	return inputs[val] && inputs[val].input;
 }

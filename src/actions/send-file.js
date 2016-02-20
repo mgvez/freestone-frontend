@@ -1,23 +1,27 @@
+import { Promise } from 'bluebird';
+
 import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
-import { SavedFileInput } from 'freestone/FileInputs';
-import uniqueId from 'utils/UniqueId';
+import { getHtmlInput } from 'freestone/FileInputs';
 
-const CHUNK_SIZE = 100 * 1024;
+const CHUNK_SIZE = 500 * 1024;
 
-function sendChunk(dispatch, file, tmpName, rangeStart) {
+function sendChunk(dispatch, fileDef, rangeStart = 0) {
+	const { file, tmpName, fieldId } = fileDef;
 	let rangeEnd = rangeStart + CHUNK_SIZE;
 	if (rangeEnd > file.size) {
 		rangeEnd = file.size;
 	}
 	const chunk = file.slice(rangeStart, rangeEnd);
 	// console.log(rangeStart);
+	// console.log(file.size);
 	
 	const data = new FormData();
-	// data.append('file', file);
 	data.append('chunk', chunk);
 	data.append('name', file.name);
+	data.append('fieldId', fieldId);
 	data.append('totalSize', file.size);
 	data.append('currentSize', rangeEnd);
+	data.append('rangeStart', rangeStart);
 	data.append('tmpName', tmpName);
 
 	const chunkReqAction = dispatch({
@@ -32,16 +36,35 @@ function sendChunk(dispatch, file, tmpName, rangeStart) {
 		return chunkReqAction;
 	}
 
-	return chunkReqAction.then(() => sendChunk(dispatch, file, tmpName, rangeEnd));
+	return chunkReqAction.then(() => sendChunk(dispatch, fileDef, rangeEnd));
 }
 
-export function sendFile(fieldId, recordId) {
-	return (dispatch) => {
+export function sendRecordFiles(dispatch, records) {
+	//loop et send files
+	const allFiles = Object.keys(records).reduce((recordsFiles, tableId) => {
+		const tableRecords = records[tableId];
+		return Object.keys(tableRecords).reduce((tableFiles, recordId) => {
+			const record = tableRecords[recordId];
+			return tableFiles.concat(Object.keys(record).map(fieldId => {
+				const tmpName = record[fieldId];
+				const htmlInput = tmpName && getHtmlInput(tmpName);
+				if (!htmlInput || !htmlInput.files || !htmlInput.files[0]) return null;
+				const file = htmlInput.files[0];
+				return {
+					tmpName,
+					file,
+					fileName: file.name,
+					fieldId,
+					recordId,
+					tableId,
+				};
+			}).filter(r => r));
+		}, recordsFiles);
+	}, []);
 
-		const savedInput = new SavedFileInput(fieldId, recordId);
-		const inp = savedInput.getInput();
-		if (!inp) return null;
+	// console.log(allFiles);
+	return Promise.mapSeries(allFiles, fileDef => {
+		return sendChunk(dispatch, fileDef);
+	});
 
-		return sendChunk(dispatch, inp.files[0], uniqueId(), 0);
-	};
 }

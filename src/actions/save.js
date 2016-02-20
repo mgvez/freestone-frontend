@@ -1,30 +1,36 @@
 import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
-import { Promise } from 'bluebird';
-import { sendFile } from 'actions/send-file';
+import { sendRecordFiles } from 'actions/send-file';
 
 export function saveRecord(tableName, tree, records) {
 	return (dispatch) => {
+		console.log(tree);
+		console.log(records);
 
-		//traverse le tree et retrieve les input file
+		dispatch({
+			type: 'INIT_SAVE',
+		});
 
-		// const fileUploads = Promise.all(fileInputIds.map((field) => {
+		return sendRecordFiles(dispatch, records).then(filesResult => {
+			// console.log(filesResult);
 
-		// 	return sendFile(field.fieldId, field.recId)(dispatch);
+			const fileNames = filesResult.reduce((carry, fileResult) => {
+				carry[fileResult.tmpName] = fileResult.name;
+				return carry;
+			}, {});
 
-		// }).filter(p => p));
+			return dispatch({
+				[FREESTONE_API]: {
+					types: ['SAVE_RECORD_REQUEST', 'SAVE_RECORD', FREESTONE_API_FATAL_FAILURE],
+					route: `save/${tableName}`,
+					data: {
+						tree,
+						records,
+						tableName,
+						fileNames,
+					},
+				},
+			});
+		});
 
-		// fileUploads.then((uploadRes) => {
-		// 	console.log(uploadRes);
-		// });
-
-		// console.log('fetch', tableName, id, parentTable);
-
-		// return dispatch({
-		// 	[FREESTONE_API]: {
-		// 		types: [null, 'SAVE_RECORD', FREESTONE_API_FATAL_FAILURE],
-		// 		route: `save/${tableName}`,
-		// 		data: record,
-		// 	},
-		// });
 	};
 }

@@ -16,7 +16,7 @@ function getEndpoint(route) {
 
 
 function callApi(route, data, jwt) {
-	// console.log('post data', data);
+	// console.log(`post data ${route}`, data);
 	// console.log(`JWT: ${jwt}`);
 	const method = data ? 'post' : 'get';
 	const headers = { 'Accept': 'application/json' };

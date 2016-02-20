@@ -60,6 +60,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - Save files
 - delete children
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
+- vérifier constantes, et refactoriser
+- pruner les temp files
 
 #### Menu
 - n records
@@ -77,6 +79,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - mtm
 - oto
 - record last modif
+- mettre types de champs dans un foreign (avec type str en key) plutot qu'un enum
+- créer type "minirel" ou "repeater field"
 - types de input
 	- file
 	- tinymce
@@ -92,6 +96,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - comment enlever un record et ses children du store (aussi les children are loaded)
 	- quand save
 	- quand cancel
+- delete des vals de file-update quand component save mount
+- si pas de record a saver quand component save, redirect (list??)
 - drag & drop tabs http://webcloud.se/sortable-list-component-react-js/
 - limiter le nombre de characteres dans les tabs
 - remettre le champ rewrite.current

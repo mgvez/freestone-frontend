@@ -28,7 +28,7 @@ export class Save extends Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props);
+		// console.log(this.props);
 		this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records);
 	}
 
@@ -36,14 +36,14 @@ export class Save extends Component {
 	}
 
 	render() {
-		console.log(this.props.saveState);
+		// console.log(this.props.saveState);
 		return (
 			<section>
 				Saving...
 				{
 					Object.keys(this.props.saveState.files).map(tmpName => {
 						const curPrc = this.props.saveState.files[tmpName];
-						return <div>Saving {tmpName} : {curPrc}%</div>;
+						return <div key={tmpName}>Saving {tmpName} : {curPrc}%</div>;
 					})
 				}
 			</section>
