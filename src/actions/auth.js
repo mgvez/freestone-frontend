@@ -62,7 +62,7 @@ export function loginUser(username, password, redirect = '/home') {
 		return dispatch({
 			[FREESTONE_API]: {
 				types: ['LOGIN_REQUEST', 'LOGIN_SUCCESS', 'LOGIN_FAILURE'],
-				route: '',
+				route: 'login',
 				data: {
 					freestoneuser: username,
 					freestonepass: password,

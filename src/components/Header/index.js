@@ -11,6 +11,7 @@ export class Header extends Component {
 		clearData: React.PropTypes.func,
 		startPerf: React.PropTypes.func,
 		stopPerf: React.PropTypes.func,
+		env: React.PropTypes.object,
 	};
 
 	constructor(props) {
@@ -38,7 +39,7 @@ export class Header extends Component {
 					<div className="row">
 						<div className="col-xs-5 col-sm-3 col-md-3 col-lg-3 logo">
 							<Link to="/">
-								Freestone
+								{this.props.env.siteName}
 							</Link>
 						</div>
 						<div className="col-xs-5 col-sm-3 col-md-3 col-lg-3">

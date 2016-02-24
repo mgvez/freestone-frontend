@@ -33,6 +33,7 @@ export class SingleRecord extends Component {
 		recordUnaltered: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		foreignOptions: React.PropTypes.object,
+		env: React.PropTypes.object,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
@@ -93,6 +94,7 @@ export class SingleRecord extends Component {
 								setFieldVal={this.props.setFieldVal}
 								fetchForeignOptions={this.props.fetchForeignOptions}
 								foreignOptions={this.props.foreignOptions[field.id]}
+								env={this.props.env}
 							/>);
 						})
 					}

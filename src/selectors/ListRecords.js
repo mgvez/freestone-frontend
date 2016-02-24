@@ -2,11 +2,12 @@ import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
 
 const recordsSelector = state => state.recordList.records;
+const envSelector = state => state.env;
 const recordsTableSelector = state => state.recordList.table;
 
 export const listRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordsTableSelector],
-	(schema, stateRecords, recordsTable) => {
+	[tableSchemaSelector, recordsSelector, recordsTableSelector, envSelector],
+	(schema, stateRecords, recordsTable, env) => {
 		const { table } = schema;
 		let records = stateRecords;
 		let groupedRecords;
@@ -49,6 +50,7 @@ export const listRecordsSelector = createSelector(
 
 		}
 		return {
+			env,
 			table,
 			searchableFields: table && table.searchableFields,
 			groupedRecords,

@@ -28,11 +28,13 @@ export class Save extends Component {
 	}
 
 	componentWillMount() {
-		// console.log(this.props);
+		// console.log('MOUNT', this.props.records);
 		this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records);
 	}
 
 	componentWillReceiveProps(nextProps) {
+		// console.log(this.props.records);
+
 	}
 
 	render() {
@@ -46,6 +48,7 @@ export class Save extends Component {
 						return <div key={tmpName}>Saving {tmpName} : {curPrc}%</div>;
 					})
 				}
+				<div>{this.props.saveState.status.msg}</div>
 			</section>
 		);
 	}

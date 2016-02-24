@@ -1,10 +1,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
-import { schemaSelector } from 'selectors/Schema';
 
 import { PARENTKEY_ALIAS, PRIKEY_ALIAS } from 'freestone/SchemaProps';
-
-const fileTypes = ['img', 'file'];
 
 const recordsSelector = state => state.recordForm.records;
 const recordIdSelector = (state, props) => props.params.recordId;
@@ -51,9 +48,9 @@ function getRecords(branch, allRecords, records = {}) {
 }
 
 export const saveRecordSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordIdSelector, childrenSelector, schemaSelector],
-	(mainTableSchema, allRecords, recordId, unfilteredChildren, schema) => {
-		console.log(`build record for ${recordId}`);
+	[tableSchemaSelector, recordsSelector, recordIdSelector, childrenSelector],
+	(mainTableSchema, allRecords, recordId, unfilteredChildren) => {
+		// console.log(`build record for ${recordId}`);
 		const { table } = mainTableSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, unfilteredChildren);
 		const records = getRecords(tree, allRecords);

@@ -9,6 +9,7 @@ const initialState = {
 export function recordList(state = initialState, action) {
 	switch (action.type) {
 	case 'UNAUTHORIZED':
+	case 'SAVE_RECORD_SUCCESS':
 		return initialState;
 	case 'RECEIVE_RECORD_LIST':
 		// console.log(action.data.qstr);

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Input } from 'components/Form/InputTypes/Input';
 import { SavedFileInput } from 'freestone/FileInputs';
+import { FileThumbnail } from 'components/FileThumbnail/FileThumbnail';
 
 export class FileInput extends Input {
 	constructor(props) {
@@ -21,7 +22,6 @@ export class FileInput extends Input {
 
 	getFileName() {
 		const val = this.props.val;
-
 	}
 
 	getSavedInput() {
@@ -75,6 +75,7 @@ export class FileInput extends Input {
 
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
+		// console.log(this.props.field);
 		const { origVal, val } = this.props;
 		const inMemory = this.getSavedInput().getInput();
 		//vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
@@ -94,10 +95,11 @@ export class FileInput extends Input {
 			deleteBtn = <button onClick={this.setForDelete}>delete db file</button>;
 		}
 
-		const displayVal = val && (inputVal || origVal);	
+		const displayVal = val && (inputVal || origVal);
 
 		return (
 			<div>
+				<FileThumbnail val={origVal === val && val} dir={this.props.field.folder} env={this.props.env} type={this.props.field.type} />
 				o: {origVal} <br/>
 				v: {val} <br/>
 				i: {inputVal} <br/>

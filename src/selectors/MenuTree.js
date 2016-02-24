@@ -31,10 +31,10 @@ function buildTree(navGroups, tables, modules, pages) {
 }
 
 
-const tablesSelector = state => state.freestone.tables;
-const modulesSelector = state => state.freestone.modules;
-const pagesSelector = state => state.freestone.pages;
-const navGroupsSelector = state => state.freestone.navGroups;
+const tablesSelector = state => state.nav.tables;
+const modulesSelector = state => state.nav.modules;
+const pagesSelector = state => state.nav.pages;
+const navGroupsSelector = state => state.nav.navGroups;
 
 export const menuTreeSelector = createSelector(
 	navGroupsSelector,

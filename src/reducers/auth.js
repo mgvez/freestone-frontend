@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export function auth(state = initialState, action) {
-	// console.log(state);
+	// console.log(action);
 	switch (action.type) {
 	case 'UNAUTHORIZED':
 		return {

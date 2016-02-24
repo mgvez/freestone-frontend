@@ -20,7 +20,7 @@ export function saveRecord(tableName, tree, records) {
 
 			return dispatch({
 				[FREESTONE_API]: {
-					types: ['SAVE_RECORD_REQUEST', 'SAVE_RECORD', FREESTONE_API_FATAL_FAILURE],
+					types: ['SAVE_RECORD_REQUEST', 'SAVE_RECORD_SUCCESS', 'SAVE_RECORD_ERROR'],
 					route: `save/${tableName}`,
 					data: {
 						tree,

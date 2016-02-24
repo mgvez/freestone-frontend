@@ -5,15 +5,15 @@ const initialState = {
 	pages: [],
 };
 
-export function freestone(state = initialState, action) {
+export function nav(state = initialState, action) {
 	// console.log(action);
 	switch (action.type) {
 	case 'UNAUTHORIZED':
 		return initialState;
-	case 'ADD_FREESTONE':
+	case 'ADD_NAV':
 		return {
 			...state,
-			...action.data.freestone,
+			...action.data,
 		};
 	case 'ADD_NAV_TABLE':
 		return {

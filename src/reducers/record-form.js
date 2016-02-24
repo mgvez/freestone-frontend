@@ -62,6 +62,19 @@ function receiveRecord(state, data) {
 	return newState;
 }
 
+function removeRecords(state, data) {
+	// console.log(action.data);
+	if (!data.records) return state;
+
+	return data.records.reduce((carry, record) => {
+		const { tableId, recordId } = record;
+		const tableRecords = { ...carry[tableId] };
+		delete tableRecords[recordId];
+		carry[tableId] = tableRecords;
+		return carry;
+	}, { ...state });
+}
+
 function records(state = {}, action) {
 	switch (action.type) {
 	case 'UNAUTHORIZED':
@@ -72,6 +85,9 @@ function records(state = {}, action) {
 		return setFieldValue(state, action.data);
 	case 'CLEAR_DATA':
 		return {};
+	case 'SAVE_RECORD_SUCCESS':
+		// console.log(action);
+		return removeRecords(state, action.data);
 	default:
 		// console.log('no change');
 		return state;
@@ -87,6 +103,9 @@ function recordsUnaltered(state = {}, action) {
 		return receiveRecord(state, action.data);
 	case 'CLEAR_DATA':
 		return {};
+	case 'SAVE_RECORD_SUCCESS':
+		// console.log(action);
+		return removeRecords(state, action.data);
 	default:
 		// console.log('no change');
 		return state;

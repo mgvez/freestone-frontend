@@ -12,6 +12,8 @@ Les decorators ne sont pas suportés par Babel 6 (as of 2015-12-22) mais un plug
 ```npm i babel-plugin-transform-decorators-legacy -D```
 et voir ensuite dans .babelrc
 
+## BUGS
+- quand login marche pas, ?next s'append à chauqe login manqué
 
 ## Todo
 
@@ -32,44 +34,36 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - immutable
 - normalizr
 
-### BUGS
-- quand login marche pas, ?next s'append à chauqe login manqué
-
-### Freestone
-
-
-#### Redux
+### Redux
 - essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
-- strategie de invalidate du data
+- strategie de invalidate du data après save & cancel
 
-#### General
-- settings generaux, i.e. nom du site, url
+### General
 - liste des records en cours de modif par le user dans un widget
 - createddate && modifdate dans constantes des alias de champs
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
-- pouvoir mettre une page par défaut au login (e.g. liste d'une table en particulier)
 - standardiser les noms de fichiers (record-form, formRecord, etc)
 - mettre les actions dans des constantes, les types de champs aussi
 - mettre des icones/couleurs pour les groupes dans le menu
 
-#### PHP
+### Freestone PHP
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
 	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
 - bank (et toutes les instances de cet classe)
 - traduire les erreurs (VException)
 - Save files
+- pruner les temp files
 - delete children
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
 - vérifier constantes, et refactoriser
-- pruner les temp files
+
+### Freestone JS
 
 #### Menu
 - n records
 
 #### Header menu
 #### Liste
-- field types images
-- field types file
 - recherche
 	- chercher aussi dans les foreign keys
 - paging
@@ -94,19 +88,22 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - liste des anciennes révisions du record
 - save
 - comment enlever un record et ses children du store (aussi les children are loaded)
+	- children loaded
+	- menu gauche
 	- quand save
 	- quand cancel
-- delete des vals de file-update quand component save mount
+- limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - si pas de record a saver quand component save, redirect (list??)
 - drag & drop tabs http://webcloud.se/sortable-list-component-react-js/
 - limiter le nombre de characteres dans les tabs
 - remettre le champ rewrite.current
 
 #### Modules
-#### Pages
+- all
 
-### Refactor
-	- upload des records en tree, et des files. Rencre plus clair, peut etre en flat, et mettre les files aussi plus clair (voir le loop qui build les ids de champs file)
+#### Pages
+- all
+
 
 
 
@@ -120,4 +117,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 #### Forms
 - autocomplete
+
+
+### Done ou pas a faire
+- pouvoir mettre une page par défaut au login (e.g. liste d'une table en particulier). *pas besoin, on peut linker vers une page et ce sera redirect la apres le login*
 

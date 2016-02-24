@@ -29,7 +29,7 @@ const metaData = {
 )
 export class Freestone extends Component {
 	static propTypes = {
-		fetchFreestone: React.PropTypes.func,
+		fetchNav: React.PropTypes.func,
 		children: React.PropTypes.any,
 		tree: React.PropTypes.array,
 		errors: React.PropTypes.array,
@@ -40,7 +40,7 @@ export class Freestone extends Component {
 	}
 
 	componentWillMount() {
-		this.props.fetchFreestone();
+		this.props.fetchNav();
 	}
 
 	render() {
