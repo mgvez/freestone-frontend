@@ -1,0 +1,16 @@
+
+html, body {
+    height: 100%;
+}
+
+#main-wrapper{
+	width:100%;
+	overflow-x:hidden;
+	background: $gray;
+}
+
+.main-content{
+	position:relative;
+	padding-left: $sidebar-width;
+
+}

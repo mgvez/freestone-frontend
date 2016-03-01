@@ -19,11 +19,12 @@ et voir ensuite dans .babelrc
 
 ### next
 
-- file inputs
 - remove record from redux quand saved
+- navig back quand saved
 - delete children (php)
 - order dans lst
 - tab order
+- VISUEL
 
 ### Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
@@ -45,6 +46,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - standardiser les noms de fichiers (record-form, formRecord, etc)
 - mettre les actions dans des constantes, les types de champs aussi
 - mettre des icones/couleurs pour les groupes dans le menu
+- comment faire en sorte de pas fetcher plein de fois le meme ajax si le component receive des props plusieurs fois entretemps? -> see redux async example shouldFetchPosts. P-e se faire un reducer qui contient toutes la signature des requetes en cours, et return false si on attempt une requete qui est deja en train de se ajaxer
 
 ### Freestone PHP
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
@@ -61,6 +63,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 #### Menu
 - n records
+- enlever level 0, et collapse/decollapse dans store
 
 #### Header menu
 #### Liste
@@ -74,7 +77,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - oto
 - record last modif
 - mettre types de champs dans un foreign (avec type str en key) plutot qu'un enum
-- créer type "minirel" ou "repeater field"
+- créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
 - types de input
 	- file
 	- tinymce
@@ -88,6 +91,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - liste des anciennes révisions du record
 - save
 - comment enlever un record et ses children du store (aussi les children are loaded)
+	- mettre un champ [table_id]_fk à chaque table loadée pour pouvoir deleter record sans connaitre structure
 	- children loaded
 	- menu gauche
 	- quand save
@@ -97,14 +101,13 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - drag & drop tabs http://webcloud.se/sortable-list-component-react-js/
 - limiter le nombre de characteres dans les tabs
 - remettre le champ rewrite.current
+- navig back quand saved
 
 #### Modules
 - all
 
 #### Pages
 - all
-
-
 
 
 ### Semi-done

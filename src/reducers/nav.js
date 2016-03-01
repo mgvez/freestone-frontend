@@ -1,15 +1,18 @@
-const initialState = {
+import { combineReducers } from 'redux';
+
+const navInitialState = {
 	navGroups: [],
 	tables: [],
 	modules: [],
 	pages: [],
 };
 
-export function nav(state = initialState, action) {
+function structure(state = navInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
 	case 'UNAUTHORIZED':
-		return initialState;
+	case 'CLEAR_DATA':
+		return navInitialState;
 	case 'ADD_NAV':
 		return {
 			...state,
@@ -36,3 +39,23 @@ export function nav(state = initialState, action) {
 		return state;
 	}
 }
+
+function toggleState(state = {}, action) {
+	// console.log(action);
+	switch (action.type) {
+	case 'TOGGLE_NAV':
+		const id = action.data;
+		return {
+			...state,
+			[id]: !state[id],
+		};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
+export default combineReducers({
+	structure,
+	toggleState,
+});

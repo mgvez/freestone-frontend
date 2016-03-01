@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { routeReducer } from 'redux-simple-router';
 import { reducer as formReducer } from 'redux-form';
-import { nav } from './nav';
+import { default as nav } from './nav';
 import { default as schema } from './schema';
 import { auth } from './auth';
 import { env } from './env';

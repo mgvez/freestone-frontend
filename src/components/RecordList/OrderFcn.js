@@ -14,8 +14,8 @@ export class OrderFcn extends Component {
 				
 		return (
 			<td>
-				<a className="button button-xs">⟰</a>
-				<a className="button button-xs">⟱</a>
+				<a className="fa fa-arrow-circle-up">&nbsp;</a>
+				<a className="fa fa-arrow-circle-down">&nbsp;</a>
 			</td>
 		);
 	}
