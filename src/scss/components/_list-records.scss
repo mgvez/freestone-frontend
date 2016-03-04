@@ -1,0 +1,54 @@
+@mixin selfjoin-level($level) {
+	
+}
+
+.text-description{
+	font-size: 12px;
+	width: 70%;
+}
+
+.list-records{
+	background: $lighter-bg;
+	color: $text-color;
+
+	td {
+		vertical-align: middle;
+		border:0;
+	}
+
+	tbody, tbody+tbody{
+		border-top: 1px $border-color solid;
+		td{
+			border:0;
+		}
+	}
+
+	tr.selfjoin-row{
+		@for $i from 1 through 10 {
+			&.level-#{$i} {
+				td.selfjoin-breadcrumb, td.selfjoin-label{
+					padding-left: 5px * $i;		
+				}
+			}
+		}
+	}
+
+	tr[data-infos]{
+		
+		position:relative;
+
+		&:after {
+			content: attr(data-infos);
+			display:block;
+			position:absolute;
+			bottom:0;
+			left:0;
+		}
+	}
+
+
+	td.modification{
+		font-size:10px;
+	}
+
+}

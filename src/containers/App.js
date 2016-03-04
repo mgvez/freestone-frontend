@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 
 import * as envActionCreators from 'actions/env';
 
-import 'bootstrap-webpack';
 import 'style!scss/style.scss';
-
 import 'style!font-awesome/scss/font-awesome.scss';
 
 @connect(

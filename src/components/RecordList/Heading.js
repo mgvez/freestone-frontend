@@ -26,9 +26,8 @@ export class Heading extends Component {
 				<tr>
 					<th>Level</th>
 					<th>Item</th>
-					<th>Fcn</th>
 					{ orderCell }
-					<th>Modification</th>
+					<th>Fcn</th>
 				</tr>
 			);
 		}
@@ -40,9 +39,8 @@ export class Heading extends Component {
 						return <th key={index}>{ field.label }</th>;
 					})
 				}
-				<th>Fcn</th>
 				{ orderCell }
-				<th>Modification</th>
+				<th>Fcn</th>
 			</tr>
 		);
 

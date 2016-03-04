@@ -11,6 +11,8 @@ export class Errors extends Component {
 	}
 
 	render() {
+		if (!this.props.errors.length) return null;
+
 		return (
 			<div>
 			{

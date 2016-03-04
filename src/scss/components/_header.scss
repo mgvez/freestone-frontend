@@ -1,0 +1,12 @@
+
+header{
+	
+	padding: 16px;
+	background: $lighter-bg;
+	border-bottom: 1px $border-color solid;
+
+	&#main-header{
+		display:flex;
+		justify-content: space-between;
+	}
+}

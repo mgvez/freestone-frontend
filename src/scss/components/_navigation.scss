@@ -7,6 +7,9 @@ $level-left-pad: 10px;
 	}
 
 	@if $level > 1 {
+		
+		border-left: 0px solid transparent;
+
 		&.active{
 			border-left: 4px solid darken($teal, ($level - 1) * 10);
 			margin-bottom: 2px;
@@ -37,23 +40,21 @@ $level-left-pad: 10px;
 	background-color: $nav-bg;
 	text-align:left;
 	min-height:100%;
-	font-size: 14px;
+	padding-bottom:100px;
 
 	ul {
 
 		padding-left: 0;
 		margin-bottom: 0;
 		list-style: none;
-		// overflow:hidden;
-		// max-height: 500px;
-		transition: max-height 0.8s;
+		overflow:hidden;
 
 		&.collapsed {
-			max-height: 0;
 			display:none;
 		}
 
 		li {
+			transition: border-color 0.3s, border-width 0.3s;
 
 			a{
 				display:block;
@@ -61,7 +62,11 @@ $level-left-pad: 10px;
 				color: $nav-text-color;
 				padding-top: 6px;
 				padding-bottom: 6px;
+				font-size: 12px;
 				cursor: pointer;
+
+				transition: color 0.3s;
+
 
 				i {
 					margin-right: 6px;
@@ -71,6 +76,7 @@ $level-left-pad: 10px;
 				&.table-group{
 					padding-top: 14px;
 					padding-bottom: 14px;
+					font-size: 14px;
 					font-weight: 600;
 
 					&.active{

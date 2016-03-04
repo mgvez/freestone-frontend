@@ -34,3 +34,19 @@ export function saveRecord(tableName, tree, records) {
 
 	};
 }
+
+export function swapOrder(tableName, recordId, direction) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: ['SWAP_ORDER_REQUEST', 'SWAP_ORDER_SUCCESS', 'SWAP_ORDER_ERROR'],
+				route: `swapOrder/${tableName}`,
+				data: {
+					tableName,
+					recordId,
+					direction,
+				},
+			},
+		});
+	};
+}

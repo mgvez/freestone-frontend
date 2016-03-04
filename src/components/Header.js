@@ -30,34 +30,33 @@ export class Header extends Component {
 	// }
 
 	render() {
-
+		// console.log(this.props.env);
 		return (
-			<header ref="header">
-				<div className="container">
-					<div className="row">
-						<div className="col-xs-5 col-sm-3 col-md-3 col-lg-3 logo">
-							<Link to="/">
-								{this.props.env.siteName}
-							</Link>
-						</div>
-						<div className="col-xs-5 col-sm-3 col-md-3 col-lg-3">
-							<button className="btn btn-xs" onClick={this.props.logout}>
-								Logout
-							</button>
-							<button className="btn btn-xs" onClick={this.props.clearData}>
-								Clear all data
-							</button>
-							<button className="btn btn-xs" onClick={this.props.clearErrors}>
-								Clear errors
-							</button>
-							<button className="btn btn-xs" onClick={this.props.startPerf}>
-								Start perf
-							</button>
-							<button className="btn btn-xs" onClick={this.props.stopPerf}>
-								Stop perf
-							</button>
-						</div>
-					</div>
+			<header id="main-header" ref="header">
+				<div className="logo">
+					<Link to="/">
+						{this.props.env.siteName}
+					</Link>
+				</div>
+				<div className="fcn">
+					
+					<button className="btn btn-xs" onClick={this.props.clearData}>
+						Clear all data
+					</button>
+					<button className="btn btn-xs" onClick={this.props.clearErrors}>
+						Clear errors
+					</button>
+					<button className="btn btn-xs" onClick={this.props.startPerf}>
+						Start perf
+					</button>
+					<button className="btn btn-xs" onClick={this.props.stopPerf}>
+						Stop perf
+					</button>
+				</div>
+				<div className="logout">
+					<a onClick={this.props.logout}>
+						<i className="fa fa-sign-out"></i> Logout
+					</a>
 				</div>
 			</header>
 		);

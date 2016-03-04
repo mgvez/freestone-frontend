@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { Table } from 'components/Menu/Table';
 
+import { TweenMax } from 'utils/Greensock';
+
 
 export class NavGroup extends Component {
 	static propTypes = {
@@ -17,10 +19,29 @@ export class NavGroup extends Component {
 		super(props);
 	}
 
+	componentDidUpdate(prevProps) {
+		const wasOpen = this.getOpenState(prevProps);
+		const isOpen = this.getOpenState(this.props);
+		// console.log(wasOpen, isOpen);
+		if (wasOpen !== isOpen) this.animate(isOpen);
+	}
+
 	getChildrenGroups(level) {
 		return this.props.data.childrenGroups.map((item) => {
 			return <NavGroup key={item.id} data={item} level={level} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
 		});
+	}
+
+	getOpenState(props) {
+		return props.toggleState[props.data.id];
+	}
+
+	animate(isOpen) {
+		const childrenContainer = this.refs.children;
+		// console.log(childrenContainer);
+		const dest = isOpen ? 'from' : 'to';
+		TweenMax.set(childrenContainer, { height: 'auto', display: 'block' });
+		TweenMax[dest](childrenContainer, 0.4, { height: 0 });
 	}
 
 	toggle = () => {
@@ -28,7 +49,7 @@ export class NavGroup extends Component {
 	};
 
 	render() {
-
+		
 		if (!this.props.data.childrenGroups.length && !this.props.data.tables.length) return null;
 
 		// console.log(this.props.toggleState);
@@ -46,7 +67,7 @@ export class NavGroup extends Component {
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa arrow"></span>
 				</a>
 				
-				<ul className={toggleClass}>
+				<ul className={toggleClass} ref="children">
 				{ this.getChildrenGroups(level) }
 				{
 					this.props.data.tables.map((item) => {

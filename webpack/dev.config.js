@@ -58,7 +58,7 @@ module.exports = {
 	module: {
 		loaders: [
 		{
-			test: /\.js$/,
+			test: /\.jsx?$/,
 			loaders: ['react-hot', 'babel-loader', 'eslint-loader'],
 			exclude: /node_modules/,
 		},
@@ -69,27 +69,29 @@ module.exports = {
 		// 	loader: 'exports?window.tinymce',
 	 //    },
 		{
-			test: /bootstrap\/js\//,
-			loader: 'imports?jQuery=jquery',
-		}, {
-			test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-			loader: 'url?limit=10000&mimetype=application/font-woff',
-		}, {
-			test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-			loader: 'url?limit=10000&mimetype=application/font-woff2',
-		}, {
-			test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-			loader: 'url?limit=10000&mimetype=application/octet-stream',
-		}, {
-			test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-			loader: 'url?limit=10000&mimetype=application/font-otf',
-		}, {
-			test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-			loader: 'file',
-		}, {
-			test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-			loader: 'url?limit=10000&mimetype=image/svg+xml',
-		},  {
+        test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
+        loader: 'url-loader'
+    },
+		// {
+		// 	test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+		// 	loader: 'url?limit=10000&mimetype=application/font-woff',
+		// }, {
+		// 	test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+		// 	loader: 'url?limit=10000&mimetype=application/font-woff2',
+		// }, {
+		// 	test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+		// 	loader: 'url?limit=10000&mimetype=application/octet-stream',
+		// }, {
+		// 	test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
+		// 	loader: 'url?limit=10000&mimetype=application/font-otf',
+		// }, {
+		// 	test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+		// 	loader: 'file',
+		// }, {
+		// 	test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+		// 	loader: 'url?limit=10000&mimetype=image/svg+xml',
+		// },  
+		{
 			test: /\.scss$/,
 			loader: 'css?localIdentName=[path]!postcss-loader!sass',
 		}, {

@@ -11,6 +11,8 @@ export class Row extends Component {
 		env: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		values: React.PropTypes.object,
+
+		swapOrder: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -22,7 +24,7 @@ export class Row extends Component {
 		
 		let orderCell;
 		if (this.props.table.hasOrder) {
-			orderCell = <OrderFcn />;
+			orderCell = <OrderFcn swapOrder={this.props.swapOrder} tableName={this.props.table.name} prikey={this.props.values.prikey}/>;
 		}
 
 		const modifCell = <ModifFcn tableName={this.props.table.name} prikey={this.props.values.prikey} />;
@@ -34,22 +36,25 @@ export class Row extends Component {
 				createddate={this.props.values.createddate}
 			/>
 		);
-
+		
 		if (this.props.table.isSelfTree) {
-			const level = this.props.values.breadcrumb ? this.props.values.breadcrumb : '0';
+			const breadcrumb = this.props.values.breadcrumb ? this.props.values.breadcrumb : '0';
+			const level = this.props.values.level ? this.props.values.level : '0';
 			return (
-				<tr>
-					<td>{level}</td>
-					<td>
+				<tr className={`selfjoin-row level-${level}`}>
+					
+					<td className="selfjoin-breadcrumb">{breadcrumb}</td>
+					<td className="selfjoin-label">
 						{
 							this.props.fields.map((field, index) => {
+								// console.log(field);
+
 								return <span key={index}>{ this.props.values[field.listAlias] }</span>;
 							})
 						}
 					</td>
-					{ orderCell }
 					{ modifCell }
-					{ infoCell }
+					{ orderCell }
 				</tr>
 			);
 		}
@@ -58,7 +63,6 @@ export class Row extends Component {
 			<tr>
 				{
 					this.props.fields.map((field, index) => {
-						console.log(field);
 						let val = this.props.values[field.listAlias];
 						if (field.type === 'img' || field.type === 'file') {
 							val = <FileThumbnail val={this.props.values[field.listAlias]} dir={field.folder} env={this.props.env} type={field.type} />;
@@ -66,9 +70,8 @@ export class Row extends Component {
 						return <td key={index}>{ val }</td>;
 					})
 				}
-				{ orderCell }
 				{ modifCell }
-				{ infoCell }
+				{ orderCell }
 			</tr>
 		);
 	}

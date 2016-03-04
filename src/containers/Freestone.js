@@ -10,11 +10,12 @@ const actionCreators = { ...authActionCreators, ...devActionCreators };
 /* application components */
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
+import { Errors } from 'components/Errors';
 import { Nav } from 'containers/Nav';
 
 @connect(
 	state => {
-		return { auth: state.auth, env: state.env };
+		return { auth: state.auth, env: state.env, errors: state.errors };
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
@@ -49,12 +50,12 @@ export class Freestone extends Component {
 			return <div>Not permitted</div>;
 		}
 
-		// console.log(this.props.errors);
 		return (
 			<div>
 				<Nav />
 				<div className="main-content">
 					<Header {...this.props} />
+					<Errors {...this.props} />
 					{this.props.children}
 					<Footer />
 				</div>

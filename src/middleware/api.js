@@ -111,6 +111,11 @@ export default store => next => action => {
 					data,
 					error,
 				}));
+				next(actionWith({
+					type: FREESTONE_API_FAILURE,
+					data,
+					error,
+				}));
 			}
 			return error;
 		}
