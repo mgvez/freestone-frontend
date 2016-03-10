@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
 
-const recordsSelector = state => state.recordList.records;
+const recordsSelector = state => state.recordList;
 const envSelector = state => state.env;
-const recordsTableSelector = state => state.recordList.table;
+const paramsSelector = (state, props) => props.params;
+const locationSelector = (state, props) => props.location;
 
 function flatten(records, flat = [], breadcrumb = [], level = 0) {
 	if (!records) return flat;
@@ -38,16 +39,26 @@ function reorderSelfTree(records) {
 }
 
 export const listRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordsTableSelector, envSelector],
-	(schema, stateRecords, recordsTable, env) => {
+	[tableSchemaSelector, recordsSelector, paramsSelector, locationSelector, envSelector],
+	(schema, stateRecords, params, location, env) => {
+
+		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage } = stateRecords;
+		const { page: requestedPage } = params;
+		const { query } = location;
+		const requestedSearch = (query && query.search) || '';
+
+		const nPages = Math.ceil(nRecords / pageSize);
+
 		const { table } = schema;
-		let records = stateRecords;
+		let records = loadedRecords;
 		let groupedRecords;
-		if (table && recordsTable === table.name) {
+
+		// console.log(table + ' && ' + recordsTable + '===' + table.name + ' && ' + providedPage + '===' + requestedPage + ' && ' + providedSearch + '===' + requestedSearch);
+		if (table && recordsTable === table.name && Number(providedPage) === Number(requestedPage) && providedSearch === requestedSearch) {
 
 			if (table.isSelfTree) {
 				//le tree ne peut pas etre construit direct en SQL, a cause de l'ordre, et au lieu de le builder en php, on le fait en js
-				records = reorderSelfTree(stateRecords);
+				records = reorderSelfTree(loadedRecords);
 			} else if (table.groupField) {
 				const groupFieldAlias = table.groupField.alias;
 				const groupFieldLabelAlias = table.groupField.listAlias;
@@ -72,13 +83,16 @@ export const listRecordsSelector = createSelector(
 					{ records },
 				];
 			}
-
 		}
 		return {
 			env,
 			table,
 			searchableFields: table && table.searchableFields,
 			groupedRecords,
+			curPage: providedPage,
+			nPages,
+			nRecords,
+			search: providedSearch,
 		};
 	}
 );

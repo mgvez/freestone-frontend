@@ -19,10 +19,10 @@ et voir ensuite dans .babelrc
 
 ### next
 
+- paging
 - remove record from redux quand saved
 - navig back quand saved
 - delete children (php)
-- order dans lst
 - tab order
 - VISUEL
 
@@ -79,6 +79,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- chercher aussi dans les foreign keys
 - paging
 - order buttons. Mettre à la position du champ dans les colonnes selon son rank (ou immediatement à droite des fcn)
+- faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
 
 #### Form
 - mtm

@@ -47,7 +47,7 @@ module.exports = {
 	],
 
 	resolve: {
-		extensions: ['', '.js', '.json'],
+		extensions: ['', '.js', '.json', '.jsx'],
 		modulesDirectories: ['node_modules', 'src'],
 		alias: {
 			// require('tinymce') will do require('tinymce/tinymce') 

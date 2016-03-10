@@ -6,6 +6,7 @@ import * as recordActionCreators from 'actions/record';
 import { swapOrder } from 'actions/save';
 
 import { Heading } from 'components/RecordList/Heading';
+import { Paging } from 'components/RecordList/Paging';
 import { Row } from 'components/RecordList/Row';
 import { RequireApiData } from 'utils/RequireApiData';
 
@@ -18,11 +19,16 @@ import { listRecordsSelector } from 'selectors/ListRecords';
 export class List extends Component {
 	static propTypes = {
 		params: React.PropTypes.object,
+		location: React.PropTypes.object,
 
 		env: React.PropTypes.object,
 		table: React.PropTypes.object,
 		searchableFields: React.PropTypes.array,
 		groupedRecords: React.PropTypes.array,
+		nPages: React.PropTypes.number,
+		curPage: React.PropTypes.number,
+		nRecords: React.PropTypes.number,
+		search: React.PropTypes.string,
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
@@ -32,6 +38,7 @@ export class List extends Component {
 	constructor(props) {
 		super(props);
 		this.requireDataCtrl = new RequireApiData;
+		this.nattempts = 0;
 	}
 
 	componentWillMount() {
@@ -41,12 +48,21 @@ export class List extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
 	}
-
+	
+	shouldComponentUpdate(nextProps) {
+		//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
+		return !!(nextProps.groupedRecords && nextProps.groupedRecords.length);
+	}
+	
 	requireData(props) {
-		const { tableName } = props.params;
-
+		if (this.nattempts > 5) return;
+		const { tableName, page } = props.params;
+		const { query } = props.location;
+		const search = query && query.search;
+		
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
-		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName]);
+		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName, search, page || 1]);
+
 	}
 
 	render() {
@@ -62,6 +78,10 @@ export class List extends Component {
 						<h1>{this.props.table.actionLabel}</h1>
 						<div className="text-description">{this.props.table.help}</div>
 					</header>
+
+					<div className="padded-content">
+						<input placeholder="search" initialValue="" />
+					</div>
 
 					<div className="padded-content">
 						<table className="table list-records">
@@ -109,6 +129,12 @@ export class List extends Component {
 								})
 							}
 						</table>
+						<Paging
+							nPages={this.props.nPages}
+							curPage={this.props.curPage}
+							search={this.props.search}
+							tableName={this.props.table.name}
+						/>
 					</div>
 				</section>
 			);
