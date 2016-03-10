@@ -58,6 +58,14 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - delete children
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
 - vérifier constantes, et refactoriser
+- à l'update: sitemap
+	private static function manageSiteMap($tableId, $recId, $isDeleted) {
+		$table = new Table($tableId);
+		if($isDeleted) {
+			return SiteMap::delete($table->getName(), $recId);
+		}
+		return SiteMap::update($table->getName(), $recId);
+	}
 
 ### Freestone JS
 

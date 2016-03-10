@@ -15,9 +15,9 @@ export class ModifFcn extends Component {
 	render() {
 				
 		return (
-			<td>
-				<Link to={`/edit/${this.props.tableName}/${this.props.prikey}`} activeClassName="active" className="btn btn-xs">Edit</Link>
-				<button className="btn btn-xs">Delete</button>
+			<td className="list-functions">
+				<Link to={`/edit/${this.props.tableName}/${this.props.prikey}`} activeClassName="active" className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+				<a className="btn btn-danger btn-sm"><i className="fa fa-close"></i><span> Delete</span></a>
 			</td>
 		);
 	}
