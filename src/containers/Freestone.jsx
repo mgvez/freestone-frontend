@@ -44,7 +44,7 @@ export class Freestone extends Component {
 	}
 
 	render() {
-		console.log('%cRender AUTH', 'font-weight: bold');
+		// console.log('%cRender Freestone (auth)', 'font-weight: bold');
 
 		if (!this.props.auth.isAuthenticated) {
 			return <div>Not permitted</div>;

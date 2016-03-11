@@ -43,7 +43,8 @@ export const listRecordsSelector = createSelector(
 	(schema, stateRecords, params, location, env) => {
 
 		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage } = stateRecords;
-		const { page: requestedPage } = params;
+		let { page: requestedPage } = params;
+		requestedPage = requestedPage || 1;
 		const { query } = location;
 		const requestedSearch = (query && query.search) || '';
 

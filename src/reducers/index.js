@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { routeReducer } from 'redux-simple-router';
+import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import { default as nav } from './nav';
 import { default as schema } from './schema';
@@ -13,7 +13,7 @@ import save from './save';
 
 const rootReducer = combineReducers({
 	form: formReducer,
-	routing: routeReducer,
+	routing: routerReducer,
 	nav,
 	env,
 	auth,

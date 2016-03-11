@@ -11,9 +11,11 @@ export class RequireApiData {
 	requireProp(propName, props, fetchCallback, fetchArgs) {
 		this.attempts[propName] = this.attempts[propName] || 0;
 		this.attempts[propName]++;
-		// console.log(props.table, tableName);
+		// console.log(props[propName], propName);
 		if (!props[propName]) {
+			// console.log('attempt ' + this.attempts[propName]);
 			if (this.attempts[propName] <= MAX_ATTEMPTS) {
+				// console.log('fetch');
 				return fetchCallback.apply(null, fetchArgs);
 			}
 			// const args = JSON.stringify(fetchArgs);

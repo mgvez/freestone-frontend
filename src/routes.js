@@ -16,6 +16,7 @@ export default (
 		<Route path="login" component={Login}/>
 		<Route path="" component={Freestone}>
 			<Route path="home" component={Home}/>
+			<Route path="list/:tableName" component={List}/>
 			<Route path="list/:tableName/:page" component={List}/>
 			<Route path="edit/:tableName/:recordId" component={RootForm}/>
 			<Route path="save/:tableName/:recordId" component={Save}/>

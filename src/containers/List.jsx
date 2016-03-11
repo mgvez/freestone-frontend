@@ -59,7 +59,7 @@ export class List extends Component {
 		const { tableName, page } = props.params;
 		const { query } = props.location;
 		const search = query && query.search;
-		
+		// console.log(props.groupedRecords);
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
 		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName, search, page || 1]);
 
