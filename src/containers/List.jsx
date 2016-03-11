@@ -35,11 +35,16 @@ export class List extends Component {
 		swapOrder: React.PropTypes.func,
 	};
 
+	static contextTypes = {
+		router: React.PropTypes.object,
+	};
+
 	constructor(props) {
 		super(props);
 		this.requireDataCtrl = new RequireApiData;
 		this.nattempts = 0;
 	}
+
 
 	componentWillMount() {
 		this.requireData(this.props);
@@ -65,6 +70,14 @@ export class List extends Component {
 
 	}
 
+	handleSubmit = (e) => {
+		e.preventDefault();
+		let path = `${this.props.params.tableName}/${this.props.curPage}`;
+							search={this.props.search}
+		console.log(this.context.router);
+		// this.context.router.push(path)
+	};
+
 	render() {
 		// console.log(this.props.table);
 		// console.log('render list');
@@ -80,7 +93,10 @@ export class List extends Component {
 					</header>
 
 					<div className="padded-content">
-						<input placeholder="search" initialValue="" />
+						<form onSubmit={this.handleSubmit}>
+							<input placeholder="search" initialValue="" />
+							<button><i className="fa fa-search"></i></button>
+						</form>
 					</div>
 
 					<div className="padded-content">
