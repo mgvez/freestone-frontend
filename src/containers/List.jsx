@@ -19,7 +19,6 @@ import { listRecordsSelector } from 'selectors/ListRecords';
 export class List extends Component {
 	static propTypes = {
 		params: React.PropTypes.object,
-		location: React.PropTypes.object,
 
 		env: React.PropTypes.object,
 		table: React.PropTypes.object,
@@ -61,10 +60,7 @@ export class List extends Component {
 	
 	requireData(props) {
 		if (this.nattempts > 5) return;
-		const { tableName, page } = props.params;
-		const { query } = props.location;
-		const search = query && query.search;
-		// console.log(props.groupedRecords);
+		const { tableName, page, search } = props.params;
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
 		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName, search, page || 1]);
 
@@ -72,10 +68,13 @@ export class List extends Component {
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-		let path = `${this.props.params.tableName}/${this.props.curPage}`;
-							search={this.props.search}
-		console.log(this.context.router);
-		// this.context.router.push(path)
+		const inp = this.refs.searchVal;
+		let val = inp.value;
+		val = val ? `/${val}` : '';
+		// console.log(inp.value);
+		const path = `list/${this.props.params.tableName}/${this.props.curPage}${val}`;
+		// console.log(path);
+		this.context.router.push(path);
 	};
 
 	render() {
@@ -94,7 +93,7 @@ export class List extends Component {
 
 					<div className="padded-content">
 						<form onSubmit={this.handleSubmit}>
-							<input placeholder="search" initialValue="" />
+							<input placeholder="search" ref="searchVal" initialValue="" />
 							<button><i className="fa fa-search"></i></button>
 						</form>
 					</div>

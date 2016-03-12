@@ -3,6 +3,7 @@
 
 import reqwest from 'reqwest';
 import { receiveToken, loginUserFailure } from 'actions/auth';
+import sha1 from 'sha1';
 
 function getEndpoint(route) {
 	let hostname = window.location.hostname;
@@ -14,8 +15,9 @@ function getEndpoint(route) {
 	return `${window.location.protocol}//${hostname}/admin/${route}`;
 }
 
+const processing = {};
 
-function callApi(route, data, jwt) {
+function callApi(route, data, jwt, successType) {
 	// console.log(`post data ${route}`, data);
 	// console.log(`JWT: ${jwt}`);
 	const method = data ? 'post' : 'get';
@@ -23,17 +25,26 @@ function callApi(route, data, jwt) {
 	if (jwt) {
 		headers.Authorization = `Bearer ${jwt}`;
 	}
+	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
 
-	// console.log(data instanceof FormData);
+	console.log(`issuing ${successType}`, processing[hash]);
 
-	return reqwest({
+	processing[hash] = processing[hash] || reqwest({
 		url: getEndpoint(route),
 		crossOrigin: true,
 		processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
 		method,		
 		data,
 		headers,
+	}).then(res => {
+		processing[hash] = null;
+		return res;
+	}).catch(error => {
+		processing[hash] = null;
+		throw error;
 	});
+
+	return processing[hash];
 }
 
 export const FREESTONE_API = Symbol('Freestone API');
@@ -89,7 +100,7 @@ export default store => next => action => {
 	next(actionWith({ data, type: requestType }));
 	const jwt = store.getState().auth.jwt;
 
-	return callApi(route, data, jwt).then(
+	return callApi(route, data, jwt, successType).then(
 		res => {
 			if (res.jwt) {
 				next(receiveToken(res.jwt));

@@ -4,11 +4,15 @@ import apiMiddleware from 'middleware/api';
 import authMiddleware from 'middleware/auth';
 import createLogger from 'redux-logger';
 import reduxLocalstorage from 'redux-simple-localstorage';
+import { routerMiddleware } from 'react-router-redux';
+import { hashHistory } from 'react-router';
+
 import rootReducer from '../reducers';
 
 const logger = createLogger({ collapsed: true });
 const { read, write } = reduxLocalstorage('freestone');
 
+const routeMiddleware = routerMiddleware(hashHistory);
 // console.log(apiMiddleware);
 
 const createStoreWithMiddleware = applyMiddleware(
@@ -16,7 +20,8 @@ const createStoreWithMiddleware = applyMiddleware(
 	apiMiddleware,
 	authMiddleware,
 	logger,
-    write
+    write,
+    routeMiddleware
 )(createStore);
 
 export default function configureStore(initialState) {

@@ -9,6 +9,7 @@ import routes from './routes';
 import { syncHistoryWithStore } from 'react-router-redux';
 
 const store = configureStore();
+//changer dans configurestore aussi si on passe à browserHistory
 const history = syncHistoryWithStore(hashHistory, store);
 
 ReactDOM.render(

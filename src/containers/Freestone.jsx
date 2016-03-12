@@ -13,6 +13,7 @@ import { Footer } from 'components/Footer';
 import { Errors } from 'components/Errors';
 import { Nav } from 'containers/Nav';
 
+let i = 0;
 @connect(
 	state => {
 		return { auth: state.auth, env: state.env, errors: state.errors };
@@ -37,6 +38,8 @@ export class Freestone extends Component {
 	}
 
 	checkAuth() {
+		i++;
+		if (i > 10) return false;
 		// console.log('AUTHENTICATED:: ' + this.props.isAuthenticated);
 		if (!this.props.auth.isAuthenticated) {
 			this.props.unauthorized();

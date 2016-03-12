@@ -27,7 +27,7 @@ export class Paging extends Component {
 
 		return (
 			<li key={`${num}_${label}`}>
-				<Link to={{ pathname: `/list/${this.props.tableName}/${num}`, query: { search: this.props.search } }} activeClassName="active" className="">{display}</Link>
+				<Link to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</Link>
 			</li>
 		);
 	}

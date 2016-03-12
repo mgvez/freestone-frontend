@@ -1,5 +1,5 @@
 
-import { pushPath } from 'redux-simple-router';
+import { push as pushPath } from 'react-router-redux';
 import { unauthorized } from 'actions/auth';
 
 

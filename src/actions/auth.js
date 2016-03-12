@@ -1,5 +1,5 @@
 
-import { pushPath } from 'redux-simple-router';
+import { push as pushPath } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
 import { FREESTONE_API } from 'middleware/api';
 
@@ -68,7 +68,7 @@ export function loginUser(username, password, redirect = '/home') {
 					freestonepass: password,
 				},
 			},
-		}).then(() => {
+		}).then((res) => {
 			// console.log(res);
 			// console.log('redirect to' + redirect);
 			dispatch(pushPath(redirect));
