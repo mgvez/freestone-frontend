@@ -19,8 +19,8 @@ et voir ensuite dans .babelrc
 
 ### next
 
-- paging
-- remove record from redux quand saved
+- finir recherche (foreign, vider champ quand change table, etc)
+- corriger foreigns
 - navig back quand saved
 - delete children (php)
 - tab order
@@ -111,6 +111,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - limiter le nombre de characteres dans les tabs
 - remettre le champ rewrite.current
 - navig back quand saved
+- vider menu quand save
 
 #### Modules
 - all
@@ -118,6 +119,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 #### Pages
 - all
 
+### Pluss tard
+- shop admin en react/redux
+- ordre ds liste en drag/drop
+- meilleure strategie de modif du state quand save records (pas vider menu au complet par ex.)
 
 ### Semi-done
 
@@ -125,7 +130,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - self-join trees
 - grouped records
 - delete
-- change order
 
 #### Forms
 - autocomplete

@@ -13,7 +13,8 @@ export class Input extends Component {
 	};
 
 	changeVal = (e) => {
-		const v = (e && e.target && e.target.value) || e;
+		const v = (e && e.target) ? e.target.value : e;
+		console.log(v);
 		// console.log(this.props.field.table_id, this.props.recordId, this.props.field.id, v);
 		this.props.setFieldVal(this.props.field.table_id, this.props.recordId, this.props.field.id, v);
 	};

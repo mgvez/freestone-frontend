@@ -3,8 +3,8 @@ import { sendRecordFiles } from 'actions/send-file';
 
 export function saveRecord(tableName, tree, records) {
 	return (dispatch) => {
-		console.log(tree);
-		console.log(records);
+		// console.log(tree);
+		// console.log(records);
 
 		dispatch({
 			type: 'INIT_SAVE',

@@ -27,7 +27,7 @@ function callApi(route, data, jwt, successType) {
 	}
 	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
 
-	console.log(`issuing ${successType}`, processing[hash]);
+	// console.log(`issuing ${successType}`, processing[hash]);
 
 	processing[hash] = processing[hash] || reqwest({
 		url: getEndpoint(route),
@@ -41,7 +41,7 @@ function callApi(route, data, jwt, successType) {
 		return res;
 	}).catch(error => {
 		processing[hash] = null;
-		throw error;
+		return error;
 	});
 
 	return processing[hash];
