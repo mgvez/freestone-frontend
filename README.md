@@ -19,8 +19,6 @@ et voir ensuite dans .babelrc
 
 ### next
 
-- finir recherche (foreign, vider champ quand change table, etc)
-- corriger foreigns
 - navig back quand saved
 - delete children (php)
 - tab order
@@ -46,14 +44,14 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - standardiser les noms de fichiers (record-form, formRecord, etc)
 - mettre les actions dans des constantes, les types de champs aussi
 - mettre des icones/couleurs pour les groupes dans le menu
-- comment faire en sorte de pas fetcher plein de fois le meme ajax si le component receive des props plusieurs fois entretemps? -> see redux async example shouldFetchPosts. P-e se faire un reducer qui contient toutes la signature des requetes en cours, et return false si on attempt une requete qui est deja en train de se ajaxer
+
 
 ### Freestone PHP
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
 	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
+	- childrenAreLoaded (reducer record-form) est problématique
 - bank (et toutes les instances de cet classe)
 - traduire les erreurs (VException)
-- Save files
 - pruner les temp files
 - delete children
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
@@ -71,14 +69,9 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 #### Menu
 - n records
-- enlever level 0, et collapse/decollapse dans store
 
 #### Header menu
 #### Liste
-- recherche
-	- chercher aussi dans les foreign keys
-- paging
-- order buttons. Mettre à la position du champ dans les colonnes selon son rank (ou immediatement à droite des fcn)
 - faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
 
 #### Form
@@ -112,6 +105,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - remettre le champ rewrite.current
 - navig back quand saved
 - vider menu quand save
+- insert image de banque : drag & drop
 
 #### Modules
 - all
@@ -123,8 +117,11 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - shop admin en react/redux
 - ordre ds liste en drag/drop
 - meilleure strategie de modif du state quand save records (pas vider menu au complet par ex.)
+- preview d'un record dans site (how... how... par uune duplic de db purement et simplement?)
 
 ### Semi-done
+
+- comment faire en sorte de pas fetcher plein de fois le meme ajax si le component receive des props plusieurs fois entretemps? -> see redux async example shouldFetchPosts. P-e se faire un reducer qui contient toutes la signature des requetes en cours, et return false si on attempt une requete qui est deja en train de se ajaxer
 
 #### Liste
 - self-join trees

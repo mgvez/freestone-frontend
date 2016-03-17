@@ -28,6 +28,7 @@ export class List extends Component {
 		curPage: React.PropTypes.number,
 		nRecords: React.PropTypes.number,
 		search: React.PropTypes.string,
+		qstr: React.PropTypes.string,
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
@@ -51,6 +52,10 @@ export class List extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
+		if (nextProps.params.tableName !== this.props.params.tableName) {
+			// console.log('change table');
+			this.refs.searchVal.value = '';
+		}
 	}
 	
 	shouldComponentUpdate(nextProps) {
@@ -89,6 +94,7 @@ export class List extends Component {
 					<header>
 						<h1>{this.props.table.actionLabel}</h1>
 						<div className="text-description">{this.props.table.help}</div>
+						{/* <div className="text-description">{this.props.qstr}</div> */}
 					</header>
 
 					<div className="padded-content">

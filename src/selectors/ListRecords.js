@@ -90,6 +90,7 @@ export const listRecordsSelector = createSelector(
 			nPages,
 			nRecords,
 			search: providedSearch,
+			qstr: stateRecords.qstr,
 		};
 	}
 );
