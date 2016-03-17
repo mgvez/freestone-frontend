@@ -50,6 +50,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
 	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
 	- childrenAreLoaded (reducer record-form) est problématique
+	- getRecords de formchildrenrecord reselect fucké 
 - bank (et toutes les instances de cet classe)
 - traduire les erreurs (VException)
 - pruner les temp files

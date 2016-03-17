@@ -4,15 +4,16 @@ import { tableSchemaSelector } from 'selectors/TableSchema';
 import { PARENTKEY_ALIAS, PRIKEY_ALIAS } from 'freestone/SchemaProps';
 
 const recordsSelector = state => state.recordForm.records;
-const recordsAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
+const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
+const parentTableIdSelector = (state, props) => props.parentTableId;
 const shownRecordsSelector = (state) => state.recordForm.shownRecords;
 
-function getRecords(records, parentRecordId, prikey, searchableFields) {
+function getRecords(records, parentRecordId, parentTableId, prikey, searchableFields) {
 	return Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		// console.log(record);
-		return record[PARENTKEY_ALIAS] === parentRecordId && record;
+		return record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record;
 	}).filter(record => record).map(record => {
 		// console.log(record);
 		return {
@@ -25,17 +26,17 @@ function getRecords(records, parentRecordId, prikey, searchableFields) {
 }
 
 export const formChildrenRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordsAreLoadedSelector, parentRecordIdSelector, shownRecordsSelector],
-	(schema, records, recordsAreLoaded, parentRecordId, shownRecords) => {
+	[tableSchemaSelector, recordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector],
+	(schema, records, childrenAreLoaded, parentRecordId, parentTableId, shownRecords) => {
 		
 		const { table } = schema;
-		const areLoaded = parentRecordId && table && recordsAreLoaded[table.id] && recordsAreLoaded[table.id][parentRecordId];
-		// console.log(parentRecordId, table, recordsAreLoaded);
+		const areLoaded = parentRecordId && table && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
+		// console.log(parentRecordId, table, childrenAreLoaded);
 		const tableRecords = table && records[table.id];
 
 		let childrenRecords;
 		if (areLoaded) {
-			childrenRecords = getRecords(tableRecords, parentRecordId, table.prikey, table.searchableFields);
+			childrenRecords = getRecords(tableRecords, parentRecordId, parentTableId, table.prikey, table.searchableFields);
 		}
 
 		const activeRecord = shownRecords && table && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);

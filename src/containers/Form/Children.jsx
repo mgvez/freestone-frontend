@@ -20,7 +20,7 @@ import createRecord from 'freestone/createRecord';
 export class Children extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
-		parentTableName: React.PropTypes.string,
+		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 
 		childrenRecords: React.PropTypes.array,
@@ -50,18 +50,18 @@ export class Children extends Component {
 
 	requireData(props) {
 		// console.log(props);
-		const { tableId, parentRecordId, parentTableName } = props;
+		const { tableId, parentRecordId, parentTableId } = props;
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableId]);
 		if (props.table) {
 			const tableName = this.props.table.name;
-			this.requireDataCtrl.requireProp('childrenRecords', props, this.props.fetchRecord, [tableName, parentRecordId, parentTableName]);
+			this.requireDataCtrl.requireProp('childrenRecords', props, this.props.fetchRecord, [tableName, parentRecordId, parentTableId]);
 
 		}
 	}
 
 	addRecord = () => {
 		// console.log(this.props.table);
-		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentRecordId);
+		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId);
 		
 		// console.log(newRecord);
 		this.props.addRecord(this.props.table.id, newRecord);

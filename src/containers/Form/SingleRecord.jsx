@@ -110,7 +110,7 @@ export class SingleRecord extends Component {
 									<Children
 										key={tableId}
 										tableId={tableId}
-										parentTableName={this.props.table.name}
+										parentTableId={this.props.table.id}
 										parentRecordId={this.props.recordId}
 									/>
 								);
