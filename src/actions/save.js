@@ -1,10 +1,15 @@
 import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 import { sendRecordFiles } from 'actions/send-file';
+import { hashHistory } from 'react-router';
+
 
 export function saveRecord(tableName, tree, records) {
 	return (dispatch) => {
-		// console.log(tree);
-		// console.log(records);
+
+		if (!tree || !tree.tableId || !tree.recordId || !records || !records[tree.tableId] || !records[tree.tableId][tree.recordId]) {
+			hashHistory.push(`list/${tableName}`);
+			return null;
+		}
 
 		dispatch({
 			type: 'INIT_SAVE',

@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
-import { swapOrder } from 'actions/save';
 
 import { Heading } from 'components/RecordList/Heading';
 import { Paging } from 'components/RecordList/Paging';
@@ -14,7 +13,7 @@ import { listRecordsSelector } from 'selectors/ListRecords';
 
 @connect(
 	listRecordsSelector,
-	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators, swapOrder }, dispatch)
+	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 export class List extends Component {
 	static propTypes = {
@@ -32,7 +31,6 @@ export class List extends Component {
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
-		swapOrder: React.PropTypes.func,
 	};
 
 	static contextTypes = {
@@ -139,7 +137,6 @@ export class List extends Component {
 														values={record}
 														table={this.props.table}
 														env={this.props.env}
-														swapOrder={this.props.swapOrder}
 													/>
 												);
 											})

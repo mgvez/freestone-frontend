@@ -11,8 +11,6 @@ export class Row extends Component {
 		env: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		values: React.PropTypes.object,
-
-		swapOrder: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -24,7 +22,7 @@ export class Row extends Component {
 		
 		let orderCell;
 		if (this.props.table.hasOrder) {
-			orderCell = <OrderFcn swapOrder={this.props.swapOrder} tableName={this.props.table.name} prikey={this.props.values.prikey}/>;
+			orderCell = <OrderFcn tableName={this.props.table.name} prikey={this.props.values.prikey}/>;
 		}
 
 		const modifCell = <ModifFcn tableName={this.props.table.name} prikey={this.props.values.prikey} />;

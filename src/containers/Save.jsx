@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { hashHistory } from 'react-router';
 import * as saveActionCreators from 'actions/save';
 
 import { saveSelector } from 'selectors/Save';
@@ -29,7 +30,15 @@ export class Save extends Component {
 
 	componentWillMount() {
 		// console.log('MOUNT', this.props.records);
-		this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records);
+		const onSaved = this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records);
+
+		if (onSaved) {
+			onSaved.then((res) => {
+				console.log(hashHistory);
+				hashHistory.go(-2);
+			});
+		}
+
 	}
 
 	componentWillReceiveProps(nextProps) {

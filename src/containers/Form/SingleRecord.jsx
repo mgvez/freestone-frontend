@@ -69,17 +69,11 @@ export class SingleRecord extends Component {
 	}
 
 	render() {
-		let header;
 		let form;
 		let sub;
 		// console.log('render', this.props.table.id);
 		if (this.props.table && this.props.record) {
-			header = (
-				<header>
-					<h1>{this.props.table.displayLabel}</h1>
-					<div>{this.props.table.help}</div>
-				</header>
-			);
+			
 			form = (
 				<article>
 					{
@@ -122,8 +116,7 @@ export class SingleRecord extends Component {
 			}
 		}
 		return (
-			<section>
-				{ header }
+			<section className="padded-content">
 				{ form }
 				{ sub }
 			</section>

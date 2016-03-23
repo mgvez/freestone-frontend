@@ -46,11 +46,14 @@ export class RootForm extends Component {
 		if (this.props.table) {
 			header = (
 				<header>
-					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} activeClassName="active" className="btn btn-xs">Save</Link>
-					<button>Cancel</button>
+					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-default">Save</Link>
+					<button className="btn btn-xs btn-default">Cancel</button>
 					<div>lastmodif</div>
+					<h1>{this.props.table.displayLabel}</h1>
+					<div>{this.props.table.help}</div>
 				</header>
 			);
+
 			form = (
 				<SingleRecord tableName={this.props.params.tableName} recordId={this.props.params.recordId} />
 			);

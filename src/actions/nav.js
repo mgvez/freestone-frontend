@@ -21,3 +21,15 @@ export function toggleCollapse(itemId) {
 		});
 	};
 }
+
+export function pushStack(path, scroll) {
+	return (dispatch) => {
+		return dispatch({
+			type: 'REGISTER_PAGE',
+			data: {
+				path,
+				scroll,
+			},
+		});
+	};
+}
