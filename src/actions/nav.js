@@ -1,4 +1,5 @@
 import { FREESTONE_API } from 'middleware/api';
+import { push as pushPath } from 'react-router-redux';
 
 export function fetchNav() {
 	return (dispatch) => {
@@ -22,14 +23,25 @@ export function toggleCollapse(itemId) {
 	};
 }
 
-export function pushStack(path, scroll) {
+export function pushNavStack(path, scroll) {
 	return (dispatch) => {
 		return dispatch({
-			type: 'REGISTER_PAGE',
+			type: 'STACK_REGISTER_PAGE',
 			data: {
 				path,
 				scroll,
 			},
 		});
+	};
+}
+
+export function goTo(loc) {
+	return (dispatch) => {
+		return dispatch(pushPath({
+			pathname: loc.path,
+			state: {
+				scroll: loc.scroll || 0,
+			},
+		}));
 	};
 }

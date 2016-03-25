@@ -22,7 +22,11 @@ export class LoginForm extends Component {
 
 	login = (e) => {
 		e.preventDefault();
-		this.props.loginUser(this.state.username, this.state.password, this.state.redirectTo);
+		const username = this.refs.username.value;
+		const password = this.refs.password.value;
+		// console.log(username, password);
+		// console.log(this.state.redirectTo);
+		this.props.loginUser(username, password, this.state.redirectTo);
 	};
 
 	render() {
@@ -37,6 +41,7 @@ export class LoginForm extends Component {
 						<input type="text"
 							className="form-control input-lg"
 							placeholder="Username"
+							ref="username"
 							defaultValue={this.state.username}
 						/>
 					</div>
@@ -44,6 +49,7 @@ export class LoginForm extends Component {
 						<input type="password"
 							className="form-control input-lg"
 							placeholder="Password"
+							ref="password"
 							defaultValue={this.state.password}
 						/>
 					</div>

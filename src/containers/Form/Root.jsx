@@ -28,6 +28,7 @@ export class RootForm extends Component {
 	}
 
 	componentWillMount() {
+		window.scrollTo(0, 0);
 		this.requireData(this.props);
 	}
 

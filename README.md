@@ -14,12 +14,13 @@ et voir ensuite dans .babelrc
 
 ## BUGS
 - quand login marche pas, ?next s'append à chauqe login manqué
+- au load apres login, montre pas de records dans liste
 
 ## Todo
 
 ### next
 
-- navig back quand saved
+- navig back quand saved - scroll top
 - autocomplete : revert quand perd le focus
 - date modif dans form
 - delete children (php)

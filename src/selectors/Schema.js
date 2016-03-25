@@ -12,7 +12,7 @@ const PARENT_LINK_TYPES = ['rel', 'oto', 'mtm'];
 export const schemaSelector = createSelector(
 	[tablesSelector, fieldsSelector],
 	(rawTables, fields) => {
-		console.log('%cBUILD SCHEMA ======', 'font-weight:bold;color:#44ff44;');
+		// console.log('%cBUILD SCHEMA ======', 'font-weight:bold;color:#44ff44;');
 
 		let tables = Object.keys(rawTables).reduce((carry, tableId) => {
 			const table = rawTables[tableId];

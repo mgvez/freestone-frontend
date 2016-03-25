@@ -21,7 +21,7 @@ export class FileInput extends Input {
 	};
 
 	getFileName() {
-		const val = this.props.val;
+		return this.props.val;
 	}
 
 	getSavedInput() {

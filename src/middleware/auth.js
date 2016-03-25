@@ -7,7 +7,9 @@ export default store => next => action => {
 
 	function gotoLogin() {
 		// console.log(store.getState());
-		const redirectAfterLogin = store.getState().routing.path;
+		const redirectAfterLogin = store.getState().routing.locationBeforeTransitions.pathname || '';
+		// console.log(redirectAfterLogin);
+
 		store.dispatch(pushPath(`/login?next=${redirectAfterLogin}`));
 		return next(action);
 	}

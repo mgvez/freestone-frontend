@@ -58,7 +58,7 @@ function toggleState(state = {}, action) {
 //navig quand on a fini de saver un record: pop le stack des pages ou on peut aller
 function stack(state = [], action) {
 	switch (action.type) {
-	case 'REGISTER_PAGE':
+	case 'STACK_REGISTER_PAGE':
 		return [
 			...state,
 			action.data,
@@ -67,6 +67,8 @@ function stack(state = [], action) {
 		return state;
 	}
 }
+
+// function currentNav()
 
 export default combineReducers({
 	structure,

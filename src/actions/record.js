@@ -4,7 +4,7 @@ export function fetchList(tableName, search = '', page = 1) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [null, 'RECEIVE_RECORD_LIST', FREESTONE_API_FATAL_FAILURE],
+				types: ['REQUEST_RECORD_LIST', 'RECEIVE_RECORD_LIST', FREESTONE_API_FATAL_FAILURE],
 				route: `list/${tableName}/${page}?search=${search}`,
 			},
 		});

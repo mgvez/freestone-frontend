@@ -7,6 +7,7 @@ import * as recordActionCreators from 'actions/record';
 import { Heading } from 'components/RecordList/Heading';
 import { Paging } from 'components/RecordList/Paging';
 import { Row } from 'components/RecordList/Row';
+import { InScroll } from 'containers/InScroll';
 import { RequireApiData } from 'utils/RequireApiData';
 
 import { listRecordsSelector } from 'selectors/ListRecords';
@@ -15,7 +16,7 @@ import { listRecordsSelector } from 'selectors/ListRecords';
 	listRecordsSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
-export class List extends Component {
+export class List extends InScroll {
 	static propTypes = {
 		params: React.PropTypes.object,
 
@@ -40,7 +41,6 @@ export class List extends Component {
 	constructor(props) {
 		super(props);
 		this.requireDataCtrl = new RequireApiData;
-		this.nattempts = 0;
 	}
 
 
@@ -62,11 +62,13 @@ export class List extends Component {
 	}
 	
 	requireData(props) {
-		if (this.nattempts > 5) return;
 		const { tableName, page, search } = props.params;
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
 		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName, search, page || 1]);
+	}
 
+	componentDidUpdate() {
+		this.performScroll(this.props.groupedRecords && this.props.groupedRecords.length);
 	}
 
 	handleSubmit = (e) => {

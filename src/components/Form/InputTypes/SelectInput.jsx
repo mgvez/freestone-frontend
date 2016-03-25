@@ -23,7 +23,7 @@ export class SelectInput extends Input {
 	}
 
 	requireData(props) {
-		const { foreignOptions } = props;
+		// const { foreignOptions } = props;
 		this.requireDataCtrl.requireProp('foreignOptions', props, this.props.fetchForeignOptions, [props.field.id]);
 	}
 	

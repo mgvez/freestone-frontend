@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { hashHistory } from 'react-router';
 import * as saveActionCreators from 'actions/save';
+import { goTo } from 'actions/nav';
 
 import { saveSelector } from 'selectors/Save';
 
 @connect(
 	saveSelector,
-	dispatch => bindActionCreators(saveActionCreators, dispatch)
+	dispatch => bindActionCreators({ ...saveActionCreators, goTo }, dispatch)
 )
 export class Save extends Component {
 	static propTypes = {
@@ -19,9 +19,11 @@ export class Save extends Component {
 		records: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		saveState: React.PropTypes.object,
+		backPath: React.PropTypes.object,
 
 		saveRecord: React.PropTypes.func,
 		sendFile: React.PropTypes.func,
+		goTo: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -33,16 +35,11 @@ export class Save extends Component {
 		const onSaved = this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records);
 
 		if (onSaved) {
-			onSaved.then((res) => {
-				console.log(hashHistory);
-				hashHistory.go(-2);
+			onSaved.then(() => {
+				const backPath = this.props.backPath || { path: `list/${this.props.params.tableName}` };
+				this.props.goTo(backPath);
 			});
 		}
-
-	}
-
-	componentWillReceiveProps(nextProps) {
-		// console.log(this.props.records);
 
 	}
 

@@ -12,7 +12,7 @@ export class Tab extends Component {
 		setShownRecord: React.PropTypes.func,
 	};
 
-	setShownRecord = (e) => {
+	setShownRecord = () => {
 		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.recordId);
 	};
 
