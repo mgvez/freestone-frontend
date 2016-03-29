@@ -19,13 +19,13 @@ function getChildrenRecordIds(records, parentRecordId) {
 function buildTree(tableId, recordId, allRecords, unfilteredChildren) {
 	const childrenTables = unfilteredChildren[tableId];
 	// children = 
-	const children = childrenTables && childrenTables.reduce((carry, childTableId) => {
+	const children = (childrenTables && childrenTables.reduce((carry, childTableId) => {
 		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId);
 		const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
 			return buildTree(childTableId, childRecId, allRecords, unfilteredChildren);
 		});
 		return carry && childrenRecords && carry.concat(childrenRecords);
-	}, []);
+	}, [])) || [];
 	// console.log(children);
 	const branch = {
 		recordId,

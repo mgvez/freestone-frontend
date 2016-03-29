@@ -20,8 +20,9 @@ et voir ensuite dans .babelrc
 
 ### next
 
-- navig back quand saved - scroll top
-- autocomplete : revert quand perd le focus
+- autocomplete
+	- revert quand perd le focus
+	- finir positionnement, etc.
 - date modif dans form
 - delete children (php)
 - tab order
@@ -37,12 +38,14 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - reecrire les components en functional components https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components et https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.de5b5b1q8
 - immutable
 - normalizr
+- au lieu de tinymce http://facebook.github.io/draft-js/
 
 ### Redux
 - essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
-- strategie de invalidate du data après save & cancel
 
 ### General
+
+- login dans freestone plutot que par redirect
 - liste des records en cours de modif par le user dans un widget
 - createddate && modifdate dans constantes des alias de champs
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
@@ -72,6 +75,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	}
 
 ### Freestone JS
+
 
 #### Menu
 - n records

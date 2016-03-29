@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
 
 const rawForeignOptionsSelector = state => state.foreignOptions;
+const fieldIdSelector = (state, props) => props.field.id;
 
-export const foreignOptionsSelector = createSelector(
+export const allForeignOptionsSelector = createSelector(
 	[rawForeignOptionsSelector],
 	(rawOptions) => {
 		// console.log('parse foreigns');
@@ -40,4 +41,14 @@ export const foreignOptionsSelector = createSelector(
 		// console.log(options);
 		return options;
 	},
+);
+
+
+export const foreignOptionsSelector = createSelector(
+	[allForeignOptionsSelector, fieldIdSelector],
+	(allOptions, fieldId) => {
+		return {
+			foreignOptions: allOptions[fieldId],
+		};
+	}
 );

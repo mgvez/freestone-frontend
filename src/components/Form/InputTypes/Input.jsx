@@ -9,7 +9,6 @@ export class Input extends Component {
 		env: React.PropTypes.object,
 		
 		setFieldVal: React.PropTypes.func,
-		fetchForeignOptions: React.PropTypes.func,
 	};
 
 	changeVal = (e) => {

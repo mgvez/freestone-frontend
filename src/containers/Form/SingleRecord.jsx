@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
-import * as optionsActionCreators from 'actions/foreign-options';
 
 import { formRecordSelector } from 'selectors/FormRecord';
 
@@ -15,7 +14,7 @@ import { Field } from 'components/Form/Field';
 
 const mapStateToProps = formRecordSelector;
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ ...schemaActionCreators, ...recordActionCreators, ...optionsActionCreators }, dispatch);
+	return bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch);
 };
 
 @connect(
@@ -32,13 +31,11 @@ export class SingleRecord extends Component {
 		record: React.PropTypes.object,
 		recordUnaltered: React.PropTypes.object,
 		fields: React.PropTypes.array,
-		foreignOptions: React.PropTypes.object,
 		env: React.PropTypes.object,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
 		setFieldVal: React.PropTypes.func,
-		fetchForeignOptions: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -86,8 +83,6 @@ export class SingleRecord extends Component {
 								val={this.props.record[field.id]}
 								origVal={this.props.recordUnaltered[field.id]}
 								setFieldVal={this.props.setFieldVal}
-								fetchForeignOptions={this.props.fetchForeignOptions}
-								foreignOptions={this.props.foreignOptions[field.id]}
 								env={this.props.env}
 							/>);
 						})

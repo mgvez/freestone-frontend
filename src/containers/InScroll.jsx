@@ -14,6 +14,7 @@ export class InScroll extends Component {
 		children: React.PropTypes.any,
 		path: React.PropTypes.string,
 		scroll: React.PropTypes.number,
+		isReady: React.PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -21,17 +22,16 @@ export class InScroll extends Component {
 		this.hasScrolled = false;
 	}
 
-	// componentWillReceiveProps(nextProps) {
-	// 	console.log(nextProps.scroll);
+	componentWillReceiveProps(nextProps) {
+		// console.log(nextProps.scroll);
+		if (nextProps.path !== this.props.path) {
+			this.hasScrolled = false;
+		}
+	}
 
-	// 	if (nextProps.path !== this.props.path) {
-	// 		console.log('path change');
-	// 		window.scrollTo(0, nextProps.scroll || 0);
-	// 	}
-	// }
-
-	performScroll(isReady) {
-		if (isReady && !this.hasScrolled) {
+	componentDidUpdate() {
+		// console.log(this.props.isReady, this.hasScrolled);
+		if (this.props.isReady && !this.hasScrolled) {
 			window.scrollTo(0, this.props.scroll || 0);
 			this.hasScrolled = true;
 		}

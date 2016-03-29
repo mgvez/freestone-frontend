@@ -15,10 +15,8 @@ export class Field extends Component {
 		recordId: React.PropTypes.string,
 		val: React.PropTypes.string,
 		origVal: React.PropTypes.string,
-		foreignOptions: React.PropTypes.object,
 		
 		setFieldVal: React.PropTypes.func,
-		fetchForeignOptions: React.PropTypes.func,
 	};
 
 	render() {
@@ -89,7 +87,7 @@ export class Field extends Component {
 			return <div/>;
 		default:
 			return (
-				<div>
+				<div className="field">
 					<label>{this.props.field.label}</label>
 					<div>{input}</div>
 					<em>{this.props.field.descripton}</em>

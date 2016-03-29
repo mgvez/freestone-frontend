@@ -16,7 +16,7 @@ import { listRecordsSelector } from 'selectors/ListRecords';
 	listRecordsSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
-export class List extends InScroll {
+export class List extends Component {
 	static propTypes = {
 		params: React.PropTypes.object,
 
@@ -67,10 +67,6 @@ export class List extends InScroll {
 		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName, search, page || 1]);
 	}
 
-	componentDidUpdate() {
-		this.performScroll(this.props.groupedRecords && this.props.groupedRecords.length);
-	}
-
 	handleSubmit = (e) => {
 		e.preventDefault();
 		const inp = this.refs.searchVal;
@@ -87,8 +83,9 @@ export class List extends InScroll {
 		// console.log('render list');
 		// console.log(this.props.groupedRecords);
 		let output;
+		let readyToScroll = false;
 		if (this.props.table && this.props.groupedRecords) {
-
+			readyToScroll = true;
 			output = (
 				<section>
 					<header>
@@ -160,9 +157,9 @@ export class List extends InScroll {
 			);
 		}
 		return (
-			<section>
+			<InScroll isReady={readyToScroll}>
 				{ output }
-			</section>
+			</InScroll>
 		);
 	}
 }
