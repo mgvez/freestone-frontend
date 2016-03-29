@@ -7,11 +7,12 @@ const recordsSelector = state => state.recordForm.records;
 const recordIdSelector = (state, props) => props.params.recordId;
 const childrenSelector = state => state.schema.children;
 
-function getChildrenRecordIds(records, parentRecordId) {
+function getChildrenRecordIds(records, parentRecordId, parentTableId) {
+	// console.log(records, parentRecordId);
 	return records && Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		// console.log(record);
-		return record[PARENTKEY_ALIAS] === parentRecordId && record;
+		return record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record;
 	}).filter(record => record).map(record => record[PRIKEY_ALIAS]);
 }
 
@@ -19,8 +20,9 @@ function getChildrenRecordIds(records, parentRecordId) {
 function buildTree(tableId, recordId, allRecords, unfilteredChildren) {
 	const childrenTables = unfilteredChildren[tableId];
 	// children = 
+	// console.log(childrenTables, tableId);
 	const children = (childrenTables && childrenTables.reduce((carry, childTableId) => {
-		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId);
+		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, tableId);
 		const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
 			return buildTree(childTableId, childRecId, allRecords, unfilteredChildren);
 		});
@@ -57,6 +59,7 @@ export const saveRecordSelector = createSelector(
 		// console.log(tree);
 		// console.log(records);
 		// console.log(fileInputIds);
+		// console.log(unfilteredChildren);
 
 		return {
 			tree,

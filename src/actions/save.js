@@ -22,7 +22,7 @@ export function saveRecord(tableName, tree, records) {
 				carry[fileResult.tmpName] = fileResult.name;
 				return carry;
 			}, {});
-
+			console.log(tree, records);
 			return dispatch({
 				[FREESTONE_API]: {
 					types: ['SAVE_RECORD_REQUEST', 'SAVE_RECORD_SUCCESS', 'SAVE_RECORD_ERROR'],
