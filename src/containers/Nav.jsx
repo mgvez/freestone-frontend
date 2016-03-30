@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { NavGroup } from 'components/Menu/NavGroup';
+import { RequireApiData } from 'utils/RequireApiData';
 
 import * as navActionCreators from 'actions/nav';
 import { navSelector } from 'selectors/nav';
@@ -23,16 +24,19 @@ export class Nav extends Component {
 
 	constructor(props) {
 		super(props);
+		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
-		this.props.fetchNav();
+		this.requireData(this.props);
 	}
 
 	componentWillReceiveProps(props) {
-		if (!props.tree.length) {
-			this.props.fetchNav();
-		}
+		this.requireData(props);
+	}
+
+	requireData(props) {
+		this.requireDataCtrl.requirePropVal(props.tree.length, this.props.fetchNav);
 	}
 
 	render() {

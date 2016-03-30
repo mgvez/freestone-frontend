@@ -24,4 +24,10 @@ export class RequireApiData {
 			this.attempts[propName] = 0;
 		}
 	}
+
+	requirePropVal(prop, fetchCallback, fetchArgs) {
+		if (!prop) {
+			return fetchCallback.apply(null, fetchArgs);
+		}
+	}
 }
