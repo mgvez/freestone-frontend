@@ -41,6 +41,7 @@ export class Nav extends Component {
 
 	render() {
 		// console.log('%cRender menu', 'font-weight: bold');
+		// console.log(this.props.tree);
 		return (
 			<nav className="navbar-default" role="navigation">
 				<ul>

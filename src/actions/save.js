@@ -3,11 +3,14 @@ import { sendRecordFiles } from 'actions/send-file';
 import { push as pushPath } from 'react-router-redux';
 
 
-export function saveRecord(tableName, tree, records) {
+export function saveRecord(tableName, tree, records, deleted) {
 	return (dispatch) => {
+		// console.log(tree);
+		// console.log(records);
+		// console.log(deleted);
 
 		if (!tree || !tree.tableId || !tree.recordId || !records || !records[tree.tableId] || !records[tree.tableId][tree.recordId]) {
-			pushPath(`list/${tableName}`);
+			dispatch(pushPath(`list/${tableName}`));
 			return null;
 		}
 
@@ -30,6 +33,7 @@ export function saveRecord(tableName, tree, records) {
 					data: {
 						tree,
 						records,
+						deleted,
 						tableName,
 						fileNames,
 					},

@@ -24,7 +24,7 @@ export class Children extends Component {
 		parentRecordId: React.PropTypes.string,
 
 		childrenRecords: React.PropTypes.array,
-		activeRecord: React.PropTypes.string,
+		activeRecord: React.PropTypes.object,
 		table: React.PropTypes.object,
 		newRecord: React.PropTypes.object,
 
@@ -32,6 +32,7 @@ export class Children extends Component {
 		fetchRecord: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
 		addRecord: React.PropTypes.func,
+		setRecordDeleted: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -68,22 +69,38 @@ export class Children extends Component {
 		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);
 	};
 
+	deleteRecord = () => {
+		
+		// console.log(newRecord);
+		this.props.setRecordDeleted(this.props.table.id, this.props.activeRecord && this.props.activeRecord.id);
+		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, null);
+	};
+
 	render() {
 		let header;
+		
+		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
+
 		if (this.props.table) {
+			let deleteBtn;
+			if (activeRecordId) {
+				deleteBtn = (
+					<button className="btn btn-sm btn-warning" onClick={this.deleteRecord}>Delete record</button>
+				);
+			}
 			header = (
 				<header>
 					<h1>{this.props.table.displayLabel}</h1>
 					<div>{this.props.table.help}</div>
 					<button className="btn btn-sm btn-default" onClick={this.addRecord}>Add record</button>
+					{deleteBtn}
 				</header>
 			);
 		}
 		let tabs;
 		let form;
 		if (this.props.childrenRecords) {
-			const activeRecord = this.props.childrenRecords.find(rec => rec.id === this.props.activeRecord) || this.props.childrenRecords[0];
-			const activeRecordId = activeRecord && activeRecord.id;
+			
 			tabs = (
 				<div>
 					{

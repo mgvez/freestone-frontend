@@ -68,7 +68,7 @@ export class SingleRecord extends Component {
 	render() {
 		let form;
 		let sub;
-		// console.log('render', this.props.table.id);
+		// console.log('render', this.props.record);
 		if (this.props.table && this.props.record) {
 			
 			form = (

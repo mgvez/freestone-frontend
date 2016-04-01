@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS } from 'freestone/SchemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/SchemaProps';
 
 function setFieldValue(state, data) {
 	const { tableId, recordId, fieldId, val } = data;
@@ -105,6 +105,8 @@ function records(state = {}, action) {
 		return {};
 	case 'RECEIVE_RECORD':
 		return receiveRecord(state, action.data);
+	case 'SET_RECORD_DELETED':
+		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
 	case 'SET_FIELD_VALUE':
 		return setFieldValue(state, action.data);
 	case 'CLEAR_DATA':

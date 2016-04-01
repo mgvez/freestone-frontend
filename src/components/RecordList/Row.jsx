@@ -5,6 +5,8 @@ import { OrderFcn } from 'components/RecordList/OrderFcn';
 import { ModifFcn } from 'components/RecordList/ModifFcn';
 import { InfosFcn } from 'components/RecordList/InfosFcn';
 
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/SchemaProps';
+
 export class Row extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
@@ -30,8 +32,8 @@ export class Row extends Component {
 			<InfosFcn
 				tableName={this.props.table.name}
 				prikey={this.props.values.prikey}
-				lastmodifdate={this.props.values.lastmodifdate}
-				createddate={this.props.values.createddate}
+				lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
+				createddate={this.props.values[CREATED_DATE_ALIAS]}
 			/>
 		);
 		

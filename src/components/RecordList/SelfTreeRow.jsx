@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 import { OrderFcn } from 'components/RecordList/OrderFcn';
-import { PRIKEY_ALIAS } from 'freestone/SchemaProps';
+import { PRIKEY_ALIAS, LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/SchemaProps';
 
 
 export class Row extends Component {
@@ -19,8 +19,8 @@ export class Row extends Component {
 	render() {
 		// console.log(this.props.values);
 		const recordLink = `../main.php?i=${this.props.values[PRIKEY_ALIAS]}&t=${this.props.table.name}`;
-		const created = this.props.values.createddate || 'unknown';
-		const modified = this.props.values.lastmodifdate || 'unknown';
+		const created = this.props.values[CREATED_DATE_ALIAS] || 'unknown';
+		const modified = this.props.values[LASTMODIF_DATE_ALIAS] || 'unknown';
 
 		let orderCell;
 		if (this.props.table.hasOrder) {

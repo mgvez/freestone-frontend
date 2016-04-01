@@ -17,6 +17,7 @@ export class Save extends Component {
 		table: React.PropTypes.object,
 		tree: React.PropTypes.object,
 		records: React.PropTypes.object,
+		deleted: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		saveState: React.PropTypes.object,
 		backPath: React.PropTypes.object,
@@ -31,13 +32,13 @@ export class Save extends Component {
 	}
 
 	componentWillMount() {
-		// console.log('MOUNT', this.props.records);
-		const onSaved = this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records);
+		console.log('MOUNT', this.props.records, this.props.deleted);
+		const onSaved = this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records, this.props.deleted);
 
 		if (onSaved) {
 			onSaved.then(() => {
 				const backPath = this.props.backPath || { path: `list/${this.props.params.tableName}` };
-				this.props.goTo(backPath);
+				setTimeout(() => this.props.goTo(backPath), 2000);
 			});
 		}
 

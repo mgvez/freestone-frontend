@@ -20,12 +20,10 @@ et voir ensuite dans .babelrc
 
 ### next
 
+- tab order
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
-- date modif dans form
-- delete children (php)
-- tab order
 - debounce (lodash) des fetch data
 
 
@@ -62,7 +60,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - bank (et toutes les instances de cet classe)
 - traduire les erreurs (VException)
 - pruner les temp files
-- delete children
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
 - vérifier constantes, et refactoriser
 - à l'update: sitemap
@@ -83,11 +80,11 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 #### Header menu
 #### Liste
 - faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
+- ptn delete
 
 #### Form
 - mtm
 - oto
-- record last modif
 - mettre types de champs dans un foreign (avec type str en key) plutot qu'un enum
 - créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
 - types de input
@@ -99,7 +96,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- date https://github.com/wangzuo/input-moment
 - champs en/fr séparés
 - liste des anciennes révisions du record
-- save
 - comment enlever un record et ses children du store (aussi les children are loaded)
 	- mettre un champ [table_id]_fk à chaque table loadée pour pouvoir deleter record sans connaitre structure
 	- children loaded

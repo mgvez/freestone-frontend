@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
 
-import { PARENTKEY_ALIAS, PRIKEY_ALIAS } from 'freestone/SchemaProps';
+import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/SchemaProps';
 
 const recordsSelector = state => state.recordForm.records;
 const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
@@ -13,7 +13,7 @@ function getRecords(records, parentRecordId, parentTableId, prikey, searchableFi
 	return Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		// console.log(record);
-		return record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record;
+		return (record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
 	}).filter(record => record).map(record => {
 		// console.log(record);
 		return {
@@ -39,7 +39,9 @@ export const formChildrenRecordsSelector = createSelector(
 			childrenRecords = getRecords(tableRecords, parentRecordId, parentTableId, table.prikey, table.searchableFields);
 		}
 
-		const activeRecord = shownRecords && table && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+		const activeRecordId = shownRecords && table && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+
+		const activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
 
 		// console.log(shownRecords);
 		return {

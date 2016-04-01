@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 
 import { RequireApiData } from 'utils/RequireApiData';
-import { tableSchemaSelector } from 'selectors/TableSchema';
+import { rootFormSelector } from 'selectors/rootForm';
 
 import { SingleRecord } from 'containers/Form/SingleRecord';
 
 @connect(
-	tableSchemaSelector,
+	rootFormSelector,
 	dispatch => bindActionCreators(schemaActionCreators, dispatch)
 )
 export class RootForm extends Component {
@@ -18,7 +18,8 @@ export class RootForm extends Component {
 		params: React.PropTypes.object,
 
 		table: React.PropTypes.object,
-
+		lastmodifdate: React.PropTypes.string,
+		
 		fetchTable: React.PropTypes.func,
 	};
 
@@ -45,11 +46,12 @@ export class RootForm extends Component {
 		let header;
 		let form;
 		if (this.props.table) {
+			
 			header = (
 				<header>
 					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-default">Save</Link>
 					<button className="btn btn-xs btn-default">Cancel</button>
-					<div>lastmodif</div>
+					<div>lastmodif {this.props.lastmodifdate}</div>
 					<h1>{this.props.table.displayLabel}</h1>
 					<div>{this.props.table.help}</div>
 				</header>

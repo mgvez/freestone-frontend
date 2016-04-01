@@ -38,6 +38,15 @@ export function addRecord(tableId, newRecord) {
 	};
 }
 
+export function setRecordDeleted(tableId, recordId) {
+	return (dispatch) => {
+		return dispatch({
+			type: 'SET_RECORD_DELETED',
+			data: { tableId, recordId },
+		});
+	};
+}
+
 export function fetchRecord(tableName, id, parentTable = 0) {
 	return (dispatch) => {
 
