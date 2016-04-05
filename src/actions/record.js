@@ -61,16 +61,21 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 	};
 }
 
-export function setOrder(tableId, fieldId, recordIds) {
+export function setOrder(tableId, fieldId, records) {
 	return (dispatch) => {
-		let val = 10;
-		recordIds.forEach((recordId) => {
+		let order = 10;
+		records.forEach((record) => {
 			// console.log(tableId, recordId, fieldId, val);
-			dispatch({
-				type: 'SET_FIELD_VALUE',
-				data: { tableId, recordId, fieldId, val: `${val}` },
-			});
-			val += 10;
+			const val = String(order);
+
+			if (record.order !== val) {
+				dispatch({
+					type: 'SET_FIELD_VALUE',
+					data: { tableId, recordId: record.id, fieldId, val },
+				});
+			}
+
+			order += 10;
 		});
 
 	};

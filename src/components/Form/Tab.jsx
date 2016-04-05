@@ -5,10 +5,10 @@ const tabSource = {
 	beginDrag(props) {
 		// Return the data describing the dragged item
 		const item = { 
-			id: `${props.tableId}_${props.recordId}`,
+			id: props.recordId,
 			index: props.index,
 		};
-		// console.log(item);
+		// console.log(item.index);
 		return item;
 	},
 
@@ -16,11 +16,9 @@ const tabSource = {
 		if (!monitor.didDrop()) {
 			return;
 		}
-
 		// When dropped on a compatible target, do something
 		const item = monitor.getItem();
 		const dropResult = monitor.getDropResult();
-		// CardActions.moveCardToList(item.id, dropResult.listId);
 	},
 };
 
@@ -28,49 +26,13 @@ const tabSource = {
 const tabTarget = {
 	hover(props, monitor, component) {
 		const dragId = monitor.getItem().id;
-		const hoverId = props.id;
-		// console.log(component, dragIndex, hoverIndex);
+		const hoverId = props.recordId;
+		// console.log(dragId, hoverId);
 		// Don't replace items with themselves
 		if (dragId === hoverId) {
 			return;
 		}
-
-		props.swapRecords(monitor.getItem().index, props.index);
-
-		// Determine rectangle on screen
-		// const hoverBoundingRect = component.getDOMNode().getBoundingClientRect();
-
-		// // Get vertical middle
-		// const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
-		// // Determine mouse position
-		// const clientOffset = monitor.getClientOffset();
-
-		// // Get pixels to the top
-		// const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-		// // Only perform the move when the mouse has crossed half of the items height
-		// // When dragging downwards, only move when the cursor is below 50%
-		// // When dragging upwards, only move when the cursor is above 50%
-
-		// // Dragging downwards
-		// if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-		// 	return;
-		// }
-
-		// // Dragging upwards
-		// if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-		// 	return;
-		// }
-
-		// // Time to actually perform the action
-		// props.moveCard(dragIndex, hoverIndex);
-
-		// // Note: we're mutating the monitor item here!
-		// // Generally it's better to avoid mutations,
-		// // but it's good here for the sake of performance
-		// // to avoid expensive index searches.
-		// monitor.getItem().index = hoverIndex;
+		props.swapRecords(dragId, hoverId);
 	},
 };
 

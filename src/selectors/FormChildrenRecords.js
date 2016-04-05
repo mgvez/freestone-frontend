@@ -16,6 +16,7 @@ function getRecords(records, parentRecordId, parentTableId, prikey, searchableFi
 		return (record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
 	}).filter(record => record);
 
+	
 	if (orderField) {
 		filtered = filtered.sort((a, b) => {
 			return a[orderField.id] - b[orderField.id];
@@ -26,6 +27,7 @@ function getRecords(records, parentRecordId, parentTableId, prikey, searchableFi
 		// console.log(record);
 		return {
 			id: record[PRIKEY_ALIAS],
+			order: orderField && record[orderField.id],
 			label: searchableFields.map(field => {
 				return record[field.id];
 			}).join(' '),

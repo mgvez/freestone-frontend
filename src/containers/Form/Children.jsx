@@ -84,19 +84,20 @@ export class Children extends Component {
 		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, null);
 	};
 
-	swapRecords = (originIdx, targetIdx) => {
+	swapRecords = (originId, targetId) => {
 		const orderFieldId = this.props.table.orderField && this.props.table.orderField.id;
 		if (!orderFieldId) return;
 
+		const originIdx = this.props.childrenRecords.findIndex(el => el.id === originId);
+		const targetIdx = this.props.childrenRecords.findIndex(el => el.id === targetId);
+
 		const item = this.props.childrenRecords[originIdx];
-		let dest = [
+		const dest = [
 			...this.props.childrenRecords.slice(0, originIdx),
 			...this.props.childrenRecords.slice(+originIdx + 1),
 		];
 		dest.splice(targetIdx, 0, item);
-		dest = dest.map(record => {
-			return record.id;
-		});
+
 		this.props.setOrder(this.props.tableId, orderFieldId, dest);
 		// console.log(this.props.childrenRecords);
 		// console.log(dest);
@@ -134,6 +135,7 @@ export class Children extends Component {
 							return (<Tab 
 								key={record.id}
 								displayLabel={record.label}
+								order={record.order}
 								isActive={active}
 								recordId={record.id}
 								index={index}
