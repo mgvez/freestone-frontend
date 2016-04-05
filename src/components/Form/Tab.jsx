@@ -8,7 +8,7 @@ const tabSource = {
 			id: `${props.tableId}_${props.recordId}`,
 			index: props.index,
 		};
-		console.log(item);
+		// console.log(item);
 		return item;
 	},
 
@@ -27,13 +27,15 @@ const tabSource = {
 
 const tabTarget = {
 	hover(props, monitor, component) {
-		const dragIndex = monitor.getItem().index;
-		const hoverIndex = props.index;
-		console.log(component, dragIndex, hoverIndex);
+		const dragId = monitor.getItem().id;
+		const hoverId = props.id;
+		// console.log(component, dragIndex, hoverIndex);
 		// Don't replace items with themselves
-		if (dragIndex === hoverIndex) {
+		if (dragId === hoverId) {
 			return;
 		}
+
+		props.swapRecords(monitor.getItem().index, props.index);
 
 		// Determine rectangle on screen
 		// const hoverBoundingRect = component.getDOMNode().getBoundingClientRect();
@@ -72,15 +74,19 @@ const tabTarget = {
 	},
 };
 
-@dropTarget('tab', tabTarget, connect => {
-	// console.log(connect.dropTarget());
-	return {
-		connectDropTarget: connect.dropTarget(),
-	};
-})
+@dropTarget(
+	(props) => {
+		return `tab_${props.tableId}`;
+	},
+	tabTarget,
+	connect => {
+		return {
+			connectDropTarget: connect.dropTarget(),
+		};
+	}
+)
 @dragSource(
 	(props) => {
-		// console.log(props);
 		return `tab_${props.tableId}`;
 	},
 	tabSource,

@@ -17,37 +17,14 @@ import { Tab } from 'components/Form/Tab';
 import createRecord from 'freestone/createRecord';
 
 
-import { DropTarget as dropTarget, DragDropContext as dragDropContext } from 'react-dnd';
+import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-
-
-const tabTarget = {
-	drop(props, monitor, component) {
-		const item = monitor.getItem();
-		const delta = monitor.getDifferenceFromInitialOffset();
-		const left = Math.round(item.left + delta.x);
-		const top = Math.round(item.top + delta.y);
-		console.log(top, left);
-
-		component.moveTab(item.id, left, top);
-	},
-
-	hover(props, monitor, component) {
-		console.log(props, monitor, component);
-	},
-};
 
 @connect(
 	formChildrenRecordsSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 @dragDropContext(HTML5Backend)
-// @dropTarget('tab', tabTarget, (cnct, b) => {
-// 	console.log(cnct, b);
-// 	return {
-// 		connectDropTarget: cnct.dropTarget(),
-// 	};
-// })
 export class Children extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
@@ -64,6 +41,7 @@ export class Children extends Component {
 		setShownRecord: React.PropTypes.func,
 		addRecord: React.PropTypes.func,
 		setRecordDeleted: React.PropTypes.func,
+		setOrder: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -78,20 +56,6 @@ export class Children extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
-	}
-
-	moveTab(id, left, top) {
-		console.log(id, left, top);
-		this.setState(update(this.state, {
-			boxes: {
-				[id]: {
-					$merge: {
-						left,
-						top,
-					},
-				},
-			},
-		}));
 	}
 
 	requireData(props) {
@@ -115,10 +79,27 @@ export class Children extends Component {
 	};
 
 	deleteRecord = () => {
-		
 		// console.log(newRecord);
 		this.props.setRecordDeleted(this.props.table.id, this.props.activeRecord && this.props.activeRecord.id);
 		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, null);
+	};
+
+	swapRecords = (originIdx, targetIdx) => {
+		const orderFieldId = this.props.table.orderField && this.props.table.orderField.id;
+		if (!orderFieldId) return;
+
+		const item = this.props.childrenRecords[originIdx];
+		let dest = [
+			...this.props.childrenRecords.slice(0, originIdx),
+			...this.props.childrenRecords.slice(+originIdx + 1),
+		];
+		dest.splice(targetIdx, 0, item);
+		dest = dest.map(record => {
+			return record.id;
+		});
+		this.props.setOrder(this.props.tableId, orderFieldId, dest);
+		// console.log(this.props.childrenRecords);
+		// console.log(dest);
 	};
 
 	render() {
@@ -145,7 +126,6 @@ export class Children extends Component {
 		let tabs;
 		let form;
 		if (this.props.childrenRecords) {
-			
 			tabs = (
 				<div>
 					{
@@ -160,6 +140,7 @@ export class Children extends Component {
 								tableId={this.props.table.id}
 								parentRecordId={this.props.parentRecordId}
 								setShownRecord={this.props.setShownRecord}
+								swapRecords={this.swapRecords}
 							/>);
 						})
 					}

@@ -60,3 +60,18 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 		});
 	};
 }
+
+export function setOrder(tableId, fieldId, recordIds) {
+	return (dispatch) => {
+		let val = 10;
+		recordIds.forEach((recordId) => {
+			// console.log(tableId, recordId, fieldId, val);
+			dispatch({
+				type: 'SET_FIELD_VALUE',
+				data: { tableId, recordId, fieldId, val: `${val}` },
+			});
+			val += 10;
+		});
+
+	};
+}
