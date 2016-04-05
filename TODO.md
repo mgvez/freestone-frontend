@@ -1,7 +1,3 @@
-# Bugs
-- quand login marche pas, ?next s'append à chauqe login manqué
-- au load apres login, montre pas de records dans liste
-
 # Todo
 
 ## next
