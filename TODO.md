@@ -2,7 +2,6 @@
 
 ## next
 
-- tab order
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
@@ -77,6 +76,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 - champs en/fr séparés
+- new record
+	- val de order default
 - liste des anciennes révisions du record
 - comment enlever un record et ses children du store (aussi les children are loaded)
 	- mettre un champ [table_id]_fk à chaque table loadée pour pouvoir deleter record sans connaitre structure
@@ -86,7 +87,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- quand cancel
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - si pas de record a saver quand component save, redirect (list??)
-- drag & drop tabs http://webcloud.se/sortable-list-component-react-js/
 - limiter le nombre de characteres dans les tabs
 - remettre le champ rewrite.current
 - navig back quand saved

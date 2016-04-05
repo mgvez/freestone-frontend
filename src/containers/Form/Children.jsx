@@ -135,7 +135,7 @@ export class Children extends Component {
 							return (<Tab 
 								key={record.id}
 								displayLabel={record.label}
-								order={record.order}
+								hasOrder={!!this.props.table.orderField}
 								isActive={active}
 								recordId={record.id}
 								index={index}
