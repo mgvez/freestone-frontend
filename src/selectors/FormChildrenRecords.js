@@ -9,12 +9,20 @@ const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 const shownRecordsSelector = (state) => state.recordForm.shownRecords;
 
-function getRecords(records, parentRecordId, parentTableId, prikey, searchableFields) {
-	return Object.keys(records).map((recordId) => {
+function getRecords(records, parentRecordId, parentTableId, prikey, searchableFields, orderField) {
+	let filtered = Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		// console.log(record);
 		return (record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
-	}).filter(record => record).map(record => {
+	}).filter(record => record);
+
+	if (orderField) {
+		filtered = filtered.sort((a, b) => {
+			return a[orderField.id] - b[orderField.id];
+		});
+	}
+
+	return filtered.map(record => {
 		// console.log(record);
 		return {
 			id: record[PRIKEY_ALIAS],
@@ -36,7 +44,7 @@ export const formChildrenRecordsSelector = createSelector(
 
 		let childrenRecords;
 		if (areLoaded) {
-			childrenRecords = getRecords(tableRecords, parentRecordId, parentTableId, table.prikey, table.searchableFields);
+			childrenRecords = getRecords(tableRecords, parentRecordId, parentTableId, table.prikey, table.searchableFields, table.orderField);
 		}
 
 		const activeRecordId = shownRecords && table && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);

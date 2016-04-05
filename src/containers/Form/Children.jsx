@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import update from 'react/lib/update';
+
+
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
@@ -13,10 +16,38 @@ import { Tab } from 'components/Form/Tab';
 
 import createRecord from 'freestone/createRecord';
 
+
+import { DropTarget as dropTarget, DragDropContext as dragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+
+const tabTarget = {
+	drop(props, monitor, component) {
+		const item = monitor.getItem();
+		const delta = monitor.getDifferenceFromInitialOffset();
+		const left = Math.round(item.left + delta.x);
+		const top = Math.round(item.top + delta.y);
+		console.log(top, left);
+
+		component.moveTab(item.id, left, top);
+	},
+
+	hover(props, monitor, component) {
+		console.log(props, monitor, component);
+	},
+};
+
 @connect(
 	formChildrenRecordsSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
+@dragDropContext(HTML5Backend)
+// @dropTarget('tab', tabTarget, (cnct, b) => {
+// 	console.log(cnct, b);
+// 	return {
+// 		connectDropTarget: cnct.dropTarget(),
+// 	};
+// })
 export class Children extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
@@ -47,6 +78,20 @@ export class Children extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
+	}
+
+	moveTab(id, left, top) {
+		console.log(id, left, top);
+		this.setState(update(this.state, {
+			boxes: {
+				[id]: {
+					$merge: {
+						left,
+						top,
+					},
+				},
+			},
+		}));
 	}
 
 	requireData(props) {

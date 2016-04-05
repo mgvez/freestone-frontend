@@ -25,6 +25,7 @@ export const schemaSelector = createSelector(
 				groupField: null,
 				isSelfTree: false,
 				hasOrder: false,
+				orderField: null,
 			};
 			carry[table.name] = tableId;
 			return carry;
@@ -58,6 +59,7 @@ export const schemaSelector = createSelector(
 			}
 			if (field.type === ORDER_TYPE) {
 				table.hasOrder = true;
+				table.orderField = field;
 			}
 			if (field.type === PRIMARY_TYPE) table.prikey = field;
 			if (~PARENT_LINK_TYPES.indexOf(field.type)) table.parentLink = field;
