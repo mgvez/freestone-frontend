@@ -69,7 +69,7 @@ export const schemaSelector = createSelector(
 
 		Object.keys(tables).map((tableId) => {
 			const table = tables[tableId];
-			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank > b.rank);
+			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank - b.rank);
 		});
 
 		// console.log(tables);

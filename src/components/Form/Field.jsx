@@ -27,6 +27,7 @@ export class Field extends Component {
 		case 'date':
 		case 'datetime':
 		case 'int':
+		case 'float':
 		case 'text':
 		case 'char':
 		case 'note':

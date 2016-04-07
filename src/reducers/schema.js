@@ -5,7 +5,7 @@ function tables(state = {}, action) {
 	case 'UNAUTHORIZED':
 		return {};
 	case 'RECEIVE_SCHEMA':
-		// console.log(action);
+		// console.log(action.data.tables);
 		if (!action.data.tables) return state;
 		return {
 			...state,
@@ -55,7 +55,7 @@ function fields(state = {}, action) {
 	case 'UNAUTHORIZED':
 		return {};
 	case 'RECEIVE_SCHEMA':
-		// console.log(action);
+		// console.log(action.data.fields);
 		if (!action.data.fields) return state;
 		return {
 			...state,
