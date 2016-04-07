@@ -68,7 +68,11 @@ export class AutocompleteInput extends Input {
 		this.requireDataCtrl = new RequireApiData;
 		this.regexMatchOption = /./;
 		this.currentText = '';
-		this.currentMatchStates = {};
+		this.currentMatch = {};
+		
+		this.state = {
+			currentText: '',
+		};
 	}
 
 	componentWillMount() {
@@ -77,35 +81,47 @@ export class AutocompleteInput extends Input {
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
+		//quand on change de record, empty le texte entré, pour mettre la valeur réelle du champ
+		if (nextProps.recordId !== this.props.recordId) {
+			this.setCurrentText(null);
+		}
 	}
 
 	requireData(props) {
 		this.requireDataCtrl.requireProp('foreignOptions', props, this.props.fetchForeignOptions, [props.field.id]);
 	}
 
+	setCurrentText(tx) {
+		this.setState({
+			currentText: tx,
+		});
+	}
+
 	onSelect = (value, item) => {
-		// console.log(this.props);
 		// console.log(`select ${item.value}`);
 		this.changeVal(item.value);
+		this.setCurrentText(item.label);
 	};
 
 	onChange = (event, value) => {
 		// console.log(`change ${value}`);
-		this.currentText = value;
+		this.setCurrentText(value);
+
 		this.regexMatchOption = new RegExp(value.split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
 
 	filterOption = (option, inputTextVal) => {
-		// console.log(`filtering ${inputTextVal} ${this.currentText}`);
+		// console.log(`filtering ${inputTextVal} => ${this.state.currentText}`);
 		if (!inputTextVal) return true;
-		const currentMatchState = this.currentMatchStates[option.value] = this.currentMatchStates[option.value] || {};
-		if (currentMatchState.text === this.currentText) {
-			return currentMatchState.isMatch;
+		const currentMatch = this.currentMatch[option.value] = this.currentMatch[option.value] || {};
+		if (currentMatch.text === this.state.currentText) {
+			return currentMatch.isMatch;
 		}
 		// console.log(inputTextVal);
 		const isMatch = option.label.match(this.regexMatchOption);
-		currentMatchState.text = this.currentText;
-		currentMatchState.isMatch = isMatch;
+		currentMatch.text = this.state.currentText;
+		currentMatch.isMatch = isMatch;
+		// console.log(isMatch);
 		return isMatch;
 	};
 
@@ -113,13 +129,14 @@ export class AutocompleteInput extends Input {
 		const options = this.props.foreignOptions && this.props.foreignOptions.values;
 		const current = (options && options.find((option) => option.value === String(this.props.val))) || {};
 		// console.log(this.props.val, current);
-		// console.log(options && options.length);
-
+		// console.log(options);
+		// current.label
 		if (!options) return <div/>;
 
+		const val = this.state.currentText || current.label;
 		return (
 			<Autocomplete
-				initialValue={current.label}
+				value={val}
 				ref="autocomplete"
 				items={options}
 				shouldItemRender={this.filterOption}
