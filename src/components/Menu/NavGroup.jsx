@@ -71,7 +71,7 @@ export class NavGroup extends Component {
 				{ this.getChildrenGroups(level) }
 				{
 					this.props.data.tables.map((item) => {
-						return <Table key={item.id} name={item.name} id={item.id} actionLabel={item.actionLabel}/>;
+						return <Table key={item.id} name={item.name} id={item.id} actionLabel={item.actionLabel} nrecords={item.nrecords} />;
 					})
 				}
 				</ul>

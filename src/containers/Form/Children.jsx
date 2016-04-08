@@ -71,7 +71,15 @@ export class Children extends Component {
 
 	addRecord = () => {
 		// console.log(this.props.table);
-		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId);
+		//si field order, ajoute à la fin
+		let order;
+		if (this.props.table.orderField) {
+			order = this.props.childrenRecords.reduce((highest, record) => {
+				return record.order > highest ? record.order : highest;
+			}, 0) + 10;
+		}
+
+		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, order);
 		
 		// console.log(newRecord);
 		this.props.addRecord(this.props.table.id, newRecord);

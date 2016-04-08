@@ -2,10 +2,6 @@
 
 ## next
 
-- autocomplete
-	- revert quand perd le focus
-	- finir positionnement, etc.
-- debounce (lodash) des fetch data
 
 
 ## Respond to window size
@@ -24,13 +20,14 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## General
 
-- login dans freestone plutot que par redirect
+- login dans freestone.jsx plutot que par redirect
 - liste des records en cours de modif par le user dans un widget
 - createddate && modifdate dans constantes des alias de champs
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - standardiser les noms de fichiers (record-form, formRecord, etc)
 - mettre les actions dans des constantes, les types de champs aussi
 - mettre des icones/couleurs pour les groupes dans le menu
+- debounce (lodash) des fetch data
 
 
 # Freestone PHP
@@ -55,17 +52,16 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 # Freestone JS
 
 ## Menu
-- n records
 
 ## Header menu
 ## Liste
 - faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
-- ptn delete
+- btn delete
+- btn add record
 
 ## Form
 - mtm
 - oto
-- mettre types de champs dans un foreign (avec type str en key) plutot qu'un enum
 - créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
 - types de input
 	- file
@@ -91,6 +87,9 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - navig back quand saved
 - vider menu quand save
 - insert image de banque : drag & drop
+- autocomplete
+	- revert quand perd le focus
+	- finir positionnement, etc.
 
 ## Modules
 - all

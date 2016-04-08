@@ -6,6 +6,7 @@ export class Table extends Component {
 	static propTypes = {
 		name: React.PropTypes.string,
 		actionLabel: React.PropTypes.string,
+		nrecords: React.PropTypes.any,
 		id: React.PropTypes.number,
 	};
 
@@ -18,7 +19,8 @@ export class Table extends Component {
 		// this.oldtable = this.props;
 		return (
 			<li>
-				<Link to={`/list/${this.props.name}`} activeClassName="active" className="">{this.props.actionLabel}</Link>
+				<Link to={`/list/${this.props.name}`} activeClassName="active" className="">{this.props.actionLabel} <span className="nrecords">{this.props.nrecords}</span></Link>
+				
 			</li>
 		);
 	}

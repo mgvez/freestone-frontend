@@ -90,6 +90,18 @@ $level-left-pad: 10px;
 				background-color: darken($nav-bg, 3%);
 				text-decoration:none;
 			}
+				
+			.nrecords {
+				float: right;
+				font-weight: 600;
+			    padding: 0 4px;
+			    background-color: $nav-badge-color;
+			    font-size:11px;
+			    line-height: 16px;
+			    color: #FFFFFF;
+			    border-radius: 8px;
+			    margin-right: 8px;
+			}
 
 			@include menu-level(1);
 

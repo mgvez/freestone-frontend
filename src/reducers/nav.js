@@ -10,6 +10,7 @@ const navInitialState = {
 function structure(state = navInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
+	case 'SAVE_RECORD_SUCCESS':
 	case 'UNAUTHORIZED':
 	case 'CLEAR_DATA':
 		return navInitialState;
@@ -60,7 +61,7 @@ function stack(state = [], action) {
 	switch (action.type) {
 	case 'STACK_REGISTER_PAGE':
 		return [
-			...state,
+			// ...state,
 			action.data,
 		];
 	default:
