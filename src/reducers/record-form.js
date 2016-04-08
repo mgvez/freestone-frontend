@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/SchemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 function setFieldValue(state, data) {
 	const { tableId, recordId, fieldId, val } = data;

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/TableSchema';
+import { tableSchemaSelector } from 'selectors/tableSchema';
 
-import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/SchemaProps';
+import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
 
 

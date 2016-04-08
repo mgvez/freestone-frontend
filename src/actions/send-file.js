@@ -1,7 +1,7 @@
 import { Promise } from 'bluebird';
 
 import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
-import { getHtmlInput } from 'freestone/FileInputs';
+import { getHtmlInput } from 'freestone/fileInputs';
 
 const CHUNK_SIZE = 500 * 1024;
 

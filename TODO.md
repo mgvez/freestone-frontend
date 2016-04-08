@@ -2,7 +2,7 @@
 
 ## next
 
-
+- mtm
 
 ## Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
@@ -55,9 +55,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## Header menu
 ## Liste
-- faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
 - btn delete
-- btn add record
 
 ## Form
 
@@ -96,6 +94,7 @@ par priorité
 - all
 
 # Pluss tard
+- faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
 - shop admin en react/redux
 - ordre ds liste en drag/drop
 - champ type ajax? (voir field format form)

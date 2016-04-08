@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/TableSchema';
+import { tableSchemaSelector } from 'selectors/tableSchema';
 import { routeSelector } from 'selectors/route';
 
 

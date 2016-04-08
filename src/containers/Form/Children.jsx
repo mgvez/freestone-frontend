@@ -8,7 +8,7 @@ import update from 'react/lib/update';
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { formChildrenRecordsSelector } from 'selectors/FormChildrenRecords';
+import { formChildrenRecordsSelector } from 'selectors/formChildrenRecords';
 
 import { RequireApiData } from 'utils/RequireApiData';
 import { SingleRecord } from 'containers/Form/SingleRecord';

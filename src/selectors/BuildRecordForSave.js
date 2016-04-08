@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/TableSchema';
+import { tableSchemaSelector } from 'selectors/tableSchema';
 
-import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/SchemaProps';
+import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 const recordsSelector = state => state.recordForm.records;
 const recordIdSelector = (state, props) => props.params.recordId;
@@ -53,9 +53,9 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 
 export const saveRecordSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, recordIdSelector, childrenSelector],
-	(mainTableSchema, allRecords, recordId, unfilteredChildren) => {
+	(maintableSchema, allRecords, recordId, unfilteredChildren) => {
 		// console.log(`build record for ${recordId}`);
-		const { table } = mainTableSchema;
+		const { table } = maintableSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, unfilteredChildren);
 		const records = getRecords(tree, allRecords, false);
 		const deleted = getRecords(tree, allRecords, true);

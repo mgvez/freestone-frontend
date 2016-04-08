@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { formRecordSelector } from 'selectors/FormRecord';
+import { formRecordSelector } from 'selectors/formRecord';
 
 import { RequireApiData } from 'utils/RequireApiData';
 import { Children } from 'containers/Form/Children';

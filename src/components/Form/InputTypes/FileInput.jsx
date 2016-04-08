@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input } from 'components/Form/InputTypes/Input';
-import { SavedFileInput } from 'freestone/FileInputs';
+import { SavedFileInput } from 'freestone/fileInputs';
 import { FileThumbnail } from 'components/FileThumbnail/FileThumbnail';
 
 export class FileInput extends Input {

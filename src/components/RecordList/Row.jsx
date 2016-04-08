@@ -5,7 +5,7 @@ import { OrderFcn } from 'components/RecordList/OrderFcn';
 import { ModifFcn } from 'components/RecordList/ModifFcn';
 import { InfosFcn } from 'components/RecordList/InfosFcn';
 
-import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/SchemaProps';
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps';
 
 export class Row extends Component {
 	static propTypes = {

@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
-import { LASTMODIF_DATE_ALIAS } from 'freestone/SchemaProps';
+import { LASTMODIF_DATE_ALIAS } from 'freestone/schemaProps';
 
 
-import { tableSchemaSelector } from 'selectors/TableSchema';
+import { tableSchemaSelector } from 'selectors/tableSchema';
 const recordIdSelector = (state, props) => props.params && props.params.recordId;
 const recordsSelector = state => state.recordForm.records;
 

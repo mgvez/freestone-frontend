@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/TableSchema';
+import { tableSchemaSelector } from 'selectors/tableSchema';
 
 const recordsSelector = state => state.recordForm.records;
 const envSelector = state => state.env;

@@ -14,7 +14,7 @@ import { RequireApiData } from 'utils/RequireApiData';
 
 import createRecord from 'freestone/createRecord';
 
-import { listRecordsSelector } from 'selectors/ListRecords';
+import { listRecordsSelector } from 'selectors/listRecords';
 
 @connect(
 	listRecordsSelector,

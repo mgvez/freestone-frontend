@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import * as saveActionCreators from 'actions/save';
 import { goTo } from 'actions/nav';
 
-import { saveSelector } from 'selectors/Save';
+import { saveSelector } from 'selectors/save';
 
 @connect(
 	saveSelector,

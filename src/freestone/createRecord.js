@@ -1,12 +1,12 @@
 
 import uniqueId from 'utils/UniqueId';
-import { PRIKEY_ALIAS, PARENTKEY_ALIAS } from 'freestone/SchemaProps';
+import { PRIKEY_ALIAS, PARENTKEY_ALIAS } from 'freestone/schemaProps';
 
 export default (table, parentTableId, parentRecordId, orderVal) => {
 	const newRecord = table.fields.reduce((record, field) => {
 		// console.log(field);
 		if (field.type === 'order') {
-			record[field.id] = orderVal;
+			record[field.id] = orderVal || '';
 		} else {
 			record[field.id] = field.default;
 		}
