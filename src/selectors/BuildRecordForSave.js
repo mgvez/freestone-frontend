@@ -53,9 +53,9 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 
 export const saveRecordSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, recordIdSelector, childrenSelector],
-	(maintableSchema, allRecords, recordId, unfilteredChildren) => {
+	(mainTableSchema, allRecords, recordId, unfilteredChildren) => {
 		// console.log(`build record for ${recordId}`);
-		const { table } = maintableSchema;
+		const { table } = mainTableSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, unfilteredChildren);
 		const records = getRecords(tree, allRecords, false);
 		const deleted = getRecords(tree, allRecords, true);
