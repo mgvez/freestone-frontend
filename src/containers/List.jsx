@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
+import { pushNavStack } from 'actions/nav';
 
 import { Heading } from 'components/RecordList/Heading';
 import { Paging } from 'components/RecordList/Paging';
@@ -10,11 +12,13 @@ import { Row } from 'components/RecordList/Row';
 import { InScroll } from 'containers/InScroll';
 import { RequireApiData } from 'utils/RequireApiData';
 
+import createRecord from 'freestone/createRecord';
+
 import { listRecordsSelector } from 'selectors/ListRecords';
 
 @connect(
 	listRecordsSelector,
-	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
+	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators, pushNavStack }, dispatch)
 )
 export class List extends Component {
 	static propTypes = {
@@ -29,9 +33,13 @@ export class List extends Component {
 		nRecords: React.PropTypes.number,
 		search: React.PropTypes.string,
 		qstr: React.PropTypes.string,
+		path: React.PropTypes.string,
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
+		addRecord: React.PropTypes.func,
+		pushNavStack: React.PropTypes.func,
+
 	};
 
 	static contextTypes = {
@@ -72,10 +80,19 @@ export class List extends Component {
 		const inp = this.refs.searchVal;
 		let val = inp.value;
 		val = val ? `/${val}` : '';
-		// console.log(inp.value);
 		const path = `list/${this.props.params.tableName}/${this.props.curPage}${val}`;
-		// console.log(path);
 		this.context.router.push(path);
+	};
+
+	addRecord = () => {
+
+		const { newRecord, newRecordId } = createRecord(this.props.table);
+		this.props.addRecord(this.props.table.id, newRecord);
+		this.props.pushNavStack(this.props.path, window.pageYOffset);
+
+		const path = `/edit/${this.props.params.tableName}/${newRecordId}`;
+		this.context.router.push(path);
+
 	};
 
 	render() {
@@ -92,6 +109,8 @@ export class List extends Component {
 						<h1>{this.props.table.actionLabel}</h1>
 						<div className="text-description">{this.props.table.help}</div>
 						{/* <div className="text-description">{this.props.qstr}</div> */}
+						<button onClick={this.addRecord}><i className="fa fa-plus-square"></i> New record</button>
+
 					</header>
 
 					<div className="padded-content">

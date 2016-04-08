@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
+import { routeSelector } from 'selectors/route';
+
 
 const recordsSelector = state => state.recordList;
 const envSelector = state => state.env;
@@ -38,8 +40,8 @@ function reorderSelfTree(records) {
 }
 
 export const listRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, paramsSelector, envSelector],
-	(schema, stateRecords, params, env) => {
+	[tableSchemaSelector, recordsSelector, paramsSelector, envSelector, routeSelector],
+	(schema, stateRecords, params, env, route) => {
 
 		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage } = stateRecords;
 		const { page: requestedPage, search: requestedSearch } = params;
@@ -91,6 +93,7 @@ export const listRecordsSelector = createSelector(
 			nRecords,
 			search: providedSearch,
 			qstr: stateRecords.qstr,
+			...route,
 		};
 	}
 );

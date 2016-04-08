@@ -35,7 +35,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
 	- childrenAreLoaded (reducer record-form) est problématique
 	- getRecords de formchildrenrecord reselect fucké 
-- bank (et toutes les instances de cet classe)
+- bank (et toutes les instances de cette classe)
 - traduire les erreurs (VException)
 - pruner les temp files
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
@@ -60,6 +60,9 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - btn add record
 
 ## Form
+
+par priorité
+
 - mtm
 - oto
 - créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
@@ -72,22 +75,19 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- date https://github.com/wangzuo/input-moment
 - champs en/fr séparés
 - liste des anciennes révisions du record
+- limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
+- si pas de record a saver quand component save, redirect (list??)
+- remettre le champ rewrite.current
+- insert image de banque : drag & drop
+- autocomplete
+	- revert quand perd le focus
+	- finir positionnement, etc.
 - comment enlever un record et ses children du store (aussi les children are loaded)
 	- mettre un champ [table_id]_fk à chaque table loadée pour pouvoir deleter record sans connaitre structure
 	- children loaded
 	- menu gauche
 	- quand save
 	- quand cancel
-- limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
-- si pas de record a saver quand component save, redirect (list??)
-- limiter le nombre de characteres dans les tabs
-- remettre le champ rewrite.current
-- navig back quand saved
-- vider menu quand save
-- insert image de banque : drag & drop
-- autocomplete
-	- revert quand perd le focus
-	- finir positionnement, etc.
 
 ## Modules
 - all
