@@ -3,6 +3,7 @@
 ## next
 
 - mtm
+- mettre les actions dans des constantes, les types de champs aussi
 
 ## Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
@@ -25,7 +26,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - createddate && modifdate dans constantes des alias de champs
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - standardiser les noms de fichiers (record-form, formRecord, etc)
-- mettre les actions dans des constantes, les types de champs aussi
 - mettre des icones/couleurs pour les groupes dans le menu
 - debounce (lodash) des fetch data
 

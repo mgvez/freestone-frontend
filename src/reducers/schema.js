@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
+import { UNAUTHORIZED } from 'actions/auth';
+import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
+import { RECEIVE_SCHEMA } from 'actions/schema';
 
 function tables(state = {}, action) {
 	switch (action.type) {
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return {};
-	case 'RECEIVE_SCHEMA':
+	case RECEIVE_SCHEMA:
 		// console.log(action.data.tables);
 		if (!action.data.tables) return state;
 		return {
@@ -15,9 +18,9 @@ function tables(state = {}, action) {
 			}, {}),
 		};
 	//TEMPORAIRE POUR DEBUG
-	case 'CLEAR_ERRORS':
+	case CLEAR_ERRORS:
 		return {};
-	case 'CLEAR_DATA':
+	case CLEAR_DATA:
 		return {};
 	default:
 		// console.log('no change');
@@ -27,9 +30,9 @@ function tables(state = {}, action) {
 
 function children(state = {}, action) {
 	switch (action.type) {
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return {};
-	case 'RECEIVE_SCHEMA':
+	case RECEIVE_SCHEMA:
 		// console.log(action);
 		if (!action.data.children) return state;
 		return {
@@ -40,9 +43,9 @@ function children(state = {}, action) {
 			}, {}),
 		};
 	//TEMPORAIRE POUR DEBUG
-	case 'CLEAR_ERRORS':
+	case CLEAR_ERRORS:
 		return {};
-	case 'CLEAR_DATA':
+	case CLEAR_DATA:
 		return {};
 	default:
 		// console.log('no change');
@@ -52,9 +55,9 @@ function children(state = {}, action) {
 
 function fields(state = {}, action) {
 	switch (action.type) {
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return {};
-	case 'RECEIVE_SCHEMA':
+	case RECEIVE_SCHEMA:
 		// console.log(action.data.fields);
 		if (!action.data.fields) return state;
 		return {
@@ -65,9 +68,9 @@ function fields(state = {}, action) {
 			}, {}),
 		};
 	//TEMPORAIRE POUR DEBUG
-	case 'CLEAR_ERRORS':
+	case CLEAR_ERRORS:
 		return {};
-	case 'CLEAR_DATA':
+	case CLEAR_DATA:
 		return {};
 	default:
 		// console.log('no change');

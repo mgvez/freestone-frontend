@@ -1,6 +1,6 @@
 
 import { push as pushPath } from 'react-router-redux';
-import { unauthorized } from 'actions/auth';
+import { unauthorized, LOGIN_USER_FAILURE, LOGOUT_USER, UNAUTHORIZED } from 'actions/auth';
 
 
 export default store => next => action => {
@@ -15,11 +15,11 @@ export default store => next => action => {
 	}
 
 	switch (action.type) {
-	case 'LOGIN_USER_FAILURE':
-	case 'LOGOUT_USER':
+	case LOGIN_USER_FAILURE:
+	case LOGOUT_USER:
 		next(unauthorized());
 		return gotoLogin();
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return gotoLogin();
 	default:
 		return next(action);

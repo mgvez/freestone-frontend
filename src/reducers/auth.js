@@ -1,4 +1,6 @@
 
+import { UNAUTHORIZED, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER } from 'actions/auth';
+
 const initialState = {
 	jwt: null,
 	userName: null,
@@ -10,7 +12,7 @@ const initialState = {
 export function auth(state = initialState, action) {
 	// console.log(action);
 	switch (action.type) {
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return {
 			...state,
 			isAuthenticated: false,
@@ -18,13 +20,13 @@ export function auth(state = initialState, action) {
 			userName: null,
 			statusText: 'Unauthorized',
 		};
-	case 'LOGIN_USER_REQUEST':
+	case LOGIN_USER_REQUEST:
 		return {
 			...state,
 			isAuthenticating: true,
 			statusText: null,
 		};
-	case 'LOGIN_USER_SUCCESS':
+	case LOGIN_USER_SUCCESS:
 		return {
 			...state,
 			isAuthenticating: false,
@@ -33,7 +35,7 @@ export function auth(state = initialState, action) {
 			userName: action.payload.token.userName,
 			statusText: 'You have been successfully logged in.',
 		};
-	case 'LOGIN_USER_FAILURE':
+	case LOGIN_USER_FAILURE:
 		return {
 			...state,
 			isAuthenticating: false,
@@ -42,7 +44,7 @@ export function auth(state = initialState, action) {
 			userName: null,
 			statusText: `Authentication Error: ${action.payload.status} ${action.payload.statusText}`,
 		};
-	case 'LOGOUT_USER':
+	case LOGOUT_USER:
 		return {
 			...state,
 			isAuthenticated: false,

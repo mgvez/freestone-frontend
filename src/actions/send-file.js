@@ -3,6 +3,8 @@ import { Promise } from 'bluebird';
 import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 import { getHtmlInput } from 'freestone/fileInputs';
 
+export const SEND_FILE = 'SEND_FILE';
+
 const CHUNK_SIZE = 500 * 1024;
 
 function sendChunk(dispatch, fileDef, rangeStart = 0) {
@@ -26,7 +28,7 @@ function sendChunk(dispatch, fileDef, rangeStart = 0) {
 
 	const chunkReqAction = dispatch({
 		[FREESTONE_API]: {
-			types: [null, 'SEND_FILE', FREESTONE_API_FATAL_FAILURE],
+			types: [null, SEND_FILE, FREESTONE_API_FATAL_FAILURE],
 			route: `file`,
 			data,
 		},

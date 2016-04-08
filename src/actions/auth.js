@@ -3,10 +3,18 @@ import { push as pushPath } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
 import { FREESTONE_API } from 'middleware/api';
 
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const UNAUTHORIZED = 'UNAUTHORIZED';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
 
 function loginUserSuccess(jwt, token) {
 	return {
-		type: 'LOGIN_USER_SUCCESS',
+		type: LOGIN_USER_SUCCESS,
 		payload: {
 			jwt,
 			token,
@@ -16,7 +24,7 @@ function loginUserSuccess(jwt, token) {
 
 export function loginUserFailure(error) {
 	return {
-		type: 'LOGIN_USER_FAILURE',
+		type: LOGIN_USER_FAILURE,
 		payload: error,
 	};
 }
@@ -44,13 +52,13 @@ export function receiveToken(jwt) {
 
 export function logout() {
 	return {
-		type: 'LOGOUT_USER',
+		type: LOGOUT_USER,
 	};
 }
 
 export function unauthorized() {
 	return {
-		type: 'UNAUTHORIZED',
+		type: UNAUTHORIZED,
 	};
 }
 
@@ -61,7 +69,7 @@ export function loginUser(username, password, redirect = '/home') {
 		// console.log(action);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['LOGIN_REQUEST', 'LOGIN_SUCCESS', 'LOGIN_FAILURE'],
+				types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
 				route: 'login',
 				data: {
 					freestoneuser: username,

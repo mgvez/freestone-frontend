@@ -1,3 +1,6 @@
+
+import { ADD_ENV } from 'actions/env';
+
 const initialState = {
 	openedFrom: '',
 	clientScripts: [],
@@ -14,7 +17,7 @@ const initialState = {
 export function env(state = initialState, action) {
 	// console.log(action);
 	switch (action.type) {
-	case 'ADD_ENV':
+	case ADD_ENV:
 		// console.log(action.data);
 		return action.data;
 	default:

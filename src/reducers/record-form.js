@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { UNAUTHORIZED } from 'actions/auth';
+import { CLEAR_DATA } from 'actions/dev';
+import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED } from 'actions/record';
+import { SAVE_RECORD_SUCCESS } from 'actions/save';
 
 function setFieldValue(state, data) {
 	const { tableId, recordId, fieldId, val } = data;
@@ -67,9 +71,9 @@ function removeRecords(state, data) {
 
 function childrenAreLoaded(state = {}, action) {
 	switch (action.type) {
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return {};
-	case 'RECEIVE_RECORD':
+	case RECEIVE_RECORD:
 		if (!action.data || !action.data.parentTableId || !action.data.parentRecordId) return state;
 		const { parentTableId, parentRecordId, tableId } = action.data;
 		// console.log(parentTableId, parentRecordId, tableId);
@@ -87,10 +91,10 @@ function childrenAreLoaded(state = {}, action) {
 
 		// console.log(newState);
 		return newState;
-	case 'SAVE_RECORD_SUCCESS':
+	case SAVE_RECORD_SUCCESS:
 		//m fonction que pour les records eux meme (structure fonctionne)
 		return removeRecords(state, action.data);
-	case 'CLEAR_DATA':
+	case CLEAR_DATA:
 		return {};
 	default:
 		// console.log('no change');
@@ -101,17 +105,17 @@ function childrenAreLoaded(state = {}, action) {
 
 function records(state = {}, action) {
 	switch (action.type) {
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return {};
-	case 'RECEIVE_RECORD':
+	case RECEIVE_RECORD:
 		return receiveRecord(state, action.data);
-	case 'SET_RECORD_DELETED':
+	case SET_RECORD_DELETED:
 		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
-	case 'SET_FIELD_VALUE':
+	case SET_FIELD_VALUE:
 		return setFieldValue(state, action.data);
-	case 'CLEAR_DATA':
+	case CLEAR_DATA:
 		return {};
-	case 'SAVE_RECORD_SUCCESS':
+	case SAVE_RECORD_SUCCESS:
 		// console.log(action);
 		return removeRecords(state, action.data);
 	default:
@@ -123,13 +127,13 @@ function records(state = {}, action) {
 // garde les records tels que loadés de la db, sans alteration (donc ne repond pas au set field value)
 function recordsUnaltered(state = {}, action) {
 	switch (action.type) {
-	case 'UNAUTHORIZED':
+	case UNAUTHORIZED:
 		return {};
-	case 'RECEIVE_RECORD':
+	case RECEIVE_RECORD:
 		return receiveRecord(state, action.data);
-	case 'CLEAR_DATA':
+	case CLEAR_DATA:
 		return {};
-	case 'SAVE_RECORD_SUCCESS':
+	case SAVE_RECORD_SUCCESS:
 		// console.log(action);
 		return removeRecords(state, action.data);
 	default:
@@ -140,7 +144,7 @@ function recordsUnaltered(state = {}, action) {
 
 function shownRecords(state = {}, action) {
 	switch (action.type) {
-	case 'SET_SHOWN_RECORD':
+	case SET_SHOWN_RECORD:
 		const tableId = action.data.tableId;
 		// console.log(action);
 		const newState = {
