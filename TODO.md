@@ -71,8 +71,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 - champs en/fr séparés
-- new record
-	- val de order default
 - liste des anciennes révisions du record
 - comment enlever un record et ses children du store (aussi les children are loaded)
 	- mettre un champ [table_id]_fk à chaque table loadée pour pouvoir deleter record sans connaitre structure

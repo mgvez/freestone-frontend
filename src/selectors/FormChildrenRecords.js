@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/TableSchema';
 
 import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/SchemaProps';
+import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
+
 
 const recordsSelector = state => state.recordForm.records;
 const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
@@ -25,12 +27,18 @@ function getRecords(records, parentRecordId, parentTableId, prikey, searchableFi
 
 	return filtered.map(record => {
 		// console.log(record);
+		let label = searchableFields.map(field => {
+			return record[field.id];
+		}).join(' ');
+
+		if (label.length > MAX_TAB_LABEL_LENGTH) {
+			label = label.substring(0, MAX_TAB_LABEL_LENGTH) + '...';
+		}
+
 		return {
 			id: record[PRIKEY_ALIAS],
 			order: orderField && record[orderField.id],
-			label: searchableFields.map(field => {
-				return record[field.id];
-			}).join(' '),
+			label,
 		};
 	});
 }
