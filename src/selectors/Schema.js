@@ -21,7 +21,7 @@ export const schemaSelector = createSelector(
 				fields: [],
 				searchableFields: [],
 				prikey: null,
-				parentLink: null,
+				parentLink: {},
 				groupField: null,
 				isSelfTree: false,
 				hasOrder: false,
@@ -62,8 +62,9 @@ export const schemaSelector = createSelector(
 				table.orderField = field;
 			}
 			if (field.type === PRIMARY_TYPE) table.prikey = field;
-			if (~PARENT_LINK_TYPES.indexOf(field.type)) table.parentLink = field;
-
+			if (~PARENT_LINK_TYPES.indexOf(field.type) && field.foreign) {
+				table.parentLink[field.foreign.foreignTableId] = field;
+			}
 			return carry;
 		}, tables);
 

@@ -3,7 +3,6 @@
 ## next
 
 - mtm
-- mettre les actions dans des constantes, les types de champs aussi
 
 ## Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
@@ -28,7 +27,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - standardiser les noms de fichiers (record-form, formRecord, etc)
 - mettre des icones/couleurs pour les groupes dans le menu
 - debounce (lodash) des fetch data
-
+- au logout, save le state entier du user à la db
 
 # Freestone PHP
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
@@ -61,6 +60,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 par priorité
 
+- caching du reselect de children records
 - mtm
 - oto
 - créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)

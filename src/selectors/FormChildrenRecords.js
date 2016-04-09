@@ -18,7 +18,6 @@ function getRecords(records, parentRecordId, parentTableId, prikey, searchableFi
 		return (record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
 	}).filter(record => record);
 
-	
 	if (orderField) {
 		filtered = filtered.sort((a, b) => {
 			return a[orderField.id] - b[orderField.id];
@@ -48,24 +47,31 @@ export const formChildrenRecordsSelector = createSelector(
 	(schema, records, childrenAreLoaded, parentRecordId, parentTableId, shownRecords) => {
 		
 		const { table } = schema;
-		const areLoaded = parentRecordId && table && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
-		// console.log(parentRecordId, table, childrenAreLoaded);
-		const tableRecords = table && records[table.id];
+		if (table) {
+			const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
+			// console.log(parentRecordId, table, childrenAreLoaded);
+			const tableRecords = records[table.id];
 
-		let childrenRecords;
-		if (areLoaded) {
-			childrenRecords = getRecords(tableRecords, parentRecordId, parentTableId, table.prikey, table.searchableFields, table.orderField);
+			let childrenRecords;
+			if (areLoaded) {
+				childrenRecords = getRecords(tableRecords, parentRecordId, parentTableId, table.prikey, table.searchableFields, table.orderField);
+			}
+
+			const activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+			const activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
+
+			const parentLinkField = table.parentLink[parentTableId];
+			const type = parentLinkField && parentLinkField.type;
+
+			return {
+				table,
+				type,
+				childrenRecords,
+				activeRecord,
+			};
 		}
 
-		const activeRecordId = shownRecords && table && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+		return {};
 
-		const activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
-
-		// console.log(shownRecords);
-		return {
-			table,
-			childrenRecords,
-			activeRecord,
-		};
 	}
 );

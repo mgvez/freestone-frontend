@@ -34,6 +34,7 @@ export class Children extends Component {
 		childrenRecords: React.PropTypes.array,
 		activeRecord: React.PropTypes.object,
 		table: React.PropTypes.object,
+		type: React.PropTypes.string,
 		newRecord: React.PropTypes.object,
 
 		fetchTable: React.PropTypes.func,
@@ -114,6 +115,7 @@ export class Children extends Component {
 	render() {
 		let header;
 		
+		console.log(this.props.type);
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		if (this.props.table) {

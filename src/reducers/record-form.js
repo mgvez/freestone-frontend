@@ -24,7 +24,6 @@ function setFieldValue(state, data) {
 function receiveRecord(state, data) {
 	// console.log(action.data);
 	if (!data || !data.tableId || !data.records) return state;
-	// const { parentTableId, parentRecordId, tableId } = data;
 	const { tableId } = data;
 	const newState = {
 		...state,
@@ -34,21 +33,6 @@ function receiveRecord(state, data) {
 			return tableRecords;
 		}, state[tableId] || {}),
 	};
-
-	// if (parentTableId && parentRecordId && newState[parentTableId]) {
-	// 	newState[parentTableId] = {
-	// 		...newState[parentTableId],
-	// 		[parentRecordId]: {
-	// 			...newState[parentTableId][parentRecordId],
-	// 			__childrenAreLoaded: {
-	// 				...newState[parentTableId][parentRecordId].__childrenAreLoaded,
-	// 				[tableId]: true,
-	// 			},
-	// 		},
-	// 	};
-	// }
-
-	// console.log(newState);
 	return newState;
 }
 

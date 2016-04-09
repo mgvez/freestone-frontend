@@ -14,7 +14,12 @@ export default (table, parentTableId, parentRecordId, orderVal) => {
 	}, {});
 	const newRecordId = uniqueId();
 	newRecord[PRIKEY_ALIAS] = newRecord[table.prikey.id] = newRecordId;
-	if (parentTableId) newRecord[`${PARENTKEY_ALIAS}_${parentTableId}`] = newRecord[table.parentLink.id] = parentRecordId;
+
+	if (parentTableId) {
+		const parentFieldId = table.parentLink[parentTableId] && table.parentLink[parentTableId].id;
+		newRecord[`${PARENTKEY_ALIAS}_${parentTableId}`] = newRecord[parentFieldId] = parentRecordId;
+	}
+
 	return {
 		newRecord,
 		newRecordId,
