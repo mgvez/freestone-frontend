@@ -2,29 +2,23 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import update from 'react/lib/update';
-
-
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
 import { formChildrenRecordsSelector } from 'selectors/formChildrenRecords';
 
 import { RequireApiData } from 'utils/RequireApiData';
-import { SingleRecord } from 'containers/Form/SingleRecord';
-import { Tab } from 'components/Form/Tab';
-
 import createRecord from 'freestone/createRecord';
 
+import { Header } from 'components/Form/Header';
+import { SubformTabbed } from 'components/Form/SubformTabbed';
+import { SubformMtm } from 'components/Form/SubformMtm';
 
-import { DragDropContext as dragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 @connect(
 	formChildrenRecordsSelector,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
-@dragDropContext(HTML5Backend)
 export class Children extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
@@ -35,11 +29,10 @@ export class Children extends Component {
 		activeRecord: React.PropTypes.object,
 		table: React.PropTypes.object,
 		type: React.PropTypes.string,
-		newRecord: React.PropTypes.object,
 
+		setShownRecord: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
-		setShownRecord: React.PropTypes.func,
 		addRecord: React.PropTypes.func,
 		setRecordDeleted: React.PropTypes.func,
 		setOrder: React.PropTypes.func,
@@ -113,59 +106,31 @@ export class Children extends Component {
 	};
 
 	render() {
-		let header;
 		
 		console.log(this.props.type);
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
-		if (this.props.table) {
-			let deleteBtn;
-			if (activeRecordId) {
-				deleteBtn = (
-					<button className="btn btn-sm btn-warning" onClick={this.deleteRecord}>Delete record</button>
-				);
-			}
-			header = (
-				<header>
-					<h1>{this.props.table.displayLabel}</h1>
-					<div>{this.props.table.help}</div>
-					<button className="btn btn-sm btn-default" onClick={this.addRecord}>Add record</button>
-					{deleteBtn}
-				</header>
-			);
-		}
-		let tabs;
 		let form;
-		if (this.props.childrenRecords) {
-			tabs = (
-				<div>
-					{
-						this.props.childrenRecords.map((record, index) => {
-							const active = record.id === activeRecordId;
-							return (<Tab 
-								key={record.id}
-								displayLabel={record.label}
-								hasOrder={!!this.props.table.orderField}
-								isActive={active}
-								recordId={record.id}
-								index={index}
-								tableId={this.props.table.id}
-								parentRecordId={this.props.parentRecordId}
-								setShownRecord={this.props.setShownRecord}
-								swapRecords={this.swapRecords}
-							/>);
-						})
-					}
-				</div>
-			);
-			form = (
-				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />
-			);
+		if (this.props.childrenRecords && this.props.type === 'rel') {
+			form = (<SubformTabbed 
+				table={this.props.table}
+				activeRecord={this.props.activeRecord}
+				parentRecordId={this.props.parentRecordId}
+				swapRecords={this.swapRecords}
+				setShownRecord={this.props.setShownRecord}
+				childrenRecords={this.props.childrenRecords}
+			/>);
+		} else if (this.props.type === 'mtm') {
+			form = (<SubformMtm 
+				table={this.props.table}
+				parentRecordId={this.props.parentRecordId}
+				childrenRecords={this.props.childrenRecords}
+			/>);
 		}
+
 		return (
 			<section>
-				{ header }
-				{ tabs }
+				<Header table={this.props.table} deleteRecord={this.deleteRecord} addRecord={this.addRecord} activeRecordId={activeRecordId} />
 				{ form }
 			</section>
 		);
