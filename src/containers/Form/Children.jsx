@@ -13,6 +13,7 @@ import createRecord from 'freestone/createRecord';
 import { Header } from 'components/Form/Header';
 import { SubformTabbed } from 'components/Form/SubformTabbed';
 import { SubformMtm } from 'components/Form/SubformMtm';
+import { SingleRecord } from 'containers/Form/SingleRecord';
 
 
 @connect(
@@ -107,11 +108,15 @@ export class Children extends Component {
 
 	render() {
 		
-		console.log(this.props.type);
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		let form;
+		let hasAddButton = true;
+		let hasDeleteButton = true;
 		if (this.props.childrenRecords && this.props.type === 'rel') {
+			hasAddButton = true;
+			hasDeleteButton = true;
+
 			form = (<SubformTabbed 
 				table={this.props.table}
 				activeRecord={this.props.activeRecord}
@@ -120,17 +125,27 @@ export class Children extends Component {
 				setShownRecord={this.props.setShownRecord}
 				childrenRecords={this.props.childrenRecords}
 			/>);
+
 		} else if (this.props.type === 'mtm') {
+
+			hasAddButton = hasDeleteButton = false;
 			form = (<SubformMtm 
 				table={this.props.table}
 				parentRecordId={this.props.parentRecordId}
 				childrenRecords={this.props.childrenRecords}
 			/>);
+
+		} else if (this.props.childrenRecords && this.props.type === 'oto') {
+			
+			hasAddButton = !this.props.childrenRecords.length;
+			hasDeleteButton = true;
+			form = <SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />;
+
 		}
 
 		return (
 			<section>
-				<Header table={this.props.table} deleteRecord={this.deleteRecord} addRecord={this.addRecord} activeRecordId={activeRecordId} />
+				<Header table={this.props.table} deleteRecord={this.deleteRecord} addRecord={this.addRecord} activeRecordId={activeRecordId} hasAddButton={hasAddButton} hasDeleteButton={hasDeleteButton} />
 				{ form }
 			</section>
 		);
