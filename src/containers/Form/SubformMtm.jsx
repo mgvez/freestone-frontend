@@ -9,6 +9,8 @@ import { RequireApiData } from 'utils/RequireApiData';
 import { fetchMtmOptions } from 'actions/record';
 import { mtmOptionsSelector } from 'selectors/mtmOptions';
 
+import { Header } from 'components/Form/Header';
+
 
 @dragDropContext(HTML5Backend)
 @connect(
@@ -48,46 +50,40 @@ export class SubformMtm extends Component {
 	}
 
 	render() {
-
+		if (this.props.childrenRecords) {
+			this.props.childrenRecords.map((record, index) => {
+				// console.log(record);
+			});
+		}
 		if (this.props.mtmOptions) {
 			// console.log(this.props.mtmOptions);
 			return (
-				<div>
-				{
-					this.props.mtmOptions.map((optionGroup, groupIndex) => {
-						// console.log(optionGroup);
-						
-						const { categ, options } = optionGroup;
-						return options.map((option, optionIndex) => {
-							// console.log(option);
-							const { display, id } = option;
-							return (
-								<div className="col-md-3"
-									key={id}
-								>
-								{optionIndex}. {id}:{display}
-								</div>
-							);
-						});
-						
-					})
-				}
-				</div>
+				<section>
+					<Header table={this.props.table} />
+					{
+						this.props.mtmOptions.map((optionGroup, groupIndex) => {
+							// console.log(optionGroup);
+							
+							const { categ, options } = optionGroup;
+							return options.map((option, optionIndex) => {
+								// console.log(option);
+								const { display, id } = option;
+								return (
+									<div className="col-md-3"
+										key={id}
+									>
+									{optionIndex}. {id}:{display}
+									</div>
+								);
+							});
+							
+						})
+					}
+				</section>
 			);
 		}
 
-		return (
-			<div>
-			{
-				this.props.childrenRecords.map((record, index) => {
-					console.log(record);
-					return (<div
-						key={record.id}
-					/>);
-				})
-			}
-			</div>
-		);
+		return null;
 
 	}
 }

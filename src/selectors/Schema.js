@@ -1,13 +1,11 @@
 import { createSelector } from 'reselect';
+import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from 'freestone/schemaProps';
 
 //build le schema complet en tree
 
 const tablesSelector = state => state.schema.tables;
 const fieldsSelector = state => state.schema.fields;
 
-const PRIMARY_TYPE = 'pri';
-const ORDER_TYPE = 'order';
-const PARENT_LINK_TYPES = ['rel', 'oto', 'mtm'];
 
 export const schemaSelector = createSelector(
 	[tablesSelector, fieldsSelector],
@@ -26,6 +24,7 @@ export const schemaSelector = createSelector(
 				isSelfTree: false,
 				hasOrder: false,
 				orderField: null,
+				mtmOptionField: null,
 			};
 			carry[table.name] = tableId;
 			return carry;
@@ -57,20 +56,32 @@ export const schemaSelector = createSelector(
 				}
 				
 			}
-			if (field.type === ORDER_TYPE) {
+			if (field.type === TYPE_ORDER) {
 				table.hasOrder = true;
 				table.orderField = field;
 			}
-			if (field.type === PRIMARY_TYPE) table.prikey = field;
-			if (~PARENT_LINK_TYPES.indexOf(field.type) && field.foreign) {
+			if (field.type === TYPE_PRIMARY) table.prikey = field;
+			if (~TYPES_PARENT_LINK.indexOf(field.type) && field.foreign) {
 				table.parentLink[field.foreign.foreignTableId] = field;
 			}
 			return carry;
 		}, tables);
 
+
 		Object.keys(tables).map((tableId) => {
 			const table = tables[tableId];
 			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank - b.rank);
+
+			//if table has many to many field, we need to find the option field
+			if (table.type === TYPE_MTM) {
+				table.mtmOptionField = table.fields.reduce((carry, field) => {
+					if (!carry && !~TYPES_PARENT_LINK.indexOf(field.type) && field.foreign) {
+						return field;
+					}
+					return carry;
+				}, null);
+			}
+
 		});
 
 		// console.log(tables);

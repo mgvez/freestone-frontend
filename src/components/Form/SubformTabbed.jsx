@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-
 import { Tab } from 'components/Form/Tab';
+import { Header } from 'components/Form/Header';
 import { SingleRecord } from 'containers/Form/SingleRecord';
 
 @dragDropContext(HTML5Backend)
@@ -12,18 +15,33 @@ export class SubformTabbed extends Component {
 		table: React.PropTypes.object,
 		activeRecord: React.PropTypes.object,
 		childrenRecords: React.PropTypes.array,
+		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
+		highestOrder: React.PropTypes.number,
 		
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
 	};
 
-	render() {
+	constructor(props) {
+		super(props);
+	}
 
+	render() {
+		if (!this.props.childrenRecords || !this.props.table) return null;
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		return (
-			<div>
+			<section>
+				<Header 
+					table={this.props.table}
+					activeRecordId={activeRecordId}
+					parentRecordId={this.props.parentRecordId}
+					parentTableId={this.props.parentTableId}
+					highestOrder={this.props.highestOrder}
+					hasAddButton
+					hasDeleteButton={this.props.childrenRecords && !!this.props.childrenRecords.length}
+				/>
 				<nav>
 					{
 						this.props.childrenRecords.map((record, index) => {
@@ -44,7 +62,7 @@ export class SubformTabbed extends Component {
 					}
 				</nav>
 				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />
-			</div>
+			</section>
 		);
 
 	}

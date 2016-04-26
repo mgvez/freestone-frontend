@@ -22,7 +22,7 @@ function setFieldValue(state, data) {
 }
 
 function receiveRecord(state, data) {
-	// console.log(action.data);
+	console.log(data);
 	if (!data || !data.tableId || !data.records) return state;
 	const { tableId } = data;
 	const newState = {
@@ -33,6 +33,7 @@ function receiveRecord(state, data) {
 			return tableRecords;
 		}, state[tableId] || {}),
 	};
+	console.log(newState);
 	return newState;
 }
 

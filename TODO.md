@@ -35,8 +35,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- childrenAreLoaded (reducer record-form) est problématique
 	- getRecords de formchildrenrecord reselect fucké 
 - bank (et toutes les instances de cette classe)
+	- js delete tags figure et figcaption vides
 - traduire les erreurs (VException)
 - pruner les temp files
+- reimplmenter admin Bank.php
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
 - vérifier constantes, et refactoriser
 - à l'update: sitemap
@@ -62,7 +64,6 @@ par priorité
 
 - caching du reselect de children records
 - mtm
-- oto
 - créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
 - types de input
 	- file
@@ -77,6 +78,7 @@ par priorité
 - si pas de record a saver quand component save, redirect (list??)
 - remettre le champ rewrite.current
 - insert image de banque : drag & drop
+- dependances de champs
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
@@ -113,6 +115,9 @@ par priorité
 
 ## Forms
 - autocomplete
+
+# Done à tester
+- oto
 
 
 # Done ou pas a faire
