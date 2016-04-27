@@ -51,10 +51,18 @@ export class Children extends Component {
 		if (!this.props.table) return null;
 
 		if (this.props.table.type === TYPE_MTM) {
-			return <SubformMtm tableId={this.props.tableId} parentRecordId={this.props.parentRecordId} />;
+			return (<SubformMtm
+				tableId={this.props.tableId}
+				parentRecordId={this.props.parentRecordId}
+				parentTableId={this.props.parentTableId}
+			/>);
 		}
 		
-		return <Subform tableId={this.props.tableId} parentRecordId={this.props.parentRecordId} parentTableId={this.props.parentTableId} />;
+		return (<Subform
+			tableId={this.props.tableId}
+			parentRecordId={this.props.parentRecordId}
+			parentTableId={this.props.parentTableId}
+		/>);
 		
 	}
 }

@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED } from 'actions/record';
+import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS } from 'actions/record';
 import { SAVE_RECORD_SUCCESS } from 'actions/save';
 
 function setFieldValue(state, data) {
@@ -21,8 +21,27 @@ function setFieldValue(state, data) {
 	};
 }
 
-function receiveRecord(state, data) {
+function receiveMtmRecords(state, data) {
 	console.log(data);
+	if (!data || !data.parentTableId || !data.parentRecordId) return state;
+
+	const { tableId, parentTableId, parentRecordId } = data;
+	const newState = {
+		...state,
+		[tableId]: {
+			...state[tableId],
+		},
+	};
+	newState[tableId][parentTableId] = {
+		...newState[tableId][parentTableId],
+	};
+	newState[tableId][parentTableId][parentRecordId] = data.records;
+	console.log(newState);
+	return newState;
+}
+
+function receiveRecord(state, data) {
+	// console.log(data);
 	if (!data || !data.tableId || !data.records) return state;
 	const { tableId } = data;
 	const newState = {
@@ -33,7 +52,7 @@ function receiveRecord(state, data) {
 			return tableRecords;
 		}, state[tableId] || {}),
 	};
-	console.log(newState);
+	// console.log(newState);
 	return newState;
 }
 
@@ -58,6 +77,7 @@ function childrenAreLoaded(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
+	case RECEIVE_MTM_RECORDS:
 	case RECEIVE_RECORD:
 		if (!action.data || !action.data.parentTableId || !action.data.parentRecordId) return state;
 		const { parentTableId, parentRecordId, tableId } = action.data;
@@ -94,6 +114,8 @@ function records(state = {}, action) {
 		return {};
 	case RECEIVE_RECORD:
 		return receiveRecord(state, action.data);
+	case RECEIVE_MTM_RECORDS:
+		return receiveMtmRecords(state, action.data);
 	case SET_RECORD_DELETED:
 		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
 	case SET_FIELD_VALUE:
@@ -116,6 +138,8 @@ function recordsUnaltered(state = {}, action) {
 		return {};
 	case RECEIVE_RECORD:
 		return receiveRecord(state, action.data);
+	case RECEIVE_MTM_RECORDS:
+		return receiveMtmRecords(state, action.data);
 	case CLEAR_DATA:
 		return {};
 	case SAVE_RECORD_SUCCESS:

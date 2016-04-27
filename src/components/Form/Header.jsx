@@ -15,7 +15,7 @@ export class Header extends Component {
 		table: React.PropTypes.object,
 		activeRecordId: React.PropTypes.string,
 		parentRecordId: React.PropTypes.string,
-		parentTableId: React.PropTypes.string,
+		parentTableId: React.PropTypes.number,
 		hasDeleteButton: React.PropTypes.bool,
 		hasAddButton: React.PropTypes.bool,
 		highestOrder: React.PropTypes.number,

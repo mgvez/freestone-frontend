@@ -5,6 +5,7 @@ export const RECEIVE_RECORD_LIST = 'RECEIVE_RECORD_LIST';
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
+export const RECEIVE_MTM_RECORDS = 'RECEIVE_MTM_RECORDS';
 export const SET_RECORD_DELETED = 'SET_RECORD_DELETED';
 export const RECEIVE_MTM_OPTIONS = 'RECEIVE_MTM_OPTIONS';
 
@@ -58,12 +59,20 @@ export function setRecordDeleted(tableId, recordId) {
 
 export function fetchRecord(tableName, id, parentTable = 0) {
 	return (dispatch) => {
-
-		// console.log('fetch', tableName, id, parentTable);
-
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [null, RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
+				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
+				route: `record/${tableName}/${parentTable}/${id}`,
+			},
+		});
+	};
+}
+
+export function fetchMtmRecords(tableName, id, parentTable = 0) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: ['api::fetch-mtm-records', RECEIVE_MTM_RECORDS, FREESTONE_API_FATAL_FAILURE],
 				route: `record/${tableName}/${parentTable}/${id}`,
 			},
 		});
@@ -75,7 +84,7 @@ export function fetchMtmOptions(tableName) {
 
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [null, RECEIVE_MTM_OPTIONS, FREESTONE_API_FATAL_FAILURE],
+				types: ['api::fetch-mtm-options', RECEIVE_MTM_OPTIONS, FREESTONE_API_FATAL_FAILURE],
 				route: `mtmOptions/${tableName}`,
 			},
 		});

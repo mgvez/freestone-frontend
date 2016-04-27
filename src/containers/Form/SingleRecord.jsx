@@ -12,14 +12,9 @@ import { Children } from 'containers/Form/Children';
 
 import { Field } from 'components/Form/Field';
 
-const mapStateToProps = formRecordSelector;
-const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch);
-};
-
 @connect(
-	mapStateToProps,
-	mapDispatchToProps
+	formRecordSelector,
+	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 export class SingleRecord extends Component {
 	static propTypes = {

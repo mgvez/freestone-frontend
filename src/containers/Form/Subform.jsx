@@ -6,6 +6,7 @@ import { RequireApiData } from 'utils/RequireApiData';
 
 import { formChildrenRecordsSelector } from 'selectors/formChildrenRecords';
 import * as recordActionCreators from 'actions/record';
+import { fetchTable } from 'actions/schema';
 
 import { SubformTabbed } from 'components/Form/SubformTabbed';
 import { SubformSingle } from 'components/Form/SubformSingle';
@@ -14,10 +15,11 @@ import { TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
 
 @connect(
 	formChildrenRecordsSelector,
-	dispatch => bindActionCreators(recordActionCreators, dispatch)
+	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
 )
 export class Subform extends Component {
 	static propTypes = {
+		tableId: React.PropTypes.number,
 		table: React.PropTypes.object,
 		activeRecord: React.PropTypes.object,
 		childrenRecords: React.PropTypes.array,

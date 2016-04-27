@@ -29,12 +29,6 @@ function sortRecords(records, orderField) {
 	return records;
 }
 
-function getMtmRecords(records, mtmOptionField) {
-	return records.map(record => {
-		return record[mtmOptionField.id];
-	});
-}
-
 function getLabeledRecords(records, searchableFields, orderField) {
 
 	return sortRecords(records, orderField).map(record => {
@@ -74,21 +68,15 @@ export const formChildrenRecordsSelector = createSelector(
 			let childrenRecords;
 			if (areLoaded) {
 				childrenRecords = getRecordsFromParent(tableRecords, parentRecordId, parentTableId);
-				
-				if (type === 'mtm') {
-					childrenRecords = getMtmRecords(childrenRecords, table.mtmOptionField);
-				} else {
-					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
+				childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
 
-					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
-					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
-
-				}
+				activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+				activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
 			}
 
 			//highest order, pour quand on add un record, qu'il soit à la suite
 			let highestOrder = 0;
-			if (table.orderField) {
+			if (table.orderField && childrenRecords) {
 				highestOrder = childrenRecords.reduce((highest, record) => {
 					return record.order > highest ? Number(record.order) : highest;
 				}, 0);

@@ -6,25 +6,31 @@ import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import { RequireApiData } from 'utils/RequireApiData';
-import { fetchMtmOptions } from 'actions/record';
-import { mtmOptionsSelector } from 'selectors/mtmOptions';
+import { fetchTable } from 'actions/schema';
+import * as recordActionCreators from 'actions/record';
+
+import { mtmFormSelector } from 'selectors/mtmForm';
 
 import { Header } from 'components/Form/Header';
 
 
 @dragDropContext(HTML5Backend)
 @connect(
-	mtmOptionsSelector,
-	dispatch => bindActionCreators({ fetchMtmOptions }, dispatch)
+	mtmFormSelector,
+	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
 )
 export class SubformMtm extends Component {
 	static propTypes = {
+		tableId: React.PropTypes.number,
 		table: React.PropTypes.object,
-		childrenRecords: React.PropTypes.array,
+		records: React.PropTypes.array,
+		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		mtmOptions: React.PropTypes.array,
 
+		fetchTable: React.PropTypes.func,
 		fetchMtmOptions: React.PropTypes.func,
+		fetchMtmRecords: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -43,16 +49,20 @@ export class SubformMtm extends Component {
 
 	requireData(props) {
 		// console.log(props);
+		const { tableId, parentRecordId, parentTableId } = props;
+		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableId]);
 		if (props.table) {
-			const tableName = this.props.table.name;
+			const tableName = props.table.name;
 			this.requireDataCtrl.requireProp('mtmOptions', props, this.props.fetchMtmOptions, [tableName]);
+			this.requireDataCtrl.requireProp('records', props, this.props.fetchMtmRecords, [tableName, parentRecordId, parentTableId]);
+
 		}
 	}
 
 	render() {
-		if (this.props.childrenRecords) {
-			this.props.childrenRecords.map((record, index) => {
-				// console.log(record);
+		if (this.props.records) {
+			this.props.records.map((record, index) => {
+				console.log(record);
 			});
 		}
 		if (this.props.mtmOptions) {
