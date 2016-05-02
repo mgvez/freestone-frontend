@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 
 const allMtmOptionsSelector = state => state.mtmOptions;
-const recordsSelector = state => state.recordForm.records;
+const recordsSelector = state => state.recordForm.mtmRecords;
 const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
 const childrenRecordsSelector = (state, props) => props.childrenRecords;
 
@@ -29,7 +29,7 @@ export const mtmFormSelector = createSelector(
 		if (table) {
 			const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
 
-			// console.log(table.id);
+			// console.log(areLoaded);
 			// console.log(allRecords[table.id]);
 			// console.log(allMtmOptions);
 			mtmOptions = allMtmOptions[table.id];
@@ -37,7 +37,7 @@ export const mtmFormSelector = createSelector(
 			if (areLoaded) {
 				records = (allRecords[table.id] && allRecords[table.id][parentTableId] && allRecords[table.id][parentTableId][parentRecordId]) || [];
 			}
-
+			// console.log(records);
 		}
 		return {
 			mtmOptions,

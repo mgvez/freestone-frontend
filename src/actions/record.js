@@ -8,6 +8,7 @@ export const RECEIVE_RECORD = 'RECEIVE_RECORD';
 export const RECEIVE_MTM_RECORDS = 'RECEIVE_MTM_RECORDS';
 export const SET_RECORD_DELETED = 'SET_RECORD_DELETED';
 export const RECEIVE_MTM_OPTIONS = 'RECEIVE_MTM_OPTIONS';
+export const TOGGLE_MTM_VALUE = 'TOGGLE_MTM_VALUE';
 
 
 export function fetchList(tableName, search = '', page = 1) {
@@ -26,6 +27,15 @@ export function setFieldVal(tableId, recordId, fieldId, val) {
 		return dispatch({
 			type: SET_FIELD_VALUE,
 			data: { tableId, recordId, fieldId, val },
+		});
+	};
+}
+
+export function toggleMtm(tableId, parentTableId, parentRecordId, optionId) {
+	return (dispatch) => {
+		return dispatch({
+			type: TOGGLE_MTM_VALUE,
+			data: { tableId, parentTableId, parentRecordId, optionId },
 		});
 	};
 }

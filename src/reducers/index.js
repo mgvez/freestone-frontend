@@ -9,7 +9,7 @@ import { errors } from './errors';
 import { foreignOptions } from './foreign-options';
 import { recordList } from './record-list';
 import { default as recordForm } from './record-form';
-import { mtmOptions } from './mtm';
+import { mtmOptions } from './mtm-options';
 import save from './save';
 
 const rootReducer = combineReducers({

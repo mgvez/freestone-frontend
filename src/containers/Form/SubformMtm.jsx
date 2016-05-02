@@ -9,7 +9,7 @@ import { RequireApiData } from 'utils/RequireApiData';
 import { fetchTable } from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { mtmFormSelector } from 'selectors/mtmForm';
+import { mtmFormSelector } from 'selectors/formMtm';
 
 import { Header } from 'components/Form/Header';
 
@@ -31,6 +31,7 @@ export class SubformMtm extends Component {
 		fetchTable: React.PropTypes.func,
 		fetchMtmOptions: React.PropTypes.func,
 		fetchMtmRecords: React.PropTypes.func,
+		toggleMtm: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -48,7 +49,7 @@ export class SubformMtm extends Component {
 	}
 
 	requireData(props) {
-		// console.log(props);
+		// console.log(props.records);
 		const { tableId, parentRecordId, parentTableId } = props;
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableId]);
 		if (props.table) {
@@ -59,12 +60,13 @@ export class SubformMtm extends Component {
 		}
 	}
 
+	toggleValue = (e) => {
+		const v = (e && e.target) ? e.target.value : false;
+		this.props.toggleMtm(this.props.tableId, this.props.parentTableId, this.props.parentRecordId, v);
+	};
+
 	render() {
-		if (this.props.records) {
-			this.props.records.map((record, index) => {
-				console.log(record);
-			});
-		}
+		// console.log(this.props.records);
 		if (this.props.mtmOptions) {
 			// console.log(this.props.mtmOptions);
 			return (
@@ -73,17 +75,14 @@ export class SubformMtm extends Component {
 					{
 						this.props.mtmOptions.map((optionGroup, groupIndex) => {
 							// console.log(optionGroup);
-							
 							const { categ, options } = optionGroup;
 							return options.map((option, optionIndex) => {
-								// console.log(option);
 								const { display, id } = option;
+								const checked = this.props.records && !!this.props.records.find(r => r === id);
 								return (
-									<div className="col-md-3"
-										key={id}
-									>
-									{optionIndex}. {id}:{display}
-									</div>
+									<label className="col-md-3" key={id}>
+										<input type="checkbox" value={id} checked={checked} onChange={this.toggleValue} /> {display}
+									</label>
 								);
 							});
 							

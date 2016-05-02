@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS } from 'actions/record';
+import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE } from 'actions/record';
 import { SAVE_RECORD_SUCCESS } from 'actions/save';
 
 function setFieldValue(state, data) {
@@ -21,8 +21,32 @@ function setFieldValue(state, data) {
 	};
 }
 
+function toggleMtmValue(state, data) {
+	const { tableId, parentTableId, parentRecordId, optionId } = data;
+	// console.log(tableId, parentTableId, parentRecordId, optionId);
+
+	const siblMtmRecords = (state[tableId] && state[tableId][parentTableId] && state[tableId][parentTableId][parentRecordId] && [...state[tableId][parentTableId][parentRecordId]]) || [];
+	const idx = siblMtmRecords.indexOf(optionId);
+	if (idx === -1) {
+		siblMtmRecords.push(optionId);
+	} else {
+		siblMtmRecords.splice(idx, 1);
+	}
+	// console.log(mtmrecords);
+	return {
+		...state,
+		[tableId]: {
+			...state[tableId],
+			[parentTableId]: {
+				...state[tableId][parentTableId],
+				[parentRecordId]: siblMtmRecords,
+			},
+		},
+	};
+}
+
 function receiveMtmRecords(state, data) {
-	console.log(data);
+	// console.log(data);
 	if (!data || !data.parentTableId || !data.parentRecordId) return state;
 
 	const { tableId, parentTableId, parentRecordId } = data;
@@ -36,7 +60,7 @@ function receiveMtmRecords(state, data) {
 		...newState[tableId][parentTableId],
 	};
 	newState[tableId][parentTableId][parentRecordId] = data.records;
-	console.log(newState);
+	// console.log(newState);
 	return newState;
 }
 
@@ -114,12 +138,28 @@ function records(state = {}, action) {
 		return {};
 	case RECEIVE_RECORD:
 		return receiveRecord(state, action.data);
-	case RECEIVE_MTM_RECORDS:
-		return receiveMtmRecords(state, action.data);
 	case SET_RECORD_DELETED:
 		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
 	case SET_FIELD_VALUE:
 		return setFieldValue(state, action.data);
+	case CLEAR_DATA:
+		return {};
+	case SAVE_RECORD_SUCCESS:
+		// console.log(action);
+		return removeRecords(state, action.data);
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+function mtmRecords(state = {}, action) {
+	switch (action.type) {
+	case UNAUTHORIZED:
+		return {};
+	case RECEIVE_MTM_RECORDS:
+		return receiveMtmRecords(state, action.data);
+	case TOGGLE_MTM_VALUE:
+		return toggleMtmValue(state, action.data);
 	case CLEAR_DATA:
 		return {};
 	case SAVE_RECORD_SUCCESS:
@@ -173,6 +213,7 @@ function shownRecords(state = {}, action) {
 
 export default combineReducers({
 	records,
+	mtmRecords,
 	recordsUnaltered,
 	childrenAreLoaded,
 	shownRecords,

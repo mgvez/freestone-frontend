@@ -57,7 +57,7 @@ export const formChildrenRecordsSelector = createSelector(
 
 		if (table) {
 			const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
-			// console.log(parentRecordId, table, childrenAreLoaded);
+			// console.log(parentRecordId, table, areLoaded);
 			const tableRecords = records[table.id];
 			const parentLinkField = table.parentLink[parentTableId];
 

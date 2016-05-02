@@ -13,10 +13,10 @@ export const INIT_SAVE = 'INIT_SAVE';
 
 export function saveRecord(tableName, tree, records, deleted) {
 	return (dispatch) => {
-		// console.log(tree);
-		// console.log(records);
-		// console.log(deleted);
-
+		console.log(tree);
+		console.log(records);
+		console.log(deleted);
+		
 		if (!tree || !tree.tableId || !tree.recordId || !records || !records[tree.tableId] || !records[tree.tableId][tree.recordId]) {
 			dispatch(pushPath(`list/${tableName}`));
 			return null;
@@ -26,28 +26,28 @@ export function saveRecord(tableName, tree, records, deleted) {
 			type: INIT_SAVE,
 		});
 
-		return sendRecordFiles(dispatch, records).then(filesResult => {
-			// console.log(filesResult);
+		// return sendRecordFiles(dispatch, records).then(filesResult => {
+		// 	// console.log(filesResult);
 
-			const fileNames = filesResult.reduce((carry, fileResult) => {
-				carry[fileResult.tmpName] = fileResult.name;
-				return carry;
-			}, {});
-			// console.log(tree, records);
-			return dispatch({
-				[FREESTONE_API]: {
-					types: [SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR],
-					route: `save/${tableName}`,
-					data: {
-						tree,
-						records,
-						deleted,
-						tableName,
-						fileNames,
-					},
-				},
-			});
-		});
+		// 	const fileNames = filesResult.reduce((carry, fileResult) => {
+		// 		carry[fileResult.tmpName] = fileResult.name;
+		// 		return carry;
+		// 	}, {});
+		// 	// console.log(tree, records);
+		// 	return dispatch({
+		// 		[FREESTONE_API]: {
+		// 			types: [SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR],
+		// 			route: `save/${tableName}`,
+		// 			data: {
+		// 				tree,
+		// 				records,
+		// 				deleted,
+		// 				tableName,
+		// 				fileNames,
+		// 			},
+		// 		},
+		// 	});
+		// });
 
 	};
 }
