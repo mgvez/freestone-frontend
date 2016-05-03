@@ -1,9 +1,11 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
+import { schemaSelector } from 'selectors/schema';
 
-import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
 
 const recordsSelector = state => state.recordForm.records;
+const mtmRecordsSelector = state => state.recordForm.mtmRecords;
 const recordIdSelector = (state, props) => props.params.recordId;
 const childrenSelector = state => state.schema.children;
 
@@ -17,29 +19,46 @@ function getChildrenRecordIds(records, parentRecordId, parentTableId) {
 }
 
 //get un tree de IDs de records et de ses children
-function buildTree(tableId, recordId, allRecords, unfilteredChildren) {
-	const childrenTables = unfilteredChildren[tableId];
+function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
+	const childrenTables = unfilteredChildren[tableId] || [];
 	// children = 
 	// console.log(childrenTables, tableId);
-	const children = (childrenTables && childrenTables.reduce((carry, childTableId) => {
-		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, tableId);
-		const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
-			return buildTree(childTableId, childRecId, allRecords, unfilteredChildren);
-		});
-		return carry && childrenRecords && carry.concat(childrenRecords);
-	}, [])) || [];
+	const children = childrenTables.reduce((allChildrenRecords, childTableId) => {
+		// console.log('table %s is child of %s', childTableId, tableId);
+
+		if (allTables[childTableId] && allTables[childTableId].type === TYPE_MTM) {
+			const thisMtm = (allMtmRecords[childTableId] && allMtmRecords[childTableId][tableId] && allMtmRecords[childTableId][tableId][recordId]) || [];
+
+			allChildrenRecords.mtmChildren.push({
+				tableId: childTableId,
+				records: thisMtm,
+			});
+			
+		} else {
+
+			const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, tableId);
+			const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
+				return buildTree(childTableId, childRecId, allRecords, allMtmRecords, allTables, unfilteredChildren);
+			});
+			
+			if (childrenRecords) {
+				allChildrenRecords.children = allChildrenRecords.children.concat(childrenRecords);
+			}
+		}
+
+		return allChildrenRecords;
+	}, { children: [], mtmChildren: [] });
 	// console.log(children);
 	const branch = {
 		recordId,
 		tableId,
-		children,
+		...children,
 	};
 	return branch;
 }
 
 //utilise le tree pour retriever les records référencés dans ce tree
 function getRecords(branch, allRecords, getDeleted, records = {}) {
-	// console.log(branch);
 	const { tableId, recordId, children } = branch;
 	const record = allRecords[tableId] && allRecords[tableId][recordId];
 	records[tableId] = records[tableId] || {};
@@ -52,16 +71,17 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 }
 
 export const saveRecordSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordIdSelector, childrenSelector],
-	(mainTableSchema, allRecords, recordId, unfilteredChildren) => {
+	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
+	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = mainTableSchema;
-		const tree = buildTree(table && table.id, recordId, allRecords, unfilteredChildren);
+		const { tables } = allSchema;
+		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecords(tree, allRecords, false);
 		const deleted = getRecords(tree, allRecords, true);
 		// console.log(tree);
+		// console.log(tables);
 		// console.log(records);
-		// console.log(fileInputIds);
 		// console.log(unfilteredChildren);
 
 		return {

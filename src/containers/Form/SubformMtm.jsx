@@ -70,7 +70,7 @@ export class SubformMtm extends Component {
 		if (this.props.mtmOptions) {
 			// console.log(this.props.mtmOptions);
 			return (
-				<section>
+				<section className="row">
 					<Header table={this.props.table} />
 					{
 						this.props.mtmOptions.map((optionGroup, groupIndex) => {
