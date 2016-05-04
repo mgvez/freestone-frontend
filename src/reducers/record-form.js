@@ -21,49 +21,6 @@ function setFieldValue(state, data) {
 	};
 }
 
-function toggleMtmValue(state, data) {
-	const { tableId, parentTableId, parentRecordId, optionId } = data;
-	// console.log(tableId, parentTableId, parentRecordId, optionId);
-
-	const siblMtmRecords = (state[tableId] && state[tableId][parentTableId] && state[tableId][parentTableId][parentRecordId] && [...state[tableId][parentTableId][parentRecordId]]) || [];
-	const idx = siblMtmRecords.indexOf(optionId);
-	if (idx === -1) {
-		siblMtmRecords.push(optionId);
-	} else {
-		siblMtmRecords.splice(idx, 1);
-	}
-	// console.log(mtmrecords);
-	return {
-		...state,
-		[tableId]: {
-			...state[tableId],
-			[parentTableId]: {
-				...state[tableId][parentTableId],
-				[parentRecordId]: siblMtmRecords,
-			},
-		},
-	};
-}
-
-function receiveMtmRecords(state, data) {
-	// console.log(data);
-	if (!data || !data.parentTableId || !data.parentRecordId) return state;
-
-	const { tableId, parentTableId, parentRecordId } = data;
-	const newState = {
-		...state,
-		[tableId]: {
-			...state[tableId],
-		},
-	};
-	newState[tableId][parentTableId] = {
-		...newState[tableId][parentTableId],
-	};
-	newState[tableId][parentTableId][parentRecordId] = data.records;
-	// console.log(newState);
-	return newState;
-}
-
 function receiveRecord(state, data) {
 	// console.log(data);
 	if (!data || !data.tableId || !data.records) return state;
@@ -81,7 +38,6 @@ function receiveRecord(state, data) {
 }
 
 function removeRecords(state, data) {
-	// console.log(action.data);
 	if (!data.records) return state;
 
 	return data.records.reduce((carry, record) => {
@@ -152,6 +108,83 @@ function records(state = {}, action) {
 		return state;
 	}
 }
+
+function toggleMtmValue(state, data) {
+	const { tableId, parentTableId, parentRecordId, optionId } = data;
+	// console.log(tableId, parentTableId, parentRecordId, optionId);
+
+	const siblMtmRecords = (state[tableId] && state[tableId][parentTableId] && state[tableId][parentTableId][parentRecordId] && [...state[tableId][parentTableId][parentRecordId]]) || [];
+	const idx = siblMtmRecords.indexOf(optionId);
+	if (idx === -1) {
+		siblMtmRecords.push(optionId);
+	} else {
+		siblMtmRecords.splice(idx, 1);
+	}
+	// console.log(mtmrecords);
+	return {
+		...state,
+		[tableId]: {
+			...state[tableId],
+			[parentTableId]: {
+				...state[tableId][parentTableId],
+				[parentRecordId]: siblMtmRecords,
+			},
+		},
+	};
+}
+
+function receiveMtmRecords(state, data) {
+	// console.log(data);
+	if (!data || !data.parentTableId || !data.parentRecordId) return state;
+
+	const { tableId, parentTableId, parentRecordId } = data;
+	const newState = {
+		...state,
+		[tableId]: {
+			...state[tableId],
+		},
+	};
+	newState[tableId][parentTableId] = {
+		...newState[tableId][parentTableId],
+	};
+	newState[tableId][parentTableId][parentRecordId] = data.records;
+	// console.log(newState);
+	return newState;
+}
+
+//les records many to many ne sont pas identifiés par leur table elle même, mais sont deletes quand leur PARENT est savé
+function removeMtmRecords(state, data) {
+	if (!data.records) return state;
+
+	return data.records.reduce((allMtm, savedRecord) => {
+		const { tableId, recordId } = savedRecord;
+		//trouve une table qui aurait celle-ci comme parent
+		return Object.keys(allMtm).reduce((updatedMtm, mtmTableId) => {
+
+			if (updatedMtm[mtmTableId] && updatedMtm[mtmTableId][tableId] && updatedMtm[mtmTableId][tableId][recordId]) {
+
+				const newMtm = {
+					...updatedMtm,
+					[mtmTableId]: {
+						...updatedMtm[mtmTableId],
+						[tableId]: {
+							...updatedMtm[mtmTableId][tableId],
+						},
+					},
+				};
+				delete newMtm[mtmTableId][tableId][recordId];
+				return newMtm;
+
+			}
+
+			return updatedMtm;
+
+		}, allMtm);
+
+	}, state);
+}
+
+
 function mtmRecords(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
@@ -163,8 +196,7 @@ function mtmRecords(state = {}, action) {
 	case CLEAR_DATA:
 		return {};
 	case SAVE_RECORD_SUCCESS:
-		// console.log(action);
-		return removeRecords(state, action.data);
+		return removeMtmRecords(state, action.data);
 	default:
 		// console.log('no change');
 		return state;

@@ -73,6 +73,8 @@ par priorité
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 - champs en/fr séparés
+- separateurs
+- placeholders de relation
 - liste des anciennes révisions du record
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - si pas de record a saver quand component save, redirect (list??)
