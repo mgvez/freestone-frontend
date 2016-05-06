@@ -70,6 +70,18 @@ export class SingleRecord extends Component {
 				<article>
 					{
 						this.props.fields.map((field) => {
+
+							if (field.subformPlaceholder) {
+								return (
+									<Children
+										key={field.subformPlaceholder}
+										tableId={field.subformPlaceholder}
+										parentTableId={this.props.table.id}
+										parentRecordId={this.props.recordId}
+									/>
+								);
+							}
+
 							return (<Field
 								key={field.id} 
 								field={field}

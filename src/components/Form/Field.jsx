@@ -86,6 +86,8 @@ export class Field extends Component {
 		case 'order':
 		case 'nodisplay':
 			return <div/>;
+		case 'subform':
+			return <h3>SUBFORM</h3>;
 		default:
 			return (
 				<div className="field">

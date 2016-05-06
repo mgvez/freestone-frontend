@@ -2,7 +2,7 @@
 
 ## next
 
-- mtm
+
 
 ## Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
@@ -63,8 +63,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 par priorité
 
 - caching du reselect de children records
-- mtm
-- créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
+- champs en/fr séparés
+- mtm category
+- cancel btn
+- dependances de champs
 - types de input
 	- file
 	- tinymce
@@ -72,24 +74,17 @@ par priorité
 		- insert freestone image
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
-- champs en/fr séparés
-- separateurs
-- placeholders de relation
+- créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
 - liste des anciennes révisions du record
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - si pas de record a saver quand component save, redirect (list??)
 - remettre le champ rewrite.current
 - insert image de banque : drag & drop
-- dependances de champs
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
-- comment enlever un record et ses children du store (aussi les children are loaded)
-	- mettre un champ [table_id]_fk à chaque table loadée pour pouvoir deleter record sans connaitre structure
-	- children loaded
-	- menu gauche
-	- quand save
-	- quand cancel
+- tester definitions dans install config
+	- mettre field_type
 
 ## Modules
 - all
