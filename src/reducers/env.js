@@ -1,7 +1,7 @@
 
-import { ADD_ENV } from 'actions/env';
+import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE } from 'actions/env';
 
-const initialState = {
+const envInitialState = {
 	openedFrom: '',
 	clientScripts: [],
 	filesDir: '',
@@ -14,12 +14,29 @@ const initialState = {
 	languages: [],
 };
 
-export function env(state = initialState, action) {
+export function env(state = envInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
 	case ADD_ENV:
 		// console.log(action.data);
 		return action.data;
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
+const userViewSettingsInitialState = {
+	language: null,
+};
+export function userViewSettings(state = userViewSettingsInitialState, action) {
+	switch (action.type) {
+	case SET_FIELD_VIEW_LANGUAGE:
+		// console.log(action.data);
+		return {
+			...state,
+			language: action.data,
+		};
 	default:
 		// console.log('no change');
 		return state;

@@ -27,6 +27,7 @@ export class SingleRecord extends Component {
 		recordUnaltered: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		env: React.PropTypes.object,
+		language: React.PropTypes.string,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
@@ -65,7 +66,7 @@ export class SingleRecord extends Component {
 		let sub;
 		// console.log('render', this.props.record);
 		if (this.props.table && this.props.record) {
-			
+
 			form = (
 				<article>
 					{
@@ -82,7 +83,8 @@ export class SingleRecord extends Component {
 								);
 							}
 
-							return (<Field
+							//if field is language-specific, display it only if the current language is the field's
+							return ((field.language && field.language === this.props.language) || !field.language) ? (<Field
 								key={field.id} 
 								field={field}
 								tableName={this.props.table.name}
@@ -91,7 +93,7 @@ export class SingleRecord extends Component {
 								origVal={this.props.recordUnaltered[field.id]}
 								setFieldVal={this.props.setFieldVal}
 								env={this.props.env}
-							/>);
+							/>) : null;
 						})
 					}
 				</article>

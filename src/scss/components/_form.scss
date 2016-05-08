@@ -3,4 +3,19 @@
 	position:relative;
 	border-bottom: 1px grey solid;
 	padding:12px;
+
+	.language-tab {
+		background: #ccc;
+		border-radius: 4px;
+		padding: 4px 6px;
+		display: inline-block;
+		cursor:pointer;
+
+		&.language-tab-active {
+			font-weight: bold;
+			color: #fff;
+			background: teal;
+		}
+	}	
+
 }

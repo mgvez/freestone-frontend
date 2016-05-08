@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
+import { userViewLanguageSelector } from 'selectors/userViewLanguage';
+
 
 const recordsSelector = state => state.recordForm.records;
 const envSelector = state => state.env;
@@ -7,10 +9,9 @@ const recordsUnalteredSelector = state => state.recordForm.recordsUnaltered;
 const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.schema.children;
 
-
 export const formRecordSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordIdSelector, recordsUnalteredSelector, childrenSelector, envSelector],
-	(schema, records, recordId, recordsUnaltered, unfilteredChildren, env) => {
+	[tableSchemaSelector, recordsSelector, recordIdSelector, recordsUnalteredSelector, childrenSelector, envSelector, userViewLanguageSelector],
+	(schema, records, recordId, recordsUnaltered, unfilteredChildren, env, userViewLanguage) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = schema;
 		const record = recordId && table && records[table.id] && records[table.id][recordId];
@@ -36,6 +37,7 @@ export const formRecordSelector = createSelector(
 			table,
 			fields: table && table.fields,
 			env,
+			...userViewLanguage,
 		};
 	}
 );

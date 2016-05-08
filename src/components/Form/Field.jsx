@@ -7,6 +7,7 @@ import { NoEditInput } from 'components/Form/InputTypes/NoEditInput';
 import { HtmlInput } from 'components/Form/InputTypes/HtmlInput';
 import { FileInput } from 'components/Form/InputTypes/FileInput';
 import { AutocompleteInput } from 'components/Form/InputTypes/AutocompleteInput';
+import { LanguageToggler } from 'components/Form/LanguageToggler';
 
 
 export class Field extends Component {
@@ -21,7 +22,7 @@ export class Field extends Component {
 
 	render() {
 
-		// console.log(`render input ${this.props.field.name}`);
+		// console.log(`render input ${this.props.field.name} ${this.props.field.language}`);
 		let input;
 		switch (this.props.field.type) {
 		case 'date':
@@ -76,6 +77,10 @@ export class Field extends Component {
 			break;
 		}
 
+		const languageToggler = !!this.props.field.language ? (
+			<LanguageToggler />
+		) : null;
+
 		switch (this.props.field.type) {
 		case 'separator':
 			return <h2>{this.props.field.label}</h2>;
@@ -84,13 +89,13 @@ export class Field extends Component {
 		case 'mtm':
 		case 'oto':
 		case 'order':
+		case 'subform':
 		case 'nodisplay':
 			return <div/>;
-		case 'subform':
-			return <h3>SUBFORM</h3>;
 		default:
 			return (
 				<div className="field">
+					{languageToggler}
 					<label>{this.props.field.label}</label>
 					<div>{input}</div>
 					<em>{this.props.field.descripton}</em>
