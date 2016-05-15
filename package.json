@@ -84,7 +84,7 @@
     "redux-simple-localstorage": "^1.0.2",
     "redux-thunk": "^1.0.3",
     "reqwest": "^2.0.5",
-    "reselect": "^2.0.2",
+    "reselect": "^2.5.1",
     "sha1": "^1.1.1"
   }
 }
