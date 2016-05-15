@@ -16,7 +16,7 @@ export const formRecordSelector = createSelector(
 		const record = recordId && table && records[table.id] && records[table.id][recordId];
 		const recordUnaltered = recordId && table && recordsUnaltered[table.id] && recordsUnaltered[table.id][recordId];
 		let children;
-		console.log(`build record for ${recordId}`);
+		// console.log(`build record for ${recordId}`);
 
 		//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
 		if (table) {

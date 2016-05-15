@@ -33,7 +33,7 @@ function children(state = {}, action) {
 	case UNAUTHORIZED:
 		return {};
 	case RECEIVE_SCHEMA:
-		// console.log(action);
+		console.log(action);
 		if (!action.data.children) return state;
 		return {
 			...state,
@@ -78,9 +78,32 @@ function fields(state = {}, action) {
 	}
 }
 
+function fieldDependencies(state = {}, action) {
+	switch (action.type) {
+	case UNAUTHORIZED:
+		return {};
+	case RECEIVE_SCHEMA:
+		// console.log(action.data.fields);
+		if (!action.data.fieldDependencies) return state;
+		return {
+			...state,
+			...action.data.fieldDependencies,
+		};
+	//TEMPORAIRE POUR DEBUG
+	case CLEAR_ERRORS:
+		return {};
+	case CLEAR_DATA:
+		return {};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
 
 export default combineReducers({
 	tables,
 	fields,
+	fieldDependencies,
 	children,
 });

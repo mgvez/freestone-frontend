@@ -19,7 +19,12 @@ export function env(state = envInitialState, action) {
 	switch (action.type) {
 	case ADD_ENV:
 		// console.log(action.data);
-		return action.data;
+		const data = action.data;
+		const defaults = envInitialState;
+		return Object.keys(defaults).reduce((vals, key) => {
+			vals[key] = data[key] || defaults[key];
+			return vals;
+		}, {});
 	default:
 		// console.log('no change');
 		return state;
