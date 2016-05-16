@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import { TextInput } from 'components/unconnected/Form/InputTypes/TextInput';
-import { BoolInput } from 'components/unconnected/Form/InputTypes/BoolInput';
+import { TextInput } from 'components/static/Form/InputTypes/TextInput';
+import { BoolInput } from 'components/static/Form/InputTypes/BoolInput';
 // import { SelectInput } from 'components/Form/InputTypes/SelectInput';
-import { NoEditInput } from 'components/unconnected/Form/InputTypes/NoEditInput';
-import { HtmlInput } from 'components/unconnected/Form/InputTypes/HtmlInput';
-import { FileInput } from 'components/unconnected/Form/InputTypes/FileInput';
-import { AutocompleteInput } from 'components/unconnected/Form/InputTypes/AutocompleteInput';
-import { LanguageToggler } from 'components/unconnected/Form/LanguageToggler';
+import { NoEditInput } from 'components/static/Form/InputTypes/NoEditInput';
+import { HtmlInput } from 'components/static/Form/InputTypes/HtmlInput';
+import { FileInput } from 'components/static/Form/InputTypes/FileInput';
+import { AutocompleteInput } from 'components/static/Form/InputTypes/AutocompleteInput';
+import { LanguageToggler } from 'components/static/Form/LanguageToggler';
 
 
 export class Field extends Component {

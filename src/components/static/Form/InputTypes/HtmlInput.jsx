@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Input } from 'components/unconnected/Form/InputTypes/Input';
+import { Input } from 'components/static/Form/InputTypes/Input';
 import TinyMCEInput from 'react-tinymce-input';
 
-import VALID_ELEMENTS from 'components/unconnected/Form/InputTypes/tinymce/validElements';
+import VALID_ELEMENTS from 'components/static/Form/InputTypes/tinymce/validElements';
 
 const TINYMCE_CONFIG = {
 	theme: 'modern',

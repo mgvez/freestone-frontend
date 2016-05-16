@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input } from 'components/unconnected/Form/InputTypes/Input';
+import { Input } from 'components/static/Form/InputTypes/Input';
 import { RequireApiData } from 'utils/RequireApiData';
 
 

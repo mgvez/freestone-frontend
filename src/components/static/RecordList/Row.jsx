@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { FileThumbnail } from 'components/unconnected/FileThumbnail/FileThumbnail';
-import { InfosFcn } from 'components/unconnected/RecordList/InfosFcn';
+import { FileThumbnail } from 'components/static/FileThumbnail/FileThumbnail';
+import { InfosFcn } from 'components/static/RecordList/InfosFcn';
 
 import { OrderFcn } from 'components/connected/RecordList/OrderFcn';
 import { ModifFcn } from 'components/connected/RecordList/ModifFcn';

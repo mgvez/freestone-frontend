@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { Tab } from 'components/unconnected/Form/Tab';
+import { Tab } from 'components/static/Form/Tab';
 import { SingleRecord } from 'components/connected/Form/SingleRecord';
 import { Header } from 'components/connected/Form/Header';
 

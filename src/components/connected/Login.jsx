@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
 
-import { LoginForm } from 'components/unconnected/LoginForm';
+import { LoginForm } from 'components/static/LoginForm';
 
 /* actions */
 import * as actionCreators from 'actions/auth';

@@ -8,9 +8,9 @@ import * as devActionCreators from 'actions/dev';
 const actionCreators = { ...authActionCreators, ...devActionCreators };
 
 /* application components */
-import { Header } from 'components/unconnected/Header';
-import { Footer } from 'components/unconnected/Footer';
-import { Errors } from 'components/unconnected/Errors';
+import { Header } from 'components/static/Header';
+import { Footer } from 'components/static/Footer';
+import { Errors } from 'components/static/Errors';
 import { Nav } from 'components/connected/Nav';
 import { TestReselect } from 'components/connected/TestReselect';
 

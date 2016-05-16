@@ -6,9 +6,9 @@ import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 import { pushNavStack } from 'actions/nav';
 
-import { Heading } from 'components/unconnected/RecordList/Heading';
-import { Paging } from 'components/unconnected/RecordList/Paging';
-import { Row } from 'components/unconnected/RecordList/Row';
+import { Heading } from 'components/static/RecordList/Heading';
+import { Paging } from 'components/static/RecordList/Paging';
+import { Row } from 'components/static/RecordList/Row';
 import { InScroll } from 'components/connected/InScroll';
 
 import { RequireApiData } from 'utils/RequireApiData';

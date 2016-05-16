@@ -8,8 +8,8 @@ import { formChildrenRecordsSelector } from 'selectors/formChildrenRecords';
 import * as recordActionCreators from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
-import { SubformTabbed } from 'components/unconnected/Form/SubformTabbed';
-import { SubformSingle } from 'components/unconnected/Form/SubformSingle';
+import { SubformTabbed } from 'components/static/Form/SubformTabbed';
+import { SubformSingle } from 'components/static/Form/SubformSingle';
 
 import { TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
 

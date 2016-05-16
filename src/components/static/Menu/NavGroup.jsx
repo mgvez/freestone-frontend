@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Table } from 'components/unconnected/Menu/Table';
+import { Table } from 'components/static/Menu/Table';
 
 import { TweenMax } from 'utils/Greensock';
 

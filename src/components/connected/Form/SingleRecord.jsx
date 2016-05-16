@@ -10,7 +10,7 @@ import { formRecordSelector } from 'selectors/formRecord';
 import { RequireApiData } from 'utils/RequireApiData';
 
 import { Children } from 'components/connected/Form/Children';
-import { Field } from 'components/unconnected/Form/Field';
+import { Field } from 'components/static/Form/Field';
 
 @connect(
 	formRecordSelector,
