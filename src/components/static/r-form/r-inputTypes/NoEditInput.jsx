@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input } from 'components/static/Form/InputTypes/Input';
+import { Input } from 'components/static/form/inputTypes/Input';
 
 export class NoEditInput extends Input {
 

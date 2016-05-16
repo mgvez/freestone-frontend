@@ -9,8 +9,8 @@ import { formRecordSelector } from 'selectors/formRecord';
 
 import { RequireApiData } from 'utils/RequireApiData';
 
-import { Children } from 'components/connected/Form/Children';
-import { Field } from 'components/static/Form/Field';
+import { Children } from 'components/connected/form/Children';
+import { Field } from 'components/static/form/Field';
 
 @connect(
 	formRecordSelector,

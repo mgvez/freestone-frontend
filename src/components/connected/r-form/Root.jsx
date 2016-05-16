@@ -7,7 +7,7 @@ import * as schemaActionCreators from 'actions/schema';
 import { RequireApiData } from 'utils/RequireApiData';
 import { rootFormSelector } from 'selectors/rootForm';
 
-import { SingleRecord } from 'components/connected/Form/SingleRecord';
+import { SingleRecord } from 'components/connected/form/SingleRecord';
 
 @connect(
 	rootFormSelector,

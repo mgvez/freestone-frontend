@@ -7,8 +7,8 @@ import { tableSchemaSelector } from 'selectors/tableSchema';
 
 import { RequireApiData } from 'utils/RequireApiData';
 
-import { SubformMtm } from 'components/connected/Form/SubformMtm';
-import { Subform } from 'components/connected/Form/Subform';
+import { SubformMtm } from 'components/connected/form/SubformMtm';
+import { Subform } from 'components/connected/form/Subform';
 
 import { TYPE_MTM } from 'freestone/schemaProps';
 

@@ -11,7 +11,7 @@ import * as recordActionCreators from 'actions/record';
 
 import { mtmFormSelector } from 'selectors/formMtm';
 
-import { Header } from 'components/connected/Form/Header';
+import { Header } from 'components/connected/form/Header';
 
 
 @dragDropContext(HTML5Backend)

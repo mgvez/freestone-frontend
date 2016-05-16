@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { Tab } from 'components/static/Form/Tab';
-import { SingleRecord } from 'components/connected/Form/SingleRecord';
-import { Header } from 'components/connected/Form/Header';
+import { Tab } from 'components/static/form/Tab';
+import { SingleRecord } from 'components/connected/form/SingleRecord';
+import { Header } from 'components/connected/form/Header';
 
 @dragDropContext(HTML5Backend)
 export class SubformTabbed extends Component {

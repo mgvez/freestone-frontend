@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import { OrderFcn } from 'components/static/RecordList/OrderFcn';
+import { OrderFcn } from 'components/static/recordList/OrderFcn';
+
 import { PRIKEY_ALIAS, LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps';
 
 

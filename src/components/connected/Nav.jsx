@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { NavGroup } from 'components/static/Menu/NavGroup';
+import { NavGroup } from 'components/static/menu/NavGroup';
+
 import { RequireApiData } from 'utils/RequireApiData';
 
 import * as navActionCreators from 'actions/nav';

@@ -8,7 +8,7 @@ import 'style!scss/style.scss';
 import 'style!font-awesome/scss/font-awesome.scss';
 
 @connect(
-	state => state,
+	null,
 	dispatch => bindActionCreators(envActionCreators, dispatch)
 )
 export class App extends Component {
@@ -22,7 +22,7 @@ export class App extends Component {
 	}
 
 	render() {
-		console.log('%cRENDER ==========================', 'color: #4C50A9; font-weight: bold');
+		// console.log('%cRENDER ==========================', 'color: #4C50A9; font-weight: bold');
 		return (
 			<div id="main-wrapper">
 				{this.props.children}
