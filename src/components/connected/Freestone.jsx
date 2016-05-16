@@ -8,7 +8,7 @@ import * as devActionCreators from 'actions/dev';
 const actionCreators = { ...authActionCreators, ...devActionCreators };
 
 /* application components */
-import { Header } from 'components/static/Header';
+import { SiteHeader } from 'components/static/SiteHeader';
 import { Footer } from 'components/static/Footer';
 import { Errors } from 'components/static/Errors';
 import { Nav } from 'components/connected/Nav';
@@ -62,7 +62,7 @@ export class Freestone extends Component {
 			<div>
 				<Nav />
 				<div className="main-content">
-					<Header {...this.props} />
+					<SiteHeader {...this.props} />
 					<TestReselect params={idA} />
 					<TestReselect params={idB} />
 					<TestReselect params={idC} />

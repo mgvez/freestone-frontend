@@ -7,29 +7,15 @@ import { schemaSelector } from 'selectors/schema';
 const tableNameSelector = (state, props) => props.tableName || (props.params && props.params.tableName);
 const tableIdSelector = (state, props) => props.tableId || (props.params && props.params.tableId);
 
-export const tableSchemaSelector = createSelector(
-	[schemaSelector, tableNameSelector, tableIdSelector],
-	(schema, tableName, tableId) => {
-		//les tables sont dans le store selon leur ID, mais dans le schema buildé, il y a une entrée par nom de table qui contient le ID (schema[tableName] = id)
-		// console.log(`select table ${tableId} / ${tableName}`);
-		const resolvedTableId = tableId || schema.byName[tableName];
-		console.log(`%cselect`, 'font-weight:bold;color:#994444;', `table ${resolvedTableId}`);
 
-		return {
-			table: schema.tables[resolvedTableId],
-		};
-	}
-);
-
-
-function makeTableSchemaSelector() {
+function makeSelector(isShared) {
 	return createSelector(
 		[schemaSelector, tableNameSelector, tableIdSelector],
 		(schema, tableName, tableId) => {
 			//les tables sont dans le store selon leur ID, mais dans le schema buildé, il y a une entrée par nom de table qui contient le ID (schema[tableName] = id)
 			// console.log(`select table ${tableId} / ${tableName}`);
 			const resolvedTableId = tableId || schema.byName[tableName];
-			console.log(`%cshared`, 'font-weight:bold;color:#449944;', `select table ${resolvedTableId}`);
+			console.log((isShared ? `%cshared` : '%cunshared'), 'font-weight:bold;color:' + (isShared ? '#449944;' : '#994444'), `select table ${resolvedTableId}`);
 
 			return {
 				table: schema.tables[resolvedTableId] || { name: `fakeTable-${resolvedTableId}` },
@@ -38,10 +24,12 @@ function makeTableSchemaSelector() {
 	);
 }
 
-export const makeMapStateToProps = () => {
-	const tableSchemaSelectorInst = makeTableSchemaSelector();
+export const tableSchemaSelector = makeSelector();
+
+export const makeTableSchemaMapStateToProps = () => {
+	const selectorInst = makeSelector(true);
 	return (state, props) => {
 		console.log('reselect', props.params.tableId);
-		return tableSchemaSelectorInst(state, props);
+		return selectorInst(state, props);
 	};
 };

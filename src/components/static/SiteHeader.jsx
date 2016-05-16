@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 
-export class Header extends Component {
+export class SiteHeader extends Component {
 	static propTypes = {
 		logout: React.PropTypes.func,
 		clearErrors: React.PropTypes.func,

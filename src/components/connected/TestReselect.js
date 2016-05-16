@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { makeMapStateToProps } from 'selectors/tableSchema';
+import { makeTableSchemaMapStateToProps } from 'selectors/tableSchema';
 
 @connect(
-	makeMapStateToProps,
+	makeTableSchemaMapStateToProps,
 	null
 )
 export class TestReselect extends Component {

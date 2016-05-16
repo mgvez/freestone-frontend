@@ -7,7 +7,7 @@ import { RequireApiData } from 'utils/RequireApiData';
 import Autocomplete from 'react-autocomplete';
 
 import * as optionsActionCreators from 'actions/foreign-options';
-import { foreignOptionsSelector } from 'selectors/foreignOptions';
+import { foreignOptionsMapStateToProps } from 'selectors/foreignOptions';
 
 
 // import { FreestoneAutocomplete } from 'components/Form/InputTypes/FreestoneAutocomplete';
@@ -54,7 +54,7 @@ function renderItem(item, isHighlighted) {
 // }
 
 @connect(
-	foreignOptionsSelector,
+	foreignOptionsMapStateToProps,
 	dispatch => bindActionCreators(optionsActionCreators, dispatch)	
 )
 export class AutocompleteInput extends Input {
