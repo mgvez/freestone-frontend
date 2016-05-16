@@ -3,13 +3,13 @@ import { Route } from 'react-router';
 
 
 /* containers */
-import { App } from 'containers/App';
-import { Freestone } from 'containers/Freestone';
-import { Home } from 'containers/Home';
-import { Login } from 'containers/Login';
-import { List } from 'containers/List';
-import { RootForm } from 'containers/Form/Root';
-import { Save } from 'containers/Save';
+import { App } from 'components/connected/App';
+import { Freestone } from 'components/connected/Freestone';
+import { Home } from 'components/connected/Home';
+import { Login } from 'components/connected/Login';
+import { List } from 'components/connected/List';
+import { RootForm } from 'components/connected/Form/Root';
+import { Save } from 'components/connected/Save';
 
 export default (
 	<Route path="/" component={App}>

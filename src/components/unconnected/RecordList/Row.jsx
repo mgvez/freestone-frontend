@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
-import { FileThumbnail } from 'components/FileThumbnail/FileThumbnail';
-import { OrderFcn } from 'components/RecordList/OrderFcn';
-import { ModifFcn } from 'components/RecordList/ModifFcn';
-import { InfosFcn } from 'components/RecordList/InfosFcn';
+import { FileThumbnail } from 'components/unconnected/FileThumbnail/FileThumbnail';
+import { InfosFcn } from 'components/unconnected/RecordList/InfosFcn';
+
+import { OrderFcn } from 'components/connected/RecordList/OrderFcn';
+import { ModifFcn } from 'components/connected/RecordList/ModifFcn';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps';
 

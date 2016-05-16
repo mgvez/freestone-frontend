@@ -8,10 +8,15 @@ import * as devActionCreators from 'actions/dev';
 const actionCreators = { ...authActionCreators, ...devActionCreators };
 
 /* application components */
-import { Header } from 'components/Header';
-import { Footer } from 'components/Footer';
-import { Errors } from 'components/Errors';
-import { Nav } from 'containers/Nav';
+import { Header } from 'components/unconnected/Header';
+import { Footer } from 'components/unconnected/Footer';
+import { Errors } from 'components/unconnected/Errors';
+import { Nav } from 'components/connected/Nav';
+import { TestReselect } from 'components/connected/TestReselect';
+
+const idA = { tableId: 1, tableName: 'tableA' };
+const idB = { tableId: 2, tableName: 'tableB' };
+const idC = { tableId: 3, tableName: 'tableC' };
 
 let i = 0;
 @connect(
@@ -58,6 +63,9 @@ export class Freestone extends Component {
 				<Nav />
 				<div className="main-content">
 					<Header {...this.props} />
+					<TestReselect params={idA} />
+					<TestReselect params={idB} />
+					<TestReselect params={idC} />
 					<Errors {...this.props} />
 					{this.props.children}
 					<Footer />

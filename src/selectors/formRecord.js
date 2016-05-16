@@ -1,3 +1,5 @@
+//SHARED
+
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 import { userViewLanguageSelector } from 'selectors/userViewLanguage';
@@ -9,10 +11,29 @@ const recordsUnalteredSelector = state => state.recordForm.recordsUnaltered;
 const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.schema.children;
 
+
+function parseDependencies(table, record) {
+	if (!record) return table;
+	const { fieldDependencies } = table;
+	const fieldIds = fieldDependencies && Object.keys(fieldDependencies);
+	if (!fieldIds || fieldIds.length === 0) return table;
+	const parsedTable = { ...table };
+	// parsedTable.fields = [];
+	// fieldIds
+	table.fields.map(field => {
+		const id = field.id;
+		const deps = fieldDependencies[id];
+		if (!deps) return;
+		// console.log(id);
+		// console.log(deps);
+	});
+	return parsedTable;
+}
+
 export const formRecordSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, recordIdSelector, recordsUnalteredSelector, childrenSelector, envSelector, userViewLanguageSelector],
 	(schema, records, recordId, recordsUnaltered, unfilteredChildren, env, userViewLanguage) => {
-		const { table } = schema;
+		let { table } = schema;
 		const record = recordId && table && records[table.id] && records[table.id][recordId];
 		const recordUnaltered = recordId && table && recordsUnaltered[table.id] && recordsUnaltered[table.id][recordId];
 		let children;
@@ -27,7 +48,10 @@ export const formRecordSelector = createSelector(
 				}
 				return filteredChildren;
 			}, [...unfilteredChildren[table.id]]);
+
+			table = parseDependencies(table, record);
 		}
+
 
 		// console.log(tableSchema, records, recordId);
 		return {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { Header } from 'components/Form/Header';
-import { SingleRecord } from 'containers/Form/SingleRecord';
+import { Header } from 'components/connected/Form/Header';
+import { SingleRecord } from 'components/connected/Form/SingleRecord';
 
 
 export class SubformSingle extends Component {

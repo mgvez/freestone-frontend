@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Input } from 'components/Form/InputTypes/Input';
+import { Input } from 'components/unconnected/Form/InputTypes/Input';
 import { RequireApiData } from 'utils/RequireApiData';
 import Autocomplete from 'react-autocomplete';
 

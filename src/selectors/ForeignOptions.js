@@ -1,3 +1,5 @@
+//SHARED
+
 import { createSelector } from 'reselect';
 
 const rawForeignOptionsSelector = state => state.foreignOptions;

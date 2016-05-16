@@ -6,10 +6,11 @@ import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 import { pushNavStack } from 'actions/nav';
 
-import { Heading } from 'components/RecordList/Heading';
-import { Paging } from 'components/RecordList/Paging';
-import { Row } from 'components/RecordList/Row';
-import { InScroll } from 'containers/InScroll';
+import { Heading } from 'components/unconnected/RecordList/Heading';
+import { Paging } from 'components/unconnected/RecordList/Paging';
+import { Row } from 'components/unconnected/RecordList/Row';
+import { InScroll } from 'components/connected/InScroll';
+
 import { RequireApiData } from 'utils/RequireApiData';
 
 import createRecord from 'freestone/createRecord';

@@ -1,3 +1,5 @@
+//SHARED
+
 import { createSelector } from 'reselect';
 
 import { LASTMODIF_DATE_ALIAS } from 'freestone/schemaProps';

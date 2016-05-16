@@ -8,9 +8,9 @@ import * as recordActionCreators from 'actions/record';
 import { formRecordSelector } from 'selectors/formRecord';
 
 import { RequireApiData } from 'utils/RequireApiData';
-import { Children } from 'containers/Form/Children';
 
-import { Field } from 'components/Form/Field';
+import { Children } from 'components/connected/Form/Children';
+import { Field } from 'components/unconnected/Form/Field';
 
 @connect(
 	formRecordSelector,

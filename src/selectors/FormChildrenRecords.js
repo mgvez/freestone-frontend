@@ -1,3 +1,5 @@
+//SHARED
+
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 
