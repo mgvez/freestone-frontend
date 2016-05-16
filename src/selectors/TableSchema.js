@@ -29,7 +29,7 @@ export const tableSchemaSelector = makeSelector();
 export const makeTableSchemaMapStateToProps = () => {
 	const selectorInst = makeSelector(true);
 	return (state, props) => {
-		console.log('reselect', props.params.tableId);
+		console.log('reselect table', props.params.tableId);
 		return selectorInst(state, props);
 	};
 };
