@@ -1,5 +1,3 @@
-//SHARED
-
 import { createSelector } from 'reselect';
 import { schemaSelector } from 'selectors/schema';
 //retourne la table du store dont le nom est celui qui est en props.tableName OU tableId du component sur lequel ce selector est pluggé

@@ -6,7 +6,6 @@ const pagesSelector = state => state.nav.structure.pages;
 const navGroupsSelector = state => state.nav.structure.navGroups;
 
 function buildTree(navGroups, tables, modules, pages) {
-	// console.log('build tree');
 	const groups = navGroups.map((group) => {
 		const groupId = group.id;
 

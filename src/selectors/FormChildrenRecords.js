@@ -2,11 +2,11 @@
 
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
+import { tableRecordsMapStateToProps } from 'selectors/record';
 
 import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
 
-const recordsSelector = state => state.recordForm.records;
 const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
 const shownRecordsSelector = (state) => state.recordForm.shownRecords;
 
@@ -51,16 +51,14 @@ function getLabeledRecords(records, searchableFields, orderField) {
 	});
 }
 
-function makeSelector(tableSchemaSelector) {
+function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 	return createSelector(
-		[tableSchemaSelector, recordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector],
-		(schema, records, childrenAreLoaded, parentRecordId, parentTableId, shownRecords) => {
+		[tableSchemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector],
+		(schema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords) => {
 			const { table } = schema;
-
 			if (table) {
 				const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
 				// console.log(parentRecordId, table, areLoaded);
-				const tableRecords = records[table.id];
 				const parentLinkField = table.parentLink[parentTableId];
 
 				const type = parentLinkField && parentLinkField.type;
@@ -100,7 +98,7 @@ function makeSelector(tableSchemaSelector) {
 }
 
 export function formChildrenRecordsMapStateToProps() {
-	const selectorInst = makeSelector(tableSchemaMapStateToProps());
+	const selectorInst = makeSelector(tableSchemaMapStateToProps(), tableRecordsMapStateToProps());
 	return (state, props) => {
 		return selectorInst(state, props);
 	};
