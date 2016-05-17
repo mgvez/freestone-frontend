@@ -15,9 +15,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - normalizr
 - au lieu de tinymce http://facebook.github.io/draft-js/
 
-## Redux
-- essayer de mettre un reselect different pour chaque instance de la meme classe au lieu de un par classe
-
 ## General
 
 - debounce (lodash) des fetch data
@@ -73,7 +70,6 @@ par priorité
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 - liste des anciennes révisions du record
-- caching du reselect de children records
 - clear schema quand update certaines tables (table, field, etc.) pour éviter d'avoir une structure outdatée en state
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - si pas de record a saver quand component save, redirect (list??)
