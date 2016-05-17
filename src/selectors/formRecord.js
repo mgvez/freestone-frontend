@@ -1,7 +1,7 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/tableSchema';
+import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 import { userViewLanguageSelector } from 'selectors/userViewLanguage';
 
 
@@ -30,38 +30,48 @@ function parseDependencies(table, record) {
 	return parsedTable;
 }
 
-export const formRecordSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, recordIdSelector, recordsUnalteredSelector, childrenSelector, envSelector, userViewLanguageSelector],
-	(schema, records, recordId, recordsUnaltered, unfilteredChildren, env, userViewLanguage) => {
-		let { table } = schema;
-		const record = recordId && table && records[table.id] && records[table.id][recordId];
-		const recordUnaltered = recordId && table && recordsUnaltered[table.id] && recordsUnaltered[table.id][recordId];
-		let children;
-		// console.log(`build record for ${recordId}`);
+function makeSelector(tableSchemaSelector) {
+	return createSelector(
+		[tableSchemaSelector, recordsSelector, recordIdSelector, recordsUnalteredSelector, childrenSelector, envSelector, userViewLanguageSelector],
+		(schema, records, recordId, recordsUnaltered, unfilteredChildren, env, userViewLanguage) => {
+			let { table } = schema;
+			const record = recordId && table && records[table.id] && records[table.id][recordId];
+			const recordUnaltered = recordId && table && recordsUnaltered[table.id] && recordsUnaltered[table.id][recordId];
+			let children;
+			// console.log(`build record for ${recordId}`);
 
-		//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
-		if (table) {
-			children = table && table.fields.reduce((filteredChildren, field) => {
-				if (field.subformPlaceholder) {
-					// console.log(filteredChildren.indexOf(field.subformPlaceholder));
-					filteredChildren.splice(filteredChildren.indexOf(field.subformPlaceholder), 1);
-				}
-				return filteredChildren;
-			}, [...unfilteredChildren[table.id]]);
+			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
+			if (table) {
+				children = table && table.fields.reduce((filteredChildren, field) => {
+					if (field.subformPlaceholder) {
+						// console.log(filteredChildren.indexOf(field.subformPlaceholder));
+						filteredChildren.splice(filteredChildren.indexOf(field.subformPlaceholder), 1);
+					}
+					return filteredChildren;
+				}, [...unfilteredChildren[table.id]]);
 
-			table = parseDependencies(table, record);
+				table = parseDependencies(table, record);
+			}
+
+
+			// console.log(tableSchema, records, recordId);
+			return {
+				record,
+				recordUnaltered,
+				children,
+				table,
+				fields: table && table.fields,
+				env,
+				...userViewLanguage,
+			};
 		}
+	);
+}
 
 
-		// console.log(tableSchema, records, recordId);
-		return {
-			record,
-			recordUnaltered,
-			children,
-			table,
-			fields: table && table.fields,
-			env,
-			...userViewLanguage,
-		};
-	}
-);
+export function formRecordMapStateToProps() {
+	const selectorInst = makeSelector(tableSchemaMapStateToProps());
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}

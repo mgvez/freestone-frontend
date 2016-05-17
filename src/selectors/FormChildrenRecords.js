@@ -1,7 +1,7 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/tableSchema';
+import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 
 import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
@@ -51,49 +51,57 @@ function getLabeledRecords(records, searchableFields, orderField) {
 	});
 }
 
-export const formChildrenRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector],
-	(schema, records, childrenAreLoaded, parentRecordId, parentTableId, shownRecords) => {
-		// console.log(records);
-		const { table } = schema;
+function makeSelector(tableSchemaSelector) {
+	return createSelector(
+		[tableSchemaSelector, recordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector],
+		(schema, records, childrenAreLoaded, parentRecordId, parentTableId, shownRecords) => {
+			const { table } = schema;
 
-		if (table) {
-			const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
-			// console.log(parentRecordId, table, areLoaded);
-			const tableRecords = records[table.id];
-			const parentLinkField = table.parentLink[parentTableId];
+			if (table) {
+				const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
+				// console.log(parentRecordId, table, areLoaded);
+				const tableRecords = records[table.id];
+				const parentLinkField = table.parentLink[parentTableId];
 
-			const type = parentLinkField && parentLinkField.type;
-			let activeRecordId;
-			let activeRecord;
+				const type = parentLinkField && parentLinkField.type;
+				let activeRecordId;
+				let activeRecord;
 
-			let childrenRecords;
-			if (areLoaded) {
-				childrenRecords = getRecordsFromParent(tableRecords, parentRecordId, parentTableId);
-				childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
+				let childrenRecords;
+				if (areLoaded) {
+					childrenRecords = getRecordsFromParent(tableRecords, parentRecordId, parentTableId);
+					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
 
-				activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
-				activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
+					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
+				}
+
+				//highest order, pour quand on add un record, qu'il soit à la suite
+				let highestOrder = 0;
+				if (table.orderField && childrenRecords) {
+					highestOrder = childrenRecords.reduce((highest, record) => {
+						return record.order > highest ? Number(record.order) : highest;
+					}, 0);
+				}
+
+				return {
+					table,
+					highestOrder,
+					type,
+					childrenRecords,
+					activeRecord,
+				};
 			}
 
-			//highest order, pour quand on add un record, qu'il soit à la suite
-			let highestOrder = 0;
-			if (table.orderField && childrenRecords) {
-				highestOrder = childrenRecords.reduce((highest, record) => {
-					return record.order > highest ? Number(record.order) : highest;
-				}, 0);
-			}
+			return {};
 
-			return {
-				table,
-				highestOrder,
-				type,
-				childrenRecords,
-				activeRecord,
-			};
 		}
+	);
+}
 
-		return {};
-
-	}
-);
+export function formChildrenRecordsMapStateToProps() {
+	const selectorInst = makeSelector(tableSchemaMapStateToProps());
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}

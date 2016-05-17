@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchTable } from 'actions/schema';
-import { tableSchemaSelector } from 'selectors/tableSchema';
+import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 
 import { RequireApiData } from 'utils/RequireApiData';
 
@@ -14,7 +14,7 @@ import { TYPE_MTM } from 'freestone/schemaProps';
 
 
 @connect(
-	tableSchemaSelector,
+	tableSchemaMapStateToProps,
 	dispatch => bindActionCreators({ fetchTable }, dispatch)
 )
 export class Children extends Component {

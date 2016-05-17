@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { RequireApiData } from 'utils/RequireApiData';
 
-import { formChildrenRecordsSelector } from 'selectors/formChildrenRecords';
+import { formChildrenRecordsMapStateToProps } from 'selectors/formChildrenRecords';
 import * as recordActionCreators from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
@@ -15,7 +15,7 @@ import { TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
 
 
 @connect(
-	formChildrenRecordsSelector,
+	formChildrenRecordsMapStateToProps,
 	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
 )
 export class Subform extends Component {

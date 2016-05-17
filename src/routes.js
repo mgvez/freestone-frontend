@@ -8,7 +8,7 @@ import { Freestone } from 'components/connected/Freestone';
 import { Home } from 'components/connected/Home';
 import { Login } from 'components/connected/Login';
 import { List } from 'components/connected/List';
-import { RootForm } from 'components/connected/Form/Root';
+import { RootForm } from 'components/connected/form/Root';
 import { Save } from 'components/connected/Save';
 
 export default (

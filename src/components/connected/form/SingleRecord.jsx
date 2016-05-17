@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { formRecordSelector } from 'selectors/formRecord';
+import { formRecordMapStateToProps } from 'selectors/formRecord';
 
 import { RequireApiData } from 'utils/RequireApiData';
 
@@ -13,7 +13,7 @@ import { Children } from 'components/connected/form/Children';
 import { Field } from 'components/static/form/Field';
 
 @connect(
-	formRecordSelector,
+	formRecordMapStateToProps,
 	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 export class SingleRecord extends Component {

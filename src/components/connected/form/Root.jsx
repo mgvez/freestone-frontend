@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 
 import { RequireApiData } from 'utils/RequireApiData';
-import { rootFormSelector } from 'selectors/rootForm';
+import { rootFormMapStateToProps } from 'selectors/rootForm';
 
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
 @connect(
-	rootFormSelector,
+	rootFormMapStateToProps,
 	dispatch => bindActionCreators(schemaActionCreators, dispatch)
 )
 export class RootForm extends Component {

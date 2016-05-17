@@ -9,14 +9,14 @@ import { RequireApiData } from 'utils/RequireApiData';
 import { fetchTable } from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
-import { mtmFormSelector } from 'selectors/formMtm';
+import { formMtmMapStateToProps } from 'selectors/formMtm';
 
 import { Header } from 'components/connected/form/Header';
 
 
 @dragDropContext(HTML5Backend)
 @connect(
-	mtmFormSelector,
+	formMtmMapStateToProps,
 	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
 )
 export class SubformMtm extends Component {

@@ -12,11 +12,6 @@ import { SiteHeader } from 'components/static/SiteHeader';
 import { Footer } from 'components/static/Footer';
 import { Errors } from 'components/static/Errors';
 import { Nav } from 'components/connected/Nav';
-import { TestReselect } from 'components/connected/TestReselect';
-
-const idA = { tableId: 1, tableName: 'tableA' };
-const idB = { tableId: 2, tableName: 'tableB' };
-const idC = { tableId: 3, tableName: 'tableC' };
 
 let i = 0;
 @connect(
@@ -63,9 +58,6 @@ export class Freestone extends Component {
 				<Nav />
 				<div className="main-content">
 					<SiteHeader {...this.props} />
-					<TestReselect params={idA} />
-					<TestReselect params={idB} />
-					<TestReselect params={idC} />
 					<Errors {...this.props} />
 					{this.props.children}
 					<Footer />
