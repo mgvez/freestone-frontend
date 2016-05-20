@@ -49,8 +49,9 @@ export class RootForm extends Component {
 			
 			header = (
 				<header>
-					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-default">Save</Link>
-					<button className="btn btn-xs btn-default">Cancel</button>
+					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-primary">Save</Link>
+					<Link to={`/cancel/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-danger">Cancel</Link>
+
 					<div>lastmodif {this.props.lastmodifdate}</div>
 					<h1>{this.props.table.displayLabel}</h1>
 					<div>{this.props.table.help}</div>

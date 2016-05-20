@@ -9,6 +9,9 @@ const mtmRecordsSelector = state => state.recordForm.mtmRecords;
 const recordIdSelector = (state, props) => props.params.recordId;
 const childrenSelector = state => state.schema.children;
 
+
+const saveStateSelector = state => state.save;
+
 function getChildrenRecordIds(records, parentRecordId, parentTableId) {
 	// console.log(records, parentRecordId);
 	return records && Object.keys(records).map((recordId) => {
@@ -70,7 +73,7 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 	}, records);
 }
 
-export const saveRecordSelector = createSelector(
+const buildRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
 	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
 		// console.log(`build record for ${recordId}`);
@@ -92,4 +95,42 @@ export const saveRecordSelector = createSelector(
 			fields: table && table.fields,
 		};
 	}
+);
+
+function getRecordIds(branch, allRecords, records = []) {
+	const { tableId, recordId, children } = branch;
+	const record = allRecords[tableId] && allRecords[tableId][recordId];
+	
+	if (record) records.push({ tableId, recordId });
+
+	return children.reduce((carry, childBranch) => {
+		return getRecordIds(childBranch, allRecords, carry);
+	}, records);
+}
+
+export const buildCancelRecordSelector = createSelector(
+	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
+	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
+		// console.log(`build record for ${recordId}`);
+		const { table } = mainTableSchema;
+		const { tables } = allSchema;
+		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
+		const records = getRecordIds(tree, allRecords);
+
+		return {
+			records,
+			table,
+		};
+	}
+);
+
+export const buildSaveRecordSelector = createSelector(
+	[buildRecordSelector, saveStateSelector],
+	(builtRecord, saveState) => {
+		
+		return {
+			...builtRecord,
+			saveState,
+		};
+	},
 );

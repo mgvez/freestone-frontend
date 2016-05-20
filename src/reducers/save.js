@@ -46,7 +46,7 @@ function status(state = statusDefault, action) {
 	case SAVE_RECORD_ERROR:
 		return {
 			code: SAVE_ERROR,
-			msg: 'record saved',
+			msg: 'record save error',
 			error: null,
 		};
 	case INIT_SAVE:

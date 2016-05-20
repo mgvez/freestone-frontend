@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as saveActionCreators from 'actions/save';
+import { saveRecord } from 'actions/save';
 import { goTo } from 'actions/nav';
 
-import { saveSelector } from 'selectors/save';
+import { buildSaveRecordSelector } from 'selectors/buildRecord';
 
 @connect(
-	saveSelector,
-	dispatch => bindActionCreators({ ...saveActionCreators, goTo }, dispatch)
+	buildSaveRecordSelector,
+	dispatch => bindActionCreators({ saveRecord, goTo }, dispatch)
 )
 export class Save extends Component {
 	static propTypes = {
@@ -20,10 +20,8 @@ export class Save extends Component {
 		deleted: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		saveState: React.PropTypes.object,
-		backPath: React.PropTypes.object,
 
 		saveRecord: React.PropTypes.func,
-		sendFile: React.PropTypes.func,
 		goTo: React.PropTypes.func,
 	};
 
@@ -37,7 +35,7 @@ export class Save extends Component {
 
 		if (onSaved) {
 			onSaved.then(() => {
-				const backPath = this.props.backPath || { path: `list/${this.props.params.tableName}` };
+				const backPath = { path: `list/${this.props.params.tableName}` };
 				setTimeout(() => this.props.goTo(backPath), 2000);
 			});
 		}

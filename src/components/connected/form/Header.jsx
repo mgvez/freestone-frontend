@@ -28,13 +28,13 @@ export class Header extends Component {
 	addRecord = () => {
 		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, this.props.highestOrder + 10);
 		
-		console.log(newRecord);
+		// console.log(newRecord);
 		this.props.addRecord(this.props.table.id, newRecord);
 		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);
 	};
 
 	deleteRecord = () => {
-		console.log('delete');
+		// console.log('delete');
 		this.props.setRecordDeleted(this.props.table.id, this.props.activeRecordId);
 		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, null);
 	};

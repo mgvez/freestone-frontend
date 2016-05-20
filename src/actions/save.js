@@ -48,7 +48,6 @@ export function saveRecord(tableName, tree, records, deleted) {
 				},
 			});
 		});
-
 	};
 }
 

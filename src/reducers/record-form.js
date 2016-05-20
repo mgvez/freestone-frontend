@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE } from 'actions/record';
+import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
 import { SAVE_RECORD_SUCCESS } from 'actions/save';
 
 function setFieldValue(state, data) {
@@ -37,10 +37,10 @@ function receiveRecord(state, data) {
 	return newState;
 }
 
-function removeRecords(state, data) {
-	if (!data.records) return state;
+function removeRecords(state, recordsToRemove) {
+	if (!recordsToRemove) return state;
 
-	return data.records.reduce((carry, record) => {
+	return recordsToRemove.reduce((carry, record) => {
 		const { tableId, recordId } = record;
 		const tableRecords = { ...carry[tableId] };
 		delete tableRecords[recordId];
@@ -76,9 +76,10 @@ function childrenAreLoaded(state = {}, action) {
 
 		// console.log(newState);
 		return newState;
+	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
 		//m fonction que pour les records eux meme (structure fonctionne)
-		return removeRecords(state, action.data);
+		return removeRecords(state, action.data.records);
 	case CLEAR_DATA:
 		return {};
 	default:
@@ -100,9 +101,10 @@ function records(state = {}, action) {
 		return setFieldValue(state, action.data);
 	case CLEAR_DATA:
 		return {};
+	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
-		// console.log(action);
-		return removeRecords(state, action.data);
+		console.log(action.data);
+		return removeRecords(state, action.data.records);
 	default:
 		// console.log('no change');
 		return state;
@@ -153,10 +155,10 @@ function receiveMtmRecords(state, data) {
 }
 
 //les records many to many ne sont pas identifiés par leur table elle même, mais sont deletes quand leur PARENT est savé
-function removeMtmRecords(state, data) {
-	if (!data.records) return state;
+function removeMtmRecords(state, recordsToRemove) {
+	if (!recordsToRemove) return state;
 
-	return data.records.reduce((allMtm, savedRecord) => {
+	return recordsToRemove.reduce((allMtm, savedRecord) => {
 		const { tableId, recordId } = savedRecord;
 		//trouve une table qui aurait celle-ci comme parent
 		return Object.keys(allMtm).reduce((updatedMtm, mtmTableId) => {
@@ -195,8 +197,9 @@ function mtmRecords(state = {}, action) {
 		return toggleMtmValue(state, action.data);
 	case CLEAR_DATA:
 		return {};
+	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
-		return removeMtmRecords(state, action.data);
+		return removeMtmRecords(state, action.data.records);
 	default:
 		// console.log('no change');
 		return state;
@@ -214,9 +217,10 @@ function recordsUnaltered(state = {}, action) {
 		return receiveMtmRecords(state, action.data);
 	case CLEAR_DATA:
 		return {};
+	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
 		// console.log(action);
-		return removeRecords(state, action.data);
+		return removeRecords(state, action.data.records);
 	default:
 		// console.log('no change');
 		return state;
