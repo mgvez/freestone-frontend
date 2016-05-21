@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 const rawForeignOptionsSelector = state => state.foreignOptions;
 const fieldIdSelector = (state, props) => props.field.id;
 
-const allForeignOptionsSelector = createSelector(
+export const allForeignOptionsSelector = createSelector(
 	[rawForeignOptionsSelector],
 	(rawOptions) => {
 		// console.log('parse foreigns');

@@ -9,7 +9,7 @@ import { formRecordMapStateToProps } from 'selectors/formRecord';
 
 import { RequireApiData } from 'utils/RequireApiData';
 
-import { Children } from 'components/connected/form/Children';
+import { Subform } from 'components/connected/form/Subform';
 import { Field } from 'components/static/form/Field';
 
 @connect(
@@ -74,7 +74,7 @@ export class SingleRecord extends Component {
 
 							if (field.subformPlaceholder) {
 								return (
-									<Children
+									<Subform
 										key={field.subformPlaceholder}
 										tableId={field.subformPlaceholder}
 										parentTableId={this.props.table.id}
@@ -105,7 +105,7 @@ export class SingleRecord extends Component {
 						{
 							this.props.children.map((tableId) => {
 								return (
-									<Children
+									<Subform
 										key={tableId}
 										tableId={tableId}
 										parentTableId={this.props.table.id}

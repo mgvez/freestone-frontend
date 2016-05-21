@@ -28,6 +28,9 @@ function callApi(route, data, jwt, successType) {
 	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
 
 	// console.log(`issuing ${successType}`, route, processing[hash]);
+	if (processing[hash]) {
+		console.log(`%c${route} api already exists`, 'color:grey');
+	}
 
 	processing[hash] = processing[hash] || reqwest({
 		url: getEndpoint(route),
@@ -37,6 +40,7 @@ function callApi(route, data, jwt, successType) {
 		data,
 		headers,
 	}).then(res => {
+		console.log(`%c${route} loaded`, 'color:red');
 		processing[hash] = null;
 		return res;
 	}).catch(error => {
@@ -105,6 +109,9 @@ export default store => next => action => {
 			if (res.jwt) {
 				next(receiveToken(res.jwt));
 			}
+			console.log(`%c${route} next`, 'color:green');
+			console.log(res);
+
 			next(actionWith({
 				type: successType,
 				data: res.data,

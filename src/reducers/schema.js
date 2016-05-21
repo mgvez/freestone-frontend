@@ -2,14 +2,14 @@ import { combineReducers } from 'redux';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
 import { RECEIVE_SCHEMA } from 'actions/schema';
-import { SAVE_RECORD_SUCCESS } from 'actions/save';
+import { CLEAR_SCHEMA } from 'actions/schema';
 
 function tables(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
 	case RECEIVE_SCHEMA:
-		// console.log(action.data.tables);
+		// console.log(action.data);
 		if (!action.data.tables) return state;
 		return {
 			...state,
@@ -22,7 +22,7 @@ function tables(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
-	case SAVE_RECORD_SUCCESS:
+	case CLEAR_SCHEMA:
 		return {};
 	default:
 		// console.log('no change');
@@ -35,7 +35,7 @@ function children(state = {}, action) {
 	case UNAUTHORIZED:
 		return {};
 	case RECEIVE_SCHEMA:
-		console.log(action);
+		// console.log(action);
 		if (!action.data.children) return state;
 		return {
 			...state,
@@ -48,7 +48,7 @@ function children(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
-	case SAVE_RECORD_SUCCESS:
+	case CLEAR_SCHEMA:
 		return {};
 	default:
 		// console.log('no change');
@@ -74,7 +74,7 @@ function fields(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
-	case SAVE_RECORD_SUCCESS:
+	case CLEAR_SCHEMA:
 		return {};
 	default:
 		// console.log('no change');
@@ -97,7 +97,7 @@ function fieldDependencies(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
-	case SAVE_RECORD_SUCCESS:
+	case CLEAR_SCHEMA:
 		return {};
 	default:
 		// console.log('no change');

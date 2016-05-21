@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 
 import { FileThumbnail } from 'components/static/fileThumbnail/FileThumbnail';
 import { InfosFcn } from 'components/static/recordList/InfosFcn';
 import { OrderFcn } from 'components/connected/recordList/OrderFcn';
-import { ModifFcn } from 'components/connected/recordList/ModifFcn';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps';
 
@@ -27,7 +27,12 @@ export class Row extends Component {
 			orderCell = <OrderFcn tableName={this.props.table.name} prikey={this.props.values.prikey}/>;
 		}
 
-		const modifCell = <ModifFcn tableName={this.props.table.name} prikey={this.props.values.prikey} />;
+		const modifCell = (
+			<td className="list-functions">
+				<Link to={`/edit/${this.props.table.name}/${this.props.values.prikey}`} activeClassName="active" className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+				<a className="btn btn-danger btn-sm"><i className="fa fa-close"></i><span> Delete</span></a>
+			</td>
+		);
 		const infoCell = (
 			<InfosFcn
 				tableName={this.props.table.name}
@@ -72,6 +77,7 @@ export class Row extends Component {
 				}
 				{ modifCell }
 				{ orderCell }
+				{ infoCell }
 			</tr>
 		);
 	}

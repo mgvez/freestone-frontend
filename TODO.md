@@ -20,7 +20,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - debounce (lodash) des fetch data
 - login dans freestone.jsx plutot que par redirect
 - liste des records en cours de modif par le user dans un widget
-- createddate && modifdate dans constantes des alias de champs
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
@@ -58,7 +57,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 par priorité
 
-- cancel btn
 - créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
 - types de input
 	- file
@@ -67,7 +65,6 @@ par priorité
 		- insert freestone image
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
-- clear schema quand update certaines tables (table, field, etc.) pour éviter d'avoir une structure outdatée en state
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - si pas de record a saver quand component save, redirect (list??)
 - remettre le champ rewrite.current

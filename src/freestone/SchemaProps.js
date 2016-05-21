@@ -3,6 +3,9 @@ export const PRIKEY_ALIAS = 'prikey';
 export const PARENTKEY_ALIAS = 'parentkey';
 export const LASTMODIF_DATE_ALIAS = 'lastmodifdate';
 export const CREATED_DATE_ALIAS = 'createddate';
+export const LOADED_TIME_ALIAS = '__loaded_time';
+
+export const TYPE_MAIN = 'main';
 
 export const TYPE_MTM = 'mtm';
 export const TYPE_OTO = 'oto';

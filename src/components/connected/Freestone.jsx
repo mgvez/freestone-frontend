@@ -4,14 +4,16 @@ import { bindActionCreators } from 'redux';
 
 import * as authActionCreators from 'actions/auth';
 import * as devActionCreators from 'actions/dev';
+import { clearSchema } from 'actions/schema';
 
-const actionCreators = { ...authActionCreators, ...devActionCreators };
+const actionCreators = { ...authActionCreators, ...devActionCreators, clearSchema };
 
 /* application components */
 import { SiteHeader } from 'components/static/SiteHeader';
 import { Footer } from 'components/static/Footer';
 import { Errors } from 'components/static/Errors';
 import { Nav } from 'components/connected/Nav';
+import { LoadedRecords } from 'components/connected/LoadedRecords';
 
 let i = 0;
 @connect(
@@ -58,6 +60,7 @@ export class Freestone extends Component {
 				<Nav />
 				<div className="main-content">
 					<SiteHeader {...this.props} />
+					<LoadedRecords />
 					<Errors {...this.props} />
 					{this.props.children}
 					<Footer />

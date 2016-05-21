@@ -9,6 +9,7 @@ export class SiteHeader extends Component {
 		clearData: React.PropTypes.func,
 		startPerf: React.PropTypes.func,
 		stopPerf: React.PropTypes.func,
+		clearSchema: React.PropTypes.func,
 		env: React.PropTypes.object,
 	};
 
@@ -40,6 +41,9 @@ export class SiteHeader extends Component {
 				</div>
 				<div className="fcn">
 					
+					<button className="btn btn-xs" onClick={this.props.clearSchema}>
+						Clear schema
+					</button>
 					<button className="btn btn-xs" onClick={this.props.clearData}>
 						Clear all data
 					</button>

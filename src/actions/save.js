@@ -1,6 +1,8 @@
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { FREESTONE_API } from 'middleware/api';
 import { sendRecordFiles } from 'actions/send-file';
 import { push as pushPath } from 'react-router-redux';
+
+import { CLEAR_SCHEMA } from 'actions/schema';
 
 export const SAVE_RECORD_REQUEST = 'SAVE_RECORD_REQUEST';
 export const SAVE_RECORD_SUCCESS = 'SAVE_RECORD_SUCCESS';
@@ -11,13 +13,16 @@ export const SWAP_ORDER_ERROR = 'SWAP_ORDER_ERROR';
 export const INIT_SAVE = 'INIT_SAVE';
 
 
-export function saveRecord(tableName, tree, records, deleted) {
+export function saveRecord(table, tree, records, deleted) {
 	return (dispatch) => {
 		// console.log(tree);
 		// console.log(records);
 		// console.log(deleted);
+
+		const tableName = table.name;
+		const { isMeta } = table;
 		
-		if (!tree || !tree.tableId || !tree.recordId || !records || !records[tree.tableId] || !records[tree.tableId][tree.recordId]) {
+		if (!table || !tree || !tree.tableId || !tree.recordId || !records || !records[tree.tableId] || !records[tree.tableId][tree.recordId]) {
 			dispatch(pushPath(`list/${tableName}`));
 			return null;
 		}
@@ -34,7 +39,7 @@ export function saveRecord(tableName, tree, records, deleted) {
 				return carry;
 			}, {});
 			// console.log(tree, records);
-			return dispatch({
+			const onSaved = dispatch({
 				[FREESTONE_API]: {
 					types: [SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR],
 					route: `save/${tableName}`,
@@ -47,6 +52,16 @@ export function saveRecord(tableName, tree, records, deleted) {
 					},
 				},
 			});
+
+			//si table savée est meta (zva_...)
+			if (isMeta) {
+				onSaved.then(() => {
+					dispatch({
+						type: CLEAR_SCHEMA,
+					});
+				});
+			}
+			return onSaved;
 		});
 	};
 }

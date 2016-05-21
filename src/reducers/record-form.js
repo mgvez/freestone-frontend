@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS } from 'freestone/schemaProps';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
@@ -29,6 +29,7 @@ function receiveRecord(state, data) {
 		...state,
 		[tableId]: data.records.reduce((tableRecords, record) => {
 			const key = record[PRIKEY_ALIAS];
+			record[LOADED_TIME_ALIAS] = new Date().getTime() / 1000;
 			tableRecords[key] = record;
 			return tableRecords;
 		}, state[tableId] || {}),
@@ -103,7 +104,7 @@ function records(state = {}, action) {
 		return {};
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
-		console.log(action.data);
+		// console.log(action.data);
 		return removeRecords(state, action.data.records);
 	default:
 		// console.log('no change');

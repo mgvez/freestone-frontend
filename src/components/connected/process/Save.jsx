@@ -31,7 +31,7 @@ export class Save extends Component {
 
 	componentWillMount() {
 		// console.log('MOUNT', this.props.records, this.props.deleted);
-		const onSaved = this.props.saveRecord(this.props.params.tableName, this.props.tree, this.props.records, this.props.deleted);
+		const onSaved = this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted);
 
 		if (onSaved) {
 			onSaved.then(() => {
