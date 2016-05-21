@@ -18,6 +18,7 @@ export function foreignOptions(state = {}, action) {
 		// console.log(newState);
 		return newState;
 	case CLEAR_DATA:
+	case 'CLEAR_SCHEMA':
 		return {};
 	default:
 		// console.log('no change');

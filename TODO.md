@@ -17,7 +17,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## General
 
-- debounce (lodash) des fetch data
 - login dans freestone.jsx plutot que par redirect
 - liste des records en cours de modif par le user dans un widget
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
@@ -66,7 +65,6 @@ par priorité
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
-- si pas de record a saver quand component save, redirect (list??)
 - remettre le champ rewrite.current
 - insert image de banque : drag & drop
 - autocomplete
@@ -94,7 +92,6 @@ par priorité
 
 # Semi-done
 
-- comment faire en sorte de pas fetcher plein de fois le meme ajax si le component receive des props plusieurs fois entretemps? -> see redux async example shouldFetchPosts. P-e se faire un reducer qui contient toutes la signature des requetes en cours, et return false si on attempt une requete qui est deja en train de se ajaxer
 
 ## Liste
 - self-join trees

@@ -41,8 +41,12 @@ export class LoadedRecords extends Component {
 		// console.log(props);
 		if (props.records) {
 			props.records.filter(records => !records.table).forEach(records => {
-				// console.log(records.tableId);
 				this.props.fetchTable(records.tableId);
+			});
+		}
+		if (props.unloadedForeignOptions) {
+			props.unloadedForeignOptions.forEach(unloadedForeignOption => {
+				this.props.fetchForeignOptions(unloadedForeignOption);
 			});
 		}
 	}
