@@ -15,7 +15,6 @@ function getEndpoint(route) {
 	return `${window.location.protocol}//${hostname}/admin/${route}`;
 }
 
-const processing = {};
 
 function callApi(route, data, jwt, successType) {
 	// console.log(`post data ${route}`, data);
@@ -25,30 +24,15 @@ function callApi(route, data, jwt, successType) {
 	if (jwt) {
 		headers.Authorization = `Bearer ${jwt}`;
 	}
-	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
 
-	// console.log(`issuing ${successType}`, route, processing[hash]);
-	if (processing[hash]) {
-		console.log(`%c${route} api already exists`, 'color:grey');
-	}
-
-	processing[hash] = processing[hash] || reqwest({
+	return reqwest({
 		url: getEndpoint(route),
 		crossOrigin: true,
 		processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
 		method,		
 		data,
 		headers,
-	}).then(res => {
-		console.log(`%c${route} loaded`, 'color:red');
-		processing[hash] = null;
-		return res;
-	}).catch(error => {
-		processing[hash] = null;
-		return error;
 	});
-
-	return processing[hash];
 }
 
 export const FREESTONE_API = Symbol('Freestone API');
@@ -57,12 +41,16 @@ export const FREESTONE_API_SUCCESS = 'FREESTONE_API_SUCCESS';
 export const FREESTONE_API_FAILURE = 'FREESTONE_API_FAILURE';
 export const FREESTONE_API_FATAL_FAILURE = 'FREESTONE_API_FATAL_FAILURE';
 
+const processing = {};
+
+
 export default store => next => action => {
 	const callAPI = action[FREESTONE_API];
 	if (typeof callAPI === 'undefined') {
 		// console.log(action);
 		return next(action);
 	}
+	const { route, data, types, bailout } = callAPI;
 
 	function actionWith(vals) {
 		const finalAction = Object.assign({}, action, vals);
@@ -71,17 +59,18 @@ export default store => next => action => {
 		return finalAction;
 	}
 
-	const { route, data, types, bailout } = callAPI;
+	let [requestType, successType, failureType] = types;
+	requestType = requestType || FREESTONE_API_REQUEST;
+	successType = successType || FREESTONE_API_SUCCESS;
+	failureType = failureType || FREESTONE_API_FAILURE;	
 
+	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
+
+	// console.log(`issuing ${successType}`, route, processing[hash]);
 
 	if (!Array.isArray(types) || types.length !== 3) {
 		throw new Error('Expected an array of three action types.');
 	}
-
-	let [requestType, successType, failureType] = types;
-	requestType = requestType || FREESTONE_API_REQUEST;
-	successType = successType || FREESTONE_API_SUCCESS;
-	failureType = failureType || FREESTONE_API_FAILURE;
 
 	try {
 		if ((typeof bailout === 'boolean' && bailout) || (typeof bailout === 'function' && bailout(store.getState()))) {
@@ -101,21 +90,24 @@ export default store => next => action => {
 		return Promise.reject(e);
 	}
 
+	if (processing[hash]) return processing[hash];
+
 	next(actionWith({ data, type: requestType }));
 	const jwt = store.getState().auth.jwt;
 
-	return callApi(route, data, jwt, successType).then(
+	processing[hash] = callApi(route, data, jwt, successType).then(
 		res => {
 			if (res.jwt) {
 				next(receiveToken(res.jwt));
 			}
-			console.log(`%c${route} next`, 'color:green');
-			console.log(res);
+			// console.log(`%c${route} next`, 'color:green');
+			// console.log(res);
 
 			next(actionWith({
 				type: successType,
 				data: res.data,
 			}));
+			processing[hash] = null;
 			return res.data;
 		}
 	).catch(
@@ -135,7 +127,10 @@ export default store => next => action => {
 					error,
 				}));
 			}
+			processing[hash] = null;
 			return error;
 		}
 	);
+
+	return processing[hash];
 };
