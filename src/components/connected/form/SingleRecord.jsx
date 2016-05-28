@@ -11,6 +11,7 @@ import { RequireApiData } from 'utils/RequireApiData';
 
 import { Subform } from 'components/connected/form/Subform';
 import { Field } from 'components/static/form/Field';
+import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
 
 @connect(
 	formRecordMapStateToProps,
@@ -28,6 +29,7 @@ export class SingleRecord extends Component {
 		fields: React.PropTypes.array,
 		env: React.PropTypes.object,
 		language: React.PropTypes.string,
+		hasDeleteButton: React.PropTypes.bool,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
@@ -64,6 +66,17 @@ export class SingleRecord extends Component {
 	render() {
 		let form;
 		let sub;
+
+		let deleteBtn;
+		if (this.props.hasDeleteButton) {
+			deleteBtn = (
+				<DeleteRecord 
+					tableId={this.props.table.id}
+					recordId={this.props.recordId}
+				/>
+			);
+		}
+
 		// console.log('render', this.props.record);
 		if (this.props.table && this.props.record) {
 
@@ -96,6 +109,7 @@ export class SingleRecord extends Component {
 							/>) : null;
 						})
 					}
+					{deleteBtn}
 				</article>
 			);
 			if (this.props.children) {

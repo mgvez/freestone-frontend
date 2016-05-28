@@ -3,7 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as recordActionCreators from 'actions/record';
-import createRecord from 'freestone/createRecord';
+
+import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
+import { AddRecord } from 'components/connected/form/buttons/AddRecord';
+import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
 
 
 @connect(
@@ -18,25 +21,7 @@ export class Header extends Component {
 		parentTableId: React.PropTypes.number,
 		hasDeleteButton: React.PropTypes.bool,
 		hasAddButton: React.PropTypes.bool,
-		highestOrder: React.PropTypes.number,
-		
-		addRecord: React.PropTypes.func,
-		setShownRecord: React.PropTypes.func,
-		setRecordDeleted: React.PropTypes.func,
-	};
-
-	addRecord = () => {
-		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, this.props.highestOrder + 10);
-		
-		// console.log(newRecord);
-		this.props.addRecord(this.props.table.id, newRecord);
-		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);
-	};
-
-	deleteRecord = () => {
-		// console.log('delete');
-		this.props.setRecordDeleted(this.props.table.id, this.props.activeRecordId);
-		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, null);
+		highestOrder: React.PropTypes.number,		
 	};
 
 	render() {
@@ -46,13 +31,24 @@ export class Header extends Component {
 			let deleteBtn;
 			if (this.props.activeRecordId && this.props.hasDeleteButton) {
 				deleteBtn = (
-					<button className="btn btn-sm btn-warning" onClick={this.deleteRecord}>Delete record</button>
+					<DeleteRecord 
+						tableId={this.props.table.id}
+						parentRecordId={this.props.parentRecordId}
+						recordId={this.props.activeRecordId}
+					/>
 				);
 			}
 
 			let addBtn;
 			if (this.props.hasAddButton) {
-				addBtn = <button className="btn btn-sm btn-default" onClick={this.addRecord}>Add record</button>;
+				addBtn = (
+					<AddRecord 
+						table={this.props.table}
+						parentRecordId={this.props.parentRecordId}
+						parentTableId={this.props.parentTableId}
+						highestOrder={this.props.highestOrder}
+					/>
+				);
 			}
 
 			return (
@@ -61,6 +57,8 @@ export class Header extends Component {
 					<div>{this.props.table.help}</div>
 					{addBtn}
 					{deleteBtn}
+					<ChangeSubformView tableId={this.props.table.id} />
+
 				</header>
 			);
 		}

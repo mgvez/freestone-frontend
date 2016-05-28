@@ -3,6 +3,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 import { tableRecordsMapStateToProps } from 'selectors/record';
+import { subformViewSelector } from 'selectors/subformView';
 
 import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
@@ -53,8 +54,8 @@ function getLabeledRecords(records, searchableFields, orderField) {
 
 function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 	return createSelector(
-		[tableSchemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector],
-		(schema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords) => {
+		[tableSchemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector],
+		(schema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView) => {
 			const { table } = schema;
 			if (table) {
 				const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
@@ -88,6 +89,7 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 					type,
 					childrenRecords,
 					activeRecord,
+					...subformView,
 				};
 			}
 

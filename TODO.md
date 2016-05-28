@@ -18,7 +18,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 ## General
 
 - login dans freestone.jsx plutot que par redirect
-- liste des records en cours de modif par le user dans un widget
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
@@ -31,6 +30,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - bank (et toutes les instances de cette classe)
 	- js delete tags figure et figcaption vides
 - traduire les erreurs (VException)
+- remettre le champ rewrite.current
 - pruner les temp files
 - reimplmenter admin Bank.php
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
@@ -43,6 +43,11 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
+- tester definitions dans install config
+	- mettre field_type
+- pas quit quand image resize marche pas : save quand meme
+- images/files: overwrite ou pas au premier tour du resize, pour éviter d'écraser le fichier d'un autre record
+- image resize pour img bank selon pixel ratio
 
 # Freestone JS
 
@@ -65,13 +70,10 @@ par priorité
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
-- remettre le champ rewrite.current
 - insert image de banque : drag & drop
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
-- tester definitions dans install config
-	- mettre field_type
 - Unit tests 20%
 
 

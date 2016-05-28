@@ -9,10 +9,11 @@ import * as recordActionCreators from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
 import { SubformTabbed } from 'components/static/form/SubformTabbed';
+import { SubformList } from 'components/static/form/SubformList';
 import { SubformSingle } from 'components/static/form/SubformSingle';
 
 import { TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
-
+import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from 'freestone/schemaProps';
 
 @connect(
 	formChildrenRecordsMapStateToProps,
@@ -27,6 +28,7 @@ export class SubformStandard extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
+		currentViewType: React.PropTypes.string,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
@@ -82,7 +84,11 @@ export class SubformStandard extends Component {
 		if (!this.props.table) return null;
 
 		if (this.props.table.type === TYPE_REL) {
-			return <SubformTabbed {...this.props} swapRecords={this.swapRecords} />;
+			if (this.props.currentViewType === SUBFORM_VIEW_TABBED || !this.props.currentViewType) {
+				return <SubformTabbed {...this.props} swapRecords={this.swapRecords} />;
+			}
+			return <SubformList {...this.props} swapRecords={this.swapRecords} />;
+
 		} else if (this.props.table.type === TYPE_OTO) {
 			return <SubformSingle {...this.props} />;
 		}

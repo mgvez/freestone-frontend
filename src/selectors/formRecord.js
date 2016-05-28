@@ -78,7 +78,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 			let { table } = schema;
 			let children;
 			const recordId = record && record.prikey;
-			console.log(`build record for ${recordId}`, table && table.name);
+			// console.log(`build record for ${recordId}`, table && table.name);
 			// console.log(recordSelected, record);
 
 			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children

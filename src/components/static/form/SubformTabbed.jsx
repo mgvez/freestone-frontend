@@ -7,6 +7,7 @@ import { Tab } from 'components/static/form/Tab';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { Header } from 'components/connected/form/Header';
 
+
 @dragDropContext(HTML5Backend)
 export class SubformTabbed extends Component {
 	static propTypes = {
@@ -43,6 +44,7 @@ export class SubformTabbed extends Component {
 				<nav>
 					{
 						this.props.childrenRecords.map((record, index) => {
+
 							const active = record.id === activeRecordId;
 							return (<Tab 
 								key={record.id}
