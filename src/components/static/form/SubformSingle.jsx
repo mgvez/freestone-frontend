@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { Header } from 'components/connected/form/Header';
+import { AddRecord } from 'components/connected/form/buttons/AddRecord';
+import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
 
@@ -18,14 +19,25 @@ export class SubformSingle extends Component {
 		if (!this.props.childrenRecords) return null;
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
-		return (
-			<section>
-				<Header 
+		let addBtn;
+		if (!this.props.childrenRecords || !this.props.childrenRecords.length) {
+			addBtn = (
+				<AddRecord 
 					table={this.props.table}
-					activeRecordId={activeRecordId}
-					hasAddButton={!this.props.childrenRecords || !this.props.childrenRecords.length}
-					hasDeleteButton={this.props.childrenRecords && this.props.childrenRecords.length}
+					parentRecordId={this.props.parentRecordId}
+					parentTableId={this.props.parentTableId}
 				/>
+			);
+		}
+
+		return (
+			<section className="subform">
+				<header>
+					<Header table={this.props.table} />
+					<nav className="tabs">
+						{addBtn}
+					</nav>
+				</header>
 				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />
 			</section>
 		);

@@ -1,20 +1,35 @@
 // Basic Colors
 $teal: #1ab394;       // Primary color
-$dark-gray: #c2c2c2;  // Default color
 $blue: #1c84c6;       // Success color
 $lazur: #23c6c8;      // Info color
 $yellow: #f8ac59;     // Warrning color
 $red: #ED5565;        // Danger color
 
+$gray-45: #676a6c;
+$gray-57: #888888;
+$gray-78: #c2c2c2;
+$gray-86: #D1DADE;
+$gray-93: #e7eaec;
+$gray-96: #f3f3f4;
+
+$font-family-text: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$font-size-text-md: 14px;
+$font-size-text-sm: 12px;
+
+$color-text-primary: $gray-45;
+$color-text-muted: $gray-57;
+
+$color-emphasis: $teal;
+
+
+
 // Various colors
-$text-color: #676a6c;   // Body text
-$gray: #f3f3f4;         // Background wrapper color
-$light-gray: #D1DADE;   // Default label, badget
 $label-badget-color: #5E5E5E;
 $light-blue:#f3f6fb;
 
 $lighter-bg: #ffffff;
-$border-color: #e7eaec;
+$border-color: $gray-86;
 
 // Spiner color and margin
 $spin-color: $teal;
@@ -25,7 +40,7 @@ $sidebar-width: 260px;
 
 $default-padding: 14px;
 
-$body-bg: $gray;
+$body-bg: $gray-93;
 
 //Border radius for buttons
 $btn-border-radius: 3px;
@@ -34,6 +49,12 @@ $btn-border-radius: 3px;
 $nav-bg: #2F4050;
 $nav-text-color: #a7b1c2;
 $nav-badge-color: $blue;
+
+$form-input-border-color: $gray-86;
+$form-input-border-focus-color: $teal;
+
+
+
 
 //OVERRIDES DE BOOT MOÉ LA STRAP
 // $font-size-base: 12px !default;

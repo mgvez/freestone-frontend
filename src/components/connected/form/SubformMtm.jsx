@@ -11,7 +11,7 @@ import * as recordActionCreators from 'actions/record';
 
 import { formMtmMapStateToProps } from 'selectors/formMtm';
 
-import { Header } from 'components/connected/form/Header';
+import { Header } from 'components/static/form/Header';
 
 
 @dragDropContext(HTML5Backend)
@@ -70,8 +70,10 @@ export class SubformMtm extends Component {
 		if (this.props.mtmOptions) {
 			// console.log(this.props.mtmOptions);
 			return (
-				<section className="row">
-					<Header table={this.props.table} />
+				<section className="subform row">
+					<header>
+						<Header table={this.props.table} />
+					</header>
 					{
 						this.props.mtmOptions.map((optionGroup, groupIndex) => {
 							// console.log(optionGroup);

@@ -5,7 +5,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import { Tab } from 'components/static/form/Tab';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { Header } from 'components/connected/form/Header';
+import { AddRecord } from 'components/connected/form/buttons/AddRecord';
+import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
+import { Header } from 'components/static/form/Header';
 
 
 @dragDropContext(HTML5Backend)
@@ -31,36 +33,43 @@ export class SubformTabbed extends Component {
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		return (
-			<section>
-				<Header 
-					table={this.props.table}
-					activeRecordId={activeRecordId}
-					parentRecordId={this.props.parentRecordId}
-					parentTableId={this.props.parentTableId}
-					highestOrder={this.props.highestOrder}
-					hasAddButton
-					hasDeleteButton={this.props.childrenRecords && !!this.props.childrenRecords.length}
-				/>
-				<nav>
-					{
-						this.props.childrenRecords.map((record, index) => {
+			<section className="subform">
+				<header>
+					<div className="fcn">
+						<ChangeSubformView tableId={this.props.table.id} />
+					</div>
+					<Header table={this.props.table} />
 
-							const active = record.id === activeRecordId;
-							return (<Tab 
-								key={record.id}
-								displayLabel={record.label}
-								hasOrder={!!this.props.table.orderField}
-								isActive={active}
-								recordId={record.id}
-								index={index}
-								tableId={this.props.table.id}
-								parentRecordId={this.props.parentRecordId}
-								setShownRecord={this.props.setShownRecord}
-								swapRecords={this.props.swapRecords}
-							/>);
-						})
-					}
-				</nav>
+					<nav className="tabs">
+						{
+							this.props.childrenRecords.map((record, index) => {
+
+								const active = record.id === activeRecordId;
+								return (<Tab 
+									key={record.id}
+									displayLabel={record.label}
+									hasOrder={!!this.props.table.orderField}
+									isActive={active}
+									recordId={record.id}
+									index={index}
+									tableId={this.props.table.id}
+									parentRecordId={this.props.parentRecordId}
+									setShownRecord={this.props.setShownRecord}
+									swapRecords={this.props.swapRecords}
+								/>);
+							})
+						}
+
+						<AddRecord 
+							table={this.props.table}
+							parentRecordId={this.props.parentRecordId}
+							parentTableId={this.props.parentTableId}
+							highestOrder={this.props.highestOrder}
+						/>
+
+					</nav>
+
+				</header>
 				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />
 			</section>
 		);

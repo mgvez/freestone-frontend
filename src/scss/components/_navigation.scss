@@ -11,7 +11,7 @@ $level-left-pad: 10px;
 		border-left: 0px solid transparent;
 
 		&.active{
-			border-left: 4px solid darken($teal, ($level - 1) * 10);
+			border-left: 4px solid darken($color-emphasis, ($level - 1) * 10);
 			margin-bottom: 2px;
 			background: darken($nav-bg, ($level - 1) * 2);
 		}

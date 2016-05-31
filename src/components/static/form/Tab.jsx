@@ -63,11 +63,11 @@ export class Tab extends Component {
 	};
 
 	getMarkup(opacity = 1) {
-		let className = this.props.isActive ? 'btn-success' : 'btn-primary';
-		className = `btn ${className} btn-xs`;
+		let className = this.props.isActive ? 'tab-active' : '';
+		className = `tab ${className}`;
 		return (
 			<a className={className} onClick={this.setShownRecord} style={{ opacity }}>
-				{this.props.index + 1}. {this.props.displayLabel}
+				{this.props.displayLabel}
 			</a>
 		);
 	}

@@ -21,7 +21,7 @@ export class AddRecord extends Component {
 	};
 
 	addRecord = () => {
-		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, this.props.highestOrder + 10);
+		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, (this.props.highestOrder || 0) + 10);
 		
 		// console.log(newRecord);
 		this.props.addRecord(this.props.table.id, newRecord);
@@ -29,6 +29,6 @@ export class AddRecord extends Component {
 	};
 
 	render() {
-		return <button onClick={this.addRecord} className="btn btn-sm btn-primary">Add record</button>;
+		return <button onClick={this.addRecord} className="fa fa-plus add-record"> </button>;
 	}
 }

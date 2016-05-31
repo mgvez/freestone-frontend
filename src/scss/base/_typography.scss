@@ -1,3 +1,16 @@
+%text_default {
+	font-family: $font-family-text;
+	font-size: $font-size-text-md;
+	color: $color-text-primary;
+	line-height: 1.4;
+	font-style: normal;
+}
+
+%text_cta {
+	@extend %text_default;
+	font-weight: 600;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 100;
 }
@@ -30,6 +43,8 @@ h3, h4, h5 {
 	margin-top: 5px;
 	font-weight: 600;
 }
+
+
 
 a{
 	cursor:pointer;

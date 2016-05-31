@@ -7,6 +7,7 @@ import * as schemaActionCreators from 'actions/schema';
 import { RequireApiData } from 'utils/RequireApiData';
 import { rootFormMapStateToProps } from 'selectors/rootForm';
 
+import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
 @connect(
@@ -53,8 +54,7 @@ export class RootForm extends Component {
 					<Link to={`/cancel/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-danger">Cancel</Link>
 
 					<div>lastmodif {this.props.lastmodifdate}</div>
-					<h1>{this.props.table.displayLabel}</h1>
-					<div>{this.props.table.help}</div>
+					<Header table={this.props.table} />
 				</header>
 			);
 

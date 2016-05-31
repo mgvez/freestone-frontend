@@ -94,11 +94,16 @@ export class Field extends Component {
 			return <div/>;
 		default:
 			return (
-				<div className="field">
+				<div className="field row">
 					{languageToggler}
-					<label>{this.props.field.label}</label>
-					<div>{input}</div>
-					<em>{this.props.field.descripton}</em>
+					<div className="col-md-2">
+						<label>{this.props.field.label}</label>
+						
+					</div>
+					<div className="col-md-10">
+						{input}
+						<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
+					</div>
 				</div>
 			);	
 		}

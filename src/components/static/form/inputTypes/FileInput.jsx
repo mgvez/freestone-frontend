@@ -50,7 +50,7 @@ export class FileInput extends Input {
 			}
 			return (
 				<div>
-					<input id={id} type="file" value="" onChange={this.changeFileVal} />
+					<input id={id} type="file" value="" className="form-control" onChange={this.changeFileVal} />
 					{cancel}
 				</div>
 			);
@@ -100,10 +100,8 @@ export class FileInput extends Input {
 		return (
 			<div>
 				<FileThumbnail val={origVal === val && val} dir={this.props.field.folder} env={this.props.env} type={this.props.field.type} />
-				o: {origVal} <br/>
-				v: {val} <br/>
-				i: {inputVal} <br/>
-				d: {displayVal} <br/>
+				<br />
+				{displayVal} <br/>
 				{renderInput}
 				{revertBtn}
 				{deleteBtn}

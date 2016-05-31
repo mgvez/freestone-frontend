@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { Header } from 'components/connected/form/Header';
+import { Header } from 'components/static/form/Header';
+import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
 import { AddRecord } from 'components/connected/form/buttons/AddRecord';
 
 export class SubformList extends Component {
@@ -26,18 +27,18 @@ export class SubformList extends Component {
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		return (
-			<section>
-				<Header 
-					table={this.props.table}
-					activeRecordId={activeRecordId}
-					parentRecordId={this.props.parentRecordId}
-					parentTableId={this.props.parentTableId}
-					hasAddButton={false}
-					hasDeleteButton={false}
-				/>
+			<section className="subform">
+				<header>
+					<div className="fcn">
+						<ChangeSubformView tableId={this.props.table.id} />
+					</div>
+					<Header 
+						table={this.props.table}
+					/>
+				</header>
 				{
 					this.props.childrenRecords.map((record, index) => {
-						return <SingleRecord tableName={this.props.table.name} recordId={record.id} hasDeleteButton />;
+						return <SingleRecord key={record.id} tableName={this.props.table.name} recordId={record.id} hasDeleteButton />;
 					})
 				}
 				{

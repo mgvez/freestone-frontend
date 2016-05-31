@@ -46,8 +46,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - tester definitions dans install config
 	- mettre field_type
 - pas quit quand image resize marche pas : save quand meme
-- images/files: overwrite ou pas au premier tour du resize, pour éviter d'écraser le fichier d'un autre record
 - image resize pour img bank selon pixel ratio
+- types de fields à l'update de freestone
 
 # Freestone JS
 
@@ -61,7 +61,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 par priorité
 
-- créer type "minirel" ou "repeater field" -> en fait décider si rels s'affichent avec tabs ou en liste (le faire avec type de champ par defaut, mais changeables selon user prefs [menu tite gear]?)
 - types de input
 	- file
 	- tinymce
