@@ -27,6 +27,6 @@ export class DeleteRecord extends Component {
 	};
 
 	render() {
-		return <button onClick={this.deleteRecord} className="btn btn-sm btn-danger">Delete record</button>;
+		return <button onClick={this.deleteRecord} className="fa fa-remove delete-button"></button>;
 	}
 }

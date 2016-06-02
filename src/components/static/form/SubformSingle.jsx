@@ -16,7 +16,6 @@ export class SubformSingle extends Component {
 	};
 
 	render() {
-		if (!this.props.childrenRecords) return null;
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		let addBtn;

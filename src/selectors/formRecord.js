@@ -86,7 +86,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				//clone pour pas muter l'objet du state
 				table = { ...table };
 				children = [...unfilteredChildren[table.id]];
-
 				//delete les champs / sous-forms de la définition dépendant des field dependencies
 				const dependencies = parseDependencies(table, record);
 				// console.log(children);

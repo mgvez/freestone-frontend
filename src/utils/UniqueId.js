@@ -9,3 +9,7 @@ export default () => {
 	}
 	return `${prefix}_${id}_`;
 };
+
+export function isNew(id) {
+	return id && String(id).indexOf(prefix) === 0;
+}

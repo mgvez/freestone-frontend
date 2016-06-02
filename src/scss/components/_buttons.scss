@@ -1,0 +1,19 @@
+
+%round_button {
+	width: 20px;
+	height:20px;
+	line-height:20px;
+	display:inline-block;
+	border-radius:50%;
+	border:0;
+	text-align:center;
+}
+
+
+.delete-button{
+	@extend %round_button;
+	background:$red;
+	color:white;
+}
+
+

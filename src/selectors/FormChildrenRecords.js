@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 import { tableRecordsMapStateToProps } from 'selectors/record';
 import { subformViewSelector } from 'selectors/subformView';
+import { isNew } from 'utils/UniqueId';
 
 import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
@@ -67,8 +68,9 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 				let activeRecord;
 
 				let childrenRecords;
-				if (areLoaded) {
-					childrenRecords = getRecordsFromParent(tableRecords, parentRecordId, parentTableId);
+				if (areLoaded || isNew(parentRecordId)) {
+					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, parentTableId) : [];
+
 					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
 
 					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);

@@ -16,8 +16,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - au lieu de tinymce http://facebook.github.io/draft-js/
 
 ## General
-
-- login dans freestone.jsx plutot que par redirect
+- build pour que quiconque puisse le voir
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
@@ -29,12 +28,11 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- getRecords de formchildrenrecord reselect fucké 
 - bank (et toutes les instances de cette classe)
 	- js delete tags figure et figcaption vides
+	- image resize pour img bank selon pixel ratio
 - traduire les erreurs (VException)
 - remettre le champ rewrite.current
 - pruner les temp files
-- reimplmenter admin Bank.php
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
-- vérifier constantes, et refactoriser
 - à l'update: sitemap
 	private static function manageSiteMap($tableId, $recId, $isDeleted) {
 		$table = new Table($tableId);
@@ -46,10 +44,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - tester definitions dans install config
 	- mettre field_type
 - pas quit quand image resize marche pas : save quand meme
-- image resize pour img bank selon pixel ratio
 - types de fields à l'update de freestone
 
 # Freestone JS
+- login dans freestone.jsx plutot que par redirect
 
 ## Menu
 
@@ -61,6 +59,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 par priorité
 
+- quand new record 2e niveau, subform 3e apparait pas
 - types de input
 	- file
 	- tinymce
@@ -68,11 +67,13 @@ par priorité
 		- insert freestone image
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
+	- link (internal)
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - insert image de banque : drag & drop
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
+	- mettre description
 - Unit tests 20%
 
 

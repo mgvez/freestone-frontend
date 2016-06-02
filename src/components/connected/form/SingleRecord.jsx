@@ -29,7 +29,6 @@ export class SingleRecord extends Component {
 		fields: React.PropTypes.array,
 		env: React.PropTypes.object,
 		language: React.PropTypes.string,
-		hasDeleteButton: React.PropTypes.bool,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
@@ -67,21 +66,16 @@ export class SingleRecord extends Component {
 		let form;
 		let sub;
 
-		let deleteBtn;
-		if (this.props.hasDeleteButton) {
-			deleteBtn = (
-				<DeleteRecord 
-					tableId={this.props.table.id}
-					recordId={this.props.recordId}
-				/>
-			);
-		}
 
-		// console.log('render', this.props.record);
+		// console.log('render', this.props.children);
 		if (this.props.table && this.props.record) {
 
 			form = (
 				<article>
+					<DeleteRecord 
+						tableId={this.props.table.id}
+						recordId={this.props.recordId}
+					/>
 					{
 						this.props.fields.map((field) => {
 
@@ -109,7 +103,6 @@ export class SingleRecord extends Component {
 							/>) : null;
 						})
 					}
-					{deleteBtn}
 				</article>
 			);
 			if (this.props.children) {
@@ -134,7 +127,7 @@ export class SingleRecord extends Component {
 			}
 		}
 		return (
-			<section className="padded-content">
+			<section className="single-record">
 				{ form }
 				{ sub }
 			</section>

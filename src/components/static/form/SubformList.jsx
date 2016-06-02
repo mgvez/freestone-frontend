@@ -27,7 +27,7 @@ export class SubformList extends Component {
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		return (
-			<section className="subform">
+			<section className="subform subform-list">
 				<header>
 					<div className="fcn">
 						<ChangeSubformView tableId={this.props.table.id} />
@@ -38,7 +38,7 @@ export class SubformList extends Component {
 				</header>
 				{
 					this.props.childrenRecords.map((record, index) => {
-						return <SingleRecord key={record.id} tableName={this.props.table.name} recordId={record.id} hasDeleteButton />;
+						return <SingleRecord key={record.id} tableName={this.props.table.name} recordId={record.id} />;
 					})
 				}
 				{

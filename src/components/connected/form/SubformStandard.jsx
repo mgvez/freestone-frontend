@@ -56,7 +56,6 @@ export class SubformStandard extends Component {
 
 		if (props.table) {
 			const tableName = props.table.name;
-			// console.log(tableName);
 			this.requireDataCtrl.requireProp('childrenRecords', props, this.props.fetchRecord, [tableName, parentRecordId, parentTableId]);
 		}
 	}
@@ -81,6 +80,8 @@ export class SubformStandard extends Component {
 	};
 
 	render() {
+		// console.log(this.props.table);
+
 		if (!this.props.table) return null;
 
 		if (this.props.table.type === TYPE_REL) {
