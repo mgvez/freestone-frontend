@@ -4,8 +4,7 @@
   "description": "",
   "scripts": {
     "start": "node server.js",
-    "lint": "eslint src",
-    "build": "webpack --verbose --colors --display-error-details --config webpack/prod.config.js"
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",

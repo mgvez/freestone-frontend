@@ -11,3 +11,7 @@ Les presets de babel sont utilisés. Voir .babelrc, et les presets installés pa
 Les decorators ne sont pas suportés par Babel 6 (as of 2015-12-22) mais un plugin existe: 
 ```npm i babel-plugin-transform-decorators-legacy -D```
 et voir ensuite dans .babelrc
+
+## builder
+
+webpack --verbose --colors --display-error-details --config webpack/prod.config.js

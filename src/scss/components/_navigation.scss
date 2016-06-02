@@ -56,7 +56,9 @@ $level-left-pad: 10px;
 		li {
 			transition: border-color 0.3s, border-width 0.3s;
 
-			a{
+
+
+			a {
 				display:block;
 				position:relative;
 				color: $nav-text-color;
@@ -66,7 +68,10 @@ $level-left-pad: 10px;
 				cursor: pointer;
 
 				transition: color 0.3s;
-
+				
+				&.module{
+					font-style:italic;
+				}
 
 				i {
 					margin-right: 6px;
@@ -107,4 +112,11 @@ $level-left-pad: 10px;
 
 		}
 	}
+}
+
+
+iframe.module{
+	width:100%;
+	height:100%;
+	border:1px $gray-45 solid;
 }

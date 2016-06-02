@@ -31,6 +31,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- image resize pour img bank selon pixel ratio
 - traduire les erreurs (VException)
 - remettre le champ rewrite.current
+- procedure update table
 - pruner les temp files
 - remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
 - à l'update: sitemap
@@ -59,7 +60,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 par priorité
 
-- quand new record 2e niveau, subform 3e apparait pas
 - types de input
 	- file
 	- tinymce
@@ -73,7 +73,7 @@ par priorité
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
-	- mettre description
+	- afficher images (si image presente dans label)
 - Unit tests 20%
 
 

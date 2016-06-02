@@ -12,7 +12,7 @@ function getEndpoint(route) {
 		hostname = 'freestone_dev.freestone-2';
 	}
 	// console.log(window.location);
-	return `${window.location.protocol}//${hostname}/admin/${route}`;
+	return `${window.location.protocol}//${hostname}/api/${route}`;
 }
 
 

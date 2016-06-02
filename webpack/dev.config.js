@@ -6,7 +6,6 @@ var fs = require('fs');
 var csswring = require('csswring');
 
 
-
 module.exports = {
 	devtool: 'cheap-module-eval-source-map',
 	entry: [

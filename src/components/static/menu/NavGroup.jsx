@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { Table } from 'components/static/menu/Table';
+import { Module } from 'components/static/menu/Module';
 
 import { TweenMax } from 'utils/Greensock';
 
@@ -50,7 +51,7 @@ export class NavGroup extends Component {
 
 	render() {
 		
-		if (!this.props.data.childrenGroups.length && !this.props.data.tables.length) return null;
+		// if (!this.props.data.childrenGroups.length) return null;
 
 		// console.log(this.props.toggleState);
 		// console.log(this.props.level + ' nav group rendered', this.props.data);
@@ -60,6 +61,7 @@ export class NavGroup extends Component {
 		const toggleClass = isOpen ? '' : 'collapsed';
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';
+		// console.log(this.props.data);
 		return (
 			<li className={activeClass} >
 				<a onClick={this.toggle} className={`table-group ${activeClass}`}>
@@ -72,6 +74,11 @@ export class NavGroup extends Component {
 				{
 					this.props.data.tables.map((item) => {
 						return <Table key={item.id} name={item.name} id={item.id} actionLabel={item.actionLabel} nrecords={item.nrecords} />;
+					})
+				}
+				{
+					this.props.data.modules.map((item) => {
+						return <Module {...item} />;
 					})
 				}
 				</ul>
