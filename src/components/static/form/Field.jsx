@@ -14,8 +14,8 @@ export class Field extends Component {
 	static propTypes = {
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,
-		val: React.PropTypes.string,
-		origVal: React.PropTypes.string,
+		val: React.PropTypes.any,
+		origVal: React.PropTypes.any,
 		
 		setFieldVal: React.PropTypes.func,
 	};

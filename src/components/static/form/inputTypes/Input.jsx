@@ -4,8 +4,8 @@ export class Input extends Component {
 	static propTypes = {
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,
-		val: React.PropTypes.string,
-		origVal: React.PropTypes.string,
+		val: React.PropTypes.any,
+		origVal: React.PropTypes.any,
 		env: React.PropTypes.object,
 		
 		setFieldVal: React.PropTypes.func,

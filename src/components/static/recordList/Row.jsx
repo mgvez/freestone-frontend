@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { FileThumbnail } from 'components/static/fileThumbnail/FileThumbnail';
 import { InfosFcn } from 'components/static/recordList/InfosFcn';
 import { OrderFcn } from 'components/connected/recordList/OrderFcn';
+import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps';
 
@@ -30,7 +31,7 @@ export class Row extends Component {
 		const modifCell = (
 			<td className="list-functions">
 				<Link to={`/edit/${this.props.table.name}/${this.props.values.prikey}`} activeClassName="active" className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span> Edit</span></Link>
-				<a className="btn btn-danger btn-sm"><i className="fa fa-close"></i><span> Delete</span></a>
+				<DeleteBtn tableName={this.props.table.name} prikey={this.props.values.prikey} />
 			</td>
 		);
 		const infoCell = (
@@ -41,7 +42,7 @@ export class Row extends Component {
 				createddate={this.props.values[CREATED_DATE_ALIAS]}
 			/>
 		);
-		
+		// console.log(this.props.values);
 		if (this.props.table.isSelfTree) {
 			const breadcrumb = this.props.values.breadcrumb ? this.props.values.breadcrumb : '0';
 			const level = this.props.values.level ? this.props.values.level : '0';

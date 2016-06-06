@@ -15,3 +15,7 @@ et voir ensuite dans .babelrc
 ## builder
 
 webpack --verbose --colors --display-error-details --config webpack/prod.config.js
+
+## update submodule dans backend
+
+git submodule foreach git pull origin master

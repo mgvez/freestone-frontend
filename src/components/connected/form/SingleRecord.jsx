@@ -59,7 +59,7 @@ export class SingleRecord extends Component {
 		const { tableName, recordId } = props;
 		// console.log(props.recordId);
 		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
-		if (recordId) this.requireDataCtrl.requireProp('record', props, this.props.fetchRecord, [tableName, recordId]);
+		this.requireDataCtrl.requireProp('record', props, this.props.fetchRecord, [tableName, recordId]);
 	}
 
 	render() {

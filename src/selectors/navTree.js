@@ -8,7 +8,6 @@ const navGroupsSelector = state => state.nav.structure.navGroups;
 function buildTree(navGroups, tables, modules, pages) {
 	const groups = navGroups.map((group) => {
 		const groupId = group.id;
-		console.log(groupId);
 		return {
 			...group,
 			tables: tables.filter((table) => {

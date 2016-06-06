@@ -78,7 +78,7 @@ export class NavGroup extends Component {
 				}
 				{
 					this.props.data.modules.map((item) => {
-						return <Module {...item} />;
+						return <Module key={`mod-${item.id}`} {...item} />;
 					})
 				}
 				</ul>

@@ -81,6 +81,7 @@ export function setRecordDeleted(tableId, recordId) {
 
 export function fetchRecord(tableName, id, parentTable = 0) {
 	return (dispatch) => {
+		// console.log(`record/${tableName}/${parentTable}/${id}`);
 		return dispatch({
 			[FREESTONE_API]: {
 				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],

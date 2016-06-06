@@ -7,9 +7,15 @@ import { CLEAR_SCHEMA } from 'actions/schema';
 export const SAVE_RECORD_REQUEST = 'SAVE_RECORD_REQUEST';
 export const SAVE_RECORD_SUCCESS = 'SAVE_RECORD_SUCCESS';
 export const SAVE_RECORD_ERROR = 'SAVE_RECORD_ERROR';
+
 export const SWAP_ORDER_REQUEST = 'SWAP_ORDER_REQUEST';
 export const SWAP_ORDER_SUCCESS = 'SWAP_ORDER_SUCCESS';
 export const SWAP_ORDER_ERROR = 'SWAP_ORDER_ERROR';
+
+export const DELETE_RECORD_REQUEST = 'DELETE_RECORD_REQUEST';
+export const DELETE_RECORD_SUCCESS = 'DELETE_RECORD_SUCCESS';
+export const DELETE_RECORD_ERROR = 'DELETE_RECORD_ERROR';
+
 export const INIT_SAVE = 'INIT_SAVE';
 
 
@@ -76,6 +82,22 @@ export function swapOrder(tableName, recordId, direction) {
 					tableName,
 					recordId,
 					direction,
+				},
+			},
+		});
+	};
+}
+
+export function deleteRecord(tableName, recordId) {
+	return (dispatch) => {
+		// console.log(tableName, recordId);
+		return dispatch({
+			[FREESTONE_API]: {
+				types: [DELETE_RECORD_REQUEST, DELETE_RECORD_SUCCESS, DELETE_RECORD_ERROR],
+				route: `delete/${tableName}/${recordId}`,
+				data: {
+					tableName,
+					recordId,
 				},
 			},
 		});

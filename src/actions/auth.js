@@ -36,6 +36,7 @@ export function receiveToken(jwt) {
 			// console.log(`received token ${token}`);
 			return loginUserSuccess(jwt, token);
 		} catch (e) {
+			// console.log(jwt);
 			return loginUserFailure({
 				status: 401,
 				statusText: 'Invalid token',

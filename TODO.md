@@ -16,7 +16,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - au lieu de tinymce http://facebook.github.io/draft-js/
 
 ## General
-- build pour que quiconque puisse le voir
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
@@ -33,7 +32,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - remettre le champ rewrite.current
 - procedure update table
 - pruner les temp files
-- remplacer les instances de 'id' par le vrai nom du champ (Table->priKeyName())
 - à l'update: sitemap
 	private static function manageSiteMap($tableId, $recId, $isDeleted) {
 		$table = new Table($tableId);
@@ -54,7 +52,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## Header menu
 ## Liste
-- btn delete
+- header liste : val en html DANGEROUS
 
 ## Form
 
@@ -68,6 +66,7 @@ par priorité
 		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 	- link (internal)
+	- password
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - insert image de banque : drag & drop
 - autocomplete

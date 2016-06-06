@@ -4,7 +4,7 @@ import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS } from 'free
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
-import { SAVE_RECORD_SUCCESS } from 'actions/save';
+import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
 
 function setFieldValue(state, data) {
 	const { tableId, recordId, fieldId, val } = data;
@@ -79,6 +79,7 @@ function childrenAreLoaded(state = {}, action) {
 		return newState;
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
+	case DELETE_RECORD_SUCCESS:
 		//m fonction que pour les records eux meme (structure fonctionne)
 		return removeRecords(state, action.data.records);
 	case CLEAR_DATA:
@@ -104,6 +105,7 @@ function records(state = {}, action) {
 		return {};
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
+	case DELETE_RECORD_SUCCESS:
 		// console.log(action.data);
 		return removeRecords(state, action.data.records);
 	default:
@@ -220,6 +222,7 @@ function recordsUnaltered(state = {}, action) {
 		return {};
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
+	case DELETE_RECORD_SUCCESS:
 		// console.log(action);
 		return removeRecords(state, action.data.records);
 	default:
