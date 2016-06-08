@@ -21,29 +21,21 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - au logout, save le state entier du user à la db
 
 # Freestone PHP
+- bank (et toutes les instances de cette classe)
+	- js delete tags figure et figcaption vides
+	- image resize pour img bank selon pixel ratio
+- tester definitions dans install config
+	- mettre field_type
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
 	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
 	- childrenAreLoaded (reducer record-form) est problématique
 	- getRecords de formchildrenrecord reselect fucké 
-- bank (et toutes les instances de cette classe)
-	- js delete tags figure et figcaption vides
-	- image resize pour img bank selon pixel ratio
 - traduire les erreurs (VException)
-- remettre le champ rewrite.current
-- procedure update table
-- pruner les temp files
-- à l'update: sitemap
-	private static function manageSiteMap($tableId, $recId, $isDeleted) {
-		$table = new Table($tableId);
-		if($isDeleted) {
-			return SiteMap::delete($table->getName(), $recId);
-		}
-		return SiteMap::update($table->getName(), $recId);
-	}
-- tester definitions dans install config
-	- mettre field_type
 - pas quit quand image resize marche pas : save quand meme
-- types de fields à l'update de freestone
+
+## Modules
+- all
+
 
 # Freestone JS
 - login dans freestone.jsx plutot que par redirect
@@ -52,14 +44,14 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## Header menu
 ## Liste
-- header liste : val en html DANGEROUS
+- grouped records
+- self-join trees
 
 ## Form
 
 par priorité
 
 - types de input
-	- file
 	- tinymce
 		- link styles css site
 		- insert freestone image
@@ -76,9 +68,6 @@ par priorité
 - Unit tests 20%
 
 
-## Modules
-- all
-
 ## Pages
 - all
 
@@ -89,23 +78,12 @@ par priorité
 - champ type ajax? (voir field format form)
 - champ type tag
 - meilleure strategie de modif du state quand save records (pas vider menu au complet par ex.)
-- preview d'un record dans site (how... how... par uune duplic de db purement et simplement?)
-
-# Semi-done
-
-
-## Liste
-- self-join trees
-- grouped records
-- delete
-
-## Forms
-- autocomplete
-
-# Done à tester
-- oto
-
-
-# Done ou pas a faire
-- pouvoir mettre une page par défaut au login (e.g. liste d'une table en particulier). *pas besoin, on peut linker vers une page et ce sera redirect la apres le login*
-
+- preview d'un record dans site (how... how... par une duplic de db purement et simplement?)
+- à l'update: sitemap
+	private static function manageSiteMap($tableId, $recId, $isDeleted) {
+		$table = new Table($tableId);
+		if($isDeleted) {
+			return SiteMap::delete($table->getName(), $recId);
+		}
+		return SiteMap::update($table->getName(), $recId);
+	}

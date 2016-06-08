@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
+import { getApiUrl } from 'freestone/settings';
 
 
 const metaData = {
@@ -27,13 +28,15 @@ export class Module extends Component {
 
 	render() {
 		// console.log(this.props);
+		const host = getApiUrl();
+		const url = `${host}/module/${this.props.params.url}?jwt=${this.props.jwt}`;
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
 					<h1>
 						{this.props.params.url}
 					</h1>
-					<iframe className="module" src={`http://freestone_dev.freestone-2/admin/module/${this.props.params.url}?jwt=${this.props.jwt}`}></iframe>
+					<iframe className="module" src={url} />
 			</section>
 		);
 	}

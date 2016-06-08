@@ -59,7 +59,7 @@ export class List extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
-		if (nextProps.params.tableName !== this.props.params.tableName) {
+		if (nextProps.params.tableName !== this.props.params.tableName && this.refs.searchVal) {
 			// console.log('change table');
 			this.refs.searchVal.value = '';
 		}
@@ -108,7 +108,7 @@ export class List extends Component {
 				<section>
 					<header>
 						<h1>{this.props.table.actionLabel}</h1>
-						<div className="text-description">{this.props.table.help}</div>
+						<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
 						{/* <div className="text-description">{this.props.qstr}</div> */}
 						<button onClick={this.addRecord}><i className="fa fa-plus-square"></i> New record</button>
 

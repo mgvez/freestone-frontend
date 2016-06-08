@@ -4,15 +4,12 @@
 import reqwest from 'reqwest';
 import { receiveToken, loginUserFailure } from 'actions/auth';
 import sha1 from 'sha1';
+import { getApiUrl } from 'freestone/settings';
 
 function getEndpoint(route) {
-	let hostname = window.location.hostname;
-	if (hostname === 'localhost') {
-		// hostname = 'celeste.freestone-2';
-		hostname = 'freestone_dev.freestone-2';
-	}
+	const hostname = getApiUrl();
 	// console.log(window.location);
-	return `${window.location.protocol}//${hostname}/api/${route}`;
+	return `${hostname}/${route}`;
 }
 
 
@@ -100,8 +97,11 @@ export default store => next => action => {
 			if (res.jwt) {
 				next(receiveToken(res.jwt));
 			}
+
+			if (typeof res === 'string') {
+				throw new Error(res);
+			}
 			// console.log(`%c${route} next`, 'color:green');
-			// console.log(res);
 
 			next(actionWith({
 				type: successType,
@@ -112,7 +112,7 @@ export default store => next => action => {
 		}
 	).catch(
 		error => {
-			// console.log(`ERROR ${error.status} ${error.statusText}`);
+			console.log(`ERROR ${error.status} ${error.statusText}`);
 			if (error.status === 401) {
 				next(loginUserFailure(error));
 			} else {
