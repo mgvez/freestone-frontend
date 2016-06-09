@@ -31,30 +31,25 @@ const customStyle = {
 	},
 };
 
-/*
+function buildlink(contents, link, linkLabel) {
+	let val = link.trim();
 
-frm.on('submit.freestone', function(){
+	// console.log(val, !!~val.indexOf('{lnk'), !!~val.indexOf('//'));
+	if (!~val.indexOf('{lnk') && !~val.indexOf('//')) {
+		val = `//${val}`;
+	}
+	// console.log(val);
+	if (linkLabel) {
+		val = `<a href="${val}">${linkLabel}</a>`;
+	}
 
-			if (frm.find('#linkText').val() == '') {
-				alert('Svp entrer un texte sur lequel se fera le lien.');
-				return false;
-			}
-			//is there a freestone link?
-			var lnk = ifr.contents().find('body').data('freestonelink');
-			if(lnk) {
-				lnk = '{' + lnk + '}';
-			} else {
-				//no freestone link, use page location
-				lnk = ifr.contents().get(0).location.href ;
-			}
+	if (contents) {
+		val = contents.replace('{{link}}', val);
+	}
 
-			var html = '<a href="' + lnk + '">' + frm.find('#linkText').val() + '</a>';
+	return val;
+}
 
-			tinyMCEPopup.editor.execCommand('mceInsertContent', false, html);
-			tinyMCEPopup.close();
-			return false;
-
-		}); */
 export class LinkInsert extends Component {
 	static propTypes = {
 		onClose: React.PropTypes.func,
@@ -78,15 +73,30 @@ export class LinkInsert extends Component {
 		// this.refs.subtitle.style.color = '#f00';
 	};
 
-	selectLink = () => {
-		// this.props.setVal(this.props.contentBefore);
-		
+	selectInternal = () => {
 		const linkLabel = this.refs.linkLabel.value;
-		const ifr = this.refs.ifr;
-		const link = ifr.contentWindow.location.href;
-		const val = this.props.contentAfter.replace('{{link}}', `<a href="${link}">${linkLabel}</a>`);
-		this.props.setVal(val);
-		console.log(val);
+		
+		try {
+			const ifr = this.refs.ifr;
+			const link = ifr.contentWindow.location.href;
+			this.props.setVal(buildlink(
+				this.props.contentAfter,
+				link,
+				this.refs.linkLabel.value || 'link'
+			));
+			this.closeModal();
+		} catch (e) {
+			alert('Cross domain error. If you want to link to an external site, please paste the link in the external link input');
+		}		
+	};
+
+	selectExternal = () => {
+
+		this.props.setVal(buildlink(
+			this.props.contentAfter,
+			this.refs.linkExternal.value,
+			this.refs.linkLabel.value || 'link'
+		));
 		this.closeModal();
 	};
 
@@ -109,12 +119,30 @@ export class LinkInsert extends Component {
 				onRequestClose={this.closeModal}
 				closeTimeoutMS={n}
 				style={customStyle}
-			>	
-				<button onClick={this.cancelChange}>cancel</button>
-				<button onClick={this.selectLink}>select</button>
-				<h1>{getWebsiteUrl()}</h1>
-				label: <input defaultValue={this.props.selection} ref="linkLabel" />
-				<iframe src="http://bixi.freestone" style={{ width: '100%', height: '500px' }} ref="ifr"/>
+			>
+				<div className="container">
+					<div className="row">
+						<div className="col-md-12">
+							<button onClick={this.cancelChange}>cancel</button>
+							<p>link label: <input defaultValue={this.props.selection} ref="linkLabel" /></p>
+						</div>
+					</div>
+					<div className="row">
+						<div className="col-md-6">
+							<h4>Internal Link selector</h4>
+							<p>If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the "select" button.</p>
+							<button onClick={this.selectInternal}>use page below</button>
+						</div>
+						<div className="col-md-6">
+							<h4>External Link</h4>
+							<p>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
+							<p>external url: <input ref="linkExternal" /></p>
+							<button onClick={this.selectExternal}>use this link</button>
+
+						</div>
+					</div>
+				</div>
+				<iframe src={getWebsiteUrl()} style={{ width: '100%', height: '500px' }} ref="ifr"/>
 			</Modal>
 		);
 	}
