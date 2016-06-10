@@ -22,6 +22,10 @@
 
 	a {
 		color: $color-text-secondary;
+
+		&:hover, &:focus {
+			text-decoration: none;
+		}
 	}
 
 	.table-group {
@@ -30,6 +34,7 @@
 		position: relative;
 
 		cursor: pointer;
+		transition: background 0.3s;
 
 		i + .nav-label {
 			margin-left: 10px;
@@ -48,6 +53,7 @@
 			position: relative;
 			padding: 10px 50px 10px 10px;
 			background: mix($white, $color-accent-primary, 20%);
+			transition: background 0.3s;
 
 			.nrecords {
 				display: block;
@@ -59,6 +65,7 @@
 				width: 40px;
 				height: 100%;
 				background: mix($white, $color-accent-primary, 10%);
+				transition: background 0.3s;
 
 				.n {
 					position: absolute;
@@ -67,6 +74,14 @@
 
 					width: 100%;
 					transform: translate(0, -50%);
+				}
+			}
+
+			&:hover {
+				background: mix($white, $color-accent-primary, 10%);
+
+				.nrecords {
+					background: mix($white, $color-accent-primary, 5%);
 				}
 			}
 		}
@@ -84,6 +99,7 @@
 			height: 0;
 			border-left: 6px solid $color-accent-primary;
 			background: lighten($color-background-dark, 10%);
+			transition: background 0.3s;
 
 			.table-group {
 				padding: 10px 15px;
@@ -94,8 +110,9 @@
 			}
 		}
 
-		&:last-child {
-			border-bottom: 1px solid $color-border-dark;
-		}
+	}
+
+	> .nav-group:last-child {
+		border-bottom: 1px solid $color-border-dark;
 	}
 }
