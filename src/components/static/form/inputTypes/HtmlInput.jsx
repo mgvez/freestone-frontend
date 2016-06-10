@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Input } from 'components/static/form/inputTypes/Input';
 import { LinkInsert } from 'components/connected/form/helpers/LinkInsert';
+import { ImgBankInsert } from 'components/connected/form/helpers/ImgBankInsert';
 import TinyMCEInput from 'react-tinymce-input';
 
 import VALID_ELEMENTS from 'components/static/form/inputTypes/tinymce/validElements';
@@ -28,13 +29,22 @@ export class HtmlInput extends Input {
 		super(props);
 
 		const ExecCommand = (e) => {
-			console.log(e);
+			// console.log(e);
 			const { command } = e;
-			// console.log(this, command);
-			if (command === 'insertInternalLink') {
+			// console.log(command);
+			switch (command) {
+			case 'insertLink':
+			case 'addImageFromBank':
+			case 'addDocFromBank':
 				this.setState({
-					insertLink: e.value,
+					command: {
+						name: command,
+						params: e.value,
+					},
 				});
+				break;
+			default:
+				break;
 			}
 		};
 
@@ -43,7 +53,7 @@ export class HtmlInput extends Input {
 		};
 
 		this.state = {
-			insertLink: false,
+			command: false,
 		};
 
 	}
@@ -62,13 +72,23 @@ export class HtmlInput extends Input {
 	};
 
 	closeModal = () => {
-		this.setState({ insertLink: false });
+		this.setState({ command: null });
 	};
 
 	render() {
 
-		if (this.state.insertLink) {
-			return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...this.state.insertLink} />;
+		if (this.state.command) {
+			const { name } = this.state.command;
+			// console.log(command);
+			switch (name) {
+			case 'insertLink':
+				return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...this.state.insertLink} />;
+			case 'addImageFromBank':
+				return <ImgBankInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...this.state.insertLink} />;
+			case 'addDocFromBank':
+			default:
+				break;
+			}
 		}
 
 		// console.log(`render input ${this.props.field.name}`);

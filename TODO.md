@@ -52,6 +52,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 par priorité
 
 - types de input
+	- enum
 	- tinymce
 		- link styles css site
 		- insert freestone image
