@@ -51,8 +51,6 @@ app/bower_components
 .tmp
 ios
 .yo-rc.json
-.jshintrc
 .gitattributes
 .editorconfig
-.babelrc
 npm-debug.log
