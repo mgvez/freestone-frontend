@@ -14,9 +14,12 @@ $screen-md-max: 1300px;
 	$gray90: #e1e1e1;
 	$gray96: #f3f3f3;
 
+	$teal62: #19aa8d;
+
 	$blue66: #00aeef;
 	$blue54: #028cc0;
 	$blue26: #2f4050;
+	$blue23: #293846;
 
 	$white: #fff;
 	$black: #000;
@@ -25,11 +28,14 @@ $screen-md-max: 1300px;
 //==============================================================================
 // COLOR USAGE
 //==============================================================================
-	$color-accent-primary: $blue66;
-	$color-accent-secondary: $blue54;
+	$color-accent-primary: $teal62;
+	$color-accent-secondary: $teal62;
 
 	$color-background-light: $white;
 	$color-background-dark: $blue26;
+	$color-background-dark_hover: $blue23;
+
+	$color-border-dark: $blue23;
 
 	$color-text-primary: $black;
 	$color-text-secondary: $white;
