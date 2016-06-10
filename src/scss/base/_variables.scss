@@ -1,61 +1,71 @@
-// Basic Colors
-$teal: #1ab394;       // Primary color
-$blue: #1c84c6;       // Success color
-$lazur: #23c6c8;      // Info color
-$yellow: #f8ac59;     // Warrning color
-$red: #ED5565;        // Danger color
-
-$gray-45: #686b6c;
-$gray-57: #86898a;
-$gray-70: #a9acad;
-$gray-78: #c2c2c2;
-$gray-86: #d4d8d9;
-$gray-93: #e7eaec;
-$gray-96: #f3f3f4;
-
-$font-family-text: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-$font-size-text-md: 14px;
-$font-size-text-sm: 12px;
-
-$color-text-primary: $gray-45;
-$color-text-muted: $gray-57;
-
-$color-emphasis: $teal;
 
 
-
-// Various colors
-$label-badget-color: #5E5E5E;
-$light-blue:#f3f6fb;
-
-$lighter-bg: #ffffff;
-$border-color: $gray-86;
-
-// Spiner color and margin
-$spin-color: $teal;
-$spin-margin: 0 auto;
+$screen-lg: 1301px;
+$screen-md-max: 1300px;
 
 
-$sidebar-width: 260px;
+//==============================================================================
+// COLOR DEFS
+//==============================================================================
+	$gray31: #4a4a4a;
+	$gray43: #62666c;
+	$gray51: #79797a;
+	$gray76: #bababb;
+	$gray90: #e1e1e1;
+	$gray96: #f3f3f3;
 
-$default-padding: 14px;
+	$blue66: #00aeef;
+	$blue54: #028cc0;
+	$blue26: #2f4050;
 
-$body-bg: $gray-93;
-
-//Border radius for buttons
-$btn-border-radius: 3px;
-
-//Navigation
-$nav-bg: #2F4050;
-$nav-text-color: #a7b1c2;
-$nav-badge-color: $blue;
-
-$form-input-border-color: $gray-86;
-$form-input-border-focus-color: $teal;
-
-
+	$white: #fff;
+	$black: #000;
 
 
-//OVERRIDES DE BOOT MOÉ LA STRAP
-// $font-size-base: 12px !default;
+//==============================================================================
+// COLOR USAGE
+//==============================================================================
+	$color-accent-primary: $blue66;
+	$color-accent-secondary: $blue54;
+
+	$color-background-light: $white;
+	$color-background-dark: $blue26;
+
+	$color-text-primary: $black;
+	$color-text-secondary: $white;
+
+
+//==============================================================================
+// TEXTS
+//==============================================================================
+	$font-family-base: 'Open Sans', Helvetica, Arial, sans;
+	$font-family-title: $font-family-base;
+
+	$font-weight-light: 300;
+	$font-weight-normal: 400;
+	$font-weight-medium: 500;
+	$font-weight-semibold: 600;
+	$font-weight-bold: 700;
+	$font-weight-extrabold: 800;
+
+	$font-size-text-lg: 16px;
+	$font-size-text-md: 16px;
+	$font-size-text-sm: 16px;
+	$font-size-text-xs: 16px;
+
+	$font-size-title1-lg: 60px;
+	$font-size-title1-md: 60px;
+	$font-size-title1-sm: 40px;
+	$font-size-title1-xs: 40px;
+
+	$font-size-title2-lg: 24px;
+	$font-size-title2-md: 24px;
+	$font-size-title2-sm: 24px;
+	$font-size-title2-xs: 24px;
+
+	$font-size-title3-lg: 30px;
+	$font-size-title3-md: 30px;
+	$font-size-title3-sm: 20px;
+	$font-size-title3-xs: 20px;
+
+	$font-size-top-menu-md: 18px;

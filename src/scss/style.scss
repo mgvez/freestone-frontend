@@ -1,72 +1,23 @@
-/*
- *
- *   INSPINIA - Responsive Admin Theme
- *   version 2.4
- *
-*/
-// Google Fonts
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
-
-@import "base/variables";
 
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
-@import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+// Google Fonts
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
+@import "base/_variables";
 
-@import "layout/base";
-@import "base/typography";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_variables";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_mixins";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_tooltip";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_grid";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_normalize";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_scaffolding";
+@import "~bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities";
 
-@import "components/navigation";
-@import "components/header";
-@import "components/list-records";
-@import "components/form";
-@import "components/buttons";
-// @import "mixins";
+@import "utils/_utils";
+@import "utils/_easing";
+@import "base/_texts";
 
-// // INSPINIA Theme Elements
-// @import "navigation";
-// // @import "top_navigation";
-// @import "buttons";
-// @import "badgets_labels";
-// @import "elements";
-// @import "sidebar";
-// @import "base";
-// @import "pages";
-// // @import "chat";
-// @import "metismenu";
-// @import "spinners";
+@import "components/navbar";
 
-// // Landing page styles
-// // @import "landing";
-
-// // RTL Support
-// // @import "rtl";
-
-// // For demo only - config box style
-// @import "theme-config";
-
-// // INSPINIA Skins
-// @import "skins";
-// @import "md-skin";
-
-// // Media query style
-// @import "media";
-
-// // Custom style
-// // Your custom style to override base style
-// @import "custom";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@import "layout/_default";
