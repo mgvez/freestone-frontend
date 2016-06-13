@@ -25,7 +25,6 @@ export class List extends Component {
 	static propTypes = {
 		params: React.PropTypes.object,
 
-		env: React.PropTypes.object,
 		table: React.PropTypes.object,
 		searchableFields: React.PropTypes.array,
 		groupedRecords: React.PropTypes.array,
@@ -155,7 +154,6 @@ export class List extends Component {
 														fields={this.props.searchableFields}
 														values={record}
 														table={this.props.table}
-														env={this.props.env}
 													/>
 												);
 											})

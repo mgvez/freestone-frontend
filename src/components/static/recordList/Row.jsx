@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import { FileThumbnail } from 'components/static/fileThumbnail/FileThumbnail';
+import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { InfosFcn } from 'components/static/recordList/InfosFcn';
 import { OrderFcn } from 'components/connected/recordList/OrderFcn';
 import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
@@ -11,7 +11,6 @@ import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps'
 export class Row extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
-		env: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		values: React.PropTypes.object,
 	};
@@ -71,7 +70,7 @@ export class Row extends Component {
 					this.props.fields.map((field, index) => {
 						let val = this.props.values[field.listAlias];
 						if (field.type === 'img' || field.type === 'file') {
-							val = <FileThumbnail val={this.props.values[field.listAlias]} dir={field.folder} env={this.props.env} type={field.type} />;
+							val = <FileThumbnail val={this.props.values[field.listAlias]} dir={field.folder} type={field.type} />;
 						}
 						return <td key={index}>{ val }</td>;
 					})

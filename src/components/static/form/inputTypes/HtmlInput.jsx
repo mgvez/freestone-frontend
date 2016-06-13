@@ -16,7 +16,19 @@ const TINYMCE_CONFIG = {
 	height: 500,
 	toolbar1: 'bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect',
 	toolbar2: 'bullist numlist | outdent indent | hr removeformat | subscript superscript | freestoneImageFromBank freestoneDocFromBank freestoneLink | code',
-	plugins: 'link,hr,paste,code,freestone',
+	plugins: [
+		'link',
+		'hr',
+		'paste',
+		'code',
+		'freestone',
+		'tabfocus',
+		'paste',
+		'visualchars',
+		'autolink',
+	],
+	paste_as_text: true,
+	paste_merge_formats: true,
 	theme_modern_toolbar_location: 'top',
 	theme_modern_toolbar_align: 'left',
 	theme_advanced_blockformats: 'p,h1,h2,h3,h4,h5,h6,article,section,figure,aside,pre',
@@ -78,13 +90,13 @@ export class HtmlInput extends Input {
 	render() {
 
 		if (this.state.command) {
-			const { name } = this.state.command;
+			const { name, params } = this.state.command;
 			// console.log(command);
 			switch (name) {
 			case 'insertLink':
-				return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...this.state.insertLink} />;
+				return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...params} />;
 			case 'addImageFromBank':
-				return <ImgBankInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...this.state.insertLink} />;
+				return <ImgBankInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...params} />;
 			case 'addDocFromBank':
 			default:
 				break;

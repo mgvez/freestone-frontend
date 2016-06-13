@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Input } from 'components/static/form/inputTypes/Input';
 import { SavedFileInput } from 'freestone/fileInputs';
-import { FileThumbnail } from 'components/static/fileThumbnail/FileThumbnail';
+import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 
 export class FileInput extends Input {
 	constructor(props) {
@@ -99,7 +99,7 @@ export class FileInput extends Input {
 
 		return (
 			<div>
-				<FileThumbnail val={origVal === val && val} dir={this.props.field.folder} env={this.props.env} type={this.props.field.type} />
+				<FileThumbnail val={origVal === val && val} dir={this.props.field.folder} type={this.props.field.type} />
 				<br />
 				{displayVal} <br/>
 				{renderInput}

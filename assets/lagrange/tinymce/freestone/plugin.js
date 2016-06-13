@@ -2,7 +2,7 @@
 
 (function(){
 	
-	function pepareContent(placeholder) {
+	function pepareContent(placeholder, ed) {
 		var contentBefore = ed.getContent();
 		var selection = ed.selection.getContent();
 		ed.execCommand('mceInsertContent', false, placeholder);
@@ -29,7 +29,7 @@
 				icon: "image",
 				tooltip:"Insert image from bank",
 				onclick: function() {
-					ed.execCommand('addImageFromBank', false, pepareContent('{{placeholder}}'));
+					ed.execCommand('addImageFromBank', false, pepareContent('{{placeholder}}', ed));
 				}
 			});
 
@@ -37,7 +37,7 @@
 				tooltip:"Insert document from bank",
 				icon:"browse",
 				onclick: function() {
-					ed.execCommand('addDocFromBank', false, pepareContent('{{placeholder}}'));
+					ed.execCommand('addDocFromBank', false, pepareContent('{{placeholder}}', ed));
 				}
 			});
 
@@ -45,7 +45,7 @@
 				tooltip:"Insert link",
 				icon:"link",
 				onclick: function() {
-					ed.execCommand('insertLink', false, pepareContent('{{link}}'));
+					ed.execCommand('insertLink', false, pepareContent('{{link}}', ed));
 				}
 			});
 

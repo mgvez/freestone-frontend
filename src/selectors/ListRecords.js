@@ -4,7 +4,6 @@ import { routeSelector } from 'selectors/route';
 
 
 const recordsSelector = state => state.recordList;
-const envSelector = state => state.env;
 const paramsSelector = (state, props) => props.params;
 
 function flatten(records, flat = [], breadcrumb = [], level = 0) {
@@ -40,8 +39,8 @@ function reorderSelfTree(records) {
 }
 
 export const listRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, paramsSelector, envSelector, routeSelector],
-	(schema, stateRecords, params, env, route) => {
+	[tableSchemaSelector, recordsSelector, paramsSelector, routeSelector],
+	(schema, stateRecords, params, route) => {
 
 		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage } = stateRecords;
 		const { page: requestedPage, search: requestedSearch } = params;
@@ -84,7 +83,6 @@ export const listRecordsSelector = createSelector(
 			}
 		}
 		return {
-			env,
 			table,
 			searchableFields: table && table.searchableFields,
 			groupedRecords,
