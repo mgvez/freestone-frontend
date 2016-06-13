@@ -1,0 +1,20 @@
+
+
+.loaded-records {
+	position: absolute;
+		top: $header-height;
+		right: 0;
+
+	height: 100vh;
+	width: $records-width;
+	padding: 40px 35px;
+
+	background: $color-background-dark;
+	color: $color-text-secondary;
+
+	&.sticky {
+		position: fixed;
+			top: 0;
+			right: 0;
+	}
+}

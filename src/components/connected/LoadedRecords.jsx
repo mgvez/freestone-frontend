@@ -27,6 +27,13 @@ export class LoadedRecords extends Component {
 	constructor(props) {
 		super(props);
 		this.requireDataCtrl = new RequireApiData;
+
+		this.origOffset = null;
+		this.state = { isSticky: false };
+
+		window.addEventListener('scroll', () => {
+			this.stick();
+		});
 	}
 
 	componentWillMount() {
@@ -51,14 +58,21 @@ export class LoadedRecords extends Component {
 		}
 	}
 
+	stick() {
+		this.origOffset = this.origOffset || this.nav.offsetTop;
+		this.setState({ isSticky: window.scrollY >= this.origOffset });
+	}
+
 	render() {
 		// console.log('%cRender menu', 'font-weight: bold');
 		// console.log(this.props.tree);
 
 		if (!this.props.records) return null;
 
+		const stickClass = this.state.isSticky ? 'sticky' : '';
+
 		return (
-			<nav className="loaded-records">
+			<nav className={`loaded-records ${stickClass}`} ref={ref => this.nav = ref}>
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {
