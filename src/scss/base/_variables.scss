@@ -21,8 +21,13 @@ $records-width: 350px;
 
 	$teal62: #19aa8d;
 
+	$yellow76: #f8ac59;
+
+	$red58: #ed5565;
+
 	$blue66: #00aeef;
 	$blue54: #028cc0;
+	$blue37: #4b5863;
 	$blue26: #2f4050;
 	$blue23: #293846;
 
@@ -35,6 +40,9 @@ $records-width: 350px;
 //==============================================================================
 	$color-accent-primary: $teal62;
 	$color-accent-secondary: $teal62;
+
+	$color-warn-primary: $yellow76;
+	$color-danger-primary: $red58;
 
 	$color-background-light: $white;
 	$color-background-main: $gray93;

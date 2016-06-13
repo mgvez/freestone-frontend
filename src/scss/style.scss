@@ -18,6 +18,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "utils/_easing";
 @import "base/_texts";
 
+@import "components/buttons";
 @import "components/navbar";
 @import "components/header";
 @import "components/loaded-records";

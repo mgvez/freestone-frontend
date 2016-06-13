@@ -78,21 +78,22 @@ export class LoadedRecords extends Component {
 					this.props.records.map((records) => {
 						if (!records.records || !records.table) return null;
 						return (
-							<div key={records.tableId}>
-								<h3>{records.table.displayLabel}</h3>
-								<ul>
+							<div className="record-group" key={records.tableId}>
+								<h3 className="record-label">{records.table.displayLabel}</h3>
 								{
 									records.records.map(record => {
 										return (
-											<li key={`${records.tableId}_${record.id}`}>
+											<div className="loaded-record" key={`${records.tableId}_${record.id}`}>
 												{record.label}
-												<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="btn btn-primary btn-xs"><i className="fa fa-pencil"></i><span> Edit</span></Link>
-												<Link to={`/cancel/${records.table.name}/${record.id}`} className="btn btn-xs btn-danger">Cancel</Link>
-											</li>
+
+												<div className="record-buttons">
+													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+													<Link to={`/cancel/${records.table.name}/${record.id}`} className="button-round-warn">Cancel</Link>
+												</div>
+											</div>
 										);
 									})
 								}
-								</ul>
 							</div>
 						);
 					})

@@ -17,4 +17,29 @@
 			top: 0;
 			right: 0;
 	}
+
+	h2 {
+		margin-bottom: 30px;
+	}
+
+	.record-label {
+		text-transform: none;
+		padding-bottom: 10px;
+		margin-bottom: 20px;
+		border-bottom: 1px solid $blue37;
+	}
+}
+
+.record-group + .record-group {
+	margin-top: 40px;
+}
+
+.loaded-record {
+	.record-buttons {
+		margin-top: 5px;
+	}
+
+	[class^=button] + [class^=button] {
+		margin-left: 15px;
+	}
 }
