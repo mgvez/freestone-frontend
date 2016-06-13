@@ -41,7 +41,7 @@ export class NavGroup extends Component {
 		const childrenContainer = this.refs.children;
 		// console.log(childrenContainer);
 		const dest = isOpen ? 'from' : 'to';
-		TweenMax.set(childrenContainer, { height: 'auto', display: 'block' });
+		TweenMax.set(childrenContainer, { height: 'auto' });
 		TweenMax[dest](childrenContainer, 0.4, { height: 0 });
 	}
 
@@ -64,7 +64,7 @@ export class NavGroup extends Component {
 		// console.log(this.props.data);
 		return (
 			<li className={`${activeClass} nav-group`} >
-				<a onClick={this.toggle} className={`table-group ${activeClass}`}>
+				<a onClick={this.toggle} className={`table-group ${toggleClass} ${activeClass}`}>
 					<i className={`fa fa-${icon}`}></i>
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa arrow"></span>
 				</a>

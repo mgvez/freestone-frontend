@@ -18,7 +18,7 @@ export class Module extends Component {
 	render() {
 		return (
 			<li className="nav-item">
-				<Link to={`/module/${this.props.url}`} activeClassName="active" className="module"><span className="fa fa-wrench"></span> {this.props.label}</Link>
+				<Link to={`/module/${this.props.url}`} activeClassName="active" className="module">{this.props.label}</Link>
 			</li>
 		);
 	}
