@@ -1,0 +1,19 @@
+
+
+#main-header {
+	padding: 15px 25px;
+	background: $gray96;
+	position: absolute;
+		top: 0;
+		right: 0;
+	width: calc(100% - #{$nav-width});
+	height: $header-height;
+
+	.logout {
+		position: absolute;
+			top: 50%;
+			right: 25px;
+
+		transform: translate(0, -50%);
+	}
+}

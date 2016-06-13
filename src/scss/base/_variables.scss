@@ -3,6 +3,10 @@
 $screen-lg: 1301px;
 $screen-md-max: 1300px;
 
+$header-height: 60px;
+$nav-width: 250px;
+$records-width: 350px;
+
 
 //==============================================================================
 // COLOR DEFS
@@ -12,12 +16,18 @@ $screen-md-max: 1300px;
 	$gray51: #79797a;
 	$gray76: #bababb;
 	$gray90: #e1e1e1;
+	$gray93: #e7eaec;
 	$gray96: #f3f3f3;
 
 	$teal62: #19aa8d;
 
+	$yellow76: #f8ac59;
+
+	$red58: #ed5565;
+
 	$blue66: #00aeef;
 	$blue54: #028cc0;
+	$blue37: #4b5863;
 	$blue26: #2f4050;
 	$blue23: #293846;
 
@@ -31,7 +41,11 @@ $screen-md-max: 1300px;
 	$color-accent-primary: $teal62;
 	$color-accent-secondary: $teal62;
 
+	$color-warn-primary: $yellow76;
+	$color-danger-primary: $red58;
+
 	$color-background-light: $white;
+	$color-background-main: $gray93;
 	$color-background-dark: $blue26;
 	$color-background-dark_hover: $blue23;
 

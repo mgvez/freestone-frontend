@@ -1,0 +1,69 @@
+
+
+%base_button {
+	margin: 0;
+	padding: 0 25px;
+
+	border: none;
+	outline: none;
+	text-decoration: none;
+
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+
+	background: $color-accent-primary;
+	color: $color-text-secondary;
+
+	height: 30px;
+	line-height: 30px;
+
+	transition: color 0.3s, background 0.3s;
+
+	i {
+		margin-right: 10px;
+	}
+
+	&:hover {
+		text-decoration: none;
+		color: $color-text-secondary;
+		background: darken($color-accent-primary, 10%);
+	}
+}
+
+%round_button {
+	border-radius: 15px;
+}
+
+%warn_button {
+	background: $color-warn-primary;
+
+	&:hover {
+		background: darken($color-warn-primary, 10%);
+	}
+}
+
+%danger_button {
+	background: $color-danger-primary;
+
+	&:hover {
+		background: darken($color-danger-primary, 10%);
+	}
+}
+
+
+[class^=button] {
+	@extend %base_button;
+
+	&[class*=round] {
+		@extend %round_button;
+	}
+
+	&[class*=warn] {
+		@extend %warn_button;
+	}
+
+	&[class*=danger] {
+		@extend %danger_button;
+	}
+}

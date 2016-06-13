@@ -1,5 +1,8 @@
 
 
 .main-content {
-	padding-left: 250px;
+	padding-top: $header-height;
+	padding-left: $nav-width;
+	padding-right: $records-width;
+	background: $color-background-main;
 }

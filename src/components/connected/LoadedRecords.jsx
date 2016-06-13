@@ -27,6 +27,13 @@ export class LoadedRecords extends Component {
 	constructor(props) {
 		super(props);
 		this.requireDataCtrl = new RequireApiData;
+
+		this.origOffset = null;
+		this.state = { isSticky: false };
+
+		window.addEventListener('scroll', () => {
+			this.stick();
+		});
 	}
 
 	componentWillMount() {
@@ -51,34 +58,42 @@ export class LoadedRecords extends Component {
 		}
 	}
 
+	stick() {
+		this.origOffset = this.origOffset || this.nav.offsetTop;
+		this.setState({ isSticky: window.scrollY >= this.origOffset });
+	}
+
 	render() {
 		// console.log('%cRender menu', 'font-weight: bold');
 		// console.log(this.props.tree);
 
 		if (!this.props.records) return null;
 
+		const stickClass = this.state.isSticky ? 'sticky' : '';
+
 		return (
-			<nav className="loaded-records">
+			<nav className={`loaded-records ${stickClass}`} ref={ref => this.nav = ref}>
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {
 						if (!records.records || !records.table) return null;
 						return (
-							<div key={records.tableId}>
-								<h3>{records.table.displayLabel}</h3>
-								<ul>
+							<div className="record-group" key={records.tableId}>
+								<h3 className="record-label">{records.table.displayLabel}</h3>
 								{
 									records.records.map(record => {
 										return (
-											<li key={`${records.tableId}_${record.id}`}>
+											<div className="loaded-record" key={`${records.tableId}_${record.id}`}>
 												{record.label}
-												<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="btn btn-primary btn-xs"><i className="fa fa-pencil"></i><span> Edit</span></Link>
-												<Link to={`/cancel/${records.table.name}/${record.id}`} className="btn btn-xs btn-danger">Cancel</Link>
-											</li>
+
+												<div className="record-buttons">
+													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+													<Link to={`/cancel/${records.table.name}/${record.id}`} className="button-round-warn">Cancel</Link>
+												</div>
+											</div>
 										);
 									})
 								}
-								</ul>
 							</div>
 						);
 					})
