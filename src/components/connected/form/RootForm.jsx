@@ -20,7 +20,7 @@ export class RootForm extends Component {
 
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
-		
+
 		fetchTable: React.PropTypes.func,
 	};
 
@@ -47,14 +47,16 @@ export class RootForm extends Component {
 		let header;
 		let form;
 		if (this.props.table) {
-			
+
 			header = (
 				<header>
-					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-primary">Save</Link>
-					<Link to={`/cancel/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-danger">Cancel</Link>
-
-					<div>lastmodif {this.props.lastmodifdate}</div>
 					<Header table={this.props.table} />
+					<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
+
+					<div className="btns">
+						<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="button-round">Save</Link>
+						<Link to={`/cancel/${this.props.table.name}/${this.props.params.recordId}`} className="button-round-warn">Cancel</Link>
+					</div>
 				</header>
 			);
 
@@ -63,7 +65,7 @@ export class RootForm extends Component {
 			);
 		}
 		return (
-			<section>
+			<section className="root-form">
 				{ header }
 				{ form }
 			</section>
