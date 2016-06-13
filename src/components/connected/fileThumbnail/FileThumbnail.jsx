@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
+@connect(
+	state => {
+		return {
+			env: state.env,
+		};
+	}
+)
 export class FileThumbnail extends Component {
 	static propTypes = {
 		env: React.PropTypes.object,

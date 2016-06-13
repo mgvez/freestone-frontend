@@ -132,8 +132,12 @@ export class AutocompleteInput extends Input {
 		// console.log(options);
 		// current.label
 		if (!options) return <div/>;
-
 		const val = this.state.currentText || current.label;
+		
+		// return (
+		// 	<div>{val}</div>
+		// );
+
 		return (
 			<Autocomplete
 				value={val}
