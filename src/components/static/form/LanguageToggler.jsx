@@ -19,7 +19,7 @@ export class LanguageToggler extends Component {
 	};
 
 	changeLanguage = (e) => {
-		const lang = e && e.target && e.target.dataset && e.target.dataset.value;
+		const lang = e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.value;
 		this.props.setFieldViewLanguage(lang);
 	};
 

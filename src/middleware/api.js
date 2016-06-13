@@ -1,36 +1,9 @@
 
 //basé sur redux-api-middleware, mais comme pas de release depuis un bout, pis que le official release fonctionne pas (as of 2016-01-13), j'ai réécrit
 
-import reqwest from 'reqwest';
 import { receiveToken, loginUserFailure } from 'actions/auth';
 import sha1 from 'sha1';
-import { getApiUrl } from 'freestone/settings';
-
-function getEndpoint(route) {
-	const hostname = getApiUrl();
-	// console.log(window.location);
-	return `${hostname}/${route}`;
-}
-
-
-function callApi(route, data, jwt, successType) {
-	// console.log(`post data ${route}`, data);
-	// console.log(`JWT: ${jwt}`);
-	const method = data ? 'post' : 'get';
-	const headers = { 'Accept': 'application/json' };
-	if (jwt) {
-		headers.Authorization = `Bearer ${jwt}`;
-	}
-
-	return reqwest({
-		url: getEndpoint(route),
-		crossOrigin: true,
-		processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
-		method,		
-		data,
-		headers,
-	});
-}
+import { callApi } from 'freestone/api';
 
 export const FREESTONE_API = Symbol('Freestone API');
 export const FREESTONE_API_REQUEST = 'FREESTONE_API_REQUEST';
@@ -90,9 +63,8 @@ export default store => next => action => {
 	if (processing[hash]) return processing[hash];
 
 	next(actionWith({ data, type: requestType }));
-	const jwt = store.getState().auth.jwt;
 
-	processing[hash] = callApi(route, data, jwt, successType).then(
+	processing[hash] = callApi(route, data).then(
 		res => {
 			if (res.jwt) {
 				next(receiveToken(res.jwt));

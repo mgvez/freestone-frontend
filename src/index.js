@@ -13,6 +13,8 @@ const store = configureStore();
 //changer dans configurestore aussi si on passe à browserHistory
 const history = syncHistoryWithStore(hashHistory, store);
 
+import { setStore } from 'freestone/api';
+setStore(store);
 // <Router onUpdate={() => window.scrollTo(0, 0)}
 
 ReactDOM.render(

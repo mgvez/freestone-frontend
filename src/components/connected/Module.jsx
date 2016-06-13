@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
-import { getApiUrl } from 'freestone/settings';
+import { getApiUrl } from 'freestone/api';
 
 
 const metaData = {

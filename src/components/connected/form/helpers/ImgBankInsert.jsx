@@ -8,6 +8,9 @@ import customStyle from './modalStyles.js';
 import * as bankActionCreators from 'actions/bank';
 import { RequireApiData } from 'utils/RequireApiData';
 
+import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS } from 'freestone/schemaProps';
+import { callApi } from 'freestone/api';
+
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 
 @connect(
@@ -56,6 +59,19 @@ export class ImgBankInsert extends Component {
 		this.closeModal();
 	};
 
+	chooseImage = (e) => {
+		const id = e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.id;
+		// console.log(e.currentTarget.dataset.id);
+
+		callApi(`bank/images/${id}`).then(res => {
+			console.log(res);
+			this.props.setVal(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
+			this.closeModal();
+		}, err => {
+			console.log(err);
+		});
+	};
+
 	closeModal = () => {
 		this.props.onClose();
 	};
@@ -65,8 +81,12 @@ export class ImgBankInsert extends Component {
 		let imgs;
 		if (this.props.records) {
 			imgs = this.props.records.map((record, idx) => {
+				// console.log(record);
 				return (
-					<FileThumbnail val={record.zva_bank_img_file} dir={record.zva_bank_img_file_folder} type="img" key={`th${idx}`} />
+					<div key={`th${idx}`}>
+						<FileThumbnail val={record[BANK_IMG_FILE_ALIAS]} dir={record[BANK_IMG_FOLDER_ALIAS]} type="img" />
+						<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]}>Choose</button>
+					</div>
 				);
 			});
 		}

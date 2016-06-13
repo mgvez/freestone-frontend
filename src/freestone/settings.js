@@ -9,7 +9,3 @@ export function getWebsiteUrl() {
 	}
 	return `${window.location.protocol}//${hostname}`;
 }
-
-export function getApiUrl() {
-	return getWebsiteUrl() + '/api';
-}
