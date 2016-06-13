@@ -1,0 +1,129 @@
+
+
+.navbar-default {
+	background: $color-background-dark;
+	color: $color-text-secondary;
+	position: fixed;
+		top: 0;
+		left: 0;
+
+	width: 250px;
+	height: 100vh;
+	overflow-y: scroll;
+
+	.user {
+		padding: 40px 25px;
+		background: $color-background-dark;
+		font-weight: $font-weight-bold;
+
+		p {
+			margin-bottom: 0;
+		}
+	}
+
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		li {
+			display: block;
+		}
+	}
+
+	a {
+		color: $color-text-secondary;
+
+		&:hover, &:focus {
+			text-decoration: none;
+		}
+	}
+
+	.table-group {
+		display: block;
+		padding: 10px 15px;
+		position: relative;
+
+		cursor: pointer;
+		transition: background 0.3s;
+
+		i + .nav-label {
+			margin-left: 10px;
+		}
+
+		&:hover {
+			background: $color-background-dark_hover;
+		}
+	}
+
+	.nav-item {
+		padding: 0;
+
+		a {
+			display: block;
+			position: relative;
+			padding: 10px 50px 10px 10px;
+			background: mix($white, $color-accent-primary, 20%);
+			transition: background 0.3s;
+
+			.nrecords {
+				display: block;
+				text-align: center;
+				position: absolute;
+					top: 0;
+					right: 0;
+
+				width: 40px;
+				height: 100%;
+				background: mix($white, $color-accent-primary, 10%);
+				transition: background 0.3s;
+
+				.n {
+					position: absolute;
+						top: 50%;
+						left: 0;
+
+					width: 100%;
+					transform: translate(0, -50%);
+				}
+			}
+
+			&:hover {
+				background: mix($white, $color-accent-primary, 10%);
+
+				.nrecords {
+					background: mix($white, $color-accent-primary, 5%);
+				}
+			}
+		}
+
+		& + .nav-item {
+			border-top: 1px solid $color-accent-primary;
+		}
+	}
+
+	.nav-group {
+		border-top: 1px solid $color-border-dark;
+		overflow: hidden;
+
+		.sub-nav {
+			height: 0;
+			border-left: 6px solid $color-accent-primary;
+			background: lighten($color-background-dark, 10%);
+			transition: background 0.3s;
+
+			.table-group {
+				padding: 10px 15px;
+			}
+
+			.sub-nav {
+				border-left: 0;
+			}
+		}
+
+	}
+
+	> .nav-group:last-child {
+		border-bottom: 1px solid $color-border-dark;
+	}
+}

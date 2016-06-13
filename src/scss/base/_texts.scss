@@ -1,0 +1,56 @@
+
+%title {
+	line-height: 1;
+	margin: 0;
+	font-family: $font-family-title;
+	text-transform: uppercase;
+}
+
+%title1 {
+	@extend %title;
+}
+
+%title2 {
+	@extend %title;
+
+	font-size: 100px;
+}
+
+%title3 {
+	@extend %title;
+}
+
+%text_default {
+	font-size: 16px;
+}
+
+
+body {
+	color: $color-text-primary;
+	@extend %text_default;
+}
+
+h1 {
+	@extend %title1;
+}
+
+h2 {
+	@extend %title2;
+}
+
+h3 {
+	@extend %title3;
+}
+
+em {
+	font-style: italic;
+}
+
+strong {
+	font-weight: $font-weight-bold;
+}
+
+
+ul, ol, li {
+	@extend %text_default;
+}
