@@ -1,0 +1,15 @@
+
+
+#main-header {
+	padding: 15px 25px;
+	background: $gray96;
+	position: relative;
+
+	.logout {
+		position: absolute;
+			top: 50%;
+			right: 25px;
+
+		transform: translate(0, -50%);
+	}
+}

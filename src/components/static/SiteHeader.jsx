@@ -34,13 +34,7 @@ export class SiteHeader extends Component {
 		// console.log(this.props.env);
 		return (
 			<header id="main-header" ref="header">
-				<div className="logo">
-					<Link to="/">
-						{this.props.env.siteName}
-					</Link>
-				</div>
 				<div className="fcn">
-					
 					<button className="btn btn-xs" onClick={this.props.clearSchema}>
 						Clear schema
 					</button>
