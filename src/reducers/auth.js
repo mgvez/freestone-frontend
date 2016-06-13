@@ -10,7 +10,6 @@ const initialState = {
 };
 
 export function auth(state = initialState, action) {
-	// console.log(action);
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {
@@ -32,7 +31,7 @@ export function auth(state = initialState, action) {
 			isAuthenticating: false,
 			isAuthenticated: true,
 			jwt: action.payload.jwt,
-			userName: action.payload.token.userName,
+			userName: action.payload.token.data.realname,
 			statusText: 'You have been successfully logged in.',
 		};
 	case LOGIN_USER_FAILURE:

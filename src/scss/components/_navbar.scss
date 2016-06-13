@@ -8,7 +8,18 @@
 		left: 0;
 
 	width: 250px;
-	min-height: 100vh;
+	height: 100vh;
+	overflow-y: scroll;
+
+	.user {
+		padding: 40px 25px;
+		background: $color-background-dark;
+		font-weight: $font-weight-bold;
+
+		p {
+			margin-bottom: 0;
+		}
+	}
 
 	ul {
 		list-style-type: none;
