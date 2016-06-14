@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Input } from 'components/static/form/inputTypes/Input';
-import { RequireApiData } from 'utils/RequireApiData';
 import Autocomplete from 'react-autocomplete';
 
 import * as optionsActionCreators from 'actions/foreign-options';
@@ -65,7 +64,6 @@ export class AutocompleteInput extends Input {
 	
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 		this.regexMatchOption = /./;
 		this.currentText = '';
 		this.currentMatch = {};
@@ -88,7 +86,7 @@ export class AutocompleteInput extends Input {
 	}
 
 	requireData(props) {
-		this.requireDataCtrl.requireProp('foreignOptions', props, this.props.fetchForeignOptions, [props.field.id]);
+		if (!props.foreignOptions) this.props.fetchForeignOptions(props.field.id);
 	}
 
 	setCurrentText(tx) {

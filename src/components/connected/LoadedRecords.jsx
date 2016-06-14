@@ -3,8 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { RequireApiData } from 'utils/RequireApiData';
-
 import { fetchTable } from 'actions/schema';
 import { fetchForeignOptions } from 'actions/foreign-options';
 import { loadedRecords } from 'selectors/loadedRecords';
@@ -26,7 +24,6 @@ export class LoadedRecords extends Component {
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 
 		this.origOffset = null;
 		this.state = { isSticky: false };

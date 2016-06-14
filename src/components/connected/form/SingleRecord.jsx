@@ -7,8 +7,6 @@ import * as recordActionCreators from 'actions/record';
 
 import { formRecordMapStateToProps } from 'selectors/formRecord';
 
-import { RequireApiData } from 'utils/RequireApiData';
-
 import { Subform } from 'components/connected/form/Subform';
 import { Field } from 'components/static/form/Field';
 import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
@@ -37,7 +35,6 @@ export class SingleRecord extends Component {
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
@@ -58,8 +55,8 @@ export class SingleRecord extends Component {
 	requireData(props) {
 		const { tableName, recordId } = props;
 		// console.log(props.recordId);
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
-		this.requireDataCtrl.requireProp('record', props, this.props.fetchRecord, [tableName, recordId]);
+		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.record) this.props.fetchRecord(tableName, recordId);
 	}
 
 	render() {

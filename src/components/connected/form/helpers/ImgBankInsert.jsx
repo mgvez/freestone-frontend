@@ -6,7 +6,6 @@ import Modal from 'react-modal';
 import customStyle from './modalStyles.js';
 
 import * as bankActionCreators from 'actions/bank';
-import { RequireApiData } from 'utils/RequireApiData';
 
 import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS } from 'freestone/schemaProps';
 import { callApi } from 'freestone/api';
@@ -33,7 +32,6 @@ export class ImgBankInsert extends Component {
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
@@ -46,7 +44,7 @@ export class ImgBankInsert extends Component {
 	}
 	
 	requireData(props) {
-		this.requireDataCtrl.requireProp('records', props, this.props.fetchImageBankList, [props.search, props.page || 1]);
+		if (!props.records) this.props.fetchImageBankList(props.search, props.page || 1);
 	}
 
 	afterOpenModal = () => {

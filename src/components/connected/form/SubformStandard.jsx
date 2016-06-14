@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { RequireApiData } from 'utils/RequireApiData';
-
 import { formChildrenRecordsMapStateToProps } from 'selectors/formChildrenRecords';
 import * as recordActionCreators from 'actions/record';
 import { fetchTable } from 'actions/schema';
@@ -37,8 +35,6 @@ export class SubformStandard extends Component {
 	
 	constructor(props) {
 		super(props);
-		// console.log(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
@@ -52,11 +48,11 @@ export class SubformStandard extends Component {
 	requireData(props) {
 		// console.log(props);
 		const { tableId, parentRecordId, parentTableId } = props;
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableId]);
-
-		if (props.table) {
+		if (!props.table) {
+			this.props.fetchTable(tableId);
+		} else {
 			const tableName = props.table.name;
-			this.requireDataCtrl.requireProp('childrenRecords', props, this.props.fetchRecord, [tableName, parentRecordId, parentTableId]);
+			if (!props.childrenRecords) this.props.fetchRecord(tableName, parentRecordId, parentTableId);
 		}
 	}
 

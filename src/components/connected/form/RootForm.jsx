@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 
-import { RequireApiData } from 'utils/RequireApiData';
 import { rootFormMapStateToProps } from 'selectors/rootForm';
 
+import { Save } from 'components/connected/process/Save';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
@@ -26,12 +26,15 @@ export class RootForm extends Component {
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
 		window.scrollTo(0, 0);
 		this.requireData(this.props);
+
+		this.setState({
+			saving: false,
+		});
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -40,8 +43,14 @@ export class RootForm extends Component {
 
 	requireData(props) {
 		const { tableName } = props.params;
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
+		if (!props.table) this.props.fetchTable(tableName);
 	}
+
+	save = () => {
+		this.setState({
+			saving: true,
+		});
+	};
 
 	render() {
 		let header;
@@ -50,7 +59,7 @@ export class RootForm extends Component {
 			
 			header = (
 				<header>
-					<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-primary">Save</Link>
+					<a onClick={this.save} className="btn btn-xs btn-primary">Save</a>
 					<Link to={`/cancel/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-danger">Cancel</Link>
 
 					<div>lastmodif {this.props.lastmodifdate}</div>

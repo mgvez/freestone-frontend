@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Input } from 'components/static/form/inputTypes/Input';
-import { RequireApiData } from 'utils/RequireApiData';
 
 
 export class SelectInput extends Input {
@@ -11,7 +10,6 @@ export class SelectInput extends Input {
 	
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
@@ -24,7 +22,7 @@ export class SelectInput extends Input {
 
 	requireData(props) {
 		// const { foreignOptions } = props;
-		this.requireDataCtrl.requireProp('foreignOptions', props, this.props.fetchForeignOptions, [props.field.id]);
+		if (!props.foreignOptions) this.props.fetchForeignOptions(props.field.id);
 	}
 	
 	render() {

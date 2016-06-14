@@ -11,8 +11,6 @@ import { Paging } from 'components/static/recordList/Paging';
 import { Row } from 'components/static/recordList/Row';
 import { InScroll } from 'components/connected/InScroll';
 
-import { RequireApiData } from 'utils/RequireApiData';
-
 import createRecord from 'freestone/createRecord';
 
 import { listRecordsSelector } from 'selectors/listRecords';
@@ -48,7 +46,6 @@ export class List extends Component {
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 
@@ -71,8 +68,8 @@ export class List extends Component {
 	
 	requireData(props) {
 		const { tableName, page, search } = props.params;
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
-		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName, search, page || 1]);
+		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.groupedRecords) this.props.fetchList(tableName, search, page || 1);
 	}
 
 	handleSubmit = (e) => {

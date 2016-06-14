@@ -9,7 +9,6 @@ import { Home } from 'components/connected/Home';
 import { Login } from 'components/connected/Login';
 import { List } from 'components/connected/List';
 import { RootForm } from 'components/connected/form/RootForm';
-import { Save } from 'components/connected/process/Save';
 import { Cancel } from 'components/connected/process/Cancel';
 import { Module } from 'components/connected/Module';
 
@@ -20,7 +19,6 @@ export default (
 			<Route path="home" component={Home}/>
 			<Route path="list/:tableName(/:page)(/:search)" component={List}/>
 			<Route path="edit/:tableName/:recordId" component={RootForm}/>
-			<Route path="save/:tableName/:recordId" component={Save}/>
 			<Route path="cancel/:tableName/:recordId" component={Cancel}/>
 			<Route path="module/:url" component={Module}/>
 		</Route>
