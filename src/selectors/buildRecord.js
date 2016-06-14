@@ -6,7 +6,7 @@ import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } fr
 
 const recordsSelector = state => state.recordForm.records;
 const mtmRecordsSelector = state => state.recordForm.mtmRecords;
-const recordIdSelector = (state, props) => props.params.recordId;
+const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.schema.children;
 
 

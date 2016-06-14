@@ -53,6 +53,11 @@ export class RootForm extends Component {
 	};
 
 	render() {
+
+		if (this.state.saving) {
+			return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} />;
+		}
+
 		let header;
 		let form;
 		if (this.props.table) {
