@@ -90,7 +90,7 @@ export class RootForm extends Component {
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} />
+				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot />
 			);
 		}
 		return (
