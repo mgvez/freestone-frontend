@@ -43,10 +43,10 @@ export class Nav extends Component {
 		// console.log(this.props.tree);
 		return (
 			<nav className="navbar-default" role="navigation">
-			<div className="user">
-				<img src="http://placehold.it/75x75" alt="user" />
-				<p>{this.props.username}</p>
-			</div>
+				<div className="user">
+					<img src="http://placehold.it/75x75" alt="user" />
+					<p>{this.props.username}</p>
+				</div>
 				<ul>
 				{
 					this.props.tree.map((item) => {

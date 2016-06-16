@@ -21,10 +21,8 @@ export class RootForm extends Component {
 			tableName: React.PropTypes.string,
 			recordId: React.PropTypes.string,
 		}),
-
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
-
 		//once saved/cancelled, we can override the defualt action (which is to go to table's list)
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
@@ -67,14 +65,18 @@ export class RootForm extends Component {
 		let header;
 		let form;
 		if (this.props.table) {
-			
+
 			header = (
 				<header>
-					<a onClick={this.save} className="button-round">Save</a>
-					<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
+					<div className="texts">
+						<Header table={this.props.table} />
+						<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
+					</div>
 
-					<div>lastmodif {this.props.lastmodifdate}</div>
-					<Header table={this.props.table} />
+					<div className="btns">
+						<a onClick={this.save} className="button-round">Save</a>
+						<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
+					</div>
 				</header>
 			);
 
@@ -83,7 +85,7 @@ export class RootForm extends Component {
 			);
 		}
 		return (
-			<section>
+			<section className="root-form">
 				{ header }
 				{ form }
 			</section>
