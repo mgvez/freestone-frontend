@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { RequireApiData } from 'utils/RequireApiData';
 import { fetchTable } from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
@@ -36,8 +35,6 @@ export class SubformMtm extends Component {
 
 	constructor(props) {
 		super(props);
-		// console.log(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
@@ -51,11 +48,12 @@ export class SubformMtm extends Component {
 	requireData(props) {
 		// console.log(props.records);
 		const { tableId, parentRecordId, parentTableId } = props;
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableId]);
-		if (props.table) {
+		if (!props.table) {
+			this.props.fetchTable(tableId);
+		} else {
 			const tableName = props.table.name;
-			this.requireDataCtrl.requireProp('mtmOptions', props, this.props.fetchMtmOptions, [tableName]);
-			this.requireDataCtrl.requireProp('records', props, this.props.fetchMtmRecords, [tableName, parentRecordId, parentTableId]);
+			if (!props.mtmOptions) this.props.fetchMtmOptions(tableName);
+			if (!props.records) this.props.fetchMtmRecords(tableName, parentRecordId, parentTableId);
 
 		}
 	}

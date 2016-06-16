@@ -12,10 +12,14 @@ export const TYPE_OTO = 'oto';
 export const TYPE_REL = 'rel';
 export const TYPE_PRIMARY = 'pri';
 export const TYPE_ORDER = 'order';
+export const TYPE_IMG = 'img';
 export const TYPES_PARENT_LINK = [TYPE_REL, TYPE_OTO, TYPE_MTM];
 
 export const SUBFORM_VIEW_TABBED = 'SUBFORM_VIEW_TABBED'; 
 export const SUBFORM_VIEW_LIST = 'SUBFORM_VIEW_LIST'; 
 
+export const BANK_IMG_TABLE = 'zva_bank_img';
+export const BANK_IMG_FILE_ALIAS = 'zva_bank_img_file';
+export const BANK_IMG_FOLDER_ALIAS = 'zva_bank_img_file_folder';
 
 export const DELETED_PSEUDOFIELD_ALIAS = '__deleted';

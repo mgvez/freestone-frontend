@@ -25,3 +25,10 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "components/root-form";
 
 @import "layout/_default";
+
+
+//STYLES TEMPORAIRE MART pour la dev; Peuvent être deletés lorsque remplacés
+
+.warn {
+	color:red;
+}

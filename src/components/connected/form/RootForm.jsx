@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 
-import { RequireApiData } from 'utils/RequireApiData';
 import { rootFormMapStateToProps } from 'selectors/rootForm';
 
+import { Save } from 'components/connected/process/Save';
+import { Cancel } from 'components/connected/process/Cancel';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
@@ -16,22 +17,28 @@ import { SingleRecord } from 'components/connected/form/SingleRecord';
 )
 export class RootForm extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
-
+		params: React.PropTypes.shape({
+			tableName: React.PropTypes.string,
+			recordId: React.PropTypes.string,
+		}),
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
-
+		//once saved/cancelled, we can override the defualt action (which is to go to table's list)
+		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 	};
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
 		window.scrollTo(0, 0);
 		this.requireData(this.props);
+
+		this.setState({
+			saving: false,
+		});
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -40,10 +47,21 @@ export class RootForm extends Component {
 
 	requireData(props) {
 		const { tableName } = props.params;
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
+		if (!props.table) this.props.fetchTable(tableName);
 	}
 
+	save = () => {
+		this.setState({
+			saving: true,
+		});
+	};
+
 	render() {
+
+		if (this.state.saving) {
+			return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} />;
+		}
+
 		let header;
 		let form;
 		if (this.props.table) {
@@ -56,14 +74,14 @@ export class RootForm extends Component {
 					</div>
 
 					<div className="btns">
-						<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="button-round">Save</Link>
-						<Link to={`/cancel/${this.props.table.name}/${this.props.params.recordId}`} className="button-round-warn">Cancel</Link>
+						<a onClick={this.save} className="button-round">Save</a>
+						<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
 					</div>
 				</header>
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.params.tableName} recordId={this.props.params.recordId} />
+				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} />
 			);
 		}
 		return (

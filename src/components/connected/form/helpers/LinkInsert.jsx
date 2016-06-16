@@ -17,7 +17,7 @@ function buildlink(contents, link, linkLabel) {
 	}
 
 	if (contents) {
-		val = contents.replace('{{link}}', val);
+		val = contents.replace('{{placeholder}}', val);
 	}
 
 	return val;

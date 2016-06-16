@@ -12,7 +12,8 @@ import { buildSaveRecordSelector } from 'selectors/buildRecord';
 )
 export class Save extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		tableId: React.PropTypes.number,
+		recordId: React.PropTypes.string,
 
 		table: React.PropTypes.object,
 		tree: React.PropTypes.object,
@@ -21,6 +22,7 @@ export class Save extends Component {
 		fields: React.PropTypes.array,
 		saveState: React.PropTypes.object,
 
+		callback: React.PropTypes.func,
 		saveRecord: React.PropTypes.func,
 		goTo: React.PropTypes.func,
 	};
@@ -35,11 +37,14 @@ export class Save extends Component {
 
 		if (onSaved) {
 			onSaved.then(() => {
-				const backPath = { path: `list/${this.props.params.tableName}` };
-				setTimeout(() => this.props.goTo(backPath), 2000);
+				if (this.props.callback) {
+					this.props.callback();
+				} else {
+					const backPath = { path: `list/${this.props.table.name}` };
+					setTimeout(() => this.props.goTo(backPath), 1000);
+				}
 			});
 		}
-
 	}
 
 	render() {

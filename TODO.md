@@ -55,24 +55,19 @@ par priorité
 	- enum
 	- tinymce
 		- link styles css site
-		- insert freestone image
-		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
-	- link (internal)
 	- password
-- limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - insert image de banque : drag & drop
 - autocomplete
 	- revert quand perd le focus
 	- finir positionnement, etc.
 	- afficher images (si image presente dans label)
-- Unit tests 20%
-
 
 ## Pages
 - all
 
 # Pluss tard
+- Unit tests 20%
 - faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
 - shop admin en react/redux
 - ordre ds liste en drag/drop

@@ -4,26 +4,26 @@ import { connect } from 'react-redux';
 
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
-import { pushNavStack } from 'actions/nav';
 
 import { Heading } from 'components/static/recordList/Heading';
 import { Paging } from 'components/static/recordList/Paging';
 import { Row } from 'components/static/recordList/Row';
 import { InScroll } from 'components/connected/InScroll';
 
-import { RequireApiData } from 'utils/RequireApiData';
-
 import createRecord from 'freestone/createRecord';
-
 import { listRecordsSelector } from 'selectors/listRecords';
 
 @connect(
 	listRecordsSelector,
-	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators, pushNavStack }, dispatch)
+	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
 )
 export class List extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		params: React.PropTypes.shape({
+			tableName: React.PropTypes.string,
+			page: React.PropTypes.string,
+			search: React.PropTypes.string,
+		}),
 
 		table: React.PropTypes.object,
 		searchableFields: React.PropTypes.array,
@@ -38,7 +38,6 @@ export class List extends Component {
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
 		addRecord: React.PropTypes.func,
-		pushNavStack: React.PropTypes.func,
 
 	};
 
@@ -48,7 +47,6 @@ export class List extends Component {
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 
@@ -71,8 +69,8 @@ export class List extends Component {
 	
 	requireData(props) {
 		const { tableName, page, search } = props.params;
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableName]);
-		this.requireDataCtrl.requireProp('groupedRecords', props, this.props.fetchList, [tableName, search, page || 1]);
+		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.groupedRecords) this.props.fetchList(tableName, search, page || 1);
 	}
 
 	handleSubmit = (e) => {
@@ -85,14 +83,11 @@ export class List extends Component {
 	};
 
 	addRecord = () => {
-
 		const { newRecord, newRecordId } = createRecord(this.props.table);
 		this.props.addRecord(this.props.table.id, newRecord);
-		this.props.pushNavStack(this.props.path, window.pageYOffset);
 
 		const path = `/edit/${this.props.params.tableName}/${newRecordId}`;
 		this.context.router.push(path);
-
 	};
 
 	render() {

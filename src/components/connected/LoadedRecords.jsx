@@ -3,12 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { RequireApiData } from 'utils/RequireApiData';
-
 import { fetchTable } from 'actions/schema';
 import { fetchForeignOptions } from 'actions/foreign-options';
 import { loadedRecords } from 'selectors/loadedRecords';
 
+import { Cancel } from 'components/connected/process/Cancel';
 
 @connect(
 	loadedRecords,
@@ -26,7 +25,6 @@ export class LoadedRecords extends Component {
 
 	constructor(props) {
 		super(props);
-		this.requireDataCtrl = new RequireApiData;
 
 		this.origOffset = null;
 		this.state = { isSticky: false };
@@ -59,7 +57,7 @@ export class LoadedRecords extends Component {
 	}
 
 	stick() {
-		this.origOffset = this.origOffset || this.nav.offsetTop;
+		this.origOffset = this.origOffset || (this.nav && this.nav.offsetTop);
 		this.setState({ isSticky: window.scrollY >= this.origOffset });
 	}
 
@@ -76,19 +74,28 @@ export class LoadedRecords extends Component {
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {
-						if (!records.records || !records.table) return null;
+						if (!records.records || !records.table || !records.records.length) return null;
 						return (
 							<div className="record-group" key={records.tableId}>
 								<h3 className="record-label">{records.table.displayLabel}</h3>
 								{
 									records.records.map(record => {
+
+										const warnClass = record.isOutdated ? 'warn' : '';
+										const outdatedWarning = (
+											<div className={warnClass}>
+												This record has been open for {record.hasBeenOpenedFor} seconds.
+											</div>
+										);
+										
+
 										return (
 											<div className="loaded-record" key={`${records.tableId}_${record.id}`}>
 												{record.label}
-
+												{outdatedWarning}
 												<div className="record-buttons">
 													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
-													<Link to={`/cancel/${records.table.name}/${record.id}`} className="button-round-warn">Cancel</Link>
+													<Cancel tableName={records.table.name} recordId={record.id} />
 												</div>
 											</div>
 										);

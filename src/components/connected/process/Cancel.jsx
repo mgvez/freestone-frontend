@@ -13,10 +13,12 @@ import { buildCancelRecordSelector } from 'selectors/buildRecord';
 )
 export class Cancel extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		tableName: React.PropTypes.string,
+		recordId: React.PropTypes.string,
 
 		records: React.PropTypes.array,
 
+		callback: React.PropTypes.func,
 		cancelEdit: React.PropTypes.func,
 		goTo: React.PropTypes.func,
 	};
@@ -26,19 +28,34 @@ export class Cancel extends Component {
 	}
 
 	componentWillMount() {
-		this.props.cancelEdit(this.props.records);
 
-		const backPath = { path: `list/${this.props.params.tableName}` };
-		this.props.goTo(backPath);
-
+		this.setState({
+			cancelling: false,
+		});
 	}
 
+	doCancel = () => {
+		this.setState({
+			cancelling: true,
+		});
+
+		this.props.cancelEdit(this.props.records);
+
+		if (this.props.callback) {
+			this.props.callback();
+		} else {
+			const backPath = { path: `list/${this.props.tableName}` };
+			this.props.goTo(backPath);
+		}
+	};
+
 	render() {
-		// console.log(this.props.saveState);
+		if (this.state.cancelling) {
+			return <span>Cancelling</span>;
+		}
+
 		return (
-			<div>
-				Cancelling...
-			</div>
+			<a onClick={this.doCancel} className="button-round-warn">Cancel changes</a>
 		);
 	}
 }

@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { fetchTable } from 'actions/schema';
 import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 
-import { RequireApiData } from 'utils/RequireApiData';
-
 import { SubformMtm } from 'components/connected/form/SubformMtm';
 import { SubformStandard } from 'components/connected/form/SubformStandard';
 
@@ -29,8 +27,6 @@ export class Subform extends Component {
 
 	constructor(props) {
 		super(props);
-		// console.log(props);
-		this.requireDataCtrl = new RequireApiData;
 	}
 
 	componentWillMount() {
@@ -44,7 +40,7 @@ export class Subform extends Component {
 	requireData(props) {
 		// console.log(props);
 		const { tableId } = props;
-		this.requireDataCtrl.requireProp('table', props, this.props.fetchTable, [tableId]);
+		if (!props.table) this.props.fetchTable(tableId);
 	}
 
 	render() {

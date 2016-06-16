@@ -45,7 +45,7 @@
 				tooltip:"Insert link",
 				icon:"link",
 				onclick: function() {
-					ed.execCommand('insertLink', false, pepareContent('{{link}}', ed));
+					ed.execCommand('insertLink', false, pepareContent('{{placeholder}}', ed));
 				}
 			});
 
