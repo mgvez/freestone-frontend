@@ -55,7 +55,7 @@ export class Cancel extends Component {
 		}
 
 		return (
-			<a onClick={this.doCancel} className="button-round-warn">Cancel</a>
+			<a onClick={this.doCancel} className="button-round-warn">Cancel changes</a>
 		);
 	}
 }

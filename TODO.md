@@ -56,7 +56,6 @@ par priorité
 	- tinymce
 		- link styles css site
 	- date https://github.com/wangzuo/input-moment
-	- link (internal)
 	- password
 - limiter en temps la validité d'un record pas savé, avec avertissement si trop vieux (1h?)
 - insert image de banque : drag & drop
