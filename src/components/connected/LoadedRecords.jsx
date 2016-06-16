@@ -80,10 +80,19 @@ export class LoadedRecords extends Component {
 								<h3 className="record-label">{records.table.displayLabel}</h3>
 								{
 									records.records.map(record => {
+
+										const warnClass = record.isOutdated ? 'warn' : '';
+										const outdatedWarning = (
+											<div className={warnClass}>
+												This record has been opened for {record.hasBeenOpenedFor} seconds.
+											</div>
+										);
+										
+
 										return (
 											<div className="loaded-record" key={`${records.tableId}_${record.id}`}>
 												{record.label}
-
+												{outdatedWarning}
 												<div className="record-buttons">
 													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
 													<Cancel tableName={records.table.name} recordId={record.id} />

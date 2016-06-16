@@ -2,7 +2,8 @@ import { createSelector } from 'reselect';
 import { schemaSelector } from 'selectors/schema';
 import { allForeignOptionsSelector } from 'selectors/foreignOptions';
 
-import { TYPE_MAIN, PRIKEY_ALIAS } from 'freestone/schemaProps';
+import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from 'freestone/schemaProps';
+import { RECORD_LOADED_SAFE_LIFE } from 'freestone/settings';
 
 const recordsSelector = state => state.recordForm.records;
 
@@ -12,6 +13,7 @@ export const loadedRecords = createSelector(
 		// console.log(schema);
 		const tableIds = Object.keys(allRecords);
 		const unloadedForeignOptions = [];
+		const now = new Date().getTime() / 1000;
 
 		const recordsByTable = tableIds.map(tableId => {
 			// console.log(tableId);
@@ -46,9 +48,14 @@ export const loadedRecords = createSelector(
 					}).join(' | ');
 					// console.log(`${table.displayLabel} - ${label}`);
 
+					const hasBeenOpenedFor = Math.round(now - rec[LOADED_TIME_ALIAS]);
+					const isOutdated = hasBeenOpenedFor > RECORD_LOADED_SAFE_LIFE;
+
 					return {
 						label,
 						id: rec[PRIKEY_ALIAS],
+						isOutdated,
+						hasBeenOpenedFor,
 					};
 				});
 
