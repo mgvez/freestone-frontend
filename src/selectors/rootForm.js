@@ -17,8 +17,13 @@ function makeSelector() {
 			const { table } = schema;
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
 			
+			const hasLanguageToggle = table && table.fields.some((f) => {
+				return !!f.language;
+			});
+
 			return {
 				table,
+				hasLanguageToggle,
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
 			};
 		}

@@ -6,9 +6,7 @@ import { BoolInput } from 'components/static/form/inputTypes/BoolInput';
 import { NoEditInput } from 'components/static/form/inputTypes/NoEditInput';
 import { HtmlInput } from 'components/static/form/inputTypes/HtmlInput';
 import { FileInput } from 'components/static/form/inputTypes/FileInput';
-import { LanguageToggler } from 'components/static/form/LanguageToggler';
 import { AutocompleteInput } from 'components/connected/form/inputTypes/AutocompleteInput';
-
 
 export class Field extends Component {
 	static propTypes = {
@@ -77,10 +75,6 @@ export class Field extends Component {
 			break;
 		}
 
-		const languageToggler = !!this.props.field.language ? (
-			<LanguageToggler />
-		) : null;
-
 		switch (this.props.field.type) {
 		case 'separator':
 			return <h2>{this.props.field.label}</h2>;
@@ -95,10 +89,8 @@ export class Field extends Component {
 		default:
 			return (
 				<div className="field row">
-					{languageToggler}
 					<div className="col-md-2">
 						<label>{this.props.field.label}</label>
-						
 					</div>
 					<div className="col-md-10">
 						{input}
