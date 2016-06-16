@@ -74,7 +74,7 @@ export class ImgBankInsert extends Component {
 		// console.log(e.currentTarget.dataset.id);
 
 		callApi(`bank/images/${id}`).then(res => {
-			console.log(res);
+			// console.log(res);
 			this.props.setVal(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
 			this.closeModal();
 		}, err => {

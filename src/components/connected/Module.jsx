@@ -18,7 +18,9 @@ const metaData = {
 )
 export class Module extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		params: React.PropTypes.shape({
+			url: React.PropTypes.string,
+		}),
 		jwt: React.PropTypes.string,
 	};
 

@@ -20,7 +20,11 @@ import { listRecordsSelector } from 'selectors/listRecords';
 )
 export class List extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		params: React.PropTypes.shape({
+			tableName: React.PropTypes.string,
+			page: React.PropTypes.string,
+			search: React.PropTypes.string,
+		}),
 
 		table: React.PropTypes.object,
 		searchableFields: React.PropTypes.array,

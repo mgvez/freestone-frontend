@@ -16,7 +16,10 @@ import { SingleRecord } from 'components/connected/form/SingleRecord';
 )
 export class RootForm extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		params: React.PropTypes.shape({
+			tableName: React.PropTypes.string,
+			recordId: React.PropTypes.string,
+		}),
 
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
@@ -73,7 +76,7 @@ export class RootForm extends Component {
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.params.tableName} recordId={this.props.params.recordId} />
+				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} />
 			);
 		}
 		return (

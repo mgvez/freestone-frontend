@@ -13,7 +13,10 @@ import { buildCancelRecordSelector } from 'selectors/buildRecord';
 )
 export class Cancel extends Component {
 	static propTypes = {
-		params: React.PropTypes.object,
+		params: React.PropTypes.shape({
+			tableName: React.PropTypes.string,
+			recordId: React.PropTypes.string,
+		}),
 
 		records: React.PropTypes.array,
 
