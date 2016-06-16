@@ -13,6 +13,7 @@ import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABL
 import { callApi } from 'freestone/api';
 
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
+import { RootForm } from 'components/connected/form/RootForm';
 
 import createRecord from 'freestone/createRecord';
 import { bankSelector } from 'selectors/bank';
@@ -94,14 +95,20 @@ export class ImgBankInsert extends Component {
 		});
 	};
 
+	stopEditing = () => {
+		this.setState({
+			editing: null,
+		});
+	};
+
 	render() {
 
 		let content;
 		const { editing } = this.state;
 		if (editing) {
-			content = (<div>
-				{editing}
-			</div>);
+			content = (
+				<RootForm params={{ recordId: editing, tableName: BANK_IMG_TABLE }} finishCallback={this.stopEditing} />
+			);
 		} else if (this.props.records) {
 			content = this.props.records.map((record, idx) => {
 				// console.log(record);

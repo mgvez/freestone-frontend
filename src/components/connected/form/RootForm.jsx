@@ -7,6 +7,7 @@ import * as schemaActionCreators from 'actions/schema';
 import { rootFormMapStateToProps } from 'selectors/rootForm';
 
 import { Save } from 'components/connected/process/Save';
+import { Cancel } from 'components/connected/process/Cancel';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
@@ -23,7 +24,9 @@ export class RootForm extends Component {
 
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
-		
+
+		//once saved/cancelled, we can override the defualt action (which is to go to table's list)
+		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 	};
 
@@ -58,7 +61,7 @@ export class RootForm extends Component {
 	render() {
 
 		if (this.state.saving) {
-			return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} />;
+			return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} />;
 		}
 
 		let header;
@@ -67,8 +70,8 @@ export class RootForm extends Component {
 			
 			header = (
 				<header>
-					<a onClick={this.save} className="btn btn-xs btn-primary">Save</a>
-					<Link to={`/cancel/${this.props.table.name}/${this.props.params.recordId}`} className="btn btn-xs btn-danger">Cancel</Link>
+					<a onClick={this.save} className="button-round">Save</a>
+					<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
 
 					<div>lastmodif {this.props.lastmodifdate}</div>
 					<Header table={this.props.table} />

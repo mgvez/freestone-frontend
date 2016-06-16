@@ -19,7 +19,6 @@ export default (
 			<Route path="home" component={Home}/>
 			<Route path="list/:tableName(/:page)(/:search)" component={List}/>
 			<Route path="edit/:tableName/:recordId" component={RootForm}/>
-			<Route path="cancel/:tableName/:recordId" component={Cancel}/>
 			<Route path="module/:url" component={Module}/>
 		</Route>
 	</Route>

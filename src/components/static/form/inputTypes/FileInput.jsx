@@ -3,12 +3,14 @@ import React from 'react';
 import { Input } from 'components/static/form/inputTypes/Input';
 import { SavedFileInput } from 'freestone/fileInputs';
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
+import { TYPE_IMG } from 'freestone/schemaProps';
 
 export class FileInput extends Input {
 	constructor(props) {
 		super(props);
 		this.state = {
 			changing: false,
+			localFile: null,
 		};
 	}
 
@@ -17,7 +19,10 @@ export class FileInput extends Input {
 		const savedInput = this.getSavedInput();
 		savedInput.setInput(input, this.props.field.id, this.props.recordId);
 		this.changeVal(savedInput.getId());
-		this.setState({ changing: false });
+		this.setState({
+			changing: false,
+			localFile: null,
+		});
 	};
 
 	getFileName() {
@@ -30,15 +35,24 @@ export class FileInput extends Input {
 		if (this.props.val && this.props.val !== this.props.origVal && !saved.getInput()) {
 			this.changeVal(this.props.origVal);
 		}
+		if (saved.getInput()) {
+			this.getLocalImage(saved.getInput());
+		}
 		return saved;
 	}
 	
 	requestChange = () => {
-		this.setState({ changing: true });
+		this.setState({
+			changing: true,
+			localFile: null,
+		});
 	};
 
 	cancelRequestChange = () => {
-		this.setState({ changing: false });
+		this.setState({
+			changing: false,
+			localFile: null,
+		});
 	};
 
 	getRenderInput() {
@@ -50,7 +64,7 @@ export class FileInput extends Input {
 			}
 			return (
 				<div>
-					<input id={id} type="file" value="" className="form-control" onChange={this.changeFileVal} />
+					<input id={id} type="file" value="" className="form-control" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
 					{cancel}
 				</div>
 			);
@@ -73,6 +87,20 @@ export class FileInput extends Input {
 		this.changeVal('');
 	};
 
+	getLocalImage(inp) {
+		if (!inp || this.state.localFile || this.props.field.type !== TYPE_IMG) return null;
+
+		const reader = new FileReader();
+
+		reader.onload = (e) => {
+			this.setState({
+				localFile: e.target.result,
+			});
+		};
+
+		reader.readAsDataURL(inp.files[0]);
+	}
+
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
 		// console.log(this.props.field);
@@ -85,7 +113,7 @@ export class FileInput extends Input {
 
 		let revertBtn;
 		let deleteBtn;
-		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val ogiginale
+		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		if (origVal && val !== origVal) {
 			revertBtn = <button onClick={this.clearSavedInput}>revert to db file</button>;
 		}
@@ -97,9 +125,12 @@ export class FileInput extends Input {
 
 		const displayVal = val && (inputVal || origVal);
 
+		const thumbnail = <FileThumbnail val={origVal === val && val} localVal={this.state.localFile} dir={this.props.field.folder} type={this.props.field.type} />;
+
 		return (
 			<div>
-				<FileThumbnail val={origVal === val && val} dir={this.props.field.folder} type={this.props.field.type} />
+				{thumbnail}
+				
 				<br />
 				{displayVal} <br/>
 				{renderInput}

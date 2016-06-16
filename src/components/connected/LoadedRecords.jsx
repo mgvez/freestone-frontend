@@ -7,6 +7,7 @@ import { fetchTable } from 'actions/schema';
 import { fetchForeignOptions } from 'actions/foreign-options';
 import { loadedRecords } from 'selectors/loadedRecords';
 
+import { Cancel } from 'components/connected/process/Cancel';
 
 @connect(
 	loadedRecords,
@@ -85,7 +86,7 @@ export class LoadedRecords extends Component {
 
 												<div className="record-buttons">
 													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
-													<Link to={`/cancel/${records.table.name}/${record.id}`} className="button-round-warn">Cancel</Link>
+													<Cancel tableName={records.table.name} recordId={record.id} />
 												</div>
 											</div>
 										);
