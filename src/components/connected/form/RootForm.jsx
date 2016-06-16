@@ -50,8 +50,10 @@ export class RootForm extends Component {
 
 			header = (
 				<header>
-					<Header table={this.props.table} />
-					<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
+					<div className="texts">
+						<Header table={this.props.table} />
+						<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
+					</div>
 
 					<div className="btns">
 						<Link to={`/save/${this.props.table.name}/${this.props.params.recordId}`} className="button-round">Save</Link>

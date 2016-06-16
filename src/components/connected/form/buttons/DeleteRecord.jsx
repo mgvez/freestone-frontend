@@ -14,7 +14,7 @@ export class DeleteRecord extends Component {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,
 		parentRecordId: React.PropTypes.string,
-		
+
 		setShownRecord: React.PropTypes.func,
 		setRecordDeleted: React.PropTypes.func,
 	};
@@ -27,6 +27,6 @@ export class DeleteRecord extends Component {
 	};
 
 	render() {
-		return <button onClick={this.deleteRecord} className="fa fa-remove delete-button"></button>;
+		return <button onClick={this.deleteRecord} className="button-circle-danger-small"><i className="fa fa-remove"></i></button>;
 	}
 }

@@ -5,6 +5,37 @@
 		background: $color-background-light;
 		border-top: 1px solid $gray86;
 		border-bottom: 1px solid $gray86;
+
+		font-size: 0;
+
+		.texts, .btns {
+			display: inline-block;
+			vertical-align: middle;
+			@extend %text_default;
+		}
+
+		.texts {
+			width: calc(100% - 250px);
+			padding-right: 30px;
+		}
+
+		.last-modif-date {
+			margin-top: 20px;
+			font-weight: $font-weight-light;
+		}
+
+		.table-help {
+			margin-top: 10px;
+		}
+
+		.btns {
+			width: 250px;
+			padding-left: 30px;
+
+			[class^=button] + [class^=button] {
+				margin-left: 10px;
+			}
+		}
 	}
 }
 
