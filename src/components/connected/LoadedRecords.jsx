@@ -74,7 +74,7 @@ export class LoadedRecords extends Component {
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {
-						if (!records.records || !records.table) return null;
+						if (!records.records || !records.table || !records.records.length) return null;
 						return (
 							<div className="record-group" key={records.tableId}>
 								<h3 className="record-label">{records.table.displayLabel}</h3>
@@ -84,7 +84,7 @@ export class LoadedRecords extends Component {
 										const warnClass = record.isOutdated ? 'warn' : '';
 										const outdatedWarning = (
 											<div className={warnClass}>
-												This record has been opened for {record.hasBeenOpenedFor} seconds.
+												This record has been open for {record.hasBeenOpenedFor} seconds.
 											</div>
 										);
 										
