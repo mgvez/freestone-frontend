@@ -8,9 +8,6 @@ import Autocomplete from 'react-autocomplete';
 import * as optionsActionCreators from 'actions/foreign-options';
 import { foreignOptionsMapStateToProps } from 'selectors/foreignOptions';
 
-
-// import { FreestoneAutocomplete } from 'components/Form/InputTypes/FreestoneAutocomplete';
-
 const styles = {
 	item: {
 		padding: '2px 6px',
@@ -25,7 +22,20 @@ const styles = {
 	},
 
 	menu: {
-		border: 'solid 1px #ccc',
+		position: 'absolute',
+		top: '100%',
+		left: 0,
+		zIndex: 1000,
+		borderRadius: '3px',
+		boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+		background: 'rgba(255, 255, 255, 0.9)',
+		padding: '2px 0',
+		fontSize: '90%',
+		overflow: 'auto',
+	},
+
+	wrapper: {
+		position: 'relative',
 	},
 };
 
@@ -41,16 +51,6 @@ function renderItem(item, isHighlighted) {
 		</div>
 	);
 }
-
-// function renderMenu(items, value, style) {
-// 	// console.log(style);
-// 	const customStyle = {
-// 		top: '100%',
-// 		left: 0,
-// 		width: '800px',
-// 	};
-// 	return <div style={{ ...style, ...this.menuStyle, ...customStyle }} children={items}/>;
-// }
 
 @connect(
 	foreignOptionsMapStateToProps,
@@ -104,7 +104,6 @@ export class AutocompleteInput extends Input {
 	onChange = (event, value) => {
 		// console.log(`change ${value}`);
 		this.setCurrentText(value);
-
 		this.regexMatchOption = new RegExp(value.split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
 
@@ -126,15 +125,9 @@ export class AutocompleteInput extends Input {
 	render() {
 		const options = this.props.foreignOptions && this.props.foreignOptions.values;
 		const current = (options && options.find((option) => option.value === String(this.props.val))) || {};
-		// console.log(this.props.val, current);
-		// console.log(options);
-		// current.label
-		if (!options) return <div/>;
+
+		if (!options) return null;
 		const val = this.state.currentText || current.label;
-		
-		// return (
-		// 	<div>{val}</div>
-		// );
 
 		return (
 			<Autocomplete
@@ -146,19 +139,8 @@ export class AutocompleteInput extends Input {
 				onSelect={this.onSelect}
 				onChange={this.onChange}
 				renderItem={renderItem}
-				menuStyle={{
-					position: 'absolute',
-					top: '100%',
-					left: 0,
-					height: '300px',
-					zIndex: 1000,
-					borderRadius: '3px',
-					boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-					background: 'rgba(255, 255, 255, 0.9)',
-					padding: '2px 0',
-					fontSize: '90%',
-					overflow: 'auto',
-				}}
+				menuStyle={styles.menu}
+				wrapperStyle={styles.wrapper}
 			/>
 		);
 	}

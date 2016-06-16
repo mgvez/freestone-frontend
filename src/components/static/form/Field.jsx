@@ -45,10 +45,10 @@ export class Field extends Component {
 		case 'tags':
 			input = <TextInput {...this.props} />;
 			break;
-		case 'foreign':
 		case 'enum':
 			// input = <SelectInput {...this.props} />;
 			// break;
+		case 'foreign':
 		case 'selfcascade':
 		case 'cascade':
 		case 'foreigntext':

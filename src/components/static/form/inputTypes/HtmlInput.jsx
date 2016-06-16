@@ -76,10 +76,14 @@ export class HtmlInput extends Input {
 
 	getConfig = () => {
 		if (this.tinymceConfig) return this.tinymceConfig;
+
 		this.tinymceConfig = {
 			...TINYMCE_CONFIG,
 			body_class: this.tableName + '_' + this.name,
 		};
+		if (this.props.env.pathCss && this.props.env.pathCss.length) {
+			this.tinymceConfig.content_css = this.props.env.pathCss.map(p => `${this.props.env.clientPath}${p}`);
+		}
 		return this.tinymceConfig;
 	};
 
