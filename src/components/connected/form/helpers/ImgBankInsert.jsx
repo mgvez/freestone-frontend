@@ -5,16 +5,21 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import customStyle from './modalStyles.js';
 
+import { addRecord } from 'actions/record';
+import { fetchTable } from 'actions/schema';
 import * as bankActionCreators from 'actions/bank';
 
-import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE } from 'freestone/schemaProps';
 import { callApi } from 'freestone/api';
 
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 
+import createRecord from 'freestone/createRecord';
+import { bankSelector } from 'selectors/bank';
+
 @connect(
-	state => state.imageBankList,
-	dispatch => bindActionCreators({ ...bankActionCreators }, dispatch)
+	bankSelector,
+	dispatch => bindActionCreators({ ...bankActionCreators, addRecord, fetchTable }, dispatch)
 )
 export class ImgBankInsert extends Component {
 	static propTypes = {
@@ -22,12 +27,15 @@ export class ImgBankInsert extends Component {
 		setVal: React.PropTypes.func,
 		contentBefore: React.PropTypes.string,
 		contentAfter: React.PropTypes.string,
+		table: React.PropTypes.object,
 
 		records: React.PropTypes.array,
 		page: React.PropTypes.number,
 		search: React.PropTypes.string,
 
 		fetchImageBankList: React.PropTypes.func,
+		addRecord: React.PropTypes.func,
+		fetchTable: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -37,6 +45,9 @@ export class ImgBankInsert extends Component {
 	componentWillMount() {
 		// console.log(this.props);
 		this.requireData(this.props);
+		this.setState({
+			editing: false,
+		});
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -45,6 +56,7 @@ export class ImgBankInsert extends Component {
 	
 	requireData(props) {
 		if (!props.records) this.props.fetchImageBankList(props.search, props.page || 1);
+		if (!props.table) this.props.fetchTable(BANK_IMG_TABLE);
 	}
 
 	afterOpenModal = () => {
@@ -74,11 +86,24 @@ export class ImgBankInsert extends Component {
 		this.props.onClose();
 	};
 
+	addRecord = () => {
+		const { newRecord, newRecordId } = createRecord(this.props.table);
+		this.props.addRecord(this.props.table.id, newRecord);
+		this.setState({
+			editing: newRecordId,
+		});
+	};
+
 	render() {
 
-		let imgs;
-		if (this.props.records) {
-			imgs = this.props.records.map((record, idx) => {
+		let content;
+		const { editing } = this.state;
+		if (editing) {
+			content = (<div>
+				{editing}
+			</div>);
+		} else if (this.props.records) {
+			content = this.props.records.map((record, idx) => {
 				// console.log(record);
 				return (
 					<div key={`th${idx}`}>
@@ -98,7 +123,8 @@ export class ImgBankInsert extends Component {
 				style={customStyle}
 			>
 				<button onClick={this.cancelChange}>cancel</button>
-				{imgs}
+				<button onClick={this.addRecord}><i className="fa fa-plus-square"></i> New record</button>
+				{content}
 			</Modal>
 		);
 	}

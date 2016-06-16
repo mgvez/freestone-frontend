@@ -56,7 +56,11 @@ export class SingleRecord extends Component {
 		const { tableName, recordId } = props;
 		// console.log(props.recordId);
 		if (!props.table) this.props.fetchTable(tableName);
-		if (!props.record) this.props.fetchRecord(tableName, recordId);
+		// console.log(`fetch record ${tableName}.${recordId}`);
+
+		if (recordId && !props.record) {
+			this.props.fetchRecord(tableName, recordId);
+		}
 	}
 
 	render() {

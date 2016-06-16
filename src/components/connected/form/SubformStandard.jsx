@@ -52,7 +52,10 @@ export class SubformStandard extends Component {
 			this.props.fetchTable(tableId);
 		} else {
 			const tableName = props.table.name;
-			if (!props.childrenRecords) this.props.fetchRecord(tableName, parentRecordId, parentTableId);
+			if (!props.childrenRecords) {
+				// console.log(`fetch record ${tableName}.${parentRecordId}`);
+				this.props.fetchRecord(tableName, parentRecordId, parentTableId);
+			}
 		}
 	}
 

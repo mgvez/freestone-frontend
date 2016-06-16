@@ -56,7 +56,7 @@ export class LoadedRecords extends Component {
 	}
 
 	stick() {
-		this.origOffset = this.origOffset || this.nav.offsetTop;
+		this.origOffset = this.origOffset || (this.nav && this.nav.offsetTop);
 		this.setState({ isSticky: window.scrollY >= this.origOffset });
 	}
 

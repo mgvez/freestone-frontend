@@ -12,7 +12,6 @@ import { Row } from 'components/static/recordList/Row';
 import { InScroll } from 'components/connected/InScroll';
 
 import createRecord from 'freestone/createRecord';
-
 import { listRecordsSelector } from 'selectors/listRecords';
 
 @connect(
@@ -82,14 +81,12 @@ export class List extends Component {
 	};
 
 	addRecord = () => {
-
 		const { newRecord, newRecordId } = createRecord(this.props.table);
 		this.props.addRecord(this.props.table.id, newRecord);
 		this.props.pushNavStack(this.props.path, window.pageYOffset);
 
 		const path = `/edit/${this.props.params.tableName}/${newRecordId}`;
 		this.context.router.push(path);
-
 	};
 
 	render() {
