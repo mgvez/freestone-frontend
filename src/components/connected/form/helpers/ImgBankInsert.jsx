@@ -95,6 +95,13 @@ export class ImgBankInsert extends Component {
 		});
 	};
 
+	editExistingRecord = (e) => {
+		const editing = e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.id;
+		this.setState({
+			editing,
+		});
+	};
+
 	stopEditing = () => {
 		this.setState({
 			editing: null,
@@ -116,6 +123,7 @@ export class ImgBankInsert extends Component {
 					<div key={`th${idx}`}>
 						<FileThumbnail val={record[BANK_IMG_FILE_ALIAS]} dir={record[BANK_IMG_FOLDER_ALIAS]} type="img" />
 						<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]}>Choose</button>
+						<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]}>Edit</button>
 					</div>
 				);
 			});

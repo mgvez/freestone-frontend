@@ -55,8 +55,6 @@ par priorité
 	- enum
 	- tinymce
 		- link styles css site
-		- insert freestone image
-		- insert freestone link
 	- date https://github.com/wangzuo/input-moment
 	- link (internal)
 	- password
