@@ -40,12 +40,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## Header menu
 ## Liste
-- self-join trees
 
 ## Form
-- autocomplete
-	- afficher images (si image presente dans label)
-- Quand on delete un record dans un tablist, ça resélectionne le premier tab au lieu du tab précédent celui qu'on a delete. (Pico - 17-06-16)
 
 ## Pages
 - all
