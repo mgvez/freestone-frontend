@@ -19,7 +19,7 @@ export const DELETE_RECORD_ERROR = 'DELETE_RECORD_ERROR';
 export const INIT_SAVE = 'INIT_SAVE';
 
 
-export function saveRecord(table, tree, records, deleted) {
+export function saveRecord(table, tree, records, deleted, callback) {
 	return (dispatch) => {
 		// console.log(tree);
 		// console.log(records);
@@ -59,14 +59,30 @@ export function saveRecord(table, tree, records, deleted) {
 				},
 			});
 
-			//si table savée est meta (zva_...)
-			if (isMeta) {
-				onSaved.then(() => {
-					dispatch({
-						type: CLEAR_SCHEMA,
-					});
-				});
-			}
+			onSaved.then(() => {
+				if (callback) {
+					callback();
+				} else {
+					const backPath = `list/${table.name}`;
+					setTimeout(() => {
+						//si table savée est meta (zva_...)
+						if (isMeta) {
+							dispatch({
+								type: CLEAR_SCHEMA,
+							});
+						}
+						// console.log(backPath);
+						dispatch(pushPath({
+							pathname: backPath,
+							state: {
+								scroll: 0,
+							},
+						}));
+					}, 1000);
+				}
+			});
+
+			
 			return onSaved;
 		});
 	};

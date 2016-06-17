@@ -40,7 +40,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 ## Form
 - types de input
 	- date https://github.com/wangzuo/input-moment
-	- password
 - autocomplete
 	- afficher images (si image presente dans label)
 

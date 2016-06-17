@@ -62,14 +62,14 @@ export class RootForm extends Component {
 
 	render() {
 
-		if (this.state.saving) {
-			return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} />;
-		}
-
 		let header;
 		let form;
 		if (this.props.table) {
 			
+			if (this.state.saving) {
+				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} />;
+			}
+
 			const languageToggler = this.props.hasLanguageToggle ? (
 				<LanguageToggler />
 			) : null;
