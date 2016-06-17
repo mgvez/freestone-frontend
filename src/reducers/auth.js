@@ -1,5 +1,5 @@
 
-import { UNAUTHORIZED, LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER } from 'actions/auth';
+import { UNAUTHORIZED, LOGIN_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER } from 'actions/auth';
 
 const initialState = {
 	jwt: null,
@@ -19,11 +19,11 @@ export function auth(state = initialState, action) {
 			userName: null,
 			statusText: 'Unauthorized',
 		};
-	case LOGIN_USER_REQUEST:
+	case LOGIN_REQUEST:
 		return {
 			...state,
 			isAuthenticating: true,
-			statusText: null,
+			statusText: 'Checking credentials...',
 		};
 	case LOGIN_USER_SUCCESS:
 		return {
