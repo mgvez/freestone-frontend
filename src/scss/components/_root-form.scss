@@ -5,6 +5,8 @@
 		background: $color-background-light;
 		border-top: 1px solid $gray86;
 		border-bottom: 1px solid $gray86;
+		margin-bottom: 60px;
+		position: relative;
 
 		font-size: 0;
 
@@ -34,6 +36,50 @@
 
 			[class^=button] + [class^=button] {
 				margin-left: 10px;
+			}
+		}
+
+		.lang-toggler {
+			position: absolute;
+				bottom: 0;
+				right: 30px;
+
+			transform: translate(0, 100%);
+
+			@extend %text_default;
+			font-weight: $font-weight-bold;
+			text-transform: uppercase;
+
+			.language-tab {
+				cursor: pointer;
+				display: inline-block;
+				vertical-align: middle;
+
+				color: $color-accent-primary;
+				background: $white;
+
+				height: 30px;
+				line-height: 30px;
+
+				padding: 0 20px;
+				border: 1px solid $color-accent-primary;
+
+				transition: background 0.3s, color 0.3s;
+
+				&:first-child {
+					border-radius: 0 0 0 10px;
+					border-right: 0;
+				}
+
+				&:last-child {
+					border-radius: 0 0 10px 0;
+					border-left: 0;
+				}
+
+				&:hover, &.active {
+					background: $color-accent-primary;
+					color: $white;
+				}
 			}
 		}
 	}
