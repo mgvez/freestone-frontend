@@ -7,7 +7,7 @@ export class TextInput extends Input {
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
 		return (
-			<input value={this.props.val} className="form-control" onChange={this.changeVal} />
+			<input type="text" value={this.props.val} className="form-control" onChange={this.changeVal} />
 		);
 	}
 }

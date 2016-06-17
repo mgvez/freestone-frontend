@@ -1,0 +1,16 @@
+
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[role="combobox"] {
+	display: inline-block;
+	width: 100%;
+	height: 35px;
+	line-height: 35px;
+	border: 2px solid $color-accent-primary;
+
+	padding: 0 10px;
+
+	margin: 10px 0;
+}
