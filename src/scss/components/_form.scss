@@ -14,8 +14,54 @@ input[role="combobox"] {
 	margin: 10px 0;
 }
 
-input[type="checkbox"] + label {
+.checkbox-container {
+	text-align: right;
 
+	input {
+		display: none;
+
+		&:checked + label:after {
+			display: block;
+		}
+	}
+
+	label {
+		display: inline-block;
+		position: relative;
+		padding-right: 30px;
+		cursor: pointer;
+
+		&:before {
+			content: ' ';
+			display: block;
+
+			position: absolute;
+				top: 50%;
+				right: 0;
+
+			width: 15px;
+			height: 15px;
+			background: $white;
+			border: 1px solid $gray86;
+
+			transform: translate(0, -50%);
+		}
+
+		&:after {
+			font-family: 'FontAwesome';
+			content: '\f00c';
+			display: none;
+			line-height: 1;
+			font-size: 10px;
+			color: $color-accent-primary;
+
+			position: absolute;
+				top: 50%;
+				right: 2.5px;
+
+			transform: translate(0, -50%);
+		}
+	}
 }
 
 label {

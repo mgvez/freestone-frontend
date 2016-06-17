@@ -84,9 +84,10 @@ export class SubformMtm extends Component {
 								const { display, id } = option;
 								const checked = this.props.records && !!this.props.records.find(r => r === id);
 								return (
-									<label className="col-md-3" key={id}>
-										<input type="checkbox" value={id} checked={checked} onChange={this.toggleValue} /> {display}
-									</label>
+									<div className="checkbox-container col-md-3">
+										<input type="checkbox" id={id} value={id} checked={checked} onChange={this.toggleValue} />
+										<label htmlFor={id} key={id}>{display}</label>
+									</div>
 								);
 							});
 
@@ -94,7 +95,7 @@ export class SubformMtm extends Component {
 								{categLabel}
 								{inputs}
 							</div>);
-							
+
 						})
 					}
 				</section>
