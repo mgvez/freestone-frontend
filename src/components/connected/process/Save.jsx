@@ -8,7 +8,7 @@ import { buildSaveRecordSelector } from 'selectors/buildRecord';
 
 @connect(
 	buildSaveRecordSelector,
-	dispatch => bindActionCreators({ saveRecord, goTo }, dispatch)
+	dispatch => bindActionCreators({ saveRecord }, dispatch)
 )
 export class Save extends Component {
 	static propTypes = {
@@ -24,7 +24,6 @@ export class Save extends Component {
 
 		callback: React.PropTypes.func,
 		saveRecord: React.PropTypes.func,
-		goTo: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -32,19 +31,8 @@ export class Save extends Component {
 	}
 
 	componentWillMount() {
-		// console.log('MOUNT', this.props.records, this.props.deleted);
-		const onSaved = this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted);
-
-		if (onSaved) {
-			onSaved.then(() => {
-				if (this.props.callback) {
-					this.props.callback();
-				} else {
-					const backPath = { path: `list/${this.props.table.name}` };
-					setTimeout(() => this.props.goTo(backPath), 1000);
-				}
-			});
-		}
+		console.log('MOUNT', this.props.records, this.props.deleted);
+		const onSaved = this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.callback);
 	}
 
 	render() {

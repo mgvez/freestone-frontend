@@ -40,7 +40,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 ## Form
 - types de input
 	- date https://github.com/wangzuo/input-moment
-	- password
 - autocomplete
 	- afficher images (si image presente dans label)
 - Quand on delete un record dans un tablist, ça resélectionne le premier tab au lieu du tab précédent celui qu'on a delete. (Pico - 17-06-16)
