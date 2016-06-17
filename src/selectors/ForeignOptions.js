@@ -17,7 +17,7 @@ export const allForeignOptionsSelector = createSelector(
 				const label = row && Object.keys(row).reduce((parsedLabel, field) => {
 					const val = row[field];
 					return parsedLabel.replace('{' + field + '}', val || '');
-				}, rawLabel);
+				}, rawLabel) || '';
 				// console.log(row);
 				
 				const image = current.image && row && ('ns.settings.folderImages' + row[current.image + '_path'] + '/' + row[current.image]);
