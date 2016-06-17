@@ -55,6 +55,7 @@ ul.react-autosuggest__suggestions-container{
 	top: 40px;
 	background:white;
 	border:1px $gray86 solid;
+	z-index:1000;
 }
 
 li.react-autosuggest__suggestion{
