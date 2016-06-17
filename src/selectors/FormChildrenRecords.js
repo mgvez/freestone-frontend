@@ -60,7 +60,6 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 			const { table } = schema;
 			if (table) {
 				const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
-				// console.log(parentRecordId, table, areLoaded);
 				const parentLinkField = table.parentLink[parentTableId];
 
 				const type = parentLinkField && parentLinkField.type;
@@ -70,11 +69,9 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 				let childrenRecords;
 				if (areLoaded || isNew(parentRecordId)) {
 					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, parentTableId) : [];
-
 					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
-
 					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
-					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[0]);
+					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);
 				}
 
 				//highest order, pour quand on add un record, qu'il soit à la suite

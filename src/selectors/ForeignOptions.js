@@ -2,10 +2,11 @@ import { createSelector } from 'reselect';
 
 const rawForeignOptionsSelector = state => state.foreignOptions;
 const fieldIdSelector = (state, props) => props.field.id;
+const envSelector = state => state.env;
 
 export const allForeignOptionsSelector = createSelector(
-	[rawForeignOptionsSelector],
-	(rawOptions) => {
+	[rawForeignOptionsSelector, envSelector],
+	(rawOptions, env) => {
 		// console.log('parse foreigns');
 		const options = Object.keys(rawOptions).reduce((carry, fieldId) => {
 			const current = rawOptions[fieldId];
@@ -20,8 +21,8 @@ export const allForeignOptionsSelector = createSelector(
 				}, rawLabel) || '';
 				// console.log(row);
 				
-				const image = current.image && row && ('ns.settings.folderImages' + row[current.image + '_path'] + '/' + row[current.image]);
-				
+				const image = current.image && row && row[current.image] && (`${env.thumbsDir}${row[current.image + '_path']}/${row[current.image]}`);
+				// console.log(image);
 				return {
 					row,
 					value: rawOption.value,

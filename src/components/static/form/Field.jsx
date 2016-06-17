@@ -6,6 +6,7 @@ import { BoolInput } from 'components/static/form/inputTypes/BoolInput';
 import { NoEditInput } from 'components/static/form/inputTypes/NoEditInput';
 import { HtmlInput } from 'components/static/form/inputTypes/HtmlInput';
 import { FileInput } from 'components/static/form/inputTypes/FileInput';
+import { DateInput } from 'components/static/form/inputTypes/DateInput';
 import { AutocompleteInput } from 'components/connected/form/inputTypes/AutocompleteInput';
 
 export class Field extends Component {
@@ -23,8 +24,6 @@ export class Field extends Component {
 		// console.log(`render input ${this.props.field.name} ${this.props.field.language}`);
 		let input;
 		switch (this.props.field.type) {
-		case 'date':
-		case 'datetime':
 		case 'int':
 		case 'float':
 		case 'text':
@@ -42,6 +41,10 @@ export class Field extends Component {
 			break;
 		case 'tags':
 			input = <TextInput {...this.props} />;
+			break;
+		case 'date':
+		case 'datetime':
+			input = <DateInput {...this.props} />;
 			break;
 		case 'enum':
 			// input = <SelectInput {...this.props} />;
