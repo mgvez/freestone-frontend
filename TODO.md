@@ -24,7 +24,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
 	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
 	- childrenAreLoaded (reducer record-form) est problématique
-	- getRecords de formchildrenrecord reselect fucké 
+	- getRecords de formchildrenrecord reselect fucké
 - traduire les erreurs (VException)
 - pas quit quand image resize marche pas : save quand meme
 
@@ -43,6 +43,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	- password
 - autocomplete
 	- afficher images (si image presente dans label)
+- Quand on delete un record dans un tablist, ça resélectionne le premier tab au lieu du tab précédent celui qu'on a delete. (Pico - 17-06-16)
 
 ## Pages
 - all

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setSubformViewType } from 'actions/subform';
 import { subformViewSelector } from 'selectors/subformView';
 
-import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from 'freestone/schemaProps'; 
+import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from 'freestone/schemaProps';
 
 @connect(
 	subformViewSelector,
@@ -28,7 +28,7 @@ export class ChangeSubformView extends Component {
 		// console.log(this.props.currentViewType, this.props.tableId);
 		const label = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'View tabbed' : 'View as list';
 		const className = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'file-text' : 'list';
-		return <button onClick={this.setType} className={`change-subform-view fa fa-${className} btn btn-xs`}>{label}</button>;
+		return <button onClick={this.setType} className={`button-round change-subform-view`}><i className={`fa fa-${className}`}></i>{label}</button>;
 
 	}
 }

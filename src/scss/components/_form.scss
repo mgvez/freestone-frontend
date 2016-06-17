@@ -13,3 +13,12 @@ input[role="combobox"] {
 	padding: 0 10px;
 	margin: 10px 0;
 }
+
+label {
+	font-weight: $font-weight-bold;
+	text-align: right;
+
+	display: block;
+	height: 55px;
+	line-height: 55px;
+}

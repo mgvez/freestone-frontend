@@ -17,7 +17,7 @@
 		}
 
 		.texts {
-			width: calc(100% - 250px);
+			width: calc(100% - 275px);
 			padding-right: 30px;
 		}
 
@@ -31,7 +31,7 @@
 		}
 
 		.btns {
-			width: 250px;
+			width: 275px;
 			padding-left: 30px;
 
 			[class^=button] + [class^=button] {
@@ -83,9 +83,8 @@
 			}
 		}
 	}
-}
 
-
-.single-record {
-	padding: 0 40px;
+	> .single-record {
+		padding: 0 150px;
+	}
 }

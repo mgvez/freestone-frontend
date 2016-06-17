@@ -14,7 +14,7 @@ function getTabGroup(props) {
 			// console.log(dragId, hoverId);
 			if (dragId === hoverId) {
 				return;
-			} 
+			}
 			props.swapRecords(dragId, hoverId);
 		},
 	},
@@ -28,7 +28,7 @@ function getTabGroup(props) {
 	getTabGroup,
 	{
 		beginDrag(props) {
-			return { 
+			return {
 				id: props.recordId,
 				index: props.index,
 			};
@@ -63,7 +63,7 @@ export class Tab extends Component {
 	};
 
 	getMarkup(opacity = 1) {
-		let className = this.props.isActive ? 'tab-active' : '';
+		let className = this.props.isActive ? 'active' : '';
 		className = `tab ${className}`;
 		const label = this.props.displayLabel || '-';
 		return (
@@ -74,7 +74,7 @@ export class Tab extends Component {
 	}
 
 	render() {
-		
+
 		if (this.props.hasOrder) {
 			const { isDragging, connectDragSource, connectDropTarget } = this.props;
 			// console.log(`render input ${this.props.index}`, isDragging);

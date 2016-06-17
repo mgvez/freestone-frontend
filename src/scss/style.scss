@@ -24,11 +24,16 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "components/header";
 @import "components/loaded-records";
 @import "components/root-form";
+@import "components/subform";
 
 @import "layout/_default";
 
 
 //STYLES TEMPORAIRE MART pour la dev; Peuvent être deletés lorsque remplacés
+
+.clearfix {
+	@include clearfix();
+}
 
 //warning quand le record est trop vieux dans LoadedRecords
 .warn {
