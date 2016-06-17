@@ -10,6 +10,7 @@ import { Save } from 'components/connected/process/Save';
 import { Cancel } from 'components/connected/process/Cancel';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
+import { LanguageToggler } from 'components/connected/form/LanguageToggler';
 
 @connect(
 	rootFormMapStateToProps,
@@ -21,8 +22,11 @@ export class RootForm extends Component {
 			tableName: React.PropTypes.string,
 			recordId: React.PropTypes.string,
 		}),
+
+		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
+		
 		//once saved/cancelled, we can override the defualt action (which is to go to table's list)
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
@@ -65,6 +69,10 @@ export class RootForm extends Component {
 		let header;
 		let form;
 		if (this.props.table) {
+			
+			const languageToggler = this.props.hasLanguageToggle ? (
+				<LanguageToggler />
+			) : null;
 
 			header = (
 				<header>
@@ -77,11 +85,12 @@ export class RootForm extends Component {
 						<a onClick={this.save} className="button-round">Save</a>
 						<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
 					</div>
+					{languageToggler}
 				</header>
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} />
+				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot />
 			);
 		}
 		return (

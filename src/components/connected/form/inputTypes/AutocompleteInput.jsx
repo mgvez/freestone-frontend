@@ -3,54 +3,28 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Input } from 'components/static/form/inputTypes/Input';
-import Autocomplete from 'react-autocomplete';
+import Autosuggest from 'react-autosuggest';
 
 import * as optionsActionCreators from 'actions/foreign-options';
 import { foreignOptionsMapStateToProps } from 'selectors/foreignOptions';
-
-
-// import { FreestoneAutocomplete } from 'components/Form/InputTypes/FreestoneAutocomplete';
-
-const styles = {
-	item: {
-		padding: '2px 6px',
-		cursor: 'default',
-	},
-
-	highlightedItem: {
-		color: 'white',
-		background: 'hsl(200, 50%, 50%)',
-		padding: '2px 6px',
-		cursor: 'default',
-	},
-
-	menu: {
-		border: 'solid 1px #ccc',
-	},
-};
 
 
 function getItemValue(item) {
 	return item.label;
 }
 
-function renderItem(item, isHighlighted) {
+function renderItem(item, currentVal) {
+	// const isHighlighted = item.label.trim().toLowerCase() === currentVal.value.trim().toLowerCase();
 	return (
-		<div style={isHighlighted ? styles.highlightedItem : styles.item} key={item.value}>
+		<span key={item.value}>
 			{item.label}
-		</div>
+		</span>
 	);
 }
 
-// function renderMenu(items, value, style) {
-// 	// console.log(style);
-// 	const customStyle = {
-// 		top: '100%',
-// 		left: 0,
-// 		width: '800px',
-// 	};
-// 	return <div style={{ ...style, ...this.menuStyle, ...customStyle }} children={items}/>;
-// }
+function shouldRenderSuggestions() {
+	return true;
+}
 
 @connect(
 	foreignOptionsMapStateToProps,
@@ -65,11 +39,10 @@ export class AutocompleteInput extends Input {
 	constructor(props) {
 		super(props);
 		this.regexMatchOption = /./;
-		this.currentText = '';
-		this.currentMatch = {};
 		
 		this.state = {
 			currentText: '',
+			suggestions: this.getSuggestions(),
 		};
 	}
 
@@ -95,70 +68,74 @@ export class AutocompleteInput extends Input {
 		});
 	}
 
-	onSelect = (value, item) => {
-		// console.log(`select ${item.value}`);
-		this.changeVal(item.value);
-		this.setCurrentText(item.label);
+	onSelect = (event, { suggestion, suggestionValue }) => {
+		// console.log(`select ${suggestionValue}`);
+		this.changeVal(suggestion.value);
+		this.setCurrentText(suggestionValue);
 	};
 
-	onChange = (event, value) => {
-		// console.log(`change ${value}`);
-		this.setCurrentText(value);
-
-		this.regexMatchOption = new RegExp(value.split('').join('\\w*').replace(/\W/, ''), 'i');
+	onChange = (event, { newValue }) => {
+		// console.log(`change ${newValue}`);
+		this.setCurrentText(newValue);
+		this.regexMatchOption = new RegExp(newValue.split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
 
-	filterOption = (option, inputTextVal) => {
-		// console.log(`filtering ${inputTextVal} => ${this.state.currentText}`);
-		if (!inputTextVal) return true;
-		const currentMatch = this.currentMatch[option.value] = this.currentMatch[option.value] || {};
-		if (currentMatch.text === this.state.currentText) {
-			return currentMatch.isMatch;
-		}
-		// console.log(inputTextVal);
-		const isMatch = option.label.match(this.regexMatchOption);
-		currentMatch.text = this.state.currentText;
-		currentMatch.isMatch = isMatch;
-		// console.log(isMatch);
-		return isMatch;
+	onBlur = () => {
+		// console.log(`blur`);
+		const current = this.getCurrentOption();
+		this.setCurrentText(current && current.label);
 	};
+
+	onSuggestionsUpdateRequested = ({ value }) => {
+		// console.log(`filter suggestions ${value}`);
+		this.setState({
+			suggestions: this.getSuggestions(value),
+		});
+	};
+
+	getSuggestions = (value) => {
+		const options = this.props.foreignOptions && this.props.foreignOptions.values;
+		if (!options) return [];
+		if (!value) return options;
+
+		const inputValue = value.trim().toLowerCase();
+		const inputLength = inputValue.length;
+		return inputLength === 0 ? options : options.filter(option => {
+			return option.label.match(this.regexMatchOption);
+		});
+	}
+
+	getCurrentOption() {
+		const options = this.props.foreignOptions && this.props.foreignOptions.values;
+		return (options && options.find((option) => option.value === String(this.props.val))) || {};
+	}
 
 	render() {
-		const options = this.props.foreignOptions && this.props.foreignOptions.values;
-		const current = (options && options.find((option) => option.value === String(this.props.val))) || {};
-		// console.log(this.props.val, current);
-		// console.log(options);
-		// current.label
-		if (!options) return <div/>;
-		const val = this.state.currentText || current.label;
 		
-		// return (
-		// 	<div>{val}</div>
-		// );
+		// console.log(`VAL ${this.props.val}`);
+		if (!this.props.foreignOptions) return null;
+
+		const current = this.getCurrentOption();
+
+		const value = (this.state.currentText !== null && this.state.currentText) || current.label;
+		const { suggestions } = this.state;
+		const inputProps = {
+			placeholder: '',
+			value,
+			onChange: this.onChange,
+			onBlur: this.onBlur,
+		};
 
 		return (
-			<Autocomplete
-				value={val}
-				ref="autocomplete"
-				items={options}
-				shouldItemRender={this.filterOption}
-				getItemValue={getItemValue}
-				onSelect={this.onSelect}
-				onChange={this.onChange}
-				renderItem={renderItem}
-				menuStyle={{
-					position: 'absolute',
-					top: '100%',
-					left: 0,
-					height: '300px',
-					zIndex: 1000,
-					borderRadius: '3px',
-					boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
-					background: 'rgba(255, 255, 255, 0.9)',
-					padding: '2px 0',
-					fontSize: '90%',
-					overflow: 'auto',
-				}}
+			<Autosuggest
+				id={`${this.props.field.id}_${this.props.recordId}`}
+				suggestions={suggestions}
+				inputProps={inputProps}
+				onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
+				onSuggestionSelected={this.onSelect}
+				renderSuggestion={renderItem}
+				getSuggestionValue={getItemValue}
+				shouldRenderSuggestions={shouldRenderSuggestions}
 			/>
 		);
 	}

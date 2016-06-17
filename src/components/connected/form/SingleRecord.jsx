@@ -27,6 +27,7 @@ export class SingleRecord extends Component {
 		fields: React.PropTypes.array,
 		env: React.PropTypes.object,
 		language: React.PropTypes.string,
+		isRoot: React.PropTypes.bool,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
@@ -67,16 +68,20 @@ export class SingleRecord extends Component {
 		let form;
 		let sub;
 
-
 		// console.log('render', this.props.children);
 		if (this.props.table && this.props.record) {
 
+			let deleteBtn;
+			if (!this.props.isRoot) {
+				deleteBtn = (<DeleteRecord 
+					tableId={this.props.table.id}
+					recordId={this.props.recordId}
+				/>);
+			}
+
 			form = (
 				<article>
-					<DeleteRecord 
-						tableId={this.props.table.id}
-						recordId={this.props.recordId}
-					/>
+					{deleteBtn}
 					{
 						this.props.fields.map((field) => {
 
