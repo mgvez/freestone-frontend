@@ -11,6 +11,8 @@
 
 
 .subform {
+	margin-bottom: 30px;
+
 	> header {
 		margin-top: 30px;
 		padding-top: 30px;
@@ -53,6 +55,31 @@
 				background-color: $color-accent-primary;
 				text-decoration: none;
 			}
+		}
+	}
+
+	.subform {
+		margin-top: 30px;
+		padding-left: 60px;
+		border-top: 1px solid $gray86;
+		position: relative;
+
+		&:before {
+			position: absolute;
+				top: 30px;
+				left: 0;
+
+			content: ' ';
+			display: block;
+
+			width: 10px;
+			height: calc(100% - 30px);
+			background: $gray86;
+		}
+
+		> header {
+			border-top: none;
+			margin-top: 0;
 		}
 	}
 }
