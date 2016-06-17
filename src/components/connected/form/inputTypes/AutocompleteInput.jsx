@@ -97,6 +97,7 @@ export class AutocompleteInput extends Input {
 		const options = this.props.foreignOptions && this.props.foreignOptions.values;
 		if (!options) return [];
 		if (!value) return options;
+		// console.log(options);
 
 		const inputValue = value.trim().toLowerCase();
 		const inputLength = inputValue.length;
@@ -116,7 +117,7 @@ export class AutocompleteInput extends Input {
 		if (!this.props.foreignOptions) return null;
 
 		const current = this.getCurrentOption();
-
+		// console.log(current);
 		const value = (this.state.currentText !== null && this.state.currentText) || current.label;
 		const { suggestions } = this.state;
 		const inputProps = {
@@ -126,7 +127,9 @@ export class AutocompleteInput extends Input {
 			onBlur: this.onBlur,
 		};
 
-		return (
+		const thumb = current.image && (<img src={current.image} />);
+
+		return (<div>
 			<Autosuggest
 				id={`${this.props.field.id}_${this.props.recordId}`}
 				suggestions={suggestions}
@@ -137,6 +140,7 @@ export class AutocompleteInput extends Input {
 				getSuggestionValue={getItemValue}
 				shouldRenderSuggestions={shouldRenderSuggestions}
 			/>
-		);
+			{thumb}
+		</div>);
 	}
 }
