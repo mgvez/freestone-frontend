@@ -19,7 +19,7 @@ export class SubformTabbed extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
-		
+
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
 	};
@@ -34,42 +34,43 @@ export class SubformTabbed extends Component {
 
 		return (
 			<section className="subform">
-				<header>
-					<div className="fcn">
+				<header className="row">
+					<div className="col-md-8">
+						<Header table={this.props.table} />
+					</div>
+					<div className="col-md-3 col-md-offset-1 fcn">
 						<ChangeSubformView tableId={this.props.table.id} />
 					</div>
-					<Header table={this.props.table} />
-
-					<nav className="tabs">
-						{
-							this.props.childrenRecords.map((record, index) => {
-
-								const active = record.id === activeRecordId;
-								return (<Tab 
-									key={record.id}
-									displayLabel={record.label}
-									hasOrder={!!this.props.table.orderField}
-									isActive={active}
-									recordId={record.id}
-									index={index}
-									tableId={this.props.table.id}
-									parentRecordId={this.props.parentRecordId}
-									setShownRecord={this.props.setShownRecord}
-									swapRecords={this.props.swapRecords}
-								/>);
-							})
-						}
-
-						<AddRecord 
-							table={this.props.table}
-							parentRecordId={this.props.parentRecordId}
-							parentTableId={this.props.parentTableId}
-							highestOrder={this.props.highestOrder}
-						/>
-
-					</nav>
-
 				</header>
+
+				<nav className="tabs">
+					{
+						this.props.childrenRecords.map((record, index) => {
+
+							const active = record.id === activeRecordId;
+							return (<Tab
+								key={record.id}
+								displayLabel={record.label}
+								hasOrder={!!this.props.table.orderField}
+								isActive={active}
+								recordId={record.id}
+								index={index}
+								tableId={this.props.table.id}
+								parentRecordId={this.props.parentRecordId}
+								setShownRecord={this.props.setShownRecord}
+								swapRecords={this.props.swapRecords}
+							/>);
+						})
+					}
+
+					<AddRecord
+						table={this.props.table}
+						parentRecordId={this.props.parentRecordId}
+						parentTableId={this.props.parentTableId}
+						highestOrder={this.props.highestOrder}
+					/>
+				</nav>
+
 				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />
 			</section>
 		);

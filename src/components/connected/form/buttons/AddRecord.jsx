@@ -15,20 +15,20 @@ export class AddRecord extends Component {
 		highestOrder: React.PropTypes.number,
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
-		
+
 		addRecord: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
 	};
 
 	addRecord = () => {
 		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, (this.props.highestOrder || 0) + 10);
-		
+
 		// console.log(newRecord);
 		this.props.addRecord(this.props.table.id, newRecord);
 		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);
 	};
 
 	render() {
-		return <button onClick={this.addRecord} className="fa fa-plus add-record"> </button>;
+		return <button onClick={this.addRecord} className="add-record"><i className="fa fa-plus"></i></button>;
 	}
 }

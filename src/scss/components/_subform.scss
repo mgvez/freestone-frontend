@@ -1,0 +1,58 @@
+.single-record {
+	position: relative;
+	padding-top: 60px;
+
+	.button-circle-danger-small {
+		position: absolute;
+			top: 20px;
+			right: 0;
+	}
+}
+
+
+.subform {
+	> header {
+		margin-top: 30px;
+		padding-top: 30px;
+		border-top: 1px solid $gray86;
+
+		h1 {
+			margin-bottom: 10px;
+		}
+	}
+
+	.tabs {
+		border-bottom: 1px solid $color-accent-primary;
+		margin-top: 40px;
+
+		.tab, .add-record {
+			background: transparent;
+			display: inline-block;
+			vertical-align: middle;
+
+			height: 25px;
+			line-height: 25px;
+			padding: 0 25px;
+
+			border: 1px solid $color-accent-primary;
+			border-bottom: none;
+
+			color: $color-accent-primary;
+			cursor: pointer;
+
+			border-radius: 5px 5px 0 0;
+
+			transition: background 0.3s, color 0.3s;
+
+			& + .tab, & + .add-record {
+				margin-left: 10px;
+			}
+
+			&:hover, &.active {
+				color: $white;
+				background-color: $color-accent-primary;
+				text-decoration: none;
+			}
+		}
+	}
+}

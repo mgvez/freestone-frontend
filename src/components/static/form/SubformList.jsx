@@ -13,7 +13,7 @@ export class SubformList extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
-		
+
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
 	};
@@ -28,13 +28,13 @@ export class SubformList extends Component {
 
 		return (
 			<section className="subform subform-list">
-				<header>
-					<div className="fcn">
+				<header className="row">
+					<div className="col-md-8">
+						<Header table={this.props.table} />
+					</div>
+					<div className="col-md-3 col-md-offset-1 fcn">
 						<ChangeSubformView tableId={this.props.table.id} />
 					</div>
-					<Header 
-						table={this.props.table}
-					/>
 				</header>
 				{
 					this.props.childrenRecords.map((record, index) => {
@@ -42,7 +42,7 @@ export class SubformList extends Component {
 					})
 				}
 				{
-					<AddRecord 
+					<AddRecord
 						table={this.props.table}
 						parentRecordId={this.props.parentRecordId}
 						parentTableId={this.props.parentTableId}
