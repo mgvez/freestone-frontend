@@ -29,7 +29,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - pas quit quand image resize marche pas : save quand meme
 
 # Freestone JS
-- login dans freestone.jsx plutot que par redirect
 
 ## Dashboard
 - Analytics
@@ -43,6 +42,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## Form
 - Enlever la possibilité d'être en liste (quand on possède un sous-formulaire ou tout le temps) [Nicolas - 20-06-16]
+- link to document from bank
+- champ type url
 
 ## Pages
 - all

@@ -6,11 +6,11 @@ import { unauthorized, LOGIN_USER_FAILURE, LOGOUT_USER, UNAUTHORIZED } from 'act
 export default store => next => action => {
 
 	function gotoLogin() {
-		// console.log(store.getState());
-		const redirectAfterLogin = store.getState().routing.locationBeforeTransitions.pathname || '';
-		// console.log(redirectAfterLogin);
+		// // console.log(store.getState());
+		// const redirectAfterLogin = store.getState().routing.locationBeforeTransitions.pathname || '';
+		// // console.log(redirectAfterLogin);
 
-		store.dispatch(pushPath(`/login?next=${redirectAfterLogin}`));
+		// store.dispatch(pushPath(`/login?next=${redirectAfterLogin}`));
 		return next(action);
 	}
 

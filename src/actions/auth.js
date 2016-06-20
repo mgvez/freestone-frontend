@@ -64,7 +64,7 @@ export function unauthorized() {
 }
 
 
-export function loginUser(username, password, redirect = '/home') {
+export function loginUser(username, password) {
 	return (dispatch) => {
 		// console.log(redirect);
 		// console.log(action);
@@ -77,10 +77,6 @@ export function loginUser(username, password, redirect = '/home') {
 					freestonepass: password,
 				},
 			},
-		}).then(() => {
-			// console.log(res);
-			// console.log('redirect to' + redirect);
-			dispatch(pushPath(redirect));
 		});
 	};
 
