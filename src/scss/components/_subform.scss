@@ -1,6 +1,7 @@
 .single-record {
 	position: relative;
 	padding-top: 60px;
+	padding-bottom: 1px;
 
 	.button-circle-danger-small {
 		position: absolute;
@@ -12,6 +13,10 @@
 
 .subform {
 	margin-bottom: 30px;
+
+	.fcn {
+		text-align: right;
+	}
 
 	> header {
 		margin-top: 30px;
@@ -81,5 +86,44 @@
 			border-top: none;
 			margin-top: 0;
 		}
+	}
+}
+
+
+.subform-list {
+	.single-record {
+		position: relative;
+
+		&:nth-of-type(2n) {
+			background: $gray86;
+			//overflow: hidden;
+
+			&:before {
+				content: ' ';
+				position: absolute;
+					top: 0;
+					left: 50%;
+
+				background: $gray86;
+				transform: translate(-50%, 0);
+				width: 10000px;
+				height: 100%;
+			}
+
+			.subform {
+				border-color: $white;
+
+				&:before {
+					background: $white;
+				}
+			}
+		}
+	}
+
+	> .add-record {
+		float: right;
+
+		@extend %base_button;
+		@extend %round_button;
 	}
 }
