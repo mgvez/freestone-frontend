@@ -1,5 +1,6 @@
 
-import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE } from 'actions/env';
+import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE, ADD_CLIENT_VARIABLE } from 'actions/env';
+import { CLEAR_DATA } from 'actions/dev';
 
 const envInitialState = {
 	openedFrom: '',
@@ -41,6 +42,23 @@ export function userViewSettings(state = userViewSettingsInitialState, action) {
 		return {
 			...state,
 			language: action.data,
+		};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
+export function clientVariables(state = {}, action) {
+	switch (action.type) {
+	case CLEAR_DATA:
+		return {};
+	case ADD_CLIENT_VARIABLE:
+		console.log(action.data);
+		const { name, value } = action.data;
+		return {
+			...state,
+			[name]: value,
 		};
 	default:
 		// console.log('no change');

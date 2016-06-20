@@ -29,7 +29,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - pas quit quand image resize marche pas : save quand meme
 
 # Freestone JS
-- login dans freestone.jsx plutot que par redirect
 
 ## Dashboard
 - Analytics
@@ -42,6 +41,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 ## Liste
 
 ## Form
+- link to document from bank
+- champ type url
 
 ## Pages
 - all

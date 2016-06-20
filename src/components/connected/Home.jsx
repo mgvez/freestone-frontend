@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
 
+import { GoogleAnalytics } from 'components/connected/dashboard/GoogleAnalytics';
 
 const metaData = {
 	title: 'Freestone Home',
@@ -20,14 +21,16 @@ export class Home extends Component {
 		super(props);
 	}
 
+	componentDidMount() {
+		
+	}
+
 	render() {
 		// console.log(this.props);
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
-					<h1>
-						Home sweet home
-					</h1>
+				<GoogleAnalytics />
 			</section>
 		);
 	}

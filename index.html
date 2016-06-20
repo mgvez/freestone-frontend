@@ -17,6 +17,16 @@
 	window.GreenSockGlobals = window.GreenSockGlobals || {};
 </script>
 
+
+<script>
+(function(w,d,s,g,js,fjs){
+  g=w.gapi||(w.gapi={});g.analytics={q:[],ready:function(cb){this.q.push(cb)}};
+  js=d.createElement(s);fjs=d.getElementsByTagName(s)[0];
+  js.src='https://apis.google.com/js/platform.js';
+  fjs.parentNode.insertBefore(js,fjs);js.onload=function(){g.load('analytics')};
+  // console.log(g);
+}(window,document,'script'));
+</script>
 <script src="assets/tinymce/tinymce.min.js"></script>
 <script src="assets/lagrange/tinymce/freestone/plugin.js"></script>
 <script src="dist/bundle.js"></script>
