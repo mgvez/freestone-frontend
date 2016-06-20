@@ -78,7 +78,7 @@ export class SubformMtm extends Component {
 							const { categ, options } = optionGroup;
 							let categLabel;
 							if (categ) {
-								categLabel = <h3 className="col-md-12">{categ}</h3>;
+								categLabel = <h3 className="mtm-category col-md-3">{categ}</h3>;
 							}
 							const inputs = options.map((option, optionIndex) => {
 								const { display, id } = option;
@@ -92,8 +92,12 @@ export class SubformMtm extends Component {
 							});
 
 							return (<div key={groupIndex}>
-								{categLabel}
-								{inputs}
+								<div className="row">
+									{categLabel}
+								</div>
+								<div className="row">
+									{inputs}
+								</div>
 							</div>);
 
 						})

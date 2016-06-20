@@ -30,6 +30,11 @@ input[role="combobox"] {
 		position: relative;
 		padding-right: 30px;
 		cursor: pointer;
+		font-weight: $font-weight-normal;
+		line-height: 1;
+		height: auto;
+
+		margin: 10px 0;
 
 		&:before {
 			content: ' ';
