@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
+import DocumentMeta from 'react-document-meta';
 
 import { rootFormMapStateToProps } from 'selectors/rootForm';
 
@@ -95,6 +96,7 @@ export class RootForm extends Component {
 		}
 		return (
 			<section className="root-form">
+				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 				{ header }
 				{ form }
 			</section>

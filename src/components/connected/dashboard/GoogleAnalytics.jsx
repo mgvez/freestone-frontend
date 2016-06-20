@@ -84,7 +84,7 @@ export class GoogleAnalytics extends Component {
 			});
 
 			gapi.analytics.auth.on('success', (response) => {
-				console.log('authorized');
+				// console.log('authorized');
 				this.renderAnalyticsTimeline();
 			});
 		});

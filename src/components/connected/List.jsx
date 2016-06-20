@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import DocumentMeta from 'react-document-meta';
 
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
@@ -100,6 +101,8 @@ export class List extends Component {
 			readyToScroll = true;
 			output = (
 				<section>
+					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
+
 					<header>
 						<h1>{this.props.table.actionLabel}</h1>
 						<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
