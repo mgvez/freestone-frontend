@@ -17,6 +17,8 @@ export function auth(state = initialState, action) {
 			isAuthenticated: false,
 			jwt: null,
 			userName: null,
+			email: null,
+			emailHash: null,
 			statusText: 'Unauthorized',
 		};
 	case LOGIN_REQUEST:
@@ -26,12 +28,15 @@ export function auth(state = initialState, action) {
 			statusText: 'Checking credentials...',
 		};
 	case LOGIN_USER_SUCCESS:
+		// console.log(action.payload);
 		return {
 			...state,
 			isAuthenticating: false,
 			isAuthenticated: true,
 			jwt: action.payload.jwt,
 			userName: action.payload.token.data.realname,
+			email: action.payload.token.data.email,
+			emailHash: action.payload.token.data.email_hash,
 			statusText: 'You have been successfully logged in.',
 		};
 	case LOGIN_USER_FAILURE:
@@ -41,6 +46,8 @@ export function auth(state = initialState, action) {
 			isAuthenticated: false,
 			jwt: null,
 			userName: null,
+			email: null,
+			emailHash: null,
 			statusText: `Authentication Error: ${action.payload.status} ${action.payload.statusText}`,
 		};
 	case LOGOUT_USER:
@@ -49,6 +56,8 @@ export function auth(state = initialState, action) {
 			isAuthenticated: false,
 			jwt: null,
 			userName: null,
+			email: null,
+			emailHash: null,
 			statusText: 'You have been successfully logged out.',
 		};
 	default:
