@@ -14,6 +14,17 @@ input[role="combobox"] {
 	margin: 10px 0;
 }
 
+.field-description {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.field-label {
+	padding-top: 10px;
+	font-weight: $font-weight-bold;
+	text-align: right;
+}
+
 .checkbox-container {
 	text-align: right;
 
@@ -67,15 +78,6 @@ input[role="combobox"] {
 			transform: translate(0, -50%);
 		}
 	}
-}
-
-label {
-	font-weight: $font-weight-bold;
-	text-align: right;
-
-	display: block;
-	height: 55px;
-	line-height: 55px;
 }
 
 .mce-tinymce {

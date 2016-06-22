@@ -15,7 +15,7 @@ export class Field extends Component {
 		recordId: React.PropTypes.string,
 		val: React.PropTypes.any,
 		origVal: React.PropTypes.any,
-		
+
 		setFieldVal: React.PropTypes.func,
 	};
 
@@ -92,7 +92,7 @@ export class Field extends Component {
 		default:
 			return (
 				<div className="field row">
-					<div className="col-md-2">
+					<div className="col-md-2 field-label">
 						<label>{this.props.field.label}</label>
 					</div>
 					<div className="col-md-10">
@@ -100,9 +100,9 @@ export class Field extends Component {
 						<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
 					</div>
 				</div>
-			);	
+			);
 		}
 
-		
+
 	}
 }

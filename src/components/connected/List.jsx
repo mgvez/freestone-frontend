@@ -62,12 +62,12 @@ export class List extends Component {
 			this.refs.searchVal.value = '';
 		}
 	}
-	
+
 	shouldComponentUpdate(nextProps) {
 		//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
 		return !!(nextProps.groupedRecords && nextProps.groupedRecords.length);
 	}
-	
+
 	requireData(props) {
 		const { tableName, page, search } = props.params;
 		if (!props.table) this.props.fetchTable(tableName);
@@ -103,12 +103,15 @@ export class List extends Component {
 				<section>
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
 
-					<header>
-						<h1>{this.props.table.actionLabel}</h1>
-						<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
-						{/* <div className="text-description">{this.props.qstr}</div> */}
-						<button onClick={this.addRecord}><i className="fa fa-plus-square"></i> New record</button>
+					<header className="record-header">
+						<div className="texts">
+							<h1>{this.props.table.actionLabel}</h1>
+							<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
+						</div>
 
+						<div className="btns">
+							<button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button>
+						</div>
 					</header>
 
 					<div className="padded-content">
