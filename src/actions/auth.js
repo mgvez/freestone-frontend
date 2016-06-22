@@ -23,9 +23,14 @@ function loginUserSuccess(jwt, token) {
 }
 
 export function loginUserFailure(error) {
+	const response = error.response && JSON.parse(error.response);
+	// console.log(response);
 	return {
 		type: LOGIN_USER_FAILURE,
-		payload: error,
+		payload: {
+			error,
+			response,
+		},
 	};
 }
 
@@ -57,9 +62,12 @@ export function logout() {
 	};
 }
 
-export function unauthorized() {
+export function unauthorized(error = {}) {
 	return {
 		type: UNAUTHORIZED,
+		payload: {
+			error,
+		},
 	};
 }
 

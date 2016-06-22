@@ -84,7 +84,8 @@ export default store => next => action => {
 		}
 	).catch(
 		error => {
-			console.log(`ERROR ${error.status} ${error.statusText}`);
+			console.log(`%cERROR ${error.status} ${error.statusText}`, 'color:red;font-weight:bold');
+			// console.log(error);
 			if (error.status === 401) {
 				next(loginUserFailure(error));
 			} else {

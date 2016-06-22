@@ -65,6 +65,7 @@ export class RootForm extends Component {
 
 		let header;
 		let form;
+		let meta;
 		if (this.props.table) {
 			
 			if (this.state.saving) {
@@ -93,10 +94,12 @@ export class RootForm extends Component {
 			form = (
 				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot />
 			);
+
+			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;
 		}
 		return (
 			<section className="root-form">
-				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
+				{ meta }
 				{ header }
 				{ form }
 			</section>

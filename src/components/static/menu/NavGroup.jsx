@@ -51,8 +51,6 @@ export class NavGroup extends Component {
 
 	render() {
 
-		// if (!this.props.data.childrenGroups.length) return null;
-
 		// console.log(this.props.level + ' nav group rendered', this.props.data);
 		const level = this.props.level + 1;
 		const groupId = this.props.data.id;

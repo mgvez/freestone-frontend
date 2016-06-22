@@ -29,8 +29,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - pas quit quand image resize marche pas : save quand meme
 
 # Freestone JS
-- avatar
 - link vers home
+- pouvoir editer son propre compte
 
 ## Dashboard
 - Analytics

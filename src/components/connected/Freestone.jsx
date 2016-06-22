@@ -45,10 +45,15 @@ export class Freestone extends Component {
 	}
 
 	render() {
-		console.log('%cRender Freestone (auth)', 'font-weight: bold');
+		// console.log('%cRender Freestone (auth)', 'font-weight: bold');
 
 		if (!this.props.auth.isAuthenticated) {
-			return <Login />;
+			return (
+				<div>
+					<Errors {...this.props} />
+					<Login />
+				</div>
+			);
 		}
 
 		return (

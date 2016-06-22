@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { NavGroup } from 'components/static/menu/NavGroup';
-import { Gravatar } from 'components/connected/widgets/Gravatar';
+import { UserInfos } from 'components/connected/widgets/UserInfos';
 
 import * as navActionCreators from 'actions/nav';
 import { navSelector } from 'selectors/nav';
@@ -44,11 +44,7 @@ export class Nav extends Component {
 		// console.log(this.props.tree);
 		return (
 			<nav className="navbar-default" role="navigation">
-				<div className="user">
-					<Gravatar />
-					<img src="http://placehold.it/75x75" alt="user" />
-					<p>{this.props.username}</p>
-				</div>
+				<UserInfos />
 				<ul>
 				{
 					this.props.tree.map((item) => {

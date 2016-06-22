@@ -5,6 +5,12 @@ const modulesSelector = state => state.nav.structure.modules;
 const pagesSelector = state => state.nav.structure.pages;
 const navGroupsSelector = state => state.nav.structure.navGroups;
 
+function checkGroupFilled(group) {
+	group.childrenGroups = group.childrenGroups.filter(checkGroupFilled);
+	// console.log(group.name, group.childrenGroups.length, group.tables.length, group.modules.length, group.pages.length);
+	return group.childrenGroups.length || group.tables.length || group.modules.length || group.pages.length;
+}
+
 function buildTree(navGroups, tables, modules, pages) {
 	const groups = navGroups.map((group) => {
 		const groupId = group.id;
@@ -30,7 +36,9 @@ function buildTree(navGroups, tables, modules, pages) {
 		}
 	});
 
-	return groups.filter(group => group.parent_id === 0);
+	return groups.filter(checkGroupFilled).filter(group => {
+		return group.parent_id === 0;
+	});
 }
 
 export const navTreeSelector = createSelector(
