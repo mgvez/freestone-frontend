@@ -3,6 +3,7 @@
 
 import { receiveToken, loginUserFailure } from 'actions/auth';
 import sha1 from 'sha1';
+import Promise from 'bluebird';
 import { callApi } from 'freestone/api';
 
 export const FREESTONE_API = Symbol('Freestone API');
@@ -84,7 +85,9 @@ export default store => next => action => {
 		}
 	).catch(
 		error => {
-			console.log(`%cERROR ${error.status} ${error.statusText}`, 'color:red;font-weight:bold');
+			// console.dir(error);
+			const msg = error.status ? `${error.status} ${error.statusText}` : error.message;
+			console.log(`%cERROR ${msg}`, 'color:red;font-weight:bold');
 			// console.log(error);
 			if (error.status === 401) {
 				next(loginUserFailure(error));

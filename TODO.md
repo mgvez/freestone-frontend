@@ -68,3 +68,23 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
+
+
+
+
+
+Quand erreur, confirm avant de retourner
+
+Banque : liste de thumbnails au lieu de records en table
+
+Drag & drop dans liste pour order
+
+Date abrégée, infos completes en hover
+
+Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
+
+Mettre un champ "label" -> microtemplate pour indiquer si le champ s'affiche dans les "records en cours de modif"
+
+Mettre les subforms collapse/decollapse
+
+Duplicate records

@@ -7,13 +7,13 @@ export function errors(state = [], action) {
 	case FREESTONE_API_FAILURE:
 		return [
 			...state,
-			action.error.responseText,
+			action.error.responseText || action.error.statusText || action.error.message,
 		];
 	case FREESTONE_API_FATAL_FAILURE:
 		// console.log(action.error);
 		return [
 			...state,
-			action.error.responseText || action.error.statusText,
+			action.error.responseText || action.error.statusText || action.error.message,
 		];
 	case CLEAR_ERRORS:
 		return [];

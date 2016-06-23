@@ -1,5 +1,6 @@
 import { getWebsiteUrl } from 'freestone/settings';
 import reqwest from 'reqwest';
+import Promise from 'bluebird';
 
 let store;
 export function setStore(s) {
@@ -31,12 +32,14 @@ export function callApi(route, data) {
 		headers.Authorization = `Bearer ${jwt}`;
 	}
 
-	return reqwest({
-		url: getEndpoint(route),
-		crossOrigin: true,
-		processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
-		method,		
-		data,
-		headers,
+	return new Promise((resolve, reject) => {
+		reqwest({
+			url: getEndpoint(route),
+			crossOrigin: true,
+			processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
+			method,		
+			data,
+			headers,
+		}).then(resolve, reject);
 	});
 }
