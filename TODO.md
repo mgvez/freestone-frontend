@@ -14,6 +14,14 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
+- Quand erreur au save, btn confirm avant de retourner (pas de timeout)
+- Banque : liste de thumbnails au lieu de records en table
+- Drag & drop dans liste pour order
+- Date abrégée, infos completes en hover
+- Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
+- Mettre un champ "label" -> microtemplate pour indiquer si le champ s'affiche dans les "records en cours de modif"
+- Mettre les subforms collapse/decollapse
+- Duplicate records
 
 # Freestone PHP
 - bank (et toutes les instances de cette classe)
@@ -73,18 +81,3 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 
 
-Quand erreur, confirm avant de retourner
-
-Banque : liste de thumbnails au lieu de records en table
-
-Drag & drop dans liste pour order
-
-Date abrégée, infos completes en hover
-
-Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
-
-Mettre un champ "label" -> microtemplate pour indiquer si le champ s'affiche dans les "records en cours de modif"
-
-Mettre les subforms collapse/decollapse
-
-Duplicate records
