@@ -56,7 +56,7 @@ export class NavGroup extends Component {
 		const groupId = this.props.data.id;
 		const isOpen = this.props.toggleState[groupId];
 		// console.log(this.props.toggleState[groupId]);
-		
+
 		const toggleClass = isOpen ? '' : 'collapsed';
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';

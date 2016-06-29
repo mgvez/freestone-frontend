@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+import { HomeButton } from 'components/connected/widgets/HomeButton';
+
 
 export class SiteHeader extends Component {
 	static propTypes = {
@@ -52,6 +54,7 @@ export class SiteHeader extends Component {
 					</button>
 				</div>
 				<div className="logout">
+					<HomeButton /> 
 					<a onClick={this.props.logout}>
 						<i className="fa fa-sign-out"></i> Logout
 					</a>

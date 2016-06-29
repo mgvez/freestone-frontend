@@ -37,7 +37,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - pas quit quand image resize marche pas : save quand meme
 
 # Freestone JS
-- link vers home
+- ~link vers home~ reste juste à détecter le active
 - pouvoir editer son propre compte
 
 ## Dashboard
@@ -76,8 +76,3 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
-
-
-
-
-
