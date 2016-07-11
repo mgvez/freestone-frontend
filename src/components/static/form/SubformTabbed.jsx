@@ -33,7 +33,7 @@ export class SubformTabbed extends Component {
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
-		const changeViewBtn = this.props.table.hasChildren ? <ChangeSubformView tableId={this.props.table.id} /> : null;
+		const changeViewBtn = !this.props.table.hasChildren ? <ChangeSubformView tableId={this.props.table.id} /> : null;
 
 		return (
 			<section className="subform">

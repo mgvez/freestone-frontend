@@ -11,7 +11,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - reecrire les components en functional components https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components et https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.de5b5b1q8
 
 ## General
-- pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
 - Quand erreur au save, btn confirm avant de retourner (pas de timeout)
@@ -22,6 +21,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - Mettre un champ "label" -> microtemplate pour indiquer si le champ s'affiche dans les "records en cours de modif"
 - Mettre les subforms collapse/decollapse
 - Duplicate records
+- mettre un search general
+- pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
 
 # Freestone PHP
 - bank (et toutes les instances de cette classe)
@@ -44,6 +45,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - Analytics
 - latest modifications?
 - login list?
+- status commerce en ligne
+- feed de nouvelle twitter alerte mot cle
+- campagnes de emails (mailchimp, etc)
+- derniers messages envoyés par formulaires
 
 ## Menu
 
@@ -53,6 +58,8 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 ## Form
 - link to document from bank
 - champ type url
+- changement de langue : sticky
+- quand edit img banque et change lang, ferme popin
 
 ## Pages
 - all
