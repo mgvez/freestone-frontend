@@ -51,7 +51,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 ## Liste
 
 ## Form
-- Enlever la possibilité d'être en liste (quand on possède un sous-formulaire ou tout le temps) [Nicolas - 20-06-16]
 - link to document from bank
 - champ type url
 

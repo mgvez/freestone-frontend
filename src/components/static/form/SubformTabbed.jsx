@@ -32,6 +32,9 @@ export class SubformTabbed extends Component {
 		if (!this.props.childrenRecords || !this.props.table) return null;
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
+		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
+		const changeViewBtn = this.props.table.hasChildren ? <ChangeSubformView tableId={this.props.table.id} /> : null;
+
 		return (
 			<section className="subform">
 				<header className="row">
@@ -39,7 +42,7 @@ export class SubformTabbed extends Component {
 						<Header table={this.props.table} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
-						<ChangeSubformView tableId={this.props.table.id} />
+						{changeViewBtn}
 					</div>
 				</header>
 

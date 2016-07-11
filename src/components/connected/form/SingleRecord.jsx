@@ -106,6 +106,7 @@ export class SingleRecord extends Component {
 								origVal={this.props.recordUnaltered[field.id]}
 								setFieldVal={this.props.setFieldVal}
 								env={this.props.env}
+								lang={field.language}
 							/>) : null;
 						})
 					}
