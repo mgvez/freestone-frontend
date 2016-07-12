@@ -21,7 +21,7 @@ export const loadedRecords = createSelector(
 			let records;
 			if (table && table.type === TYPE_MAIN) {
 
-				const searchableFields = table.fields.filter(field => field.isSearch);
+				const searchableFields = table.fields.filter(field => field.isLabel);
 
 				const recordIds = Object.keys(allRecords[tableId]);
 				records = recordIds.map(recordId => {

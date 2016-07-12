@@ -13,7 +13,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## General
 - Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
-- Mettre un champ "label" -> microtemplate pour indiquer si le champ s'affiche dans les "records en cours de modif"
 - Duplicate records
 - Quand erreur au save, btn confirm avant de retourner (pas de timeout)
 - mettre un search general
@@ -60,6 +59,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - link to document from bank
 - champ type url
 - quand edit img banque et change lang, ferme popin
+	- parce que le input sous-jacent change aussi car il répond au state. Soit mettre les 2 langues dans le form de bank, ou mettre le lang local aux forms din popins, ou mettre que le lang est table-specific
 
 ## Pages
 - all
