@@ -60,7 +60,7 @@ export class FileInput extends Input {
 		if (this.state.changing || (!this.props.val && !this.props.origVal)) {
 			let cancel;
 			if (!this.props.val) {
-				cancel = <button onClick={this.cancelRequestChange}>cancel</button>;
+				cancel = <button className="button-round" onClick={this.cancelRequestChange}>cancel</button>;
 			}
 			return (
 				<div>
@@ -71,7 +71,7 @@ export class FileInput extends Input {
 		}
 
 		return (
-			<button onClick={this.requestChange}>change</button>
+			<button className="button-round" onClick={this.requestChange}>change</button>
 		);	
 	}
 
@@ -115,12 +115,12 @@ export class FileInput extends Input {
 		let deleteBtn;
 		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		if (origVal && val !== origVal) {
-			revertBtn = <button onClick={this.clearSavedInput}>revert to db file</button>;
+			revertBtn = <button className="button-round-warning" onClick={this.clearSavedInput}>revert to db file</button>;
 		}
 
 		// s'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
 		if (origVal === val) {
-			deleteBtn = <button onClick={this.setForDelete}>delete db file</button>;
+			deleteBtn = <button className="button-round-danger" onClick={this.setForDelete}>delete db file</button>;
 		}
 
 		const displayVal = val && (inputVal || origVal);

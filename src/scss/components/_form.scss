@@ -8,10 +8,28 @@ input[role="combobox"] {
 	width: 100%;
 	height: 35px;
 	line-height: 35px;
-	border: 2px solid $color-accent-primary;
+	border: 2px solid transparent;
 
 	padding: 0 10px;
 	margin: 10px 0;
+
+	&:focus {
+		border: 2px solid $color-accent-primary;
+		outline: none;
+	}
+}
+
+.mce-tinymce {
+	border: 2px solid transparent !important;
+
+	&:focus {
+		border: 2px solid $color-accent-primary !important;
+	}
+}
+
+ul.react-autosuggest__suggestions-container {
+	width: 100%;
+	top: 45px;
 }
 
 .field-description {
@@ -23,6 +41,26 @@ input[role="combobox"] {
 	padding-top: 10px;
 	font-weight: $font-weight-bold;
 	text-align: right;
+
+	label {
+		display: block;
+		position: relative;
+		padding-right: 45px;
+	}
+
+	.lang-append {
+		position: absolute;
+			top: 50%;
+			right: 0;
+
+		transform: translate(0, -50%);
+		font-style: normal;
+		text-transform: uppercase;
+
+		span {
+			color: $color-accent-primary;
+		}
+	}
 }
 
 .checkbox-container {

@@ -79,7 +79,7 @@ export class Field extends Component {
 			break;
 		}
 
-		const languageAppend = this.props.lang ? <em>{this.props.lang}</em> : '';
+		const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
 
 		switch (this.props.field.type) {
 		case 'separator':

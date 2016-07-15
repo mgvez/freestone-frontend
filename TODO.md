@@ -56,6 +56,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - champ type url
 - quand edit img banque et change lang, ferme popin
 	- parce que le input sous-jacent change aussi car il répond au state. Soit mettre les 2 langues dans le form de bank, ou mettre le lang local aux forms din popins, ou mettre que le lang est table-specific
+- Mettre focus sur TinyMCE quand on l'edit et pas juste dans ses sous components.
 
 ## Pages
 - all
