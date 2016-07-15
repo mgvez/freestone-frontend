@@ -21,20 +21,16 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - Drag & drop dans liste pour order
 - Mettre les subforms collapse/decollapse
 - liste des anciennes révisions du record
-- pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
+- pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
+- remettre les icones par defaut pour les table groups default freestone
 
 # Freestone PHP
-- bank (et toutes les instances de cette classe)
-	- js delete tags figure et figcaption vides
-	- image resize pour img bank selon pixel ratio
 - tester definitions dans install config
 	- mettre field_type
 - verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
 	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
 	- childrenAreLoaded (reducer record-form) est problématique
 	- getRecords de formchildrenrecord reselect fucké
-- traduire les erreurs (VException)
-- pas quit quand image resize marche pas : save quand meme
 
 # Freestone JS
 - link vers home
