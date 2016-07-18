@@ -32,6 +32,10 @@ ul.react-autosuggest__suggestions-container {
 	top: 45px;
 }
 
+li.react-autosuggest__suggestion--focused {
+	color: $white;
+}
+
 .field-description {
 	display: block;
 	margin-bottom: 10px;
@@ -120,4 +124,97 @@ ul.react-autosuggest__suggestions-container {
 
 .mce-tinymce {
 	margin: 10px 0 !important;
+}
+
+.toggle-container {
+	input[type="checkbox"] {
+		display: none;
+
+		&:checked + .toggle{
+			background: $color-accent-primary;
+
+			&:after {
+				left: calc(100% - 25px);
+			}
+
+			&:before {
+				content: attr(data-on-label);
+				left: 7.5px;
+			}
+		}
+	}
+}
+
+.toggle {
+	cursor: pointer;
+
+	position: relative;
+	display: block;
+	width: 0;
+	height: 34px;
+
+	padding: 0 35px;
+	margin: 10px 0;
+
+	border-radius: 22px;
+	background: $color-danger-primary;
+	border: 2px solid $white;
+
+	transition: background 0.2s;
+
+	&:after {
+		position: absolute;
+			top: 5px;
+			left: 5px;
+
+		height: 20px;
+		width: 20px;
+		content: ' ';
+		background: #fff;
+		border-radius: 100%;
+
+		transition: left 0.2s;
+	}
+
+	&:before {
+		content: attr(data-off-label);
+		color: $white;
+
+		position: absolute;
+			top: 0;
+			right: 7.5px;
+
+		line-height: 30px;
+	}
+}
+
+.file-infos {
+	font-style: italic;
+	display: inline-block;
+	vertical-align: bottom;
+	margin-right: 10px;
+
+	a {
+		display: block;
+		margin-bottom: 5px;
+	}
+}
+
+.file-input-section {
+	display: inline-block;
+	vertical-align: bottom;
+	padding-bottom: 25px;
+}
+
+.file-input-input {
+	display: inline-block;
+	vertical-align: bottom;
+
+	input {
+		max-width: 200px;
+	}
+
+	[class^=button] {
+		margin-right: 10px
+	}
 }

@@ -7,9 +7,9 @@ export class BoolInput extends Input {
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
 		return (
-			<div>
-				Yes <input type="radio" value="1" checked={this.props.val === '1'} onChange={this.changeVal} />
-				No <input type="radio" value="0" checked={this.props.val === '0'} onChange={this.changeVal} />
+			<div className="toggle-container">
+				<input id={this.props.field.id} type="checkbox" value={this.props.val === '1' ? '0' : '1'} checked={this.props.val === '1'} onChange={this.changeVal} />
+				<label className="toggle" htmlFor={this.props.field.id} data-on-label="Oui" data-off-label="Non"></label>
 			</div>
 		);
 	}
