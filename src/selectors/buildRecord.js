@@ -1,23 +1,23 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 import { schemaSelector } from 'selectors/schema';
+import { getForeignFieldId } from 'freestone/schemaHelpers';
 
-import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
 
 const recordsSelector = state => state.recordForm.records;
 const mtmRecordsSelector = state => state.recordForm.mtmRecords;
 const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.schema.children;
 
-
 const saveStateSelector = state => state.save;
 
-function getChildrenRecordIds(records, parentRecordId, parentTableId) {
+function getChildrenRecordIds(records, parentRecordId, linkFieldId) {
 	// console.log(records, parentRecordId);
-	return records && Object.keys(records).map((recordId) => {
+	return linkFieldId && records && Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		// console.log(record);
-		return record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record;
+		return record[linkFieldId] === parentRecordId && record;
 	}).filter(record => record).map(record => record[PRIKEY_ALIAS]);
 }
 
@@ -38,8 +38,8 @@ function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfi
 			});
 			
 		} else {
-
-			const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, tableId);
+			const subformFieldId = getForeignFieldId(childTableId, tableId, allTables);
+			const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, subformFieldId);
 			const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
 				return buildTree(childTableId, childRecId, allRecords, allMtmRecords, allTables, unfilteredChildren);
 			});

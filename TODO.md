@@ -1,7 +1,6 @@
 # Todo
 
 ## next
-- images retina (bank / field normal)
 
 ## Respond to window size
 https://facebook.github.io/react/tips/dom-event-listeners.html
