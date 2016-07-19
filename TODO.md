@@ -12,7 +12,6 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 
 ## General
 - Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
-- Duplicate records
 - Quand erreur au save, btn confirm avant de retourner (pas de timeout)
 - mettre un search general
 - Banque : liste de thumbnails au lieu de records en table

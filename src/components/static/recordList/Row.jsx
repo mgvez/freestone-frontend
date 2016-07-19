@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { InfosFcn } from 'components/static/recordList/InfosFcn';
+import { DuplicateBtn } from 'components/connected/recordList/DuplicateBtn';
 import { OrderFcn } from 'components/connected/recordList/OrderFcn';
 import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
 
@@ -30,6 +31,7 @@ export class Row extends Component {
 		const modifCell = (
 			<td className="list-functions">
 				<Link to={`/edit/${this.props.table.name}/${this.props.values.prikey}`} activeClassName="active" className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+				<DuplicateBtn tableName={this.props.table.name} prikey={this.props.values.prikey} />
 				<DeleteBtn tableName={this.props.table.name} prikey={this.props.values.prikey} />
 			</td>
 		);

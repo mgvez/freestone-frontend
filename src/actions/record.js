@@ -1,3 +1,4 @@
+import { push as pushPath } from 'react-router-redux';
 import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 
 export const REQUEST_RECORD_LIST = 'REQUEST_RECORD_LIST';
@@ -103,6 +104,11 @@ export function duplicateRecord(tableName, id) {
 				types: ['api::duplicate-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
 				route: `duplicate/${tableName}/${id}`,
 			},
+		}).then((res) => {
+			// console.log(res);
+			const { rootRecordId } = res;
+			return dispatch(pushPath(`edit/${tableName}/${rootRecordId}`));
+
 		});
 	};
 }
