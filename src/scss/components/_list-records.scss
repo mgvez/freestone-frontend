@@ -1,0 +1,41 @@
+
+.padded-content {
+	padding: 0 150px;
+}
+
+.list-records {
+	width: 100%;
+	margin-top: 20px;
+
+	th, td {
+		text-align: left;
+		border-bottom: 1px solid $gray86;
+		border-top: 1px solid $gray86;
+		background: $white;
+
+		&:first-child {
+			border-left: 1px solid $gray86;
+		}
+
+		&:last-child {
+			border-right: 1px solid $gray86;
+		}
+	}
+
+	th {
+		padding: 10px 20px;
+	}
+
+	td {
+		padding: 20px;
+		vertical-align: middle;
+	}
+
+	@for $i from 1 through 5 {
+		tr.level-#{$i} {
+			td:first-child {
+				padding-left: 20px * $i;
+			}
+		}
+	}
+}
