@@ -17,6 +17,26 @@ input[role="combobox"] {
 		border: 2px solid $color-accent-primary;
 		outline: none;
 	}
+
+	&.search-input {
+		width: 200px;
+		vertical-align: middle;
+	}
+}
+
+.button-search {
+	height: 40px;
+	line-height: 40px;
+
+	padding: 0;
+	width: 40px;
+
+	border-radius: 5px;
+	margin-left: 10px;
+
+	i {
+		margin-right: 0;
+	}
 }
 
 .mce-tinymce {

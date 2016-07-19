@@ -116,8 +116,8 @@ export class List extends Component {
 
 					<div className="padded-content">
 						<form onSubmit={this.handleSubmit}>
-							<input placeholder="search" ref="searchVal" initialValue="" />
-							<button><i className="fa fa-search"></i></button>
+							<input className="search-input" type="text" placeholder="search" ref="searchVal" initialValue="" />
+							<button className="button-search"><i className="fa fa-search"></i></button>
 						</form>
 					</div>
 
