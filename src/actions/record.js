@@ -95,6 +95,18 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 	};
 }
 
+export function duplicateRecord(tableName, id) {
+	return (dispatch) => {
+		// console.log(`record/${tableName}/${parentTable}/${id}`);
+		return dispatch({
+			[FREESTONE_API]: {
+				types: ['api::duplicate-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
+				route: `duplicate/${tableName}/${id}`,
+			},
+		});
+	};
+}
+
 export function fetchMtmRecords(tableName, id, parentTable = 0) {
 	return (dispatch) => {
 		return dispatch({
