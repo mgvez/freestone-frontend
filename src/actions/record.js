@@ -65,7 +65,11 @@ export function addRecord(tableId, newRecord) {
 	return (dispatch) => {
 		return dispatch({
 			type: RECEIVE_RECORD,
-			data: { tableId, records: [newRecord] },
+			data: {
+				tables: [
+					{ tableId, records: [newRecord] },
+				],
+			},
 		});
 	};
 }

@@ -1,6 +1,6 @@
 
 import uniqueId from 'utils/UniqueId';
-import { PRIKEY_ALIAS, PARENTKEY_ALIAS, TYPE_ORDER } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, TYPE_ORDER } from 'freestone/schemaProps';
 
 export default (table, parentTableId, parentRecordId, orderVal) => {
 	const newRecord = table.fields.reduce((record, field) => {
@@ -17,7 +17,7 @@ export default (table, parentTableId, parentRecordId, orderVal) => {
 
 	if (parentTableId) {
 		const parentFieldId = table.parentLink[parentTableId] && table.parentLink[parentTableId].id;
-		newRecord[`${PARENTKEY_ALIAS}_${parentTableId}`] = newRecord[parentFieldId] = parentRecordId;
+		newRecord[parentFieldId] = parentRecordId;
 	}
 
 	return {

@@ -4,9 +4,11 @@ import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 import { tableRecordsMapStateToProps } from 'selectors/record';
 import { subformViewSelector } from 'selectors/subformView';
+import { schemaSelector } from 'selectors/schema';
 import { isNew } from 'utils/UniqueId';
+import { getForeignFieldId } from 'freestone/schemaHelpers';
 
-import { PARENTKEY_ALIAS, PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
 
 const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
@@ -16,11 +18,11 @@ const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 
 
-function getRecordsFromParent(records, parentRecordId, parentTableId) {
+function getRecordsFromParent(records, parentRecordId, linkFieldId) {
 	return Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		// console.log(record);
-		return (record[`${PARENTKEY_ALIAS}_${parentTableId}`] === parentRecordId && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
+		return (record[linkFieldId] === parentRecordId && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
 	}).filter(record => record);
 }
 
@@ -55,9 +57,11 @@ function getLabeledRecords(records, searchableFields, orderField) {
 
 function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 	return createSelector(
-		[tableSchemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector],
-		(schema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView) => {
+		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector],
+		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView) => {
 			const { table } = schema;
+			const { tables } = allSchema;
+
 			if (table) {
 				const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
 				const parentLinkField = table.parentLink[parentTableId];
@@ -68,7 +72,9 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 
 				let childrenRecords;
 				if (areLoaded || isNew(parentRecordId)) {
-					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, parentTableId) : [];
+					const subformFieldId = getForeignFieldId(table.id, parentTableId, tables);
+					// console.log(subformFieldId);
+					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, subformFieldId) : [];
 					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
 					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
 					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);
