@@ -35,20 +35,20 @@
 	border-radius: 15px;
 }
 
-%warn_button {
-	background: $color-warn-primary;
+@mixin button-color-modifier($color) {
+	background: $color;
 
 	&:hover {
-		background: darken($color-warn-primary, 10%);
+		background: darken($color, 10%);
 	}
 }
 
-%danger_button {
-	background: $color-danger-primary;
+%warn_button {
+	@include button-color-modifier($color-warn-primary);
+}
 
-	&:hover {
-		background: darken($color-danger-primary, 10%);
-	}
+%danger_button {
+	@include button-color-modifier($color-danger-primary);
 }
 
 %circle_button {
