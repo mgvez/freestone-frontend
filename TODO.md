@@ -1,5 +1,4 @@
 ## General
-- Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
 - Quand erreur au save, btn confirm avant de retourner (pas de timeout)
 - mettre un search general
 - Banque : liste de thumbnails au lieu de records en table

@@ -72,6 +72,7 @@ export class AutocompleteInput extends Input {
 		// console.log(`select ${suggestionValue}`);
 		this.changeVal(suggestion.value);
 		this.setCurrentText(suggestionValue);
+		
 	};
 
 	onChange = (event, { newValue }) => {
@@ -84,6 +85,9 @@ export class AutocompleteInput extends Input {
 		// console.log(`blur`);
 		const current = this.getCurrentOption();
 		this.setCurrentText(current && current.label);
+		this.setState({
+			suggestions: this.getSuggestions(),
+		});
 	};
 
 	onSuggestionsUpdateRequested = ({ value }) => {
@@ -94,6 +98,8 @@ export class AutocompleteInput extends Input {
 	};
 
 	getSuggestions = (value) => {
+		// console.log(`getSuggestions ${value}`);
+
 		const options = this.props.foreignOptions && this.props.foreignOptions.values;
 		if (!options) return [];
 		if (!value) return options;
@@ -101,9 +107,11 @@ export class AutocompleteInput extends Input {
 
 		const inputValue = value.trim().toLowerCase();
 		const inputLength = inputValue.length;
-		return inputLength === 0 ? options : options.filter(option => {
+		const res = inputLength === 0 ? options : options.filter(option => {
 			return option.label.match(this.regexMatchOption);
 		});
+		// console.log(res);
+		return res;
 	}
 
 	getCurrentOption() {

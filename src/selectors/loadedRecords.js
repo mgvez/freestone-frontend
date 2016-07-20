@@ -45,7 +45,7 @@ export const loadedRecords = createSelector(
 						}
 
 						return val;
-					}).join(' | ');
+					}).filter(val => !!val).join(' | ');
 					// console.log(`${table.displayLabel} - ${label}`);
 
 					const hasBeenOpenedFor = Math.round(now - rec[LOADED_TIME_ALIAS]);
