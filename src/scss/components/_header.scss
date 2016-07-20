@@ -1,6 +1,6 @@
 
 
-#main-header {
+.main-content > header {
 	padding: 15px 25px;
 	background: $gray96;
 	position: absolute;
@@ -8,6 +8,8 @@
 		right: 0;
 	width: calc(100% - #{$nav-width});
 	height: $header-height;
+
+	transition: width 0.3s;
 
 	.logout {
 		position: absolute;

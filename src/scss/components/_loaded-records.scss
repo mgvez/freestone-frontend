@@ -12,6 +12,8 @@
 	background: $color-background-dark;
 	color: $color-text-secondary;
 
+	transform: translate(0, 100%);
+
 	&.sticky {
 		position: fixed;
 			top: 0;

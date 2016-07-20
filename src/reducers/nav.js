@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { ADD_NAV, TOGGLE_NAV } from 'actions/nav';
+import { ADD_NAV, TOGGLE_NAV, TOGGLE_VISIBILITY } from 'actions/nav';
 import { SAVE_RECORD_SUCCESS } from 'actions/save';
 
 const navInitialState = {
@@ -45,9 +45,24 @@ function toggleState(state = {}, action) {
 }
 
 
+function toggleVisibility(state = {}, action) {
+	switch (action.type) {
+	case TOGGLE_VISIBILITY:
+		const wantedVisibility = action.data;
+		return {
+			...state,
+			visible: wantedVisibility, 
+		};
+	default:
+		return state;
+	}
+}
+
+
 // function currentNav()
 
 export default combineReducers({
 	structure,
 	toggleState,
+	toggleVisibility,
 });

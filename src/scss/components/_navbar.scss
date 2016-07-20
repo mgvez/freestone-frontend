@@ -1,4 +1,32 @@
 
+.navbar-container {
+	&.collapsed {
+		.navbar-default {
+			transform: translate(-100%, 0);
+		}
+		
+		& + .main-content {
+			padding-left: 0;
+
+			header {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.nav-collapse {
+	position: fixed;
+		top: 0;
+		left: 500px;
+
+	z-index: 99999;
+
+	height: 100px;
+	background: $color-background-dark;
+	color: $white;
+	cursor: pointer;
+}
 
 .navbar-default {
 	background: $color-background-dark;
@@ -10,6 +38,8 @@
 	width: $nav-width;
 	height: 100vh;
 	overflow-y: scroll;
+
+	transition: transform 0.3s;
 
 	.user {
 		padding: 40px 25px;

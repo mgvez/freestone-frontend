@@ -3,6 +3,7 @@ import { push as pushPath } from 'react-router-redux';
 
 export const ADD_NAV = 'ADD_NAV';
 export const TOGGLE_NAV = 'TOGGLE_NAV';
+export const TOGGLE_VISIBILITY = 'TOGGLE_NAV_VISIBILITY';
 
 export function fetchNav() {
 	return (dispatch) => {
@@ -12,6 +13,16 @@ export function fetchNav() {
 				types: [null, ADD_NAV, null],
 				route: 'nav',
 			},
+		});
+	};
+}
+
+
+export function toggleVisibility(wantedVisibility) {
+	return (dispatch) => {
+		return dispatch({
+			type: TOGGLE_VISIBILITY,
+			data: wantedVisibility,
 		});
 	};
 }

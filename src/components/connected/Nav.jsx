@@ -17,10 +17,12 @@ export class Nav extends Component {
 	static propTypes = {
 		fetchNav: React.PropTypes.func,
 		toggleCollapse: React.PropTypes.func,
+		toggleVisibility: React.PropTypes.func,
 
 		tree: React.PropTypes.array,
 		toggleState: React.PropTypes.object,
 		username: React.PropTypes.string,
+		visible: React.PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -39,21 +41,30 @@ export class Nav extends Component {
 		if (!props.tree.length) this.props.fetchNav();
 	}
 
+	clickCollapse = () => {
+		const isFirstTime = this.props.visible === undefined;
+		const visibility = isFirstTime ? false : !this.props.visible;
+
+		this.props.toggleVisibility(visibility);
+	};
+
 	render() {
-		// console.log('%cRender menu', 'font-weight: bold');
-		// console.log(this.props.tree);
+		const collapsedClass = this.props.visible ? 'collapsed' : '';
 		return (
-			<nav className="navbar-default" role="navigation">
-				<UserInfos />
-				<ul>
-				{
-					this.props.tree.map((item) => {
-						// console.log('item...');
-						return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
-					})
-				}
-				</ul>
-			</nav>
+			<div className={`navbar-container ${collapsedClass}`}>
+				<div className="nav-collapse" onClick={this.clickCollapse}>Collapse moé</div>
+				<nav className={`navbar-default ${collapsedClass}`} role="navigation">
+					<UserInfos />
+					<ul>
+					{
+						this.props.tree.map((item) => {
+							// console.log('item...');
+							return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
+						})
+					}
+					</ul>
+				</nav>
+			</div>
 		);
 	}
 }

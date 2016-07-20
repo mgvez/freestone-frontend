@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 export class SiteHeader extends Component {
 	static propTypes = {
 		logout: React.PropTypes.func,
+		toggleLoadedRecords: React.PropTypes.func,
 		clearErrors: React.PropTypes.func,
 		clearData: React.PropTypes.func,
 		startPerf: React.PropTypes.func,
@@ -50,6 +51,11 @@ export class SiteHeader extends Component {
 					<button className="btn btn-xs" onClick={this.props.stopPerf}>
 						Stop perf
 					</button>
+				</div>
+				<div className="toggle-loaded">
+					<a onClick={this.props.toggleLoadedRecords}>
+						<i></i> Toggle loaded
+					</a>
 				</div>
 				<div className="logout">
 					<a onClick={this.props.logout}>
