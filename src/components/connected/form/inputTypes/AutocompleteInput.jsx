@@ -14,7 +14,6 @@ function getItemValue(item) {
 }
 
 function renderItem(item, currentVal) {
-	// const isHighlighted = item.label.trim().toLowerCase() === currentVal.value.trim().toLowerCase();
 	return (
 		<span key={item.value}>
 			{item.label}
@@ -55,6 +54,13 @@ export class AutocompleteInput extends Input {
 		//quand on change de record, empty le texte entré, pour mettre la valeur réelle du champ
 		if (nextProps.recordId !== this.props.recordId) {
 			this.setCurrentText(null);
+		}
+
+		if (nextProps.foreignOptions !== this.props.foreignOptions) {
+			// console.log(nextProps.foreignOptions);
+			this.setState({
+				suggestions: this.getSuggestions(null, nextProps.foreignOptions),
+			});
 		}
 	}
 
@@ -97,10 +103,10 @@ export class AutocompleteInput extends Input {
 		});
 	};
 
-	getSuggestions = (value) => {
+	getSuggestions = (value, foreignOptions) => {
 		// console.log(`getSuggestions ${value}`);
 
-		const options = this.props.foreignOptions && this.props.foreignOptions.values;
+		const options = (foreignOptions && foreignOptions.values) || (this.props.foreignOptions && this.props.foreignOptions.values);
 		if (!options) return [];
 		if (!value) return options;
 		// console.log(options);
@@ -122,12 +128,13 @@ export class AutocompleteInput extends Input {
 	render() {
 		
 		// console.log(`VAL ${this.props.val}`);
-		if (!this.props.foreignOptions) return null;
+		if (!this.props.foreignOptions || !this.props.foreignOptions.values.length) return null;
 
 		const current = this.getCurrentOption();
 		// console.log(current);
 		const value = (this.state.currentText !== null && this.state.currentText) || current.label;
 		const { suggestions } = this.state;
+		// console.log('render with "%s" tx, %s options', value, suggestions.length);
 		const inputProps = {
 			placeholder: '',
 			value,
@@ -146,6 +153,7 @@ export class AutocompleteInput extends Input {
 				onSuggestionSelected={this.onSelect}
 				renderSuggestion={renderItem}
 				getSuggestionValue={getItemValue}
+				focusFirstSuggestion
 				shouldRenderSuggestions={shouldRenderSuggestions}
 			/>
 			{thumb}
