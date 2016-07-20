@@ -1,34 +1,15 @@
-# Todo
-
-## next
-
-## Respond to window size
-https://facebook.github.io/react/tips/dom-event-listeners.html
-
-## implementer / refactor
-[https://blog.risingstack.com/react-js-best-practices-for-2016/](https://blog.risingstack.com/react-js-best-practices-for-2016/)
-- voir https://gist.github.com/Chrisui/49e76eb8b4ff887967e9
-- reecrire les components en functional components https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components et https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.de5b5b1q8
-
 ## General
 - Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
 - Quand erreur au save, btn confirm avant de retourner (pas de timeout)
 - mettre un search general
 - Banque : liste de thumbnails au lieu de records en table
 - au logout, save le state entier du user à la db
-- Drag & drop dans liste pour order
 - Mettre les subforms collapse/decollapse
 - liste des anciennes révisions du record
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 - remettre les icones par defaut pour les table groups default freestone
 
 # Freestone PHP
-- tester definitions dans install config
-	- mettre field_type
-- verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
-	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
-	- childrenAreLoaded (reducer record-form) est problématique
-	- getRecords de formchildrenrecord reselect fucké
 
 # Freestone JS
 - link vers home
@@ -60,6 +41,7 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - all
 
 # Pluss tard
+- Drag & drop dans liste pour order
 - Unit tests 20%
 - insert image de banque : drag & drop
 - faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
@@ -79,6 +61,11 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 	}
 
 
+## implementer / refactor
+[https://blog.risingstack.com/react-js-best-practices-for-2016/](https://blog.risingstack.com/react-js-best-practices-for-2016/)
+- voir https://gist.github.com/Chrisui/49e76eb8b4ff887967e9
+- reecrire les components en functional components https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components et https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.de5b5b1q8
+- Respond to window size https://facebook.github.io/react/tips/dom-event-listeners.html
 
 
 

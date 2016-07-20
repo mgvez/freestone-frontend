@@ -5,6 +5,7 @@ import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 import { recordMapStateToProps, recordUnalteredMapStateToProps } from 'selectors/record';
 import { userViewLanguageSelector } from 'selectors/userViewLanguage';
+import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 
 // const recordsSelector = state => state.recordForm.records;
@@ -77,7 +78,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, userViewLanguage) => {
 			let { table } = schema;
 			let children;
-			const recordId = record && record.prikey;
+			const recordId = record && record[PRIKEY_ALIAS];
 			// console.log(`build record for ${recordId}`, table && table.name);
 			// console.log(recordSelected, record);
 

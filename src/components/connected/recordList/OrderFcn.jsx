@@ -35,10 +35,10 @@ export class OrderFcn extends Component {
 	render() {
 				
 		return (
-			<td>
+			<div>
 				<a className="fa fa-arrow-circle-up" onClick={this.swapOrderUp}>&nbsp;</a>
 				<a className="fa fa-arrow-circle-down" onClick={this.swapOrderDown}>&nbsp;</a>
-			</td>
+			</div>
 		);
 	}
 }

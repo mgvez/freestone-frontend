@@ -19,11 +19,11 @@ export class InfosFcn extends Component {
 		const created = this.props.createddate || 'unknown';
 		const modified = this.props.lastmodifdate || 'unknown';
 		return (
-			<td className="modification" colSpan="25">
+			<div className="modification" colSpan="25">
 				created { created }, 
 				modified { modified }, 
 				<em><a target="_blank" href={recordLink}>{ this.props.prikey }</a></em>
-			</td>
+			</div>
 		);
 	}
 }

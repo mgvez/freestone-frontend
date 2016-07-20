@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 import { routeSelector } from 'selectors/route';
 
+import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 const recordsSelector = state => state.recordList;
 const paramsSelector = (state, props) => props.params;
@@ -25,7 +26,7 @@ function reorderSelfTree(records) {
 	const copy = records.map(r => { return { ...r }; });
 	const tree = copy.reduce((carry, item) => {
 		const parentId = Number(item.parent);
-		const parentRecord = copy.find(record => Number(record.prikey) === parentId);
+		const parentRecord = copy.find(record => Number(record[PRIKEY_ALIAS]) === parentId);
 
 		if (!parentId || !parentRecord) {
 			carry.push(item);
