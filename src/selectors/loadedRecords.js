@@ -43,8 +43,9 @@ export const loadedRecords = createSelector(
 							});
 							return foreignRec && foreignRec.label;
 						}
-
-						return val;
+						const node = document.createElement('div');
+						node.innerHTML = val;
+						return node.textContent || null;
 					}).filter(val => !!val).join(' | ');
 					// console.log(`${table.displayLabel} - ${label}`);
 

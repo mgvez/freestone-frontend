@@ -19,6 +19,7 @@ export class SubformTabbed extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
+		language: React.PropTypes.string,
 
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
@@ -74,7 +75,7 @@ export class SubformTabbed extends Component {
 					/>
 				</nav>
 
-				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} />
+				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} language={this.props.language}/>
 			</section>
 		);
 

@@ -7,6 +7,8 @@
 - liste des anciennes révisions du record
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 - remettre les icones par defaut pour les table groups default freestone
+- remember des scroll quand retourne a liste apres edit
+- cancel (replace placeholder) quand clique dans overlay du popin banque
 
 # Freestone PHP
 

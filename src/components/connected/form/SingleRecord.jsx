@@ -124,6 +124,7 @@ export class SingleRecord extends Component {
 										tableId={tableId}
 										parentTableId={this.props.table.id}
 										parentRecordId={this.props.recordId}
+										language={this.props.language}
 									/>
 								);
 							})

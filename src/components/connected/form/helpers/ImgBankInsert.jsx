@@ -114,7 +114,7 @@ export class ImgBankInsert extends Component {
 		const { editing } = this.state;
 		if (editing) {
 			content = (
-				<RootForm params={{ recordId: editing, tableName: BANK_IMG_TABLE }} finishCallback={this.stopEditing} />
+				<RootForm params={{ recordId: editing, tableName: BANK_IMG_TABLE }} finishCallback={this.stopEditing} isModal />
 			);
 		} else if (this.props.records) {
 			content = this.props.records.map((record, idx) => {

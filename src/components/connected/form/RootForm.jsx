@@ -24,6 +24,8 @@ export class RootForm extends Component {
 			recordId: React.PropTypes.string,
 		}),
 
+		isModal: React.PropTypes.bool,
+		language: React.PropTypes.string,
 		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
@@ -43,6 +45,7 @@ export class RootForm extends Component {
 
 		this.setState({
 			saving: false,
+			language: null,
 		});
 	}
 
@@ -54,6 +57,13 @@ export class RootForm extends Component {
 		const { tableName } = props.params;
 		if (!props.table) this.props.fetchTable(tableName);
 	}
+
+	// *
+	// Les modales sont ouvertes en langue courante, mais quand on toggle la langue, c'est form-specific (i.e. pas dans le store)
+	
+	// setLanguageState = () => {
+
+	// }
 
 	save = () => {
 		this.setState({
@@ -92,7 +102,7 @@ export class RootForm extends Component {
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot />
+				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot language={this.props.language}/>
 			);
 
 			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;
