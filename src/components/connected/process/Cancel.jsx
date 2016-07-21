@@ -44,8 +44,7 @@ export class Cancel extends Component {
 		if (this.props.callback) {
 			this.props.callback();
 		} else {
-			const backPath = { path: `list/${this.props.tableName}` };
-			this.props.goTo(backPath);
+			this.props.goTo(`list/${this.props.tableName}`);
 		}
 	};
 

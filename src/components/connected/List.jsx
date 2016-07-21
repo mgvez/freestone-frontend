@@ -37,8 +37,6 @@ export class List extends Component {
 		curPage: React.PropTypes.number,
 		nRecords: React.PropTypes.number,
 		search: React.PropTypes.string,
-		qstr: React.PropTypes.string,
-		path: React.PropTypes.string,
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,

@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { ADD_NAV, TOGGLE_NAV } from 'actions/nav';
+import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL } from 'actions/nav';
 import { SAVE_RECORD_SUCCESS } from 'actions/save';
 
 const navInitialState = {
@@ -43,6 +43,26 @@ function toggleState(state = {}, action) {
 		return state;
 	}
 }
+function scrollLock(state = {}, action) {
+	// console.log(action);
+	switch (action.type) {
+	case LOCK_SCROLL:
+		const { path, scroll } = action.data;
+		// console.log(path, scroll);
+		const newState = {
+			...state,
+		};
+		if (!scroll) {
+			delete(newState[path]);
+		} else {
+			newState[path] = scroll;
+		}
+		return newState;
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
 
 
 // function currentNav()
@@ -50,4 +70,5 @@ function toggleState(state = {}, action) {
 export default combineReducers({
 	structure,
 	toggleState,
+	scrollLock,
 });

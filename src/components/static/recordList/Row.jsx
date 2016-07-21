@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { RecordInteractions } from 'components/static/recordList/RecordInteractions';
+import { RecordInteractions } from 'components/connected/recordList/RecordInteractions';
 import { createCells } from 'components/static/recordList/row/createCells';
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { PRIKEY_ALIAS } from 'freestone/schemaProps';

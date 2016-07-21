@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { saveRecord } from 'actions/save';
-import { goTo } from 'actions/nav';
 
 import { buildSaveRecordSelector } from 'selectors/buildRecord';
 

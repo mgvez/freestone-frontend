@@ -40,7 +40,11 @@ export class RootForm extends Component {
 	}
 
 	componentWillMount() {
-		window.scrollTo(0, 0);
+		
+		if (!this.props.isModal) {
+			window.scrollTo(0, 0);
+		}
+
 		this.requireData(this.props);
 
 		this.setState({
@@ -57,11 +61,9 @@ export class RootForm extends Component {
 	Les modales sont ouvertes en langue courante, mais quand on toggle la langue, c'est form-specific (i.e. pas dans le store)
 	*/
 	setLanguageState = (language) => {
-		console.log(language);
 		this.setState({
 			language,
 		});
-		console.log(this.state);
 	}
 
 	save = () => {

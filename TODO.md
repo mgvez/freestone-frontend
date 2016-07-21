@@ -6,7 +6,6 @@
 - Mettre les subforms collapse/decollapse
 - liste des anciennes révisions du record
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
-- remettre les icones par defaut pour les table groups default freestone
 - remember des scroll quand retourne a liste apres edit
 - cancel (replace placeholder) quand clique dans overlay du popin banque
 
@@ -14,7 +13,6 @@
 
 # Freestone JS
 - link vers home
-- pouvoir editer son propre compte
 
 ## Dashboard
 - Analytics
@@ -34,8 +32,6 @@
 - changement de langue : sticky
 - link to document from bank
 - champ type url
-- quand edit img banque et change lang, ferme popin
-	- parce que le input sous-jacent change aussi car il répond au state. Soit mettre les 2 langues dans le form de bank, ou mettre le lang local aux forms din popins, ou mettre que le lang est table-specific
 - Mettre focus sur TinyMCE quand on l'edit et pas juste dans ses sous components.
 
 ## Pages
