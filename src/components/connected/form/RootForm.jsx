@@ -53,38 +53,47 @@ export class RootForm extends Component {
 		this.requireData(nextProps);
 	}
 
-	requireData(props) {
-		const { tableName } = props.params;
-		if (!props.table) this.props.fetchTable(tableName);
+	/**
+	Les modales sont ouvertes en langue courante, mais quand on toggle la langue, c'est form-specific (i.e. pas dans le store)
+	*/
+	setLanguageState = (language) => {
+		console.log(language);
+		this.setState({
+			language,
+		});
+		console.log(this.state);
 	}
-
-	// *
-	// Les modales sont ouvertes en langue courante, mais quand on toggle la langue, c'est form-specific (i.e. pas dans le store)
-	
-	// setLanguageState = () => {
-
-	// }
 
 	save = () => {
 		this.setState({
 			saving: true,
 		});
-	};
+	}
+
+	requireData(props) {
+		const { tableName } = props.params;
+		if (!props.table) this.props.fetchTable(tableName);
+	}
 
 	render() {
 
 		let header;
 		let form;
 		let meta;
+
+		//langue peut être locale (si par ex. dans une modale) pour éviter les rerender des autres formulaires. Si présente en state, priorité sur store
+		const language = this.state.language || this.props.language;
+
 		if (this.props.table) {
 			
 			if (this.state.saving) {
 				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} />;
 			}
 
-			const languageToggler = this.props.hasLanguageToggle ? (
-				<LanguageToggler />
-			) : null;
+			let languageToggler;
+			if (this.props.hasLanguageToggle) {
+				languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.setLanguageState : null} localLanguage={language} />;
+			}
 
 			header = (
 				<header>
@@ -102,7 +111,7 @@ export class RootForm extends Component {
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot language={this.props.language}/>
+				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot language={language}/>
 			);
 
 			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;
