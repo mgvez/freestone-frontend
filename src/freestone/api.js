@@ -40,6 +40,9 @@ export function callApi(route, data) {
 			method,		
 			data,
 			headers,
-		}).then(resolve, reject);
+		}).then(resolve, (res) => {
+			// console.log(res);
+			reject(new Error(res.responseText));
+		});
 	});
 }
