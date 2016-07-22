@@ -13,8 +13,8 @@ import { siteHeaderSelector } from 'selectors/siteHeader';
 export class SiteHeader extends Component {
 	static propTypes = {
 		toggleNavVisibility: React.PropTypes.func,
-		logout: React.PropTypes.func,
 		toggleLoadedRecords: React.PropTypes.func,
+		logout: React.PropTypes.func,
 		clearErrors: React.PropTypes.func,
 		clearData: React.PropTypes.func,
 		startPerf: React.PropTypes.func,
@@ -23,6 +23,7 @@ export class SiteHeader extends Component {
 
 		env: React.PropTypes.object,
 		nav_visibility: React.PropTypes.bool,
+		loaded_records_visibility: React.PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -42,18 +43,26 @@ export class SiteHeader extends Component {
 	// 	this.refs.header.style.opacity = opacity;
 	// }
 
-	collapseNav = () => {
+	navToggler = () => {
 		const isFirstTime = this.props.nav_visibility === undefined;
 		const visibility = isFirstTime ? false : !this.props.nav_visibility;
 
 		this.props.toggleNavVisibility(visibility);
 	};
 
+	loadedRecordsToggler = () => {
+		const isFirstTime = this.props.loaded_records_visibility === undefined;
+		const visibility = isFirstTime ? true : !this.props.loaded_records_visibility;
+
+		this.props.toggleLoadedRecords(visibility);
+	};
+
 	render() {
 		// console.log(this.props.env);
 		return (
 			<header id="main-header" ref="header">
-				<div className="nav-toggler" onClick={this.collapseNav}>Toggle moé la nav</div>
+				<div className="nav-toggler" onClick={this.navToggler}>Toggle moé la nav</div>
+				<div className="loaded-records-toggler" onClick={this.loadedRecordsToggler}>Toggle loaded records</div>
 				<div className="fcn">
 					<button className="btn btn-xs" onClick={this.props.clearSchema}>
 						Clear schema
@@ -70,11 +79,6 @@ export class SiteHeader extends Component {
 					<button className="btn btn-xs" onClick={this.props.stopPerf}>
 						Stop perf
 					</button>
-				</div>
-				<div className="toggle-loaded">
-					<a onClick={this.props.toggleLoadedRecords}>
-						<i></i> Toggle loaded
-					</a>
 				</div>
 				<div className="logout">
 					<a onClick={this.props.logout}>

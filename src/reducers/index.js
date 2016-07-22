@@ -18,6 +18,7 @@ import save from './save';
 const rootReducer = combineReducers({
 	form: formReducer,
 	routing: routerReducer,
+	siteHeader,
 	nav,
 	env,
 	userViewSettings,
@@ -32,7 +33,6 @@ const rootReducer = combineReducers({
 	subform,
 	imageBankList,
 	clientVariables,
-	siteHeader,
 });
 
 export default rootReducer;

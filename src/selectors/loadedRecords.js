@@ -6,10 +6,11 @@ import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from 'freestone/schemaProp
 import { RECORD_LOADED_SAFE_LIFE } from 'freestone/settings';
 
 const recordsSelector = state => state.recordForm.records;
+const toggleLoadedRecordsSelector = state => state.siteHeader.toggleLoadedRecords.loaded_records_visibility;
 
 export const loadedRecords = createSelector(
-	[schemaSelector, recordsSelector, allForeignOptionsSelector],
-	(schema, allRecords, allForeignOptions) => {
+	[schemaSelector, recordsSelector, allForeignOptionsSelector, toggleLoadedRecordsSelector],
+	(schema, allRecords, allForeignOptions, visible) => {
 		// console.log(schema);
 		const tableIds = Object.keys(allRecords);
 		const unloadedForeignOptions = [];
@@ -72,6 +73,7 @@ export const loadedRecords = createSelector(
 		return {
 			records: recordsByTable,
 			unloadedForeignOptions,
+			visible,
 		};
 	}
 );

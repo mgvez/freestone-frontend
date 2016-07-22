@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TOGGLE_NAV_VISIBILITY } from 'actions/siteHeader';
+import { TOGGLE_NAV_VISIBILITY, TOGGLE_LOADED_RECORDS } from 'actions/siteHeader';
 
 function toggleNavVisibility(state = {}, action) {
 	switch (action.type) {
@@ -14,6 +14,20 @@ function toggleNavVisibility(state = {}, action) {
 	}
 }
 
+function toggleLoadedRecords(state = {}, action) {
+	switch (action.type) {
+	case TOGGLE_LOADED_RECORDS:
+		const wantedVisibility = action.data;
+		return {
+			...state,
+			loaded_records_visibility: wantedVisibility, 
+		};
+	default:
+		return state;
+	}
+}
+
 export default combineReducers({
 	toggleNavVisibility,
+	toggleLoadedRecords,
 });

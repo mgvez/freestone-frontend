@@ -44,7 +44,6 @@ export class Nav extends Component {
 		const collapsedClass = this.props.visible ? 'collapsed' : '';
 		return (
 			<div className={`navbar-container ${collapsedClass}`}>
-				<div className="nav-collapse" onClick={this.clickCollapse}>Collapse moé</div>
 				<nav className={`navbar-default ${collapsedClass}`} role="navigation">
 					<UserInfos />
 					<ul>

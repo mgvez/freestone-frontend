@@ -1,5 +1,9 @@
 
 
+body {
+	overflow-x: hidden;
+}
+
 .main-content {
 	padding-top: $header-height;
 	padding-left: $nav-width;

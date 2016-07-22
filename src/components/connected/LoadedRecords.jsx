@@ -21,6 +21,7 @@ export class LoadedRecords extends Component {
 		records: React.PropTypes.array,
 		unloadedForeignOptions: React.PropTypes.array,
 		toggleState: React.PropTypes.object,
+		visible: React.PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -68,9 +69,10 @@ export class LoadedRecords extends Component {
 		if (!this.props.records) return null;
 
 		const stickClass = this.state.isSticky ? 'sticky' : '';
+		const collapsedClass = this.props.visible ? '' : 'collapsed';
 
 		return (
-			<nav className={`loaded-records ${stickClass}`} ref={ref => this.nav = ref}>
+			<nav className={`loaded-records ${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {
