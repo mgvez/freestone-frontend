@@ -77,7 +77,7 @@ export class ImgBankInsert extends Component {
 		callApi(`bank/images/${id}`).then(res => {
 			// console.log(res);
 			this.props.setVal(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
-			this.closeModal();
+			this.closeModal(true);
 		}, err => {
 			console.log(err);
 		});
@@ -133,7 +133,7 @@ export class ImgBankInsert extends Component {
 			<Modal
 				isOpen
 				onAfterOpen={this.afterOpenModal}
-				onRequestClose={this.closeModal}
+				onRequestClose={this.cancelChange}
 				closeTimeoutMS={300}
 				style={customStyle}
 			>

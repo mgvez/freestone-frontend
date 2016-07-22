@@ -6,7 +6,7 @@
 - Mettre les subforms collapse/decollapse
 - liste des anciennes révisions du record
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
-- cancel (replace placeholder) quand clique dans overlay du popin banque
+
 
 # Freestone PHP
 
