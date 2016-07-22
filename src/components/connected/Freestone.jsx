@@ -10,7 +10,7 @@ import { clearSchema } from 'actions/schema';
 const actionCreators = { ...authActionCreators, ...devActionCreators, ...envActionCreators, clearSchema };
 
 /* application components */
-import { SiteHeader } from 'components/static/SiteHeader';
+import { SiteHeader } from 'components/connected/SiteHeader';
 import { Footer } from 'components/static/Footer';
 import { Errors } from 'components/static/Errors';
 import { Nav } from 'components/connected/Nav';

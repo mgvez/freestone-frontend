@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 import { default as nav } from './nav';
+import { default as siteHeader } from './siteHeader';
 import { default as schema } from './schema';
 import { auth } from './auth';
 import { env, userViewSettings, clientVariables } from './env';
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
 	subform,
 	imageBankList,
 	clientVariables,
+	siteHeader,
 });
 
 export default rootReducer;

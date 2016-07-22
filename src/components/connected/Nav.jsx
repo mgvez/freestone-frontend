@@ -17,7 +17,6 @@ export class Nav extends Component {
 	static propTypes = {
 		fetchNav: React.PropTypes.func,
 		toggleCollapse: React.PropTypes.func,
-		toggleVisibility: React.PropTypes.func,
 
 		tree: React.PropTypes.array,
 		toggleState: React.PropTypes.object,
@@ -40,13 +39,6 @@ export class Nav extends Component {
 	requireData(props) {
 		if (!props.tree.length) this.props.fetchNav();
 	}
-
-	clickCollapse = () => {
-		const isFirstTime = this.props.visible === undefined;
-		const visibility = isFirstTime ? false : !this.props.visible;
-
-		this.props.toggleVisibility(visibility);
-	};
 
 	render() {
 		const collapsedClass = this.props.visible ? 'collapsed' : '';
