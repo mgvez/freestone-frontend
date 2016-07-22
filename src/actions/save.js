@@ -18,6 +18,16 @@ export const DELETE_RECORD_ERROR = 'DELETE_RECORD_ERROR';
 
 export const INIT_SAVE = 'INIT_SAVE';
 
+function catchError(res) {
+
+	if (res instanceof Error) {
+		console.log('%cSAVE ERROR', 'color:magenta;font-weight:bold');
+		console.log(res);
+		return res;
+	}
+
+}
+
 
 export function saveRecord(table, tree, records, deleted, callback) {
 	return (dispatch) => {
@@ -38,7 +48,9 @@ export function saveRecord(table, tree, records, deleted, callback) {
 		});
 
 		return sendRecordFiles(dispatch, records).then(filesResult => {
-			// console.log(filesResult);
+
+			const filesErr = catchError(filesResult);
+			if (filesErr) return filesErr;
 
 			const fileNames = filesResult.reduce((carry, fileResult) => {
 				carry[fileResult.tmpName] = fileResult.name;
@@ -59,26 +71,25 @@ export function saveRecord(table, tree, records, deleted, callback) {
 				},
 			});
 
-			onSaved.then(() => {
+			onSaved.then((res) => {
+
+				const saveErr = catchError(res);
+				if (saveErr) return saveErr;
+
 				if (callback) {
 					callback();
 				} else {
 					const backPath = `list/${table.name}`;
-					setTimeout(() => {
-						//si table savée est meta (zva_...)
-						if (isMeta) {
-							dispatch({
-								type: CLEAR_SCHEMA,
-							});
-						}
-						// console.log(backPath);
-						dispatch(pushPath({
-							pathname: backPath,
-							state: {
-								scroll: 0,
-							},
-						}));
-					}, 1000);
+
+					//si table savée est meta (zva_...)
+					if (isMeta) {
+						dispatch({
+							type: CLEAR_SCHEMA,
+						});
+					}
+					// console.log(backPath);
+					dispatch(pushPath({ pathname: backPath }));
+
 				}
 			});
 

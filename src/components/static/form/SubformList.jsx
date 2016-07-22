@@ -13,6 +13,7 @@ export class SubformList extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
+		language: React.PropTypes.string,
 
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
@@ -38,7 +39,7 @@ export class SubformList extends Component {
 				</header>
 				{
 					this.props.childrenRecords.map((record, index) => {
-						return <SingleRecord key={record.id} tableName={this.props.table.name} recordId={record.id} />;
+						return <SingleRecord key={record.id} tableName={this.props.table.name} recordId={record.id} language={this.props.language}/>;
 					})
 				}
 				{

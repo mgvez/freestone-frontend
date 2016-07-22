@@ -20,6 +20,7 @@ export class Subform extends Component {
 		tableId: React.PropTypes.number,
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
+		language: React.PropTypes.string,
 
 		table: React.PropTypes.object,
 		fetchTable: React.PropTypes.func,
@@ -58,6 +59,7 @@ export class Subform extends Component {
 			tableId={this.props.tableId}
 			parentRecordId={this.props.parentRecordId}
 			parentTableId={this.props.parentTableId}
+			language={this.props.language}
 		/>);
 		
 	}

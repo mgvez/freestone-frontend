@@ -14,7 +14,6 @@ function getItemValue(item) {
 }
 
 function renderItem(item, currentVal) {
-	// const isHighlighted = item.label.trim().toLowerCase() === currentVal.value.trim().toLowerCase();
 	return (
 		<span key={item.value}>
 			{item.label}
@@ -56,6 +55,13 @@ export class AutocompleteInput extends Input {
 		if (nextProps.recordId !== this.props.recordId) {
 			this.setCurrentText(null);
 		}
+
+		if (nextProps.foreignOptions !== this.props.foreignOptions) {
+			// console.log(nextProps.foreignOptions);
+			this.setState({
+				suggestions: this.getSuggestions(null, nextProps.foreignOptions),
+			});
+		}
 	}
 
 	requireData(props) {
@@ -72,6 +78,7 @@ export class AutocompleteInput extends Input {
 		// console.log(`select ${suggestionValue}`);
 		this.changeVal(suggestion.value);
 		this.setCurrentText(suggestionValue);
+		
 	};
 
 	onChange = (event, { newValue }) => {
@@ -84,6 +91,9 @@ export class AutocompleteInput extends Input {
 		// console.log(`blur`);
 		const current = this.getCurrentOption();
 		this.setCurrentText(current && current.label);
+		this.setState({
+			suggestions: this.getSuggestions(),
+		});
 	};
 
 	onSuggestionsUpdateRequested = ({ value }) => {
@@ -93,17 +103,21 @@ export class AutocompleteInput extends Input {
 		});
 	};
 
-	getSuggestions = (value) => {
-		const options = this.props.foreignOptions && this.props.foreignOptions.values;
+	getSuggestions = (value, foreignOptions) => {
+		// console.log(`getSuggestions ${value}`);
+
+		const options = (foreignOptions && foreignOptions.values) || (this.props.foreignOptions && this.props.foreignOptions.values);
 		if (!options) return [];
 		if (!value) return options;
 		// console.log(options);
 
 		const inputValue = value.trim().toLowerCase();
 		const inputLength = inputValue.length;
-		return inputLength === 0 ? options : options.filter(option => {
+		const res = inputLength === 0 ? options : options.filter(option => {
 			return option.label.match(this.regexMatchOption);
 		});
+		// console.log(res);
+		return res;
 	}
 
 	getCurrentOption() {
@@ -114,12 +128,13 @@ export class AutocompleteInput extends Input {
 	render() {
 		
 		// console.log(`VAL ${this.props.val}`);
-		if (!this.props.foreignOptions) return null;
+		if (!this.props.foreignOptions || !this.props.foreignOptions.values.length) return null;
 
 		const current = this.getCurrentOption();
 		// console.log(current);
 		const value = (this.state.currentText !== null && this.state.currentText) || current.label;
 		const { suggestions } = this.state;
+		// console.log('render with "%s" tx, %s options', value, suggestions.length);
 		const inputProps = {
 			placeholder: '',
 			value,
@@ -138,6 +153,7 @@ export class AutocompleteInput extends Input {
 				onSuggestionSelected={this.onSelect}
 				renderSuggestion={renderItem}
 				getSuggestionValue={getItemValue}
+				focusFirstSuggestion
 				shouldRenderSuggestions={shouldRenderSuggestions}
 			/>
 			{thumb}

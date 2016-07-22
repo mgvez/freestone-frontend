@@ -125,7 +125,7 @@ export class FileInput extends Input {
 
 		const displayVal = val && (inputVal || origVal);
 
-		const thumbnail = <FileThumbnail val={origVal === val && val} localVal={this.state.localFile} dir={this.props.field.folder} type={this.props.field.type} />;
+		const thumbnail = <FileThumbnail val={origVal === val ? val : null} localVal={this.state.localFile} dir={this.props.field.folder} type={this.props.field.type} />;
 
 		return (
 			<div>

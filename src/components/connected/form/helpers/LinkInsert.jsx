@@ -83,7 +83,7 @@ export class LinkInsert extends Component {
 			<Modal
 				isOpen
 				onAfterOpen={this.afterOpenModal}
-				onRequestClose={this.closeModal}
+				onRequestClose={this.cancelChange}
 				closeTimeoutMS={n}
 				style={customStyle}
 			>

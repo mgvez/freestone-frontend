@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import md5 from 'md5';
 
 import { Gravatar } from 'components/static/widgets/Gravatar';
 

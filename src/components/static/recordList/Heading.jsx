@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 export class Heading extends Component {
 	static propTypes = {
 		fields: React.PropTypes.array,
-		hasOrder: React.PropTypes.bool,
 		isSelfTree: React.PropTypes.bool,
 	};
 
@@ -14,10 +13,6 @@ export class Heading extends Component {
 
 	render() {
 
-		let orderCell;
-		if (this.props.hasOrder) {
-			orderCell = (<th>Order</th>);
-		}
 
 		let fieldsCells;
 		//si self tree, cells par defaut
@@ -26,8 +21,6 @@ export class Heading extends Component {
 				<tr>
 					<th>Level</th>
 					<th>Item</th>
-					{ orderCell }
-					<th>Fcn</th>
 				</tr>
 			);
 		}
@@ -39,8 +32,6 @@ export class Heading extends Component {
 						return <th key={index}>{ field.label }</th>;
 					})
 				}
-				{ orderCell }
-				<th>Fcn</th>
 			</tr>
 		);
 

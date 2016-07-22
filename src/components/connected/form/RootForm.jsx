@@ -24,6 +24,8 @@ export class RootForm extends Component {
 			recordId: React.PropTypes.string,
 		}),
 
+		isModal: React.PropTypes.bool,
+		language: React.PropTypes.string,
 		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
@@ -38,11 +40,16 @@ export class RootForm extends Component {
 	}
 
 	componentWillMount() {
-		window.scrollTo(0, 0);
+		
+		if (!this.props.isModal) {
+			window.scrollTo(0, 0);
+		}
+
 		this.requireData(this.props);
 
 		this.setState({
 			saving: false,
+			language: null,
 		});
 	}
 
@@ -50,31 +57,51 @@ export class RootForm extends Component {
 		this.requireData(nextProps);
 	}
 
-	requireData(props) {
-		const { tableName } = props.params;
-		if (!props.table) this.props.fetchTable(tableName);
+	/**
+	Les modales sont ouvertes en langue courante, mais quand on toggle la langue, c'est form-specific (i.e. pas dans le store)
+	*/
+	setLanguageState = (language) => {
+		this.setState({
+			language,
+		});
 	}
 
 	save = () => {
 		this.setState({
 			saving: true,
 		});
-	};
+	}
+	
+	cancelSave = () => {
+		this.setState({
+			saving: false,
+		});
+	}
+
+	requireData(props) {
+		const { tableName } = props.params;
+		if (!props.table) this.props.fetchTable(tableName);
+	}
 
 	render() {
 
 		let header;
 		let form;
 		let meta;
+
+		//langue peut être locale (si par ex. dans une modale) pour éviter les rerender des autres formulaires. Si présente en state, priorité sur store
+		const language = this.state.language || this.props.language;
+
 		if (this.props.table) {
 			
 			if (this.state.saving) {
-				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} />;
+				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} cancelSave={this.cancelSave} />;
 			}
 
-			const languageToggler = this.props.hasLanguageToggle ? (
-				<LanguageToggler />
-			) : null;
+			let languageToggler;
+			if (this.props.hasLanguageToggle) {
+				languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.setLanguageState : null} localLanguage={language} />;
+			}
 
 			header = (
 				<header>
@@ -92,7 +119,7 @@ export class RootForm extends Component {
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot />
+				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot language={language}/>
 			);
 
 			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { routeSelector } from 'selectors/route';
+import { bindActionCreators } from 'redux';
 
+import { routeSelector } from 'selectors/route';
+import { lockScroll } from 'actions/nav';
 /**
-	Si dans le state du history on veut etre a un scroll au load d'une route, l'enforce
+	Permet de se souvenir d'un scroll dans une page. Quand on la quitte, on call l'action "lockScroll" avec le scroll current, et si ce component est placé dans le component, quand on reviendra à ce path, le scroll sera le même que quand on l'a quitté.
 */
 
 @connect(
-	routeSelector
+	routeSelector,
+	dispatch => bindActionCreators({ lockScroll }, dispatch)
 )
 export class InScroll extends Component {
 	static propTypes = {
@@ -15,6 +18,9 @@ export class InScroll extends Component {
 		path: React.PropTypes.string,
 		scroll: React.PropTypes.number,
 		isReady: React.PropTypes.bool,
+		
+		lockScroll: React.PropTypes.func,
+
 	};
 
 	constructor(props) {
@@ -34,6 +40,10 @@ export class InScroll extends Component {
 		if (this.props.isReady && !this.hasScrolled) {
 			window.scrollTo(0, this.props.scroll || 0);
 			this.hasScrolled = true;
+
+			//reset
+			this.props.lockScroll(this.props.path, 0);
+
 		}
 	}
 

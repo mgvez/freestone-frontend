@@ -4,7 +4,7 @@ const fieldsSelector = state => state.schema.fields;
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 import { recordMapStateToProps, recordUnalteredMapStateToProps } from 'selectors/record';
-import { userViewLanguageSelector } from 'selectors/userViewLanguage';
+import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 
 // const recordsSelector = state => state.recordForm.records;
@@ -73,11 +73,11 @@ function parseDependencies(table, record) {
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector) {
 	return createSelector(
-		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, userViewLanguageSelector],
-		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, userViewLanguage) => {
+		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector],
+		(schema, allFields, record, recordUnaltered, unfilteredChildren, env) => {
 			let { table } = schema;
 			let children;
-			const recordId = record && record.prikey;
+			const recordId = record && record[PRIKEY_ALIAS];
 			// console.log(`build record for ${recordId}`, table && table.name);
 			// console.log(recordSelected, record);
 
@@ -128,7 +128,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				table,
 				fields: table && table.fields,
 				env,
-				...userViewLanguage,
 			};
 		}
 	);
