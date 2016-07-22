@@ -44,10 +44,11 @@ function status(state = statusDefault, action) {
 			error: null,
 		};
 	case SAVE_RECORD_ERROR:
+		// console.log(action);
 		return {
 			code: SAVE_ERROR,
 			msg: 'record save error',
-			error: null,
+			error: action.error.response,
 		};
 	case INIT_SAVE:
 	case CLEAR_DATA:

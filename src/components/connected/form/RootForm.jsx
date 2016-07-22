@@ -71,6 +71,12 @@ export class RootForm extends Component {
 			saving: true,
 		});
 	}
+	
+	cancelSave = () => {
+		this.setState({
+			saving: false,
+		});
+	}
 
 	requireData(props) {
 		const { tableName } = props.params;
@@ -89,7 +95,7 @@ export class RootForm extends Component {
 		if (this.props.table) {
 			
 			if (this.state.saving) {
-				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} />;
+				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} cancelSave={this.cancelSave} />;
 			}
 
 			let languageToggler;

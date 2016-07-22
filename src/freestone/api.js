@@ -42,7 +42,17 @@ export function callApi(route, data) {
 			headers,
 		}).then(resolve, (res) => {
 			// console.log(res);
-			reject(new Error(res.responseText));
+			const err = new Error('API Error');
+			err.status = res.status;
+			err.statusText = res.statusText;
+			err.responseText = res.responseText;
+			try {
+				const jsonResponse = JSON.parse(res.response);
+				err.response = jsonResponse && jsonResponse.error;
+			} catch (e) {
+				err.response = res.response;
+			}
+			reject(err);
 		});
 	});
 }

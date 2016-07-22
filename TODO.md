@@ -7,7 +7,6 @@
 - liste des anciennes révisions du record
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 
-
 # Freestone PHP
 
 # Freestone JS
@@ -31,7 +30,7 @@
 - changement de langue : sticky
 - link to document from bank
 - champ type url
-- Mettre focus sur TinyMCE quand on l'edit et pas juste dans ses sous components.
+- Mettre focus sur TinyMCE quand on l'edit et pas juste dans ses sous components - Pic 2016-07-22.
 
 ## Pages
 - all
