@@ -4,6 +4,7 @@ import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { Header } from 'components/static/form/Header';
 import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
 import { AddRecord } from 'components/connected/form/buttons/AddRecord';
+import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 
 export class SubformList extends Component {
 	static propTypes = {
@@ -14,6 +15,7 @@ export class SubformList extends Component {
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
 		language: React.PropTypes.string,
+		isCollapsed: React.PropTypes.bool,
 
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
@@ -23,10 +25,31 @@ export class SubformList extends Component {
 		super(props);
 	}
 
+	getContent() {
+		if (this.props.isCollapsed) return null;
+		return (<div>
+			{
+				this.props.childrenRecords.map((record, index) => {
+					return <SingleRecord key={record.id} tableId={this.props.table.id} recordId={record.id} language={this.props.language}/>;
+				})
+			}
+			{
+				<AddRecord
+					table={this.props.table}
+					parentRecordId={this.props.parentRecordId}
+					parentTableId={this.props.parentTableId}
+					highestOrder={this.props.highestOrder}
+				/>
+			}
+		</div>);
+	}
+
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
+		const changeViewBtn = (!this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
+		const content = this.getContent();
 		return (
 			<section className="subform subform-list">
 				<header className="row">
@@ -34,22 +57,11 @@ export class SubformList extends Component {
 						<Header table={this.props.table} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
-						<ChangeSubformView tableId={this.props.table.id} />
+						{ changeViewBtn }
+						<ToggleSubform tableId={this.props.table.id} />
 					</div>
 				</header>
-				{
-					this.props.childrenRecords.map((record, index) => {
-						return <SingleRecord key={record.id} tableName={this.props.table.name} recordId={record.id} language={this.props.language}/>;
-					})
-				}
-				{
-					<AddRecord
-						table={this.props.table}
-						parentRecordId={this.props.parentRecordId}
-						parentTableId={this.props.parentTableId}
-						highestOrder={this.props.highestOrder}
-					/>
-				}
+				{ content }
 			</section>
 		);
 

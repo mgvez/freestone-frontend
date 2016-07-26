@@ -8,7 +8,7 @@ import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { AddRecord } from 'components/connected/form/buttons/AddRecord';
 import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
 import { Header } from 'components/static/form/Header';
-
+import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 
 @dragDropContext(HTML5Backend)
 export class SubformTabbed extends Component {
@@ -20,6 +20,7 @@ export class SubformTabbed extends Component {
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
 		language: React.PropTypes.string,
+		isCollapsed: React.PropTypes.bool,
 
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
@@ -29,13 +30,49 @@ export class SubformTabbed extends Component {
 		super(props);
 	}
 
-	render() {
-		if (!this.props.childrenRecords || !this.props.table) return null;
+	getContent() {
+		if (this.props.isCollapsed) return null;
+		
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
-		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
-		const changeViewBtn = !this.props.table.hasChildren ? <ChangeSubformView tableId={this.props.table.id} /> : null;
+		return (<div>
+			<nav className="tabs">
+				{
+					this.props.childrenRecords.map((record, index) => {
 
+						const active = record.id === activeRecordId;
+						return (<Tab
+							key={record.id}
+							displayLabel={record.label}
+							hasOrder={!!this.props.table.orderField}
+							isActive={active}
+							recordId={record.id}
+							index={index}
+							tableId={this.props.table.id}
+							parentRecordId={this.props.parentRecordId}
+							setShownRecord={this.props.setShownRecord}
+							swapRecords={this.props.swapRecords}
+						/>);
+					})
+				}
+
+				<AddRecord
+					table={this.props.table}
+					parentRecordId={this.props.parentRecordId}
+					parentTableId={this.props.parentTableId}
+					highestOrder={this.props.highestOrder}
+				/>
+			</nav>
+
+			<SingleRecord tableId={this.props.table.id} recordId={activeRecordId} language={this.props.language}/>
+		</div>);
+	}
+
+	render() {
+		if (!this.props.childrenRecords || !this.props.table) return null;
+		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
+		const changeViewBtn = (!this.props.table.hasChildren && !this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
+		const content = this.getContent();
 		return (
 			<section className="subform">
 				<header className="row">
@@ -44,38 +81,10 @@ export class SubformTabbed extends Component {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}
+						<ToggleSubform tableId={this.props.table.id} />
 					</div>
 				</header>
-
-				<nav className="tabs">
-					{
-						this.props.childrenRecords.map((record, index) => {
-
-							const active = record.id === activeRecordId;
-							return (<Tab
-								key={record.id}
-								displayLabel={record.label}
-								hasOrder={!!this.props.table.orderField}
-								isActive={active}
-								recordId={record.id}
-								index={index}
-								tableId={this.props.table.id}
-								parentRecordId={this.props.parentRecordId}
-								setShownRecord={this.props.setShownRecord}
-								swapRecords={this.props.swapRecords}
-							/>);
-						})
-					}
-
-					<AddRecord
-						table={this.props.table}
-						parentRecordId={this.props.parentRecordId}
-						parentTableId={this.props.parentTableId}
-						highestOrder={this.props.highestOrder}
-					/>
-				</nav>
-
-				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} language={this.props.language}/>
+				{ content }
 			</section>
 		);
 

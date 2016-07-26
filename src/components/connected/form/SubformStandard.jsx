@@ -28,6 +28,7 @@ export class SubformStandard extends Component {
 		highestOrder: React.PropTypes.number,
 		currentViewType: React.PropTypes.string,
 		language: React.PropTypes.string,
+		isCollapsed: React.PropTypes.bool,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,

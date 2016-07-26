@@ -13,6 +13,7 @@ export class SubformSingle extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		language: React.PropTypes.string,
+		isCollapsed: React.PropTypes.bool,
 
 	};
 
@@ -38,7 +39,7 @@ export class SubformSingle extends Component {
 						{addBtn}
 					</nav>
 				</header>
-				<SingleRecord tableName={this.props.table.name} recordId={activeRecordId} language={this.props.language}/>
+				<SingleRecord tableId={this.props.table.id} recordId={activeRecordId} language={this.props.language}/>
 			</section>
 		);
 

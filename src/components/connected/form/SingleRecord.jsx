@@ -17,7 +17,7 @@ import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
 )
 export class SingleRecord extends Component {
 	static propTypes = {
-		tableName: React.PropTypes.string,
+		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,
 
 		table: React.PropTypes.object,
@@ -54,13 +54,13 @@ export class SingleRecord extends Component {
 	// }
 
 	requireData(props) {
-		const { tableName, recordId } = props;
+		const { tableId, recordId } = props;
 		// console.log(props.recordId);
-		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.table) this.props.fetchTable(tableId);
 		// console.log(`fetch record ${tableName}.${recordId}`);
 
 		if (recordId && !props.record) {
-			this.props.fetchRecord(tableName, recordId);
+			this.props.fetchRecord(tableId, recordId);
 		}
 	}
 

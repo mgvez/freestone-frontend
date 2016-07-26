@@ -11,7 +11,7 @@ import { foreignOptions } from './foreign-options';
 import { recordList } from './record-list';
 import { default as recordForm } from './record-form';
 import { mtmOptions } from './mtm-options';
-import { subform } from './subform';
+import { default as subform } from './subform';
 import { imageBankList } from './bank';
 import save from './save';
 

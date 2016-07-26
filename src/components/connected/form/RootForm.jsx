@@ -119,7 +119,7 @@ export class RootForm extends Component {
 			);
 
 			form = (
-				<SingleRecord tableName={this.props.table.name} recordId={this.props.params.recordId} isRoot language={language}/>
+				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language}/>
 			);
 
 			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;
