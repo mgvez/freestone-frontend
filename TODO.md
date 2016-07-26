@@ -1,5 +1,4 @@
 ## General
-- Quand erreur au save, btn confirm avant de retourner (pas de timeout)
 - mettre un search general
 - Banque : liste de thumbnails au lieu de records en table
 - au logout, save le state entier du user à la db

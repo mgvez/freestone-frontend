@@ -23,7 +23,7 @@ function loginUserSuccess(jwt, token) {
 }
 
 export function loginUserFailure(error) {
-	const response = error.response && JSON.parse(error.response);
+	const { response } = error;
 	// console.log(response);
 	return {
 		type: LOGIN_USER_FAILURE,
