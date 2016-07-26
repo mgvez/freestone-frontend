@@ -41,7 +41,7 @@ export class Nav extends Component {
 	}
 
 	render() {
-		const collapsedClass = this.props.visible ? 'collapsed' : '';
+		const collapsedClass = this.props.visible ? '' : 'collapsed';
 		return (
 			<div className={`navbar-container ${collapsedClass}`}>
 				<nav className={`navbar-default ${collapsedClass}`} role="navigation">

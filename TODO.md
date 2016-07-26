@@ -1,9 +1,9 @@
 ## General
-- mettre un search general
 - Banque : liste de thumbnails au lieu de records en table
-- au logout, save le state entier du user à la db
 - Mettre les subforms collapse/decollapse
 - liste des anciennes révisions du record
+- au logout, save le state entier du user à la db
+- mettre un search general
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 
 # Freestone PHP

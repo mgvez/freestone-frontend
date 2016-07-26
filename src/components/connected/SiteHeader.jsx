@@ -44,9 +44,7 @@ export class SiteHeader extends Component {
 	// }
 
 	navToggler = () => {
-		const isFirstTime = this.props.nav_visibility === undefined;
-		const visibility = isFirstTime ? false : !this.props.nav_visibility;
-
+		const visibility = !this.props.nav_visibility;
 		this.props.toggleNavVisibility(visibility);
 	};
 

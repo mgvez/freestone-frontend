@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-const toggleNavVisibilitySelector = state => state.siteHeader.toggleNavVisibility.nav_visibility;
-const toggleLoadedRecordsSelector = state => state.siteHeader.toggleLoadedRecords.loaded_records_visibility;
+const toggleNavVisibilitySelector = state => state.siteHeader.nav_visibility;
+const toggleLoadedRecordsSelector = state => state.siteHeader.loaded_records_visibility;
 
 export const siteHeaderSelector = createSelector(
 	[toggleNavVisibilitySelector, toggleLoadedRecordsSelector],
