@@ -25,9 +25,9 @@ export class SubformTabbed extends Component {
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
 	};
-
-	constructor(props) {
-		super(props);
+	
+	componentDidUpdate(prevProps) {
+		console.log('container did update');
 	}
 
 	getContent() {
@@ -35,7 +35,7 @@ export class SubformTabbed extends Component {
 		
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
-		return (<div>
+		return (<div ref={this.setCollapsable}>
 			<nav className="tabs">
 				{
 					this.props.childrenRecords.map((record, index) => {
@@ -68,6 +68,14 @@ export class SubformTabbed extends Component {
 		</div>);
 	}
 
+	setCollapsable = (el) => {
+		this._collapsable = el;
+	}
+
+	getCollapsable = (el) => {
+		return this._collapsable;
+	}
+
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
 		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
@@ -81,7 +89,7 @@ export class SubformTabbed extends Component {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}
-						<ToggleSubform tableId={this.props.table.id} />
+						<ToggleSubform tableId={this.props.table.id} getCollapsable={this.getCollapsable}/>
 					</div>
 				</header>
 				{ content }

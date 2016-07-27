@@ -12,7 +12,7 @@ function makeSelector() {
 		(schema, tableName, tableId) => {
 			//les tables sont dans le store selon leur ID, mais dans le schema buildé, il y a une entrée par nom de table qui contient le ID (schema[tableName] = id)
 			const resolvedTableId = tableId || schema.byName[tableName];
-			console.log('process... %s', resolvedTableId);
+			// console.log('process... %s', resolvedTableId);
 			const table = schema.tables[resolvedTableId];
 			//retourne une copie de la table, parce que certains reselectors peuvent retourner une copie altérée, par exemple à cause des dependances de champs
 			return {
