@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { TweenMax } from 'utils/Greensock';
 
-export function collapser({ toggleAnimTime }) {
+export function collapser({ toggleAnimTime = 0.5 }) {
 
 	return (DecoratedComponent) => {
 		const displayName = DecoratedComponent.displayName || DecoratedComponent.name || 'Component';
@@ -18,7 +18,7 @@ export function collapser({ toggleAnimTime }) {
 			componentDidUpdate(prevProps) {
 				const wasCollapsed = this.decoratedComponentInstance.checkIsCollapsed(prevProps);
 				const isCollapsed = this.decoratedComponentInstance.checkIsCollapsed();
-				console.log('collapser did update', wasCollapsed, isCollapsed);
+				// console.log('collapser did update', wasCollapsed, isCollapsed);
 				//si on vient d'ouvrir, animate in
 				if (wasCollapsed !== isCollapsed && !isCollapsed) this.animate(true);
 			}
@@ -28,7 +28,7 @@ export function collapser({ toggleAnimTime }) {
 				// console.log(childrenContainer);
 				const dest = isOpening ? 'from' : 'to';
 				console.log('animate %s', isOpening ? 'in' : 'out');
-				TweenMax.set(childrenContainer, { height: 'auto' });
+				TweenMax.set(childrenContainer, { height: 'auto', overflow: 'hidden' });
 				TweenMax[dest](childrenContainer, toggleAnimTime, { height: 0, onComplete: callback });
 			}
 
@@ -36,9 +36,9 @@ export function collapser({ toggleAnimTime }) {
 				this.decoratedComponentInstance.toggleCollapse(v);
 			};
 
-			toggle = () => {
+			onRequestToggleCollapse = () => {
 				const isCollapsed = this.decoratedComponentInstance.checkIsCollapsed();
-				// console.log('collapsed %s', isCollapsed);
+				console.log('request change, collapsed %s', isCollapsed);
 				//si pas ouvert, request le open avant, pour placer les children dans la page
 				if (isCollapsed) {
 					this.changeState(false);
@@ -62,11 +62,6 @@ export function collapser({ toggleAnimTime }) {
 
 			handleChildRef = (component) => {
 				this.decoratedComponentInstance = component;
-			};
-
-			onRequestToggleCollapse = () => {
-				this.toggle();
-				// this.decoratedComponentInstance.toggleCollapse(!this.isCollapsed);
 			};
 
 			render() {

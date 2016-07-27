@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { collapser } from 'components/static/animation/Collapser';
+
+import { formCollapsedMapStateToProps } from 'selectors/formCollapsed';
+import { setSubformCollapsed } from 'actions/subform';
 
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -11,6 +18,11 @@ import { Header } from 'components/static/form/Header';
 import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 
 @dragDropContext(HTML5Backend)
+@connect(
+	formCollapsedMapStateToProps,
+	dispatch => bindActionCreators({ setSubformCollapsed }, dispatch)
+)
+@collapser({})
 export class SubformTabbed extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
@@ -24,11 +36,11 @@ export class SubformTabbed extends Component {
 
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
+		
+		setSubformCollapsed: React.PropTypes.func,
+		onRequestToggleCollapse: React.PropTypes.func,
+
 	};
-	
-	componentDidUpdate(prevProps) {
-		console.log('container did update');
-	}
 
 	getContent() {
 		if (this.props.isCollapsed) return null;
@@ -76,6 +88,15 @@ export class SubformTabbed extends Component {
 		return this._collapsable;
 	}
 
+	toggleCollapse(val) {
+		console.log('collapse %s', val);
+		this.props.setSubformCollapsed(this.props.table.id, val);
+	}
+
+	checkIsCollapsed(props) {
+		return (props || this.props).isCollapsed;
+	}
+
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
 		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
@@ -89,7 +110,7 @@ export class SubformTabbed extends Component {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}
-						<ToggleSubform tableId={this.props.table.id} getCollapsable={this.getCollapsable}/>
+						<ToggleSubform isCollapsed={this.props.isCollapsed} onRequestToggleCollapse={this.props.onRequestToggleCollapse}/>
 					</div>
 				</header>
 				{ content }

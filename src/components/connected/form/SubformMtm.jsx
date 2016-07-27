@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { DragDropContext as dragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { collapser } from 'components/static/animation/Collapser';
 
+import { setSubformCollapsed } from 'actions/subform';
 import { fetchTable } from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
@@ -13,12 +13,11 @@ import { formMtmMapStateToProps } from 'selectors/formMtm';
 import { Header } from 'components/static/form/Header';
 import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 
-
-@dragDropContext(HTML5Backend)
 @connect(
 	formMtmMapStateToProps,
-	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
+	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable, setSubformCollapsed }, dispatch)
 )
+@collapser({})
 export class SubformMtm extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
@@ -33,6 +32,9 @@ export class SubformMtm extends Component {
 		fetchMtmOptions: React.PropTypes.func,
 		fetchMtmRecords: React.PropTypes.func,
 		toggleMtm: React.PropTypes.func,
+		
+		setSubformCollapsed: React.PropTypes.func,
+		onRequestToggleCollapse: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -79,11 +81,23 @@ export class SubformMtm extends Component {
 
 		});
 	}
-	
-	toggleValue = (e) => {
-		const v = (e && e.target) ? e.target.value : false;
-		this.props.toggleMtm(this.props.tableId, this.props.parentTableId, this.props.parentRecordId, v);
-	};
+
+	setCollapsable = (el) => {
+		this._collapsable = el;
+	}
+
+	getCollapsable = (el) => {
+		return this._collapsable;
+	}
+
+	toggleCollapse(val) {
+		console.log('collapse %s', val);
+		this.props.setSubformCollapsed(this.props.table.id, val);
+	}
+
+	checkIsCollapsed(props) {
+		return (props || this.props).isCollapsed;
+	}
 
 	requireData(props) {
 		// console.log(props.records);
@@ -98,6 +112,11 @@ export class SubformMtm extends Component {
 		}
 	}
 
+	toggleValue = (e) => {
+		const v = (e && e.target) ? e.target.value : false;
+		this.props.toggleMtm(this.props.tableId, this.props.parentTableId, this.props.parentRecordId, v);
+	};
+
 	render() {
 		// console.log(this.props.records);
 		if (this.props.mtmOptions) {
@@ -110,10 +129,10 @@ export class SubformMtm extends Component {
 							<Header table={this.props.table} />
 						</div>
 						<div className="col-md-3 col-md-offset-1 fcn">
-							<ToggleSubform tableId={this.props.tableId} />
+							<ToggleSubform isCollapsed={this.props.isCollapsed} onRequestToggleCollapse={this.props.onRequestToggleCollapse}/>
 						</div>
 					</header>
-					<div className="row">
+					<div className="row" ref={this.setCollapsable}>
 						{ options }
 					</div>
 				</section>

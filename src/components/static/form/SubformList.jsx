@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { collapser } from 'components/static/animation/Collapser';
+
+import { formCollapsedMapStateToProps } from 'selectors/formCollapsed';
+import { setSubformCollapsed } from 'actions/subform';
 
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { Header } from 'components/static/form/Header';
@@ -6,6 +13,11 @@ import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubfo
 import { AddRecord } from 'components/connected/form/buttons/AddRecord';
 import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 
+@connect(
+	formCollapsedMapStateToProps,
+	dispatch => bindActionCreators({ setSubformCollapsed }, dispatch)
+)
+@collapser({})
 export class SubformList extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
@@ -19,6 +31,9 @@ export class SubformList extends Component {
 
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
+		
+		setSubformCollapsed: React.PropTypes.func,
+		onRequestToggleCollapse: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -27,7 +42,7 @@ export class SubformList extends Component {
 
 	getContent() {
 		if (this.props.isCollapsed) return null;
-		return (<div>
+		return (<div ref={this.setCollapsable}>
 			{
 				this.props.childrenRecords.map((record, index) => {
 					return <SingleRecord key={record.id} tableId={this.props.table.id} recordId={record.id} language={this.props.language}/>;
@@ -44,6 +59,23 @@ export class SubformList extends Component {
 		</div>);
 	}
 
+	setCollapsable = (el) => {
+		this._collapsable = el;
+	}
+
+	getCollapsable = (el) => {
+		return this._collapsable;
+	}
+
+	toggleCollapse(val) {
+		console.log('collapse %s', val);
+		this.props.setSubformCollapsed(this.props.table.id, val);
+	}
+
+	checkIsCollapsed(props) {
+		return (props || this.props).isCollapsed;
+	}
+
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
@@ -58,7 +90,7 @@ export class SubformList extends Component {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{ changeViewBtn }
-						<ToggleSubform tableId={this.props.table.id} />
+						<ToggleSubform isCollapsed={this.props.isCollapsed} onRequestToggleCollapse={this.props.onRequestToggleCollapse}/>
 					</div>
 				</header>
 				{ content }
