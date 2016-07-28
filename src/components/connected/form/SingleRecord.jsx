@@ -7,7 +7,7 @@ import * as recordActionCreators from 'actions/record';
 
 import { formRecordMapStateToProps } from 'selectors/formRecord';
 
-import { Subform } from 'components/connected/form/Subform';
+import { Subform } from 'components/connected/form/subform/Subform';
 import { Field } from 'components/static/form/Field';
 import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
 

@@ -6,9 +6,9 @@ import { formChildrenRecordsMapStateToProps } from 'selectors/formChildrenRecord
 import * as recordActionCreators from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
-import { SubformTabbed } from 'components/static/form/SubformTabbed';
-import { SubformList } from 'components/static/form/SubformList';
-import { SubformSingle } from 'components/static/form/SubformSingle';
+import { SubformTabbed } from 'components/static/form/subform/SubformTabbed';
+import { SubformList } from 'components/static/form/subform/SubformList';
+import { SubformSingle } from 'components/static/form/subform/SubformSingle';
 
 import { TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
 import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from 'freestone/schemaProps';
