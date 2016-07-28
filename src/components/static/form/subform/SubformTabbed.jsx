@@ -5,13 +5,9 @@ import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
 import { Header } from 'components/static/form/Header';
 import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
-import { collapser } from 'components/static/animation/Collapser';
-import { CollapsableForm, checkIsCollapsed } from 'components/connected/form/CollapsableForm';
+import { CollapsableForm } from 'components/static/form/subform/CollapsableForm';
 
 
-@collapser({
-	checkIsCollapsed,
-})
 export class SubformTabbed extends CollapsableForm {
 	static propTypes = {
 		table: React.PropTypes.object,
@@ -22,7 +18,7 @@ export class SubformTabbed extends CollapsableForm {
 	};
 
 	getContent() {
-		if (!this.isShowCollapsable()) return null;
+		if (!this.collapser.getOpenState()) return null;
 		
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
@@ -45,7 +41,7 @@ export class SubformTabbed extends CollapsableForm {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}
-						<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id}/>
+						<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
 					</div>
 				</header>
 				{ content }

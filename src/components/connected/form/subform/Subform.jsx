@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchTable } from 'actions/schema';
+import { setSubformCollapsed } from 'actions/subform';
 import { subformMapStateToProps } from 'selectors/subform';
 
 import { SubformMtm } from 'components/connected/form/subform/SubformMtm';
@@ -13,7 +14,7 @@ import { TYPE_MTM } from 'freestone/schemaProps';
 
 @connect(
 	subformMapStateToProps,
-	dispatch => bindActionCreators({ fetchTable }, dispatch)
+	dispatch => bindActionCreators({ fetchTable, setSubformCollapsed }, dispatch)
 )
 export class Subform extends Component {
 	static propTypes = {
@@ -26,6 +27,7 @@ export class Subform extends Component {
 		table: React.PropTypes.object,
 		
 		fetchTable: React.PropTypes.func,
+		setSubformCollapsed: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -54,6 +56,7 @@ export class Subform extends Component {
 				parentRecordId={this.props.parentRecordId}
 				parentTableId={this.props.parentTableId}
 				isCollapsed={this.props.isCollapsed}
+				setSubformCollapsed={this.props.setSubformCollapsed}
 			/>);
 		}
 		
@@ -62,6 +65,7 @@ export class Subform extends Component {
 			parentRecordId={this.props.parentRecordId}
 			parentTableId={this.props.parentTableId}
 			isCollapsed={this.props.isCollapsed}
+			setSubformCollapsed={this.props.setSubformCollapsed}
 			language={this.props.language}
 		/>);
 		

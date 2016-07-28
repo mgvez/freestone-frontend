@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { collapser } from 'components/static/animation/Collapser';
-
-import { formCollapsedMapStateToProps } from 'selectors/formCollapsed';
-import { setSubformCollapsed } from 'actions/subform';
 
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { Header } from 'components/static/form/Header';
 import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
 import { AddRecord } from 'components/connected/form/buttons/AddRecord';
+import { CollapsableForm } from 'components/static/form/subform/CollapsableForm';
 import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 
-@connect(
-	formCollapsedMapStateToProps,
-	dispatch => bindActionCreators({ setSubformCollapsed }, dispatch)
-)
-// @collapser({})
-export class SubformList extends Component {
+export class SubformList extends CollapsableForm {
 	static propTypes = {
 		table: React.PropTypes.object,
 		activeRecord: React.PropTypes.object,
@@ -41,7 +30,7 @@ export class SubformList extends Component {
 	}
 
 	getContent() {
-		if (this.props.isCollapsed) return null;
+		if (!this.collapser.getOpenState()) return null;
 		return (<div ref={this.setCollapsable}>
 			{
 				this.props.childrenRecords.map((record, index) => {
@@ -59,22 +48,6 @@ export class SubformList extends Component {
 		</div>);
 	}
 
-	setCollapsable = (el) => {
-		this._collapsable = el;
-	}
-
-	getCollapsable = (el) => {
-		return this._collapsable;
-	}
-
-	toggleCollapse(val) {
-		this.props.setSubformCollapsed(this.props.table.id, val);
-	}
-
-	checkIsCollapsed(props) {
-		return (props || this.props).isCollapsed;
-	}
-
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
@@ -89,7 +62,7 @@ export class SubformList extends Component {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{ changeViewBtn }
-						<ToggleSubform isCollapsed={this.props.isCollapsed} onRequestToggleCollapse={this.props.onRequestToggleCollapse}/>
+						<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
 					</div>
 				</header>
 				{ content }

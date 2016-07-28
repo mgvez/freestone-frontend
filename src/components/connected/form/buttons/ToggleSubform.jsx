@@ -13,16 +13,12 @@ export class ToggleSubform extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		isCollapsed: React.PropTypes.bool,
-		setSubformCollapsed: React.PropTypes.func,
-	};
-
-	onClickToggle = () => {
-		this.props.setSubformCollapsed(this.props.tableId, !this.props.isCollapsed);
+		toggle: React.PropTypes.func,
 	};
 
 	render() {
 		const toggleLabel = this.props.isCollapsed ? 'show' : 'hide';
-		return <a className="button-round" onClick={this.onClickToggle}>{ toggleLabel }</a>;
+		return <a className="button-round" onClick={this.props.toggle}>{ toggleLabel }</a>;
 		// return <button onClick={this.deleteRecord} className="button-circle-danger-small"><i className="fa fa-remove"></i></button>;
 	}
 }

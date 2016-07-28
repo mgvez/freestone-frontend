@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { collapser } from 'components/static/animation/Collapser';
-
-import { setSubformCollapsed } from 'actions/subform';
 import { fetchTable } from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
@@ -12,13 +9,13 @@ import { formMtmMapStateToProps } from 'selectors/formMtm';
 
 import { Header } from 'components/static/form/Header';
 import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
+import { CollapsableForm } from 'components/static/form/subform/CollapsableForm';
 
 @connect(
 	formMtmMapStateToProps,
-	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable, setSubformCollapsed }, dispatch)
+	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
 )
-// @collapser({})
-export class SubformMtm extends Component {
+export class SubformMtm extends CollapsableForm {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		table: React.PropTypes.object,
@@ -50,7 +47,7 @@ export class SubformMtm extends Component {
 	}
 
 	getOptions() {
-		if (this.props.isCollapsed) return null;
+		if (!this.collapser.getOpenState()) return null;
 
 		return this.props.mtmOptions.map((optionGroup, groupIndex) => {
 			// console.log(optionGroup);
@@ -80,22 +77,6 @@ export class SubformMtm extends Component {
 			</div>);
 
 		});
-	}
-
-	setCollapsable = (el) => {
-		this._collapsable = el;
-	}
-
-	getCollapsable = (el) => {
-		return this._collapsable;
-	}
-
-	toggleCollapse(val) {
-		this.props.setSubformCollapsed(this.props.table.id, val);
-	}
-
-	checkIsCollapsed(props) {
-		return (props || this.props).isCollapsed;
 	}
 
 	requireData(props) {
@@ -128,7 +109,7 @@ export class SubformMtm extends Component {
 							<Header table={this.props.table} />
 						</div>
 						<div className="col-md-3 col-md-offset-1 fcn">
-							<ToggleSubform isCollapsed={this.props.isCollapsed} onRequestToggleCollapse={this.props.onRequestToggleCollapse}/>
+							<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
 						</div>
 					</header>
 					<div className="row" ref={this.setCollapsable}>

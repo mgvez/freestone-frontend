@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 
 import { Table } from 'components/static/menu/Table';
 import { Module } from 'components/static/menu/Module';
-
-import { TweenMax } from 'utils/Greensock';
-
-const TOGGLE_ANIM_TIME = 0.5;
+import { Collapser } from 'animation/Collapser';
 
 export class NavGroup extends Component {
 	static propTypes = {
@@ -19,14 +16,22 @@ export class NavGroup extends Component {
 
 	constructor(props) {
 		super(props);
+		this.collapser = new Collapser({
+			getOpenState: (fromProps) => {
+				const propsToCheck = fromProps || this.props;
+				return propsToCheck.toggleState[propsToCheck.data.id];
+			},
+			changeState: () => {
+				this.props.toggleCollapse(this.props.data.id);
+			},
+			getContainer: () => {
+				return this._children;
+			},
+		});
 	}
 
 	componentDidUpdate(prevProps) {
-		const wasOpen = this.getOpenState(prevProps);
-		const isOpen = this.getOpenState(this.props);
-		// console.log(wasOpen, isOpen);
-		//si on vient d'ouvrir, animate in
-		if (wasOpen !== isOpen && isOpen) this.animate(true);
+		this.collapser.didUpdate(prevProps);
 	}
 
 	getChildrenGroups(level) {
@@ -36,7 +41,7 @@ export class NavGroup extends Component {
 	}
 
 	getContents() {
-		if (!this.getOpenState()) return null;
+		if (!this.collapser.getOpenState()) return null;
 		const level = this.props.level + 1;
 
 		return (<ul className="sub-nav" ref={(el) => this._children = el}>
@@ -54,37 +59,10 @@ export class NavGroup extends Component {
 		</ul>);
 	}
 
-	getOpenState(fromProps) {
-		const props = fromProps || this.props;
-		return props.toggleState[props.data.id];
-	}
-
-	animate(isOpening, callback) {
-		const childrenContainer = this._children;
-		// console.log(childrenContainer);
-		const dest = isOpening ? 'from' : 'to';
-		TweenMax.set(childrenContainer, { height: 'auto' });
-		TweenMax[dest](childrenContainer, TOGGLE_ANIM_TIME, { height: 0, onComplete: callback });
-	}
-
-	changeState = () => {
-		this.props.toggleCollapse(this.props.data.id);
-	};
-
-	toggle = () => {
-		//si pas ouvert, request le open avant, pour placer les children dans la page
-		if (!this.getOpenState()) {
-			this.changeState();
-		} else {
-			//ouvert, on ferme
-			this.animate(false, this.changeState);
-		}
-	};
-
 	render() {
 
 		// console.log(this.props.level + ' nav group rendered', this.props.data);
-		const isOpen = this.getOpenState();
+		const isOpen = this.collapser.getOpenState();
 		
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';
@@ -93,7 +71,7 @@ export class NavGroup extends Component {
 		// console.log(this.props.data);
 		return (
 			<li className={`${activeClass} nav-group`} >
-				<a onClick={this.toggle} className={`table-group ${activeClass}`}>
+				<a onClick={this.collapser.toggle} className={`table-group ${activeClass}`}>
 					<i className={`fa fa-${icon}`}></i>
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa arrow"></span>
 				</a>
