@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { TweenMax } from 'utils/Greensock';
 
-export function collapser({ toggleAnimTime = 0.5 }) {
+const noop = () => null;
+
+export function collapser({	toggleAnimTime = 0.5, checkIsCollapsed }) {
 
 	return (DecoratedComponent) => {
 		const displayName = DecoratedComponent.displayName || DecoratedComponent.name || 'Component';
@@ -15,57 +17,69 @@ export function collapser({ toggleAnimTime = 0.5 }) {
 				return this.decoratedComponentInstance;
 			}
 
-			componentDidUpdate(prevProps) {
-				const wasCollapsed = this.decoratedComponentInstance.checkIsCollapsed(prevProps);
-				const isCollapsed = this.decoratedComponentInstance.checkIsCollapsed();
-				// console.log('collapser did update', wasCollapsed, isCollapsed);
-				//si on vient d'ouvrir, animate in
-				if (wasCollapsed !== isCollapsed && !isCollapsed) this.animate(true);
+			componentWillMount() {
+				console.log('will mount');
+				this.changeCollapsed(checkIsCollapsed(this.props));
+				this.changeAnimating(false);
 			}
 
-			animate(isOpening, callback) {
+			componentDidUpdate() {
+				//si on vient d'ouvrir, animate in
+				const isCollapsed = checkIsCollapsed(this.props);
+				console.log('collapser did update, collapsed %s', isCollapsed);
+
+				if (this.state.isCollapsed !== isCollapsed) this.animate(!isCollapsed);
+			}
+
+			animate(isOpening, callback = noop) {
+				if (this.state.isAnimating) return null;
+				this.changeAnimating(true);
+				
 				const childrenContainer = this.decoratedComponentInstance.getCollapsable();
+				if (!childrenContainer) return null;
+
+
 				// console.log(childrenContainer);
 				const dest = isOpening ? 'from' : 'to';
 				console.log('animate %s', isOpening ? 'in' : 'out');
 				TweenMax.set(childrenContainer, { height: 'auto', overflow: 'hidden' });
-				TweenMax[dest](childrenContainer, toggleAnimTime, { height: 0, onComplete: callback });
+				TweenMax[dest](childrenContainer, toggleAnimTime, 
+					{
+						height: 0,
+						onComplete: () => {
+							this.changeAnimating(false);
+							this.changeCollapsed(!isOpening);
+							callback();
+						},
+					}
+				);
 			}
 
-			changeState = (v) => {
-				this.decoratedComponentInstance.toggleCollapse(v);
-			};
+			changeAnimating(v) {
+				this.setState({ isAnimating: v });
+			}
 
-			onRequestToggleCollapse = () => {
-				const isCollapsed = this.decoratedComponentInstance.checkIsCollapsed();
-				console.log('request change, collapsed %s', isCollapsed);
-				//si pas ouvert, request le open avant, pour placer les children dans la page
-				if (isCollapsed) {
-					this.changeState(false);
-				} else {
-					//ouvert, on ferme
-					this.animate(false, () => {
-						this.changeState(true);
-					});
-				}
-			};
-			
-			
-			// 	cette fonction est addée au container qui se collapse/decollapse, dans les props du component décoré
-			// 	<div ref={this.props.setCollapsableRef}>
-			// 	et ajoutera donc ce container aux refs du component décorant
-			
-			// setCollapsableRef = (el) => {
-			// 	console.log('collapsable container', el);
-			// 	this._collapsable = el;
-			// }
+			changeCollapsed(v) {
+				console.log('change collapse %s', v);
+				this.setState({ isCollapsed: v });
+			}
 
 			handleChildRef = (component) => {
 				this.decoratedComponentInstance = component;
 			};
 
 			render() {
-				return (<DecoratedComponent {...this.props} onRequestToggleCollapse={this.onRequestToggleCollapse} ref={this.handleChildRef} />);
+				const isShowCollapsable = !this.state.isCollapsed || this.state.isAnimating;
+				console.log('render collapser, show? %s', isShowCollapsable);
+
+				return (<div>
+					Collapser
+					<DecoratedComponent 
+						{...this.props}
+						isShowCollapsable={isShowCollapsable}
+						ref={this.handleChildRef}
+					/>
+				</div>);
 			}
 		};
 	};

@@ -39,7 +39,7 @@ export class NavGroup extends Component {
 		if (!this.getOpenState()) return null;
 		const level = this.props.level + 1;
 
-		return (<ul className="sub-nav" ref="children">
+		return (<ul className="sub-nav" ref={(el) => this._children = el}>
 			{ this.getChildrenGroups(level) }
 			{
 				this.props.data.tables.map((item) => {
@@ -60,7 +60,7 @@ export class NavGroup extends Component {
 	}
 
 	animate(isOpening, callback) {
-		const childrenContainer = this.refs.children;
+		const childrenContainer = this._children;
 		// console.log(childrenContainer);
 		const dest = isOpening ? 'from' : 'to';
 		TweenMax.set(childrenContainer, { height: 'auto' });
@@ -72,11 +72,8 @@ export class NavGroup extends Component {
 	};
 
 	toggle = () => {
-
-		const groupId = this.props.data.id;
-		const isOpen = this.props.toggleState[groupId];
 		//si pas ouvert, request le open avant, pour placer les children dans la page
-		if (!isOpen) {
+		if (!this.getOpenState()) {
 			this.changeState();
 		} else {
 			//ouvert, on ferme

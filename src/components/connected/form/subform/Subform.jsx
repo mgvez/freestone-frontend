@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { fetchTable } from 'actions/schema';
 import { subformMapStateToProps } from 'selectors/subform';
 
-import { SubformMtm } from 'components/connected/form/SubformMtm';
-import { SubformStandard } from 'components/connected/form/SubformStandard';
+import { SubformMtm } from 'components/connected/form/subform/SubformMtm';
+import { SubformStandard } from 'components/connected/form/subform/SubformStandard';
 
 import { TYPE_MTM } from 'freestone/schemaProps';
 

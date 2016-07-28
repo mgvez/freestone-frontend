@@ -17,7 +17,7 @@ import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 	formMtmMapStateToProps,
 	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable, setSubformCollapsed }, dispatch)
 )
-@collapser({})
+// @collapser({})
 export class SubformMtm extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
@@ -91,7 +91,6 @@ export class SubformMtm extends Component {
 	}
 
 	toggleCollapse(val) {
-		console.log('collapse %s', val);
 		this.props.setSubformCollapsed(this.props.table.id, val);
 	}
 

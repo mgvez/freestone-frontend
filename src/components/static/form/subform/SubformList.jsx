@@ -7,23 +7,18 @@ import { collapser } from 'components/static/animation/Collapser';
 import { formCollapsedMapStateToProps } from 'selectors/formCollapsed';
 import { setSubformCollapsed } from 'actions/subform';
 
-import { DragDropContext as dragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
-
-import { Tab } from 'components/static/form/Tab';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { AddRecord } from 'components/connected/form/buttons/AddRecord';
-import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
 import { Header } from 'components/static/form/Header';
+import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
+import { AddRecord } from 'components/connected/form/buttons/AddRecord';
 import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
 
-@dragDropContext(HTML5Backend)
 @connect(
 	formCollapsedMapStateToProps,
 	dispatch => bindActionCreators({ setSubformCollapsed }, dispatch)
 )
-@collapser({})
-export class SubformTabbed extends Component {
+// @collapser({})
+export class SubformList extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		activeRecord: React.PropTypes.object,
@@ -36,47 +31,31 @@ export class SubformTabbed extends Component {
 
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
-		
+
 		setSubformCollapsed: React.PropTypes.func,
 		onRequestToggleCollapse: React.PropTypes.func,
-
 	};
+
+	constructor(props) {
+		super(props);
+	}
 
 	getContent() {
 		if (this.props.isCollapsed) return null;
-		
-		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
-
 		return (<div ref={this.setCollapsable}>
-			<nav className="tabs">
-				{
-					this.props.childrenRecords.map((record, index) => {
-
-						const active = record.id === activeRecordId;
-						return (<Tab
-							key={record.id}
-							displayLabel={record.label}
-							hasOrder={!!this.props.table.orderField}
-							isActive={active}
-							recordId={record.id}
-							index={index}
-							tableId={this.props.table.id}
-							parentRecordId={this.props.parentRecordId}
-							setShownRecord={this.props.setShownRecord}
-							swapRecords={this.props.swapRecords}
-						/>);
-					})
-				}
-
+			{
+				this.props.childrenRecords.map((record, index) => {
+					return <SingleRecord key={record.id} tableId={this.props.table.id} recordId={record.id} language={this.props.language}/>;
+				})
+			}
+			{
 				<AddRecord
 					table={this.props.table}
 					parentRecordId={this.props.parentRecordId}
 					parentTableId={this.props.parentTableId}
 					highestOrder={this.props.highestOrder}
 				/>
-			</nav>
-
-			<SingleRecord tableId={this.props.table.id} recordId={activeRecordId} language={this.props.language}/>
+			}
 		</div>);
 	}
 
@@ -89,7 +68,6 @@ export class SubformTabbed extends Component {
 	}
 
 	toggleCollapse(val) {
-		console.log('collapse %s', val);
 		this.props.setSubformCollapsed(this.props.table.id, val);
 	}
 
@@ -99,17 +77,18 @@ export class SubformTabbed extends Component {
 
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
-		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
-		const changeViewBtn = (!this.props.table.hasChildren && !this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
+		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
+
+		const changeViewBtn = (!this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
 		const content = this.getContent();
 		return (
-			<section className="subform">
+			<section className="subform subform-list">
 				<header className="row">
 					<div className="col-md-8">
 						<Header table={this.props.table} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
-						{changeViewBtn}
+						{ changeViewBtn }
 						<ToggleSubform isCollapsed={this.props.isCollapsed} onRequestToggleCollapse={this.props.onRequestToggleCollapse}/>
 					</div>
 				</header>
