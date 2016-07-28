@@ -27,7 +27,7 @@ export class Row extends Component {
 	}
 	
 	getInteractions() {
-		return (<td colSpan="20">
+		return (<td colSpan="20" className="interactions">
 			<RecordInteractions table={this.props.table} fields={this.props.fields} values={this.props.values} />
 		</td>);
 	}

@@ -26,7 +26,7 @@ export class DuplicateBtn extends Component {
 	render() {
 				
 		return (
-			<a className="btn btn-danger btn-sm" onClick={this.process}><i className="fa fa-clone"></i><span> Duplicate</span></a>
+			<a className="button-round-warn" onClick={this.process}><i className="fa fa-clone"></i><span> Duplicate</span></a>
 		);
 	}
 }

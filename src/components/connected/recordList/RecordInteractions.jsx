@@ -41,29 +41,31 @@ export class RecordInteractions extends Component {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
 		if (this.props.table.hasOrder) {
-			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal}/>;
+			orderFcn = <div className="col-md-2 orders"><OrderFcn tableName={this.props.table.name} prikey={prikeyVal}/></div>;
 		}
 
 		const modifFcn = (
-			<div className="list-functions">
-				<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+			<div className="list-functions col-md-5">
+				<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
 				<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 				<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
 			</div>
 		);
 		const infos = (
-			<InfosFcn
-				tableName={this.props.table.name}
-				prikey={prikeyVal}
-				lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
-				createddate={this.props.values[CREATED_DATE_ALIAS]}
-			/>
+			<div className="col-md-5">
+				<InfosFcn
+					tableName={this.props.table.name}
+					prikey={prikeyVal}
+					lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
+					createddate={this.props.values[CREATED_DATE_ALIAS]}
+				/>
+			</div>
 		);
 
 		return (<div>
-			{ orderFcn }
-			{ modifFcn }
 			{ infos }
+			{ modifFcn }
+			{ orderFcn }
 		</div>);
 
 	}

@@ -34,6 +34,30 @@
 		vertical-align: middle;
 	}
 
+	.interactions {
+		background: $color-background-dark;
+		
+		&, a {
+			color: $white;
+		}
+
+		[class^=button] {
+			& + [class^=button] {
+				margin-left: 20px;
+			}
+		}
+
+		.modification {
+			a {
+				color: $color-accent-primary;
+			}
+		}
+
+		.orders {
+			text-align: right;
+		}
+	}
+
 	@for $i from 1 through 5 {
 		tr.level-#{$i} {
 			td:first-child {
