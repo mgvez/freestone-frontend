@@ -22,7 +22,7 @@ import 'style!font-awesome/scss/font-awesome.scss';
 
 @connect(
 	state => {
-		return { auth: state.auth, env: state.env, errors: state.errors };
+		return { auth: state.auth, env: state.env };
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
@@ -62,9 +62,9 @@ export class Freestone extends Component {
 				<div className="main-content">
 					<SiteHeader {...this.props} />
 					<LoadedRecords />
-					<Errors {...this.props} />
 					{this.props.children}
 					<Footer />
+					<Errors {...this.props} />
 				</div>
 			</div>
 		);

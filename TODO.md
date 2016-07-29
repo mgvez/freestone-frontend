@@ -1,6 +1,6 @@
 ## General
+
 - Banque : liste de thumbnails au lieu de records en table
-- Mettre les subforms collapse/decollapse
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
 - mettre un search general
@@ -26,7 +26,7 @@
 ## Liste
 
 ## Form
-- changement de langue : sticky
+- changement de langue & save : sticky
 - link to document from bank
 - champ type url
 - Mettre focus sur TinyMCE quand on l'edit et pas juste dans ses sous components - Pic 2016-07-22.
