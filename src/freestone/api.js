@@ -48,10 +48,12 @@ export function callApi(route, data) {
 			err.responseText = res.responseText;
 			try {
 				const jsonResponse = JSON.parse(res.response);
-				err.response = jsonResponse && jsonResponse.error;
+				err.responseText = jsonResponse && jsonResponse.message;
+				err.details = jsonResponse && jsonResponse.details;
 			} catch (e) {
 				err.response = res.response;
 			}
+			// console.log(err);
 			reject(err);
 		});
 	});

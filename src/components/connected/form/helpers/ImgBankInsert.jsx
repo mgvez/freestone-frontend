@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
-import customStyle from './modalStyles.js';
+import customStyle from 'components/styles/modalStyles.js';
 
 import { addRecord } from 'actions/record';
 import { fetchTable } from 'actions/schema';
