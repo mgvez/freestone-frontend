@@ -25,8 +25,10 @@ export class Paging extends Component {
 			display = label;
 		}
 
+		const activeClass = num === this.props.curPage ? 'active' : '';
+
 		return (
-			<li key={`${num}_${label}`}>
+			<li key={`${num}_${label}`} className={activeClass}>
 				<Link to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</Link>
 			</li>
 		);
