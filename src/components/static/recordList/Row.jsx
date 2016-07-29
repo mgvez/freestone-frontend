@@ -96,10 +96,12 @@ export class Row extends Component {
 		}
 
 		//ROW NORMAL, MOBILE
-		content = createCells(fields, values);
+		content = createCells(fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr>
-				{ content }
+				<td>
+					{ content }
+				</td>
 				<td className="interactions">
 					<RecordInteractions table={this.props.table} fields={fields} values={values} />
 				</td>
