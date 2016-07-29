@@ -68,7 +68,7 @@ export class Row extends Component {
 				<td className="selfjoin-label">
 					{ content }
 				</td>
-				<td>
+				<td className="interactions">
 					<RecordInteractions table={this.props.table} fields={fields} values={values} />
 				</td>
 			</tr>
@@ -100,7 +100,7 @@ export class Row extends Component {
 		return (
 			<tr>
 				{ content }
-				<td>
+				<td className="interactions">
 					<RecordInteractions table={this.props.table} fields={fields} values={values} />
 				</td>
 			</tr>
