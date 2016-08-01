@@ -57,8 +57,6 @@
     "webpack-dev-server": "^1.8.2",
     "webpack-hot-middleware": "^2.4.1",
     "yargs": "^3.18.0"
-  },
-  "dependencies": {
     "bluebird": "^3.3.1",
     "bootstrap-sass": "^3.3.6",
     "font-awesome": "^4.5.0",
@@ -91,5 +89,8 @@
     "reqwest": "^2.0.5",
     "reselect": "^2.5.1",
     "sha1": "^1.1.1"
+  },
+  "dependencies": {
+   
   }
 }
