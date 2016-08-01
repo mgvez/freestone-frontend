@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 
-export function createCells(fields, values, elementType = 'td') {
+export function createCells(fields, values, elementType = 'td', options = {}) {
 	return fields.map((field, index) => {
 		let val = values[field.listAlias];
 		if (field.type === 'img' || field.type === 'file') {
@@ -19,6 +19,8 @@ export function createCells(fields, values, elementType = 'td') {
 			elementType,
 			{
 				key: index,
+				'data-field-label': field.label,
+				...options,
 			},
 			val
 		);

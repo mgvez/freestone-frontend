@@ -65,4 +65,87 @@
 			}
 		}
 	}
+
+	@include at-most(1736px) {
+		.list-functions {
+			[class^=button] {
+				display: block;
+				width: 100%;
+				text-align: center;
+
+				& + [class^=button] {
+					margin-left: 0;
+					margin-top: 10px;
+				}
+			}
+		}
+	}
+
+	@include at-most(1150px) {
+		.interactions .orders [class^=button] {
+			display: block;
+			& + [class^=button] {
+				margin-top: 10px;
+				margin-left: 0;
+			}
+		}
+	}
+
+
+	@include at-most($screen-sm-max) {
+		tr:nth-of-type(2n) {
+			td {
+				background: $gray97;
+
+				&.interactions {
+					background: $color-background-dark;
+				}
+			}
+		}
+
+		td {
+			vertical-align: top;
+			padding: 0;
+		}
+
+		.mobile-cell {
+			padding: 20px 20px 20px 50%;
+			position: relative;
+			border-bottom: 1px solid $gray86;
+
+			&:after {
+				position: absolute;
+					top: 20px;
+					left: 20px;
+			
+				width: 40%;
+				display: block;
+				content: attr(data-field-label);
+				font-weight: $font-weight-bold;
+			}
+		}
+
+		.interactions {
+			padding: 20px;
+			width: 250px;
+
+			.list-functions {
+				margin: 30px 0;
+			}
+
+			.orders {
+				text-align: center;
+
+				[class^=button] {
+					display: inline-block;
+
+					+ [class^=button] {
+						margin-top: 0;
+						margin-left: 20px;
+					}
+				}
+			}
+		}
+
+	}
 }
