@@ -10,8 +10,7 @@ import { SubformTabbed } from 'components/static/form/subform/SubformTabbed';
 import { SubformList } from 'components/static/form/subform/SubformList';
 import { SubformSingle } from 'components/static/form/subform/SubformSingle';
 
-import { TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
-import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from 'freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
 
 @connect(
 	formChildrenRecordsMapStateToProps,
@@ -34,10 +33,6 @@ export class SubformStandard extends Component {
 		fetchRecord: React.PropTypes.func,
 		setOrder: React.PropTypes.func,
 	};
-	
-	constructor(props) {
-		super(props);
-	}
 
 	componentWillMount() {
 		this.requireData(this.props);
@@ -94,5 +89,6 @@ export class SubformStandard extends Component {
 		} else if (this.props.table.type === TYPE_OTO) {
 			return <SubformSingle {...this.props} />;
 		}
+		return null;
 	}
 }

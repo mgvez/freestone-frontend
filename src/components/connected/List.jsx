@@ -79,7 +79,7 @@ export class List extends Component {
 		window.removeEventListener('resize', this.handleResize);
 	}
 	
-	handleResize = (e) => {
+	handleResize = () => {
 		const windowWidth = window.innerWidth;
 		const isLarge = windowWidth > LARGE_MINW_BREAKPOINT;
 		this.setState({ windowWidth, isLarge });
@@ -160,7 +160,7 @@ export class List extends Component {
 
 					<div className="padded-content">
 						<table className="table list-records">
-							{ heading }
+							{heading}
 							{
 								this.props.groupedRecords.map((group, groupIdx) => {
 									let groupHeading;
@@ -168,7 +168,7 @@ export class List extends Component {
 										groupHeading = (
 											<tr>
 												<td colSpan="20">
-												<strong>{group.label}</strong>
+													<strong>{group.label}</strong>
 												</td>
 											</tr>
 										);
@@ -176,7 +176,7 @@ export class List extends Component {
 
 									return (
 										<tbody key={groupIdx}>
-										{ groupHeading }
+										{groupHeading}
 										{
 											group.records.map((record, idx) => {
 												const isHovering = this.state.hoveringId === record[PRIKEY_ALIAS];
@@ -211,7 +211,7 @@ export class List extends Component {
 		}
 		return (
 			<InScroll isReady={readyToScroll}>
-				{ output }
+				{output}
 			</InScroll>
 		);
 	}

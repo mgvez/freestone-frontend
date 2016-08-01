@@ -88,7 +88,7 @@ export class FileInput extends Input {
 	};
 
 	getLocalImage(inp) {
-		if (!inp || this.state.localFile || this.props.field.type !== TYPE_IMG) return null;
+		if (!inp || this.state.localFile || this.props.field.type !== TYPE_IMG) return undefined;
 
 		const reader = new FileReader();
 

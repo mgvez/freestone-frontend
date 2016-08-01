@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { RecordInteractions } from 'components/connected/recordList/RecordInteractions';
 import { createCells } from 'components/static/recordList/row/createCells';
-import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 export class Row extends Component {
@@ -16,11 +15,7 @@ export class Row extends Component {
 		handleHover: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
+	shouldComponentUpdate(nextProps) {
 		return nextProps.isHovering !== this.props.isHovering
 			|| nextProps.isLarge !== this.props.isLarge
 			|| nextProps.values !== this.props.values;
@@ -32,7 +27,7 @@ export class Row extends Component {
 		</td>);
 	}
 
-	handleHover = (e) => {
+	handleHover = () => {
 		this.props.handleHover(this.props.values[PRIKEY_ALIAS]);
 	}
 
@@ -48,7 +43,7 @@ export class Row extends Component {
 				const label = createCells(fields, values, 'span');
 				content = [
 					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>,
-					<td key="cellLabel" className="selfjoin-label">{ label }</td>,
+					<td key="cellLabel" className="selfjoin-label">{label}</td>,
 				];
 			} else {
 				content = this.getInteractions();
@@ -56,7 +51,7 @@ export class Row extends Component {
 
 			return (
 				<tr onMouseOver={this.handleHover}>
-					{ content }
+					{content}
 				</tr>
 			);
 		}
@@ -66,7 +61,7 @@ export class Row extends Component {
 			<tr className={`selfjoin-row level-${level}`}>
 				<td className="selfjoin-breadcrumb">{breadcrumb}</td>
 				<td className="selfjoin-label">
-					{ content }
+					{content}
 				</td>
 				<td>
 					<RecordInteractions table={this.props.table} fields={fields} values={values} />
@@ -90,7 +85,7 @@ export class Row extends Component {
 
 			return (
 				<tr onMouseOver={this.handleHover}>
-					{ content }
+					{content}
 				</tr>
 			);
 		}
@@ -99,7 +94,7 @@ export class Row extends Component {
 		content = createCells(fields, values);
 		return (
 			<tr>
-				{ content }
+				{content}
 				<td>
 					<RecordInteractions table={this.props.table} fields={fields} values={values} />
 				</td>

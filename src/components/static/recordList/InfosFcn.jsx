@@ -9,20 +9,16 @@ export class InfosFcn extends Component {
 		createddate: React.PropTypes.string,
 		lastmodifdate: React.PropTypes.string,
 	};
-
-	constructor(props) {
-		super(props);
-	}
-
+	
 	render() {
 		const recordLink = `../main.php?i=${this.props.prikey}&t=${this.props.tableName}`;
 		const created = this.props.createddate || 'unknown';
 		const modified = this.props.lastmodifdate || 'unknown';
 		return (
 			<div className="modification" colSpan="25">
-				created { created }, 
-				modified { modified }, 
-				<em><a target="_blank" href={recordLink}>{ this.props.prikey }</a></em>
+				created {created}, 
+				modified {modified}, 
+				<em><a target="_blank" href={recordLink}>{this.props.prikey}</a></em>
 			</div>
 		);
 	}

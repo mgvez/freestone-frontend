@@ -7,10 +7,6 @@ export class SelectInput extends Input {
 	static propTypes = {
 		foreignOptions: React.PropTypes.object,
 	};
-	
-	constructor(props) {
-		super(props);
-	}
 
 	componentWillMount() {
 		this.requireData(this.props);

@@ -15,10 +15,6 @@ export class DuplicateBtn extends Component {
 		duplicateRecord: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	process = () => {
 		this.props.duplicateRecord(this.props.tableName, this.props.prikey);
 	};

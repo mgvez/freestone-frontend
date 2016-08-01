@@ -1,5 +1,4 @@
 ## General
-
 - Banque : liste de thumbnails au lieu de records en table
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db

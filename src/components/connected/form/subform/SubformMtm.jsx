@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -33,11 +33,7 @@ export class SubformMtm extends CollapsableForm {
 		setSubformCollapsed: React.PropTypes.func,
 		onRequestToggleCollapse: React.PropTypes.func,
 	};
-
-	constructor(props) {
-		super(props);
-	}
-
+	
 	componentWillMount() {
 		this.requireData(this.props);
 	}
@@ -113,7 +109,7 @@ export class SubformMtm extends CollapsableForm {
 						</div>
 					</header>
 					<div className="row" ref={this.setCollapsable}>
-						{ options }
+						{options}
 					</div>
 				</section>
 			);

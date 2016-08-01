@@ -1,7 +1,7 @@
 
 const Greensock = window.GreenSockGlobals = window.GreenSockGlobals || {};
 
-import tm from 'gsap';
+import tm from 'gsap';// eslint-disable-line
 
 // console.log(Greensock);
 

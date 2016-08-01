@@ -45,7 +45,7 @@ export class NavGroup extends Component {
 		const level = this.props.level + 1;
 
 		return (<ul className="sub-nav" ref={(el) => this._children = el}>
-			{ this.getChildrenGroups(level) }
+			{this.getChildrenGroups(level)}
 			{
 				this.props.data.tables.map((item) => {
 					return <Table key={item.id} name={item.name} id={item.id} actionLabel={item.actionLabel} nrecords={item.nrecords} />;
@@ -75,7 +75,7 @@ export class NavGroup extends Component {
 					<i className={`fa fa-${icon}`}></i>
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa arrow"></span>
 				</a>
-				{ contents }				
+				{contents}				
 			</li>
 		);
 	}

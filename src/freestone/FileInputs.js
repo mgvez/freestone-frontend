@@ -5,7 +5,7 @@ const inputs = {};
 export function showFileInputs() {
 	// console.log(inputs);
 	Object.keys(inputs).forEach(k => {
-		console.log(k, inputs[k], inputs[k].input.value);
+		console.warn(k, inputs[k], inputs[k].input.value);
 	});
 }
 

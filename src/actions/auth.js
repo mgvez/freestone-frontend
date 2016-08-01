@@ -1,5 +1,3 @@
-
-import { push as pushPath } from 'react-router-redux';
 import jwtDecode from 'jwt-decode';
 import { FREESTONE_API } from 'middleware/api';
 
@@ -35,18 +33,16 @@ export function loginUserFailure(error) {
 }
 
 export function receiveToken(jwt) {
-	if (jwt) {
-		try {
-			const token = jwtDecode(jwt);
-			// console.log(`received token ${token}`);
-			return loginUserSuccess(jwt, token);
-		} catch (e) {
-			// console.log(jwt);
-			return loginUserFailure({
-				status: 401,
-				statusText: 'Invalid token',
-			});
-		}
+	try {
+		const token = jwtDecode(jwt);
+		// console.log(`received token ${token}`);
+		return loginUserSuccess(jwt, token);
+	} catch (e) {
+		// console.log(jwt);
+		return loginUserFailure({
+			status: 401,
+			statusText: 'Invalid token',
+		});
 	}
 }
 

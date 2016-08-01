@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
-import { RECEIVE_SCHEMA } from 'actions/schema';
-import { CLEAR_SCHEMA } from 'actions/schema';
+import { CLEAR_SCHEMA, RECEIVE_SCHEMA } from 'actions/schema';
 
 function tables(state = {}, action) {
 	switch (action.type) {

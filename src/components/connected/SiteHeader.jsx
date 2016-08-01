@@ -26,18 +26,6 @@ export class SiteHeader extends Component {
 		loaded_records_visibility: React.PropTypes.bool,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
-	componentDidMount() {
-		// window.addEventListener('scroll', this.hideHeader);
-	}
-
-	componentWillUnmount() {
-		// window.removeEventListener('scroll', this.hideHeader);
-	}
-
 	// hideHeader() {
 	// 	const opacity = 1 - (window.pageYOffset / 200).toFixed(1);
 	// 	this.refs.header.style.opacity = opacity;

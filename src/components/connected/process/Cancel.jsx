@@ -22,11 +22,7 @@ export class Cancel extends Component {
 		cancelEdit: React.PropTypes.func,
 		goTo: React.PropTypes.func,
 	};
-
-	constructor(props) {
-		super(props);
-	}
-
+	
 	componentWillMount() {
 
 		this.setState({

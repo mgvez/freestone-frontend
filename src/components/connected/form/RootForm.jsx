@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
@@ -34,10 +33,6 @@ export class RootForm extends Component {
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 	};
-
-	constructor(props) {
-		super(props);
-	}
 
 	componentWillMount() {
 		
@@ -119,16 +114,16 @@ export class RootForm extends Component {
 			);
 
 			form = (
-				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language}/>
+				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
 			);
 
 			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;
 		}
 		return (
 			<section className="root-form">
-				{ meta }
-				{ header }
-				{ form }
+				{meta}
+				{header}
+				{form}
 			</section>
 		);
 	}

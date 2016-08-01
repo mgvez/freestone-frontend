@@ -17,13 +17,6 @@ const metaData = {
 	state => state,
 )
 export class Home extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-	componentDidMount() {
-		
-	}
 
 	render() {
 		// console.log(this.props);

@@ -76,7 +76,7 @@ export const schemaSelector = createSelector(
 		}, tables);
 
 
-		Object.keys(tables).map((tableId) => {
+		Object.keys(tables).forEach((tableId) => {
 			const table = tables[tableId];
 			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank - b.rank);
 

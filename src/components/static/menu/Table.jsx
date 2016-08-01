@@ -10,10 +10,6 @@ export class Table extends Component {
 		id: React.PropTypes.number,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		// console.log('table rendered', this.oldtable, this.oldtable === this.props);
 		// this.oldtable = this.props;

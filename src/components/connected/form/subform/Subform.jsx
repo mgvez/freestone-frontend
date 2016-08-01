@@ -30,10 +30,6 @@ export class Subform extends Component {
 		setSubformCollapsed: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	componentWillMount() {
 		this.requireData(this.props);
 	}

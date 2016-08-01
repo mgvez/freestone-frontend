@@ -14,10 +14,6 @@ export class UserInfos extends Component {
 		userid: React.PropTypes.string,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<div className="user">					

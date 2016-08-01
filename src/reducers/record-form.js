@@ -63,7 +63,7 @@ function childrenAreLoaded(state = {}, action) {
 	case UNAUTHORIZED:
 		return {};
 	case RECEIVE_MTM_RECORDS:
-	case RECEIVE_RECORD:
+	case RECEIVE_RECORD: {
 		if (!action.data || !action.data.tables) return state;
 
 		const newState = action.data.tables.reduce((bldState, tableRecords) => {
@@ -83,6 +83,7 @@ function childrenAreLoaded(state = {}, action) {
 		});
 		// console.log(newState);
 		return newState;
+	}
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
 	case DELETE_RECORD_SUCCESS:
@@ -239,7 +240,7 @@ function recordsUnaltered(state = {}, action) {
 
 function shownRecords(state = {}, action) {
 	switch (action.type) {
-	case SET_SHOWN_RECORD:
+	case SET_SHOWN_RECORD: {
 		const tableId = action.data.tableId;
 		// console.log(action);
 		const newState = {
@@ -252,6 +253,7 @@ function shownRecords(state = {}, action) {
 		// console.log(action.data);
 		// console.log(newState);
 		return newState;
+	}
 	default:
 		return state;
 	}

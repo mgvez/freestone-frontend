@@ -39,10 +39,6 @@ export class ImgBankInsert extends Component {
 		fetchTable: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	componentWillMount() {
 		// console.log(this.props);
 		this.requireData(this.props);
@@ -79,7 +75,7 @@ export class ImgBankInsert extends Component {
 			this.props.setVal(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
 			this.closeModal(true);
 		}, err => {
-			console.log(err);
+			console.error(err);
 		});
 	};
 

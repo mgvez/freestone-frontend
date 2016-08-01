@@ -21,10 +21,11 @@ export const INIT_SAVE = 'INIT_SAVE';
 function catchError(res) {
 
 	if (res instanceof Error) {
-		console.log('%cSAVE ERROR', 'color:magenta;font-weight:bold');
-		console.log(res);
+		console.log('%cSAVE ERROR', 'color:magenta;font-weight:bold');// eslint-disable-line
+		console.log(res);// eslint-disable-line
 		return res;
 	}
+	return null;
 
 }
 
@@ -91,6 +92,7 @@ export function saveRecord(table, tree, records, deleted, callback) {
 					dispatch(pushPath({ pathname: backPath }));
 
 				}
+				return null;
 			});
 
 			

@@ -13,7 +13,7 @@ function getItemValue(item) {
 	return item.label;
 }
 
-function renderItem(item, currentVal) {
+function renderItem(item) {
 	return (
 		<span key={item.value}>
 			{item.label}

@@ -9,10 +9,6 @@ export class Gravatar extends Component {
 		size: React.PropTypes.number,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		// console.log(this.props);
 		// console.log(window.devicePixelRatio);

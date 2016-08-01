@@ -23,11 +23,7 @@ export class Nav extends Component {
 		username: React.PropTypes.string,
 		visible: React.PropTypes.bool,
 	};
-
-	constructor(props) {
-		super(props);
-	}
-
+	
 	componentWillMount() {
 		this.requireData(this.props);
 	}

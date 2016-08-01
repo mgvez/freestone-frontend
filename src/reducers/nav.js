@@ -32,12 +32,13 @@ function structure(state = navInitialState, action) {
 function toggleState(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case TOGGLE_NAV:
+	case TOGGLE_NAV: {
 		const id = action.data;
 		return {
 			...state,
 			[id]: !state[id],
 		};
+	}
 	default:
 		// console.log('no change');
 		return state;
@@ -46,7 +47,7 @@ function toggleState(state = {}, action) {
 function scrollLock(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case LOCK_SCROLL:
+	case LOCK_SCROLL: {
 		const { path, scroll } = action.data;
 		// console.log(path, scroll);
 		const newState = {
@@ -58,6 +59,7 @@ function scrollLock(state = {}, action) {
 			newState[path] = scroll;
 		}
 		return newState;
+	}
 	default:
 		// console.log('no change');
 		return state;

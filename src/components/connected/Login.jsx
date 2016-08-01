@@ -61,7 +61,8 @@ export class Login extends Component {
 								{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : ''}
 								<form role="form">
 									<div className="form-group">
-										<input type="text"
+										<input
+											type="text"
 											className="form-control input-lg"
 											placeholder="Username"
 											ref={el => this._username = el}
@@ -69,14 +70,16 @@ export class Login extends Component {
 										/>
 									</div>
 									<div className="form-group">
-										<input type="password"
+										<input
+											type="password"
 											className="form-control input-lg"
 											placeholder="Password"
 											ref={el => this._password = el}
 											defaultValue={this.state.password}
 										/>
 									</div>
-									<button type="submit"
+									<button
+										type="submit"
 										className="btn btn-lg"
 										disabled={this.props.isAuthenticating}
 										onClick={this.login}

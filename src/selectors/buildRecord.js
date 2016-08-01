@@ -18,7 +18,11 @@ function getChildrenRecordIds(records, parentRecordId, linkFieldId) {
 		const record = records[recordId];
 		// console.log(record);
 		return record[linkFieldId] === parentRecordId && record;
-	}).filter(record => record).map(record => record[PRIKEY_ALIAS]);
+	}).filter(
+		record => record
+	).map(
+		record => record[PRIKEY_ALIAS]
+	);
 }
 
 //get un tree de IDs de records et de ses children

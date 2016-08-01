@@ -48,12 +48,12 @@ export class Field extends Component {
 			input = <DateInput {...this.props} />;
 			break;
 		case 'enum':
-			// input = <SelectInput {...this.props} />;
-			// break;
 		case 'foreign':
 		case 'selfcascade':
 		case 'cascade':
 		case 'foreigntext':
+			// input = <SelectInput {...this.props} />;
+			// break;
 			input = <AutocompleteInput {...this.props} />;
 			break;
 		case 'img':
@@ -91,7 +91,7 @@ export class Field extends Component {
 		case 'order':
 		case 'subform':
 		case 'nodisplay':
-			return <div/>;
+			return null;
 		default:
 			return (
 				<div className="field row">

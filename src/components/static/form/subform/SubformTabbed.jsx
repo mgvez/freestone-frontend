@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { TabList } from 'components/static/form/subform/TabList';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
@@ -24,7 +24,7 @@ export class SubformTabbed extends CollapsableForm {
 
 		return (<div ref={this.setCollapsable}>
 			<TabList {...this.props} activeRecordId={activeRecordId} />
-			<SingleRecord tableId={this.props.table.id} recordId={activeRecordId} language={this.props.language}/>
+			<SingleRecord tableId={this.props.table.id} recordId={activeRecordId} language={this.props.language} />
 		</div>);
 	}
 
@@ -44,7 +44,7 @@ export class SubformTabbed extends CollapsableForm {
 						<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
 					</div>
 				</header>
-				{ content }
+				{content}
 			</section>
 		);
 

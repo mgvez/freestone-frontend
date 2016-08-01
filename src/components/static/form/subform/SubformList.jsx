@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { Header } from 'components/static/form/Header';
@@ -25,16 +25,12 @@ export class SubformList extends CollapsableForm {
 		onRequestToggleCollapse: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	getContent() {
 		if (!this.collapser.getOpenState()) return null;
 		return (<div ref={this.setCollapsable}>
 			{
-				this.props.childrenRecords.map((record, index) => {
-					return <SingleRecord key={record.id} tableId={this.props.table.id} recordId={record.id} language={this.props.language}/>;
+				this.props.childrenRecords.map((record) => {
+					return <SingleRecord key={record.id} tableId={this.props.table.id} recordId={record.id} language={this.props.language} />;
 				})
 			}
 			{
@@ -50,7 +46,6 @@ export class SubformList extends CollapsableForm {
 
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
-		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		const changeViewBtn = (!this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
 		const content = this.getContent();
@@ -61,11 +56,11 @@ export class SubformList extends CollapsableForm {
 						<Header table={this.props.table} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
-						{ changeViewBtn }
+						{changeViewBtn}
 						<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
 					</div>
 				</header>
-				{ content }
+				{content}
 			</section>
 		);
 

@@ -20,10 +20,6 @@ export class Errors extends Component {
 		clearErrors: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	closeModal = () => {
 		this.props.clearErrors();
 	};
@@ -60,7 +56,7 @@ export class Errors extends Component {
 					this.props.errors.map((err, index) => {
 						const { message, details } = err;
 						// console.log(err);
-						const nodes = [<div key={index} dangerouslySetInnerHTML={ { __html: message } } />];
+						const nodes = [<div key={index} dangerouslySetInnerHTML={{ __html: message }} />];
 						if (details && typeof details === 'object') {
 							const detailsPrint = JSON.stringify(details, null, 2).replace(/\\t/g, '	').replace(/\\n/g, '\n').replace(/\\r/g, '');//this.printObject(details);
 							nodes.push(<pre key={`${index}_details`}>{detailsPrint}</pre>);

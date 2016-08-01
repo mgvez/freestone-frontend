@@ -8,10 +8,6 @@ export class Module extends Component {
 		id: React.PropTypes.number,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return (
 			<li className="nav-item">

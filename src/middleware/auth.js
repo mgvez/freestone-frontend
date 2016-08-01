@@ -1,9 +1,6 @@
-
-import { push as pushPath } from 'react-router-redux';
 import { unauthorized, LOGIN_USER_FAILURE, LOGOUT_USER, UNAUTHORIZED } from 'actions/auth';
 
-
-export default store => next => action => {
+export default store => next => action => {// eslint-disable-line
 
 	function gotoLogin() {
 		// // console.log(store.getState());

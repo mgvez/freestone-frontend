@@ -27,13 +27,9 @@ export class Save extends Component {
 		cancelSave: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	componentWillMount() {
 		// console.log('MOUNT', this.props.records, this.props.deleted);
-		const onSaved = this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.callback);
+		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.callback);
 	}
 
 	render() {

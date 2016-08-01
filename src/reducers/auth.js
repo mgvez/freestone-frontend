@@ -51,7 +51,7 @@ export function auth(state = initialState, action) {
 			userId: action.payload.token.data.id,
 			statusText: 'You have been successfully logged in.',
 		};
-	case LOGIN_USER_FAILURE:
+	case LOGIN_USER_FAILURE: {
 		const err = action.payload.response && action.payload.response.error;
 		return {
 			...state,
@@ -63,6 +63,7 @@ export function auth(state = initialState, action) {
 			email: null,
 			statusText: `Authentication Error: ${err}`,
 		};
+	}
 	case LOGOUT_USER:
 		return {
 			...state,

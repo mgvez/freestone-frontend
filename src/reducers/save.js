@@ -7,13 +7,14 @@ import { SEND_FILE } from 'actions/send-file';
 function files(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case SEND_FILE:
+	case SEND_FILE: {
 		// console.log(action.data);
 		const { tmpName, progress } = action.data;
 		return {
 			...state,
 			[tmpName]: Math.ceil(progress * 100),
 		};
+	}
 	case INIT_SAVE:
 	case CLEAR_DATA:
 	case CLEAR_ERRORS:

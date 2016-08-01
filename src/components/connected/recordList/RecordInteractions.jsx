@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { routeSelector } from 'selectors/route';
 import { lockScroll } from 'actions/nav';
 
-import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { InfosFcn } from 'components/static/recordList/InfosFcn';
 import { DuplicateBtn } from 'components/connected/recordList/DuplicateBtn';
 import { OrderFcn } from 'components/connected/recordList/OrderFcn';
@@ -29,11 +28,7 @@ export class RecordInteractions extends Component {
 		lockScroll: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
-	onEditClick = (e) => {
+	onEditClick = () => {
 		this.props.lockScroll(this.props.path, window.scrollY);
 	}
 
@@ -41,7 +36,7 @@ export class RecordInteractions extends Component {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
 		if (this.props.table.hasOrder) {
-			orderFcn = <div className="col-md-2 orders"><OrderFcn tableName={this.props.table.name} prikey={prikeyVal}/></div>;
+			orderFcn = <div className="col-md-2 orders"><OrderFcn tableName={this.props.table.name} prikey={prikeyVal} /></div>;
 		}
 
 		const modifFcn = (
@@ -63,9 +58,9 @@ export class RecordInteractions extends Component {
 		);
 
 		return (<div>
-			{ infos }
-			{ modifFcn }
-			{ orderFcn }
+			{infos}
+			{modifFcn}
+			{orderFcn}
 		</div>);
 
 	}

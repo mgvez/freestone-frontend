@@ -15,10 +15,6 @@ export class OrderFcn extends Component {
 		swapOrder: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	swapOrder(direction) {
 		// console.log('swap', this.props.tableName, this.props.prikey, direction);
 		this.props.swapOrder(this.props.tableName, this.props.prikey, direction);

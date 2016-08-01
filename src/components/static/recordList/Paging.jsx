@@ -9,11 +9,7 @@ export class Paging extends Component {
 		curPage: React.PropTypes.number,
 		search: React.PropTypes.string,
 	};
-
-	constructor(props) {
-		super(props);
-	}
-
+	
 	getPage(num, label) {
 
 		let display;

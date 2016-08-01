@@ -34,10 +34,6 @@ export class SingleRecord extends Component {
 		setFieldVal: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	componentWillMount() {
 		this.requireData(this.props);
 	}
@@ -136,8 +132,8 @@ export class SingleRecord extends Component {
 		}
 		return (
 			<section className="single-record">
-				{ form }
-				{ sub }
+				{form}
+				{sub}
 			</section>
 		);
 	}

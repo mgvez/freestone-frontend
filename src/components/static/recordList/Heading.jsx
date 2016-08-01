@@ -7,14 +7,7 @@ export class Heading extends Component {
 		isSelfTree: React.PropTypes.bool,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
-
-
-		let fieldsCells;
 		//si self tree, cells par defaut
 		if (this.props.isSelfTree) {
 			return (
@@ -29,7 +22,7 @@ export class Heading extends Component {
 			<tr>
 				{
 					this.props.fields.map((field, index) => {
-						return <th key={index}>{ field.label }</th>;
+						return <th key={index}>{field.label}</th>;
 					})
 				}
 			</tr>

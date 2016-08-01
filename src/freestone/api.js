@@ -26,7 +26,7 @@ export function callApi(route, data) {
 	// console.log(`post data ${route}`, data);
 	// console.log(`JWT: ${jwt}`);
 	const method = data ? 'post' : 'get';
-	const headers = { 'Accept': 'application/json' };
+	const headers = { Accept: 'application/json' };
 	const jwt = getJWT();
 	if (jwt) {
 		headers.Authorization = `Bearer ${jwt}`;
