@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Input } from 'components/static/form/inputTypes/Input';
 import Autosuggest from 'react-autosuggest';
 
-import * as optionsActionCreators from 'actions/foreign-options';
+import * as optionsActionCreators from 'actions/foreignOptions';
 import { foreignOptionsMapStateToProps } from 'selectors/foreignOptions';
 
 

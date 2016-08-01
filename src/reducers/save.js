@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { SAVE_SUCCESS, SAVE_ERROR, SAVE_PROCESSING, SAVE_IDLE } from 'freestone/codes';
 import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
 import { SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR, INIT_SAVE } from 'actions/save';
-import { SEND_FILE } from 'actions/send-file';
+import { SEND_FILE } from 'actions/sendFile';
 
 function files(state = {}, action) {
 	// console.log(action);

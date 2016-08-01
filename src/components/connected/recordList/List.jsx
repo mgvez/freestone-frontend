@@ -116,6 +116,10 @@ export class List extends Component {
 		this.setState({ hoveringId: recordId });
 	}
 
+	hideAllHovers = () => {
+		this.handleHover(null);
+	}
+
 	render() {
 		// console.log(this.props.table);
 		// console.log('render list');
@@ -159,7 +163,7 @@ export class List extends Component {
 					</div>
 
 					<div className="padded-content">
-						<table className="table list-records">
+						<table className="table list-records" onMouseLeave={this.hideAllHovers} ref={el => this._list = el}>
 							{heading}
 							{
 								this.props.groupedRecords.map((group, groupIdx) => {

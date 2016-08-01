@@ -1,7 +1,7 @@
 
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { RECEIVE_FOREIGN_OPTIONS } from 'actions/foreign-options';
+import { RECEIVE_FOREIGN_OPTIONS } from 'actions/foreignOptions';
 
 
 export function foreignOptions(state = {}, action) {

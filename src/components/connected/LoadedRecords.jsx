@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { fetchTable } from 'actions/schema';
-import { fetchForeignOptions } from 'actions/foreign-options';
+import { fetchForeignOptions } from 'actions/foreignOptions';
 import { loadedRecords } from 'selectors/loadedRecords';
 
 import { Cancel } from 'components/connected/process/Cancel';

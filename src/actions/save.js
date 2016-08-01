@@ -1,5 +1,5 @@
 import { FREESTONE_API } from 'middleware/api';
-import { sendRecordFiles } from 'actions/send-file';
+import { sendRecordFiles } from 'actions/sendFile';
 import { push as pushPath } from 'react-router-redux';
 
 import { CLEAR_SCHEMA } from 'actions/schema';

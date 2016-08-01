@@ -5,7 +5,7 @@ import { Route } from 'react-router';
 /* containers */
 import { Freestone } from 'components/connected/Freestone';
 import { Home } from 'components/connected/Home';
-import { List } from 'components/connected/List';
+import { List } from 'components/connected/recordList/List';
 import { RootForm } from 'components/connected/form/RootForm';
 import { Module } from 'components/connected/Module';
 
