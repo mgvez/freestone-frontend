@@ -11,8 +11,7 @@ import { DuplicateBtn } from 'components/connected/recordList/DuplicateBtn';
 import { OrderFcn } from 'components/connected/recordList/OrderFcn';
 import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
 
-import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS } from 'freestone/schemaProps';
-
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 @connect(
 	routeSelector,
@@ -53,6 +52,7 @@ export class RecordInteractions extends Component {
 					prikey={prikeyVal}
 					lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
 					createddate={this.props.values[CREATED_DATE_ALIAS]}
+					label={this.props.values[LABEL_PSEUDOFIELD_ALIAS]}
 				/>
 			</div>
 		);

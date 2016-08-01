@@ -26,21 +26,21 @@ export class LoadedRecords extends Component {
 
 	constructor(props) {
 		super(props);
-
 		this.origOffset = null;
 		this.state = { isSticky: false };
-
-		window.addEventListener('scroll', () => {
-			this.stick();
-		});
 	}
 
 	componentWillMount() {
 		this.requireData(this.props);
+		window.addEventListener('scroll', this.stick);
 	}
 
 	componentWillReceiveProps(props) {
 		this.requireData(props);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.stick);
 	}
 
 	requireData(props) {
@@ -57,7 +57,7 @@ export class LoadedRecords extends Component {
 		}
 	}
 
-	stick() {
+	stick = () => {
 		this.origOffset = this.origOffset || (this.nav && this.nav.offsetTop);
 		this.setState({ isSticky: window.scrollY >= this.origOffset });
 	}

@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
+import { getUnloadedOptions, getRecordLabel } from 'selectors/recordLabel';
 
-import { PRIKEY_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 const recordsSelector = state => state.recordList;
 const paramsSelector = (state, props) => props.params;
@@ -48,11 +49,15 @@ export const listRecordsSelector = createSelector(
 		const nPages = Math.ceil(nRecords / pageSize);
 
 		const { table } = schema;
-		let records = loadedRecords;
+
 		let groupedRecords;
 
 		// console.log(table + ' && ' + recordsTable + '===' + table.name + ' && ' + providedPage + '===' + requestedPage + ' && ' + providedSearch + '===' + requestedSearch);
 		if (table && recordsTable === table.name && Number(providedPage) === Number(requestedPage || 1) && providedSearch === (requestedSearch || '')) {
+			let records = loadedRecords.map(record => {
+				record[LABEL_PSEUDOFIELD_ALIAS] = getRecordLabel(record, table);
+				return record;
+			});
 
 			if (table.isSelfTree) {
 				//le tree ne peut pas etre construit direct en SQL, a cause de l'ordre, et au lieu de le builder en php, on le fait en js

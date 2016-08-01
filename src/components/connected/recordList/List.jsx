@@ -123,7 +123,7 @@ export class List extends Component {
 	render() {
 		// console.log(this.props.table);
 		// console.log('render list');
-		// console.log(this.props.groupedRecords);
+		// console.log(this.props.searchableFields);
 		let output;
 		let readyToScroll = false;
 		if (this.props.table && this.props.groupedRecords) {

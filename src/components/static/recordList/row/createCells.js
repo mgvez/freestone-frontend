@@ -1,11 +1,15 @@
 import React from 'react';
 
+import { TYPE_IMG, TYPE_FILE } from 'freestone/schemaProps';
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 
 export function createCells(fields, values, elementType = 'td', options = {}) {
 	return fields.map((field, index) => {
+		
+		if (field.isGroup) return null;
+
 		let val = values[field.listAlias];
-		if (field.type === 'img' || field.type === 'file') {
+		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
 			val = React.createElement(
 				FileThumbnail,
 				{

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { schemaSelector } from 'selectors/schema';
 import { allForeignOptionsSelector } from 'selectors/foreignOptions';
+import { getUnloadedOptions, getRecordLabel } from 'selectors/recordLabel';
 
 import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from 'freestone/schemaProps';
 import { RECORD_LOADED_SAFE_LIFE } from 'freestone/settings';
@@ -13,7 +14,7 @@ export const loadedRecords = createSelector(
 	(schema, allRecords, allForeignOptions, visible) => {
 		// console.log(schema);
 		const tableIds = Object.keys(allRecords);
-		const unloadedForeignOptions = [];
+		let unloadedForeignOptions = [];
 		const now = new Date().getTime() / 1000;
 
 		const recordsByTable = tableIds.map(tableId => {
@@ -22,32 +23,12 @@ export const loadedRecords = createSelector(
 			let records;
 			if (table && table.type === TYPE_MAIN) {
 
-				const searchableFields = table.fields.filter(field => field.isLabel);
+				unloadedForeignOptions = unloadedForeignOptions.concat(getUnloadedOptions(table, allForeignOptions));
 
 				const recordIds = Object.keys(allRecords[tableId]);
 				records = recordIds.map(recordId => {
 					const rec = allRecords[tableId][recordId];
-					// console.log(rec);
-					const label = searchableFields.map(field => {
-						const val = rec[field.id];
-						// console.log(field);
-						if (field.foreign) {
-							const foreignValues = allForeignOptions[field.id];
-							if (!foreignValues) {
-								unloadedForeignOptions.push(field.id);
-								return val;
-							}
-							// console.log(typeof val, val);
-							const foreignRec = foreignValues.values.find(foreignValue => {
-								// console.log(foreignValue);
-								return foreignValue.value === val;
-							});
-							return foreignRec && foreignRec.label;
-						}
-						const node = document.createElement('div');
-						node.innerHTML = val;
-						return node.textContent || null;
-					}).filter(val => !!val).join(' | ');
+					const label = getRecordLabel(rec, table, allForeignOptions);
 					// console.log(`${table.displayLabel} - ${label}`);
 
 					const hasBeenOpenedFor = Math.round(now - rec[LOADED_TIME_ALIAS]);
@@ -70,7 +51,7 @@ export const loadedRecords = createSelector(
 			};
 
 		});
-		// console.log(recordsByTable);
+		// console.log(unloadedForeignOptions);
 		return {
 			records: recordsByTable,
 			unloadedForeignOptions,

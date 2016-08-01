@@ -22,6 +22,7 @@ export class Heading extends Component {
 			<tr>
 				{
 					this.props.fields.map((field, index) => {
+						if (field.isGroup) return null;
 						return <th key={index}>{field.label}</th>;
 					})
 				}

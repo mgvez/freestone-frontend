@@ -8,6 +8,7 @@ export class InfosFcn extends Component {
 		prikey: React.PropTypes.string,
 		createddate: React.PropTypes.string,
 		lastmodifdate: React.PropTypes.string,
+		label: React.PropTypes.string,
 	};
 	
 	render() {
@@ -16,9 +17,10 @@ export class InfosFcn extends Component {
 		const modified = this.props.lastmodifdate || 'unknown';
 		return (
 			<div className="modification" colSpan="25">
-				created {created}, 
-				modified {modified}, 
-				<em><a target="_blank" href={recordLink}>{this.props.prikey}</a></em>
+				<div>{this.props.prikey}. <strong>{this.props.label}</strong></div>
+				created {created}<br />
+				modified {modified}<br />
+				<em><a target="_blank" href={recordLink}>preview</a></em>
 			</div>
 		);
 	}
