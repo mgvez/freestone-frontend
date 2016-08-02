@@ -7,7 +7,7 @@ import * as recordActionCreators from 'actions/record';
 
 import { formRecordMapStateToProps } from 'selectors/formRecord';
 
-import { Subform } from 'components/connected/form/Subform';
+import { Subform } from 'components/connected/form/subform/Subform';
 import { Field } from 'components/static/form/Field';
 import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
 
@@ -17,7 +17,7 @@ import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
 )
 export class SingleRecord extends Component {
 	static propTypes = {
-		tableName: React.PropTypes.string,
+		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,
 
 		table: React.PropTypes.object,
@@ -33,10 +33,6 @@ export class SingleRecord extends Component {
 		fetchRecord: React.PropTypes.func,
 		setFieldVal: React.PropTypes.func,
 	};
-
-	constructor(props) {
-		super(props);
-	}
 
 	componentWillMount() {
 		this.requireData(this.props);
@@ -54,13 +50,13 @@ export class SingleRecord extends Component {
 	// }
 
 	requireData(props) {
-		const { tableName, recordId } = props;
+		const { tableId, recordId } = props;
 		// console.log(props.recordId);
-		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.table) this.props.fetchTable(tableId);
 		// console.log(`fetch record ${tableName}.${recordId}`);
 
 		if (recordId && !props.record) {
-			this.props.fetchRecord(tableName, recordId);
+			this.props.fetchRecord(tableId, recordId);
 		}
 	}
 
@@ -106,6 +102,7 @@ export class SingleRecord extends Component {
 								origVal={this.props.recordUnaltered[field.id]}
 								setFieldVal={this.props.setFieldVal}
 								env={this.props.env}
+								lang={field.language}
 							/>) : null;
 						})
 					}
@@ -123,6 +120,7 @@ export class SingleRecord extends Component {
 										tableId={tableId}
 										parentTableId={this.props.table.id}
 										parentRecordId={this.props.recordId}
+										language={this.props.language}
 									/>
 								);
 							})
@@ -134,8 +132,8 @@ export class SingleRecord extends Component {
 		}
 		return (
 			<section className="single-record">
-				{ form }
-				{ sub }
+				{form}
+				{sub}
 			</section>
 		);
 	}

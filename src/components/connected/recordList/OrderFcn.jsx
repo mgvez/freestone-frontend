@@ -15,10 +15,6 @@ export class OrderFcn extends Component {
 		swapOrder: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	swapOrder(direction) {
 		// console.log('swap', this.props.tableName, this.props.prikey, direction);
 		this.props.swapOrder(this.props.tableName, this.props.prikey, direction);
@@ -35,10 +31,10 @@ export class OrderFcn extends Component {
 	render() {
 				
 		return (
-			<td>
-				<a className="fa fa-arrow-circle-up" onClick={this.swapOrderUp}>&nbsp;</a>
-				<a className="fa fa-arrow-circle-down" onClick={this.swapOrderDown}>&nbsp;</a>
-			</td>
+			<div>
+				<a className="button-circle fa fa-arrow-up" onClick={this.swapOrderUp}></a>
+				<a className="button-circle fa fa-arrow-down" onClick={this.swapOrderDown}></a>
+			</div>
 		);
 	}
 }

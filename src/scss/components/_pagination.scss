@@ -1,0 +1,33 @@
+
+
+.pagination {
+	list-style-type: none;
+	padding-left: 0;
+
+	li {
+		display: inline-block;
+		padding: 7px 0;
+		background: $white;
+		border: 1px solid $color-accent-primary;
+		border-radius: 5px;
+		width: 35px;
+		text-align: center;
+
+		a {
+			color: $color-accent-primary;
+			text-decoration: none;
+		}
+
+		&.active {
+			background: $color-accent-primary;
+
+			a {
+				color: $white;
+			}
+		}
+
+		& + li {
+			margin-left: 10px;
+		}
+	}
+}

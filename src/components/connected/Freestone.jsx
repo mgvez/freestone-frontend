@@ -10,7 +10,7 @@ import { clearSchema } from 'actions/schema';
 const actionCreators = { ...authActionCreators, ...devActionCreators, ...envActionCreators, clearSchema };
 
 /* application components */
-import { SiteHeader } from 'components/static/SiteHeader';
+import { SiteHeader } from 'components/connected/SiteHeader';
 import { Footer } from 'components/static/Footer';
 import { Errors } from 'components/static/Errors';
 import { Nav } from 'components/connected/Nav';
@@ -22,7 +22,7 @@ import 'style!font-awesome/scss/font-awesome.scss';
 
 @connect(
 	state => {
-		return { auth: state.auth, env: state.env, errors: state.errors };
+		return { auth: state.auth, env: state.env };
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
@@ -62,9 +62,9 @@ export class Freestone extends Component {
 				<div className="main-content">
 					<SiteHeader {...this.props} />
 					<LoadedRecords />
-					<Errors {...this.props} />
 					{this.props.children}
 					<Footer />
+					<Errors {...this.props} />
 				</div>
 			</div>
 		);

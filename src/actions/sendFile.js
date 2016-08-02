@@ -29,7 +29,7 @@ function sendChunk(dispatch, fileDef, rangeStart = 0) {
 	const chunkReqAction = dispatch({
 		[FREESTONE_API]: {
 			types: [null, SEND_FILE, FREESTONE_API_FATAL_FAILURE],
-			route: `file`,
+			route: 'file',
 			data,
 		},
 	});

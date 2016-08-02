@@ -1,84 +1,114 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
 
-import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
-import { InfosFcn } from 'components/static/recordList/InfosFcn';
-import { OrderFcn } from 'components/connected/recordList/OrderFcn';
-import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
-
-import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps';
+import { RecordInteractions } from 'components/connected/recordList/RecordInteractions';
+import { createCells } from 'components/static/recordList/row/createCells';
+import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 export class Row extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		values: React.PropTypes.object,
+		isLarge: React.PropTypes.bool,
+		isHovering: React.PropTypes.bool,
+
+		handleHover: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
+	shouldComponentUpdate(nextProps) {
+		return nextProps.isHovering !== this.props.isHovering
+			|| nextProps.isLarge !== this.props.isLarge
+			|| nextProps.values !== this.props.values;
+	}
+	
+	getInteractions() {
+		return (<td colSpan="20" className="interactions">
+			<RecordInteractions table={this.props.table} fields={this.props.fields} values={this.props.values} />
+		</td>);
 	}
 
-	render() {
-		// console.log(this.props.values);
-		
-		let orderCell;
-		if (this.props.table.hasOrder) {
-			orderCell = <OrderFcn tableName={this.props.table.name} prikey={this.props.values.prikey}/>;
-		}
+	handleHover = () => {
+		this.props.handleHover(this.props.values[PRIKEY_ALIAS]);
+	}
 
-		const modifCell = (
-			<td className="list-functions">
-				<Link to={`/edit/${this.props.table.name}/${this.props.values.prikey}`} activeClassName="active" className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span> Edit</span></Link>
-				<DeleteBtn tableName={this.props.table.name} prikey={this.props.values.prikey} />
-			</td>
-		);
-		const infoCell = (
-			<InfosFcn
-				tableName={this.props.table.name}
-				prikey={this.props.values.prikey}
-				lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
-				createddate={this.props.values[CREATED_DATE_ALIAS]}
-			/>
-		);
-		// console.log(this.props.values);
-		if (this.props.table.isSelfTree) {
-			const breadcrumb = this.props.values.breadcrumb ? this.props.values.breadcrumb : '0';
-			const level = this.props.values.level ? this.props.values.level : '0';
+	renderSelfTree() {
+		const { fields, values } = this.props;
+		let content;
+
+		const breadcrumb = values.breadcrumb ? values.breadcrumb : '0';
+		const level = values.level ? values.level : '0';
+
+		if (this.props.isLarge) {
+			if (!this.props.isHovering) {
+				const label = createCells(fields, values, 'span');
+				content = [
+					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>,
+					<td key="cellLabel" className="selfjoin-label">{label}</td>,
+				];
+			} else {
+				content = this.getInteractions();
+			}
+
 			return (
-				<tr className={`selfjoin-row level-${level}`}>
-					
-					<td className="selfjoin-breadcrumb">{breadcrumb}</td>
-					<td className="selfjoin-label">
-						{
-							this.props.fields.map((field, index) => {
-								// console.log(field);
-
-								return <span key={index}>{ this.props.values[field.listAlias] }</span>;
-							})
-						}
-					</td>
-					{ modifCell }
-					{ orderCell }
+				<tr onMouseOver={this.handleHover}>
+					{content}
 				</tr>
 			);
 		}
 
+		content = createCells(fields, values, 'span');
 		return (
-			<tr>
-				{
-					this.props.fields.map((field, index) => {
-						let val = this.props.values[field.listAlias];
-						if (field.type === 'img' || field.type === 'file') {
-							val = <FileThumbnail val={this.props.values[field.listAlias]} dir={field.folder} type={field.type} />;
-						}
-						return <td key={index}>{ val }</td>;
-					})
-				}
-				{ modifCell }
-				{ orderCell }
-				{ infoCell }
+			<tr className={`selfjoin-row level-${level}`}>
+				<td className="selfjoin-breadcrumb">{breadcrumb}</td>
+				<td className="selfjoin-label">
+					{content}
+				</td>
+				<td className="interactions">
+					<RecordInteractions table={this.props.table} fields={fields} values={values} />
+				</td>
 			</tr>
 		);
+
+	}
+
+	renderRegular() {
+		const { fields, values } = this.props;
+		let content;
+		//ROW NORMAL, LARGE
+		if (this.props.isLarge) {
+
+			if (!this.props.isHovering) {
+				content = createCells(fields, values);
+			} else {
+				content = this.getInteractions();
+			}
+
+			return (
+				<tr onMouseOver={this.handleHover}>
+					{content}
+				</tr>
+			);
+		}
+
+		//ROW NORMAL, MOBILE
+		content = createCells(fields, values, 'div', { className: 'mobile-cell' });
+		return (
+			<tr>
+				<td>
+					{content}
+				</td>
+				<td className="interactions">
+					<RecordInteractions table={this.props.table} fields={fields} values={values} />
+				</td>
+			</tr>
+		);
+
+	}
+
+	render() {
+		// console.log('render %s', this.props.values.prikey);
+		// console.log(this.props.table);
+		return this.props.table.isSelfTree ? this.renderSelfTree() : this.renderRegular();
+
 	}
 }

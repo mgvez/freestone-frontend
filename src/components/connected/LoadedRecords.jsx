@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import { fetchTable } from 'actions/schema';
-import { fetchForeignOptions } from 'actions/foreign-options';
+import { fetchForeignOptions } from 'actions/foreignOptions';
 import { loadedRecords } from 'selectors/loadedRecords';
 
 import { Cancel } from 'components/connected/process/Cancel';
@@ -21,25 +21,26 @@ export class LoadedRecords extends Component {
 		records: React.PropTypes.array,
 		unloadedForeignOptions: React.PropTypes.array,
 		toggleState: React.PropTypes.object,
+		visible: React.PropTypes.bool,
 	};
 
 	constructor(props) {
 		super(props);
-
 		this.origOffset = null;
 		this.state = { isSticky: false };
-
-		window.addEventListener('scroll', () => {
-			this.stick();
-		});
 	}
 
 	componentWillMount() {
 		this.requireData(this.props);
+		window.addEventListener('scroll', this.stick);
 	}
 
 	componentWillReceiveProps(props) {
 		this.requireData(props);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.stick);
 	}
 
 	requireData(props) {
@@ -56,7 +57,7 @@ export class LoadedRecords extends Component {
 		}
 	}
 
-	stick() {
+	stick = () => {
 		this.origOffset = this.origOffset || (this.nav && this.nav.offsetTop);
 		this.setState({ isSticky: window.scrollY >= this.origOffset });
 	}
@@ -68,9 +69,10 @@ export class LoadedRecords extends Component {
 		if (!this.props.records) return null;
 
 		const stickClass = this.state.isSticky ? 'sticky' : '';
+		const collapsedClass = this.props.visible ? '' : 'collapsed';
 
 		return (
-			<nav className={`loaded-records ${stickClass}`} ref={ref => this.nav = ref}>
+			<nav className={`loaded-records ${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {

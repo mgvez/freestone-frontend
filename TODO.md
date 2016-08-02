@@ -1,40 +1,11 @@
-# Todo
-
-## next
-
-## Respond to window size
-https://facebook.github.io/react/tips/dom-event-listeners.html
-
-## implementer / refactor
-[https://blog.risingstack.com/react-js-best-practices-for-2016/](https://blog.risingstack.com/react-js-best-practices-for-2016/)
-- voir https://gist.github.com/Chrisui/49e76eb8b4ff887967e9
-- reecrire les components en functional components https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components et https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.de5b5b1q8
-
 ## General
-- pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc.)
+- Banque : liste de thumbnails au lieu de records en table
 - liste des anciennes révisions du record
 - au logout, save le state entier du user à la db
-- Quand erreur au save, btn confirm avant de retourner (pas de timeout)
-- Banque : liste de thumbnails au lieu de records en table
-- Drag & drop dans liste pour order
-- Date abrégée, infos completes en hover
-- Rows: pas d'infos ni btns, ils apparaissent ds un widget au hover
-- Mettre un champ "label" -> microtemplate pour indiquer si le champ s'affiche dans les "records en cours de modif"
-- Mettre les subforms collapse/decollapse
-- Duplicate records
+- mettre un search general
+- pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 
 # Freestone PHP
-- bank (et toutes les instances de cette classe)
-	- js delete tags figure et figcaption vides
-	- image resize pour img bank selon pixel ratio
-- tester definitions dans install config
-	- mettre field_type
-- verifier que les tables avec plusieurs rels fonctionnent (voir icc content_block si encore setté de meme)
-	- toutes les instances de Table->getRelField doivent passer le ID de la table parent. Vérifier dans js aussi
-	- childrenAreLoaded (reducer record-form) est problématique
-	- getRecords de formchildrenrecord reselect fucké
-- traduire les erreurs (VException)
-- pas quit quand image resize marche pas : save quand meme
 
 # Freestone JS
 - ~link vers home~ reste juste à détecter le active
@@ -44,6 +15,10 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 - Analytics
 - latest modifications?
 - login list?
+- status commerce en ligne
+- feed de nouvelle twitter alerte mot cle
+- campagnes de emails (mailchimp, etc)
+- derniers messages envoyés par formulaires
 
 ## Menu
 
@@ -51,14 +26,16 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 ## Liste
 
 ## Form
-- Enlever la possibilité d'être en liste (quand on possède un sous-formulaire ou tout le temps) [Nicolas - 20-06-16]
+- changement de langue & save : sticky
 - link to document from bank
 - champ type url
+- Mettre focus sur TinyMCE quand on l'edit et pas juste dans ses sous components - Pic 2016-07-22.
 
 ## Pages
 - all
 
 # Pluss tard
+- Drag & drop dans liste pour order
 - Unit tests 20%
 - insert image de banque : drag & drop
 - faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
@@ -76,3 +53,16 @@ https://facebook.github.io/react/tips/dom-event-listeners.html
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
+<<<<<<< HEAD
+=======
+
+
+## implementer / refactor
+[https://blog.risingstack.com/react-js-best-practices-for-2016/](https://blog.risingstack.com/react-js-best-practices-for-2016/)
+- voir https://gist.github.com/Chrisui/49e76eb8b4ff887967e9
+- reecrire les components en functional components https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components et https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.de5b5b1q8
+- Respond to window size https://facebook.github.io/react/tips/dom-event-listeners.html
+
+
+
+>>>>>>> 57b88561afe76dfd0e91c4cec286bd894be7d9ab

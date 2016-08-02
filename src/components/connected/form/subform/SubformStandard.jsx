@@ -6,12 +6,11 @@ import { formChildrenRecordsMapStateToProps } from 'selectors/formChildrenRecord
 import * as recordActionCreators from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
-import { SubformTabbed } from 'components/static/form/SubformTabbed';
-import { SubformList } from 'components/static/form/SubformList';
-import { SubformSingle } from 'components/static/form/SubformSingle';
+import { SubformTabbed } from 'components/static/form/subform/SubformTabbed';
+import { SubformList } from 'components/static/form/subform/SubformList';
+import { SubformSingle } from 'components/static/form/subform/SubformSingle';
 
-import { TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
-import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from 'freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
 
 @connect(
 	formChildrenRecordsMapStateToProps,
@@ -27,15 +26,13 @@ export class SubformStandard extends Component {
 		parentRecordId: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
 		currentViewType: React.PropTypes.string,
+		language: React.PropTypes.string,
+		isCollapsed: React.PropTypes.bool,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
 		setOrder: React.PropTypes.func,
 	};
-	
-	constructor(props) {
-		super(props);
-	}
 
 	componentWillMount() {
 		this.requireData(this.props);
@@ -92,5 +89,6 @@ export class SubformStandard extends Component {
 		} else if (this.props.table.type === TYPE_OTO) {
 			return <SubformSingle {...this.props} />;
 		}
+		return null;
 	}
 }

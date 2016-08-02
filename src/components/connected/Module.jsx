@@ -23,11 +23,7 @@ export class Module extends Component {
 		}),
 		jwt: React.PropTypes.string,
 	};
-
-	constructor(props) {
-		super(props);
-	}
-
+	
 	render() {
 		// console.log(this.props);
 		const host = getApiUrl();
@@ -35,10 +31,10 @@ export class Module extends Component {
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
-					<h1>
-						{this.props.params.url}
-					</h1>
-					<iframe className="module" src={url} />
+				<h1>
+					{this.props.params.url}
+				</h1>
+				<iframe className="module" src={url} />
 			</section>
 		);
 	}

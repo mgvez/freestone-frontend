@@ -60,10 +60,10 @@ export class FileInput extends Input {
 		if (this.state.changing || (!this.props.val && !this.props.origVal)) {
 			let cancel;
 			if (!this.props.val) {
-				cancel = <button onClick={this.cancelRequestChange}>cancel</button>;
+				cancel = <button className="button-round" onClick={this.cancelRequestChange}>Modifier</button>;
 			}
 			return (
-				<div>
+				<div className="file-input-input">
 					<input id={id} type="file" value="" className="form-control" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
 					{cancel}
 				</div>
@@ -71,7 +71,7 @@ export class FileInput extends Input {
 		}
 
 		return (
-			<button onClick={this.requestChange}>change</button>
+			<button className="button-round" onClick={this.requestChange}>Modifier</button>
 		);	
 	}
 
@@ -88,7 +88,7 @@ export class FileInput extends Input {
 	};
 
 	getLocalImage(inp) {
-		if (!inp || this.state.localFile || this.props.field.type !== TYPE_IMG) return null;
+		if (!inp || this.state.localFile || this.props.field.type !== TYPE_IMG) return undefined;
 
 		const reader = new FileReader();
 
@@ -115,27 +115,29 @@ export class FileInput extends Input {
 		let deleteBtn;
 		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		if (origVal && val !== origVal) {
-			revertBtn = <button onClick={this.clearSavedInput}>revert to db file</button>;
+			revertBtn = <button className="button-round-warning" onClick={this.clearSavedInput}>revert to db file</button>;
 		}
 
 		// s'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
 		if (origVal === val) {
-			deleteBtn = <button onClick={this.setForDelete}>delete db file</button>;
+			deleteBtn = <button className="button-round-danger" onClick={this.setForDelete}>Effacer</button>;
 		}
 
 		const displayVal = val && (inputVal || origVal);
 
-		const thumbnail = <FileThumbnail val={origVal === val && val} localVal={this.state.localFile} dir={this.props.field.folder} type={this.props.field.type} />;
+		const thumbnail = <FileThumbnail val={origVal === val ? val : null} localVal={this.state.localFile} dir={this.props.field.folder} type={this.props.field.type} />;
 
 		return (
 			<div>
-				{thumbnail}
-				
-				<br />
-				{displayVal} <br/>
-				{renderInput}
-				{revertBtn}
-				{deleteBtn}
+				<div className="file-infos">
+					{thumbnail}
+					{displayVal}
+				</div>
+				<div className="file-input-section">
+					{renderInput}
+					{revertBtn}
+					{deleteBtn}
+				</div>
 			</div>
 		);
 	}

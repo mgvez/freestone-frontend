@@ -26,7 +26,7 @@ export function callApi(route, data) {
 	// console.log(`post data ${route}`, data);
 	// console.log(`JWT: ${jwt}`);
 	const method = data ? 'post' : 'get';
-	const headers = { 'Accept': 'application/json' };
+	const headers = { Accept: 'application/json' };
 	const jwt = getJWT();
 	if (jwt) {
 		headers.Authorization = `Bearer ${jwt}`;
@@ -40,6 +40,21 @@ export function callApi(route, data) {
 			method,		
 			data,
 			headers,
-		}).then(resolve, reject);
+		}).then(resolve, (res) => {
+			// console.log(res);
+			const err = new Error('API Error');
+			err.status = res.status;
+			err.statusText = res.statusText;
+			err.responseText = res.responseText;
+			try {
+				const jsonResponse = JSON.parse(res.response);
+				err.responseText = jsonResponse && jsonResponse.message;
+				err.details = jsonResponse && jsonResponse.details;
+			} catch (e) {
+				err.response = res.response;
+			}
+			// console.log(err);
+			reject(err);
+		});
 	});
 }

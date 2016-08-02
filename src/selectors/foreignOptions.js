@@ -17,7 +17,7 @@ export const allForeignOptionsSelector = createSelector(
 				const row = rawOption.row;
 				const label = row && Object.keys(row).reduce((parsedLabel, field) => {
 					const val = row[field];
-					return parsedLabel.replace('{' + field + '}', val || '');
+					return parsedLabel.replace(`{${field}}`, val || '');
 				}, rawLabel) || '';
 				// console.log(row);
 				

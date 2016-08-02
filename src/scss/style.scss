@@ -26,7 +26,9 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "components/root-form";
 @import "components/subform";
 @import "components/home-button";
-@import "components/react-datepicker";
+@import "components/list-records";
+@import "components/pagination";
+@import "components/_react-datepicker";
 
 @import "layout/_default";
 

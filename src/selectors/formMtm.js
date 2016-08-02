@@ -6,23 +6,15 @@ import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
 const allMtmOptionsSelector = state => state.mtmOptions;
 const recordsSelector = state => state.recordForm.mtmRecords;
 const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
-const childrenRecordsSelector = (state, props) => props.childrenRecords;
 
 const tableIdSelector = (state, props) => props.table && props.table.id;
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 
-
-function getMtmRecords(records, mtmOptionField) {
-	return records.map(record => {
-		return record[mtmOptionField.id];
-	});
-}
-
 function makeSelector(tableSchemaSelector) {
 	return createSelector(
-		[tableSchemaSelector, allMtmOptionsSelector, tableIdSelector, parentTableIdSelector, parentRecordIdSelector, childrenAreLoadedSelector, recordsSelector, childrenRecordsSelector],
-		(schema, allMtmOptions, tableId, parentTableId, parentRecordId, childrenAreLoaded, allRecords, childrenRecords) => {
+		[tableSchemaSelector, allMtmOptionsSelector, tableIdSelector, parentTableIdSelector, parentRecordIdSelector, childrenAreLoadedSelector, recordsSelector],
+		(schema, allMtmOptions, tableId, parentTableId, parentRecordId, childrenAreLoaded, allRecords) => {
 			
 			const { table } = schema;
 

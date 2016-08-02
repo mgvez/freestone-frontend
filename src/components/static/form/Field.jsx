@@ -15,6 +15,7 @@ export class Field extends Component {
 		recordId: React.PropTypes.string,
 		val: React.PropTypes.any,
 		origVal: React.PropTypes.any,
+		lang: React.PropTypes.string,
 
 		setFieldVal: React.PropTypes.func,
 	};
@@ -47,12 +48,12 @@ export class Field extends Component {
 			input = <DateInput {...this.props} />;
 			break;
 		case 'enum':
-			// input = <SelectInput {...this.props} />;
-			// break;
 		case 'foreign':
 		case 'selfcascade':
 		case 'cascade':
 		case 'foreigntext':
+			// input = <SelectInput {...this.props} />;
+			// break;
 			input = <AutocompleteInput {...this.props} />;
 			break;
 		case 'img':
@@ -78,6 +79,8 @@ export class Field extends Component {
 			break;
 		}
 
+		const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
+
 		switch (this.props.field.type) {
 		case 'separator':
 			return <h2>{this.props.field.label}</h2>;
@@ -88,12 +91,12 @@ export class Field extends Component {
 		case 'order':
 		case 'subform':
 		case 'nodisplay':
-			return <div/>;
+			return null;
 		default:
 			return (
 				<div className="field row">
 					<div className="col-md-2 field-label">
-						<label>{this.props.field.label}</label>
+						<label>{this.props.field.label} {languageAppend}</label>
 					</div>
 					<div className="col-md-10">
 						{input}

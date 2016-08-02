@@ -1,0 +1,151 @@
+
+.padded-content {
+	width: 1200 / 1655 * 100%;
+	margin-left: auto;
+	margin-right: auto;
+	//padding: 0 150px;
+}
+
+.list-records {
+	width: 100%;
+	margin-top: 20px;
+
+	th, td {
+		text-align: left;
+		border-bottom: 1px solid $gray86;
+		border-top: 1px solid $gray86;
+		background: $white;
+
+		&:first-child {
+			border-left: 1px solid $gray86;
+		}
+
+		&:last-child {
+			border-right: 1px solid $gray86;
+		}
+	}
+
+	th {
+		padding: 10px 20px;
+	}
+
+	td {
+		padding: 20px;
+		vertical-align: middle;
+	}
+
+	.interactions {
+		background: $color-background-dark;
+		
+		&, a {
+			color: $white;
+		}
+
+		[class^=button] {
+			& + [class^=button] {
+				margin-left: 20px;
+			}
+		}
+
+		.modification {
+			a {
+				color: $color-accent-primary;
+			}
+		}
+
+		.orders {
+			text-align: right;
+		}
+	}
+
+	@for $i from 1 through 5 {
+		tr.level-#{$i} {
+			td:first-child {
+				padding-left: 20px * $i;
+			}
+		}
+	}
+
+	@include at-most(1736px) {
+		.list-functions {
+			[class^=button] {
+				display: block;
+				width: 100%;
+				text-align: center;
+
+				& + [class^=button] {
+					margin-left: 0;
+					margin-top: 10px;
+				}
+			}
+		}
+	}
+
+	@include at-most(1150px) {
+		.interactions .orders [class^=button] {
+			display: block;
+			& + [class^=button] {
+				margin-top: 10px;
+				margin-left: 0;
+			}
+		}
+	}
+
+
+	@include at-most($screen-sm-max) {
+		tr:nth-of-type(2n) {
+			td {
+				background: $gray97;
+
+				&.interactions {
+					background: $color-background-dark;
+				}
+			}
+		}
+
+		td {
+			vertical-align: top;
+			padding: 0;
+		}
+
+		.mobile-cell {
+			padding: 20px 20px 20px 50%;
+			position: relative;
+			border-bottom: 1px solid $gray86;
+
+			&:after {
+				position: absolute;
+					top: 20px;
+					left: 20px;
+			
+				width: 40%;
+				display: block;
+				content: attr(data-field-label);
+				font-weight: $font-weight-bold;
+			}
+		}
+
+		.interactions {
+			padding: 20px;
+			width: 250px;
+
+			.list-functions {
+				margin: 30px 0;
+			}
+
+			.orders {
+				text-align: center;
+
+				[class^=button] {
+					display: inline-block;
+
+					+ [class^=button] {
+						margin-top: 0;
+						margin-left: 20px;
+					}
+				}
+			}
+		}
+
+	}
+}

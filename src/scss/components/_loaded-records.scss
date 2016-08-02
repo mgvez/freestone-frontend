@@ -11,11 +11,18 @@
 
 	background: $color-background-dark;
 	color: $color-text-secondary;
+	z-index: 2;
+
+	transition: transform 0.3s;
 
 	&.sticky {
 		position: fixed;
 			top: 0;
 			right: 0;
+	}
+
+	&.collapsed {
+		transform: translate(100%, 0);
 	}
 
 	h2 {

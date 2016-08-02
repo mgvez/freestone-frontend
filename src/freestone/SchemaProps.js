@@ -1,9 +1,10 @@
 
 export const PRIKEY_ALIAS = 'prikey';
-export const PARENTKEY_ALIAS = 'parentkey';
 export const LASTMODIF_DATE_ALIAS = 'lastmodifdate';
 export const CREATED_DATE_ALIAS = 'createddate';
 export const LOADED_TIME_ALIAS = '__loaded_time';
+export const DELETED_PSEUDOFIELD_ALIAS = '__deleted';
+export const LABEL_PSEUDOFIELD_ALIAS = '__recordlabel';
 
 export const TYPE_MAIN = 'main';
 
@@ -13,6 +14,7 @@ export const TYPE_REL = 'rel';
 export const TYPE_PRIMARY = 'pri';
 export const TYPE_ORDER = 'order';
 export const TYPE_IMG = 'img';
+export const TYPE_FILE = 'file';
 export const TYPE_DATETIME = 'datetime';
 
 export const TYPES_PARENT_LINK = [TYPE_REL, TYPE_OTO, TYPE_MTM];
@@ -24,4 +26,3 @@ export const BANK_IMG_TABLE = 'zva_bank_img';
 export const BANK_IMG_FILE_ALIAS = 'zva_bank_img_file';
 export const BANK_IMG_FOLDER_ALIAS = 'zva_bank_img_file_folder';
 
-export const DELETED_PSEUDOFIELD_ALIAS = '__deleted';

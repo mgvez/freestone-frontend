@@ -1,6 +1,6 @@
 
 
-#main-header {
+.main-content > header {
 	padding: 15px 25px;
 	background: $gray96;
 	position: absolute;
@@ -9,12 +9,19 @@
 	width: calc(100% - #{$nav-width});
 	height: $header-height;
 
+	transition: width 0.3s;
+
 	.logout {
 		position: absolute;
 			top: 50%;
 			right: 25px;
 
 		transform: translate(0, -50%);
+	}
+
+	.nav-toggler, .loaded-records-toggler {
+		@extend %base_button;
+		@extend %round_button;
 	}
 }
 

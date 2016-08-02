@@ -32,7 +32,7 @@ const TINYMCE_CONFIG = {
 	theme_modern_toolbar_location: 'top',
 	theme_modern_toolbar_align: 'left',
 	theme_advanced_blockformats: 'p,h1,h2,h3,h4,h5,h6,article,section,figure,aside,pre',
-	extended_valid_elements: 'img[src|alt=|title|class|id|style|height|width]',
+	extended_valid_elements: 'img[src|alt=|title|class|id|style|height|width|srcset|sizes]',
 	valid_elements: VALID_ELEMENTS,
 };
 

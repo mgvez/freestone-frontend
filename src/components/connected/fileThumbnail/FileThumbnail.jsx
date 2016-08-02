@@ -36,7 +36,7 @@ export class FileThumbnail extends Component {
 
 		let thumb = <div>view</div>;
 		if (this.props.type === TYPE_IMG) {
-			thumb = <img src={val} style={this.css}/>;
+			thumb = <img src={val} style={this.css} />;
 		}
 		return (
 			<a href={`${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`} target="_blank">{thumb}</a>

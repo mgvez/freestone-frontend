@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { saveRecord } from 'actions/save';
-import { goTo } from 'actions/nav';
+
 
 import { buildSaveRecordSelector } from 'selectors/buildRecord';
 
@@ -24,19 +24,30 @@ export class Save extends Component {
 
 		callback: React.PropTypes.func,
 		saveRecord: React.PropTypes.func,
+		cancelSave: React.PropTypes.func,
 	};
-
-	constructor(props) {
-		super(props);
-	}
 
 	componentWillMount() {
 		// console.log('MOUNT', this.props.records, this.props.deleted);
-		const onSaved = this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.callback);
+		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.callback);
 	}
 
 	render() {
 		// console.log(this.props.saveState);
+		const isError = !!this.props.saveState.status.error;
+		let msgDisplay = null;
+		if (isError) {
+			msgDisplay = (<div>
+				<h2 className="error">{this.props.saveState.status.msg}</h2>
+				<div>{this.props.saveState.status.error}</div>
+				<div onClick={this.props.cancelSave} className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span>Go back to form</span></div>
+			</div>);
+		} else {
+			msgDisplay = (<div>
+				{this.props.saveState.status.msg}
+			</div>);
+		}
+
 		return (
 			<section>
 				Saving...
@@ -46,7 +57,7 @@ export class Save extends Component {
 						return <div key={tmpName}>Saving {tmpName} : {curPrc}%</div>;
 					})
 				}
-				<div>{this.props.saveState.status.msg}</div>
+				{msgDisplay}
 			</section>
 		);
 	}

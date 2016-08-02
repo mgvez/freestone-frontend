@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { getWebsiteUrl } from 'freestone/settings';
 import Modal from 'react-modal';
-import customStyle from './modalStyles.js';
+import customStyle from 'components/styles/modalStyles.js';
 
 function buildlink(contents, link, linkLabel) {
 	let val = link.trim();
@@ -32,11 +32,6 @@ export class LinkInsert extends Component {
 		selection: React.PropTypes.string,
 	};
 
-	constructor(props) {
-		super(props);
-		// console.log(props);
-	}
-
 	afterOpenModal = () => {
 		// references are now sync'd and can be accessed.
 		// this.refs.subtitle.style.color = '#f00';
@@ -54,7 +49,7 @@ export class LinkInsert extends Component {
 			));
 			this.closeModal();
 		} catch (e) {
-			alert('Cross domain error. If you want to link to an external site, please paste the link in the external link input');
+			alert('Cross domain error. If you want to link to an external site, please paste the link in the external link input');// eslint-disable-line
 		}		
 	};
 
@@ -83,7 +78,7 @@ export class LinkInsert extends Component {
 			<Modal
 				isOpen
 				onAfterOpen={this.afterOpenModal}
-				onRequestClose={this.closeModal}
+				onRequestClose={this.cancelChange}
 				closeTimeoutMS={n}
 				style={customStyle}
 			>
@@ -109,7 +104,7 @@ export class LinkInsert extends Component {
 						</div>
 					</div>
 				</div>
-				<iframe src={getWebsiteUrl()} style={{ width: '100%', height: '500px' }} ref="ifr"/>
+				<iframe src={getWebsiteUrl()} style={{ width: '100%', height: '500px' }} ref="ifr" />
 			</Modal>
 		);
 	}

@@ -22,12 +22,9 @@ export class Nav extends Component {
 		tree: React.PropTypes.array,
 		toggleState: React.PropTypes.object,
 		username: React.PropTypes.string,
+		visible: React.PropTypes.bool,
 	};
-
-	constructor(props) {
-		super(props);
-	}
-
+	
 	componentWillMount() {
 		this.requireData(this.props);
 	}
@@ -41,12 +38,12 @@ export class Nav extends Component {
 	}
 
 	render() {
-		// console.log('%cRender menu', 'font-weight: bold');
-		// console.log(this.props.tree);
+		const collapsedClass = this.props.visible ? '' : 'collapsed';
 		return (
-			<nav className="navbar-default" role="navigation">
-				<UserInfos />
-				<ul>
+			<div className={`navbar-container ${collapsedClass}`}>
+				<nav className={`navbar-default ${collapsedClass}`} role="navigation">
+					<UserInfos />
+					<ul>
 					<li className="nav-group home">
 						<HomeButton showIcon customClass="table-group"/>
 					</li>
@@ -56,8 +53,9 @@ export class Nav extends Component {
 							return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
 						})
 					}
-				</ul>
-			</nav>
+					</ul>
+				</nav>
+			</div>
 		);
 	}
 }

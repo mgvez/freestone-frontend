@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS } from 'actions/dev';
+import { CLEAR_ERRORS } from 'actions/errors';
 import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 
 export function errors(state = [], action) {
@@ -6,15 +6,16 @@ export function errors(state = [], action) {
 	switch (action.type) {
 	case FREESTONE_API_FAILURE:
 		return [
-			...state,
-			action.error.responseText || action.error.statusText || action.error.message,
+			// ...state,
+			{
+				message: action.error.responseText || action.error.statusText || action.error.response,
+				details: action.error.details,
+			},
 		];
-	case FREESTONE_API_FATAL_FAILURE:
 		// console.log(action.error);
-		return [
-			...state,
-			action.error.responseText || action.error.statusText || action.error.message,
-		];
+	//appelée en PLUS de API_FAILURE, donc n'a pas besoin d'ajouter l'erreur. Ne sert pas encore
+	case FREESTONE_API_FATAL_FAILURE:
+		return state;
 	case CLEAR_ERRORS:
 		return [];
 	default:

@@ -23,10 +23,6 @@ export class GoogleAnalytics extends Component {
 		fetchVariable: React.PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	componentWillMount() {
 		this.requireData(this.props);
 	}
@@ -68,14 +64,14 @@ export class GoogleAnalytics extends Component {
 	}
 
 	renderAnalytics() {
-		if (!this.props.clientId) return null;
+		if (!this.props.clientId) return undefined;
 		const gapi = window.gapi;
 		gapi.analytics.ready(() => {
 			// console.log('analytics ready', this.props.property);
 			
 			if (gapi.analytics.auth.isAuthorized()) {
 				this.renderAnalyticsTimeline();
-				return null;
+				return undefined;
 			}
 
 			gapi.analytics.auth.authorize({
@@ -83,7 +79,7 @@ export class GoogleAnalytics extends Component {
 				clientid: this.props.clientId,
 			});
 
-			gapi.analytics.auth.on('success', (response) => {
+			gapi.analytics.auth.on('success', () => {
 				// console.log('authorized');
 				this.renderAnalyticsTimeline();
 			});

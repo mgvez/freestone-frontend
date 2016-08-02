@@ -155,7 +155,7 @@ export const VALID_ELEMENTS = 'a[accesskey|charset|class|coords|dir<ltr?rtl|href
  + 'img[align<bottom?left?middle?right?top|alt|border|class|dir<ltr?rtl|height'
  + '|hspace|id|ismap<ismap|lang|longdesc|name|onclick|ondblclick|onkeydown'
  + '|onkeypress|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover'
- + '|onmouseup|src|style|title|usemap|vspace|width],'
+ + '|onmouseup|src|style|title|usemap|vspace|width|srcset|sizes],'
  + 'input[accept|accesskey|align<bottom?left?middle?right?top|alt|autocomplete|autofocus'
  + '|checked<checked|class|dir<ltr?rtl|disabled<disabled|form|id|ismap<ismap|lang|list'
  + '|max|maxlength|min|name|onblur|onclick|ondblclick|onfocus|onkeydown|onkeypress'

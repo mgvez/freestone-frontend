@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
+import { PRIKEY_ALIAS } from 'freestone/schemaProps';
+
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
 
@@ -13,6 +15,8 @@ import { InScroll } from 'components/connected/InScroll';
 
 import createRecord from 'freestone/createRecord';
 import { listRecordsSelector } from 'selectors/listRecords';
+
+const LARGE_MINW_BREAKPOINT = 1024;
 
 @connect(
 	listRecordsSelector,
@@ -33,8 +37,6 @@ export class List extends Component {
 		curPage: React.PropTypes.number,
 		nRecords: React.PropTypes.number,
 		search: React.PropTypes.string,
-		qstr: React.PropTypes.string,
-		path: React.PropTypes.string,
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
@@ -48,11 +50,16 @@ export class List extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = { windowWidth: 0, isLarge: true, hoveringId: 0 };
 	}
-
 
 	componentWillMount() {
 		this.requireData(this.props);
+	}
+
+	componentDidMount() {
+		window.addEventListener('resize', this.handleResize);
+		this.handleResize();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -66,6 +73,16 @@ export class List extends Component {
 	shouldComponentUpdate(nextProps) {
 		//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
 		return !!(nextProps.groupedRecords && nextProps.groupedRecords.length);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+	}
+	
+	handleResize = () => {
+		const windowWidth = window.innerWidth;
+		const isLarge = windowWidth > LARGE_MINW_BREAKPOINT;
+		this.setState({ windowWidth, isLarge });
 	}
 
 	requireData(props) {
@@ -91,14 +108,37 @@ export class List extends Component {
 		this.context.router.push(path);
 	};
 
+	/**
+		Les rows appellent le hover ici
+	*/
+	handleHover = (recordId) => {
+		// console.log('hovering %s', recordId);
+		this.setState({ hoveringId: recordId });
+	}
+
+	hideAllHovers = () => {
+		this.handleHover(null);
+	}
+
 	render() {
 		// console.log(this.props.table);
 		// console.log('render list');
-		// console.log(this.props.groupedRecords);
+		// console.log(this.props.searchableFields);
 		let output;
 		let readyToScroll = false;
 		if (this.props.table && this.props.groupedRecords) {
 			readyToScroll = true;
+
+			let heading = null;
+			if (this.state.isLarge) {
+				heading = (<thead>
+					<Heading
+						fields={this.props.searchableFields}
+						isSelfTree={this.props.table.isSelfTree}
+					/>
+				</thead>);
+			}
+
 			output = (
 				<section>
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
@@ -106,6 +146,7 @@ export class List extends Component {
 					<header className="record-header">
 						<div className="texts">
 							<h1>{this.props.table.actionLabel}</h1>
+							<h2>{this.state.windowWidth} pxw</h2>
 							<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
 						</div>
 
@@ -116,21 +157,14 @@ export class List extends Component {
 
 					<div className="padded-content">
 						<form onSubmit={this.handleSubmit}>
-							<input placeholder="search" ref="searchVal" initialValue="" />
-							<button><i className="fa fa-search"></i></button>
+							<input className="search-input" type="text" placeholder="search" ref="searchVal" initialValue="" />
+							<button className="button-search"><i className="fa fa-search"></i></button>
 						</form>
 					</div>
 
 					<div className="padded-content">
-						<table className="table list-records">
-							<thead>
-								<Heading
-									fields={this.props.searchableFields}
-									hasOrder={this.props.table.hasOrder}
-									isSelfTree={this.props.table.isSelfTree}
-								/>
-
-							</thead>
+						<table className="table list-records" onMouseLeave={this.hideAllHovers} ref={el => this._list = el}>
+							{heading}
 							{
 								this.props.groupedRecords.map((group, groupIdx) => {
 									let groupHeading;
@@ -138,7 +172,7 @@ export class List extends Component {
 										groupHeading = (
 											<tr>
 												<td colSpan="20">
-												<strong>{group.label}</strong>
+													<strong>{group.label}</strong>
 												</td>
 											</tr>
 										);
@@ -146,15 +180,19 @@ export class List extends Component {
 
 									return (
 										<tbody key={groupIdx}>
-										{ groupHeading }
+										{groupHeading}
 										{
 											group.records.map((record, idx) => {
+												const isHovering = this.state.hoveringId === record[PRIKEY_ALIAS];
 												return (
 													<Row
 														key={idx}
 														fields={this.props.searchableFields}
 														values={record}
 														table={this.props.table}
+														isLarge={this.state.isLarge}
+														isHovering={isHovering}
+														handleHover={this.handleHover}
 													/>
 												);
 											})
@@ -177,7 +215,7 @@ export class List extends Component {
 		}
 		return (
 			<InScroll isReady={readyToScroll}>
-				{ output }
+				{output}
 			</InScroll>
 		);
 	}

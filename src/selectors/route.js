@@ -5,13 +5,16 @@ import { createSelector } from 'reselect';
 */
 
 const stateLocationSelector = state => state.routing.locationBeforeTransitions;
+const scrollLockSelector = state => state.nav.scrollLock;
 
 export const routeSelector = createSelector(
-	[stateLocationSelector],
-	(location) => {
+	[stateLocationSelector, scrollLockSelector],
+	(location, scrollLock) => {
+		const path = location.pathname;
+		// console.log(scrollLock);
 		return {
-			path: location.pathname,
-			scroll: location.state && location.state.scroll,
+			path,
+			scroll: scrollLock[path],
 		};
 	},
 );

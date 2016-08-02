@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 import { Table } from 'components/static/menu/Table';
 import { Module } from 'components/static/menu/Module';
-
-import { TweenMax } from 'utils/Greensock';
-
+import { Collapser } from 'animation/Collapser';
 
 export class NavGroup extends Component {
 	static propTypes = {
@@ -18,13 +16,22 @@ export class NavGroup extends Component {
 
 	constructor(props) {
 		super(props);
+		this.collapser = new Collapser({
+			getOpenState: (fromProps) => {
+				const propsToCheck = fromProps || this.props;
+				return propsToCheck.toggleState[propsToCheck.data.id];
+			},
+			changeState: () => {
+				this.props.toggleCollapse(this.props.data.id);
+			},
+			getContainer: () => {
+				return this._children;
+			},
+		});
 	}
 
 	componentDidUpdate(prevProps) {
-		const wasOpen = this.getOpenState(prevProps);
-		const isOpen = this.getOpenState(this.props);
-		// console.log(wasOpen, isOpen);
-		if (wasOpen !== isOpen) this.animate(isOpen);
+		this.collapser.didUpdate(prevProps);
 	}
 
 	getChildrenGroups(level) {
@@ -33,54 +40,42 @@ export class NavGroup extends Component {
 		});
 	}
 
-	getOpenState(props) {
-		return props.toggleState[props.data.id];
-	}
+	getContents() {
+		if (!this.collapser.getOpenState()) return null;
+		const level = this.props.level + 1;
 
-	animate(isOpen) {
-		const childrenContainer = this.refs.children;
-		// console.log(childrenContainer);
-		const dest = isOpen ? 'from' : 'to';
-		TweenMax.set(childrenContainer, { height: 'auto' });
-		TweenMax[dest](childrenContainer, 0.4, { height: 0 });
+		return (<ul className="sub-nav" ref={(el) => this._children = el}>
+			{this.getChildrenGroups(level)}
+			{
+				this.props.data.tables.map((item) => {
+					return <Table key={item.id} name={item.name} id={item.id} actionLabel={item.actionLabel} nrecords={item.nrecords} />;
+				})
+			}
+			{
+				this.props.data.modules.map((item) => {
+					return <Module key={`mod-${item.id}`} {...item} />;
+				})
+			}
+		</ul>);
 	}
-
-	toggle = () => {
-		this.props.toggleCollapse(this.props.data.id);
-	};
 
 	render() {
 
 		// console.log(this.props.level + ' nav group rendered', this.props.data);
-		const level = this.props.level + 1;
-		const groupId = this.props.data.id;
-		const isOpen = this.props.toggleState[groupId];
-		// console.log(this.props.toggleState[groupId]);
-
-		const toggleClass = isOpen ? '' : 'collapsed';
+		const isOpen = this.collapser.getOpenState();
+		
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';
+
+		const contents = this.getContents();
 		// console.log(this.props.data);
 		return (
 			<li className={`${activeClass} nav-group`} >
-				<a onClick={this.toggle} className={`table-group ${toggleClass} ${activeClass}`}>
+				<a onClick={this.collapser.toggle} className={`table-group ${activeClass}`}>
 					<i className={`fa fa-${icon}`}></i>
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa arrow"></span>
 				</a>
-
-				<ul className="sub-nav" ref="children">
-				{ this.getChildrenGroups(level) }
-				{
-					this.props.data.tables.map((item) => {
-						return <Table key={item.id} name={item.name} id={item.id} actionLabel={item.actionLabel} nrecords={item.nrecords} />;
-					})
-				}
-				{
-					this.props.data.modules.map((item) => {
-						return <Module key={`mod-${item.id}`} {...item} />;
-					})
-				}
-				</ul>
+				{contents}				
 			</li>
 		);
 	}

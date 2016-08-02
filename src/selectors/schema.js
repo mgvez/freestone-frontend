@@ -6,11 +6,12 @@ import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from 'freestone
 const tablesSelector = state => state.schema.tables;
 const fieldsSelector = state => state.schema.fields;
 const fieldDependenciesSelector = state => state.schema.fieldDependencies;
+const childrenSelector = state => state.schema.children;
 
 
 export const schemaSelector = createSelector(
-	[tablesSelector, fieldsSelector, fieldDependenciesSelector],
-	(rawTables, fields, fieldDependencies) => {
+	[tablesSelector, fieldsSelector, fieldDependenciesSelector, childrenSelector],
+	(rawTables, fields, fieldDependencies, allChildren) => {
 		// console.log('%cBUILD SCHEMA ======', 'font-weight:bold;color:#44ff44;');
 
 		let tables = Object.keys(rawTables).reduce((carry, tableId) => {
@@ -27,6 +28,7 @@ export const schemaSelector = createSelector(
 				hasOrder: false,
 				orderField: null,
 				mtmOptionField: null,
+				hasChildren: !!(allChildren[tableId] && allChildren[tableId].length),
 			};
 			carry[table.name] = tableId;
 			return carry;
@@ -74,9 +76,10 @@ export const schemaSelector = createSelector(
 		}, tables);
 
 
-		Object.keys(tables).map((tableId) => {
+		Object.keys(tables).forEach((tableId) => {
 			const table = tables[tableId];
 			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank - b.rank);
+			if (table.searchableFields) table.searchableFields = table.searchableFields.sort((a, b) => a.rank - b.rank);
 
 			//if table has many to many field, we need to find the option field
 			if (table.type === TYPE_MTM) {

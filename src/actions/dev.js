@@ -1,15 +1,8 @@
 import Perf from 'react-addons-perf';
 
-export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const CLEAR_DATA = 'CLEAR_DATA';
 export const PERF_START = 'PERF_START';
 export const PERF_STOP = 'PERF_STOP';
-
-export function clearErrors() {
-	return {
-		type: CLEAR_ERRORS,
-	};
-}
 
 
 export function clearData() {

@@ -1,3 +1,4 @@
+import { push as pushPath } from 'react-router-redux';
 import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 
 export const REQUEST_RECORD_LIST = 'REQUEST_RECORD_LIST';
@@ -65,7 +66,11 @@ export function addRecord(tableId, newRecord) {
 	return (dispatch) => {
 		return dispatch({
 			type: RECEIVE_RECORD,
-			data: { tableId, records: [newRecord] },
+			data: {
+				tables: [
+					{ tableId, records: [newRecord] },
+				],
+			},
 		});
 	};
 }
@@ -87,6 +92,23 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
 				route: `record/${tableName}/${parentTable}/${id}`,
 			},
+		});
+	};
+}
+
+export function duplicateRecord(tableName, id) {
+	return (dispatch) => {
+		// console.log(`record/${tableName}/${parentTable}/${id}`);
+		return dispatch({
+			[FREESTONE_API]: {
+				types: ['api::duplicate-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
+				route: `duplicate/${tableName}/${id}`,
+			},
+		}).then((res) => {
+			// console.log(res);
+			const { rootRecordId } = res;
+			return dispatch(pushPath(`edit/${tableName}/${rootRecordId}`));
+
 		});
 	};
 }

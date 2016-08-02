@@ -18,7 +18,7 @@ const envInitialState = {
 export function env(state = envInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
-	case ADD_ENV:
+	case ADD_ENV: {
 		// console.log(action.data);
 		const data = action.data;
 		const defaults = envInitialState;
@@ -26,6 +26,7 @@ export function env(state = envInitialState, action) {
 			vals[key] = data[key] || defaults[key];
 			return vals;
 		}, {});
+	}
 	default:
 		// console.log('no change');
 		return state;
@@ -49,17 +50,21 @@ export function userViewSettings(state = userViewSettingsInitialState, action) {
 	}
 }
 
+/**
+	Variables dépendant du client (e.g. Google Analytics ID)
+*/
 export function clientVariables(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA:
 		return {};
-	case ADD_CLIENT_VARIABLE:
-		console.log(action.data);
+	case ADD_CLIENT_VARIABLE: {
+		// console.log(action.data);
 		const { name, value } = action.data;
 		return {
 			...state,
 			[name]: value,
 		};
+	}
 	default:
 		// console.log('no change');
 		return state;

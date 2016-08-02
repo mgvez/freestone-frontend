@@ -1,5 +1,5 @@
 import { FREESTONE_API } from 'middleware/api';
-import { sendRecordFiles } from 'actions/send-file';
+import { sendRecordFiles } from 'actions/sendFile';
 import { push as pushPath } from 'react-router-redux';
 
 import { CLEAR_SCHEMA } from 'actions/schema';
@@ -17,6 +17,17 @@ export const DELETE_RECORD_SUCCESS = 'DELETE_RECORD_SUCCESS';
 export const DELETE_RECORD_ERROR = 'DELETE_RECORD_ERROR';
 
 export const INIT_SAVE = 'INIT_SAVE';
+
+function catchError(res) {
+
+	if (res instanceof Error) {
+		console.log('%cSAVE ERROR', 'color:magenta;font-weight:bold');// eslint-disable-line
+		console.log(res);// eslint-disable-line
+		return res;
+	}
+	return null;
+
+}
 
 
 export function saveRecord(table, tree, records, deleted, callback) {
@@ -38,7 +49,9 @@ export function saveRecord(table, tree, records, deleted, callback) {
 		});
 
 		return sendRecordFiles(dispatch, records).then(filesResult => {
-			// console.log(filesResult);
+
+			const filesErr = catchError(filesResult);
+			if (filesErr) return filesErr;
 
 			const fileNames = filesResult.reduce((carry, fileResult) => {
 				carry[fileResult.tmpName] = fileResult.name;
@@ -59,27 +72,27 @@ export function saveRecord(table, tree, records, deleted, callback) {
 				},
 			});
 
-			onSaved.then(() => {
+			onSaved.then((res) => {
+
+				const saveErr = catchError(res);
+				if (saveErr) return saveErr;
+
 				if (callback) {
 					callback();
 				} else {
 					const backPath = `list/${table.name}`;
-					setTimeout(() => {
-						//si table savée est meta (zva_...)
-						if (isMeta) {
-							dispatch({
-								type: CLEAR_SCHEMA,
-							});
-						}
-						// console.log(backPath);
-						dispatch(pushPath({
-							pathname: backPath,
-							state: {
-								scroll: 0,
-							},
-						}));
-					}, 1000);
+
+					//si table savée est meta (zva_...)
+					if (isMeta) {
+						dispatch({
+							type: CLEAR_SCHEMA,
+						});
+					}
+					// console.log(backPath);
+					dispatch(pushPath({ pathname: backPath }));
+
 				}
+				return null;
 			});
 
 			

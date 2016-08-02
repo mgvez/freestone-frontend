@@ -15,7 +15,7 @@ export function fetchTable(name) {
 	};
 }
 
-export function clearSchema(name) {
+export function clearSchema() {
 	return (dispatch) => {
 		return dispatch({
 			type: CLEAR_SCHEMA,

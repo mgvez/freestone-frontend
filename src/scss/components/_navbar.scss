@@ -1,4 +1,19 @@
 
+.navbar-container {
+	&.collapsed {
+		.navbar-default {
+			transform: translate(-100%, 0);
+		}
+		
+		& + .main-content {
+			padding-left: 0;
+
+			header {
+				width: 100%;
+			}
+		}
+	}
+}
 
 .navbar-default {
 	background: $color-background-dark;
@@ -11,11 +26,17 @@
 	height: 100vh;
 	overflow-y: scroll;
 
+	transition: transform 0.3s;
+
 	.user {
 		padding: 40px 25px;
 		background: url(../img/user-bg.jpg) bottom right no-repeat;
 		background-size: cover;
 		font-weight: $font-weight-bold;
+
+		img {
+			border-radius: 100%;
+		}
 
 		p {
 			margin-bottom: 0;
@@ -52,7 +73,7 @@
 			margin-left: 10px;
 		}
 
-		&:hover {
+		&:hover, &.active {
 			background: $color-background-dark_hover;
 		}
 	}
@@ -63,9 +84,10 @@
 		a {
 			display: block;
 			position: relative;
-			padding: 10px 50px 10px 10px;
-			background: mix($white, $color-accent-primary, 20%);
+			padding: 10px 50px 10px 30px;
+			background: lighten($color-background-dark, 10%);
 			transition: background 0.3s;
+			border-left: 6px solid $color-accent-primary;
 
 			.nrecords {
 				display: block;
@@ -76,7 +98,7 @@
 
 				width: 40px;
 				height: 100%;
-				background: mix($white, $color-accent-primary, 10%);
+				background: lighten($color-background-dark, 5%);
 				transition: background 0.3s;
 
 				.n {
@@ -89,17 +111,32 @@
 				}
 			}
 
-			&:hover {
-				background: mix($white, $color-accent-primary, 10%);
+			&:hover, &.active {
+				background: lighten($color-background-dark, 2%);
 
 				.nrecords {
-					background: mix($white, $color-accent-primary, 5%);
+					background: lighten($color-background-dark_hover, 2%);
 				}
 			}
 		}
 
 		& + .nav-item {
-			border-top: 1px solid $color-accent-primary;
+			position: relative;
+			border-top: 1px solid $color-background-dark;
+
+			&:after {
+				content: ' ';
+				display: block;
+				width: 6px;
+				height: 1px;
+				background: $color-accent-primary;
+
+				position: absolute;
+					top: -1px;
+					left: 0;
+
+				z-index: 2;
+			}
 		}
 	}
 
@@ -115,6 +152,10 @@
 
 			.table-group {
 				padding: 10px 15px;
+
+				&:hover, &.active {
+					background: $color-background-dark;
+				}
 			}
 
 			.sub-nav {

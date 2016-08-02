@@ -8,7 +8,7 @@ function getTabGroup(props) {
 @dropTarget(
 	getTabGroup,
 	{
-		hover(props, monitor, component) {
+		hover(props, monitor) {
 			const dragId = monitor.getItem().id;
 			const hoverId = props.recordId;
 			// console.log(dragId, hoverId);

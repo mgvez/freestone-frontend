@@ -23,18 +23,22 @@ function setFieldValue(state, data) {
 
 function receiveRecord(state, data) {
 	// console.log(data);
-	if (!data || !data.tableId || !data.records) return state;
-	const { tableId } = data;
-	const newState = {
-		...state,
-		[tableId]: data.records.reduce((tableRecords, record) => {
+	if (!data || !data.tables) return state;
+
+	const newState = data.tables.reduce((bldState, singleTable) => {
+		if (!singleTable.tableId || !singleTable.records) return bldState;
+		const { tableId } = singleTable;
+		bldState[tableId] = singleTable.records.reduce((tableRecords, record) => {
 			const key = record[PRIKEY_ALIAS];
 			record[LOADED_TIME_ALIAS] = new Date().getTime() / 1000;
 			tableRecords[key] = record;
 			return tableRecords;
-		}, state[tableId] || {}),
-	};
-	// console.log(newState);
+		}, bldState[tableId] || {});
+		return bldState;
+	}, {
+		...state,
+	});
+
 	return newState;
 }
 
@@ -59,24 +63,27 @@ function childrenAreLoaded(state = {}, action) {
 	case UNAUTHORIZED:
 		return {};
 	case RECEIVE_MTM_RECORDS:
-	case RECEIVE_RECORD:
-		if (!action.data || !action.data.parentTableId || !action.data.parentRecordId) return state;
-		const { parentTableId, parentRecordId, tableId } = action.data;
-		// console.log(parentTableId, parentRecordId, tableId);
-		const newState = {
+	case RECEIVE_RECORD: {
+		if (!action.data || !action.data.tables) return state;
+
+		const newState = action.data.tables.reduce((bldState, tableRecords) => {
+			if (!tableRecords.parentTableId || !tableRecords.parentRecordId) return bldState;
+			const { parentTableId, parentRecordId, tableId } = tableRecords;
+			bldState[parentTableId] = {
+				...bldState[parentTableId],
+			};
+
+			bldState[parentTableId][parentRecordId] = {
+				...bldState[parentTableId][parentRecordId],
+			};
+			bldState[parentTableId][parentRecordId][tableId] = !!tableRecords.records;
+			return bldState;
+		}, {
 			...state,
-			[parentTableId]: {
-				...state[parentTableId],
-			},
-		};
-
-		newState[parentTableId][parentRecordId] = {
-			...newState[parentTableId][parentRecordId],
-		};
-		newState[parentTableId][parentRecordId][tableId] = !!action.data.records;
-
+		});
 		// console.log(newState);
 		return newState;
+	}
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
 	case DELETE_RECORD_SUCCESS:
@@ -233,7 +240,7 @@ function recordsUnaltered(state = {}, action) {
 
 function shownRecords(state = {}, action) {
 	switch (action.type) {
-	case SET_SHOWN_RECORD:
+	case SET_SHOWN_RECORD: {
 		const tableId = action.data.tableId;
 		// console.log(action);
 		const newState = {
@@ -246,6 +253,7 @@ function shownRecords(state = {}, action) {
 		// console.log(action.data);
 		// console.log(newState);
 		return newState;
+	}
 	default:
 		return state;
 	}
