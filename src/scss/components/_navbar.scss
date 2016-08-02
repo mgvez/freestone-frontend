@@ -160,6 +160,16 @@
 
 			.sub-nav {
 				border-left: 0;
+
+				.nav-item {
+					a {
+						border-left: 0;
+					}
+					
+					&:after {
+						display: none;
+					}
+				}
 			}
 		}
 
