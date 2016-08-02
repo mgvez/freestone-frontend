@@ -8,8 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/mgvez/freestone-frontend.git"
   },
+  "files":[
+    "dist",
+    "assets",
+    "index.html"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {

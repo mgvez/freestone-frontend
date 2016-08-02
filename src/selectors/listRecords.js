@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
-import { getUnloadedOptions, getRecordLabel } from 'selectors/recordLabel';
+import { getRecordLabel } from 'selectors/recordLabel';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
