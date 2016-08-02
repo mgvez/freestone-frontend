@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { NavGroup } from 'components/static/menu/NavGroup';
 import { UserInfos } from 'components/connected/widgets/UserInfos';
+import { HomeButton } from 'components/connected/widgets/HomeButton';
 
 import * as navActionCreators from 'actions/nav';
 import { navSelector } from 'selectors/nav';
@@ -43,12 +44,15 @@ export class Nav extends Component {
 				<nav className={`navbar-default ${collapsedClass}`} role="navigation">
 					<UserInfos />
 					<ul>
-					{
-						this.props.tree.map((item) => {
-							// console.log('item...');
-							return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
-						})
-					}
+						<li className="nav-group home">
+							<HomeButton showIcon customClass="table-group" />
+						</li>
+						{
+							this.props.tree.map((item) => {
+								// console.log('item...');
+								return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
+							})
+						}
 					</ul>
 				</nav>
 			</div>

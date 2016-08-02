@@ -23,6 +23,15 @@
 		@extend %base_button;
 		@extend %round_button;
 	}
+
+	.nav-toggler {
+		border-radius: 4px;
+		padding: 0 15px;
+
+		i {
+			margin:0;
+		}
+	}
 }
 
 .record-header {

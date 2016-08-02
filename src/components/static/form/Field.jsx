@@ -95,10 +95,10 @@ export class Field extends Component {
 		default:
 			return (
 				<div className="field row">
-					<div className="col-md-2 field-label">
+					<div className="col-md-3 field-label">
 						<label>{this.props.field.label} {languageAppend}</label>
 					</div>
-					<div className="col-md-10">
+					<div className="col-md-9">
 						{input}
 						<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
 					</div>

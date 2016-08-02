@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { HomeButton } from 'components/connected/widgets/HomeButton';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -47,7 +48,7 @@ export class SiteHeader extends Component {
 		// console.log(this.props.env);
 		return (
 			<header id="main-header" ref="header">
-				<div className="nav-toggler" onClick={this.navToggler}>Toggle moé la nav</div>
+				<div className="nav-toggler" onClick={this.navToggler}><i className="fa fa-bars"></i></div>
 				<div className="loaded-records-toggler" onClick={this.loadedRecordsToggler}>Toggle loaded records</div>
 				<div className="fcn">
 					<button className="btn btn-xs" onClick={this.props.clearSchema}>
@@ -67,6 +68,7 @@ export class SiteHeader extends Component {
 					</button>
 				</div>
 				<div className="logout">
+					<HomeButton /> 
 					<a onClick={this.props.logout}>
 						<i className="fa fa-sign-out"></i> Logout
 					</a>

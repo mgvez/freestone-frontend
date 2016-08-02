@@ -146,7 +146,6 @@ export class List extends Component {
 					<header className="record-header">
 						<div className="texts">
 							<h1>{this.props.table.actionLabel}</h1>
-							<h2>{this.state.windowWidth} pxw</h2>
 							<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
 						</div>
 
@@ -155,7 +154,7 @@ export class List extends Component {
 						</div>
 					</header>
 
-					<div className="padded-content">
+					<div className="padded-content search-ctn">
 						<form onSubmit={this.handleSubmit}>
 							<input className="search-input" type="text" placeholder="search" ref="searchVal" initialValue="" />
 							<button className="button-search"><i className="fa fa-search"></i></button>

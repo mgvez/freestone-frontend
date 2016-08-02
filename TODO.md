@@ -8,7 +8,8 @@
 # Freestone PHP
 
 # Freestone JS
-- link vers home
+- ~link vers home~ reste juste à détecter le active
+- pouvoir editer son propre compte
 
 ## Dashboard
 - Analytics
@@ -52,6 +53,8 @@
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
+<<<<<<< HEAD
+=======
 
 
 ## implementer / refactor
@@ -62,3 +65,4 @@
 
 
 
+>>>>>>> 57b88561afe76dfd0e91c4cec286bd894be7d9ab
