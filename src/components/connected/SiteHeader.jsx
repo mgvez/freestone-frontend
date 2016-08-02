@@ -13,6 +13,7 @@ import { siteHeaderSelector } from 'selectors/siteHeader';
 )
 export class SiteHeader extends Component {
 	static propTypes = {
+		nLoadedRecords: React.PropTypes.number,
 		toggleNavVisibility: React.PropTypes.func,
 		toggleLoadedRecords: React.PropTypes.func,
 		logout: React.PropTypes.func,
@@ -45,11 +46,19 @@ export class SiteHeader extends Component {
 	};
 
 	render() {
-		// console.log(this.props.env);
+		// console.log(this.props);
 		return (
 			<header id="main-header" ref="header">
 				<div className="nav-toggler" onClick={this.navToggler}><i className="fa fa-bars"></i></div>
-				<div className="loaded-records-toggler" onClick={this.loadedRecordsToggler}>Toggle loaded records</div>
+				<div className="logout">
+					<HomeButton /> 
+					<a onClick={this.props.logout}>
+						<i className="fa fa-sign-out"></i> Logout
+					</a>
+				</div>
+				<div className="loaded-records-toggler" onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
+					<i className="fa fa-pencil"></i>
+				</div>
 				<div className="fcn">
 					<button className="btn btn-xs" onClick={this.props.clearSchema}>
 						Clear schema
@@ -66,12 +75,6 @@ export class SiteHeader extends Component {
 					<button className="btn btn-xs" onClick={this.props.stopPerf}>
 						Stop perf
 					</button>
-				</div>
-				<div className="logout">
-					<HomeButton /> 
-					<a onClick={this.props.logout}>
-						<i className="fa fa-sign-out"></i> Logout
-					</a>
 				</div>
 			</header>
 		);
