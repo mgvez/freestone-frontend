@@ -146,7 +146,6 @@ export class List extends Component {
 					<header className="record-header">
 						<div className="texts">
 							<h1>{this.props.table.actionLabel}</h1>
-							<h2>{this.state.windowWidth} pxw</h2>
 							<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
 						</div>
 
