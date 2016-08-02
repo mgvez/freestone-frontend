@@ -44,15 +44,15 @@ export class Nav extends Component {
 				<nav className={`navbar-default ${collapsedClass}`} role="navigation">
 					<UserInfos />
 					<ul>
-					<li className="nav-group home">
-						<HomeButton showIcon customClass="table-group"/>
-					</li>
-					{
-						this.props.tree.map((item) => {
-							// console.log('item...');
-							return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
-						})
-					}
+						<li className="nav-group home">
+							<HomeButton showIcon customClass="table-group" />
+						</li>
+						{
+							this.props.tree.map((item) => {
+								// console.log('item...');
+								return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
+							})
+						}
 					</ul>
 				</nav>
 			</div>

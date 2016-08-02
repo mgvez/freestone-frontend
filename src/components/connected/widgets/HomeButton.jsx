@@ -7,10 +7,6 @@ export class HomeButton extends Component {
 		customClass: React.PropTypes.string,
 	};
 
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		const icon = this.props.showIcon ? <i className="fa fa-home"></i> : null;
 		return (
