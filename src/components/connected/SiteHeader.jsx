@@ -48,7 +48,7 @@ export class SiteHeader extends Component {
 		// console.log(this.props.env);
 		return (
 			<header id="main-header" ref="header">
-				<div className="nav-toggler" onClick={this.navToggler}>Toggle moé la nav</div>
+				<div className="nav-toggler" onClick={this.navToggler}><i className="fa fa-bars"></i></div>
 				<div className="loaded-records-toggler" onClick={this.loadedRecordsToggler}>Toggle loaded records</div>
 				<div className="fcn">
 					<button className="btn btn-xs" onClick={this.props.clearSchema}>
