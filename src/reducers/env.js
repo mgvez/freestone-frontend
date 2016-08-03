@@ -1,5 +1,5 @@
 
-import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE, ADD_CLIENT_VARIABLE } from 'actions/env';
+import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE, SET_ENV_VARIABLE } from 'actions/env';
 import { CLEAR_DATA } from 'actions/dev';
 
 const envInitialState = {
@@ -53,11 +53,11 @@ export function userViewSettings(state = userViewSettingsInitialState, action) {
 /**
 	Variables dépendant du client (e.g. Google Analytics ID)
 */
-export function clientVariables(state = {}, action) {
+export function envVariables(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA:
 		return {};
-	case ADD_CLIENT_VARIABLE: {
+	case SET_ENV_VARIABLE: {
 		// console.log(action.data);
 		const { name, value } = action.data;
 		return {

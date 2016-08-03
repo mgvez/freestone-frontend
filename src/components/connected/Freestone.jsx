@@ -22,7 +22,10 @@ import 'style!font-awesome/scss/font-awesome.scss';
 
 @connect(
 	state => {
-		return { auth: state.auth, env: state.env };
+		return { 
+			auth: state.auth, 
+			env: state.env,
+		};
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )
@@ -32,16 +35,13 @@ export class Freestone extends Component {
 		env: React.PropTypes.object,
 
 		unauthorized: React.PropTypes.func,
+		fetchVariable: React.PropTypes.func,
 		fetchEnv: React.PropTypes.func,
 		children: React.PropTypes.any,
 	};
 	
 	componentWillMount() {
 		this.props.fetchEnv();
-	}
-
-	componentWillReceiveProps() {
-
 	}
 
 	render() {

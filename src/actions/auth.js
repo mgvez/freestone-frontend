@@ -21,13 +21,13 @@ function loginUserSuccess(jwt, token) {
 }
 
 export function loginUserFailure(error) {
-	const { response } = error;
-	// console.log(response);
+	const { responseText } = error;
+	// console.log(error);
 	return {
 		type: LOGIN_USER_FAILURE,
 		payload: {
 			error,
-			response,
+			message: responseText,
 		},
 	};
 }
@@ -68,7 +68,7 @@ export function unauthorized(error = {}) {
 }
 
 
-export function loginUser(username, password) {
+export function loginUser(username, password, processInstall) {
 	return (dispatch) => {
 		// console.log(redirect);
 		// console.log(action);
@@ -79,6 +79,7 @@ export function loginUser(username, password) {
 				data: {
 					freestoneuser: username,
 					freestonepass: password,
+					freestoneinstall: processInstall ? '1' : '0',
 				},
 			},
 		});

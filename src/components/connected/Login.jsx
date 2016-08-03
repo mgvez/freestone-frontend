@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
 /* actions */
-import * as actionCreators from 'actions/auth';
+import * as authActionCreators from 'actions/auth';
+import { fetchVariable, setVariable } from 'actions/env';
+
 
 const metaData = {
 	title: 'Freestone',
@@ -16,8 +18,13 @@ const metaData = {
 };
 
 @connect(
-	state => state.auth,
-	dispatch => bindActionCreators(actionCreators, dispatch)
+	state => {
+		return {
+			...state.auth,
+			isInstalled: state.envVariables && state.envVariables.isInstalled,
+		};
+	},
+	dispatch => bindActionCreators({ ...authActionCreators, fetchVariable, setVariable }, dispatch)
 )
 export class Login extends Component {
 	static propTypes = {
@@ -26,7 +33,11 @@ export class Login extends Component {
 		jwt: React.PropTypes.string,
 		username: React.PropTypes.string,
 		isAuthenticating: React.PropTypes.bool,
+		isInstalled: React.PropTypes.bool,
+
 		loginUser: React.PropTypes.func,
+		fetchVariable: React.PropTypes.func,
+		setVariable: React.PropTypes.func,
 	};
 
 	constructor(props) {
@@ -36,16 +47,44 @@ export class Login extends Component {
 			password: 'aaa', //'aaa',wLT9GOCG62
 		};
 	}
+
+	componentWillMount() {
+		this.props.setVariable('isInstalled', undefined);
+		this.requireData(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.requireData(nextProps);
+	}
+
+	requireData(nextProps) {
+		// console.log(nextProps);
+		if (undefined === nextProps.isInstalled) {
+			this.props.fetchVariable('isInstalled');
+		}
+	}
 	
 	login = (e) => {
 		e.preventDefault();
 		const username = this._username.value;
 		const password = this._password.value;
 		// console.log(username, password);
-		this.props.loginUser(username, password);
+		this.props.loginUser(username, password, this.props.isInstalled === false);
 	};
 
 	render() {
+
+		const msgs = {
+			text: 'Please enter your credentials',
+			action: 'Submit',
+		};
+
+		//si pas installé, on met des messages différents
+		if (this.props.isInstalled === false) {
+			msgs.text = 'Welcome to Freestone! Please choose a username and password in order to install Freestone.';
+			msgs.action = 'Install';
+		}
+
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
@@ -59,7 +98,7 @@ export class Login extends Component {
 						<div className="row">
 							<div className="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
 								<div className="col-md-6 col-md-offset-3">
-									{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : ''}
+									{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : msgs.text}
 									<form role="form">
 										<div className="form-group">
 											<input
@@ -86,7 +125,7 @@ export class Login extends Component {
 											</div>
 										</div>
 										<div className="form-group">
-											<button type="submit" className="button-round-fw" disabled={this.props.isAuthenticating} onClick={this.login}>Log in</button>
+											<button type="submit" className="button-round-fw" disabled={this.props.isAuthenticating} onClick={this.login}>{msgs.action}</button>
 											<button className="button-round-warn-fw">Forgot your password?</button>
 										</div>
 									</form>
