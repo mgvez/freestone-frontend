@@ -31,4 +31,12 @@
 .login-zone {
 	background: $color-background-main;
 	padding: 60px;
+
+	.checkbox-container {
+		text-align: left;
+	}
+
+	[class|=button] {
+		margin: 10px 0;
+	}
 }
