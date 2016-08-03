@@ -57,8 +57,8 @@ export class Login extends Component {
 				<div className="login-zone">
 					<div className="container">
 						<div className="row">
-							<div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-								<div className="col-xs-12 col-md-6 col-md-offset-3">
+							<div className="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
+								<div className="col-md-6 col-md-offset-3">
 									{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : ''}
 									<form role="form">
 										<div className="form-group">
@@ -79,14 +79,16 @@ export class Login extends Component {
 												defaultValue={this.state.password}
 											/>
 										</div>
-										<button
-											type="submit"
-											className="btn btn-lg"
-											disabled={this.props.isAuthenticating}
-											onClick={this.login}
-										>
-											Submit
-										</button>
+										<div className="form-group">
+											<div className="checkbox-container">
+												<input type="checkbox" id="remember" />
+												<label htmlFor="remember">Remember me?</label>
+											</div>
+										</div>
+										<div className="form-group">
+											<button type="submit" className="button-round-fw" disabled={this.props.isAuthenticating} onClick={this.login}>Log in</button>
+											<button className="button-round-warn-fw">Forgot your password?</button>
+										</div>
 									</form>
 								</div>
 							</div>

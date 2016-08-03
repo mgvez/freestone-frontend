@@ -35,6 +35,12 @@
 	border-radius: 15px;
 }
 
+%full_width_button {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
 @mixin button-color-modifier($color) {
 	background: $color;
 
@@ -72,7 +78,7 @@
 }
 
 
-[class^=button] {
+[class|=button] {
 	@extend %base_button;
 
 	&[class*=round] {
@@ -89,5 +95,9 @@
 
 	&[class*=danger] {
 		@extend %danger_button;
+	}
+
+	&[class*=fw] {
+		@extend %full_width_button;
 	}
 }
