@@ -12,24 +12,53 @@
 	transition: width 0.3s;
 
 	.logout {
-		position: absolute;
-			top: 50%;
-			right: 25px;
+		float:right;
+			margin: 15px 25px 0 15px;
+		line-height: 30px;
 
 		transform: translate(0, -50%);
 	}
 
-	.nav-toggler, .loaded-records-toggler {
-		@extend %base_button;
-		@extend %round_button;
+	.fcn {
+		float:left;
+		line-height: 30px;
 	}
 
 	.nav-toggler {
+		@extend %base_button;
+		@extend %round_button;
+
+		float: left;
 		border-radius: 4px;
 		padding: 0 15px;
 
 		i {
 			margin:0;
+		}
+	}
+
+	.loaded-records-toggler {
+		float:right;
+		line-height: 30px;
+		padding: 0 10px;
+		position: relative;
+		cursor: pointer;
+		font-size: 16px;
+
+		&:not([data-num="0"]):after {
+			position: absolute;
+				top: -7px;
+				right: -4px;
+			content: attr(data-num);
+			font-family: $font-family-base;
+			font-weight: $font-weight-extrabold;
+			color: $white;
+			font-size: 11px;
+			background: $color-accent-primary;
+			padding: 4px 5px;
+			height: auto;
+			line-height: 11px;
+			border-radius: 4px;
 		}
 	}
 }

@@ -8,6 +8,7 @@ const initialState = {
 	isAuthenticated: false,
 	isAuthenticating: false,
 	statusText: null,
+	realName: null,
 };
 
 export function auth(state = initialState, action) {
@@ -41,7 +42,7 @@ export function auth(state = initialState, action) {
 			statusText: 'Checking credentials...',
 		};
 	case LOGIN_USER_SUCCESS:
-		// console.log(action.payload);
+		console.log(action.payload);
 		return {
 			...state,
 			isAuthenticating: false,
@@ -50,6 +51,7 @@ export function auth(state = initialState, action) {
 			userName: action.payload.token.data.realname,
 			email: action.payload.token.data.email,
 			userId: action.payload.token.data.id,
+			realName: action.payload.token.data.realname,
 			statusText: 'You have been successfully logged in.',
 		};
 	case LOGIN_USER_FAILURE: {

@@ -75,59 +75,59 @@ export class Login extends Component {
 	render() {
 
 		const msgs = {
-			title: 'Please log in',
 			text: 'Please enter your credentials',
 			action: 'Submit',
 		};
 
 		//si pas installé, on met des messages différents
 		if (this.props.isInstalled === false) {
-			msgs.title = 'Welcome to Freestone!';
-			msgs.text = 'Please choose a username and password in order to install Freestone.';
+			msgs.text = 'Welcome to Freestone! Please choose a username and password in order to install Freestone.';
 			msgs.action = 'Install';
 		}
 
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
-				<div className="container">
-					<div className="row">
-						<div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-							<h1>
-								{msgs.title}
-							</h1>
-							{msgs.text}
-							<div className="col-xs-12 col-md-6 col-md-offset-3">
-								
-								{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : ''}
-								<form role="form">
-									<div className="form-group">
-										<input
-											type="text"
-											className="form-control input-lg"
-											placeholder="Username"
-											ref={el => this._username = el}
-											defaultValue={this.state.username}
-										/>
-									</div>
-									<div className="form-group">
-										<input
-											type="password"
-											className="form-control input-lg"
-											placeholder="Password"
-											ref={el => this._password = el}
-											defaultValue={this.state.password}
-										/>
-									</div>
-									<button
-										type="submit"
-										className="btn btn-lg"
-										disabled={this.props.isAuthenticating}
-										onClick={this.login}
-									>
-										{msgs.action}
-									</button>
-								</form>
+				<div className="login-header">
+					<a className="logo-grange" href="http://la-grange.ca"></a>
+					<a className="help" href="#"><i className="fa fa-question"></i></a>
+				</div>
+				<div className="freestone-logo"></div>
+				<div className="login-zone">
+					<div className="container">
+						<div className="row">
+							<div className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
+								<div className="col-xs-12 col-md-6 col-md-offset-3">
+									{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : msgs.text}
+									<form role="form">
+										<div className="form-group">
+											<input
+												type="text"
+												className="form-control input-lg"
+												placeholder="Username"
+												ref={el => this._username = el}
+												defaultValue={this.state.username}
+											/>
+										</div>
+										<div className="form-group">
+											<input
+												type="password"
+												className="form-control input-lg"
+												placeholder="Password"
+												ref={el => this._password = el}
+												defaultValue={this.state.password}
+											/>
+										</div>
+										<button
+											type="submit"
+											className="btn btn-lg"
+											disabled={this.props.isAuthenticating}
+											onClick={this.login}
+										>
+											{msgs.action}
+										</button>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>

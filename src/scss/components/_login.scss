@@ -1,0 +1,34 @@
+.login-header {
+	background: #000;
+	color: $white;
+	padding: 15px;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.logo-grange {
+		width: 106px;
+		height: 26px;
+		background: url(../img/lagrange-logo.png);
+		margin-bottom: -4px;
+	}
+
+	.help {
+		color: $white;
+		font-size: 20px;
+	}
+}
+
+.freestone-logo {
+	width: 100%;
+	height: 400px;
+	max-height: 66vh;
+	background: $blue26 url(../img/freestone-logo.png) center center no-repeat;
+	background-size: auto 295px;
+}
+
+.login-zone {
+	background: $color-background-main;
+	padding: 60px;
+}
