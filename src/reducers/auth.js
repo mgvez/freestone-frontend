@@ -15,9 +15,10 @@ export function auth(state = initialState, action) {
 	switch (action.type) {
 	case FREESTONE_API_FAILURE:
 	case FREESTONE_API_FATAL_FAILURE:
+		//si failure, reset pour éviter que le btn login soit désactivé
 		return {
 			...state,
-			statusText: 'API failure',
+			statusText: '',
 			isAuthenticating: false,
 		};
 	case UNAUTHORIZED:
@@ -52,7 +53,7 @@ export function auth(state = initialState, action) {
 			statusText: 'You have been successfully logged in.',
 		};
 	case LOGIN_USER_FAILURE: {
-		const err = action.payload.response && action.payload.response.error;
+		const err = action.payload.message;
 		return {
 			...state,
 			isAuthenticating: false,

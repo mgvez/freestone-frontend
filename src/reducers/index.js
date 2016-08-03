@@ -5,7 +5,7 @@ import { default as nav } from './nav';
 import { default as siteHeader } from './siteHeader';
 import { default as schema } from './schema';
 import { auth } from './auth';
-import { env, userViewSettings, clientVariables } from './env';
+import { env, userViewSettings, envVariables } from './env';
 import { errors } from './errors';
 import { foreignOptions } from './foreignOptions';
 import { recordList } from './recordList';
@@ -32,7 +32,7 @@ const rootReducer = combineReducers({
 	mtmOptions,
 	subform,
 	imageBankList,
-	clientVariables,
+	envVariables,
 });
 
 export default rootReducer;

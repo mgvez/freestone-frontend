@@ -2,7 +2,7 @@ import { FREESTONE_API } from 'middleware/api';
 
 export const ADD_ENV = 'ADD_ENV';
 export const SET_FIELD_VIEW_LANGUAGE = 'SET_FIELD_VIEW_LANGUAGE';
-export const ADD_CLIENT_VARIABLE = 'ADD_CLIENT_VARIABLE';
+export const SET_ENV_VARIABLE = 'SET_ENV_VARIABLE';
 
 export function fetchEnv() {
 	return (dispatch) => {
@@ -21,8 +21,20 @@ export function fetchVariable(name) {
 		// console.log('fetch env');
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [null, ADD_CLIENT_VARIABLE, null],
+				types: [null, SET_ENV_VARIABLE, null],
 				route: `env/clientvar/${name}`,
+			},
+		});
+	};
+}
+
+export function setVariable(name, value) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_ENV_VARIABLE,
+			data: {
+				name,
+				value,
 			},
 		});
 	};

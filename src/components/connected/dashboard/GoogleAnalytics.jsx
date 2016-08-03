@@ -7,9 +7,9 @@ import { fetchVariable } from 'actions/env';
 
 @connect(
 	state => { 
-		if (!state.clientVariables.api_google) return {};
+		if (!state.envVariables.api_google) return {};
 		return {
-			...state.clientVariables.api_google,
+			...state.envVariables.api_google,
 		};
 	},
 	dispatch => bindActionCreators({ fetchVariable }, dispatch)

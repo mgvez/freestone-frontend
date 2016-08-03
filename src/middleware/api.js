@@ -88,7 +88,7 @@ export default store => next => action => {
 			// console.dir(error);
 			const msg = error.status ? `${error.message} ${error.status} ${error.statusText}` : error.message;
 			console.log(`%cERROR ${msg}`, 'color:red;font-weight:bold');// eslint-disable-line
-			// console.log(error);
+			// console.log(error.responseText);
 			if (error.status === 401) {
 				next(loginUserFailure(error));
 			} else {
