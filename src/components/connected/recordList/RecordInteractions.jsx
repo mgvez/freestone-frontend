@@ -62,6 +62,5 @@ export class RecordInteractions extends Component {
 			{modifFcn}
 			{orderFcn}
 		</div>);
-
 	}
 }
