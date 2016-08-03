@@ -1,5 +1,5 @@
 
-import { UNAUTHORIZED, LOGIN_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER } from 'actions/auth';
+import { UNAUTHORIZED, LOGIN_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_SUCCESS } from 'actions/auth';
 import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 
 const initialState = {
@@ -67,7 +67,7 @@ export function auth(state = initialState, action) {
 			statusText: `Authentication Error: ${err}`,
 		};
 	}
-	case LOGOUT_USER:
+	case LOGOUT_SUCCESS:
 		return {
 			...state,
 			isAuthenticated: false,
