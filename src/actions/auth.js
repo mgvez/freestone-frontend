@@ -3,7 +3,9 @@ import { FREESTONE_API } from 'middleware/api';
 
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
-export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -53,8 +55,19 @@ export function receiveToken(jwt) {
 // }
 
 export function logout() {
-	return {
-		type: LOGOUT_USER,
+
+	return (dispatch) => {
+		// console.log(redirect);
+		// console.log(action);
+		return dispatch({
+			[FREESTONE_API]: {
+				types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
+				route: 'login',
+				data: {
+					logout: true,
+				},
+			},
+		});
 	};
 }
 
