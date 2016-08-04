@@ -88,10 +88,6 @@ export class Login extends Component {
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
-				<div className="login-header">
-					<a className="logo-grange" href="http://la-grange.ca"></a>
-					<a className="help" href="#"><i className="fa fa-question"></i></a>
-				</div>
 				<div className="freestone-logo"></div>
 				<div className="login-zone">
 					<div className="container">
