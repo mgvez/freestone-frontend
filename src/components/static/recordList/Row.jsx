@@ -50,17 +50,19 @@ export class Row extends Component {
 			}
 
 			return (
-				<tr onMouseOver={this.handleHover}>
+				<tr className={`level-${level}`} onMouseOver={this.handleHover}>
 					{content}
 				</tr>
 			);
 		}
-
-		content = createCells(fields, values, 'span');
+		
+		/**
+		 * @todo : Faire en sorte que ca marche avec le level ( Extender fields, values ??)
+		 */
+		content = createCells(fields, values, 'div', { className: 'mobile-cell' });
 		return (
-			<tr className={`selfjoin-row level-${level}`}>
-				<td className="selfjoin-breadcrumb">{breadcrumb}</td>
-				<td className="selfjoin-label">
+			<tr className="selfjoin-row">
+				<td>
 					{content}
 				</td>
 				<td className="interactions">
