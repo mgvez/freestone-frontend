@@ -50,7 +50,7 @@ export class SubformMtm extends CollapsableForm {
 			const { categ, options } = optionGroup;
 			let categLabel;
 			if (categ) {
-				categLabel = <h3 className="mtm-category col-md-3">{categ}</h3>;
+				categLabel = <h3 className="mtm-category col-md-12">{categ}</h3>;
 			}
 			const inputs = options.map((option) => {
 				const { display, id } = option;
@@ -63,7 +63,7 @@ export class SubformMtm extends CollapsableForm {
 				);
 			});
 
-			return (<div key={groupIndex}>
+			return (<div className="col-md-12 mtm-group" key={groupIndex}>
 				<div className="row">
 					{categLabel}
 				</div>

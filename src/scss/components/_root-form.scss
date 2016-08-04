@@ -95,8 +95,18 @@
 	}
 }
 
+.mtm-group {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-top: 1px solid rgba(0,0,0,0.05);
+
+	&:first-child {
+		border-top: none;
+	}
+}
+
 .mtm-category {
-	text-align: right;
-	margin: 20px 0 10px;
+	text-align: left;
+	margin: 0 0 10px;
 	padding-right: 30px + $grid-gutter-width / 2;
 }

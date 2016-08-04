@@ -22,6 +22,14 @@
 
 	.fcn {
 		text-align: right;
+
+		[class^=button] {
+			margin-bottom: 15px;
+		}
+
+		[class^=button] + [class^=button] {
+			margin-left: 15px;
+		}
 	}
 
 	> header {

@@ -88,7 +88,7 @@ li.react-autosuggest__suggestion--focused {
 }
 
 .checkbox-container {
-	text-align: right;
+	text-align: left;
 
 	input {
 		display: none;
@@ -98,14 +98,19 @@ li.react-autosuggest__suggestion--focused {
 		}
 	}
 
+	&:nth-child(4n+1) {
+		clear: left;
+	}
+
 	label {
 		display: inline-block;
 		position: relative;
-		padding-right: 30px;
+		padding-left: 30px;
 		cursor: pointer;
 		font-weight: $font-weight-normal;
-		line-height: 1;
+		line-height: 1.4;
 		height: auto;
+		text-align: left;
 
 		margin: 10px 0;
 
@@ -114,15 +119,13 @@ li.react-autosuggest__suggestion--focused {
 			display: block;
 
 			position: absolute;
-				top: 50%;
-				right: 0;
+				top: 2px;
+				left: 0;
 
 			width: 15px;
 			height: 15px;
 			background: $white;
 			border: 1px solid $gray86;
-
-			transform: translate(0, -50%);
 		}
 
 		&:after {

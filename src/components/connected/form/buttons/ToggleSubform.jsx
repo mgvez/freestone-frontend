@@ -17,8 +17,8 @@ export class ToggleSubform extends Component {
 	};
 
 	render() {
-		const toggleLabel = this.props.isCollapsed ? 'show' : 'hide';
-		return <a className="button-round" onClick={this.props.toggle}>{toggleLabel}</a>;
+		const toggleLabel = this.props.isCollapsed ? <i className="fa fa-eye"></i> : <i className="fa fa-eye-slash"></i>;
+		return <a className="button-round button-hide-show" onClick={this.props.toggle}>{toggleLabel}</a>;
 		// return <button onClick={this.deleteRecord} className="button-circle-danger-small"><i className="fa fa-remove"></i></button>;
 	}
 }

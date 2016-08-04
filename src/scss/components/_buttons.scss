@@ -100,4 +100,10 @@
 	&[class*=fw] {
 		@extend %full_width_button;
 	}
+
+	&[class*=hide-show] {
+		i {
+			margin:0;
+		}
+	}
 }
