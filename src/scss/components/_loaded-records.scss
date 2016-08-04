@@ -46,6 +46,10 @@
 		margin-top: 5px;
 	}
 
+	& + .loaded-record {
+		margin-top: 20px;
+	}
+
 	[class^=button] + [class^=button] {
 		margin-left: 15px;
 	}
