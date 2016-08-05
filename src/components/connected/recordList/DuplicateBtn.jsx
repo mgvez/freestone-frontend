@@ -21,7 +21,7 @@ export class DuplicateBtn extends Component {
 
 	render() {		
 		return (
-			<a className="button-circle-warn" onClick={this.process}><i className="fa fa-clone"></i></a>
+			<div className="record-action" onClick={this.process}><i className="fa fa-clone"></i>Dupliquer</div>
 		);
 	}
 }

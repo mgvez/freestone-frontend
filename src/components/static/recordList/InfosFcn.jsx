@@ -37,12 +37,10 @@ export class InfosFcn extends Component {
 		return (
 			<div data-info-tooltip>
 				<div className={`tooltip ${activeClass}`}>
-					<div>{this.props.prikey}. <strong>{this.props.label}</strong></div>
-					created {created}<br />
 					modified {modified}<br />
 				</div>
 
-				<div className="button-circle" data-info-control onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}><i className="fa fa-info"></i></div>
+				<a onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>Last modified ?</a>
 			</div>
 		);
 	}

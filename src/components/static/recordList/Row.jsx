@@ -44,14 +44,6 @@ export class Row extends Component {
 
 			return (
 				<tr className={`level-${level}`} onMouseOver={this.handleHover}>
-					<td className="infos">
-						<InfosFcn
-							prikey={values[PRIKEY_ALIAS]}
-							lastmodifdate={values[LASTMODIF_DATE_ALIAS]}
-							createddate={values[CREATED_DATE_ALIAS]}
-							label={values[LABEL_PSEUDOFIELD_ALIAS]}
-						/>
-					</td>
 					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>
 					<td key="cellLabel" className="selfjoin-label">{label}</td>
 					<td className="interactions">
@@ -84,14 +76,6 @@ export class Row extends Component {
 
 			return (
 				<tr onMouseOver={this.handleHover}>
-					<td className="infos">
-						<InfosFcn
-							prikey={values[PRIKEY_ALIAS]}
-							lastmodifdate={values[LASTMODIF_DATE_ALIAS]}
-							createddate={values[CREATED_DATE_ALIAS]}
-							label={values[LABEL_PSEUDOFIELD_ALIAS]}
-						/>
-					</td>
 					{content}
 					<td className="interactions">
 						<RecordInteractions table={this.props.table} fields={fields} values={values} />
