@@ -41,10 +41,11 @@
 	.interactions {
 		width: 200px;
 		text-align: left;
+		@include clearfix();
 
 		.record-actions {
 			position: relative;
-			margin-bottom: 10px;
+			margin-bottom: 5px;
 
 			.record-action-control {
 				cursor: pointer;
@@ -59,6 +60,8 @@
 				position: absolute;
 					top: 40px;
 					left: 0;
+
+				width: 130px;
 
 				&:before {
 					content: ' ';
@@ -98,8 +101,28 @@
 			}
 		}
 
+		.orders, .actions {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
 		.orders {
-			margin-top: 10px;
+			margin-left: 62px;
+
+			a {
+				color: $color-accent-primary;
+				display: block;
+				text-align: center;
+				cursor: pointer;
+
+				& + a {
+					margin-top: 20px
+				}
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
 		}
 
 		[data-info-tooltip] {

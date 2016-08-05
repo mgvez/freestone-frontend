@@ -32,8 +32,8 @@ export class OrderFcn extends Component {
 				
 		return (
 			<div className="orders">
-				<a className="button-circle fa fa-arrow-up" onClick={this.swapOrderUp}></a>
-				<a className="button-circle fa fa-arrow-down" onClick={this.swapOrderDown}></a>
+				<a className="fa fa-arrow-up" onClick={this.swapOrderUp}></a>
+				<a className="fa fa-arrow-down" onClick={this.swapOrderDown}></a>
 			</div>
 		);
 	}
