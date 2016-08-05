@@ -87,7 +87,9 @@
 			padding: 10px 50px 10px 30px;
 			background: lighten($color-background-dark, 10%);
 			transition: background 0.3s;
-			border-left: 6px solid $color-accent-primary;
+			border-left: 2px solid $color-accent-primary;
+			font-size: 12px;
+			color: rgba($white, 0.85);
 
 			.nrecords {
 				display: block;
@@ -98,8 +100,6 @@
 
 				width: 40px;
 				height: 100%;
-				background: lighten($color-background-dark, 5%);
-				transition: background 0.3s;
 
 				.n {
 					position: absolute;
@@ -113,29 +113,7 @@
 
 			&:hover, &.active {
 				background: lighten($color-background-dark, 2%);
-
-				.nrecords {
-					background: lighten($color-background-dark_hover, 2%);
-				}
-			}
-		}
-
-		& + .nav-item {
-			position: relative;
-			border-top: 1px solid $color-background-dark;
-
-			&:after {
-				content: ' ';
-				display: block;
-				width: 6px;
-				height: 1px;
-				background: $color-accent-primary;
-
-				position: absolute;
-					top: -1px;
-					left: 0;
-
-				z-index: 2;
+				color: $white;
 			}
 		}
 	}
@@ -146,7 +124,7 @@
 
 		.sub-nav {
 			height: 0;
-			border-left: 6px solid $color-accent-primary;
+			border-left: 2px solid $color-accent-primary;
 			background: lighten($color-background-dark, 10%);
 			transition: background 0.3s;
 
