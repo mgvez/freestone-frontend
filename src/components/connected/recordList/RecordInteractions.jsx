@@ -35,17 +35,17 @@ export class RecordInteractions extends Component {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
 		if (this.props.table.hasOrder) {
-			orderFcn = <div className="col-md-2 orders"><OrderFcn tableName={this.props.table.name} prikey={prikeyVal} /></div>;
+			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} />;
 		}
 
 		const modifFcn = (
-			<div className="list-functions col-md-5">
-				<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+			<div className="list-functions">
+				<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="button-circle"><i className="fa fa-pencil"></i></Link>
 				<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 				<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
 			</div>
 		);
-		const infos = (
+		/*const infos = (
 			<div className="col-md-5">
 				<InfosFcn
 					tableName={this.props.table.name}
@@ -55,11 +55,13 @@ export class RecordInteractions extends Component {
 					label={this.props.values[LABEL_PSEUDOFIELD_ALIAS]}
 				/>
 			</div>
-		);
+		);/**/
+
+		const recordLink = `../main.php?i=${prikeyVal}&t=${this.props.table.name}`;
 
 		return (<div>
-			{infos}
 			{modifFcn}
+			<a target="_blank" href={recordLink} className="button-round-fw">Preview</a>
 			{orderFcn}
 		</div>);
 	}

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import { RecordInteractions } from 'components/connected/recordList/RecordInteractions';
+import { InfosFcn } from 'components/static/recordList/InfosFcn';
 import { createCells } from 'components/static/recordList/row/createCells';
-import { PRIKEY_ALIAS } from 'freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 export class Row extends Component {
 	static propTypes = {
@@ -78,16 +79,22 @@ export class Row extends Component {
 		let content;
 		//ROW NORMAL, LARGE
 		if (this.props.isLarge) {
-
-			if (!this.props.isHovering) {
-				content = createCells(fields, values);
-			} else {
-				content = this.getInteractions();
-			}
+			content = createCells(fields, values);
 
 			return (
 				<tr onMouseOver={this.handleHover}>
+					<td className="infos">
+						<InfosFcn
+							prikey={values[PRIKEY_ALIAS]}
+							lastmodifdate={values[LASTMODIF_DATE_ALIAS]}
+							createddate={values[CREATED_DATE_ALIAS]}
+							label={values[LABEL_PSEUDOFIELD_ALIAS]}
+						/>
+					</td>
 					{content}
+					<td className="interactions">
+						<RecordInteractions table={this.props.table} fields={fields} values={values} />
+					</td>
 				</tr>
 			);
 		}

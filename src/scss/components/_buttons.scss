@@ -57,6 +57,10 @@
 	@include button-color-modifier($color-danger-primary);
 }
 
+%info_button {
+	@include button-color-modifier($color-background-dark);
+}
+
 %circle_button {
 	text-align: center;
 	width: 40px;
@@ -81,20 +85,24 @@
 [class|=button] {
 	@extend %base_button;
 
-	&[class*=round] {
+	&[class*=-round] {
 		@extend %round_button;
 	}
 
-	&[class*=circle] {
+	&[class*=-circle] {
 		@extend %circle_button;
 	}
 
-	&[class*=warn] {
+	&[class*=-warn] {
 		@extend %warn_button;
 	}
 
-	&[class*=danger] {
+	&[class*=-danger] {
 		@extend %danger_button;
+	}
+
+	&[class*=-info] {
+		@extend %info_button;
 	}
 
 	&[class*=fw] {

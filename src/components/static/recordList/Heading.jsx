@@ -20,12 +20,14 @@ export class Heading extends Component {
 		//sinon, une cell pour chaque field de recherche
 		return (
 			<tr>
+				<th>Infos</th>
 				{
 					this.props.fields.map((field, index) => {
 						if (field.isGroup) return null;
 						return <th key={index}>{field.label}</th>;
 					})
 				}
+				<th>Functions</th>
 			</tr>
 		);
 

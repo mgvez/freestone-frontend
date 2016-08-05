@@ -19,10 +19,9 @@ export class DuplicateBtn extends Component {
 		this.props.duplicateRecord(this.props.tableName, this.props.prikey);
 	};
 
-	render() {
-				
+	render() {		
 		return (
-			<a className="button-round-warn" onClick={this.process}><i className="fa fa-clone"></i><span> Duplicate</span></a>
+			<a className="button-circle-warn" onClick={this.process}><i className="fa fa-clone"></i></a>
 		);
 	}
 }

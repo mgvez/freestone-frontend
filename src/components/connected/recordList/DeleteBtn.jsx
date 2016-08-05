@@ -50,7 +50,7 @@ export class DeleteBtn extends Component {
 		}
 
 		return (
-			<a className="button-round-danger" onClick={this.process}><i className="fa fa-close"></i><span> Delete</span></a>
+			<a className="button-circle-danger" onClick={this.process}><i className="fa fa-close"></i></a>
 		);
 	}
 }
