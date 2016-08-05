@@ -40,26 +40,27 @@ export class Row extends Component {
 		const level = values.level ? values.level : '0';
 
 		if (this.props.isLarge) {
-			if (!this.props.isHovering) {
-				const label = createCells(fields, values, 'span');
-				content = [
-					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>,
-					<td key="cellLabel" className="selfjoin-label">{label}</td>,
-				];
-			} else {
-				content = this.getInteractions();
-			}
+			const label = createCells(fields, values, 'span');
 
 			return (
 				<tr className={`level-${level}`} onMouseOver={this.handleHover}>
-					{content}
+					<td className="infos">
+						<InfosFcn
+							prikey={values[PRIKEY_ALIAS]}
+							lastmodifdate={values[LASTMODIF_DATE_ALIAS]}
+							createddate={values[CREATED_DATE_ALIAS]}
+							label={values[LABEL_PSEUDOFIELD_ALIAS]}
+						/>
+					</td>
+					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>
+					<td key="cellLabel" className="selfjoin-label">{label}</td>
+					<td className="interactions">
+						<RecordInteractions table={this.props.table} fields={fields} values={values} />
+					</td>
 				</tr>
 			);
 		}
 		
-		/**
-		 * @todo : Faire en sorte que ca marche avec le level ( Extender fields, values ??)
-		 */
 		content = createCells(fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr className="selfjoin-row">

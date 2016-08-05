@@ -12,8 +12,10 @@ export class Heading extends Component {
 		if (this.props.isSelfTree) {
 			return (
 				<tr>
+					<th>Infos</th>
 					<th>Level</th>
 					<th>Item</th>
+					<th>Functions</th>
 				</tr>
 			);
 		}
