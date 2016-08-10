@@ -181,7 +181,7 @@ li.react-autosuggest__suggestion--focused {
 
 	border-radius: 22px;
 	background: $color-danger-primary;
-	border: 2px solid $white;
+	border: 2px solid transparent;
 
 	transition: background 0.2s;
 
