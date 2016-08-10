@@ -43,8 +43,8 @@ export class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: 'mvezina',
-			password: 'aaa', //'aaa',wLT9GOCG62
+			username: '',
+			password: '',
 		};
 	}
 

@@ -7,6 +7,7 @@ import { NoEditInput } from 'components/static/form/inputTypes/NoEditInput';
 import { HtmlInput } from 'components/static/form/inputTypes/HtmlInput';
 import { FileInput } from 'components/static/form/inputTypes/FileInput';
 import { DateInput } from 'components/static/form/inputTypes/DateInput';
+import { BankImgInput } from 'components/static/form/inputTypes/BankImgInput';
 import { AutocompleteInput } from 'components/connected/form/inputTypes/AutocompleteInput';
 
 export class Field extends Component {
@@ -68,6 +69,9 @@ export class Field extends Component {
 			break;
 		case 'noedit'://on la voit mais on l'edit pas!
 			input = <NoEditInput {...this.props} />;
+			break;
+		case 'bankimg'://link vers image de la banque
+			input = <BankImgInput {...this.props} />;
 			break;
 		case 'pri':
 		case 'ajax':

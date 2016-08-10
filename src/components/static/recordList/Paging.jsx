@@ -8,7 +8,14 @@ export class Paging extends Component {
 		nPages: React.PropTypes.number,
 		curPage: React.PropTypes.number,
 		search: React.PropTypes.string,
+		onChangePage: React.PropTypes.func,
 	};
+
+	onClickPage = (e) => {
+		e.preventDefault();
+		const clicked = e.currentTarget;
+		this.props.onChangePage(clicked.dataset.page);
+	}
 	
 	getPage(num, label) {
 
@@ -23,10 +30,16 @@ export class Paging extends Component {
 
 		const activeClass = num === this.props.curPage ? 'active' : '';
 
+		//le link peut etre un Link ou encore un callback
+		let lnk;
+		if (this.props.onChangePage) {
+			lnk = <a data-page={num} onClick={this.onClickPage} activeClassName="active" className="">{display}</a>;
+		} else {
+			lnk = <Link to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</Link>;
+		}
+
 		return (
-			<li key={`${num}_${label}`} className={activeClass}>
-				<Link to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</Link>
-			</li>
+			<li key={`${num}_${label}`} className={activeClass}>{lnk}</li>
 		);
 	}
 

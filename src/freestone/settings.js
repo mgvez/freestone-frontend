@@ -1,4 +1,5 @@
 
+export const THUMBNAIL_SIZE = 200;
 export const MAX_TAB_LABEL_LENGTH = 30;
 
 //how many seconds a record can be open on the front-end and still considered "safe". Should be the same as lock time on the backend

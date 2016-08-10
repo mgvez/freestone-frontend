@@ -6,6 +6,13 @@
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 
 # Freestone PHP
+- champs images où on peut mettre des images de la banque
+
+# Images
+- faire le tag {img: de freestone frontend
+- nombre de uses
+- widget qui montre les uses
+- reset uses & instances
 
 # Freestone JS
 - ~link vers home~ reste juste à détecter le active
@@ -53,16 +60,4 @@
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
-<<<<<<< HEAD
-=======
 
-
-## implementer / refactor
-[https://blog.risingstack.com/react-js-best-practices-for-2016/](https://blog.risingstack.com/react-js-best-practices-for-2016/)
-- voir https://gist.github.com/Chrisui/49e76eb8b4ff887967e9
-- reecrire les components en functional components https://facebook.github.io/react/blog/2015/10/07/react-v0.14.html#stateless-functional-components et https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0#.de5b5b1q8
-- Respond to window size https://facebook.github.io/react/tips/dom-event-listeners.html
-
-
-
->>>>>>> 57b88561afe76dfd0e91c4cec286bd894be7d9ab

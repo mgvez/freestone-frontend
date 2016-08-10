@@ -13,6 +13,7 @@ const envInitialState = {
 	clientPath: '',
 	pathCss: [],
 	languages: [],
+	defaultLanguage: '',
 };
 
 export function env(state = envInitialState, action) {
@@ -27,6 +28,8 @@ export function env(state = envInitialState, action) {
 			return vals;
 		}, {});
 	}
+	case CLEAR_DATA:
+		return envInitialState;
 	default:
 		// console.log('no change');
 		return state;

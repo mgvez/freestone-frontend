@@ -29,6 +29,8 @@ export const allForeignOptionsSelector = createSelector(
 					label,
 					image,
 				};
+			}).sort((a, b) => {
+				return a.label < b.label ? -1 : 1;
 			});
 
 			carry[fieldId] = {

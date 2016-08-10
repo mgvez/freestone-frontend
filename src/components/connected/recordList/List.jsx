@@ -78,18 +78,6 @@ export class List extends Component {
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleResize);
 	}
-	
-	handleResize = () => {
-		const windowWidth = window.innerWidth;
-		const isLarge = windowWidth > LARGE_MINW_BREAKPOINT;
-		this.setState({ windowWidth, isLarge });
-	}
-
-	requireData(props) {
-		const { tableName, page, search } = props.params;
-		if (!props.table) this.props.fetchTable(tableName);
-		if (!props.groupedRecords) this.props.fetchList(tableName, search, page || 1);
-	}
 
 	handleSubmit = (e) => {
 		e.preventDefault();
@@ -98,7 +86,19 @@ export class List extends Component {
 		val = val ? `/${val}` : '';
 		const path = `list/${this.props.params.tableName}/${this.props.curPage}${val}`;
 		this.context.router.push(path);
-	};
+	}
+
+	requireData(props) {
+		const { tableName, page, search } = props.params;
+		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.groupedRecords) this.props.fetchList(tableName, search, page || 1);
+	}
+
+	handleResize = () => {
+		const windowWidth = window.innerWidth;
+		const isLarge = windowWidth > LARGE_MINW_BREAKPOINT;
+		this.setState({ windowWidth, isLarge });
+	}
 
 	addRecord = () => {
 		const { newRecord, newRecordId } = createRecord(this.props.table);
@@ -106,7 +106,7 @@ export class List extends Component {
 
 		const path = `/edit/${this.props.params.tableName}/${newRecordId}`;
 		this.context.router.push(path);
-	};
+	}
 
 	/**
 		Les rows appellent le hover ici
