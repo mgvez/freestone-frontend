@@ -8,6 +8,7 @@
 	height: 100vh;
 	width: $records-width;
 	padding: 40px 35px;
+	overflow: auto;
 
 	background: $color-background-dark;
 	color: $color-text-secondary;
