@@ -6,13 +6,12 @@
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 
 # Freestone PHP
-- champs images où on peut mettre des images de la banque
+- changer type rel pour subform
 
 # Images
 - faire le tag {img: de freestone frontend
-- nombre de uses
 - widget qui montre les uses
-- reset uses & instances
+- trigger erreur quand essaie de deleter une image in use
 
 # Freestone JS
 - ~link vers home~ reste juste à détecter le active

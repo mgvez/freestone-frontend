@@ -14,8 +14,8 @@ import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 const DEFAULT_LABEL = 'Actions';
-const EDIT_LABEL = 'Modifier';
-const PREVIEW_LABEL = 'Prévisualiser';
+const EDIT_LABEL = 'Edit';
+const PREVIEW_LABEL = 'Preview';
 
 
 @connect(
