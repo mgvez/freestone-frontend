@@ -39,7 +39,7 @@ export class BankImgThumbnail extends Component {
 	render() {
 		if (!this.props.id) return null;
 		return (
-			<div dangerouslySetInnerHTML={{ __html: this.props.markup }} />
+			<div className="bank-img-thumbnail-container" dangerouslySetInnerHTML={{ __html: this.props.markup }} />
 		);
 	}
 }
