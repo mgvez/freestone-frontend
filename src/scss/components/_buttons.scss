@@ -29,6 +29,18 @@
 		color: $color-text-secondary;
 		background: darken($color-accent-primary, 10%);
 	}
+
+	&[class*=-bordered] {
+		background: transparent;
+		border: 2px solid $color-accent-primary;
+		color: $color-accent-primary;
+		line-height: 28px;
+
+		&:hover {
+			background: $color-accent-primary;
+			color: $white;
+		}
+	}
 }
 
 %round_button {
@@ -47,6 +59,17 @@
 	&:hover {
 		background: darken($color, 10%);
 	}
+
+	&[class*=-bordered] {
+		background: transparent;
+		border-color: $color;
+		color: $color;
+
+		&:hover {
+			background: $color;
+			color: $white;
+		}
+	}
 }
 
 %warn_button {
@@ -59,6 +82,10 @@
 
 %info_button {
 	@include button-color-modifier($color-background-dark);
+}
+
+%action_button {
+	@include button-color-modifier($blue37);
 }
 
 %circle_button {
@@ -103,6 +130,10 @@
 
 	&[class*=-info] {
 		@extend %info_button;
+	}
+
+	&[class*=-action] {
+		@extend %action_button;
 	}
 
 	&[class*=fw] {
