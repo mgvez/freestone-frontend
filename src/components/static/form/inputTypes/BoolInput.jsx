@@ -9,7 +9,7 @@ export class BoolInput extends Input {
 		return (
 			<div className="toggle-container">
 				<input id={this.props.field.id} type="checkbox" value={this.props.val === '1' ? '0' : '1'} checked={this.props.val === '1'} onChange={this.changeVal} />
-				<label className="toggle" htmlFor={this.props.field.id} data-on-label="Oui" data-off-label="Non"></label>
+				<label className="toggle" htmlFor={this.props.field.id} data-on-label="Yes" data-off-label="No"></label>
 			</div>
 		);
 	}

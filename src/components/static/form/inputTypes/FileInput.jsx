@@ -60,7 +60,7 @@ export class FileInput extends Input {
 		if (this.state.changing || (!this.props.val && !this.props.origVal)) {
 			let cancel;
 			if (!this.props.val) {
-				cancel = <button className="button-round-action-bordered" onClick={this.cancelRequestChange}>Modifier</button>;
+				cancel = <button className="button-round-action-bordered" onClick={this.cancelRequestChange}>Modify</button>;
 			}
 			return (
 				<div className="file-input-input">
@@ -71,7 +71,7 @@ export class FileInput extends Input {
 		}
 
 		return (
-			<button className="button-round-action-bordered" onClick={this.requestChange}>Modifier</button>
+			<button className="button-round-action-bordered" onClick={this.requestChange}>Modify</button>
 		);	
 	}
 

@@ -30,7 +30,7 @@ export class BankImgInput extends Input {
 			return <BankImgInsert onClose={this.closeModal} setVal={this.handleEditorChange} />;
 		}
 		const id = Number(this.props.val);
-		const label = id ? 'Changer image' : 'Choisir image';
+		const label = id ? 'Change image' : 'Choose image';
 		return (<div>
 			<BankImgThumbnail id={id} />
 			<button className="button-round-action-bordered" onClick={this.openModal}>{label}</button>
