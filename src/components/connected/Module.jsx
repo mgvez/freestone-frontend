@@ -34,7 +34,7 @@ export class Module extends Component {
 				<h1>
 					{this.props.params.url}
 				</h1>
-				<iframe className="module" src={url} />
+				<iframe className="module" src={url} style={{ width: '100%', minHeight: '100vh' }} />
 			</section>
 		);
 	}

@@ -43,14 +43,14 @@ export class DeleteBtn extends Component {
 		if (this.state.requested) {
 			return (
 				<div className="record-action prompt">
-					<a onClick={this.process}>Confirm delete</a>
-					<a onClick={this.cancel}>Cancel</a>
+					<div onClick={this.process}><i className="fa fa-close"></i>Confirm</div>
+					<div onClick={this.cancel}><i className="fa fa-undo"></i>Cancel</div>
 				</div>
 			);
 		}
 
 		return (
-			<div className="record-action"><i className="fa fa-close"></i>Supprimer</div>
+			<div className="record-action" onClick={this.process}><i className="fa fa-close"></i>Delete</div>
 		);
 	}
 }
