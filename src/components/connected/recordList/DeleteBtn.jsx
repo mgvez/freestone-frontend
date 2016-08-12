@@ -50,7 +50,7 @@ export class DeleteBtn extends Component {
 		}
 
 		return (
-			<div className="record-action" onClick={this.process}><i className="fa fa-close"></i>Delete</div>
+			<div className="record-action red" onClick={this.process}><i className="fa fa-close"></i>Delete</div>
 		);
 	}
 }

@@ -77,12 +77,12 @@ export class RecordInteractions extends Component {
 				<div className={`record-actions ${activeClass}`}>
 					<div className="record-action-control" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></div>
 					<div className="record-actions-group">
-						<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="record-action">
+						<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="record-action accent">
 							<i className="fa fa-pencil"></i>{EDIT_LABEL}
 						</Link>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
-						<a href={recordLink} className="record-action">
+						<a href={recordLink} className="record-action accent">
 							<i className="fa fa-eye"></i>{PREVIEW_LABEL}
 						</a>
 					</div>

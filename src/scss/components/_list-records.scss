@@ -95,12 +95,32 @@
 
 				i {
 					margin-right: 10px;
+					width: 20px;
+					text-align: center;
 				}
 
 				&.prompt {
 					background: darken($color-background-main, 10%);
 					margin: 10px -10px;
 					padding: 10px;
+				}
+
+				&.red {
+					i {
+						color: $red58;
+					}
+				}
+
+				&.accent {
+					i {
+						color: $color-accent-primary;
+					}
+				}
+
+				&.yellow {
+					i {
+						color: $yellow76;
+					}
 				}
 			}
 
