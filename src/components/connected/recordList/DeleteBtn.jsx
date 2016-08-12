@@ -22,13 +22,24 @@ export class DeleteBtn extends Component {
 		};
 	}
 
-	cancel = () => {
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.prikey !== this.props.prikey) {
+			this.setState({
+				requested: false,
+			});
+		}
+	}
+
+	cancel = (e) => {
+		e.stopPropagation();
+
 		this.setState({
 			requested: false,
 		});
 	}
 
-	process = () => {
+	process = (e) => {
+		e.stopPropagation();
 		if (this.state.requested) {
 			this.props.deleteRecord(this.props.tableName, this.props.prikey);
 		} else {
@@ -39,7 +50,8 @@ export class DeleteBtn extends Component {
 	};
 
 	render() {
-		
+		console.log(this.props.prikey, this.state.requested);
+
 		if (this.state.requested) {
 			return (
 				<div className="record-action prompt">
