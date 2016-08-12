@@ -41,7 +41,15 @@ export class Freestone extends Component {
 	};
 	
 	componentWillMount() {
-		this.props.fetchEnv();
+		this.requireData(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.requireData(nextProps);
+	}
+
+	requireData(props) {
+		if (!props.env.adminPath) this.props.fetchEnv();
 	}
 
 	render() {

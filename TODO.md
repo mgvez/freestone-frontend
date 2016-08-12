@@ -9,9 +9,7 @@
 - changer type rel pour subform
 
 # Images
-- faire le tag {img: de freestone frontend
-- widget qui montre les uses
-- trigger erreur quand essaie de deleter une image in use
+- widget qui montre les uses des items de banque
 
 # Freestone JS
 - ~link vers home~ reste juste à détecter le active
