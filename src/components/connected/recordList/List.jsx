@@ -11,11 +11,11 @@ import * as recordActionCreators from 'actions/record';
 import { Heading } from 'components/static/recordList/Heading';
 import { Paging } from 'components/static/recordList/Paging';
 import { Row } from 'components/static/recordList/Row';
+import { ListSearch } from 'components/static/recordList/ListSearch';
 import { InScroll } from 'components/connected/InScroll';
 
 import createRecord from 'freestone/createRecord';
 import { listRecordsSelector } from 'selectors/listRecords';
-import debounce from 'utils/Debounce.js';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
@@ -61,16 +61,10 @@ export class List extends Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
-		console.log(this.refs);
-		this.refs.searchVal.addEventListener('keydown', this.onUpdateSearchField);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
-		if (nextProps.params.tableName !== this.props.params.tableName && this.refs.searchVal) {
-			// console.log('change table');
-			this.refs.searchVal.value = '';
-		}
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -80,25 +74,6 @@ export class List extends Component {
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleResize);
-
-		this.refs.searchVal.removeEventListener('keydown', this.onUpdateSearchField);
-	}
-
-	onUpdateSearchField = debounce(() => {
-		this.search();
-	}, 200);
-
-	handleSubmit = (e) => {
-		e.preventDefault();
-		this.search();
-	}
-
-	search() {
-		const inp = this.refs.searchVal;
-		let val = inp.value;
-		val = val ? `/${val}` : '';
-		const path = `list/${this.props.params.tableName}/${this.props.curPage}${val}`;
-		this.context.router.push(path);
 	}
 
 	requireData(props) {
@@ -168,10 +143,7 @@ export class List extends Component {
 					</header>
 
 					<div className="padded-content search-ctn">
-						<form onSubmit={this.handleSubmit}>
-							<input className="search-input" type="text" placeholder="search" ref="searchVal" initialValue="" />
-							<button className="button-search"><i className="fa fa-search"></i></button>
-						</form>
+						<ListSearch tableName={this.props.table.name} search={this.props.params.search} curPage={this.props.curPage} router={this.context.router} />
 					</div>
 
 					<div className="padded-content">

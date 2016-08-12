@@ -40,6 +40,21 @@ export class RecordInteractions extends Component {
 		};
 	}
 
+	componentWillReceiveProps(nextProps) {
+		const currentPrikeyVal = this.props.values[PRIKEY_ALIAS];
+		const nextPrikeyVal = nextProps.values[PRIKEY_ALIAS];
+
+		if (currentPrikeyVal !== nextPrikeyVal) {
+			this.setState({
+				active: false,
+			});
+		}
+	}
+
+	componentWillUnmount() {
+		this.removeWindowListener();
+	}
+	
 	onEditClick = () => {
 		this.props.lockScroll(this.props.path, window.scrollY);
 	}
@@ -48,18 +63,27 @@ export class RecordInteractions extends Component {
 		this.toggleActions();
 	}
 
-	toggleActions = () => {
+	toggleActions = (e) => {
+		if (e) e.stopPropagation();
+		const isActiveNewState = !this.state.active;
+
 		this.setState({
-			active: !this.state.active,
-		}, () => {
-			if (this.state.active) {
-				setTimeout(() => {
-					window.addEventListener('click', this.onWindowClick);
-				}, 0);
-			} else {
-				window.removeEventListener('click', this.onWindowClick);
-			}
+			active: isActiveNewState,
 		});
+		//if becomes active, add event lister to close on click outside
+		if (isActiveNewState) {
+			this.addWindowListener();
+		} else {
+			this.removeWindowListener();
+		}
+	}
+
+	addWindowListener() {
+		window.addEventListener('click', this.onWindowClick);
+	}
+
+	removeWindowListener() {
+		window.removeEventListener('click', this.onWindowClick);
 	}
 
 	render() {
