@@ -15,6 +15,7 @@ import { InScroll } from 'components/connected/InScroll';
 
 import createRecord from 'freestone/createRecord';
 import { listRecordsSelector } from 'selectors/listRecords';
+import debounce from 'utils/Debounce.js';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
@@ -60,6 +61,8 @@ export class List extends Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
+		console.log(this.refs);
+		this.refs.searchVal.addEventListener('keydown', this.onUpdateSearchField);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -77,10 +80,20 @@ export class List extends Component {
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleResize);
+
+		this.refs.searchVal.removeEventListener('keydown', this.onUpdateSearchField);
 	}
+
+	onUpdateSearchField = debounce(() => {
+		this.search();
+	}, 200);
 
 	handleSubmit = (e) => {
 		e.preventDefault();
+		this.search();
+	}
+
+	search() {
 		const inp = this.refs.searchVal;
 		let val = inp.value;
 		val = val ? `/${val}` : '';

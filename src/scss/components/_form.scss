@@ -227,6 +227,15 @@ li.react-autosuggest__suggestion--focused {
 	display: inline-block;
 	vertical-align: bottom;
 	padding-bottom: 25px;
+
+	[class|=button] + [class|=button] {
+		margin-left: 10px;
+	}
+}
+
+.bank-img-thumbnail-container {
+	display: inline-block;
+	margin-right: 20px;
 }
 
 .file-input-input {

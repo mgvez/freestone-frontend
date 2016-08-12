@@ -44,9 +44,21 @@ export class RecordInteractions extends Component {
 		this.props.lockScroll(this.props.path, window.scrollY);
 	}
 
+	onWindowClick = () => {
+		this.toggleActions();
+	}
+
 	toggleActions = () => {
 		this.setState({
 			active: !this.state.active,
+		}, () => {
+			if (this.state.active) {
+				setTimeout(() => {
+					window.addEventListener('click', this.onWindowClick);
+				}, 0);
+			} else {
+				window.removeEventListener('click', this.onWindowClick);
+			}
 		});
 	}
 
@@ -63,7 +75,7 @@ export class RecordInteractions extends Component {
 		return (<div>
 			<div className="actions">
 				<div className={`record-actions ${activeClass}`}>
-					<div className="record-action-control" onClick={this.toggleActions}>{DEFAULT_LABEL}</div>
+					<div className="record-action-control" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></div>
 					<div className="record-actions-group">
 						<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="record-action">
 							<i className="fa fa-pencil"></i>{EDIT_LABEL}

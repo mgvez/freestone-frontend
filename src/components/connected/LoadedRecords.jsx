@@ -43,6 +43,24 @@ export class LoadedRecords extends Component {
 		window.removeEventListener('scroll', this.stick);
 	}
 
+	getMinutes = (record) => {
+		const minutes = parseInt(record.hasBeenOpenedFor / 60, 10);
+		return minutes === 0 ? '' : `${minutes}m`;
+	}
+
+	getSeconds = (record) => {
+		const seconds = this.leftPad(parseInt(record.hasBeenOpenedFor % 60, 10));
+		return seconds === '00' ? '' : `${seconds}s`;
+	}
+
+	getTimeElapsed = (record) => {
+		return this.getMinutes(record) + this.getSeconds(record);
+	}
+
+	leftPad = (n) => {
+		return n < 10 ? `0${n}` : n;
+	}
+
 	requireData(props) {
 		// console.log(props);
 		if (props.records) {
@@ -86,7 +104,7 @@ export class LoadedRecords extends Component {
 										const warnClass = record.isOutdated ? 'warn' : '';
 										const outdatedWarning = (
 											<div className={warnClass}>
-												This record has been open for {record.hasBeenOpenedFor} seconds.
+												This record has been open for {this.getTimeElapsed(record)}.
 											</div>
 										);
 										

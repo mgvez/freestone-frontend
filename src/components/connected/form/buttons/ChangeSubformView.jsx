@@ -28,7 +28,7 @@ export class ChangeSubformView extends Component {
 		// console.log(this.props.currentViewType, this.props.tableId);
 		const label = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'View tabbed' : 'View as list';
 		const className = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'file-text' : 'list';
-		return <button onClick={this.setType} className="button-round change-subform-view"><i className={`fa fa-${className}`}></i>{label}</button>;
+		return <button onClick={this.setType} className="button-round-action-bordered change-subform-view"><i className={`fa fa-${className}`}></i>{label}</button>;
 
 	}
 }
