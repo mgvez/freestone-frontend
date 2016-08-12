@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/mgvez/freestone-frontend.git"
   },
-  "files":[
+  "files": [
     "dist",
     "assets",
     "index.html"
@@ -96,5 +96,7 @@
     "webpack-hot-middleware": "^2.4.1",
     "yargs": "^3.18.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react": "^15.0.2"
+  }
 }
