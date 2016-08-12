@@ -61,7 +61,6 @@ export class List extends Component {
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
-		console.log(this.refs);
 		this.refs.searchVal.addEventListener('keydown', this.onUpdateSearchField);
 	}
 
