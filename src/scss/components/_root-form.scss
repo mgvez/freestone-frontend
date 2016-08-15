@@ -51,7 +51,7 @@
 			transform: translate(0, 100%);
 
 			@extend %text_default;
-			font-weight: $font-weight-bold;
+			font-weight: $font-weight-semibold;
 			text-transform: uppercase;
 
 			.language-tab {

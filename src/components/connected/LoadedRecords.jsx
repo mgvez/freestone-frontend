@@ -114,7 +114,7 @@ export class LoadedRecords extends Component {
 												{record.label}
 												{outdatedWarning}
 												<div className="record-buttons">
-													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></Link>
 													<Cancel tableName={records.table.name} recordId={record.id} />
 												</div>
 											</div>
