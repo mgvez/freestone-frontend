@@ -24,21 +24,17 @@ export class Errors extends Component {
 	};
 
 	closeModal = () => {
+		const isFatal = this.props.errors.reduce((status, e) => status || e.isFatal);
+		const redirectingError = this.props.errors.find(e => !!e.redirectOnError);
+		//si l'erreur demande une redirection OU que c'est une erreur fatale (dans ce cas on redirect vers default)
+		const redirect = (redirectingError && redirectingError.redirectOnError) || (isFatal && '/');
 		this.props.clearErrors();
-	};
-
-	closeFatal = () => {
-		this.props.goTo('/');
-		this.props.clearErrors();
+		if (redirect) this.props.goTo(redirect);
 	};
 
 	render() {
 		if (!this.props.errors.length) return null;
 		// console.log('errors');
-		const isFatal = this.props.errors.reduce((status, e) => status || e.isFatal);
-
-		//if fatal error, we need to refresh
-		let closeModal = isFatal ? this.closeFatal : this.closeModal;
 
 		return (
 			<Modal
@@ -59,7 +55,7 @@ export class Errors extends Component {
 					})
 				}
 
-				<button onClick={closeModal}>Close</button>
+				<button onClick={this.closeModal}>Close</button>
 
 			</Modal>
 		);

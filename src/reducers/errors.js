@@ -12,6 +12,7 @@ export function errors(state = [], action) {
 				message: action.error.responseText || action.error.statusText || action.error.response,
 				details: action.error.details,
 				isFatal: action.type === FREESTONE_API_FATAL_FAILURE,
+				redirectOnError: action.redirectOnError,
 			},
 		];
 	case CLEAR_ERRORS:

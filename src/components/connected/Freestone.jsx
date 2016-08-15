@@ -39,7 +39,7 @@ export class Freestone extends Component {
 		fetchEnv: React.PropTypes.func,
 		children: React.PropTypes.any,
 	};
-	
+
 	componentWillMount() {
 		this.requireData(this.props);
 	}
@@ -49,7 +49,8 @@ export class Freestone extends Component {
 	}
 
 	requireData(props) {
-		if (!props.env.adminPath) this.props.fetchEnv();
+		// console.log(props.env);
+		if (!props.env.clientPath) this.props.fetchEnv();
 	}
 
 	render() {

@@ -1,5 +1,5 @@
 import { push as pushPath } from 'react-router-redux';
-import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 
 export const REQUEST_RECORD_LIST = 'REQUEST_RECORD_LIST';
 export const RECEIVE_RECORD_LIST = 'RECEIVE_RECORD_LIST';
@@ -89,8 +89,9 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 		// console.log(`record/${tableName}/${parentTable}/${id}`);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FAILURE],
+				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
 				route: `record/${tableName}/${parentTable}/${id}`,
+				redirectOnError: `list/${tableName}`,
 			},
 		});
 	};
@@ -119,6 +120,7 @@ export function fetchMtmRecords(tableName, id, parentTable = 0) {
 			[FREESTONE_API]: {
 				types: ['api::fetch-mtm-records', RECEIVE_MTM_RECORDS, FREESTONE_API_FAILURE],
 				route: `record/${tableName}/${parentTable}/${id}`,
+				redirectOnError: `list/${parentTable}`,
 			},
 		});
 	};
@@ -131,6 +133,7 @@ export function fetchMtmOptions(tableName) {
 			[FREESTONE_API]: {
 				types: ['api::fetch-mtm-options', RECEIVE_MTM_OPTIONS, FREESTONE_API_FAILURE],
 				route: `mtmOptions/${tableName}`,
+				redirectOnError: '/',
 			},
 		});
 	};

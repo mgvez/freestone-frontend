@@ -28,7 +28,7 @@ export default store => next => action => {
 		// console.log(action);
 		return next(action);
 	}
-	const { route, data, types, bailout } = callAPI;
+	const { route, data, types, redirectOnError } = callAPI;
 
 	function actionWith(vals) {
 		const finalAction = Object.assign({}, action, vals);
@@ -94,6 +94,7 @@ export default store => next => action => {
 					type: failureType,
 					data,
 					error,
+					redirectOnError,
 				}));
 
 				//specific error type if not an API error type, we also need to throw an API error
@@ -102,6 +103,7 @@ export default store => next => action => {
 						type: FREESTONE_API_FAILURE,
 						data,
 						error,
+						redirectOnError,
 					}));
 				}
 			}
