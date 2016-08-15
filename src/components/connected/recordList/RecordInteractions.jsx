@@ -99,7 +99,7 @@ export class RecordInteractions extends Component {
 		return (<div>
 			<div className="actions">
 				<div className={`record-actions ${activeClass}`}>
-					<div className="record-action-control" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></div>
+					<div className="button-round-bordered-info record-action-control" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></div>
 					<div className="record-actions-group">
 						<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="record-action accent">
 							<i className="fa fa-pencil"></i>{EDIT_LABEL}
