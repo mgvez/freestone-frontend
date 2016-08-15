@@ -37,7 +37,7 @@ export class InfosFcn extends Component {
 		return (
 			<div data-info-tooltip>
 				<div className={`tooltip ${activeClass}`}>
-					modified {modified}<br />
+					{modified}<br />
 				</div>
 
 				<a onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>Last modified ?</a>
