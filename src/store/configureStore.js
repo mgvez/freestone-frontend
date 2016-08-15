@@ -25,7 +25,13 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 
 export default function configureStore(initialState) {
-	const store = createStoreWithMiddleware(rootReducer, read() || initialState);
+	const currentState = read() || initialState;
+	//remove current routing from local storage state, to return to home at refresh if fatal error
+	if (currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
+		delete currentState.routing;
+		delete currentState.errors;
+	}
+	const store = createStoreWithMiddleware(rootReducer, currentState);
 
 	if (module.hot) {
 		// Enable Webpack hot module replacement for reducers

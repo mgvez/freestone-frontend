@@ -12,7 +12,7 @@ const actionCreators = { ...authActionCreators, ...devActionCreators, ...envActi
 /* application components */
 import { SiteHeader } from 'components/connected/SiteHeader';
 import { Footer } from 'components/static/Footer';
-import { Errors } from 'components/static/Errors';
+import { Errors } from 'components/connected/Errors';
 import { Nav } from 'components/connected/Nav';
 import { LoadedRecords } from 'components/connected/LoadedRecords';
 import { Login } from 'components/connected/Login';

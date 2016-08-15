@@ -37,7 +37,7 @@ export function callApi(route, data) {
 			url: getEndpoint(route),
 			crossOrigin: true,
 			processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
-			method,		
+			method,
 			data,
 			headers,
 		}).then(resolve, (res) => {

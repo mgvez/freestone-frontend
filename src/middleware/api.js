@@ -2,6 +2,7 @@
 //basé sur redux-api-middleware, mais comme pas de release depuis un bout, pis que le official release fonctionne pas (as of 2016-01-13), j'ai réécrit
 
 import { receiveToken, loginUserFailure } from 'actions/auth';
+import { CLEAR_ERRORS } from 'actions/errors';
 import sha1 from 'sha1';
 import Promise from 'bluebird';
 import { callApi } from 'freestone/api';
@@ -14,10 +15,14 @@ export const FREESTONE_API_FATAL_FAILURE = 'FREESTONE_API_FATAL_FAILURE';
 
 const processing = {};
 
-let isFatalError = false;
-
+let isError = false;
 
 export default store => next => action => {
+	//if clear errors, unflag recoverable error state
+	if (action.type === CLEAR_ERRORS) {
+		isError = false;
+	}
+
 	const callAPI = action[FREESTONE_API];
 	if (typeof callAPI === 'undefined') {
 		// console.log(action);
@@ -45,8 +50,9 @@ export default store => next => action => {
 		throw new Error('Expected an array of three action types.');
 	}
 
-	if (isFatalError) {
-		return Promise.reject(new Error('Api has had a fatal failure'));
+	//when API has had a fatal error, we don't retry any API call until errors are cleared (to avoid eternal calls)
+	if (isError) {
+		return Promise.reject(new Error('Api has had a failure.'));
 	}
 
 	if (processing[hash]) return processing[hash];
@@ -81,18 +87,23 @@ export default store => next => action => {
 				next(loginUserFailure(error));
 			} else {
 
-				if (failureType === FREESTONE_API_FATAL_FAILURE) isFatalError = true;
+				isError = true;
 
+				//always next with specified failure type
 				next(actionWith({
 					type: failureType,
 					data,
 					error,
 				}));
-				next(actionWith({
-					type: FREESTONE_API_FAILURE,
-					data,
-					error,
-				}));
+
+				//specific error type if not an API error type, we also need to throw an API error
+				if (failureType !== FREESTONE_API_FAILURE && failureType !== FREESTONE_API_FATAL_FAILURE) {
+					next(actionWith({
+						type: FREESTONE_API_FAILURE,
+						data,
+						error,
+					}));
+				}
 			}
 			processing[hash] = null;
 			return error;

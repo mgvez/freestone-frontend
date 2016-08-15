@@ -1,5 +1,5 @@
 import { push as pushPath } from 'react-router-redux';
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
 
 export const REQUEST_RECORD_LIST = 'REQUEST_RECORD_LIST';
 export const RECEIVE_RECORD_LIST = 'RECEIVE_RECORD_LIST';
@@ -17,7 +17,7 @@ export function fetchList(tableName, search = '', page = 1) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [REQUEST_RECORD_LIST, RECEIVE_RECORD_LIST, FREESTONE_API_FATAL_FAILURE],
+				types: [REQUEST_RECORD_LIST, RECEIVE_RECORD_LIST, FREESTONE_API_FAILURE],
 				route: `list/${tableName}/${page}?search=${search}`,
 			},
 		});
@@ -89,7 +89,7 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 		// console.log(`record/${tableName}/${parentTable}/${id}`);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
+				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FAILURE],
 				route: `record/${tableName}/${parentTable}/${id}`,
 			},
 		});
@@ -101,7 +101,7 @@ export function duplicateRecord(tableName, id) {
 		// console.log(`record/${tableName}/${parentTable}/${id}`);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::duplicate-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
+				types: ['api::duplicate-record', RECEIVE_RECORD, FREESTONE_API_FAILURE],
 				route: `duplicate/${tableName}/${id}`,
 			},
 		}).then((res) => {
@@ -117,7 +117,7 @@ export function fetchMtmRecords(tableName, id, parentTable = 0) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-mtm-records', RECEIVE_MTM_RECORDS, FREESTONE_API_FATAL_FAILURE],
+				types: ['api::fetch-mtm-records', RECEIVE_MTM_RECORDS, FREESTONE_API_FAILURE],
 				route: `record/${tableName}/${parentTable}/${id}`,
 			},
 		});
@@ -129,7 +129,7 @@ export function fetchMtmOptions(tableName) {
 
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-mtm-options', RECEIVE_MTM_OPTIONS, FREESTONE_API_FATAL_FAILURE],
+				types: ['api::fetch-mtm-options', RECEIVE_MTM_OPTIONS, FREESTONE_API_FAILURE],
 				route: `mtmOptions/${tableName}`,
 			},
 		});

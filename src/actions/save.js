@@ -38,7 +38,7 @@ export function saveRecord(table, tree, records, deleted, callback) {
 
 		const tableName = table.name;
 		const { isMeta } = table;
-		
+
 		if (!table || !tree || !tree.tableId || !tree.recordId || !records || !records[tree.tableId] || !records[tree.tableId][tree.recordId]) {
 			dispatch(pushPath(`list/${tableName}`));
 			return null;
@@ -95,7 +95,6 @@ export function saveRecord(table, tree, records, deleted, callback) {
 				return null;
 			});
 
-			
 			return onSaved;
 		});
 	};

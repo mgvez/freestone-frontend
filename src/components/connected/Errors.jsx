@@ -7,45 +7,39 @@ import Modal from 'react-modal';
 import customStyle from 'components/styles/modalStyles.js';
 
 import * as errorsActionCreators from 'actions/errors';
+import { goTo } from 'actions/nav';
 
 @connect(
 	state => {
 		return { errors: state.errors };
 	},
-	dispatch => bindActionCreators(errorsActionCreators, dispatch)
+	dispatch => bindActionCreators({ ...errorsActionCreators, goTo }, dispatch)
 )
 export class Errors extends Component {
 	static propTypes = {
 		errors: React.PropTypes.array,
+
 		clearErrors: React.PropTypes.func,
+		goTo: React.PropTypes.func,
 	};
 
 	closeModal = () => {
 		this.props.clearErrors();
 	};
-	
-	// printObject(obj, lev = 0, carry = []) {
-	// 	if (typeof obj === 'object') {
-	// 		return Object.keys(obj).map(prop => {
-	// 			const val = this.printObject(obj[prop], lev + 1);
-	// 			const style = {
-	// 				paddingLeft: lev * 10,
-	// 			};
-	// 			return (
-	// 				<div style={style} key={prop}>
-	// 					<strong>{prop}</strong> : 
-	// 					{val}
-	// 				</div>
-	// 			);
-	// 		});
-	// 	}
-	// 	carry.push(<pre>{obj}</pre>);
-	// 	return carry;
-	// }
+
+	closeFatal = () => {
+		this.props.goTo('/');
+		this.props.clearErrors();
+	};
 
 	render() {
 		if (!this.props.errors.length) return null;
 		// console.log('errors');
+		const isFatal = this.props.errors.reduce((status, e) => status || e.isFatal);
+
+		//if fatal error, we need to refresh
+		let closeModal = isFatal ? this.closeFatal : this.closeModal;
+
 		return (
 			<Modal
 				isOpen
@@ -64,7 +58,8 @@ export class Errors extends Component {
 						return nodes;
 					})
 				}
-				<button onClick={this.closeModal}>OK</button>
+
+				<button onClick={closeModal}>Close</button>
 
 			</Modal>
 		);

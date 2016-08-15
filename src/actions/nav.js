@@ -1,4 +1,5 @@
-import { FREESTONE_API } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+
 import { push as pushPath } from 'react-router-redux';
 
 export const ADD_NAV = 'ADD_NAV';
@@ -10,7 +11,7 @@ export function fetchNav() {
 		// console.log('fetch nav');
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [null, ADD_NAV, null],
+				types: ['api::fetch-nav', ADD_NAV, FREESTONE_API_FATAL_FAILURE],
 				route: 'nav',
 			},
 		});

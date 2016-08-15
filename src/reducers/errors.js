@@ -5,17 +5,15 @@ export function errors(state = [], action) {
 	// console.log(action);
 	switch (action.type) {
 	case FREESTONE_API_FAILURE:
+	case FREESTONE_API_FATAL_FAILURE:
 		return [
-			// ...state,
+			...state,
 			{
 				message: action.error.responseText || action.error.statusText || action.error.response,
 				details: action.error.details,
+				isFatal: action.type === FREESTONE_API_FATAL_FAILURE,
 			},
 		];
-		// console.log(action.error);
-	//appelée en PLUS de API_FAILURE, donc n'a pas besoin d'ajouter l'erreur. Ne sert pas encore
-	case FREESTONE_API_FATAL_FAILURE:
-		return state;
 	case CLEAR_ERRORS:
 		return [];
 	default:
