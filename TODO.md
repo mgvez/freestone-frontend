@@ -6,8 +6,8 @@
 - pouvoir mettre une langue différente pour le core (i.e. strings de l'admin, e.g. search, etc., errors)
 
 # Freestone PHP
-- changer type rel pour subform
 - ajouter un field "has_preview" à json de def de table, qui check si un template existe avec le nom de la table, pour eviter de mettre le link preview si non
+- ajout 'noparse' dans template
 
 # Images
 - widget qui montre les uses des items de banque

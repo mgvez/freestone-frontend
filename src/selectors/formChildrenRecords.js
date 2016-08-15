@@ -74,7 +74,9 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 				if (areLoaded || isNew(parentRecordId)) {
 					const subformFieldId = getForeignFieldId(table.id, parentTableId, tables);
 					// console.log(subformFieldId);
+					// console.log(tableRecords);
 					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, subformFieldId) : [];
+					// console.log(childrenRecords);
 					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
 					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
 					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);

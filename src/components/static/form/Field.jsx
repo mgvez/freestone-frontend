@@ -76,6 +76,7 @@ export class Field extends Component {
 		case 'pri':
 		case 'ajax':
 		case 'rel':
+		case 'subform':
 		case 'order':
 		case 'mtm':
 		default:

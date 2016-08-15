@@ -50,7 +50,6 @@ export class DeleteBtn extends Component {
 	};
 
 	render() {
-		console.log(this.props.prikey, this.state.requested);
 
 		if (this.state.requested) {
 			return (

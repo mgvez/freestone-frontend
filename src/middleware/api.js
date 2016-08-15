@@ -14,6 +14,8 @@ export const FREESTONE_API_FATAL_FAILURE = 'FREESTONE_API_FATAL_FAILURE';
 
 const processing = {};
 
+let isFatalError = false;
+
 
 export default store => next => action => {
 	const callAPI = action[FREESTONE_API];
@@ -43,22 +45,8 @@ export default store => next => action => {
 		throw new Error('Expected an array of three action types.');
 	}
 
-	try {
-		if ((typeof bailout === 'boolean' && bailout) || (typeof bailout === 'function' && bailout(store.getState()))) {
-			throw new Error('Bailout');
-		}
-
-		if (!types.every(type => typeof type === 'string')) {
-			// console.log(types);
-			// throw new Error('Expected action types to be strings.');
-		}
-
-	} catch (e) {
-		next(actionWith({
-			type: requestType,
-			data: e,
-		}));
-		return Promise.reject(e);
+	if (isFatalError) {
+		return Promise.reject(new Error('Api has had a fatal failure'));
 	}
 
 	if (processing[hash]) return processing[hash];
@@ -92,6 +80,9 @@ export default store => next => action => {
 			if (error.status === 401) {
 				next(loginUserFailure(error));
 			} else {
+
+				if (failureType === FREESTONE_API_FATAL_FAILURE) isFatalError = true;
+
 				next(actionWith({
 					type: failureType,
 					data,

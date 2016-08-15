@@ -10,14 +10,14 @@ export const TYPE_MAIN = 'main';
 
 export const TYPE_MTM = 'mtm';
 export const TYPE_OTO = 'oto';
-export const TYPE_REL = 'rel';
+export const TYPE_SUBFORM = 'subform';
 export const TYPE_PRIMARY = 'pri';
 export const TYPE_ORDER = 'order';
 export const TYPE_IMG = 'img';
 export const TYPE_FILE = 'file';
 export const TYPE_DATETIME = 'datetime';
 
-export const TYPES_PARENT_LINK = [TYPE_REL, TYPE_OTO, TYPE_MTM];
+export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM];
 
 export const SUBFORM_VIEW_TABBED = 'SUBFORM_VIEW_TABBED'; 
 export const SUBFORM_VIEW_LIST = 'SUBFORM_VIEW_LIST'; 

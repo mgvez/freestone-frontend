@@ -10,7 +10,7 @@ import { SubformTabbed } from 'components/static/form/subform/SubformTabbed';
 import { SubformList } from 'components/static/form/subform/SubformList';
 import { SubformSingle } from 'components/static/form/subform/SubformSingle';
 
-import { SUBFORM_VIEW_TABBED, TYPE_REL, TYPE_OTO } from 'freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from 'freestone/schemaProps';
 
 @connect(
 	formChildrenRecordsMapStateToProps,
@@ -80,7 +80,7 @@ export class SubformStandard extends Component {
 
 		if (!this.props.table) return null;
 
-		if (this.props.table.type === TYPE_REL) {
+		if (this.props.table.type === TYPE_SUBFORM) {
 			if (this.props.currentViewType === SUBFORM_VIEW_TABBED || !this.props.currentViewType) {
 				return <SubformTabbed {...this.props} swapRecords={this.swapRecords} />;
 			}
