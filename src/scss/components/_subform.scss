@@ -3,6 +3,10 @@
 	padding-top: 60px;
 	padding-bottom: 1px;
 
+	h2 {
+		font-weight: $font-weight-semibold;
+	}
+
 	.button-circle-danger-small {
 		position: absolute;
 			top: 20px;
