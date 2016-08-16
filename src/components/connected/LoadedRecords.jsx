@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { LoadedRecordsToggler } from 'components/connected/widgets/LoadedRecordsToggler';
 
 import { fetchTable } from 'actions/schema';
 import { fetchForeignOptions } from 'actions/foreignOptions';
@@ -91,6 +92,7 @@ export class LoadedRecords extends Component {
 
 		return (
 			<nav className={`loaded-records ${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
+				<LoadedRecordsToggler />
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {
@@ -107,7 +109,6 @@ export class LoadedRecords extends Component {
 												This record has been open for {this.getTimeElapsed(record)}.
 											</div>
 										);
-										
 
 										return (
 											<div className="loaded-record" key={`${records.tableId}_${record.id}`}>
