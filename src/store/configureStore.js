@@ -27,7 +27,7 @@ const createStoreWithMiddleware = applyMiddleware(
 export default function configureStore(initialState) {
 	const currentState = read() || initialState;
 	//remove current routing from local storage state, to return to home at refresh if fatal error
-	if (currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
+	if (currentState && currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
 		delete currentState.routing;
 		delete currentState.errors;
 	}
