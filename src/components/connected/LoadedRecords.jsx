@@ -92,7 +92,7 @@ export class LoadedRecords extends Component {
 
 		return (
 			<nav className={`loaded-records ${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
-				<LoadedRecordsToggler />
+				<LoadedRecordsToggler isClose />
 				<h2>Loaded records</h2>
 				{
 					this.props.records.map((records) => {

@@ -26,7 +26,7 @@ export class SiteHeader extends Component {
 			<header id="main-header" ref="header">
 				<NavToggler />
 				<div className="logout">
-					<HomeButton /> 
+					<HomeButton />
 					<a onClick={this.props.logout}>
 						<i className="fa fa-sign-out"></i> Logout
 					</a>

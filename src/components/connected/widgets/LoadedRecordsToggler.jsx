@@ -25,8 +25,11 @@ export class LoadedRecordsToggler extends Component {
 	};
 
 	render() {
-		const className = !this.props.isClose ? 'fa-close' : 'fa-pencil';
-		return (<div className="loaded-records-toggler" onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
+		const className = this.props.isClose ? 'fa-close' : 'fa-pencil';
+		const buttonClassName = this.props.isClose ? 'button-circle-small' : '';
+
+
+		return (<div className={`${buttonClassName} loaded-records-toggler `} onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
 			<i className={`fa ${className}`}></i>
 		</div>);
 	}
