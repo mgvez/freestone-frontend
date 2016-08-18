@@ -24,7 +24,7 @@ export class Errors extends Component {
 	};
 
 	closeModal = () => {
-		const isFatal = this.props.errors.reduce((status, e) => status || e.isFatal);
+		const isFatal = this.props.errors.reduce((status, e) => status || e.isFatal, false);
 		const redirectingError = this.props.errors.find(e => !!e.redirectOnError);
 		//si l'erreur demande une redirection OU que c'est une erreur fatale (dans ce cas on redirect vers default)
 		const redirect = (redirectingError && redirectingError.redirectOnError) || (isFatal && '/');
