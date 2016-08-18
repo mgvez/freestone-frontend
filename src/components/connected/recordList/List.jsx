@@ -69,7 +69,7 @@ export class List extends Component {
 
 	shouldComponentUpdate(nextProps) {
 		//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
-		return !!(nextProps.groupedRecords && nextProps.groupedRecords.length);
+		return !!(nextProps.groupedRecords);
 	}
 
 	componentWillUnmount() {

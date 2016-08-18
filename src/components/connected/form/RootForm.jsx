@@ -28,14 +28,14 @@ export class RootForm extends Component {
 		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
-		
+
 		//once saved/cancelled, we can override the defualt action (which is to go to table's list)
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 	};
 
 	componentWillMount() {
-		
+
 		if (!this.props.isModal) {
 			window.scrollTo(0, 0);
 		}
@@ -66,7 +66,7 @@ export class RootForm extends Component {
 			saving: true,
 		});
 	}
-	
+
 	cancelSave = () => {
 		this.setState({
 			saving: false,
@@ -88,7 +88,7 @@ export class RootForm extends Component {
 		const language = this.state.language || this.props.language;
 
 		if (this.props.table) {
-			
+
 			if (this.state.saving) {
 				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} cancelSave={this.cancelSave} />;
 			}

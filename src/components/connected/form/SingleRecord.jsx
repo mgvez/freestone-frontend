@@ -28,7 +28,7 @@ export class SingleRecord extends Component {
 		env: React.PropTypes.object,
 		language: React.PropTypes.string,
 		isRoot: React.PropTypes.bool,
-		
+
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
 		setFieldVal: React.PropTypes.func,
@@ -64,7 +64,7 @@ export class SingleRecord extends Component {
 		let form;
 		let sub;
 
-		// console.log('render', this.props.children);
+		// console.log('render', this.props.table.name);
 		if (this.props.table && this.props.record) {
 
 			let deleteBtn;
@@ -88,11 +88,13 @@ export class SingleRecord extends Component {
 										tableId={field.subformPlaceholder}
 										parentTableId={this.props.table.id}
 										parentRecordId={this.props.recordId}
+										language={this.props.language}
 									/>
 								);
 							}
 
 							//if field is language-specific, display it only if the current language is the field's
+							// console.log(field.name, field.language, this.props.language);
 							return ((field.language && field.language === this.props.language) || !field.language) ? (<Field
 								key={field.id} 
 								field={field}
@@ -108,8 +110,8 @@ export class SingleRecord extends Component {
 					}
 				</article>
 			);
-			if (this.props.children) {
 
+			if (this.props.children) {
 				sub = (
 					<div>
 						{

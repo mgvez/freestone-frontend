@@ -19,7 +19,7 @@ export class SubformTabbed extends CollapsableForm {
 
 	getContent() {
 		if (!this.collapser.getOpenState()) return null;
-		
+
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		return (<div ref={this.setCollapsable}>

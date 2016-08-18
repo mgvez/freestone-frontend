@@ -25,7 +25,7 @@ export class Subform extends Component {
 
 		isCollapsed: React.PropTypes.bool,
 		table: React.PropTypes.object,
-		
+
 		fetchTable: React.PropTypes.func,
 		setSubformCollapsed: React.PropTypes.func,
 	};
@@ -55,7 +55,8 @@ export class Subform extends Component {
 				setSubformCollapsed={this.props.setSubformCollapsed}
 			/>);
 		}
-		
+		console.log(this.props.language);
+
 		return (<SubformStandard
 			tableId={this.props.tableId}
 			parentRecordId={this.props.parentRecordId}
@@ -64,6 +65,6 @@ export class Subform extends Component {
 			setSubformCollapsed={this.props.setSubformCollapsed}
 			language={this.props.language}
 		/>);
-		
+
 	}
 }
