@@ -133,7 +133,7 @@ export class List extends Component {
 
 					<header className="record-header">
 						<div className="texts">
-							<h1>{this.props.table.actionLabel}</h1>
+							<h1>{this.props.table.displayLabel}</h1>
 							<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
 						</div>
 

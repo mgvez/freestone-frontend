@@ -38,25 +38,35 @@ function checkRule(rule, val) {
 	}, false);
 }
 
+/**
+Retrieve rules where fields are displayed/hidden depending on other field's values. Will output an object {[fieldId]:isDisplayed}
+*/
 function parseDependencies(table, record) {
 	if (!record) return null;
 	const { fieldDependencies } = table;
-	const fieldIds = fieldDependencies && Object.keys(fieldDependencies);
-	if (!fieldIds || fieldIds.length === 0) return null;
-	// parsedTable.fields = [];
-	// fieldIds
-	const dependenciesValues = fieldIds.map((fieldId) => {
-		const deps = fieldDependencies[fieldId];
+	console.log(fieldDependencies);
+	const controlFieldIds = fieldDependencies && Object.keys(fieldDependencies);
+	if (!controlFieldIds || controlFieldIds.length === 0) return null;
+
+	const dependenciesValues = controlFieldIds.map((fieldId) => {
+		const rules = fieldDependencies[fieldId];
 		// console.log(record[id]);
 		// console.log(id);
-		// console.log(deps);
-		return deps && deps.reduce((states, def) => {
+		console.log(rules);
+		return rules && rules.reduce((states, def) => {
+			//does the control field value matches the condition
 			const ruleApplies = checkRule(def.rule, record[fieldId]);
+			//check all fields that need to be shown if this condition is true
 			return def.deps.show.reduce((carry, targetFieldId) => {
-				carry[targetFieldId] = ruleApplies;
+				//as soon as a rule that shows the field applies, it's priority
+				carry[targetFieldId] = carry[targetFieldId] || ruleApplies;
 				return carry;
+			//rule can also make the field hidden
 			}, def.deps.hide.reduce((carry, targetFieldId) => {
-				carry[targetFieldId] = !ruleApplies;
+				//fields are shown by default, hidden ONLY if hiding rule applies
+				let curStatus = carry[targetFieldId] || typeof carry[targetFieldId] === 'undefined';
+				if (ruleApplies) curStatus = false;
+				carry[targetFieldId] = curStatus;
 				return carry;
 			}, states));
 		}, {});
@@ -66,10 +76,11 @@ function parseDependencies(table, record) {
 			...partial,
 		};
 	}, {});
-	// console.log(dependenciesValues);
+	console.log(dependenciesValues);
 
 	return dependenciesValues;
 }
+
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector) {
 	return createSelector(

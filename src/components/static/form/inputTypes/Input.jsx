@@ -7,7 +7,7 @@ export class Input extends Component {
 		val: React.PropTypes.any,
 		origVal: React.PropTypes.any,
 		env: React.PropTypes.object,
-		
+
 		setFieldVal: React.PropTypes.func,
 	};
 
