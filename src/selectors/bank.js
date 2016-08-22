@@ -33,7 +33,6 @@ export const bankSelector = createSelector(
 				providedSearch,
 				curPage: providedPage,
 				nPages,
-				lang: env.defaultLanguage,
 			};
 		}
 

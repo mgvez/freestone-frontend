@@ -8,7 +8,7 @@ import customStyle from 'components/styles/modalStyles.js';
 import { addRecord, fetchList } from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
-import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_BG_LAYOUT } from 'freestone/schemaProps';
 import { callApi } from 'freestone/api';
 
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
@@ -137,16 +137,25 @@ export class BankImgInsert extends Component {
 			);
 		} else if (this.props.records) {
 			// console.log(this.props.records);
-			content = this.props.records.map((record, idx) => {
-				return (
-					<div key={`th${idx}`} style={{ float: 'left' }}>
-						<FileThumbnail val={record[BANK_IMG_FILE_ALIAS]} dir={record[BANK_IMG_FOLDER_ALIAS]} type="img" />
-						{record[BANK_IMG_DIM_ALIAS]} {record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}
-						<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]}>Choose</button>
-						<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]}>Edit</button>
-					</div>
-				);
-			});
+			content = (
+				<div className="row">
+					{
+						this.props.records.map((record, idx) => {
+							return (
+								<div key={`th${idx}`} className="col-sm-3 col-md-2 bank-image-list-item">
+									<FileThumbnail val={record[BANK_IMG_FILE_ALIAS]} dir={record[BANK_IMG_FOLDER_ALIAS]} type={BANK_IMG_BG_LAYOUT} />
+									<div className="label">{record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
+									<div className="size">
+										Original size : {record[BANK_IMG_DIM_ALIAS]}
+									</div>
+									<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
+									<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]} className="button-round-warning">Edit</button>
+								</div>
+							);
+						})
+					}
+				</div>
+			);
 		}
 
 		return (
@@ -157,15 +166,21 @@ export class BankImgInsert extends Component {
 				closeTimeoutMS={300}
 				style={customStyle}
 			>
-				<button onClick={this.cancelChange}>cancel</button>
-				<button onClick={this.addRecord}><i className="fa fa-plus-square"></i> New record</button>
-				<div className="padded-content search-ctn">
-					<form onSubmit={this.handleSearch}>
-						<input className="search-input" type="text" placeholder="search" ref={(el) => this._searchInput = el} initialValue={this.props.search} />
-						<button className="button-search"><i className="fa fa-search"></i></button>
-					</form>
+				<div className="bank-image-list-actions">
+					<div className="buttons">
+						<button onClick={this.cancelChange} className="button-round-bordered-action">Cancel</button>
+						<button onClick={this.addRecord} className="button-round-bordered-action"><i className="fa fa-plus-square"></i> New record</button>
+					</div>
+					<div className="padded-content search-ctn">
+						<form onSubmit={this.handleSearch}>
+							<input className="search-input" type="text" placeholder="search" ref={(el) => this._searchInput = el} initialValue={this.props.search} />
+							<button className="button-search"><i className="fa fa-search"></i></button>
+						</form>
+					</div>
 				</div>
-				{content}
+				<div className="bank-image-list">
+					{content}
+				</div>
 				<Paging
 					nPages={this.props.nPages}
 					curPage={this.props.curPage}

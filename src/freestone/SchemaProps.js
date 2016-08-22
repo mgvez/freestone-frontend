@@ -28,3 +28,5 @@ export const BANK_IMG_DIM_ALIAS = 'zva_bank_img__dim';
 export const BANK_IMG_TITLE_ALIAS = 'zva_bank_img__title_';
 export const BANK_IMG_FOLDER_ALIAS = 'zva_bank_img_file_folder';
 
+export const BANK_IMG_BG_LAYOUT = 'background-image';
+
