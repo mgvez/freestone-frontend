@@ -1,5 +1,6 @@
 
 
+textarea,
 input[type="text"],
 input[type="password"],
 input[type="email"],
@@ -22,6 +23,11 @@ input[role="combobox"] {
 		width: 200px;
 		vertical-align: middle;
 	}
+}
+
+textarea{
+	height: 130px;
+	line-height: 1.4em;
 }
 
 .button-search {

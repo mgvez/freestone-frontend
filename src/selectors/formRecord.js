@@ -16,60 +16,69 @@ const childrenSelector = state => state.schema.children;
 
 function checkRule(rule, val) {
 	const boolRule = rule.toUpperCase();
-	
+	if (boolRule === '*') return true;
 	if (boolRule === 'TRUE') {
 		return !!val;
 	} else if (boolRule === 'FALSE') {
 		return !val;
 	}
-	
+
 	//next tests only valid if field has value
 	if (!val) return false;
-	
+
 	//regexp?
 	if (rule[0] === '/') {
 		const pattern = rule.substr(1, rule.lastIndexOf('/') - 1);
 		const modifiers = rule.substr(rule.lastIndexOf('/') + 1);
 		return RegExp(pattern, modifiers).test(val);
 	}
-	
+
 	return rule.split(';').reduce((isCheck, singleRule) => {
 		return isCheck || singleRule === String(val);
 	}, false);
 }
 
+/**
+Retrieve rules where fields are displayed/hidden depending on other field's values. Will output an object {[fieldId]:isDisplayed}
+*/
 function parseDependencies(table, record) {
 	if (!record) return null;
 	const { fieldDependencies } = table;
-	const fieldIds = fieldDependencies && Object.keys(fieldDependencies);
-	if (!fieldIds || fieldIds.length === 0) return null;
-	// parsedTable.fields = [];
-	// fieldIds
-	const dependenciesValues = fieldIds.map((fieldId) => {
-		const deps = fieldDependencies[fieldId];
-		// console.log(record[id]);
-		// console.log(id);
-		// console.log(deps);
-		return deps && deps.reduce((states, def) => {
-			const ruleApplies = checkRule(def.rule, record[fieldId]);
-			return def.deps.show.reduce((carry, targetFieldId) => {
-				carry[targetFieldId] = ruleApplies;
-				return carry;
-			}, def.deps.hide.reduce((carry, targetFieldId) => {
-				carry[targetFieldId] = !ruleApplies;
-				return carry;
-			}, states));
-		}, {});
-	}).reduce((carry, partial) => {
-		return {
-			...carry,
-			...partial,
-		};
+	const controlFieldIds = fieldDependencies && Object.keys(fieldDependencies);
+	if (!controlFieldIds || controlFieldIds.length === 0) return null;
+
+	// console.log(fieldDependencies);
+	// console.log(record);
+
+	//defaults all depending fields to the inverse of their set rules, that is, if rules are for displaying a field, hide it until we match a rule
+	const dependenciesValues = controlFieldIds.reduce((defaults, controlFieldId) => {
+		return fieldDependencies[controlFieldId].reduce((carry, rule) => {
+			const { dependingFieldId } = rule;
+			//sets default if first time we encounter this depending field in the loop
+			if (carry[dependingFieldId] === undefined) {
+				carry[dependingFieldId] = {
+					isDisplay: !rule.isDisplay,
+					descriptionAppend: '',
+				};
+			}
+
+			//does the control field value match the rule?
+			const ruleApplies = checkRule(rule.rule, record[controlFieldId]);
+			// console.log(rule.rule, controlFieldId, record[controlFieldId]);
+			if (ruleApplies) {
+				// console.log(rule.rule, record[controlFieldId]);
+				carry[dependingFieldId].isDisplay = rule.isDisplay;
+				carry[dependingFieldId].descriptionAppend = rule.descriptionAppend;
+			}
+
+			return carry;
+		}, defaults);
 	}, {});
 	// console.log(dependenciesValues);
 
 	return dependenciesValues;
 }
+
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector) {
 	return createSelector(
@@ -91,14 +100,23 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				// console.log(children);
 				// console.log(allFields);
 				if (dependencies) {
-					table.fields = table.fields.filter(field => {
-						//ce field dépend d'un autre?
-						const dep = dependencies[field.id];
-						return dep !== false;
-					});
+					table.fields = table.fields.map(field => {
+						if (dependencies[field.id] === undefined) return field;
+						//field depends on another?
+						const { isDisplay, descriptionAppend } = dependencies[field.id];
+						if (isDisplay) {
+							//field description can have an append that is set by dependencies
+							return {
+								...field,
+								descriptionAppend,
+							};
+						}
+						return false;
+					}).filter(field => field);
+
 					//certains fields sont le rel field d'un sous-form, ce qui indique que ce sous-form doit s'afficher au non
 					Object.keys(dependencies).forEach((targetFieldId) => {
-						const isShow = dependencies[targetFieldId];
+						const isShow = dependencies[targetFieldId] && dependencies[targetFieldId].isDisplay;
 						if (isShow) return;
 						const field = allFields[targetFieldId];
 						const subFormTableId = field.table_id;
@@ -115,8 +133,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					}
 					return filteredChildren;
 				}, children);
-
-				
 			}
 
 

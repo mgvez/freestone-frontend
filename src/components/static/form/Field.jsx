@@ -50,8 +50,7 @@ export class Field extends Component {
 			break;
 		case 'enum':
 		case 'foreign':
-		case 'selfcascade':
-		case 'cascade':
+		case 'selfjoin':
 		case 'foreigntext':
 			// input = <SelectInput {...this.props} />;
 			// break;
@@ -106,6 +105,7 @@ export class Field extends Component {
 					<div className="col-md-8">
 						{input}
 						<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
+						<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.descriptionAppend }}></em>
 					</div>
 				</div>
 			);
