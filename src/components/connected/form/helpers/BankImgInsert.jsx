@@ -144,7 +144,10 @@ export class BankImgInsert extends Component {
 							return (
 								<div key={`th${idx}`} className="col-sm-3 col-md-2 bank-image-list-item">
 									<FileThumbnail val={record[BANK_IMG_FILE_ALIAS]} dir={record[BANK_IMG_FOLDER_ALIAS]} type={BANK_IMG_BG_LAYOUT} />
-									<div className="label">{record[BANK_IMG_DIM_ALIAS]} {record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
+									<div className="label">{record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
+									<div className="size">
+										Original size : {record[BANK_IMG_DIM_ALIAS]}
+									</div>
 									<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
 									<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]} className="button-round-warning">Edit</button>
 								</div>

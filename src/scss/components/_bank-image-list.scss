@@ -42,8 +42,12 @@
 		background-color: $color-background-main;
 	}
 
-	.label {
+	.label, .size {
 		margin: 10px 0;
+	}
+
+	.size {
+		font-size: 12px;
 	}
 
 	[class|=button] + [class|=button] {
