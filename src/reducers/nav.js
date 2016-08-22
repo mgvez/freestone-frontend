@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL } from 'actions/nav';
-import { SAVE_RECORD_SUCCESS } from 'actions/save';
+import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
 
 const navInitialState = {
 	navGroups: [],
@@ -16,7 +16,10 @@ function structure(state = navInitialState, action) {
 	switch (action.type) {
 	case SAVE_RECORD_SUCCESS:
 	case UNAUTHORIZED:
+	case SWAP_ORDER_SUCCESS:
+	case DELETE_RECORD_SUCCESS:
 	case CLEAR_DATA:
+		console.log('saved');
 		return navInitialState;
 	case ADD_NAV:
 		return {
