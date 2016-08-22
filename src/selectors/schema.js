@@ -52,7 +52,7 @@ export const schemaSelector = createSelector(
 			}
 
 			if (field.isSearch) {
-				
+
 				if (field.isGroup) {
 					table.groupField = field;
 					//self join? si oui, affiche le tree
@@ -62,7 +62,7 @@ export const schemaSelector = createSelector(
 				} else {
 					table.searchableFields.push(field);
 				}
-				
+
 			}
 			if (field.type === TYPE_ORDER) {
 				table.hasOrder = true;
