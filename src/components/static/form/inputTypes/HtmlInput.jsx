@@ -39,6 +39,10 @@ const TINYMCE_CONFIG = {
 };
 
 export class HtmlInput extends Input {
+	static propTypes = {
+		lang: React.PropTypes.string,
+	};
+	
 	constructor(props) {
 		super(props);
 
@@ -102,7 +106,7 @@ export class HtmlInput extends Input {
 			case 'insertLink':
 				return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...params} />;
 			case 'addImageFromBank':
-				return <BankImgInsert onClose={this.closeModal} setMarkup={this.handleEditorChange} {...params} />;
+				return <BankImgInsert onClose={this.closeModal} setMarkup={this.handleEditorChange} lang={this.props.lang} {...params} />;
 			case 'addDocFromBank':
 			default:
 				break;

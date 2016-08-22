@@ -181,7 +181,7 @@ export class GoogleAnalytics extends Component {
 							})
 							.map((browser) => {
 								return (
-									<div className="browser-list-item">
+									<div className="browser-list-item" key={browser[0]}>
 										<p><strong>{browser[0]}</strong> - {Math.round(browser[1].totalSessions / totalSessions * 100)}% de toutes les sessions</p>
 										<ul>
 											{

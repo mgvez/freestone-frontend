@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { TYPE_IMG } from 'freestone/schemaProps';
+import { TYPE_IMG, BANK_IMG_BG_LAYOUT } from 'freestone/schemaProps';
 
 
 @connect(
@@ -38,9 +38,13 @@ export class FileThumbnail extends Component {
 		if (this.props.type === TYPE_IMG) {
 			thumb = <img src={val} style={this.css} />;
 		}
-		return (
-			<a href={`${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`} target="_blank">{thumb}</a>
-		);
+
+		let content = <a href={`${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`} target="_blank">{thumb}</a>;
+		if (this.props.type === BANK_IMG_BG_LAYOUT) {
+			content = <div className="thumbnail-bg" style={{ backgroundImage: `url(${val})` }}></div>;
+		}
+
+		return content;
 		
 	}
 }

@@ -5,6 +5,10 @@ import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThum
 import { BankImgInsert } from 'components/connected/form/helpers/BankImgInsert';
 
 export class BankImgInput extends Input {
+	static propTypes = {
+		lang: React.PropTypes.string,
+	};
+
 	constructor(props) {
 		super(props);
 
@@ -27,7 +31,7 @@ export class BankImgInput extends Input {
 
 	render() {
 		if (this.state.isChoosing) {
-			return <BankImgInsert onClose={this.closeModal} setVal={this.handleEditorChange} />;
+			return <BankImgInsert onClose={this.closeModal} setVal={this.handleEditorChange} lang={this.props.lang} />;
 		}
 		const id = Number(this.props.val);
 		const label = id ? 'Change image' : 'Choose image';
