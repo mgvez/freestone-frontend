@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import { default as nav } from './nav';
 import { default as siteHeader } from './siteHeader';
 import { default as schema } from './schema';
+import { default as translations } from './translations';
 import { auth } from './auth';
 import { env, userViewSettings, envVariables } from './env';
 import { errors } from './errors';
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
 	subform,
 	bankImage,
 	envVariables,
+	translations,
 });
 
 export default rootReducer;

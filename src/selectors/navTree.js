@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import nativeModules from 'freestone/nativeModules';
+
 const tablesSelector = state => state.nav.structure.tables;
 const modulesSelector = state => state.nav.structure.modules;
 const pagesSelector = state => state.nav.structure.pages;
@@ -9,6 +11,10 @@ function checkGroupFilled(group) {
 	group.childrenGroups = group.childrenGroups.filter(checkGroupFilled);
 	// console.log(group.name, group.childrenGroups.length, group.tables.length, group.modules.length, group.pages.length);
 	return group.childrenGroups.length || group.tables.length || group.modules.length || group.pages.length;
+}
+
+function getNativeModules(groupName) {
+	return nativeModules.filter(m => groupName.toLowerCase() === m.groupName.toLowerCase());
 }
 
 function buildTree(navGroups, tables, modules, pages) {
@@ -22,6 +28,7 @@ function buildTree(navGroups, tables, modules, pages) {
 			modules: modules.filter((module) => {
 				return module.group_id === groupId;
 			}),
+			nativeModules: getNativeModules(group.name),
 			pages: pages.filter((page) => {
 				return page.group_id === groupId;
 			}),
