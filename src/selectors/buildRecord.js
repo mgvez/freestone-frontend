@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 import { schemaSelector } from 'selectors/schema';
 import { getForeignFieldId } from 'freestone/schemaHelpers';
+import { isNew } from 'utils/UniqueId';
 
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
 
@@ -28,7 +29,7 @@ function getChildrenRecordIds(records, parentRecordId, linkFieldId) {
 //get un tree de IDs de records et de ses children
 function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
 	const childrenTables = unfilteredChildren[tableId] || [];
-	// children = 
+	// children =
 	// console.log(childrenTables, tableId);
 	const children = childrenTables.reduce((allChildrenRecords, childTableId) => {
 		// console.log('table %s is child of %s', childTableId, tableId);
@@ -40,14 +41,14 @@ function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfi
 				tableId: childTableId,
 				records: thisMtm,
 			});
-			
+
 		} else {
 			const subformFieldId = getForeignFieldId(childTableId, tableId, allTables);
 			const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, subformFieldId);
 			const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
 				return buildTree(childTableId, childRecId, allRecords, allMtmRecords, allTables, unfilteredChildren);
 			});
-			
+
 			if (childrenRecords) {
 				allChildrenRecords.children = allChildrenRecords.children.concat(childrenRecords);
 			}
@@ -70,7 +71,8 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 	const record = allRecords[tableId] && allRecords[tableId][recordId];
 	records[tableId] = records[tableId] || {};
 
-	if (record && ((getDeleted && record[DELETED_PSEUDOFIELD_ALIAS]) || (!getDeleted && !record[DELETED_PSEUDOFIELD_ALIAS]))) records[tableId][recordId] = record;
+	// console.log(recordId, isNew(recordId));
+	if (record && ((getDeleted && record[DELETED_PSEUDOFIELD_ALIAS] && !isNew(recordId)) || (!getDeleted && !record[DELETED_PSEUDOFIELD_ALIAS]))) records[tableId][recordId] = record;
 
 	return children.reduce((carry, childBranch) => {
 		return getRecords(childBranch, allRecords, getDeleted, carry);
