@@ -7,10 +7,9 @@ import DocumentMeta from 'react-document-meta';
 import { rootFormMapStateToProps } from 'selectors/rootForm';
 
 import { Save } from 'components/connected/process/Save';
-import { Cancel } from 'components/connected/process/Cancel';
-import { Header } from 'components/static/form/Header';
+import { HeaderContainer } from 'components/static/header/HeaderContainer';
+import { RecordHeader } from 'components/connected/form/header/RecordHeader';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { LanguageToggler } from 'components/connected/form/LanguageToggler';
 
 @connect(
 	rootFormMapStateToProps,
@@ -80,7 +79,6 @@ export class RootForm extends Component {
 
 	render() {
 
-		let header;
 		let form;
 		let meta;
 
@@ -93,36 +91,26 @@ export class RootForm extends Component {
 				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} cancelSave={this.cancelSave} />;
 			}
 
-			let languageToggler;
-			if (this.props.hasLanguageToggle) {
-				languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.setLanguageState : null} localLanguage={language} />;
-			}
-
-			header = (
-				<header>
-					<div className="texts">
-						<Header table={this.props.table} />
-						<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
-					</div>
-
-					<div className="btns">
-						<a onClick={this.save} className="button-round">Save</a>
-						<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
-					</div>
-					{languageToggler}
-				</header>
-			);
-
 			form = (
 				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
 			);
 
 			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;
 		}
+
+		const functions = {
+			save: this.save,
+			setLanguageState: this.setLanguageState,
+		};
+
 		return (
 			<section className="root-form">
 				{meta}
-				{header}
+				<HeaderContainer>
+					<RecordHeader {...this.props} functions={functions} />
+					<RecordHeader isLight {...this.props} functions={functions} />
+				</HeaderContainer>
+				
 				{form}
 			</section>
 		);

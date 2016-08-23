@@ -3,7 +3,8 @@
 	position: relative;
 	overflow: hidden;
 
-	> header {
+	> header,
+	.fixed-header > header {
 		padding: 25px 40px;
 		background: $color-background-light;
 		border-top: 1px solid $gray86;

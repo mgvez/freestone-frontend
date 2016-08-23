@@ -11,7 +11,7 @@ export class Header extends Component {
 		if (this.props.table) {
 			return (
 				<div>
-					<h1>{this.props.table.displayLabel}</h1>					
+					<h1>{this.props.table.displayLabel}</h1>
 					<div className="table-help" dangerouslySetInnerHTML={{ __html: this.props.table.help }}></div>
 				</div>
 			);
