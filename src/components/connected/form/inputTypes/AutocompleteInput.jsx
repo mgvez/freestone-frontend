@@ -15,7 +15,7 @@ function getItemValue(item) {
 
 function parseLabel(string) {
 	let label = string;
-	const hex = /(#[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/;
+	const hex = /(#[A-Fa-f0-9]{6}|#[A-Fa-f0-9]{3})/;
 	const rgba = /(rgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d*(?:\.\d+)?\))/;
 	let result;
 	const parts = [];
