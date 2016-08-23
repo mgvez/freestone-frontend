@@ -8,7 +8,7 @@ export class HomeButton extends Component {
 	};
 
 	render() {
-		const icon = this.props.showIcon ? <i className="fa fa-home"></i> : null;
+		const icon = this.props.showIcon ? <i className="fa fa-home fa-fw"></i> : null;
 		return (
 			<Link to={'/'} className={`home-button ${this.props.customClass}`}>{icon}<span className="nav-label">Dashboard</span></Link>
 		);
