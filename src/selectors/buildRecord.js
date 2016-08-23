@@ -71,7 +71,6 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 	const record = allRecords[tableId] && allRecords[tableId][recordId];
 	records[tableId] = records[tableId] || {};
 
-	// console.log(recordId, isNew(recordId));
 	if (record && ((getDeleted && record[DELETED_PSEUDOFIELD_ALIAS] && !isNew(recordId)) || (!getDeleted && !record[DELETED_PSEUDOFIELD_ALIAS]))) records[tableId][recordId] = record;
 
 	return children.reduce((carry, childBranch) => {

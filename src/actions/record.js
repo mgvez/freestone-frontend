@@ -26,6 +26,16 @@ export function fetchList(tableName, search = '', page = 1) {
 
 export function cancelEdit(records) {
 	return (dispatch) => {
+		dispatch({
+			[FREESTONE_API]: {
+				types: [REQUEST_RECORD_LIST, RECEIVE_RECORD_LIST, FREESTONE_API_FAILURE],
+				route: 'lock',
+				data: {
+					records,
+				},
+			},
+		});
+
 		return dispatch({
 			type: CANCEL_EDIT_RECORD,
 			data: {
