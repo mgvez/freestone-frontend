@@ -78,7 +78,7 @@ export class NavGroup extends Component {
 		return (
 			<li className={`${activeClass} nav-group`} >
 				<a onClick={this.collapser.toggle} className={`table-group ${activeClass}`}>
-					<i className={`fa fa-${icon}`}></i>
+					<i className={`fa fa-${icon} fa-fw`}></i>
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa arrow"></span>
 				</a>
 				{contents}

@@ -26,6 +26,7 @@
 		"no-param-reassign": ["error", { "props": false }],
 		"no-underscore-dangle": ["error", { "allowAfterThis": true }],
 		"consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
+		"no-cond-assign": [2, "except-parens"],
 	},
 	"ecmaFeatures" : {
 		"experimentalObjectRestSpread":true

@@ -13,10 +13,28 @@ function getItemValue(item) {
 	return item.label;
 }
 
+function parseLabel(string) {
+	let label = string;
+	const hex = /(#[A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})/;
+	const rgba = /(rgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d*(?:\.\d+)?\))/;
+	let result;
+	const parts = [];
+	while ((result = hex.exec(label)) || (result = rgba.exec(label))) {
+		if (result.index) {
+			parts.push(label.substring(0, result.index));
+		}
+		parts.push(<i className="color-preview" style={{ background: result[1] }}></i>);
+		label = label.substring(result.index + result[1].length);
+	}
+	parts.push(label);
+	return parts;
+}
+
 function renderItem(item) {
+	const label = parseLabel(item.label);
 	return (
 		<span key={item.value}>
-			{item.label}
+			{label}
 		</span>
 	);
 }
