@@ -58,4 +58,4 @@
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
-
+- Couleurs highligthées dans les record list ( ex #ff0000 ou rgba(0,0,0,0.5) )
