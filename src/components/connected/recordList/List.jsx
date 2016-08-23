@@ -154,7 +154,7 @@ export class List extends Component {
 									let groupHeading;
 									if (group.label) {
 										groupHeading = (
-											<tr>
+											<tr className="group-heading">
 												<td colSpan="20">
 													<strong>{group.label}</strong>
 												</td>
