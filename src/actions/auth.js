@@ -81,7 +81,7 @@ export function unauthorized(error = {}) {
 }
 
 
-export function loginUser(username, password, processInstall) {
+export function loginUser(username, password, remember, processInstall) {
 	return (dispatch) => {
 		// console.log(redirect);
 		// console.log(action);
@@ -92,6 +92,7 @@ export function loginUser(username, password, processInstall) {
 				data: {
 					freestoneuser: username,
 					freestonepass: password,
+					freestoneremember: remember ? '1' : '0',
 					freestoneinstall: processInstall ? '1' : '0',
 				},
 			},

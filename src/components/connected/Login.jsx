@@ -63,13 +63,14 @@ export class Login extends Component {
 			this.props.fetchVariable('isInstalled');
 		}
 	}
-	
+
 	login = (e) => {
 		e.preventDefault();
 		const username = this._username.value;
 		const password = this._password.value;
-		// console.log(username, password);
-		this.props.loginUser(username, password, this.props.isInstalled === false);
+		const remember = this._remember.checked;
+		// console.log(username, password, remember);
+		this.props.loginUser(username, password, remember, this.props.isInstalled === false);
 	};
 
 	render() {
@@ -85,6 +86,7 @@ export class Login extends Component {
 			msgs.action = 'Install';
 		}
 
+		// <iframe src="dummy.html" name="dummy" style={{ display: 'none' }}></iframe>
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
@@ -95,12 +97,13 @@ export class Login extends Component {
 							<div className="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
 								<div className="col-md-6 col-md-offset-3">
 									{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : msgs.text}
-									<form role="form">
+									<form role="form" onSubmit={this.login}>
 										<div className="form-group">
 											<input
 												type="text"
 												className="form-control input-lg"
 												placeholder="Username"
+												name="freestoneuser"
 												ref={el => this._username = el}
 												defaultValue={this.state.username}
 											/>
@@ -110,18 +113,19 @@ export class Login extends Component {
 												type="password"
 												className="form-control input-lg"
 												placeholder="Password"
+												name="freestonepass"
 												ref={el => this._password = el}
 												defaultValue={this.state.password}
 											/>
 										</div>
 										<div className="form-group">
 											<div className="checkbox-container">
-												<input type="checkbox" id="remember" />
+												<input type="checkbox" id="remember" ref={el => this._remember = el} />
 												<label htmlFor="remember">Remember me?</label>
 											</div>
 										</div>
 										<div className="form-group">
-											<button type="submit" className="button-round-fw" disabled={this.props.isAuthenticating} onClick={this.login}>{msgs.action}</button>
+											<button type="submit" className="button-round-fw" disabled={this.props.isAuthenticating}>{msgs.action}</button>
 											<button className="button-round-warn-fw">Forgot your password?</button>
 										</div>
 									</form>

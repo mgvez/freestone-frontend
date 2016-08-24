@@ -42,7 +42,7 @@ export function auth(state = initialState, action) {
 			statusText: 'Checking credentials...',
 		};
 	case LOGIN_USER_SUCCESS:
-		// console.log(action.payload);
+		console.log(action.payload);
 		return {
 			...state,
 			isAuthenticating: false,
