@@ -29,15 +29,21 @@ export class BankImgInput extends Input {
 		this.changeVal(v);
 	};
 
+	delete = (e) => {
+		this.handleEditorChange(null);
+	};
+
 	render() {
 		if (this.state.isChoosing) {
 			return <BankImgInsert onClose={this.closeModal} setVal={this.handleEditorChange} lang={this.props.lang} />;
 		}
 		const id = Number(this.props.val);
 		const label = id ? 'Change image' : 'Choose image';
+		const deleteBtn = id ? <button className="button-round-danger-bordered" onClick={this.delete}>Delete</button> : undefined;
 		return (<div>
 			<BankImgThumbnail id={id} />
 			<button className="button-round-action-bordered" onClick={this.openModal}>{label}</button>
+			{deleteBtn}
 		</div>);
 	}
 }
