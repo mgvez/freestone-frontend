@@ -124,7 +124,7 @@ function records(state = {}, action) {
 function toggleMtmValue(state, data) {
 	const { tableId, parentTableId, parentRecordId, optionId } = data;
 	// console.log(tableId, parentTableId, parentRecordId, optionId);
-
+	// console.log(state);
 	const siblMtmRecords = (state[tableId] && state[tableId][parentTableId] && state[tableId][parentTableId][parentRecordId] && [...state[tableId][parentTableId][parentRecordId]]) || [];
 	const idx = siblMtmRecords.indexOf(optionId);
 	if (idx === -1) {
@@ -133,12 +133,13 @@ function toggleMtmValue(state, data) {
 		siblMtmRecords.splice(idx, 1);
 	}
 	// console.log(mtmrecords);
+	const cousinMtmRecords = state[tableId] && state[tableId][parentTableId] || {};
 	return {
 		...state,
 		[tableId]: {
 			...state[tableId],
 			[parentTableId]: {
-				...state[tableId][parentTableId],
+				...cousinMtmRecords,
 				[parentRecordId]: siblMtmRecords,
 			},
 		},
@@ -147,21 +148,25 @@ function toggleMtmValue(state, data) {
 
 function receiveMtmRecords(state, data) {
 	// console.log(data);
-	if (!data || !data.parentTableId || !data.parentRecordId) return state;
+	if (!data || !data.tables) return state;
 
-	const { tableId, parentTableId, parentRecordId } = data;
-	const newState = {
-		...state,
-		[tableId]: {
-			...state[tableId],
-		},
-	};
-	newState[tableId][parentTableId] = {
-		...newState[tableId][parentTableId],
-	};
-	newState[tableId][parentTableId][parentRecordId] = data.records;
-	// console.log(newState);
-	return newState;
+	return data.tables.reduce((transformedState, table) => {
+		if (!table.parentTableId || !table.parentRecordId) return transformedState;
+
+		const { tableId, parentTableId, parentRecordId } = table;
+		const newState = {
+			...transformedState,
+			[tableId]: {
+				...transformedState[tableId],
+			},
+		};
+		newState[tableId][parentTableId] = {
+			...newState[tableId][parentTableId],
+		};
+		newState[tableId][parentTableId][parentRecordId] = table.records;
+		// console.log(newState);
+		return newState;
+	}, state);
 }
 
 //les records many to many ne sont pas identifiés par leur table elle même, mais sont deletes quand leur PARENT est savé
