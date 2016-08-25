@@ -86,6 +86,10 @@ export class RecordInteractions extends Component {
 		window.removeEventListener('click', this.onWindowClick);
 	}
 
+	changePort(e) {
+		e.target.port = 80;
+	}
+
 	render() {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
@@ -106,7 +110,7 @@ export class RecordInteractions extends Component {
 						</Link>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
-						<a href={recordLink} className="record-action accent">
+						<a href={recordLink} onClick={this.changePort} className="record-action accent">
 							<i className="fa fa-eye"></i>{PREVIEW_LABEL}
 						</a>
 					</div>
