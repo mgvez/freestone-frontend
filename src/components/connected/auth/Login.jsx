@@ -137,7 +137,6 @@ export class Login extends Component {
 										</div>
 										<div className="form-group">
 											<button type="submit" className="button-round-fw" disabled={this.props.isAuthenticating}>{msgs.action}</button>
-											<button className="button-round-warn-fw">Forgot your password?</button>
 										</div>
 									</form>
 									{googleLoginBtn}

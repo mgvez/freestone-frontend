@@ -10,12 +10,10 @@
 - ajout 'noparse' dans template
 
 # Images
-- widget qui montre les uses des items de banque
+- widget qui montre les uses précis des items de banque (tel item dans tel record)
 
 # Freestone JS
 - ~link vers home~ reste juste à détecter le active
-- timeout au component mount pour forcer request (et relogger)
-
 
 ## Dashboard
 - Analytics
