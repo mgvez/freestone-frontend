@@ -14,7 +14,8 @@
 
 # Freestone JS
 - ~link vers home~ reste juste à détecter le active
-- pouvoir editer son propre compte
+- timeout au component mount pour forcer request (et relogger)
+
 
 ## Dashboard
 - Analytics

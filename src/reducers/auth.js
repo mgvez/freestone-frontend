@@ -1,6 +1,6 @@
 
 import { UNAUTHORIZED, LOGIN_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_SUCCESS } from 'actions/auth';
-import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { FREESTONE_API_REQUEST, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 
 const initialState = {
 	jwt: null,
@@ -9,11 +9,17 @@ const initialState = {
 	isAuthenticating: false,
 	statusText: null,
 	realName: null,
+	lastRequestTime: 0,
 };
 
 export function auth(state = initialState, action) {
 
 	switch (action.type) {
+	case FREESTONE_API_REQUEST:
+		return {
+			...state,
+			lastRequestTime: Date.now(),
+		};
 	case FREESTONE_API_FAILURE:
 	case FREESTONE_API_FATAL_FAILURE:
 		//si failure, reset pour éviter que le btn login soit désactivé

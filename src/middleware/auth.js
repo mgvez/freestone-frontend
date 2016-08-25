@@ -2,22 +2,13 @@ import { unauthorized, LOGIN_USER_FAILURE, LOGOUT_USER, UNAUTHORIZED } from 'act
 
 export default store => next => action => {// eslint-disable-line
 
-	function gotoLogin() {
-		// // console.log(store.getState());
-		// const redirectAfterLogin = store.getState().routing.locationBeforeTransitions.pathname || '';
-		// // console.log(redirectAfterLogin);
-
-		// store.dispatch(pushPath(`/login?next=${redirectAfterLogin}`));
-		return next(action);
-	}
-
 	switch (action.type) {
 	case LOGIN_USER_FAILURE:
 	case LOGOUT_USER:
 		next(unauthorized());
-		return gotoLogin();
+		return next(action);
 	case UNAUTHORIZED:
-		return gotoLogin();
+		return next(action);
 	default:
 		return next(action);
 	}

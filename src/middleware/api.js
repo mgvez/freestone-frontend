@@ -40,7 +40,7 @@ export default store => next => action => {
 	let [requestType, successType, failureType] = types;
 	requestType = requestType || FREESTONE_API_REQUEST;
 	successType = successType || FREESTONE_API_SUCCESS;
-	failureType = failureType || FREESTONE_API_FAILURE;	
+	failureType = failureType || FREESTONE_API_FAILURE;
 
 	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
 
@@ -58,6 +58,10 @@ export default store => next => action => {
 	if (processing[hash]) return processing[hash];
 
 	next(actionWith({ data, type: requestType }));
+	//enforce que le default API_REQUEST est triggeré si le request type est spécifique
+	if (FREESTONE_API_REQUEST !== requestType) {
+		next(actionWith({ data, type: FREESTONE_API_REQUEST }));
+	}
 
 	processing[hash] = callApi(route, data).then(
 		res => {
