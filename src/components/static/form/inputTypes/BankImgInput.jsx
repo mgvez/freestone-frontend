@@ -40,7 +40,7 @@ export class BankImgInput extends Input {
 		const id = Number(this.props.val);
 		const label = id ? 'Change image' : 'Choose image';
 		const deleteBtn = id ? <button className="button-round-danger-bordered" onClick={this.delete}>Delete</button> : undefined;
-		return (<div>
+		return (<div className="bank-image-input-thumbnail">
 			<BankImgThumbnail id={id} />
 			<button className="button-round-action-bordered" onClick={this.openModal}>{label}</button>
 			{deleteBtn}

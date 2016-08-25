@@ -11,7 +11,7 @@ export class Gravatar extends Component {
 	};
 
 	render() {
-		console.log(this.props);
+		// console.log(this.props);
 		// console.log(window.devicePixelRatio);
 		//default sur picture qui peut etre passée dans le user (si par ex. loggé par google)
 		const size = this.props.size || DEFAULT_SIZE;

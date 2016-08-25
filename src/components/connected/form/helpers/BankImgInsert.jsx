@@ -8,10 +8,10 @@ import customStyle from 'components/styles/modalStyles.js';
 import { addRecord, fetchList } from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
-import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_BG_LAYOUT } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS } from 'freestone/schemaProps';
 import { callApi } from 'freestone/api';
 
-import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
+import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
 import { RootForm } from 'components/connected/form/RootForm';
 import { Paging } from 'components/static/recordList/Paging';
 
@@ -143,7 +143,7 @@ export class BankImgInsert extends Component {
 						this.props.records.map((record, idx) => {
 							return (
 								<div key={`th${idx}`} className="col-sm-3 col-md-2 bank-image-list-item">
-									<FileThumbnail val={record[BANK_IMG_FILE_ALIAS]} dir={record[BANK_IMG_FOLDER_ALIAS]} type={BANK_IMG_BG_LAYOUT} />
+									<BankImgThumbnail id={record[PRIKEY_ALIAS]} />
 									<div className="label">{record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
 									<div className="size">
 										Original size : {record[BANK_IMG_DIM_ALIAS]}
