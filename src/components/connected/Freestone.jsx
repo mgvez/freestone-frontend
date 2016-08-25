@@ -15,7 +15,8 @@ import { Footer } from 'components/static/Footer';
 import { Errors } from 'components/connected/Errors';
 import { Nav } from 'components/connected/Nav';
 import { LoadedRecords } from 'components/connected/LoadedRecords';
-import { Login } from 'components/connected/Login';
+import { Login } from 'components/connected/auth/Login';
+import { GoogleAuthenticate } from 'components/connected/auth/GoogleAuthenticate';
 
 import 'style!scss/style.scss';
 import 'style!font-awesome/scss/font-awesome.scss';
@@ -61,6 +62,7 @@ export class Freestone extends Component {
 				<div>
 					<Errors {...this.props} />
 					<Login />
+					<GoogleAuthenticate />
 				</div>
 			);
 		}
@@ -75,6 +77,7 @@ export class Freestone extends Component {
 					<Footer />
 					<Errors {...this.props} />
 				</div>
+				<GoogleAuthenticate />
 			</div>
 		);
 	}

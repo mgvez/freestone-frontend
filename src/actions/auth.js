@@ -56,6 +56,10 @@ export function receiveToken(jwt) {
 
 export function logout() {
 
+	//attempt logout google
+	const auth2 = window.gapi && window.gapi.auth2 && window.gapi.auth2.getAuthInstance();
+	if (auth2) auth2.signOut();
+
 	return (dispatch) => {
 		// console.log(redirect);
 		// console.log(action);
@@ -98,5 +102,20 @@ export function loginUser(username, password, remember, processInstall) {
 			},
 		});
 	};
+}
 
+export function loginGoogleAPI(token) {
+	return (dispatch) => {
+		// console.log(redirect);
+		// console.log(action);
+		return dispatch({
+			[FREESTONE_API]: {
+				types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+				route: 'login',
+				data: {
+					googletoken: token,
+				},
+			},
+		});
+	};
 }
