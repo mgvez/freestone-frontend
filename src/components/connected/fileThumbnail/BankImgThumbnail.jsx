@@ -14,7 +14,7 @@ const MAX_SIZE = 400;
 )
 export class BankImgThumbnail extends Component {
 	static propTypes = {
-		id: React.PropTypes.number,
+		id: React.PropTypes.any,
 		markup: React.PropTypes.string,
 
 		fetchBankImage: React.PropTypes.func,

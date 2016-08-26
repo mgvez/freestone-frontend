@@ -73,12 +73,12 @@ export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback
 			});
 
 			onSaved.then((res) => {
-
+				console.log(res);
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
 
 				if (callback) {
-					callback();
+					callback(res.mainRecord);
 				} else {
 					const backPath = gotoOnFinish || `list/${table.name}`;
 

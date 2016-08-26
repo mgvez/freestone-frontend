@@ -52,6 +52,7 @@ export class RootForm extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		if (nextProps.params !== this.props.params) this.cancelSave();
 		this.requireData(nextProps);
 	}
 
@@ -76,14 +77,23 @@ export class RootForm extends Component {
 	saveAndForm = () => {
 		this.setState({
 			saving: true,
-			afterSave: this.cancelSave,
+			afterSave: ({ recordId, tableName }) => {
+				// console.log(recordId, tableName);
+				//si record Id est meme, on ne fait que cancel le save, ca reload les vals
+				if (String(recordId) === this.props.params.recordId) {
+					this.cancelSave();
+				} else {
+					this.props.goTo(`edit/${this.props.table.name}/${recordId}`);
+				}
+			},
 		});
 	}
 
 	cancelSave = () => {
+		// console.log('cancel');
 		this.setState({
 			saving: false,
-			afterSaveLocation: null,
+			afterSave: null,
 		});
 	}
 
