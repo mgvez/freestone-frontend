@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
+import { goTo } from 'actions/nav';
 import DocumentMeta from 'react-document-meta';
 
 import { rootFormMapStateToProps } from 'selectors/rootForm';
@@ -14,7 +15,7 @@ import { LanguageToggler } from 'components/connected/form/LanguageToggler';
 
 @connect(
 	rootFormMapStateToProps,
-	dispatch => bindActionCreators(schemaActionCreators, dispatch)
+	dispatch => bindActionCreators({ ...schemaActionCreators, goTo }, dispatch)
 )
 export class RootForm extends Component {
 	static propTypes = {
@@ -29,9 +30,10 @@ export class RootForm extends Component {
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
 
-		//once saved/cancelled, we can override the defualt action (which is to go to table's list)
+		//once saved/cancelled, we can override the defualt action (which is to go to table's list). For example, when bank items are edited, they do not redirect, they only set a state on the insert component
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
+		goTo: React.PropTypes.func,
 	};
 
 	componentWillMount() {
@@ -44,6 +46,7 @@ export class RootForm extends Component {
 
 		this.setState({
 			saving: false,
+			afterSave: null,
 			language: null,
 		});
 	}
@@ -61,15 +64,26 @@ export class RootForm extends Component {
 		});
 	}
 
-	save = () => {
+	saveAndBack = () => {
 		this.setState({
 			saving: true,
+			afterSave: this.props.finishCallback || (() => {
+				this.props.goTo(`list/${this.props.table.name}`);
+			}),
+		});
+	}
+
+	saveAndForm = () => {
+		this.setState({
+			saving: true,
+			afterSave: this.cancelSave,
 		});
 	}
 
 	cancelSave = () => {
 		this.setState({
 			saving: false,
+			afterSaveLocation: null,
 		});
 	}
 
@@ -90,7 +104,7 @@ export class RootForm extends Component {
 		if (this.props.table) {
 
 			if (this.state.saving) {
-				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.props.finishCallback} cancelSave={this.cancelSave} />;
+				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.state.afterSave} afterSaveLocation={this.state.afterSaveLocation} cancelSave={this.cancelSave} />;
 			}
 
 			let languageToggler;
@@ -106,7 +120,8 @@ export class RootForm extends Component {
 					</div>
 
 					<div className="btns">
-						<a onClick={this.save} className="button-round">Save</a>
+						<a onClick={this.saveAndBack} className="button-round">Save and go back</a>
+						<a onClick={this.saveAndForm} className="button-round">Save</a>
 						<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
 					</div>
 					{languageToggler}
