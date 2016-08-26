@@ -13,7 +13,7 @@ const TINYMCE_CONFIG = {
 	statusbar: true,
 	resize: true,
 	forced_root_block: '',
-	height: 500,
+	height: 200,
 	toolbar1: 'bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect',
 	toolbar2: 'bullist numlist | outdent indent | hr removeformat | subscript superscript | freestoneImageFromBank freestoneDocFromBank freestoneLink | code',
 	plugins: [
