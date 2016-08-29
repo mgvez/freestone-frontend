@@ -18,13 +18,13 @@ function checkRule(rule, val) {
 	const boolRule = rule.toUpperCase();
 	if (boolRule === '*') return true;
 	if (boolRule === 'TRUE') {
-		return !!val;
+		return !!val && val !== '0';
 	} else if (boolRule === 'FALSE') {
-		return !val;
+		return !val || val === '0';
 	}
 
 	//next tests only valid if field has value
-	if (!val) return false;
+	if (!val || val === '0') return false;
 
 	//regexp?
 	if (rule[0] === '/') {
@@ -59,16 +59,20 @@ function parseDependencies(table, record) {
 				carry[dependingFieldId] = {
 					isDisplay: !rule.isDisplay,
 					descriptionAppend: '',
+					forceDisplay: undefined,
 				};
 			}
 
+			if (rule.rule === '*') carry[dependingFieldId].forceDisplay = rule.forceDisplay;
+
 			//does the control field value match the rule?
 			const ruleApplies = checkRule(rule.rule, record[controlFieldId]);
-			// console.log(rule.rule, controlFieldId, record[controlFieldId]);
+			// console.log(rule.rule, controlFieldId, dependingFieldId, ruleApplies);
 			if (ruleApplies) {
 				// console.log(rule.rule, record[controlFieldId]);
-				carry[dependingFieldId].isDisplay = rule.isDisplay;
-				carry[dependingFieldId].descriptionAppend = rule.descriptionAppend;
+
+				carry[dependingFieldId].isDisplay = typeof carry[dependingFieldId].forceDisplay === 'undefined' ? rule.isDisplay : carry[dependingFieldId].forceDisplay;
+				carry[dependingFieldId].descriptionAppend = carry[dependingFieldId].descriptionAppend + rule.descriptionAppend;
 			}
 
 			return carry;
@@ -106,6 +110,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 						const { isDisplay, descriptionAppend } = dependencies[field.id];
 						if (isDisplay) {
 							//field description can have an append that is set by dependencies
+							// console.log('DISPLAY', field.id);
 							return {
 								...field,
 								descriptionAppend,
@@ -113,7 +118,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 						}
 						return false;
 					}).filter(field => field);
-
 					//certains fields sont le rel field d'un sous-form, ce qui indique que ce sous-form doit s'afficher au non
 					Object.keys(dependencies).forEach((targetFieldId) => {
 						const isShow = dependencies[targetFieldId] && dependencies[targetFieldId].isDisplay;
@@ -133,6 +137,9 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					}
 					return filteredChildren;
 				}, children);
+
+				// console.log(table.fields);
+
 			}
 
 

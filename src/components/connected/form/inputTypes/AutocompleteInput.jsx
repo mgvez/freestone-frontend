@@ -51,12 +51,13 @@ export class AutocompleteInput extends Input {
 	static propTypes = {
 		fetchForeignOptions: React.PropTypes.func,
 		foreignOptions: React.PropTypes.object,
+		field: React.PropTypes.object,
 	};
-	
+
 	constructor(props) {
 		super(props);
 		this.regexMatchOption = /./;
-		
+
 		this.state = {
 			currentText: '',
 			suggestions: this.getSuggestions(),
@@ -93,20 +94,16 @@ export class AutocompleteInput extends Input {
 	}
 
 	onSelect = (event, { suggestion, suggestionValue }) => {
-		// console.log(`select ${suggestionValue}`);
 		this.changeVal(suggestion.value);
 		this.setCurrentText(suggestionValue);
-		
 	};
 
 	onChange = (event, { newValue }) => {
-		// console.log(`change ${newValue}`);
 		this.setCurrentText(newValue);
 		this.regexMatchOption = new RegExp(newValue.split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
 
 	onBlur = () => {
-		// console.log(`blur`);
 		const current = this.getCurrentOption();
 		this.setCurrentText(current && current.label);
 		this.setState({
@@ -115,18 +112,22 @@ export class AutocompleteInput extends Input {
 	};
 
 	onSuggestionsUpdateRequested = ({ value }) => {
-		// console.log(`filter suggestions ${value}`);
+		if (!value) this.changeVal(null);
 		this.setState({
 			suggestions: this.getSuggestions(value),
 		});
 	};
 
 	getSuggestions = (value, foreignOptions) => {
-		// console.log(`getSuggestions ${value}`);
+		// console.log(`${this.props.field.name} getSuggestions ${value}`);
 
 		const options = (foreignOptions && foreignOptions.values) || (this.props.foreignOptions && this.props.foreignOptions.values);
-		if (!options) return [];
-		if (!value) return options;
+		if (!options) {
+			return [];
+		}
+		if (!value) {
+			return options;
+		}
 		// console.log(options);
 
 		const inputValue = value.trim().toLowerCase();
@@ -144,7 +145,7 @@ export class AutocompleteInput extends Input {
 	}
 
 	render() {
-		
+
 		// console.log(`VAL ${this.props.val}`);
 		if (!this.props.foreignOptions || !this.props.foreignOptions.values.length) return null;
 
