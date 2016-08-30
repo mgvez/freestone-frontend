@@ -110,7 +110,7 @@ export class AutocompleteInput extends Input {
 		});
 	};
 
-	onSuggestionsUpdateRequested = ({ value }) => {
+	onSuggestionsFetchRequested = ({ value }) => {
 		if (!value) this.changeVal(null);
 		this.setState({
 			suggestions: this.getSuggestions(value),
@@ -127,7 +127,7 @@ export class AutocompleteInput extends Input {
 		if (!value) {
 			return options;
 		}
-		console.log(options);
+		// console.log(options);
 
 		const inputValue = value.trim().toLowerCase();
 		const inputLength = inputValue.length;
@@ -143,13 +143,9 @@ export class AutocompleteInput extends Input {
 		return (options && options.find((option) => option.value === String(this.props.val))) || {};
 	}
 
-	onSuggestionsFetchRequested = ({ value }) => {
-
-	}
-	onSuggestionsClearRequested = ({ value }) => {
-		this.setState({
-			suggestions: [],
-		});
+	onSuggestionsClearRequested = () => {
+		// console.log('clear');
+		throw new Error();
 	}
 
 	render() {
@@ -176,13 +172,12 @@ export class AutocompleteInput extends Input {
 				id={`${this.props.field.id}_${this.props.recordId}`}
 				suggestions={suggestions}
 				inputProps={inputProps}
-				onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
+				onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 				onSuggestionSelected={this.onSelect}
 				renderSuggestion={renderItem}
 				getSuggestionValue={getItemValue}
 				focusFirstSuggestion
 				shouldRenderSuggestions={shouldRenderSuggestions}
-				onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 				onSuggestionsClearRequested={this.onSuggestionsClearRequested}
 			/>
 			{thumb}

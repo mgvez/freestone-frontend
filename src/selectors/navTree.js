@@ -14,7 +14,8 @@ function checkGroupFilled(group) {
 }
 
 function getNativeModules(groupName) {
-	return nativeModules.filter(m => groupName.toLowerCase() === m.groupName.toLowerCase());
+	// console.log(groupName);
+	return nativeModules.filter(m => String(groupName).toLowerCase() === String(m.groupName).toLowerCase());
 }
 
 function buildTree(navGroups, tables, modules, pages) {

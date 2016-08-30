@@ -19,7 +19,7 @@ function structure(state = navInitialState, action) {
 	case SWAP_ORDER_SUCCESS:
 	case DELETE_RECORD_SUCCESS:
 	case CLEAR_DATA:
-		console.log('saved');
+		// console.log('clear');
 		return navInitialState;
 	case ADD_NAV:
 		return {
