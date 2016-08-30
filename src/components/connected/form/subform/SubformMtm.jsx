@@ -57,8 +57,8 @@ export class SubformMtm extends CollapsableForm {
 				const checked = this.props.records && !!this.props.records.find(r => r === id);
 				return (
 					<div className="checkbox-container col-md-3" key={`opt_${id}`}>
-						<input type="checkbox" id={id} value={id} checked={checked} onChange={this.toggleValue} />
-						<label htmlFor={id}>{display}</label>
+						<input type="checkbox" id={`${this.props.table.id}_mtm_${id}`} value={id} checked={checked} onChange={this.toggleValue} />
+						<label htmlFor={`${this.props.table.id}_mtm_${id}`}>{display}</label>
 					</div>
 				);
 			});
