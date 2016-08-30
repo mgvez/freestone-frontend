@@ -111,6 +111,7 @@ export class AutocompleteInput extends Input {
 	};
 
 	onSuggestionsFetchRequested = ({ value }) => {
+		console.log(value);
 		if (!value) this.changeVal(null);
 		this.setState({
 			suggestions: this.getSuggestions(value),
@@ -145,7 +146,7 @@ export class AutocompleteInput extends Input {
 
 	onSuggestionsClearRequested = () => {
 		// console.log('clear');
-		throw new Error();
+		// throw new Error();
 	}
 
 	render() {
