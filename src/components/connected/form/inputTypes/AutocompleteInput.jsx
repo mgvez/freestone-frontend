@@ -8,7 +8,6 @@ import Autosuggest from 'react-autosuggest';
 import * as optionsActionCreators from 'actions/foreignOptions';
 import { foreignOptionsMapStateToProps } from 'selectors/foreignOptions';
 
-
 function getItemValue(item) {
 	return item.label;
 }
@@ -128,7 +127,7 @@ export class AutocompleteInput extends Input {
 		if (!value) {
 			return options;
 		}
-		// console.log(options);
+		console.log(options);
 
 		const inputValue = value.trim().toLowerCase();
 		const inputLength = inputValue.length;
@@ -144,6 +143,15 @@ export class AutocompleteInput extends Input {
 		return (options && options.find((option) => option.value === String(this.props.val))) || {};
 	}
 
+	onSuggestionsFetchRequested = ({ value }) => {
+
+	}
+	onSuggestionsClearRequested = ({ value }) => {
+		this.setState({
+			suggestions: [],
+		});
+	}
+
 	render() {
 
 		// console.log(`VAL ${this.props.val}`);
@@ -151,7 +159,7 @@ export class AutocompleteInput extends Input {
 
 		const current = this.getCurrentOption();
 		// console.log(current);
-		const value = (this.state.currentText !== null && this.state.currentText) || current.label;
+		const value = (this.state.currentText !== null && this.state.currentText) || current.label || '';
 		const { suggestions } = this.state;
 		// console.log('render with "%s" tx, %s options', value, suggestions.length);
 		const inputProps = {
@@ -174,6 +182,8 @@ export class AutocompleteInput extends Input {
 				getSuggestionValue={getItemValue}
 				focusFirstSuggestion
 				shouldRenderSuggestions={shouldRenderSuggestions}
+				onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+				onSuggestionsClearRequested={this.onSuggestionsClearRequested}
 			/>
 			{thumb}
 		</div>);

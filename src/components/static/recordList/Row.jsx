@@ -21,7 +21,7 @@ export class Row extends Component {
 			|| nextProps.isLarge !== this.props.isLarge
 			|| nextProps.values !== this.props.values;
 	}
-	
+
 	getInteractions() {
 		return (<td colSpan="20" className="interactions">
 			<RecordInteractions table={this.props.table} fields={this.props.fields} values={this.props.values} />
@@ -38,6 +38,7 @@ export class Row extends Component {
 
 		const breadcrumb = values.breadcrumb ? values.breadcrumb : '0';
 		const level = values.level ? values.level : '0';
+		// console.log(values);
 
 		if (this.props.isLarge) {
 			const label = createCells(fields, values, 'span');
@@ -52,7 +53,7 @@ export class Row extends Component {
 				</tr>
 			);
 		}
-		
+
 		content = createCells(fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr className="selfjoin-row">

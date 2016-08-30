@@ -53,6 +53,12 @@
 		padding: 20px;
 		vertical-align: middle;
 		background: $white;
+
+		&.selfjoin-label{
+			span {
+				margin-right: 0.35em;
+			}
+		}
 	}
 
 	.interactions {
