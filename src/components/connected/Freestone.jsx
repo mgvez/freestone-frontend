@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as authActionCreators from 'actions/auth';
-import * as devActionCreators from 'actions/dev';
 import * as envActionCreators from 'actions/env';
-import { clearSchema } from 'actions/schema';
 import { MAX_TIME_BETWEEN_API_CALLS } from 'freestone/settings';
 
-const actionCreators = { ...authActionCreators, ...devActionCreators, ...envActionCreators, clearSchema };
+const actionCreators = { ...authActionCreators, ...envActionCreators };
 
 /* application components */
 import { SiteHeader } from 'components/connected/SiteHeader';
@@ -80,7 +78,7 @@ export class Freestone extends Component {
 			<div id="main-wrapper">
 				<Nav />
 				<div className="main-content">
-					<SiteHeader {...this.props} />
+					<SiteHeader />
 					<LoadedRecords />
 					{this.props.children}
 					<Footer />

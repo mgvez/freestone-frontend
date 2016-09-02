@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 import { schemaSelector } from 'selectors/schema';
-import { getForeignFieldId } from 'freestone/schemaHelpers';
+import { getForeignFieldId, getChildrenRecordIds } from 'freestone/schemaHelpers';
 import { isNew } from 'utils/UniqueId';
 
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
@@ -12,19 +12,6 @@ const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.schema.children;
 
 const saveStateSelector = state => state.save;
-
-function getChildrenRecordIds(records, parentRecordId, linkFieldId) {
-	// console.log(records, parentRecordId);
-	return linkFieldId && records && Object.keys(records).map((recordId) => {
-		const record = records[recordId];
-		// console.log(record);
-		return record[linkFieldId] === parentRecordId && record;
-	}).filter(
-		record => record
-	).map(
-		record => record[PRIKEY_ALIAS]
-	);
-}
 
 //get un tree de IDs de records et de ses children
 function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {

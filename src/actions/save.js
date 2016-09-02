@@ -73,7 +73,7 @@ export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback
 			});
 
 			onSaved.then((res) => {
-				console.log(res);
+				// console.log(res);
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
 

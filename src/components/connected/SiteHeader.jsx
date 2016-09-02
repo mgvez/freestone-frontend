@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import * as devActionCreators from 'actions/dev';
+import * as authActionCreators from 'actions/auth';
+import { clearSchema } from 'actions/schema';
+
+import { GOD_USER_GROUP } from 'freestone/settings';
 
 import { HomeButton } from 'components/connected/widgets/HomeButton';
 import { NavToggler } from 'components/connected/widgets/NavToggler';
 import { LoadedRecordsToggler } from 'components/connected/widgets/LoadedRecordsToggler';
 
+const actionCreators = { ...authActionCreators, ...devActionCreators, clearSchema };
+
+@connect(
+	state => {
+		// console.log(state.auth.usergroup, GOD_USER_GROUP);
+		return {
+			isGod: state.auth.usergroup === GOD_USER_GROUP,
+		};
+	},
+	dispatch => bindActionCreators(actionCreators, dispatch)
+)
 export class SiteHeader extends Component {
 	static propTypes = {
+		isGod: React.PropTypes.bool,
+
 		logout: React.PropTypes.func,
 		clearErrors: React.PropTypes.func,
 		clearData: React.PropTypes.func,
@@ -22,34 +43,39 @@ export class SiteHeader extends Component {
 
 	render() {
 		// console.log(this.props);
+		const debug = this.props.isGod ? (<div className="debug-fcn">
+			<button className="button-debug-round-small" onClick={this.props.clearSchema}>
+				Clear schema
+			</button>
+			<button className="button-debug-round-small" onClick={this.props.clearData}>
+				Clear all data
+			</button>
+			<button className="button-debug-round-small" onClick={this.props.clearErrors}>
+				Clear errors
+			</button>
+			<button className="button-debug-round-small" onClick={this.props.startPerf}>
+				Start perf
+			</button>
+			<button className="button-debug-round-small" onClick={this.props.stopPerf}>
+				Stop perf
+			</button>
+		</div>) : null;
+
 		return (
 			<header id="main-header" ref="header">
+
 				<NavToggler />
+
 				<div className="logout">
 					<HomeButton />
 					<a onClick={this.props.logout}>
 						<i className="fa fa-sign-out"></i> Logout
 					</a>
 				</div>
+
 				<LoadedRecordsToggler />
 
-				<div className="fcn">
-					<button className="btn btn-xs" onClick={this.props.clearSchema}>
-						Clear schema
-					</button>
-					<button className="btn btn-xs" onClick={this.props.clearData}>
-						Clear all data
-					</button>
-					<button className="btn btn-xs" onClick={this.props.clearErrors}>
-						Clear errors
-					</button>
-					<button className="btn btn-xs" onClick={this.props.startPerf}>
-						Start perf
-					</button>
-					<button className="btn btn-xs" onClick={this.props.stopPerf}>
-						Stop perf
-					</button>
-				</div>
+				{debug}
 			</header>
 		);
 	}

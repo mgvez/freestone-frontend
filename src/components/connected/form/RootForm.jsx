@@ -25,6 +25,7 @@ export class RootForm extends Component {
 		}),
 
 		isModal: React.PropTypes.bool,
+		isEdited: React.PropTypes.bool,
 		language: React.PropTypes.string,
 		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
@@ -122,6 +123,21 @@ export class RootForm extends Component {
 				languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.setLanguageState : null} localLanguage={language} />;
 			}
 
+			let actionBtns;
+			//le record a été édité depuis son load à la db. On met les actions pour le save
+			if (this.props.isEdited) {
+				actionBtns = [
+					<a onClick={this.saveAndBack} className="button-round">Save and go back</a>,
+					<a onClick={this.saveAndForm} className="button-round">Save</a>,
+					<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Discard changes" />,
+				];
+			//record pas été édité: juste btn close
+			} else {
+				actionBtns = [
+					<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Close" />,
+				];
+			}
+
 			header = (
 				<header>
 					<div className="texts">
@@ -130,9 +146,7 @@ export class RootForm extends Component {
 					</div>
 
 					<div className="btns">
-						<a onClick={this.saveAndBack} className="button-round">Save and go back</a>
-						<a onClick={this.saveAndForm} className="button-round">Save</a>
-						<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
+						{actionBtns}
 					</div>
 					{languageToggler}
 				</header>

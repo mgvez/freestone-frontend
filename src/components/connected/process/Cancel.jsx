@@ -15,6 +15,7 @@ export class Cancel extends Component {
 	static propTypes = {
 		tableName: React.PropTypes.string,
 		recordId: React.PropTypes.string,
+		label: React.PropTypes.string,
 
 		records: React.PropTypes.array,
 
@@ -22,7 +23,11 @@ export class Cancel extends Component {
 		cancelEdit: React.PropTypes.func,
 		goTo: React.PropTypes.func,
 	};
-	
+
+	static defaultProps = {
+		label: 'Cancel changes',
+	};
+
 	componentWillMount() {
 
 		this.setState({
@@ -50,7 +55,7 @@ export class Cancel extends Component {
 		}
 
 		return (
-			<a onClick={this.doCancel} className="button-round-danger">Cancel changes</a>
+			<a onClick={this.doCancel} className="button-round-danger">{this.props.label}</a>
 		);
 	}
 }

@@ -2,7 +2,7 @@
 
 %base_button {
 	margin: 0;
-	padding: 0 25px;
+	padding: 0 20px;
 
 	border: none;
 	outline: none;
@@ -19,6 +19,14 @@
 	line-height: 30px;
 
 	transition: color 0.3s, background 0.3s;
+
+	&[class*=small] {
+		height: 24px;
+		line-height: 24px;
+		padding: 0 15px;
+		font-size: 0.8em;
+	}
+
 
 	i {
 		margin-right: 10px;
@@ -45,6 +53,9 @@
 
 %round_button {
 	border-radius: 15px;
+	&[class*=small] {
+		border-radius: 12px;
+	}
 }
 
 %full_width_button {
@@ -86,6 +97,10 @@
 
 %action_button {
 	@include button-color-modifier($blue37);
+}
+
+%debug_button {
+	@include button-color-modifier($gray86);
 }
 
 %circle_button {
@@ -134,6 +149,10 @@
 
 	&[class*=-action] {
 		@extend %action_button;
+	}
+
+	&[class*=-debug] {
+		@extend %debug_button;
 	}
 
 	&[class*=fw] {

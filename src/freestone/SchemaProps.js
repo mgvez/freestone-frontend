@@ -5,6 +5,7 @@ export const CREATED_DATE_ALIAS = 'createddate';
 export const LOADED_TIME_ALIAS = '__loaded_time';
 export const DELETED_PSEUDOFIELD_ALIAS = '__deleted';
 export const LABEL_PSEUDOFIELD_ALIAS = '__recordlabel';
+export const EDITED_PSEUDOFIELD_ALIAS = '__isedited';
 
 export const TYPE_MAIN = 'main';
 

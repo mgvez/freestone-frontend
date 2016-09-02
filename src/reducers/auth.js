@@ -10,6 +10,10 @@ const initialState = {
 	statusText: null,
 	realName: null,
 	lastRequestTime: 0,
+	email: '',
+	userId: null,
+	picture: '',
+	usergroup: 0,
 };
 
 export function auth(state = initialState, action) {
@@ -31,7 +35,6 @@ export function auth(state = initialState, action) {
 	case UNAUTHORIZED:
 		// const err = action.payload.response;
 		// console.log(err);
-
 		return {
 			...state,
 			isAuthenticated: false,
@@ -56,9 +59,10 @@ export function auth(state = initialState, action) {
 			jwt: action.payload.jwt,
 			userName: action.payload.token.data.realname,
 			email: action.payload.token.data.email,
-			userId: action.payload.token.data.id,
+			userId: Number(action.payload.token.data.id),
 			realName: action.payload.token.data.realname,
 			picture: action.payload.token.data.picture,
+			usergroup: Number(action.payload.token.data.usergroup),
 			statusText: 'You have been successfully logged in.',
 		};
 	case LOGIN_USER_FAILURE: {

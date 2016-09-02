@@ -47,7 +47,7 @@
 - ordre ds liste en drag/drop
 - champ type ajax? (voir field format form)
 - champ type tag
-- meilleure strategie de modif du state quand save records (pas vider menu au complet par ex.)
+- meilleure strategie de modif du state quand save records (pas vider menu au complet par ex.) 
 - preview d'un record dans site (how... how... par une duplic de db purement et simplement?)
 - à l'update: sitemap
 	private static function manageSiteMap($tableId, $recId, $isDeleted) {
