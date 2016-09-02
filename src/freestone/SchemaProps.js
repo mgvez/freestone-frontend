@@ -17,6 +17,7 @@ export const TYPE_ORDER = 'order';
 export const TYPE_IMG = 'img';
 export const TYPE_FILE = 'file';
 export const TYPE_DATETIME = 'datetime';
+export const TYPE_BOOL = 'bool';
 
 export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM];
 
