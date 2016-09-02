@@ -127,8 +127,8 @@ export class RootForm extends Component {
 			//le record a été édité depuis son load à la db. On met les actions pour le save
 			if (this.props.isEdited) {
 				actionBtns = [
-					<a onClick={this.saveAndBack} className="button-round">Save and go back</a>,
-					<a onClick={this.saveAndForm} className="button-round">Save</a>,
+					<a onClick={this.saveAndBack} className="button-round">Save and close</a>,
+					<a onClick={this.saveAndForm} className="button-round-faded">Save</a>,
 					<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Discard changes" />,
 				];
 			//record pas été édité: juste btn close

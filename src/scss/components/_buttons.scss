@@ -99,7 +99,7 @@
 	@include button-color-modifier($blue37);
 }
 
-%debug_button {
+%faded_button {
 	@include button-color-modifier($gray86);
 }
 
@@ -151,8 +151,8 @@
 		@extend %action_button;
 	}
 
-	&[class*=-debug] {
-		@extend %debug_button;
+	&[class*=-debug], &[class*=-faded] {
+		@extend %faded_button;
 	}
 
 	&[class*=fw] {
