@@ -44,7 +44,7 @@ export class RecordHeader extends Component {
 
 	componentDidMount() {
 		const h = this._header.getBoundingClientRect().height;
-		console.log('didMount', this.props.isLight, h);
+		// console.log('didMount', this.props.isLight, h);
 		this.context.setHeight(this.props.isLight, h);
 	}
 

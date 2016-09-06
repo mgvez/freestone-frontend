@@ -113,7 +113,7 @@ export class AutocompleteInput extends Input {
 	};
 
 	onSuggestionsFetchRequested = ({ value }) => {
-		console.log(value);
+		// console.log(value);
 		if (!value) this.changeVal(null);
 		this.setState({
 			suggestions: this.getSuggestions(value),
@@ -157,7 +157,7 @@ export class AutocompleteInput extends Input {
 		if (!this.props.foreignOptions || !this.props.foreignOptions.values.length) return null;
 
 		const current = this.getCurrentOption();
-		console.log(current);
+		// console.log(current);
 		const value = (this.state.currentText !== null && this.state.currentText) || current.label || '';
 		const { suggestions } = this.state;
 		// console.log('render with "%s" tx, %s options', value, suggestions.length);
