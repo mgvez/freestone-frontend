@@ -30,6 +30,14 @@
 		}
 	}
 
+	@for $i from 2 through 10 {
+		tr.level-#{$i} {
+			td {
+				background: darken($white, $i * 2%);
+			}
+		}
+	}
+
 	th, td {
 		text-align: left;
 		border-bottom: 1px solid $color-border-light;
