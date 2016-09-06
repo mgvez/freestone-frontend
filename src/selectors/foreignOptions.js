@@ -15,8 +15,8 @@ export const allForeignOptionsSelector = createSelector(
 			if (!current.options || !current.display) return carry;
 			const rawLabel = current.display.label;
 
-			const imageField = current.display.fields.find(field => field.type === TYPE_IMG);
-			const imageBankField = current.display.fields.find(field => field.type === TYPE_BANKIMG);
+			const imageField = current.display.fields && current.display.fields.find(field => field.type === TYPE_IMG);
+			const imageBankField = current.display.fields && current.display.fields.find(field => field.type === TYPE_BANKIMG);
 
 
 			const values = current.options.map(rawOption => {

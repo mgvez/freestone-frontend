@@ -16,6 +16,7 @@ const shownRecordsSelector = (state) => state.recordForm.shownRecords;
 
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
+const rawForeignOptionsSelector = state => state.foreignOptions;
 
 
 function getRecordsFromParent(records, parentRecordId, linkFieldId) {
@@ -35,12 +36,28 @@ function sortRecords(records, orderField) {
 	return records;
 }
 
-function getLabeledRecords(records, searchableFields, orderField) {
+function getLabeledRecords(records, searchableFields, orderField, rawForeignOptions) {
 
+	// console.log(rawForeignOptions);
+	// console.log(searchableFields);
 	return sortRecords(records, orderField).map(record => {
 		// console.log(record);
 		let label = searchableFields.map(field => {
-			return record[field.id];
+			const fieldVal = record[field.id];
+			//si valeur foreign, trouve parmi les options foreign. Ne les load pas spécifiquement, les ajoute uniquement si elles sont loadées pour ce field (par le autocomplete du field)
+			if (field.foreign) {
+				if (rawForeignOptions[field.id] && rawForeignOptions[field.id].options) {
+					const selectedOption = rawForeignOptions[field.id].options.find(opt => opt.value === fieldVal);
+					if (!selectedOption) {
+						return '';
+					}
+					return Object.keys(selectedOption.row).reduce((foreignLabel, curAlias) => {
+						return foreignLabel.replace(`{${curAlias}}`, selectedOption.row[curAlias]);
+					}, rawForeignOptions[field.id].display.label);
+				}
+				return '';
+			}
+			return fieldVal;
 		}).join(' ');
 
 		if (label.length > MAX_TAB_LABEL_LENGTH) {
@@ -57,8 +74,8 @@ function getLabeledRecords(records, searchableFields, orderField) {
 
 function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 	return createSelector(
-		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector],
-		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView) => {
+		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector, rawForeignOptionsSelector],
+		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions) => {
 			const { table } = schema;
 			const { tables } = allSchema;
 
@@ -77,7 +94,7 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 					// console.log(tableRecords);
 					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, subformFieldId) : [];
 					// console.log(childrenRecords);
-					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField);
+					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField, rawForeignOptions);
 					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
 					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);
 				}

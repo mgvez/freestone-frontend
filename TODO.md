@@ -7,7 +7,7 @@
 
 # Freestone PHP
 - ajouter un field "has_preview" à json de def de table, qui check si un template existe avec le nom de la table, pour eviter de mettre le link preview si non
-- ajout 'noparse' dans template
+
 
 # Images
 - widget qui montre les uses précis des items de banque (tel item dans tel record)
@@ -31,7 +31,6 @@
 
 ## Form
 - changement de langue & save : sticky
-- link to document from bank
 - champ type url
 - Mettre focus sur TinyMCE quand on l'edit et pas juste dans ses sous components - Pic 2016-07-22.
 
@@ -40,7 +39,6 @@
 
 # Pluss tard
 - Drag & drop dans liste pour order
-- Unit tests 20%
 - insert image de banque : drag & drop
 - faire une liste de type "file manager" ou on a des gros thumbnails au lieu d'une liste en table
 - shop admin en react/redux
