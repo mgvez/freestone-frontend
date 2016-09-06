@@ -15,6 +15,7 @@ export const TYPE_SUBFORM = 'subform';
 export const TYPE_PRIMARY = 'pri';
 export const TYPE_ORDER = 'order';
 export const TYPE_IMG = 'img';
+export const TYPE_BANKIMG = 'bankimg';
 export const TYPE_FILE = 'file';
 export const TYPE_DATETIME = 'datetime';
 export const TYPE_BOOL = 'bool';

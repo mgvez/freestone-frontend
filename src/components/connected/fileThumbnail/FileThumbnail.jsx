@@ -28,7 +28,7 @@ export class FileThumbnail extends Component {
 	render() {
 
 		if (!this.props.val && !this.props.localVal) return null;
-
+		//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
 		const val = this.props.val ? `${this.props.env.thumbsDir}/${this.props.dir}/${this.props.val}` : this.props.localVal;
 
 		return <a href={`${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`} target="_blank"><img src={val} style={this.css} /></a>;

@@ -3,6 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Input } from 'components/static/form/inputTypes/Input';
+import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
+import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
 import Autosuggest from 'react-autosuggest';
 
 import * as optionsActionCreators from 'actions/foreignOptions';
@@ -155,7 +157,7 @@ export class AutocompleteInput extends Input {
 		if (!this.props.foreignOptions || !this.props.foreignOptions.values.length) return null;
 
 		const current = this.getCurrentOption();
-		// console.log(current);
+		console.log(current);
 		const value = (this.state.currentText !== null && this.state.currentText) || current.label || '';
 		const { suggestions } = this.state;
 		// console.log('render with "%s" tx, %s options', value, suggestions.length);
@@ -166,7 +168,13 @@ export class AutocompleteInput extends Input {
 			onBlur: this.onBlur,
 		};
 
-		const thumb = current.image && (<img src={current.image} />);
+		let thumb = null;
+		//il peut y avoir un thumbnail, qui provient d'un fichier direct ou de la banque
+		if (current.image) {
+			thumb = <FileThumbnail {...current.image} />;
+		} else if (current.imageBank) {
+			thumb = <BankImgThumbnail id={current.imageBank} />;
+		}
 
 		return (<div>
 			<Autosuggest
