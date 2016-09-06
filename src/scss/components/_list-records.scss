@@ -30,6 +30,12 @@
 		}
 	}
 
+	tr.level-1 {
+		td:not(:last-child) {
+			font-weight: bold;
+		}
+	}
+
 	@for $i from 2 through 10 {
 		tr.level-#{$i} {
 			td {
