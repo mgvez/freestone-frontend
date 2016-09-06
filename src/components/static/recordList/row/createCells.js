@@ -9,9 +9,9 @@ export function createCells(fields, values, elementType = 'td', options = {}) {
 		if (field.isGroup) return null;
 
 		let val = values[field.listAlias];
-		if (!val) {
-			return null;
-		}
+		// if (!val) {
+		// 	return null;
+		// }
 		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
 			val = React.createElement(
 				FileThumbnail,

@@ -113,7 +113,7 @@ export class AutocompleteInput extends Input {
 	};
 
 	onSuggestionsFetchRequested = ({ value }) => {
-		console.log(value);
+		// console.log(value);
 		if (!value) this.changeVal(null);
 		this.setState({
 			suggestions: this.getSuggestions(value),

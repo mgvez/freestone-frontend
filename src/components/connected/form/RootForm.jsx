@@ -13,6 +13,9 @@ import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 import { LanguageToggler } from 'components/connected/form/LanguageToggler';
 
+import { HeaderContainer } from 'components/static/header/HeaderContainer'; 
+import { RecordHeader } from 'components/connected/form/header/RecordHeader'; 
+
 @connect(
 	rootFormMapStateToProps,
 	dispatch => bindActionCreators({ ...schemaActionCreators, goTo }, dispatch)
@@ -128,7 +131,7 @@ export class RootForm extends Component {
 			if (this.props.isEdited) {
 				actionBtns = [
 					<a key="fcn_1" onClick={this.saveAndBack} className="button-round">Save and close</a>,
-					<a key="fcn_2" onClick={this.saveAndForm} className="button-round-faded">Save</a>,
+					<a key="fcn_2" onClick={this.saveAndForm} className="button-round-lighter">Save</a>,
 					<Cancel key="fcn_3" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Discard changes" />,
 				];
 			//record pas été édité: juste btn close
@@ -138,18 +141,22 @@ export class RootForm extends Component {
 				];
 			}
 
-			header = (
-				<header>
-					<div className="texts">
-						<Header table={this.props.table} />
-						<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
-					</div>
+			const functions = {
+				saveAndBack: this.saveAndBack,
+				saveAndForm: this.saveAndForm,
+				cancelSave: this.cancelSave,
+				setLanguageState: this.setLanguageState,
+			};
 
-					<div className="btns">
+			header = (
+				<HeaderContainer>
+					<RecordHeader {...this.props} functions={functions}>
 						{actionBtns}
-					</div>
-					{languageToggler}
-				</header>
+					</RecordHeader>
+					<RecordHeader isLight {...this.props} functions={functions}>
+						{actionBtns}
+					</RecordHeader>
+				</HeaderContainer>
 			);
 
 			form = (
