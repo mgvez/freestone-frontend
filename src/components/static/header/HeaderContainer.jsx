@@ -9,9 +9,12 @@ export class HeaderContainer extends Component {
 		setHeight: React.PropTypes.func,
 	};
 
+	constructor(props) {
+		super(props);
+		this.state = { isSticky: false };
+	}
+
 	getChildContext() {
-		// it exposes one property "text", any of the components that are
-		// rendered inside it will be able to access it
 		return {
 			setHeight: this.setHeight,
 		};
@@ -19,17 +22,23 @@ export class HeaderContainer extends Component {
 
 	componentDidMount() {
 		window.addEventListener('scroll', this.onScroll);
+		this.onScroll();
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.onScroll);
 	}
 
 	onScroll = () => {
 		const st = document.body.scrollTop;
-		// const headerHeight = this.props.staticHeader.height;
+
+		const topHeaderHeight = 60;
+		this.setState({ isFixed: (st >= this.staticHeight + topHeaderHeight) });
 	}
 
-	setHeight(isLight, h) {
+	setHeight = (isLight, h) => {
 		if (!isLight) {
 			this.staticHeight = h;
-			console.log(this.staticHeight);
 		}
 	}
 
@@ -58,7 +67,7 @@ export class HeaderContainer extends Component {
 
 	render() {
 		return (
-			<div className="fixed-header">
+			<div className="fixed-header" data-fixed={this.state.isFixed}>
 				{this.props.children}
 			</div>
 		);

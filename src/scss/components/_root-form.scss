@@ -3,6 +3,14 @@
 	position: relative;
 	// overflow: hidden;
 
+	.fixed-header[data-fixed=true] {
+		> header {
+			&.light {
+				transform: translate(0,0);
+			}
+		}
+	}
+
 	> header,
 	.fixed-header > header {
 		padding: 25px 40px;
@@ -13,7 +21,21 @@
 		position: relative;
 		width: 100%;
 
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
 		font-size: 0;
+
+		&.light {
+			justify-content: flex-end;
+			position:fixed;
+				top: 0;
+				right: 0;
+			transform: translate(0, -150%);
+			transition: transform 0.3s ease;
+			z-index: 5;
+		}
 
 		.texts, .btns {
 			display: inline-block;
@@ -22,7 +44,6 @@
 		}
 
 		.texts {
-			width: calc(100% - 275px);
 			padding-right: 30px;
 		}
 
@@ -36,8 +57,9 @@
 		}
 
 		.btns {
-			width: 275px;
 			padding-left: 30px;
+
+			display: flex;
 
 			[class^=button] + [class^=button] {
 				margin-left: 10px;

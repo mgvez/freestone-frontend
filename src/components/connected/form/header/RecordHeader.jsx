@@ -30,12 +30,12 @@ export class RecordHeader extends Component {
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 
-		functions: React.PropTypes.shape({		
-			setLanguageState: React.PropTypes.func,
-			save: React.PropTypes.func,
-		}),
+		functions: React.PropTypes.object,
+		buttons: React.PropTypes.object,
 
 		isLight: React.PropTypes.bool,
+
+		children: React.PropTypes.array,
 	};
 
 	static contextTypes = {
@@ -44,6 +44,7 @@ export class RecordHeader extends Component {
 
 	componentDidMount() {
 		const h = this._header.getBoundingClientRect().height;
+		console.log('didMount', this.props.isLight, h);
 		this.context.setHeight(this.props.isLight, h);
 	}
 
@@ -62,13 +63,14 @@ export class RecordHeader extends Component {
 			</div>
 		);
 
+		const isLightClass = (this.props.isLight) ? 'light' : '';
+
 		return (
-			<header ref={el => this._header = el}>
+			<header className={isLightClass} ref={el => this._header = el}>
 				{infos}
 
 				<div className="btns">
-					<a onClick={this.props.functions.save} className="button-round">Save</a>
-					<Cancel tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} />
+					{this.props.children}
 				</div>
 				{languageToggler}
 			</header>
