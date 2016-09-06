@@ -18,9 +18,29 @@
 	width: 100%;
 	margin-top: 20px;
 
+	.group-heading {
+		td {
+			background: $gray97;
+		}
+	}
+
 	tr:hover {
 		td {
 			background: $gray97;
+		}
+	}
+
+	tr.level-1 {
+		td:not(:last-child) {
+			font-weight: bold;
+		}
+	}
+
+	@for $i from 2 through 10 {
+		tr.level-#{$i} {
+			td {
+				background: darken($white, $i * 2%);
+			}
 		}
 	}
 
@@ -47,6 +67,12 @@
 		padding: 20px;
 		vertical-align: middle;
 		background: $white;
+
+		&.selfjoin-label{
+			span {
+				margin-right: 0.35em;
+			}
+		}
 	}
 
 	.interactions {

@@ -2,6 +2,7 @@
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { RECEIVE_FOREIGN_OPTIONS } from 'actions/foreignOptions';
+import { SAVE_RECORD_SUCCESS } from 'actions/save';
 
 
 export function foreignOptions(state = {}, action) {
@@ -19,6 +20,7 @@ export function foreignOptions(state = {}, action) {
 		return newState;
 	}
 	case CLEAR_DATA:
+	case SAVE_RECORD_SUCCESS:
 	case 'CLEAR_SCHEMA':
 		return {};
 	default:

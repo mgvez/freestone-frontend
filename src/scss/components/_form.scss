@@ -53,13 +53,15 @@ textarea{
 	}
 }
 
-ul.react-autosuggest__suggestions-container {
-	width: 100%;
-	top: 45px;
-}
 
-li.react-autosuggest__suggestion--focused {
-	color: $white;
+
+.color-preview {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	vertical-align: middle;
+	border: 1px solid #000;
+	margin-right: 6px;
 }
 
 .field-description {
@@ -144,7 +146,7 @@ li.react-autosuggest__suggestion--focused {
 
 			position: absolute;
 				top: 50%;
-				right: 2.5px;
+				left: 2.5px;
 
 			transform: translate(0, -50%);
 		}
@@ -239,10 +241,6 @@ li.react-autosuggest__suggestion--focused {
 	}
 }
 
-.bank-img-thumbnail-container {
-	display: inline-block;
-	margin-right: 20px;
-}
 
 .file-input-input {
 	display: inline-block;

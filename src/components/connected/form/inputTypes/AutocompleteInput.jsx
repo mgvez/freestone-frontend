@@ -3,20 +3,39 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { Input } from 'components/static/form/inputTypes/Input';
+import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
+import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
 import Autosuggest from 'react-autosuggest';
 
 import * as optionsActionCreators from 'actions/foreignOptions';
 import { foreignOptionsMapStateToProps } from 'selectors/foreignOptions';
 
-
 function getItemValue(item) {
 	return item.label;
 }
 
+function parseLabel(string) {
+	let label = string;
+	const hex = /(#[A-Fa-f0-9]{6}|#[A-Fa-f0-9]{3})/;
+	const rgba = /(rgba\(\d{1,3},\s*\d{1,3},\s*\d{1,3},\s*\d*(?:\.\d+)?\))/;
+	let result;
+	const parts = [];
+	while ((result = hex.exec(label)) || (result = rgba.exec(label))) {
+		if (result.index) {
+			parts.push(label.substring(0, result.index));
+		}
+		parts.push(<i className="color-preview" style={{ background: result[1] }}></i>);
+		label = label.substring(result.index + result[1].length);
+	}
+	parts.push(label);
+	return parts;
+}
+
 function renderItem(item) {
+	const label = parseLabel(item.label);
 	return (
 		<span key={item.value}>
-			{item.label}
+			{label}
 		</span>
 	);
 }
@@ -33,12 +52,13 @@ export class AutocompleteInput extends Input {
 	static propTypes = {
 		fetchForeignOptions: React.PropTypes.func,
 		foreignOptions: React.PropTypes.object,
+		field: React.PropTypes.object,
 	};
-	
+
 	constructor(props) {
 		super(props);
 		this.regexMatchOption = /./;
-		
+
 		this.state = {
 			currentText: '',
 			suggestions: this.getSuggestions(),
@@ -75,20 +95,16 @@ export class AutocompleteInput extends Input {
 	}
 
 	onSelect = (event, { suggestion, suggestionValue }) => {
-		// console.log(`select ${suggestionValue}`);
 		this.changeVal(suggestion.value);
 		this.setCurrentText(suggestionValue);
-		
 	};
 
 	onChange = (event, { newValue }) => {
-		// console.log(`change ${newValue}`);
 		this.setCurrentText(newValue);
 		this.regexMatchOption = new RegExp(newValue.split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
 
 	onBlur = () => {
-		// console.log(`blur`);
 		const current = this.getCurrentOption();
 		this.setCurrentText(current && current.label);
 		this.setState({
@@ -96,19 +112,24 @@ export class AutocompleteInput extends Input {
 		});
 	};
 
-	onSuggestionsUpdateRequested = ({ value }) => {
-		// console.log(`filter suggestions ${value}`);
+	onSuggestionsFetchRequested = ({ value }) => {
+		console.log(value);
+		if (!value) this.changeVal(null);
 		this.setState({
 			suggestions: this.getSuggestions(value),
 		});
 	};
 
 	getSuggestions = (value, foreignOptions) => {
-		// console.log(`getSuggestions ${value}`);
+		// console.log(`${this.props.field.name} getSuggestions ${value}`);
 
 		const options = (foreignOptions && foreignOptions.values) || (this.props.foreignOptions && this.props.foreignOptions.values);
-		if (!options) return [];
-		if (!value) return options;
+		if (!options) {
+			return [];
+		}
+		if (!value) {
+			return options;
+		}
 		// console.log(options);
 
 		const inputValue = value.trim().toLowerCase();
@@ -125,14 +146,19 @@ export class AutocompleteInput extends Input {
 		return (options && options.find((option) => option.value === String(this.props.val))) || {};
 	}
 
+	onSuggestionsClearRequested = () => {
+		// console.log('clear');
+		// throw new Error();
+	}
+
 	render() {
-		
+
 		// console.log(`VAL ${this.props.val}`);
 		if (!this.props.foreignOptions || !this.props.foreignOptions.values.length) return null;
 
 		const current = this.getCurrentOption();
-		// console.log(current);
-		const value = (this.state.currentText !== null && this.state.currentText) || current.label;
+		console.log(current);
+		const value = (this.state.currentText !== null && this.state.currentText) || current.label || '';
 		const { suggestions } = this.state;
 		// console.log('render with "%s" tx, %s options', value, suggestions.length);
 		const inputProps = {
@@ -142,19 +168,26 @@ export class AutocompleteInput extends Input {
 			onBlur: this.onBlur,
 		};
 
-		const thumb = current.image && (<img src={current.image} />);
+		let thumb = null;
+		//il peut y avoir un thumbnail, qui provient d'un fichier direct ou de la banque
+		if (current.image) {
+			thumb = <FileThumbnail {...current.image} />;
+		} else if (current.imageBank) {
+			thumb = <BankImgThumbnail id={current.imageBank} />;
+		}
 
 		return (<div>
 			<Autosuggest
 				id={`${this.props.field.id}_${this.props.recordId}`}
 				suggestions={suggestions}
 				inputProps={inputProps}
-				onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
+				onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
 				onSuggestionSelected={this.onSelect}
 				renderSuggestion={renderItem}
 				getSuggestionValue={getItemValue}
 				focusFirstSuggestion
 				shouldRenderSuggestions={shouldRenderSuggestions}
+				onSuggestionsClearRequested={this.onSuggestionsClearRequested}
 			/>
 			{thumb}
 		</div>);

@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { tableSchemaSelector } from 'selectors/tableSchema';
 import { getRecordLabel } from 'selectors/recordLabel';
 
-import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from 'freestone/schemaProps';
 
 const recordsSelector = state => state.recordList;
 const paramsSelector = (state, props) => props.params;
@@ -45,7 +45,7 @@ export const listRecordsSelector = createSelector(
 
 		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage } = stateRecords;
 		const { page: requestedPage, search: requestedSearch } = params;
-		
+
 		const nPages = Math.ceil(nRecords / pageSize);
 
 		const { table } = schema;
@@ -63,14 +63,17 @@ export const listRecordsSelector = createSelector(
 				//le tree ne peut pas etre construit direct en SQL, a cause de l'ordre, et au lieu de le builder en php, on le fait en js
 				records = reorderSelfTree(loadedRecords);
 			} else if (table.groupField) {
+				console.log(table.groupField);
 				const groupFieldAlias = table.groupField.alias;
 				const groupFieldLabelAlias = table.groupField.listAlias;
 				groupedRecords = records.reduce((carry, record) => {
 					const groupVal = record[groupFieldAlias];
 					let group = carry.find(candidate => candidate.val === groupVal);
 					if (!group) {
+						let groupValue = record[groupFieldLabelAlias];
+						if (table.groupField.type === TYPE_BOOL) groupValue = Number(groupValue) ? 'true' : 'false';
 						group = {
-							label: record[groupFieldLabelAlias],
+							label: `${table.groupField.label} - ${groupValue}`,
 							val: groupVal,
 							records: [],
 						};

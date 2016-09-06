@@ -22,7 +22,6 @@ export function bankImage(state = initialState, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
-		console.log('CLEAR');
 		return initialState;
 	case SAVE_RECORD_SUCCESS:
 	case DELETE_RECORD_SUCCESS:

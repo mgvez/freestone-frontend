@@ -1,6 +1,6 @@
 
 import { UNAUTHORIZED, LOGIN_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_SUCCESS } from 'actions/auth';
-import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { FREESTONE_API_REQUEST, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
 
 const initialState = {
 	jwt: null,
@@ -9,11 +9,21 @@ const initialState = {
 	isAuthenticating: false,
 	statusText: null,
 	realName: null,
+	lastRequestTime: 0,
+	email: '',
+	userId: null,
+	picture: '',
+	usergroup: 0,
 };
 
 export function auth(state = initialState, action) {
 
 	switch (action.type) {
+	case FREESTONE_API_REQUEST:
+		return {
+			...state,
+			lastRequestTime: Date.now(),
+		};
 	case FREESTONE_API_FAILURE:
 	case FREESTONE_API_FATAL_FAILURE:
 		//si failure, reset pour éviter que le btn login soit désactivé
@@ -25,7 +35,6 @@ export function auth(state = initialState, action) {
 	case UNAUTHORIZED:
 		// const err = action.payload.response;
 		// console.log(err);
-
 		return {
 			...state,
 			isAuthenticated: false,
@@ -50,8 +59,10 @@ export function auth(state = initialState, action) {
 			jwt: action.payload.jwt,
 			userName: action.payload.token.data.realname,
 			email: action.payload.token.data.email,
-			userId: action.payload.token.data.id,
+			userId: Number(action.payload.token.data.id),
 			realName: action.payload.token.data.realname,
+			picture: action.payload.token.data.picture,
+			usergroup: Number(action.payload.token.data.usergroup),
 			statusText: 'You have been successfully logged in.',
 		};
 	case LOGIN_USER_FAILURE: {

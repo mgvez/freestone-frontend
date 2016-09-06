@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { saveRecord } from 'actions/save';
 
-
 import { buildSaveRecordSelector } from 'selectors/buildRecord';
 
 @connect(
@@ -14,6 +13,7 @@ export class Save extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,
+		afterSaveLocation: React.PropTypes.string,
 
 		table: React.PropTypes.object,
 		tree: React.PropTypes.object,
@@ -29,7 +29,7 @@ export class Save extends Component {
 
 	componentWillMount() {
 		// console.log('MOUNT', this.props.records, this.props.deleted);
-		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.callback);
+		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.afterSaveLocation, this.props.callback);
 	}
 
 	render() {

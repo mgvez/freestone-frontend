@@ -49,7 +49,7 @@ function status(state = statusDefault, action) {
 		return {
 			code: SAVE_ERROR,
 			msg: 'record save error',
-			error: action.error.response,
+			error: action.error.response || action.error.responseText,
 		};
 	case INIT_SAVE:
 	case CLEAR_DATA:

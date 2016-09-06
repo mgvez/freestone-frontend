@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { Table } from 'components/static/menu/Table';
 import { Module } from 'components/static/menu/Module';
+import { NativeModule } from 'components/static/menu/NativeModule';
 import { Collapser } from 'animation/Collapser';
 
 export class NavGroup extends Component {
@@ -56,6 +57,11 @@ export class NavGroup extends Component {
 					return <Module key={`mod-${item.id}`} {...item} />;
 				})
 			}
+			{
+				this.props.data.nativeModules.map((item) => {
+					return <NativeModule key={`mod-${item.id}`} {...item} />;
+				})
+			}
 		</ul>);
 	}
 
@@ -63,7 +69,7 @@ export class NavGroup extends Component {
 
 		// console.log(this.props.level + ' nav group rendered', this.props.data);
 		const isOpen = this.collapser.getOpenState();
-		
+
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';
 
@@ -72,10 +78,10 @@ export class NavGroup extends Component {
 		return (
 			<li className={`${activeClass} nav-group`} >
 				<a onClick={this.collapser.toggle} className={`table-group ${activeClass}`}>
-					<i className={`fa fa-${icon}`}></i>
+					<i className={`fa fa-${icon} fa-fw`}></i>
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa arrow"></span>
 				</a>
-				{contents}				
+				{contents}
 			</li>
 		);
 	}

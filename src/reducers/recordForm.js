@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 import { UNAUTHORIZED } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
 import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
 
+/**
+change la valeur d'un champ (lors de l'édition par user)
+*/
 function setFieldValue(state, data) {
 	const { tableId, recordId, fieldId, val } = data;
 	// console.log(tableId, recordId, fieldId, val);
@@ -16,11 +19,15 @@ function setFieldValue(state, data) {
 			[recordId]: {
 				...state[tableId][recordId],
 				[fieldId]: val,
+				[EDITED_PSEUDOFIELD_ALIAS]: true,
 			},
 		},
 	};
 }
 
+/**
+Receive un record de la DB
+*/
 function receiveRecord(state, data) {
 	// console.log(data);
 	if (!data || !data.tables) return state;
@@ -31,6 +38,7 @@ function receiveRecord(state, data) {
 		bldState[tableId] = singleTable.records.reduce((tableRecords, record) => {
 			const key = record[PRIKEY_ALIAS];
 			record[LOADED_TIME_ALIAS] = new Date().getTime() / 1000;
+			record[EDITED_PSEUDOFIELD_ALIAS] = false;
 			tableRecords[key] = record;
 			return tableRecords;
 		}, bldState[tableId] || {});
@@ -124,7 +132,7 @@ function records(state = {}, action) {
 function toggleMtmValue(state, data) {
 	const { tableId, parentTableId, parentRecordId, optionId } = data;
 	// console.log(tableId, parentTableId, parentRecordId, optionId);
-
+	// console.log(state);
 	const siblMtmRecords = (state[tableId] && state[tableId][parentTableId] && state[tableId][parentTableId][parentRecordId] && [...state[tableId][parentTableId][parentRecordId]]) || [];
 	const idx = siblMtmRecords.indexOf(optionId);
 	if (idx === -1) {
@@ -133,12 +141,13 @@ function toggleMtmValue(state, data) {
 		siblMtmRecords.splice(idx, 1);
 	}
 	// console.log(mtmrecords);
+	const cousinMtmRecords = state[tableId] && state[tableId][parentTableId] || {};
 	return {
 		...state,
 		[tableId]: {
 			...state[tableId],
 			[parentTableId]: {
-				...state[tableId][parentTableId],
+				...cousinMtmRecords,
 				[parentRecordId]: siblMtmRecords,
 			},
 		},
@@ -147,21 +156,25 @@ function toggleMtmValue(state, data) {
 
 function receiveMtmRecords(state, data) {
 	// console.log(data);
-	if (!data || !data.parentTableId || !data.parentRecordId) return state;
+	if (!data || !data.tables) return state;
 
-	const { tableId, parentTableId, parentRecordId } = data;
-	const newState = {
-		...state,
-		[tableId]: {
-			...state[tableId],
-		},
-	};
-	newState[tableId][parentTableId] = {
-		...newState[tableId][parentTableId],
-	};
-	newState[tableId][parentTableId][parentRecordId] = data.records;
-	// console.log(newState);
-	return newState;
+	return data.tables.reduce((transformedState, table) => {
+		if (!table.parentTableId || !table.parentRecordId) return transformedState;
+
+		const { tableId, parentTableId, parentRecordId } = table;
+		const newState = {
+			...transformedState,
+			[tableId]: {
+				...transformedState[tableId],
+			},
+		};
+		newState[tableId][parentTableId] = {
+			...newState[tableId][parentTableId],
+		};
+		newState[tableId][parentTableId][parentRecordId] = table.records;
+		// console.log(newState);
+		return newState;
+	}, state);
 }
 
 //les records many to many ne sont pas identifiés par leur table elle même, mais sont deletes quand leur PARENT est savé

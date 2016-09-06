@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { THUMBNAIL_SIZE } from 'freestone/settings';
 import { fetchBankImage } from 'actions/bank';
 import { bankImgThumbnailSelector } from 'selectors/bank';
+
+//dimension max des images, selon grille
+const MAX_SIZE = 400;
 
 @connect(
 	bankImgThumbnailSelector,
@@ -12,7 +14,7 @@ import { bankImgThumbnailSelector } from 'selectors/bank';
 )
 export class BankImgThumbnail extends Component {
 	static propTypes = {
-		id: React.PropTypes.number,
+		id: React.PropTypes.any,
 		markup: React.PropTypes.string,
 
 		fetchBankImage: React.PropTypes.func,
@@ -20,11 +22,6 @@ export class BankImgThumbnail extends Component {
 
 	componentWillMount() {
 		this.requireData(this.props);
-
-		this.css = {
-			maxHeight: 200,
-			maxWidth: 200,
-		};
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -33,13 +30,13 @@ export class BankImgThumbnail extends Component {
 
 	requireData(props) {
 		// console.log(props);
-		if (props.id && !props.markup) this.props.fetchBankImage(props.id);
+		if (props.id && !props.markup) this.props.fetchBankImage(props.id, MAX_SIZE);
 	}
 
 	render() {
 		if (!this.props.id) return null;
 		return (
-			<div className="bank-img-thumbnail-container" dangerouslySetInnerHTML={{ __html: this.props.markup }} />
+			<div className="bank-image-thumbnail" dangerouslySetInnerHTML={{ __html: this.props.markup }} />
 		);
 	}
 }

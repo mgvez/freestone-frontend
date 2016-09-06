@@ -9,7 +9,7 @@ export function errors(state = [], action) {
 		return [
 			...state,
 			{
-				message: action.error.responseText || action.error.statusText || action.error.response,
+				message: action.error.responseText || action.error.statusText || action.error.response || action.error.message,
 				details: action.error.details,
 				isFatal: action.type === FREESTONE_API_FATAL_FAILURE,
 				redirectOnError: action.redirectOnError,

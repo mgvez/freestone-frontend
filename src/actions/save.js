@@ -30,7 +30,7 @@ function catchError(res) {
 }
 
 
-export function saveRecord(table, tree, records, deleted, callback) {
+export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback) {
 	return (dispatch) => {
 		// console.log(tree);
 		// console.log(records);
@@ -73,14 +73,14 @@ export function saveRecord(table, tree, records, deleted, callback) {
 			});
 
 			onSaved.then((res) => {
-
+				// console.log(res);
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
 
 				if (callback) {
-					callback();
+					callback(res.mainRecord);
 				} else {
-					const backPath = `list/${table.name}`;
+					const backPath = gotoOnFinish || `list/${table.name}`;
 
 					//si table savée est meta (zva_...)
 					if (isMeta) {

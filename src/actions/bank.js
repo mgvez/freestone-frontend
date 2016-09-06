@@ -5,12 +5,12 @@ export const RECEIVE_BANK_IMAGE = 'RECEIVE_BANK_IMAGE';
 export const REQUEST_BANK_IMAGE = 'REQUEST_BANK_IMAGE';
 
 
-export function fetchBankImage(id) {
+export function fetchBankImage(id, size) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
 				types: [REQUEST_BANK_IMAGE, RECEIVE_BANK_IMAGE, FREESTONE_API_FAILURE],
-				route: `bank/images/thumbnail/${id}`,
+				route: `bank/images/thumbnail/${id}/${size}`,
 			},
 		});
 	};

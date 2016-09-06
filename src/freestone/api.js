@@ -49,6 +49,7 @@ export function callApi(route, data) {
 			try {
 				const jsonResponse = JSON.parse(res.response);
 				err.responseText = jsonResponse && jsonResponse.message;
+				err.response = jsonResponse && jsonResponse.message;
 				err.details = jsonResponse && jsonResponse.details;
 			} catch (e) {
 				err.response = res.response;

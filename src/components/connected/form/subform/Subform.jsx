@@ -55,7 +55,7 @@ export class Subform extends Component {
 				setSubformCollapsed={this.props.setSubformCollapsed}
 			/>);
 		}
-		console.log(this.props.language);
+		// console.log(this.props.language);
 
 		return (<SubformStandard
 			tableId={this.props.tableId}

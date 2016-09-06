@@ -10,11 +10,10 @@
 - ajout 'noparse' dans template
 
 # Images
-- widget qui montre les uses des items de banque
+- widget qui montre les uses précis des items de banque (tel item dans tel record)
 
 # Freestone JS
 - ~link vers home~ reste juste à détecter le active
-- pouvoir editer son propre compte
 
 ## Dashboard
 - Analytics
@@ -48,7 +47,7 @@
 - ordre ds liste en drag/drop
 - champ type ajax? (voir field format form)
 - champ type tag
-- meilleure strategie de modif du state quand save records (pas vider menu au complet par ex.)
+- meilleure strategie de modif du state quand save records (pas vider menu au complet par ex.) 
 - preview d'un record dans site (how... how... par une duplic de db purement et simplement?)
 - à l'update: sitemap
 	private static function manageSiteMap($tableId, $recId, $isDeleted) {
@@ -58,4 +57,4 @@
 		}
 		return SiteMap::update($table->getName(), $recId);
 	}
-
+- Couleurs highligthées dans les record list ( ex #ff0000 ou rgba(0,0,0,0.5) )

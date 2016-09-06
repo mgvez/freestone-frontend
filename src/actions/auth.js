@@ -8,10 +8,10 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+//login api actions don't return their values directly through a api succes, but are rather caught by the middleware. Login can be included in any API response, not only login requests.
 
+//middleware will call receiveToken hwne a jwt is part of a response from the API. These can be included in the response of any API call, and are not limited to login requests, so the login requests don't need to set a success or failure action.
 function loginUserSuccess(jwt, token) {
 	return {
 		type: LOGIN_USER_SUCCESS,
@@ -56,6 +56,10 @@ export function receiveToken(jwt) {
 
 export function logout() {
 
+	//attempt logout google
+	const auth2 = window.gapi && window.gapi.auth2 && window.gapi.auth2.getAuthInstance();
+	if (auth2) auth2.signOut();
+
 	return (dispatch) => {
 		// console.log(redirect);
 		// console.log(action);
@@ -81,21 +85,38 @@ export function unauthorized(error = {}) {
 }
 
 
-export function loginUser(username, password, processInstall) {
+export function loginUser(username = null, password = null, remember = null, processInstall = false) {
+	return (dispatch) => {
+		// console.log(redirect);
+		// console.log(action);
+		const data = (username || password) ? {
+			freestoneuser: username,
+			freestonepass: password,
+			freestoneremember: remember ? '1' : '0',
+			freestoneinstall: processInstall ? '1' : '0',
+		} : {};
+		return dispatch({
+			[FREESTONE_API]: {
+				types: [LOGIN_REQUEST, null, null],
+				route: 'login',
+				data,
+			},
+		});
+	};
+}
+
+export function loginGoogleAPI(token) {
 	return (dispatch) => {
 		// console.log(redirect);
 		// console.log(action);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE],
+				types: [LOGIN_REQUEST, null, null],
 				route: 'login',
 				data: {
-					freestoneuser: username,
-					freestonepass: password,
-					freestoneinstall: processInstall ? '1' : '0',
+					googletoken: token,
 				},
 			},
 		});
 	};
-
 }
