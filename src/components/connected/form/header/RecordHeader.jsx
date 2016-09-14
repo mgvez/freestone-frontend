@@ -51,10 +51,7 @@ export class RecordHeader extends Component {
 	render() {
 		const language = this.props.language;
 
-		let languageToggler;
-		if (this.props.hasLanguageToggle) {
-			languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.props.functions.setLanguageState : null} localLanguage={language} />;
-		}
+		const languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.props.functions.setLanguageState : null} localLanguage={language} />;
 
 		let infos = (this.props.isLight) ? '' : (
 			<div className="texts">
