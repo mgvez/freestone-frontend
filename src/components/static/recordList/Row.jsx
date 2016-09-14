@@ -34,7 +34,6 @@ export class Row extends Component {
 
 	renderSelfTree() {
 		const { fields, values } = this.props;
-		let content;
 
 		const breadcrumb = values.breadcrumb ? values.breadcrumb : '0';
 		const level = values.level ? values.level : '0';
@@ -54,7 +53,7 @@ export class Row extends Component {
 			);
 		}
 
-		content = createCells(fields, values, 'div', { className: 'mobile-cell' });
+		const content = createCells(fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr className="selfjoin-row">
 				<td>

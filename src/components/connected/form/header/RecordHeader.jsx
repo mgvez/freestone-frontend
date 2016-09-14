@@ -53,7 +53,7 @@ export class RecordHeader extends Component {
 
 		const languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.props.functions.setLanguageState : null} localLanguage={language} />;
 
-		let infos = (this.props.isLight) ? '' : (
+		const infos = (this.props.isLight) ? '' : (
 			<div className="texts">
 				<Header table={this.props.table} />
 				<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
