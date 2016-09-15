@@ -43,7 +43,7 @@ export class SiteHeader extends Component {
 
 	render() {
 		// console.log(this.props);
-		const debug = this.props.isGod ? (<div className="debug-fcn">
+		const debug = this.props.isGod || window.IS_DEV ? (<div className="debug-fcn">
 			<button className="button-debug-round-small" onClick={this.props.clearSchema}>
 				Clear schema
 			</button>
