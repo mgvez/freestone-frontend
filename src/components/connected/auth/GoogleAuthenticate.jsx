@@ -45,7 +45,7 @@ export class GoogleAuthenticate extends Component {
 	}
 
 	onIsLogged = (isLogged) => {
-		console.log(isLogged);
+		// console.log(isLogged);
 	}
 
 	onReceiveUser = (user) => {
