@@ -6,6 +6,19 @@ import { CLEAR_DATA } from 'actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
 import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
 
+
+function removeRecords(state, recordsToRemove) {
+	if (!recordsToRemove) return state;
+
+	return recordsToRemove.reduce((carry, record) => {
+		const { tableId, recordId } = record;
+		const tableRecords = { ...carry[tableId] };
+		delete tableRecords[recordId];
+		carry[tableId] = tableRecords;
+		return carry;
+	}, { ...state });
+}
+
 /**
 change la valeur d'un champ (lors de l'édition par user)
 */
@@ -50,16 +63,18 @@ function receiveRecord(state, data) {
 	return newState;
 }
 
-function removeRecords(state, recordsToRemove) {
-	if (!recordsToRemove) return state;
-
-	return recordsToRemove.reduce((carry, record) => {
-		const { tableId, recordId } = record;
-		const tableRecords = { ...carry[tableId] };
-		delete tableRecords[recordId];
-		carry[tableId] = tableRecords;
-		return carry;
-	}, { ...state });
+function toggleMainEditedFromMtm(state, data) {
+	const { parentTableId, parentRecordId } = data;
+	return {
+		...state,
+		[parentTableId]: {
+			...state[parentTableId],
+			[parentRecordId]: {
+				...state[parentTableId][parentRecordId],
+				[EDITED_PSEUDOFIELD_ALIAS]: true,
+			},
+		},
+	};
 }
 
 /**
@@ -118,6 +133,8 @@ function records(state = {}, action) {
 		return setFieldValue(state, action.data);
 	case CLEAR_DATA:
 		return {};
+	case TOGGLE_MTM_VALUE:
+		return toggleMainEditedFromMtm(state, action.data);
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
 	case DELETE_RECORD_SUCCESS:

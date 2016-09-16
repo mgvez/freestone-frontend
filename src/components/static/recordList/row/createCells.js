@@ -4,7 +4,7 @@ import { TYPE_IMG, TYPE_FILE, TYPE_BANKIMG } from 'freestone/schemaProps';
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
 
-const MAX_THUMB_SIZE = 400;
+const MAX_THUMB_SIZE = 200;
 
 
 export function createCells(fields, values, elementType = 'td', options = {}) {
