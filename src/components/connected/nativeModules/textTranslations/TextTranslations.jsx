@@ -3,20 +3,20 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { SingleTranslation } from 'components/connected/nativeModules/textTranslations/SingleTranslation';
+import { Field } from 'components/connected/nativeModules/textTranslations/Field';
+import { HeaderContainer } from 'components/static/header/HeaderContainer';
+
 import * as translationActions from 'actions/translations';
+import { coreTranslations } from 'selectors/translations';
 
 @connect(
-	state => {
-		return {
-			...state.translations,
-			languages: state.env.languages,
-		};
-	},
+	coreTranslations,
 	dispatch => bindActionCreators(translationActions, dispatch)
 )
 export class TextTranslations extends Component {
 	static propTypes = {
 		translations: React.PropTypes.object,
+		translationKeys: React.PropTypes.array,
 		placedTranslations: React.PropTypes.array,
 		languages: React.PropTypes.array,
 
@@ -42,28 +42,77 @@ export class TextTranslations extends Component {
 		if (!props.placedTranslations) {
 			this.props.fetchPlacedTranslations();
 		}
+		// console.log(props);
+	}
 
-		console.log(props);
+	addTranslation() {
+
+	}
+
+	chooseTranslation() {
+
+	}
+
+	renameKey() {
+
+	}
+
+	changeTranslation() {
 
 	}
 
 	render() {
 		// console.log(this.props);
-		if (this.props.placedTranslations) {
-			return (<div>
-				{this.props.placedTranslations.map(fileTranslations => {
-					const key = `file_${fileTranslations.file}`;
-					return (<div key={key}>
-						<h2>{fileTranslations.file}</h2>
-						{fileTranslations.keys.map(translationKey => {
-							return (<div>
-								{this.props.languages.map(language => {
-									return <SingleTranslation translationKey={translationKey} language={language} />;
-								})}
+		let keys;
+		if (this.props.translationKeys) {
+			keys = (<div className="container">
+				{this.props.translationKeys.map((translationKey, tIdx) => {
+					return (<div key={tIdx}>
+						<div className="row">
+							<div className="col-md-12">
+								<h3>{translationKey}</h3>
+								<button>Delete</button>
+							</div>
+						</div>
+						<div>
+						{this.props.languages.map((language, idx) => {
+							return (<div key={idx}>
+								<Field label={language} onChange={this.changeTranslation} >
+									<SingleTranslation translationKey={translationKey} language={language} />
+								</Field>
 							</div>);
 						})}
-						{fileTranslations.hardcoded.map(hardcoded => {
-							return <div>{hardcoded.str} ({hardcoded.lang})</div>;
+						</div>
+						<Field label="Rename">
+							<input className="form-control" type="text" value={translationKey} onChange={this.renameKey} />
+						</Field>
+					</div>);
+				})}
+			</div>);
+		}
+
+		let placed;
+		if (this.props.placedTranslations) {
+			placed = (<div>
+				{this.props.placedTranslations.map(fileTranslations => {
+					const key = `file_${fileTranslations.file}`;
+					console.log(fileTranslations);
+					return (<div key={key}>
+						<h2>{fileTranslations.file}</h2>
+						{fileTranslations.strings.map((hardcoded, hIdx) => {
+							return (<div key={hIdx}>
+								{hardcoded.str} ({hardcoded.lang})
+								set key <input data-replace={hardcoded.replace} onChange={this.addTranslation} placeholder="Type new key, e.g. home.title" />
+								<div>
+									{hardcoded.candidates.map((candidate, cIdx) => {
+										return (<div key={cIdx}>
+											{candidate.key} ::
+											{candidate.str}
+											<button>Choose</button>
+										</div>);
+									})}
+								</div>
+							</div>);
 						})}
 					</div>);
 				})}
@@ -71,19 +120,18 @@ export class TextTranslations extends Component {
 		}
 		return (
 			<section>
-				<h1>
+				<HeaderContainer>
+
+					<h1>Text translations</h1>
+					<p>Text translations</p>
 					<ul>
 						<li>
-							Key ds template sans traduction
+							liste all keys
 							<ul>
-								<li>ajout dans chaque langue</li>
-							</ul>
-						</li>
-						<li>
-							Key ds template avec traduction
-							<ul>
-								<li>liste tous fichiers où utilisée</li>
-								<li>changement dans chaque langue</li>
+								<li>value fr</li>
+								<li>value en</li>
+								<li>LOCAL rename</li>
+								<li>delete (if not used)</li>
 							</ul>
 						</li>
 						<li>
@@ -93,15 +141,11 @@ export class TextTranslations extends Component {
 								<li>LOCAL proposition key</li>
 							</ul>
 						</li>
-						<li>
-							liste all keys
-							<ul>
-								<li>LOCAL rename</li>
-								<li>delete (if not used)</li>
-							</ul>
-						</li>
 					</ul>
-				</h1>
+				</HeaderContainer>
+
+				{keys}
+				{placed}
 			</section>
 		);
 	}

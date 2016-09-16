@@ -25,6 +25,10 @@ export class SingleTranslation extends Component {
 		this.requireData(props);
 	}
 
+	changeVal() {
+
+	}
+
 	requireData(props) {
 		// props.languages.forEach(lang => {
 		// 	if (!props.translations || !props.translations[lang]) {
@@ -38,6 +42,6 @@ export class SingleTranslation extends Component {
 	}
 
 	render() {
-		return (<input value={this.props.translationValue} />);
+		return (<input type="text" value={this.props.translationValue} onChange={this.changeVal} />);
 	}
 }
