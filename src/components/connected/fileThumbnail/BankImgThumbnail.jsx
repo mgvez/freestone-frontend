@@ -16,6 +16,7 @@ export class BankImgThumbnail extends Component {
 	static propTypes = {
 		id: React.PropTypes.any,
 		markup: React.PropTypes.string,
+		maxSize: React.PropTypes.number,
 
 		fetchBankImage: React.PropTypes.func,
 	};
@@ -30,7 +31,7 @@ export class BankImgThumbnail extends Component {
 
 	requireData(props) {
 		// console.log(props);
-		if (props.id && !props.markup) this.props.fetchBankImage(props.id, MAX_SIZE);
+		if (props.id && !props.markup) this.props.fetchBankImage(props.id, this.props.maxSize || MAX_SIZE);
 	}
 
 	render() {

@@ -1,7 +1,11 @@
 import React from 'react';
 
-import { TYPE_IMG, TYPE_FILE } from 'freestone/schemaProps';
+import { TYPE_IMG, TYPE_FILE, TYPE_BANKIMG } from 'freestone/schemaProps';
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
+import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
+
+const MAX_THUMB_SIZE = 400;
+
 
 export function createCells(fields, values, elementType = 'td', options = {}) {
 	return fields.map((field, index) => {
@@ -19,6 +23,15 @@ export function createCells(fields, values, elementType = 'td', options = {}) {
 					val: values[field.listAlias],
 					dir: field.folder,
 					type: field.type,
+				}
+			);
+		}
+		if (field.type === TYPE_BANKIMG) {
+			val = React.createElement(
+				BankImgThumbnail,
+				{
+					id: values[field.listAlias],
+					maxSize: MAX_THUMB_SIZE,
 				}
 			);
 		}
