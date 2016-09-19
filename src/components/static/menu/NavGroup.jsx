@@ -54,12 +54,10 @@ export class NavGroup extends Component {
 			}
 			{
 				this.props.data.modules.map((item) => {
+					if (item.isFrontendComponent) {
+						return <NativeModule key={`mod-${item.id}`} {...item} />;
+					}
 					return <Module key={`mod-${item.id}`} {...item} />;
-				})
-			}
-			{
-				this.props.data.nativeModules.map((item) => {
-					return <NativeModule key={`mod-${item.id}`} {...item} />;
 				})
 			}
 		</ul>);

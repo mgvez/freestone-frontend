@@ -48,6 +48,7 @@ export const coreTranslations = createSelector(
 		return {
 			translationKeys,
 			translations,
+			isEdited: translations.isEdited,
 			placedTranslations,
 			languages,
 		};

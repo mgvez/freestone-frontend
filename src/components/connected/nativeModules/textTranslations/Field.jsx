@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class Field extends Component {
 	static propTypes = {
-		children: React.PropTypes.array,
+		children: React.PropTypes.any,
 		label: React.PropTypes.string,
 		description: React.PropTypes.string,
 		val: React.PropTypes.any,
