@@ -1,4 +1,5 @@
 
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE, SET_ENV_VARIABLE } from 'actions/env';
 import { CLEAR_DATA } from 'actions/dev';
 
@@ -29,6 +30,7 @@ export function env(state = envInitialState, action) {
 		}, {});
 	}
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 		return envInitialState;
 	default:
 		// console.log('no change');
@@ -59,6 +61,7 @@ export function userViewSettings(state = userViewSettingsInitialState, action) {
 export function envVariables(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 		return {};
 	case SET_ENV_VARIABLE: {
 		// console.log(action.data);

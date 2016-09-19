@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
-import { UNAUTHORIZED } from 'actions/auth';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
 import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
@@ -113,6 +113,7 @@ function childrenAreLoaded(state = {}, action) {
 		//m fonction que pour les records eux meme (structure fonctionne)
 		return removeRecords(state, action.data.records);
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 		return {};
 	default:
 		// console.log('no change');
@@ -132,6 +133,7 @@ function records(state = {}, action) {
 	case SET_FIELD_VALUE:
 		return setFieldValue(state, action.data);
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 		return {};
 	case TOGGLE_MTM_VALUE:
 		return toggleMainEditedFromMtm(state, action.data);
@@ -236,6 +238,7 @@ function mtmRecords(state = {}, action) {
 	case TOGGLE_MTM_VALUE:
 		return toggleMtmValue(state, action.data);
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 		return {};
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:
@@ -256,6 +259,7 @@ function recordsUnaltered(state = {}, action) {
 	case RECEIVE_MTM_RECORDS:
 		return receiveMtmRecords(state, action.data);
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 		return {};
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_SUCCESS:

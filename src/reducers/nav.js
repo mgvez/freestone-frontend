@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { UNAUTHORIZED } from 'actions/auth';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL } from 'actions/nav';
 import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
@@ -18,6 +18,7 @@ function structure(state = navInitialState, action) {
 	case UNAUTHORIZED:
 	case SWAP_ORDER_SUCCESS:
 	case DELETE_RECORD_SUCCESS:
+	case LOGOUT_SUCCESS:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return navInitialState;

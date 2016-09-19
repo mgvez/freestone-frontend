@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { UNAUTHORIZED } from 'actions/auth';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
 import { CLEAR_SCHEMA, RECEIVE_SCHEMA } from 'actions/schema';
 import { SAVE_RECORD_SUCCESS } from 'actions/save';
@@ -28,6 +28,7 @@ function tables(state = {}, action) {
 		return {};
 	case CLEAR_DATA:
 	case CLEAR_SCHEMA:
+	case LOGOUT_SUCCESS:
 		return {};
 	default:
 		// console.log('no change');
@@ -58,6 +59,7 @@ function children(state = {}, action) {
 		}
 		return state;
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 	case CLEAR_SCHEMA:
 		return {};
 	default:
@@ -89,6 +91,7 @@ function fields(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 	case CLEAR_SCHEMA:
 		return {};
 	default:
@@ -117,6 +120,7 @@ function fieldDependencies(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
 	case CLEAR_SCHEMA:
 		return {};
 	default:

@@ -1,5 +1,5 @@
 
-import { UNAUTHORIZED } from 'actions/auth';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { RECEIVE_BANK_IMAGE } from 'actions/bank';
 import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
 import { BANK_IMG_TABLE } from 'freestone/schemaProps';
@@ -21,6 +21,7 @@ function removeRecords(state, recordsToRemove) {
 export function bankImage(state = initialState, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
+	case LOGOUT_SUCCESS:
 	case CLEAR_DATA:
 		return initialState;
 	case SAVE_RECORD_SUCCESS:
