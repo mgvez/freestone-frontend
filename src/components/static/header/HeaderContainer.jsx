@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 export class HeaderContainer extends Component {
 	static propTypes = {
-		children: React.PropTypes.array,
+		children: React.PropTypes.any,
 	};
 	
 	static childContextTypes = {

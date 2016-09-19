@@ -25,6 +25,6 @@ export class SingleTranslation extends Component {
 	}
 
 	render() {
-		return (<input type="text" value={this.props.translationValue} onChange={this.changeVal} />);
+		return (<input type="text" value={this.props.translationValue || ''} onChange={this.changeVal} />);
 	}
 }

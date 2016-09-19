@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 
 import { SingleTranslation } from 'components/connected/nativeModules/textTranslations/SingleTranslation';
 import { Field } from 'components/connected/nativeModules/textTranslations/Field';
-import { HeaderContainer } from 'components/static/header/HeaderContainer';
+import { FormHeader } from 'components/connected/header/FormHeader'; 
 
 import * as translationActions from 'actions/translations';
+import { goTo } from 'actions/nav';
 import { coreTranslations } from 'selectors/translations';
 
 @connect(
 	coreTranslations,
-	dispatch => bindActionCreators(translationActions, dispatch)
+	dispatch => bindActionCreators({ ...translationActions, goTo }, dispatch)
 )
 export class TextTranslations extends Component {
 	static propTypes = {
@@ -22,7 +23,16 @@ export class TextTranslations extends Component {
 
 		saveTranslations: React.PropTypes.func,
 		fetchTranslations: React.PropTypes.func,
+		closeTranslations: React.PropTypes.func,
+		goTo: React.PropTypes.func,
 	};
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			closing: false,
+		};
+	}
 
 	componentWillMount() {
 		this.requireData(this.props);
@@ -33,15 +43,35 @@ export class TextTranslations extends Component {
 	}
 
 	requireData(props) {
-		props.languages.forEach(lang => {
-			if (!props.translations || !props.translations[lang]) {
-				this.props.fetchTranslations(lang);
-			}
-		});
+		// console.log(this.state);
+		if (!this.state.closing) {
+			props.languages.forEach(lang => {
+				if (!props.translations || !props.translations[lang]) {
+					this.props.fetchTranslations(lang);
+				}
+			});
+		}
+	}
+
+	//ferme le form, va au home
+	goHome = () => {
+		this.props.goTo('/');
+	}
+
+	close = () => {
+		this.setState({ closing: true });
+		const onClosed = this.props.closeTranslations();
+		onClosed.then(this.goHome);
 	}
 
 	save = () => {
 		this.props.saveTranslations(this.props.translations);
+	}
+
+	saveAndBack = () => {
+		this.setState({ closing: true });
+		const onSaved = this.props.saveTranslations(this.props.translations);
+		onSaved.then(this.goHome);
 	}
 
 	render() {
@@ -69,16 +99,27 @@ export class TextTranslations extends Component {
 				})}
 			</div>);
 		}
-		let saveBtn;
+
+		let actionBtns;
+		//le record a été édité depuis son load à la db. On met les actions pour le save
 		if (this.props.isEdited) {
-			saveBtn = <button className="button-round-action" onClick={this.save}>Save</button>;
+			actionBtns = [
+				<a key="fcn_1" onClick={this.saveAndBack} className="button-round">Save and close</a>,
+				<a key="fcn_2" onClick={this.save} className="button-round-lighter">Save</a>,
+				<a key="fcn_3" onClick={this.close} className="button-round-danger">Discard changes</a>,
+			];
+		//record pas été édité: juste btn close
+		} else {
+			actionBtns = [
+				<a key="fcn_3" onClick={this.close} className="button-round-danger">Close</a>,
+			];
 		}
+
 		return (
-			<section>
-				<HeaderContainer>
+			<section className="root-form">
+				<FormHeader hasLanguageToggle={false} buttons={actionBtns}>
 					<h1>Text translations</h1>
-					{saveBtn}
-				</HeaderContainer>
+				</FormHeader>
 				{keys}
 			</section>
 		);

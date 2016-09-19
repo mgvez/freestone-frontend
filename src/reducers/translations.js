@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { SET_TRANSLATIONS, SET_PLACED_TRANSLATIONS, EDIT_TRANSLATION, SAVE_TRANSLATIONS } from 'actions/translations';
+import { SET_TRANSLATIONS, SET_PLACED_TRANSLATIONS, EDIT_TRANSLATION, SAVE_TRANSLATIONS, CLOSE_TRANSLATIONS } from 'actions/translations';
 import { CLEAR_DATA } from 'actions/dev';
 
 function translations(state = {}, action) {
@@ -28,6 +28,7 @@ function translations(state = {}, action) {
 	}
 	case CLEAR_DATA:
 	case SAVE_TRANSLATIONS:
+	case CLOSE_TRANSLATIONS:
 		return {};
 	default:
 		return state;

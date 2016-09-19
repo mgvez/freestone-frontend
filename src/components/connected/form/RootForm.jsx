@@ -11,10 +11,8 @@ import { Save } from 'components/connected/process/Save';
 import { Cancel } from 'components/connected/process/Cancel';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { LanguageToggler } from 'components/connected/form/LanguageToggler';
 
-import { HeaderContainer } from 'components/static/header/HeaderContainer'; 
-import { RecordHeader } from 'components/connected/form/header/RecordHeader'; 
+import { FormHeader } from 'components/connected/header/FormHeader'; 
 
 @connect(
 	rootFormMapStateToProps,
@@ -108,10 +106,6 @@ export class RootForm extends Component {
 
 	render() {
 
-		let header;
-		let form;
-		let meta;
-
 		//langue peut être locale (si par ex. dans une modale) pour éviter les rerender des autres formulaires. Si présente en state, priorité sur store
 		const language = this.state.language || this.props.language;
 
@@ -119,11 +113,6 @@ export class RootForm extends Component {
 
 			if (this.state.saving) {
 				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.state.afterSave} afterSaveLocation={this.state.afterSaveLocation} cancelSave={this.cancelSave} />;
-			}
-
-			let languageToggler;
-			if (this.props.hasLanguageToggle) {
-				languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.setLanguageState : null} localLanguage={language} />;
 			}
 
 			let actionBtns;
@@ -141,36 +130,20 @@ export class RootForm extends Component {
 				];
 			}
 
-			const functions = {
-				saveAndBack: this.saveAndBack,
-				saveAndForm: this.saveAndForm,
-				cancelSave: this.cancelSave,
-				setLanguageState: this.setLanguageState,
-			};
+			return (<section className="root-form">
+				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
-			header = (
-				<HeaderContainer>
-					<RecordHeader {...this.props} functions={functions}>
-						{actionBtns}
-					</RecordHeader>
-					<RecordHeader isLight {...this.props} functions={functions}>
-						{actionBtns}
-					</RecordHeader>
-				</HeaderContainer>
-			);
+				<FormHeader {...this.props} hasLanguageToggle setLanguageState={this.setLanguageState} buttons={actionBtns}>
+					<Header table={this.props.table} />
+				</FormHeader>
 
-			form = (
 				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
-			);
 
-			meta = <DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />;
+			</section>);
+
 		}
-		return (
-			<section className="root-form">
-				{meta}
-				{header}
-				{form}
-			</section>
-		);
+
+		return null;
+
 	}
 }

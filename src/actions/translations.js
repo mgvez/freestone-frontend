@@ -4,6 +4,7 @@ export const SET_TRANSLATIONS = 'SET_TRANSLATIONS';
 export const SET_PLACED_TRANSLATIONS = 'SET_PLACED_TRANSLATIONS';
 export const EDIT_TRANSLATION = 'EDIT_TRANSLATION';
 export const SAVE_TRANSLATIONS = 'SAVE_TRANSLATIONS';
+export const CLOSE_TRANSLATIONS = 'CLOSE_TRANSLATIONS';
 
 export function fetchTranslations(lang) {
 	return (dispatch) => {
@@ -47,9 +48,20 @@ export function saveTranslations(translations) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::save-translations', SAVE_TRANSLATIONS, FREESTONE_API_FATAL_FAILURE],
+				types: ['api::save-translations', SAVE_TRANSLATIONS, null],
 				route: 'translations/save',
 				data: translations,
+			},
+		});
+	};
+}
+
+export function closeTranslations() {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: ['api::save-translations', CLOSE_TRANSLATIONS, null],
+				route: 'translations/unlock',
 			},
 		});
 	};

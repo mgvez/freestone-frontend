@@ -1,41 +1,29 @@
 import React, { Component } from 'react';
 
-import { Header } from 'components/static/form/Header';
-import { Cancel } from 'components/connected/process/Cancel';
 import { LanguageToggler } from 'components/connected/form/LanguageToggler';
 
-
 /**
- * RecordHeader
+ * FormHeaderVariation
  * 
- * Un header de formulaire qui peut prendre 2 formes, soient une
+ * Un header de formulaire qui peut prendre 2 formes, soit une
  * avec et l'autre sans informations à propos du record (titre, desc, etc)
  * Pour simplifier l'animation d'un header fixe, on se sert du light
  * pour ne pas avoir à recalculer la hauteur du header et l'ajouter au
  * padding-top du body.
  */
-export class RecordHeader extends Component {
+export class FormHeaderVariation extends Component {
 	static propTypes = {
-		params: React.PropTypes.shape({
-			tableName: React.PropTypes.string,
-			recordId: React.PropTypes.string,
-		}),
-
 		isModal: React.PropTypes.bool,
 		language: React.PropTypes.string,
 		hasLanguageToggle: React.PropTypes.bool,
-		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
-		
-		finishCallback: React.PropTypes.func,
-		fetchTable: React.PropTypes.func,
 
-		functions: React.PropTypes.object,
-		buttons: React.PropTypes.object,
+		setLanguageState: React.PropTypes.func,
 
 		isLight: React.PropTypes.bool,
 
-		children: React.PropTypes.array,
+		buttons: React.PropTypes.any,
+		children: React.PropTypes.any,
 	};
 
 	static contextTypes = {
@@ -51,12 +39,13 @@ export class RecordHeader extends Component {
 	render() {
 		const language = this.props.language;
 
-		const languageToggler = <LanguageToggler onChangeLang={this.props.isModal ? this.props.functions.setLanguageState : null} localLanguage={language} />;
+		const languageToggler = this.props.hasLanguageToggle ? <LanguageToggler onChangeLang={this.props.isModal ? this.props.setLanguageState : null} localLanguage={language} /> : null;
+		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
 		const infos = (this.props.isLight) ? '' : (
 			<div className="texts">
-				<Header table={this.props.table} />
-				<div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div>
+				{this.props.children}
+				{lastModif}
 			</div>
 		);
 
@@ -65,9 +54,8 @@ export class RecordHeader extends Component {
 		return (
 			<header className={isLightClass} ref={el => this._header = el}>
 				{infos}
-
 				<div className="btns">
-					{this.props.children}
+					{this.props.buttons}
 				</div>
 				{languageToggler}
 			</header>
