@@ -91,17 +91,22 @@ export class GoogleAnalytics extends Component {
 	renderAnalytics() {
 		if (!this.props.clientId) return undefined;
 		const gapi = window.gapi;
+		// console.log('render analytics...');
 		gapi.analytics.ready(() => {
-		
+			// console.log('analytics ready');
 			if (gapi.analytics.auth.isAuthorized()) {
+				// console.log('authorized');
 				this.renderAnalyticsTimeline();
 				return undefined;
 			}
-
-			gapi.analytics.auth.authorize({
-				container: this._authbtn,
-				clientid: this.props.clientId,
-			});
+			// console.log('authorize...');
+			const auth2 = gapi.auth2;
+			if (!auth2.getAuthInstance()) {
+				gapi.analytics.auth.authorize({
+					container: this._authbtn,
+					clientid: this.props.clientId,
+				});
+			}
 
 			gapi.analytics.auth.on('success', () => {
 				// console.log('authorized');

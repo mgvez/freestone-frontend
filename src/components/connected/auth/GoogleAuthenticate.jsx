@@ -60,9 +60,9 @@ export class GoogleAuthenticate extends Component {
 	}
 
 	initGoogleApi() {
-
+		// console.log('gapi..?', this.gapi);
 		if (this.gapi) return this.gapi;
-
+		// console.log('pas gapi');
 		if (this.props.apiGoogle && this.props.apiGoogle.clientId) {
 
 			const { clientId } = this.props.apiGoogle;
