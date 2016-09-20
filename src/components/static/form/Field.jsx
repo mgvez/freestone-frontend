@@ -8,6 +8,7 @@ import { HtmlInput } from 'components/static/form/inputTypes/HtmlInput';
 import { FileInput } from 'components/static/form/inputTypes/FileInput';
 import { DateInput } from 'components/static/form/inputTypes/DateInput';
 import { BankImgInput } from 'components/static/form/inputTypes/BankImgInput';
+import { UrlInput } from 'components/static/form/inputTypes/UrlInput';
 import { AutocompleteInput } from 'components/connected/form/inputTypes/AutocompleteInput';
 
 export class Field extends Component {
@@ -31,15 +32,14 @@ export class Field extends Component {
 		case 'text':
 		case 'char':
 		case 'note':
-		case 'url':
 		case 'password':
 			input = <TextInput {...this.props} />;
 			break;
 		case 'html':
 			input = <HtmlInput {...this.props} />;
 			break;
-		case 'internal_url':
-			input = <TextInput {...this.props} />;
+		case 'url':
+			input = <UrlInput {...this.props} />;
 			break;
 		case 'tags':
 			input = <TextInput {...this.props} />;

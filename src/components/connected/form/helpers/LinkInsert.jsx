@@ -16,7 +16,7 @@ function buildlink(contents, link, linkLabel) {
 		val = `<a href="${val}">${linkLabel}</a>`;
 	}
 
-	if (contents) {
+	if (contents && ~contents.indexOf('{{placeholder}}')) {
 		val = contents.replace('{{placeholder}}', val);
 	}
 
@@ -30,6 +30,8 @@ export class LinkInsert extends Component {
 		contentBefore: React.PropTypes.string,
 		contentAfter: React.PropTypes.string,
 		selection: React.PropTypes.string,
+		//indique si on veut un link <a href...> ou juste une url
+		isUrlOnly: React.PropTypes.bool,
 	};
 
 	afterOpenModal = () => {
@@ -38,19 +40,18 @@ export class LinkInsert extends Component {
 	};
 
 	selectInternal = () => {
-		
 		try {
 			const ifr = this.refs.ifr;
 			const link = ifr.contentWindow.location.href;
 			this.props.setVal(buildlink(
 				this.props.contentAfter,
 				link,
-				this.refs.linkLabel.value || 'link'
+				this.props.isUrlOnly ? null : (this.refs.linkLabel && this.refs.linkLabel.value) || 'link'
 			));
 			this.closeModal();
 		} catch (e) {
 			alert('Cross domain error. If you want to link to an external site, please paste the link in the external link input');// eslint-disable-line
-		}		
+		}
 	};
 
 	selectExternal = () => {
@@ -58,7 +59,7 @@ export class LinkInsert extends Component {
 		this.props.setVal(buildlink(
 			this.props.contentAfter,
 			this.refs.linkExternal.value,
-			this.refs.linkLabel.value || 'link'
+			this.props.isUrlOnly ? null : (this.refs.linkLabel && this.refs.linkLabel.value) || 'link'
 		));
 		this.closeModal();
 	};
@@ -74,6 +75,9 @@ export class LinkInsert extends Component {
 
 	render() {
 		const n = 300;
+
+		const labelInput = this.props.isUrlOnly ? null : <p>link label: <input defaultValue={this.props.selection} ref="linkLabel" /></p>;
+
 		return (
 			<Modal
 				isOpen
@@ -82,28 +86,29 @@ export class LinkInsert extends Component {
 				closeTimeoutMS={n}
 				style={customStyle}
 			>
-				<div className="container">
+				<section className="container url-modal">
 					<div className="row">
-						<div className="col-md-12">
-							<button onClick={this.cancelChange}>cancel</button>
-							<p>link label: <input defaultValue={this.props.selection} ref="linkLabel" /></p>
+						<div className="col-md-6">
+							{labelInput}
+						</div>
+						<div className="col-md-6 url-modal-cancel">
+							<button className="button-round-danger" onClick={this.cancelChange}>cancel</button>
 						</div>
 					</div>
 					<div className="row">
 						<div className="col-md-6">
-							<h4>Internal Link selector</h4>
-							<p>If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the "select" button.</p>
-							<button onClick={this.selectInternal}>use page below</button>
+							<h4>Internal Link</h4>
+							<p>If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the following button.</p>
+							<button className="button-round-action-bordered" onClick={this.selectInternal}>use page below</button>
 						</div>
 						<div className="col-md-6">
 							<h4>External Link</h4>
 							<p>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
-							<p>external url: <input ref="linkExternal" /></p>
-							<button onClick={this.selectExternal}>use this link</button>
-
+							<p><input type="text" ref="linkExternal" className="bordered" /></p>
+							<button className="button-round-action-bordered" onClick={this.selectExternal}>use this url</button>
 						</div>
 					</div>
-				</div>
+				</section>
 				<iframe src={getWebsiteUrl()} style={{ width: '100%', height: '500px' }} ref="ifr" />
 			</Modal>
 		);

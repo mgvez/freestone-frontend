@@ -23,6 +23,10 @@ input[role="combobox"] {
 		width: 200px;
 		vertical-align: middle;
 	}
+
+	&.bordered{
+		border: 2px solid $color-border-dark;
+	}
 }
 
 textarea{
