@@ -19,7 +19,6 @@ export class GenericFileInput extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			changing: false,
 			localFile: null,
 		};
 	}
@@ -43,12 +42,13 @@ export class GenericFileInput extends Component {
 	}
 
 	getSavedInput() {
+		// console.log('get input %s', this.props.val);
 		const saved = new SavedFileInput(this.props.val);
 		//si pas de input mais que la val est une ref à un input, c'est que le input existe pas... reset la val à original
-		if (this.props.val && this.props.val !== this.props.origVal && !saved.getInput()) {
+		if (this.props.val && this.props.val !== this.props.origVal && !saved.getFilePath()) {
 			this.props.changeVal(this.props.origVal);
 		}
-		if (saved.getInput()) {
+		if (saved.getFile()) {
 			this.getLocalImage(saved.getFile());
 		}
 		return saved;
@@ -56,7 +56,6 @@ export class GenericFileInput extends Component {
 
 	setForDelete = () => {
 		this.getSavedInput().deleteInput();
-		this.cancelRequestChange();
 		this.props.changeVal('');
 	}
 
@@ -64,16 +63,15 @@ export class GenericFileInput extends Component {
 		const input = e.target;
 		const savedInput = this.getSavedInput();
 		savedInput.setInput(input, this.props.fieldId, this.props.recordId);
-		this.props.changeVal(savedInput.getId());
+		// console.log('change val %s', savedInput.getId());
 		this.setState({
-			changing: false,
 			localFile: null,
 		});
+		this.props.changeVal(savedInput.getId());
 	}
 
 	clearSavedInput = () => {
 		this.getSavedInput().deleteInput();
-		this.cancelRequestChange();
 		this.props.changeVal(this.props.origVal);
 	}
 
@@ -85,29 +83,15 @@ export class GenericFileInput extends Component {
 		}
 	}
 
-	cancelRequestChange = () => {
-		this.setState({
-			changing: false,
-			localFile: null,
-		});
-	}
-
-	requestChange = () => {
-		this.setState({
-			changing: true,
-			localFile: null,
-		});
-	}
-
 	render() {
 		const typeLabel = this.props.type === TYPE_IMG ? 'image' : 'file';
 		// console.log(`render input ${this.props.field.name}`);
 		// console.log(this.props.field);
 		const { origVal, val } = this.props;
-		const inMemory = this.getSavedInput().getInput();
+		const inMemory = this.getSavedInput().getFilePath();
 		//vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
-		const inputVal = inMemory && inMemory.value.split(/(\\|\/)/g).pop();
-
+		const inputVal = inMemory && inMemory.split(/(\\|\/)/g).pop();
+		// console.log(val);
 		let revertBtn;
 		let deleteBtn;
 		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
@@ -132,7 +116,6 @@ export class GenericFileInput extends Component {
 				{displayVal}
 			</div>);
 		}
-
 		return (
 			<div className="file-input-generic">
 				{fileInfos}

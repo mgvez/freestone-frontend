@@ -16,7 +16,7 @@ function sendChunk(dispatch, fileDef, rangeStart = 0) {
 	const chunk = file.slice(rangeStart, rangeEnd);
 	// console.log(rangeStart);
 	// console.log(file.size);
-	
+
 	const data = new FormData();
 	data.append('chunk', chunk);
 	data.append('name', file.name);
@@ -47,10 +47,13 @@ export function sendRecordFiles(dispatch, records) {
 		const tableRecords = records[tableId];
 		return Object.keys(tableRecords).reduce((tableFiles, recordId) => {
 			const record = tableRecords[recordId];
+			// console.log(record);
 			return tableFiles.concat(Object.keys(record).map(fieldId => {
 				const tmpName = record[fieldId];
+				//on n'a pas besoin de vérifier si le champ est d'un type particulier: le getfile retournera un file basé sur la value seulement, qui est un hash
 				const file = tmpName && getFileVal(tmpName);
 				if (!file) return null;
+				// console.log(file, tmpName);
 				return {
 					tmpName,
 					file,

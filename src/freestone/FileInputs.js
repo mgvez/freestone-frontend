@@ -14,20 +14,24 @@ export function showFileInputs() {
 }
 
 export function getFileVal(inputKey) {
-	const input = inputs[inputKey] && inputs[inputKey].input;
-	return input && input.files && input.files[0];
+	return inputs[inputKey] && inputs[inputKey].fileVal;
 }
 
 export class SavedFileInput {
 	constructor(val) {
 		this.key = (inputs[val] && val) || uniqueId();
+		// console.log('get saved input %s -> %s', val, this.key);
 	}
 
 	setInput(input, fieldId, recId) {
+		// console.log('%cchange input', 'color:red;font-weight:bold;');
 		this.deleteInput();
 		this.key = uniqueId();
+		const fileVal = input && input.files && input.files[0];
+		const filePath = input && input.value;
 		inputs[this.key] = {
-			input,
+			fileVal,
+			filePath,
 			fieldId,
 			recId,
 			id: this.key,
@@ -35,9 +39,9 @@ export class SavedFileInput {
 		// showfileInputs();
 	}
 
-	getInput() {
+	getFilePath() {
 		// console.log(this.key, inputs[this.key]);
-		return inputs[this.key] && inputs[this.key].input;
+		return inputs[this.key] && inputs[this.key].filePath;
 	}
 
 	getId() {
@@ -49,7 +53,7 @@ export class SavedFileInput {
 	}
 
 	getFile() {
-		return getFileVal(this.key);
+		return inputs[this.key] && inputs[this.key].fileVal;
 	}
 }
 

@@ -28,6 +28,7 @@ export class BankImgInput extends Input {
 	};
 
 	handleEditorChange = (v) => {
+		// console.log('set val', v);
 		this.changeVal(v);
 	};
 
