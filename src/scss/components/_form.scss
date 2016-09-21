@@ -250,8 +250,9 @@ textarea{
 	display: inline-block;
 	vertical-align: bottom;
 
-	input {
-		max-width: 200px;
+	input.file-control {
+		display:none;
+		// max-width: 200px;
 	}
 
 	[class^=button] {

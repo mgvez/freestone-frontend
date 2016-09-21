@@ -1,7 +1,7 @@
 import { Promise } from 'bluebird';
 
 import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
-import { getHtmlInput } from 'freestone/fileInputs';
+import { getFileVal } from 'freestone/fileInputs';
 
 export const SEND_FILE = 'SEND_FILE';
 
@@ -49,9 +49,8 @@ export function sendRecordFiles(dispatch, records) {
 			const record = tableRecords[recordId];
 			return tableFiles.concat(Object.keys(record).map(fieldId => {
 				const tmpName = record[fieldId];
-				const htmlInput = tmpName && getHtmlInput(tmpName);
-				if (!htmlInput || !htmlInput.files || !htmlInput.files[0]) return null;
-				const file = htmlInput.files[0];
+				const file = tmpName && getFileVal(tmpName);
+				if (!file) return null;
 				return {
 					tmpName,
 					file,

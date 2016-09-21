@@ -1,4 +1,8 @@
 import uniqueId from 'utils/UniqueId';
+/**
+Conserve les nodes des inputs file en mémoire pour pouvoir les poster, il est impossible de les recréer (on ne peut pas mettre dynamiquement une valeur à un input file pour raisons de sécurité
+*/
+
 
 const inputs = {};
 
@@ -7,6 +11,11 @@ export function showFileInputs() {
 	Object.keys(inputs).forEach(k => {
 		console.warn(k, inputs[k], inputs[k].input.value);
 	});
+}
+
+export function getFileVal(inputKey) {
+	const input = inputs[inputKey] && inputs[inputKey].input;
+	return input && input.files && input.files[0];
 }
 
 export class SavedFileInput {
@@ -38,9 +47,9 @@ export class SavedFileInput {
 	deleteInput() {
 		if (inputs[this.key]) delete inputs[this.key];
 	}
+
+	getFile() {
+		return getFileVal(this.key);
+	}
 }
 
-
-export function getHtmlInput(val) {
-	return inputs[val] && inputs[val].input;
-}

@@ -35,6 +35,11 @@
 
 //thumbnail d'un input de bank image (placé dans input type bank_img)
 .bank-image-input-thumbnail {
+
+	[class|=button] + [class|=button] {
+		margin-left: 10px;
+	}
+
 	.bank-image-thumbnail {
 		display: inline-block;
 		margin-right: 20px;
@@ -45,7 +50,16 @@
 			max-height: 300px;
 		}
 	}
+
+	.file-input-generic {
+
+	}
+
+	.bank-image-fromfile-separator{
+		margin: 10px 0;
+	}
 }
+
 
 
 //thumbnail dans la liste des images de banque quand on ouvre le popin "select...". Largeur dépend de la grille

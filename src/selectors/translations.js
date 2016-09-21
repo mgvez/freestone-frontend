@@ -43,7 +43,7 @@ export const coreTranslations = createSelector(
 				return allKeys.concat(keys);
 			}
 			return allKeys;
-		}, []).filter(onlyUnique).sort((a, b) => a > b);
+		}, []).filter(onlyUnique).sort((a, b) => { return a > b ? 1 : -1; });
 
 		return {
 			translationKeys,
