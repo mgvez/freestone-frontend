@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
 import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
@@ -47,7 +47,11 @@ function receiveRecord(state, data) {
 
 	const newState = data.tables.reduce((bldState, singleTable) => {
 		if (!singleTable.tableId || !singleTable.records) return bldState;
-		const { tableId } = singleTable;
+		const { tableId, tableType } = singleTable;
+		
+		//doit se faire uniquement pour les tables NON mtm. Normalement, les records mtm sont recus par une action spécifique, mais quand on duplicate les records, tous les recs sont dans le même call api
+		if (tableType === TYPE_MTM) return bldState;
+
 		bldState[tableId] = singleTable.records.reduce((tableRecords, record) => {
 			const key = record[PRIKEY_ALIAS];
 			record[LOADED_TIME_ALIAS] = new Date().getTime() / 1000;
@@ -180,7 +184,9 @@ function receiveMtmRecords(state, data) {
 	return data.tables.reduce((transformedState, table) => {
 		if (!table.parentTableId || !table.parentRecordId) return transformedState;
 
-		const { tableId, parentTableId, parentRecordId } = table;
+		const { tableId, parentTableId, parentRecordId, tableType } = table;
+		//doit se faire uniquement pour les tables de type mtm. Normalement, les records mtm sont recus par une action spécifique, mais quand on duplicate les records, tous les recs sont dans le même call api, donc on ne repond pas spécifiquement a une action receive MTM
+		if (tableType !== TYPE_MTM) return transformedState;
 		const newState = {
 			...transformedState,
 			[tableId]: {
@@ -234,6 +240,7 @@ function mtmRecords(state = {}, action) {
 	case UNAUTHORIZED:
 		return {};
 	case RECEIVE_MTM_RECORDS:
+	case RECEIVE_RECORD:
 		return receiveMtmRecords(state, action.data);
 	case TOGGLE_MTM_VALUE:
 		return toggleMtmValue(state, action.data);
