@@ -110,7 +110,7 @@ export class RecordInteractions extends Component {
 						</Link>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
-						<a href={recordLink} onClick={this.changePort} className="record-action accent">
+						<a href={recordLink} onClick={this.changePort} target="_blank" className="record-action accent">
 							<i className="fa fa-eye"></i>{PREVIEW_LABEL}
 						</a>
 					</div>

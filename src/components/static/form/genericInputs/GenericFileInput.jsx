@@ -79,7 +79,7 @@ export class GenericFileInput extends Component {
 		if (this.fileinp) {
 			const e = new Event('click');
 			this.fileinp.dispatchEvent(e);
-			// console.log(this.fileinp);
+			console.log(this.fileinp);
 		}
 	}
 
