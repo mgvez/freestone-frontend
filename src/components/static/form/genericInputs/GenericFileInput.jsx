@@ -103,7 +103,7 @@ export class GenericFileInput extends Component {
 			deleteBtn = <button className="button-round-bordered-danger" onClick={this.setForDelete}><i className="fa fa-times"></i>Delete {typeLabel}</button>;
 		}
 
-		const displayVal = val && (inputVal || origVal);
+		const displayVal = this.props.type === TYPE_IMG ? val && (inputVal || origVal) : null;
 
 		const thumbnail = <FileThumbnail val={origVal === val ? val : null} localVal={this.state.localFile} dir={this.props.folder} type={this.props.type} />;
 		const id = `${this.props.fieldId}__${this.props.recordId}`;

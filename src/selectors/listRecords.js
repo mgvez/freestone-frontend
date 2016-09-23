@@ -63,7 +63,7 @@ export const listRecordsSelector = createSelector(
 				//le tree ne peut pas etre construit direct en SQL, a cause de l'ordre, et au lieu de le builder en php, on le fait en js
 				records = reorderSelfTree(loadedRecords);
 			} else if (table.groupField) {
-				console.log(table.groupField);
+				// console.log(table.groupField);
 				const groupFieldAlias = table.groupField.alias;
 				const groupFieldLabelAlias = table.groupField.listAlias;
 				groupedRecords = records.reduce((carry, record) => {

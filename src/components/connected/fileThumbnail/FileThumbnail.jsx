@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { TYPE_FILE } from 'freestone/schemaProps';
+
 @connect(
 	state => {
 		return {
@@ -28,10 +30,19 @@ export class FileThumbnail extends Component {
 	render() {
 
 		if (!this.props.val && !this.props.localVal) return null;
-		//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
-		const val = this.props.val ? `${this.props.env.thumbsDir}/${this.props.dir}/${this.props.val}` : this.props.localVal;
 
-		return <a href={`${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`} target="_blank"><img src={val} style={this.css} /></a>;
+		let display;
+		if (this.props.type === TYPE_FILE) {
+			display = this.props.val;
+		} else {
+			//image
+			//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
+			const val = this.props.val ? `${this.props.env.thumbsDir}/${this.props.dir}/${this.props.val}` : this.props.localVal;
+			display = <img src={val} style={this.css} />;
+		}
+
+
+		return <a href={`${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`} target="_blank">{display}</a>;
 
 	}
 }
