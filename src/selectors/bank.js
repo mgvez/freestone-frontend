@@ -7,8 +7,10 @@ const recordsSelector = state => state.recordList;
 // const recordListSelector = state => state.imageBankList;
 const envSelector = state => state.env;
 const bankImgSelector = state => state.bankImage;
+const allUsesSelector = state => state.bankUses;
 
 const idSelector = (state, props) => props.id;
+const bankNameSelector = (state, props) => props.bankName;
 
 export const bankSelector = createSelector(
 	[schemaSelector, recordsSelector, envSelector],
@@ -48,6 +50,18 @@ export const bankImgThumbnailSelector = createSelector(
 		const markup = allImages[id];
 		return {
 			markup,
+		};
+	}
+);
+
+export const bankUsesSelector = createSelector(
+	[bankNameSelector, idSelector, allUsesSelector],
+	(bankName, id, allUses) => {
+		// console.log(bankName);
+		// console.log(allUses);
+		const records = allUses[bankName] && allUses[bankName][id];
+		return {
+			records,
 		};
 	}
 );

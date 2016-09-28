@@ -8,7 +8,7 @@ function buildlink(contents, link, linkLabel) {
 	let val = link.trim();
 
 	// console.log(val, !!~val.indexOf('{lnk'), !!~val.indexOf('//'));
-	if (!~val.indexOf('{lnk') && !~val.indexOf('//')) {
+	if (!~val.indexOf('//') && !~val.indexOf('{lnk')) {
 		val = `//${val}`;
 	}
 	// console.log(val);
@@ -19,8 +19,13 @@ function buildlink(contents, link, linkLabel) {
 	if (contents && ~contents.indexOf('{{placeholder}}')) {
 		val = contents.replace('{{placeholder}}', val);
 	}
-
+	// console.log(val);
 	return val;
+}
+
+let internalUrl;
+function receiveUrl(event) {
+	internalUrl = event.data;
 }
 
 export class LinkInsert extends Component {
@@ -34,6 +39,14 @@ export class LinkInsert extends Component {
 		isUrlOnly: React.PropTypes.bool,
 	};
 
+	componentWillMount() {
+		window.addEventListener('message', receiveUrl, false);
+	}
+
+	componentWillUnMount() {
+		window.removeEventListener('message', receiveUrl);
+	}
+
 	afterOpenModal = () => {
 		// references are now sync'd and can be accessed.
 		// this.refs.subtitle.style.color = '#f00';
@@ -42,7 +55,7 @@ export class LinkInsert extends Component {
 	selectInternal = () => {
 		try {
 			const ifr = this.refs.ifr;
-			const link = ifr.contentWindow.location.href;
+			const link = internalUrl || ifr.contentWindow.location.href;
 			this.props.setVal(buildlink(
 				this.props.contentAfter,
 				link,
@@ -50,6 +63,7 @@ export class LinkInsert extends Component {
 			));
 			this.closeModal();
 		} catch (e) {
+			console.log(e);
 			alert('Cross domain error. If you want to link to an external site, please paste the link in the external link input');// eslint-disable-line
 		}
 	};

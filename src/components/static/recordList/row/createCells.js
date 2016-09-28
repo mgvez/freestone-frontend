@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { TYPE_IMG, TYPE_FILE, TYPE_BANKIMG } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, ROLE_N_USES } from 'freestone/schemaProps';
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
+import { BankNUses } from 'components/connected/widgets/BankNUses';
 
 const MAX_THUMB_SIZE = 200;
 
 
-export function createCells(fields, values, elementType = 'td', options = {}) {
+export function createCells(table, fields, values, elementType = 'td', options = {}) {
 	return fields.map((field, index) => {
-		// console.log(field.listAlias);
 		if (field.isGroup) return null;
 
 		let val = values[field.listAlias];
@@ -35,6 +35,20 @@ export function createCells(fields, values, elementType = 'td', options = {}) {
 				}
 			);
 		}
+
+		if (field.role === ROLE_N_USES) {
+			// console.log(field);
+			// console.log(values);
+			val = React.createElement(
+				BankNUses,
+				{
+					bankName: table.bankName,
+					id: values[PRIKEY_ALIAS],
+					nUses: val,
+				}
+			);
+		}
+
 		return React.createElement(
 			elementType,
 			{

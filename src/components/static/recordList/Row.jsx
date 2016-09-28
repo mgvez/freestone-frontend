@@ -33,14 +33,14 @@ export class Row extends Component {
 	}
 
 	renderSelfTree() {
-		const { fields, values } = this.props;
+		const { fields, values, table } = this.props;
 
 		const breadcrumb = values.breadcrumb ? values.breadcrumb : '0';
 		const level = values.level ? values.level : '0';
 		// console.log(values);
 
 		if (this.props.isLarge) {
-			const label = createCells(fields, values, 'span');
+			const label = createCells(table, fields, values, 'span');
 
 			return (
 				<tr className={`level-${level}`} onMouseOver={this.handleHover}>
@@ -53,7 +53,7 @@ export class Row extends Component {
 			);
 		}
 
-		const content = createCells(fields, values, 'div', { className: 'mobile-cell' });
+		const content = createCells(table, fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr className="selfjoin-row">
 				<td>
@@ -68,11 +68,11 @@ export class Row extends Component {
 	}
 
 	renderRegular() {
-		const { fields, values } = this.props;
+		const { fields, values, table } = this.props;
 		let content;
 		//ROW NORMAL, LARGE
 		if (this.props.isLarge) {
-			content = createCells(fields, values);
+			content = createCells(table, fields, values);
 
 			return (
 				<tr onMouseOver={this.handleHover}>
@@ -85,7 +85,7 @@ export class Row extends Component {
 		}
 
 		//ROW NORMAL, MOBILE
-		content = createCells(fields, values, 'div', { className: 'mobile-cell' });
+		content = createCells(table, fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr>
 				<td>

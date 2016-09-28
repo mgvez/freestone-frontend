@@ -13,7 +13,7 @@ import { recordList } from './recordList';
 import { default as recordForm } from './recordForm';
 import { mtmOptions } from './mtmOptions';
 import { default as subform } from './subform';
-import { bankImage } from './bank';
+import { bankImage, bankUses } from './bank';
 import save from './save';
 
 const rootReducer = combineReducers({
@@ -33,6 +33,7 @@ const rootReducer = combineReducers({
 	mtmOptions,
 	subform,
 	bankImage,
+	bankUses,
 	envVariables,
 	translations,
 });
