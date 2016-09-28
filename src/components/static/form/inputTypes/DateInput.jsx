@@ -9,8 +9,9 @@ export class DateInput extends Input {
 
 	onSelectDate = (d) => {
 		// console.log(a);
+		let dateStr = '';
 		if (d) {
-			let dateStr = d.format('YYYY-MM-DD');
+			dateStr = d.format('YYYY-MM-DD');
 
 			if (this.props.field.type === TYPE_DATETIME) {
 				d.hour(Number(this._hour.value));
@@ -19,8 +20,8 @@ export class DateInput extends Input {
 				dateStr = d.format('YYYY-MM-DD HH:mm:ss');
 			}
 
-			this.changeVal(dateStr);
 		}
+		this.changeVal(dateStr);
 	};
 
 	onChangeTime = () => {
@@ -35,9 +36,9 @@ export class DateInput extends Input {
 		let timeInputs;
 		if (this.props.field.type === TYPE_DATETIME) {
 			timeInputs = (<div>
-				<input ref={el => this._hour = el} value={d.hour()} onChange={this.onChangeTime} /> h
-				<input ref={el => this._minute = el} value={d.minute()} onChange={this.onChangeTime} /> m
-				<input ref={el => this._second = el} value={d.second()} onChange={this.onChangeTime} /> s
+				<input ref={el => this._hour = el} value={d && d.hour()} onChange={this.onChangeTime} /> h
+				<input ref={el => this._minute = el} value={d && d.minute()} onChange={this.onChangeTime} /> m
+				<input ref={el => this._second = el} value={d && d.second()} onChange={this.onChangeTime} /> s
 			</div>);
 		}
 
