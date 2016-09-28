@@ -9,16 +9,18 @@ export class DateInput extends Input {
 
 	onSelectDate = (d) => {
 		// console.log(a);
-		let dateStr = d.format('YYYY-MM-DD');
+		if (d) {
+			let dateStr = d.format('YYYY-MM-DD');
 
-		if (this.props.field.type === TYPE_DATETIME) {
-			d.hour(Number(this._hour.value));
-			d.minute(Number(this._minute.value));
-			d.second(Number(this._second.value));
-			dateStr = d.format('YYYY-MM-DD HH:mm:ss');
+			if (this.props.field.type === TYPE_DATETIME) {
+				d.hour(Number(this._hour.value));
+				d.minute(Number(this._minute.value));
+				d.second(Number(this._second.value));
+				dateStr = d.format('YYYY-MM-DD HH:mm:ss');
+			}
+
+			this.changeVal(dateStr);
 		}
-
-		this.changeVal(dateStr);
 	};
 
 	onChangeTime = () => {
@@ -27,9 +29,8 @@ export class DateInput extends Input {
 
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
-		const d = this.props.val ? moment(this.props.val) : moment();
-
-		console.log('moment', this.props.val, d);
+		const d = this.props.val ? moment(this.props.val) : null;
+		// console.log('moment', this.props.val, d);
 
 		let timeInputs;
 		if (this.props.field.type === TYPE_DATETIME) {
@@ -39,7 +40,7 @@ export class DateInput extends Input {
 				<input ref={el => this._second = el} value={d.second()} onChange={this.onChangeTime} /> s
 			</div>);
 		}
-		
+
 		return (<div>
 			<DatePicker selected={d} locale="fr-CA" showYearDropdown onChange={this.onSelectDate} />
 			{timeInputs}
