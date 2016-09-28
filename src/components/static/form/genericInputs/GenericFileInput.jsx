@@ -76,9 +76,10 @@ export class GenericFileInput extends Component {
 	}
 
 	triggerSelectFile = () => {
+		console.log(this.fileinp);
 		if (this.fileinp) {
 			const e = new Event('click');
-			this.fileinp.dispatchEvent(e);
+			this.fileinp.click();
 			// console.log(this.fileinp);
 		}
 	}

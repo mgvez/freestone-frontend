@@ -95,8 +95,5 @@
     "webpack-dev-server": "^1.8.2",
     "webpack-hot-middleware": "^2.4.1",
     "yargs": "^3.18.0"
-  },
-  "dependencies": {
-    "react": "^15.0.2"
   }
 }
