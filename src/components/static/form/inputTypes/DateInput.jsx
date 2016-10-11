@@ -30,7 +30,7 @@ export class DateInput extends Input {
 
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
-		const d = this.props.val ? moment(this.props.val) : null;
+		const d = (this.props.val && !~this.props.val.indexOf('0000-00-00')) ? moment(this.props.val) : null;
 		// console.log('moment', this.props.val, d);
 
 		let timeInputs;
