@@ -33,6 +33,7 @@ export class Field extends Component {
 		case 'char':
 		case 'note':
 		case 'password':
+		case 'md':
 			input = <TextInput {...this.props} />;
 			break;
 		case 'html':
