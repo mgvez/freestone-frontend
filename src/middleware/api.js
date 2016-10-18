@@ -41,6 +41,7 @@ export default store => next => action => {
 	requestType = requestType || FREESTONE_API_REQUEST;
 	successType = successType || FREESTONE_API_SUCCESS;
 	failureType = failureType || FREESTONE_API_FAILURE;
+	// console.log(requestType, successType);
 
 	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
 
@@ -85,7 +86,9 @@ export default store => next => action => {
 		error => {
 			const msg = error.status ? `${error.message} ${error.status} ${error.statusText}` : error.message;
 			console.log(`%cERROR ${msg}`, 'color:red;font-weight:bold');// eslint-disable-line
-			console.log(error);
+			console.log('for requests', requestType, successType);// eslint-disable-line
+			console.log(data);// eslint-disable-line
+			console.log(error);// eslint-disable-line
 			// console.log(error.responseText);
 			if (error.status === 401) {
 				next(loginUserFailure(error));
