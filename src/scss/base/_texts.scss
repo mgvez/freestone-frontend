@@ -62,3 +62,8 @@ strong {
 ul, ol, li {
 	@extend %text_default;
 }
+
+
+iframe {
+	border:0;
+}

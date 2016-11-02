@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { Table } from 'components/static/menu/Table';
 import { Module } from 'components/static/menu/Module';
+import { Page } from 'components/static/menu/Page';
 import { NativeModule } from 'components/static/menu/NativeModule';
 import { Collapser } from 'animation/Collapser';
 
@@ -44,7 +45,6 @@ export class NavGroup extends Component {
 	getContents() {
 		if (!this.collapser.getOpenState()) return null;
 		const level = this.props.level + 1;
-
 		return (<ul className="sub-nav" ref={(el) => this._children = el}>
 			{this.getChildrenGroups(level)}
 			{
@@ -59,6 +59,11 @@ export class NavGroup extends Component {
 						return <NativeModule key={`mod-${item.id}`} {...item} />;
 					}
 					return <Module key={`mod-${item.id}`} {...item} />;
+				})
+			}
+			{
+				this.props.data.pages.map((item) => {
+					return <Page key={`pg-${item.id}`} {...item} />;
 				})
 			}
 		</ul>);
