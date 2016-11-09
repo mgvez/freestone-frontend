@@ -17,16 +17,16 @@ export function fetchTranslations(lang) {
 	};
 }
 
-export function fetchPlacedTranslations() {
-	return (dispatch) => {
-		return dispatch({
-			[FREESTONE_API]: {
-				types: ['api::fetch-placed-translations', SET_PLACED_TRANSLATIONS, FREESTONE_API_FATAL_FAILURE],
-				route: 'translations/getFromTemplates',
-			},
-		});
-	};
-}
+// export function fetchPlacedTranslations() {
+// 	return (dispatch) => {
+// 		return dispatch({
+// 			[FREESTONE_API]: {
+// 				types: ['api::fetch-placed-translations', SET_PLACED_TRANSLATIONS, FREESTONE_API_FATAL_FAILURE],
+// 				route: 'translations/getFromTemplates',
+// 			},
+// 		});
+// 	};
+// }
 
 
 export function editTranslation(language, key, value) {

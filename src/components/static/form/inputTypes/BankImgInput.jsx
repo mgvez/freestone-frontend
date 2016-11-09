@@ -51,20 +51,24 @@ export class BankImgInput extends Input {
 		const label = bankImgId ? 'Change' : 'Choose image from bank';
 		const deleteBtn = bankImgId ? <button className="button-round-danger-bordered" onClick={this.delete}>Remove value</button> : undefined;
 
+		//si une image de banque deja placée, on peut pas mettre un fichier direct. O peut juste changer l'image de la banque, parce que sinon ça donne l'impression que le fichier direct edit le record de banque.
+		let localFileInput = null;
+		if (!bankImgId) {
+			localFileInput = (<GenericFileInput 
+				type={TYPE_IMG}
+				fieldId={this.props.field.id}
+				recordId={this.props.recordId}
+				val={localFileId}
+				changeVal={this.handleEditorChange}
+			/>);
+		}
+
 		return (
 			<div className="bank-image-input-thumbnail">
-
 				{bankThumbnail}
 				<button className="button-round-action-bordered" onClick={this.openModal}>{label}</button>
 				{deleteBtn}
-
-				<GenericFileInput 
-					type={TYPE_IMG}
-					fieldId={this.props.field.id}
-					recordId={this.props.recordId}
-					val={localFileId}
-					changeVal={this.handleEditorChange}
-				/>
+				{localFileInput}
 			</div>
 		);
 	}
