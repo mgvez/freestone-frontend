@@ -12,6 +12,7 @@ const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.schema.children;
 
 const saveStateSelector = state => state.save;
+const listPageAfterSaveSelector = state => state.nav.listPageAfterSave;
 
 //get un tree de IDs de records et de ses children
 function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
@@ -66,8 +67,8 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 }
 
 const buildRecordSelector = createSelector(
-	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
+	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, listPageAfterSaveSelector],
+	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = mainTableSchema;
 		const { tables } = allSchema;
@@ -78,12 +79,14 @@ const buildRecordSelector = createSelector(
 		// console.log(tables);
 		// console.log(records);
 		// console.log(unfilteredChildren);
-
+		const afterSaveLocation = table && allListPageAfterSave[table.name] && allListPageAfterSave[table.name][recordId];
+		// console.log(afterSaveLocation);
 		return {
 			tree,
 			records,
 			deleted,
 			table,
+			afterSaveLocation,
 			fields: table && table.fields,
 		};
 	}

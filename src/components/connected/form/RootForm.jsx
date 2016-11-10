@@ -70,9 +70,7 @@ export class RootForm extends Component {
 	saveAndBack = () => {
 		this.setState({
 			saving: true,
-			afterSave: this.props.finishCallback || (() => {
-				this.props.goTo(`list/${this.props.table.name}`);
-			}),
+			afterSave: this.props.finishCallback,
 		});
 	}
 

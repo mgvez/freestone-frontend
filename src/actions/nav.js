@@ -5,6 +5,7 @@ import { push as pushPath } from 'react-router-redux';
 export const ADD_NAV = 'ADD_NAV';
 export const TOGGLE_NAV = 'TOGGLE_NAV';
 export const LOCK_SCROLL = 'LOCK_SCROLL';
+export const REMEMBER_LIST_PAGE = 'REMEMBER_LIST_PAGE';
 
 export function fetchNav() {
 	return (dispatch) => {
@@ -26,6 +27,19 @@ export function lockScroll(path, scroll) {
 			data: {
 				path,
 				scroll,
+			},
+		});
+	};
+}
+
+export function rememberListPage(table, recId, path) {
+	return (dispatch) => {
+		return dispatch({
+			type: REMEMBER_LIST_PAGE,
+			data: {
+				table,
+				recId,
+				path,
 			},
 		});
 	};

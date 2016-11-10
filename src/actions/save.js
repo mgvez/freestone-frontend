@@ -73,7 +73,7 @@ export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback
 			});
 
 			onSaved.then((res) => {
-				// console.log(res);
+				// console.log(callback);
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
 
@@ -81,7 +81,7 @@ export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback
 					callback(res.mainRecord);
 				} else {
 					const backPath = gotoOnFinish || `list/${table.name}`;
-
+					// console.log(backPath, gotoOnFinish);
 					//si table savée est meta (zva_...)
 					if (isMeta) {
 						dispatch({

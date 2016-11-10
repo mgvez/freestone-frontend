@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL } from 'actions/nav';
+import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL, REMEMBER_LIST_PAGE } from 'actions/nav';
 import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
 
 const navInitialState = {
@@ -48,6 +48,7 @@ function toggleState(state = {}, action) {
 		return state;
 	}
 }
+
 function scrollLock(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
@@ -70,10 +71,33 @@ function scrollLock(state = {}, action) {
 	}
 }
 
+/**
+	Une fois savé, on retourne à la page de liste, mais celle d'ou on a ouvert le record qu'on save
+*/
+function listPageAfterSave(state = {}, action) {
+	// console.log(action);
+
+	switch (action.type) {
+	case REMEMBER_LIST_PAGE:
+		// console.log(action);
+		return {
+			...state,
+			[action.data.table]: {
+				...state[action.data.table],
+				[action.data.recId]: action.data.path,
+			},
+		};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
 // function currentNav()
 
 export default combineReducers({
 	structure,
 	toggleState,
 	scrollLock,
+	listPageAfterSave,
 });

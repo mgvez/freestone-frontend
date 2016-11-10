@@ -16,7 +16,7 @@ export class Paging extends Component {
 		const clicked = e.currentTarget;
 		this.props.onChangePage(clicked.dataset.page);
 	}
-	
+
 	getPage(num, label) {
 
 		let display;

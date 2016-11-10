@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { routeSelector } from 'selectors/route';
-import { lockScroll } from 'actions/nav';
+import { lockScroll, rememberListPage } from 'actions/nav';
 
 import { InfosFcn } from 'components/static/recordList/InfosFcn';
 import { DuplicateBtn } from 'components/connected/recordList/DuplicateBtn';
@@ -20,7 +20,7 @@ const PREVIEW_LABEL = 'Preview';
 
 @connect(
 	routeSelector,
-	dispatch => bindActionCreators({ lockScroll }, dispatch)
+	dispatch => bindActionCreators({ lockScroll, rememberListPage }, dispatch)
 )
 export class RecordInteractions extends Component {
 	static propTypes = {
@@ -29,6 +29,7 @@ export class RecordInteractions extends Component {
 		path: React.PropTypes.string,
 		values: React.PropTypes.object,
 
+		rememberListPage: React.PropTypes.func,
 		lockScroll: React.PropTypes.func,
 	};
 
@@ -57,6 +58,7 @@ export class RecordInteractions extends Component {
 	
 	onEditClick = () => {
 		this.props.lockScroll(this.props.path, window.scrollY);
+		this.props.rememberListPage(this.props.table.name, this.props.values[PRIKEY_ALIAS], this.props.path);
 	}
 
 	onWindowClick = () => {
