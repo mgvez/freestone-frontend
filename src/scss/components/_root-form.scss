@@ -60,6 +60,8 @@
 			padding-left: 30px;
 
 			display: flex;
+			justify-content: flex-end;
+			flex: 0 0 405px;
 
 			[class^=button] + [class^=button] {
 				margin-left: 10px;

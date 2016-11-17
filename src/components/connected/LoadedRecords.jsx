@@ -6,18 +6,20 @@ import { LoadedRecordsToggler } from 'components/connected/widgets/LoadedRecords
 
 import { fetchTable } from 'actions/schema';
 import { fetchForeignOptions } from 'actions/foreignOptions';
+import { toggleLoadedRecords } from 'actions/siteHeader';
 import { loadedRecords } from 'selectors/loadedRecords';
 
 import { Cancel } from 'components/connected/process/Cancel';
 
 @connect(
 	loadedRecords,
-	dispatch => bindActionCreators({ fetchTable, fetchForeignOptions }, dispatch)
+	dispatch => bindActionCreators({ fetchTable, fetchForeignOptions, toggleLoadedRecords }, dispatch)
 )
 export class LoadedRecords extends Component {
 	static propTypes = {
 		fetchTable: React.PropTypes.func,
 		fetchForeignOptions: React.PropTypes.func,
+		toggleLoadedRecords: React.PropTypes.func,
 
 		records: React.PropTypes.array,
 		unloadedForeignOptions: React.PropTypes.array,
@@ -81,6 +83,10 @@ export class LoadedRecords extends Component {
 		this.setState({ isSticky: window.scrollY >= this.origOffset });
 	}
 
+	linkClick = () => {
+		this.props.toggleLoadedRecords(false);
+	}
+
 	render() {
 		// console.log('%cRender menu', 'font-weight: bold');
 		// console.log(this.props.tree);
@@ -115,7 +121,7 @@ export class LoadedRecords extends Component {
 												{record.label}
 												{outdatedWarning}
 												<div className="record-buttons">
-													<Link to={`/edit/${records.table.name}/${record.id}`} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+													<Link to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></Link>
 													<Cancel tableName={records.table.name} recordId={record.id} />
 												</div>
 											</div>
