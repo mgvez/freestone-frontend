@@ -5,12 +5,25 @@ export class Page extends Component {
 	static propTypes = {
 		label: React.PropTypes.string,
 		id: React.PropTypes.number,
+		flag: React.PropTypes.oneOfType([
+			React.PropTypes.string,
+			React.PropTypes.number,
+		]),
+		flag_type: React.PropTypes.string,
 	};
 
 	render() {
+
+		let flag;
+		if (this.props.flag) {
+			flag = (<span className="flag">
+				<span className={`${this.props.flag_type}`}>{this.props.flag}</span>
+			</span>);
+		}
+
 		return (
 			<li className="nav-item">
-				<Link to={`/page/${this.props.id}`} activeClassName="active" className="module">{this.props.label}</Link>
+				<Link to={`/page/${this.props.id}`} activeClassName="active" className="module">{this.props.label} {flag}</Link>
 			</li>
 		);
 	}

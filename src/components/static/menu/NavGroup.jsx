@@ -63,6 +63,7 @@ export class NavGroup extends Component {
 			}
 			{
 				this.props.data.pages.map((item) => {
+					// console.log(item);
 					return <Page key={`pg-${item.id}`} {...item} />;
 				})
 			}
