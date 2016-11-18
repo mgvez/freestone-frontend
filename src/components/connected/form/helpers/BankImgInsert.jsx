@@ -8,7 +8,7 @@ import customStyle from 'components/styles/modalStyles.js';
 import { addRecord, fetchList } from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
-import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from 'freestone/schemaProps';
 import { callApi } from 'freestone/api';
 
 import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
@@ -147,6 +147,9 @@ export class BankImgInsert extends Component {
 									<div className="label">{record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
 									<div className="size">
 										Original size : {record[BANK_IMG_DIM_ALIAS]}
+									</div>
+									<div className="comments">
+										Comments : {record[BANK_IMG_COMMENTS_ALIAS]}
 									</div>
 									<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
 									<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]} className="button-round-warning">Edit</button>

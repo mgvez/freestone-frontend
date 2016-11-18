@@ -29,6 +29,7 @@ export const BANK_IMG_TABLE = 'zva_bank_img';
 export const BANK_IMG_FILE_ALIAS = 'zva_bank_img_file';
 export const BANK_IMG_DIM_ALIAS = 'zva_bank_img__dim';
 export const BANK_IMG_TITLE_ALIAS = 'zva_bank_img__title_';
+export const BANK_IMG_COMMENTS_ALIAS = 'zva_bank_img_comments';
 export const BANK_IMG_FOLDER_ALIAS = 'zva_bank_img_file_folder';
 
 export const ROLE_N_USES = 'ROLE_N_USES';
