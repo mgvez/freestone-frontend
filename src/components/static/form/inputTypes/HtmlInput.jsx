@@ -27,7 +27,7 @@ const TINYMCE_CONFIG = {
 		'visualchars',
 		'autolink',
 	],
-	paste_as_text: true,
+	paste_as_text: false,
 	paste_merge_formats: true,
 	theme_modern_toolbar_location: 'top',
 	theme_modern_toolbar_align: 'left',
