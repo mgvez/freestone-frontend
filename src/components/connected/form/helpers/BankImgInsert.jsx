@@ -127,6 +127,7 @@ export class BankImgInsert extends Component {
 		this.props.fetchList(BANK_IMG_TABLE, val, 1);
 	};
 
+
 	render() {
 
 		let content;
@@ -138,23 +139,37 @@ export class BankImgInsert extends Component {
 		} else if (this.props.records) {
 			// console.log(this.props.records);
 			content = (
-				<div className="row">
+				<div>
 					{
-						this.props.records.map((record, idx) => {
-							return (
-								<div key={`th${idx}`} className="col-sm-3 col-md-2 bank-image-list-item">
-									<BankImgThumbnail id={record[PRIKEY_ALIAS]} />
-									<div className="label">{record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
-									<div className="size">
-										Original size : {record[BANK_IMG_DIM_ALIAS]}
+						this.props.records.map((categ, idx) => {
+							const images = categ.images.map((record, imidx) => {
+								const comments = record[BANK_IMG_COMMENTS_ALIAS] ? (<div className="comments">
+									Comments : {record[BANK_IMG_COMMENTS_ALIAS]}
+								</div>) : null;
+								return (
+									<div key={`th${imidx}`} className="col-sm-3 col-md-2 bank-image-list-item">
+										<BankImgThumbnail id={record[PRIKEY_ALIAS]} />
+										<div className="label">{record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
+										<div className="filename">{record[BANK_IMG_FILE_ALIAS]}</div>
+										<div className="size">
+											Original size : {record[BANK_IMG_DIM_ALIAS]}
+										</div>
+										{comments}
+										<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
+										<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]} className="button-round-warning">Edit</button>
 									</div>
-									<div className="comments">
-										Comments : {record[BANK_IMG_COMMENTS_ALIAS]}
+								);
+							});
+							return (<div key={`categ-${idx}`}>
+								<div className="row">
+									<div className="col-md-12 ">
+										<h2 className="bank-categ">{categ.categName}</h2>
 									</div>
-									<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
-									<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]} className="button-round-warning">Edit</button>
 								</div>
-							);
+								<div className="row">
+									{images}
+								</div>
+							</div>);
 						})
 					}
 				</div>

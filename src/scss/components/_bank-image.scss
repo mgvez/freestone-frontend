@@ -24,6 +24,10 @@
 
 .bank-image-list {
 	padding: 0 $grid-gutter-width/2;
+	
+	.bank-categ {
+		margin: 30px 0 20px;
+	}
 
 	.root-form {
 		background: $color-background-main;
@@ -64,7 +68,6 @@
 
 //thumbnail dans la liste des images de banque quand on ouvre le popin "select...". Largeur dépend de la grille
 .bank-image-list-item {
-
 	//le thumbnail lui-même (div contenant l'image avec srcset)
 	.bank-image-thumbnail {
 		width: 100%;
@@ -84,11 +87,11 @@
 		}
 	}
 
-	.label, .size, .comments {
+	.label, .size, .comments, .filename {
 		margin: 10px 0;
 	}
 
-	.size, .comments {
+	.size, .comments, .filename {
 		font-size: 12px;
 	}
 
