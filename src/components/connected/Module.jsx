@@ -14,13 +14,26 @@ const metaData = {
 };
 
 @connect(
-	state => { return { jwt: state.auth.jwt }; }
+	(state, props) => {
+		const { url } = props.params;
+		const modules = state.nav.structure.modules;
+		let module = {};
+		if (modules) {
+			module = modules.find(mod => mod.url === url);
+		}
+		return { 
+			jwt: state.auth.jwt,
+			...module,
+		};
+	}
 )
 export class Module extends Component {
 	static propTypes = {
 		params: React.PropTypes.shape({
 			url: React.PropTypes.string,
 		}),
+		label: React.PropTypes.string,
+		description: React.PropTypes.string,
 		jwt: React.PropTypes.string,
 	};
 	
@@ -31,9 +44,12 @@ export class Module extends Component {
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
-				<h1>
-					{this.props.params.url}
-				</h1>
+				<header className="module-header">
+					<div className="texts">
+						<h1>{this.props.label}</h1>
+						<p>{this.props.description}</p>
+					</div>
+				</header>
 				<iframe className="module" src={url} style={{ width: '100%', minHeight: '100vh' }} />
 			</section>
 		);

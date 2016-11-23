@@ -40,8 +40,8 @@ export function callApi(route, data) {
 			method,
 			data,
 			headers,
-		}).then(resolve, (res) => {
-			// console.log(res);
+		}).then(resolve).catch(res => {
+			console.log(res);
 			const err = new Error('API Error');
 			err.status = res.status;
 			err.statusText = res.statusText;

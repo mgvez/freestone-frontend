@@ -38,26 +38,30 @@ export class Save extends Component {
 		let msgDisplay = null;
 		if (isError) {
 			msgDisplay = (<div>
-				<h2 className="error">{this.props.saveState.status.msg}</h2>
-				<div>{this.props.saveState.status.error}</div>
-				<div onClick={this.props.cancelSave} className="btn btn-primary btn-sm"><i className="fa fa-pencil"></i><span>Go back to form</span></div>
+				<h3 className="error-title">{this.props.saveState.status.msg}</h3>
+				<div className="error-message">{this.props.saveState.status.error}</div>
+				<div onClick={this.props.cancelSave} className="back-btn"><i className="fa fa-pencil"></i><span>Go back to form</span></div>
 			</div>);
 		} else {
-			msgDisplay = (<div>
+			msgDisplay = (<div className="save-msg">
 				{this.props.saveState.status.msg}
 			</div>);
 		}
 
 		return (
-			<section>
-				Saving...
-				{
-					Object.keys(this.props.saveState.files).map(tmpName => {
-						const curPrc = this.props.saveState.files[tmpName];
-						return <div key={tmpName}>Saving {tmpName} : {curPrc}%</div>;
-					})
-				}
-				{msgDisplay}
+			<section className="saving">
+				<header className="page-header">
+					<div className="texts">
+						<h2>Saving...</h2>
+						{
+							Object.keys(this.props.saveState.files).map(tmpName => {
+								const curPrc = this.props.saveState.files[tmpName];
+								return <div key={tmpName} className="save-msg">Saving {tmpName} : {curPrc}%</div>;
+							})
+						}
+						{msgDisplay}
+					</div>
+				</header>
 			</section>
 		);
 	}

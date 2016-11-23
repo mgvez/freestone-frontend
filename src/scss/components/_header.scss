@@ -69,7 +69,7 @@
 	}
 }
 
-.record-header {
+.record-header, .module-header, .page-header {
 	padding: 25px 40px;
 	background: $color-background-light;
 	border-top: 1px solid $gray86;
@@ -77,6 +77,10 @@
 	margin-bottom: 60px;
 	position: relative;
 	width: 100%;
+
+	&.module-header {
+		margin-bottom:0;
+	}
 
 	font-size: 0;
 
