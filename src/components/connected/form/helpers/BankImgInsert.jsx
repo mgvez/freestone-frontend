@@ -8,7 +8,7 @@ import customStyle from 'components/styles/modalStyles.js';
 import { addRecord, fetchList } from 'actions/record';
 import { fetchTable } from 'actions/schema';
 
-import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_FOLDER_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from 'freestone/schemaProps';
 import { callApi } from 'freestone/api';
 
 import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
@@ -19,7 +19,7 @@ import createRecord from 'freestone/createRecord';
 import { bankSelector } from 'selectors/bank';
 
 @connect(
-	bankSelector,
+	bankSelector(BANK_IMG_TABLE),
 	dispatch => bindActionCreators({ fetchList, addRecord, fetchTable }, dispatch)
 )
 export class BankImgInsert extends Component {
@@ -143,16 +143,16 @@ export class BankImgInsert extends Component {
 					{
 						this.props.records.map((categ, idx) => {
 							const images = categ.images.map((record, imidx) => {
-								const comments = record[BANK_IMG_COMMENTS_ALIAS] ? (<div className="comments">
-									Comments : {record[BANK_IMG_COMMENTS_ALIAS]}
+								const comments = record[`${BANK_IMG_TABLE}_${BANK_IMG_COMMENTS_ALIAS}`] ? (<div className="comments">
+									Comments : {record[`${BANK_IMG_TABLE}_${BANK_IMG_COMMENTS_ALIAS}`]}
 								</div>) : null;
 								return (
 									<div key={`th${imidx}`} className="col-sm-3 col-md-2 bank-image-list-item">
 										<BankImgThumbnail id={record[PRIKEY_ALIAS]} />
-										<div className="label">{record[`${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
-										<div className="filename">{record[BANK_IMG_FILE_ALIAS]}</div>
+										<div className="label">{record[`${BANK_IMG_TABLE}_${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
+										<div className="filename">{record[`${BANK_IMG_TABLE}_${BANK_IMG_FILE_ALIAS}`]}</div>
 										<div className="size">
-											Original size : {record[BANK_IMG_DIM_ALIAS]}
+											Original size : {record[`${BANK_IMG_TABLE}_${BANK_IMG_DIM_ALIAS}`]}
 										</div>
 										{comments}
 										<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>

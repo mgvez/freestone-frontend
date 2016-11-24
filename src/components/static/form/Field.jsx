@@ -8,6 +8,7 @@ import { HtmlInput } from 'components/static/form/inputTypes/HtmlInput';
 import { FileInput } from 'components/static/form/inputTypes/FileInput';
 import { DateInput } from 'components/static/form/inputTypes/DateInput';
 import { BankImgInput } from 'components/static/form/inputTypes/BankImgInput';
+import { BankFileInput } from 'components/static/form/inputTypes/BankFileInput';
 import { UrlInput } from 'components/static/form/inputTypes/UrlInput';
 import { AutocompleteInput } from 'components/connected/form/inputTypes/AutocompleteInput';
 
@@ -72,6 +73,9 @@ export class Field extends Component {
 			break;
 		case 'bankimg'://link vers image de la banque
 			input = <BankImgInput {...this.props} />;
+			break;
+		case 'bankfile'://link vers image de la banque
+			input = <BankFileInput {...this.props} />;
 			break;
 		case 'pri':
 		case 'ajax':

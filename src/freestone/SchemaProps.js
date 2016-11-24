@@ -26,11 +26,17 @@ export const SUBFORM_VIEW_TABBED = 'SUBFORM_VIEW_TABBED';
 export const SUBFORM_VIEW_LIST = 'SUBFORM_VIEW_LIST'; 
 
 export const BANK_IMG_TABLE = 'zva_bank_img';
-export const BANK_IMG_FILE_ALIAS = 'zva_bank_img_file';
-export const BANK_IMG_DIM_ALIAS = 'zva_bank_img__dim';
-export const BANK_IMG_TITLE_ALIAS = 'zva_bank_img__title_';
-export const BANK_IMG_COMMENTS_ALIAS = 'zva_bank_img_comments';
-export const BANK_IMG_FOLDER_ALIAS = 'zva_bank_img_file_folder';
-export const BANK_IMG_CATEG_ALIAS = 'zva_bank_img_categ_id_label';
+export const BANK_IMG_FILE_ALIAS = 'file';
+export const BANK_IMG_DIM_ALIAS = '_dim';
+export const BANK_IMG_TITLE_ALIAS = '_title_';
+export const BANK_IMG_COMMENTS_ALIAS = 'comments';
+export const BANK_IMG_CATEG_ALIAS = 'categ_id_label';
+
+export const BANK_FILE_TABLE = 'zva_bank_docs';
+export const BANK_FILE_FILE_ALIAS = 'file';
+export const BANK_FILE_TITLE_ALIAS = '_title_';
+export const BANK_FILE_COMMENTS_ALIAS = 'comments';
+export const BANK_FILE_PATH_ALIAS = 'file_path';
+export const BANK_FILE_CATEG_ALIAS = 'categ_id_label';
 
 export const ROLE_N_USES = 'ROLE_N_USES';
