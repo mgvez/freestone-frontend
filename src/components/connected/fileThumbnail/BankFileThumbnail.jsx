@@ -33,16 +33,16 @@ export class BankFileThumbnail extends Component {
 	}
 
 	render() {
-		if (!this.props.id || !this.props.item) return null;
 		// console.log(this.props.item);
+		if (!this.props.id || !this.props.item) return null;
 		return (
 			<div className="bank-file-thumbnail">
+				<strong>{this.props.item[`${BANK_FILE_TITLE_ALIAS}${this.props.lang}`]}</strong>
+				<br />
 				<a href={this.props.item[BANK_FILE_PATH_ALIAS]} target="_blank">
 					<i className="fa fa-file" />&nbsp;
 					{this.props.item[BANK_FILE_FILE_ALIAS]}
 				</a>
-				<br />
-				<strong>{this.props.item[`${BANK_FILE_TITLE_ALIAS}${this.props.lang}`]}</strong>
 			</div>
 		);
 	}

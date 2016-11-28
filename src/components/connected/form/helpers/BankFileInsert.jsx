@@ -10,6 +10,7 @@ import { fetchTable } from 'actions/schema';
 
 import { PRIKEY_ALIAS, BANK_FILE_FILE_ALIAS, BANK_FILE_TABLE, BANK_FILE_TITLE_ALIAS, BANK_FILE_COMMENTS_ALIAS } from 'freestone/schemaProps';
 import { callApi } from 'freestone/api';
+import { BankFileThumbnail } from 'components/connected/fileThumbnail/BankFileThumbnail';
 
 import { RootForm } from 'components/connected/form/RootForm';
 import { Paging } from 'components/static/recordList/Paging';
@@ -46,7 +47,6 @@ export class BankFileInsert extends Component {
 	
 
 	componentWillMount() {
-		console.log(this.props);
 		this.requireData(this.props);
 		this.setState({
 			editing: false,
@@ -148,6 +148,7 @@ export class BankFileInsert extends Component {
 								</div>) : null;
 								return (
 									<div key={`th${imidx}`} className="col-sm-3 col-md-2 bank-file-list-item">
+										<BankFileThumbnail id={record[PRIKEY_ALIAS]} />
 										<div className="label">{record[`${BANK_FILE_TITLE_ALIAS}${this.props.lang}`]}</div>
 										<div className="filename">{record[BANK_FILE_FILE_ALIAS]}</div>
 										{comments}
