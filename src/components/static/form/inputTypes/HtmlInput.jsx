@@ -3,6 +3,7 @@ import React from 'react';
 import { Input } from 'components/static/form/inputTypes/Input';
 import { LinkInsert } from 'components/connected/form/helpers/LinkInsert';
 import { BankImgInsert } from 'components/connected/form/helpers/BankImgInsert';
+import { BankFileInsert } from 'components/connected/form/helpers/BankFileInsert';
 import TinyMCEInput from 'react-tinymce-input';
 
 import VALID_ELEMENTS from 'components/static/form/inputTypes/tinymce/validElements';
@@ -108,6 +109,7 @@ export class HtmlInput extends Input {
 			case 'addImageFromBank':
 				return <BankImgInsert onClose={this.closeModal} setMarkup={this.handleEditorChange} lang={this.props.lang} {...params} />;
 			case 'addDocFromBank':
+				return <BankFileInsert onClose={this.closeModal} setMarkup={this.handleEditorChange} lang={this.props.lang} {...params} />;
 			default:
 				break;
 			}

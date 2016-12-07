@@ -25,6 +25,7 @@ function buildlink(contents, link, linkLabel) {
 
 let internalUrl;
 function receiveUrl(event) {
+	// console.log(event.data);
 	internalUrl = event.data;
 }
 
@@ -56,6 +57,7 @@ export class LinkInsert extends Component {
 		try {
 			const ifr = this.refs.ifr;
 			const link = internalUrl || ifr.contentWindow.location.href;
+			// console.log(link);
 			this.props.setVal(buildlink(
 				this.props.contentAfter,
 				link,

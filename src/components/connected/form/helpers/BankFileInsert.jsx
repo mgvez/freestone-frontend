@@ -76,7 +76,7 @@ export class BankFileInsert extends Component {
 		this.closeModal();
 	};
 
-	chooseImage = (e) => {
+	chooseFile = (e) => {
 		const id = e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.id;
 		// console.log(e.currentTarget.dataset.id);
 
@@ -86,8 +86,9 @@ export class BankFileInsert extends Component {
 		}
 
 		if (this.props.setMarkup) {
-			callApi(`bank/files/link/${id}`).then(res => {
-				// console.log(res);
+			callApi(`bank/files/link/${id}/${this.props.lang}`).then(res => {
+				console.log(res);
+
 				this.props.setMarkup(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
 				this.closeModal(true);
 			}, err => {
@@ -152,7 +153,7 @@ export class BankFileInsert extends Component {
 										<div className="label">{record[`${BANK_FILE_TITLE_ALIAS}${this.props.lang}`]}</div>
 										<div className="filename">{record[BANK_FILE_FILE_ALIAS]}</div>
 										{comments}
-										<button onClick={this.chooseImage} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
+										<button onClick={this.chooseFile} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
 										<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]} className="button-round-warning">Edit</button>
 									</div>
 								);

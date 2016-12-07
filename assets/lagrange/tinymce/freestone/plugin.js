@@ -23,7 +23,7 @@
 
 			ed.addCommand('addDocFromBank', function() {});
 
-			ed.addCommand('insertLink', function(){});
+			ed.addCommand('insertLink', function() {});
 
 			ed.addButton('freestoneImageFromBank', {
 				icon: "image",
