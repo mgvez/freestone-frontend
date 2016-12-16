@@ -1,0 +1,14 @@
+
+
+.shortcuts {
+	margin-top: 30px;
+	margin-bottom: 30px;
+
+	[class|=button] {
+		position:relative;
+		margin-right: 10px;
+		.nrecords, .flag {
+			display:none;
+		}
+	}
+}

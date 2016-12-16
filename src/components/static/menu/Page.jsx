@@ -10,6 +10,7 @@ export class Page extends Component {
 			React.PropTypes.number,
 		]),
 		flag_type: React.PropTypes.string,
+		className: React.PropTypes.string,
 	};
 
 	render() {
@@ -22,9 +23,7 @@ export class Page extends Component {
 		}
 
 		return (
-			<li className="nav-item">
-				<Link to={`/page/${this.props.id}`} activeClassName="active" className="module">{this.props.label} {flag}</Link>
-			</li>
+			<Link to={`/page/${this.props.id}`} activeClassName="active" className={`${this.props.className} module`}>{this.props.label} {flag}</Link>
 		);
 	}
 }

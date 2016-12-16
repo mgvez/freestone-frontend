@@ -49,22 +49,22 @@ export class NavGroup extends Component {
 			{this.getChildrenGroups(level)}
 			{
 				this.props.data.tables.map((item) => {
-					return <Table key={item.id} name={item.name} id={item.id} displayLabel={item.displayLabel} nrecords={item.nrecords} />;
+					return 	<li className="nav-item" key={item.id}><Table name={item.name} id={item.id} displayLabel={item.displayLabel} nrecords={item.nrecords} /></li>;
 				})
 			}
 			{
 				this.props.data.modules.map((item) => {
 					// console.log(item.isFrontendComponent, item);
 					if (item.isFrontendComponent) {
-						return <NativeModule key={`mod-${item.id}`} {...item} />;
+						return <li className="nav-item" key={`mod-${item.id}`}><NativeModule {...item} /></li>;
 					}
-					return <Module key={`mod-${item.id}`} {...item} />;
+					return <li className="nav-item" key={`mod-${item.id}`}><Module {...item} /></li>;
 				})
 			}
 			{
 				this.props.data.pages.map((item) => {
 					// console.log(item);
-					return <Page key={`pg-${item.id}`} {...item} />;
+					return <li className="nav-item" key={`pg-${item.id}`}><Page {...item} /></li>;
 				})
 			}
 		</ul>);

@@ -6,13 +6,12 @@ export class Module extends Component {
 		label: React.PropTypes.string,
 		url: React.PropTypes.string,
 		id: React.PropTypes.number,
+		className: React.PropTypes.string,
 	};
 
 	render() {
 		return (
-			<li className="nav-item">
-				<Link to={`/module/${this.props.url}`} activeClassName="active" className="module">{this.props.label}</Link>
-			</li>
+			<Link to={`/module/${this.props.url}`} activeClassName="active" className={`${this.props.className} module`}>{this.props.label}</Link>
 		);
 	}
 }
