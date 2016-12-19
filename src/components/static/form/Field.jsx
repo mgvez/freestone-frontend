@@ -54,6 +54,7 @@ export class Field extends Component {
 		case 'foreign':
 		case 'selfjoin':
 		case 'foreigntext':
+		case 'language':
 			// input = <SelectInput {...this.props} />;
 			// break;
 			input = <AutocompleteInput {...this.props} />;

@@ -7,6 +7,14 @@ const allLanguagesSelector = state => state.env.languages;
 const keySelector = (state, props) => props.translationKey;
 const langSelector = (state, props) => props.language;
 
+
+export const languageKeysSelector = createSelector(
+	[allLanguagesSelector],
+	(languages) => {
+		return languages.map(lang => lang.key);
+	}
+);
+
 function makeSingleTranslationSelector() {
 	return createSelector(
 		[allTranslationsSelector, keySelector, langSelector],
@@ -33,7 +41,7 @@ function onlyUnique(value, index, self) {
 }
 
 export const coreTranslations = createSelector(
-	[allTranslationsSelector, allLanguagesSelector, placedTranslationsSelector],
+	[allTranslationsSelector, languageKeysSelector, placedTranslationsSelector],
 	(translations, languages, placedTranslations) => {
 
 		const translationKeys = languages.reduce((allKeys, lang) => {

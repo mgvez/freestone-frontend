@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
-import { TYPE_BANKIMG, TYPE_IMG } from 'freestone/schemaProps';
+import { TYPE_BANKIMG, TYPE_IMG, TYPE_LANGUAGE } from 'freestone/schemaProps';
 
 const rawForeignOptionsSelector = state => state.foreignOptions;
-const fieldIdSelector = (state, props) => props.field.id;
+const fieldSelector = (state, props) => props.field;
 const envSelector = state => state.env;
+const langSelector = state => state.env.languages;
 
 export const allForeignOptionsSelector = createSelector(
 	[rawForeignOptionsSelector, envSelector],
@@ -57,12 +58,34 @@ export const allForeignOptionsSelector = createSelector(
 	},
 );
 
+//format language list to display in dropdown
+function getLanguages(languages) {
+	// console.log(languages);
+	return {
+		values: languages.map(lang => {
+			return {
+				value: lang.key,
+				label: `${lang.key} - ${lang.name}`,
+			};
+		}),
+	};
+}
+
 function makeSelector() {
 	return createSelector(
-		[allForeignOptionsSelector, fieldIdSelector],
-		(allOptions, fieldId) => {
+		[allForeignOptionsSelector, fieldSelector, langSelector],
+		(allOptions, field, languages) => {
+
+			//normal foreign
+			let foreignOptions = allOptions[field.id];
+
+			//language type: special type of foreign whose values come from an environtment var (available languages)
+			if (field.type === TYPE_LANGUAGE) {
+				foreignOptions = getLanguages(languages);
+			}
+
 			return {
-				foreignOptions: allOptions[fieldId],
+				foreignOptions,
 			};
 		}
 	);
