@@ -19,6 +19,8 @@ export class Field extends Component {
 		val: React.PropTypes.any,
 		origVal: React.PropTypes.any,
 		lang: React.PropTypes.string,
+		//isRoot can be true if table has property forceAsRoot that make it "main table" even if it is also subforms. 
+		isRoot: React.PropTypes.number,
 
 		setFieldVal: React.PropTypes.func,
 	};
@@ -78,10 +80,15 @@ export class Field extends Component {
 		case 'bankfile'://link vers image de la banque
 			input = <BankFileInput {...this.props} />;
 			break;
+		case 'subform':
+		case 'rel':
+		case 'oto':
+			if (this.props.isRoot) {
+				input = <AutocompleteInput {...this.props} />;
+			}
+			break;
 		case 'pri':
 		case 'ajax':
-		case 'rel':
-		case 'subform':
 		case 'order':
 		case 'mtm':
 		default:
@@ -91,18 +98,11 @@ export class Field extends Component {
 
 		const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
 
-		switch (this.props.field.type) {
-		case 'separator':
+		if (this.props.field.type === 'separator') {
 			return <h2>{this.props.field.label}</h2>;
-		case 'pri':
-		case 'rel':
-		case 'mtm':
-		case 'oto':
-		case 'order':
-		case 'subform':
-		case 'nodisplay':
-			return null;
-		default:
+		}
+
+		if (input) {
 			return (
 				<div className="field row">
 					<div className="col-md-4 field-label">
@@ -117,6 +117,7 @@ export class Field extends Component {
 			);
 		}
 
+		return null;
 
 	}
 }

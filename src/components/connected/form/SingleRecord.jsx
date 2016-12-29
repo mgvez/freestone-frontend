@@ -65,6 +65,7 @@ export class SingleRecord extends Component {
 		let sub;
 
 		// console.log('render', this.props.table.name);
+		// console.log('render', this.props.table);
 		if (this.props.table && this.props.record) {
 
 			let deleteBtn;
@@ -105,6 +106,7 @@ export class SingleRecord extends Component {
 								setFieldVal={this.props.setFieldVal}
 								env={this.props.env}
 								lang={field.language}
+								isRoot={this.props.isRoot}
 							/>) : null;
 						})
 					}
