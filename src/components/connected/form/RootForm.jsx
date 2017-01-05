@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import { goTo } from 'actions/nav';
+import { fetchRecordRevisionList } from 'actions/record';
 import DocumentMeta from 'react-document-meta';
 
 import { rootFormMapStateToProps } from 'selectors/rootForm';
@@ -16,7 +17,7 @@ import { FormHeader } from 'components/connected/header/FormHeader';
 
 @connect(
 	rootFormMapStateToProps,
-	dispatch => bindActionCreators({ ...schemaActionCreators, goTo }, dispatch)
+	dispatch => bindActionCreators({ ...schemaActionCreators, goTo, fetchRecordRevisionList }, dispatch)
 )
 export class RootForm extends Component {
 	static propTypes = {
@@ -36,6 +37,7 @@ export class RootForm extends Component {
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 		goTo: React.PropTypes.func,
+		fetchRecordRevisionList: React.PropTypes.func,
 	};
 
 	componentWillMount() {
@@ -51,6 +53,7 @@ export class RootForm extends Component {
 			afterSave: null,
 			language: null,
 		});
+
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -99,7 +102,11 @@ export class RootForm extends Component {
 
 	requireData(props) {
 		const { tableName } = props.params;
-		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.table) {
+			this.props.fetchTable(tableName);
+		} else {
+			// this.props.fetchRecordRevisionList(this.props.table.id, this.props.params.recordId);		
+		}
 	}
 
 	render() {

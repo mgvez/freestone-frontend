@@ -10,6 +10,7 @@ import { env, userViewSettings, envVariables } from './env';
 import { errors } from './errors';
 import { foreignOptions } from './foreignOptions';
 import { recordList } from './recordList';
+import { default as recordRevision } from './recordRevision';
 import { default as recordForm } from './recordForm';
 import { mtmOptions } from './mtmOptions';
 import { default as subform } from './subform';
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
 	bank,
 	envVariables,
 	translations,
+	recordRevision,
 });
 
 export default rootReducer;
