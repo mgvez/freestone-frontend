@@ -34,6 +34,10 @@ export class ListSearch extends Component {
 		return this.props.search ? <div className="search-results-num">Showing {this.props.numRecords} result{(this.props.numRecords > 1) ? 's' : ''} for '{this.props.search}' in {this.props.tableName}</div> : <div> </div>;
 	}
 
+	getClearSearch() {
+		return this.props.search ? <button className="button-search clear" type="reset" onClick={this.onUpdateSearchField}><i className="fa fa-times"></i></button> : null;
+	}
+
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.search();
@@ -50,8 +54,9 @@ export class ListSearch extends Component {
 		return (<form className="search-results-infos" onSubmit={this.handleSubmit}>
 			{this.getSearchResults()}
 			<div className="search-inputs-ctn">
-				<input className="search-input" type="text" placeholder="search" ref={el => this.searchInput = el} initialValue="" />
+				<input className="search-input" type="search" placeholder="search" ref={el => this.searchInput = el} initialValue="" />
 				<button className="button-search"><i className="fa fa-search"></i></button>
+				{this.getClearSearch()}
 			</div>
 		</form>);
 	}
