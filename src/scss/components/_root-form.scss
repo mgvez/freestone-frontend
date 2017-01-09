@@ -83,6 +83,10 @@
 			@extend %text_default;
 			font-weight: $font-weight-semibold;
 			text-transform: uppercase;
+
+			&.schema + .button-preview {
+				margin-left: 20px;
+			}
 		}
 
 		.lang-toggler {

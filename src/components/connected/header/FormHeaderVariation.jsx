@@ -18,6 +18,7 @@ export class FormHeaderVariation extends Component {
 			recordId: React.PropTypes.string,
 		}),
 		
+		table: React.PropTypes.object,
 		isModal: React.PropTypes.bool,
 		language: React.PropTypes.string,
 		hasLanguageToggle: React.PropTypes.bool,
@@ -52,8 +53,12 @@ export class FormHeaderVariation extends Component {
 		const languageToggler = this.props.hasLanguageToggle ? <LanguageToggler onChangeLang={this.props.isModal ? this.props.setLanguageState : null} localLanguage={language} /> : null;
 		
 		const recordLink = `../main.php?i=${this.props.params.recordId}&t=${this.props.params.tableName}`;
-		const preview = this.props.hasPreview ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
+		const preview = this.props.table.hasTemplate ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
+
+		const canEditSchema = true; // TODO: plug this with user permissions
+		const editSchemaLink = `#/edit/zva_table/${this.props.table.id}`;
+		const editSchema = canEditSchema ? (<a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>) : null;
 
 		const infos = (this.props.isLight) ? '' : (
 			<div className="texts">
@@ -71,6 +76,7 @@ export class FormHeaderVariation extends Component {
 					{this.props.buttons}
 				</div>
 				<div className="popout">
+					{editSchema}
 					{preview}
 					{languageToggler}
 				</div>

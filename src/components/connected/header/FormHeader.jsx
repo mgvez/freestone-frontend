@@ -6,7 +6,7 @@ import { FormHeaderVariation } from 'components/connected/header/FormHeaderVaria
 
 export class FormHeader extends Component {
 	static propTypes = {
-		record: React.PropTypes.object,
+		table: React.PropTypes.object,
 		setLanguageState: React.PropTypes.func,
 		hasLanguageToggle: React.PropTypes.bool,
 		hasPreview: React.PropTypes.bool,
