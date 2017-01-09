@@ -7,8 +7,13 @@
 
 	height: calc(100vh - 60px);
 	width: $records-width;
-	padding: 40px 35px;
 	overflow: auto;
+	padding: 40px 15px;
+
+	.container {
+		width: #{$records-width - 20px};
+		padding: 0 20px;
+	}
 
 	background: $color-background-dark;
 	color: $color-text-secondary;
