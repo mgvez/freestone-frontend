@@ -8,6 +8,7 @@ export class ListSearch extends Component {
 		search: React.PropTypes.string,
 		curPage: React.PropTypes.number,
 		router: React.PropTypes.object,
+		numRecords: React.PropTypes.number,
 	};
 
 	componentDidMount() {
@@ -29,6 +30,10 @@ export class ListSearch extends Component {
 		this.search();
 	}, 200);
 
+	getSearchResults() {
+		return this.props.search ? <div className="search-results-num">Showing {this.props.numRecords} result{(this.props.numRecords > 1) ? 's' : ''} for '{this.props.search}' in {this.props.tableName}</div> : <div> </div>;
+	}
+
 	handleSubmit = (e) => {
 		e.preventDefault();
 		this.search();
@@ -42,9 +47,12 @@ export class ListSearch extends Component {
 	}
 
 	render() {
-		return (<form onSubmit={this.handleSubmit}>
-			<input className="search-input" type="text" placeholder="search" ref={el => this.searchInput = el} initialValue="" />
-			<button className="button-search"><i className="fa fa-search"></i></button>
+		return (<form className="search-results-infos" onSubmit={this.handleSubmit}>
+			{this.getSearchResults()}
+			<div className="search-inputs-ctn">
+				<input className="search-input" type="text" placeholder="search" ref={el => this.searchInput = el} initialValue="" />
+				<button className="button-search"><i className="fa fa-search"></i></button>
+			</div>
 		</form>);
 	}
 }

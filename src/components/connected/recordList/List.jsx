@@ -76,6 +76,10 @@ export class List extends Component {
 		window.removeEventListener('resize', this.handleResize);
 	}
 
+	getNumRecords = () => {
+		return this.props.groupedRecords.reduce((total, gr) => total + gr.records.reduce((subtotal) => subtotal + 1, 0), 0);
+	}
+
 	requireData(props) {
 		const { tableName, page, search } = props.params;
 		if (!props.table) this.props.fetchTable(tableName);
@@ -143,7 +147,7 @@ export class List extends Component {
 					</header>
 
 					<div className="padded-content search-ctn">
-						<ListSearch tableName={this.props.table.name} search={this.props.params.search} curPage={this.props.curPage} router={this.context.router} />
+						<ListSearch tableName={this.props.table.name} numRecords={this.getNumRecords()} search={this.props.params.search} curPage={this.props.curPage} router={this.context.router} />
 					</div>
 
 					<div className="padded-content">
