@@ -162,7 +162,7 @@ export class AutocompleteInput extends Input {
 		const { suggestions } = this.state;
 		// console.log('render with "%s" tx, %s options', value, suggestions.length);
 		const inputProps = {
-			placeholder: '',
+			placeholder: 'Click or type to see suggestions...',
 			value,
 			onChange: this.onChange,
 			onBlur: this.onBlur,

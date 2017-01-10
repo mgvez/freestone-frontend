@@ -8,6 +8,7 @@ import { fetchTable } from 'actions/schema';
 import { fetchForeignOptions } from 'actions/foreignOptions';
 import { toggleLoadedRecords } from 'actions/siteHeader';
 import { loadedRecords } from 'selectors/loadedRecords';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import { Cancel } from 'components/connected/process/Cancel';
 
@@ -98,40 +99,44 @@ export class LoadedRecords extends Component {
 
 		return (
 			<nav className={`loaded-records ${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
-				<LoadedRecordsToggler isClose />
-				<h2>Loaded records</h2>
-				{
-					this.props.records.map((records) => {
-						if (!records.records || !records.table || !records.records.length) return null;
-						return (
-							<div className="record-group" key={records.tableId}>
-								<h3 className="record-label">{records.table.displayLabel}</h3>
-								{
-									records.records.map(record => {
+				<Scrollbars>
+					<div className="container">
+						<LoadedRecordsToggler isClose />
+						<h2>Loaded records</h2>
+						{
+							this.props.records.map((records) => {
+								if (!records.records || !records.table || !records.records.length) return null;
+								return (
+									<div className="record-group" key={records.tableId}>
+										<h3 className="record-label">{records.table.displayLabel}</h3>
+										{
+											records.records.map(record => {
 
-										const warnClass = record.isOutdated ? 'warn' : '';
-										const outdatedWarning = (
-											<div className={warnClass}>
-												This record has been open for {this.getTimeElapsed(record)}.
-											</div>
-										);
+												const warnClass = record.isOutdated ? 'warn' : '';
+												const outdatedWarning = (
+													<div className={warnClass}>
+														This record has been open for {this.getTimeElapsed(record)}.
+													</div>
+												);
 
-										return (
-											<div className="loaded-record" key={`${records.tableId}_${record.id}`}>
-												{record.label}
-												{outdatedWarning}
-												<div className="record-buttons">
-													<Link to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></Link>
-													<Cancel tableName={records.table.name} recordId={record.id} />
-												</div>
-											</div>
-										);
-									})
-								}
-							</div>
-						);
-					})
-				}
+												return (
+													<div className="loaded-record" key={`${records.tableId}_${record.id}`}>
+														{record.label}
+														{outdatedWarning}
+														<div className="record-buttons">
+															<Link to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+															<Cancel tableName={records.table.name} recordId={record.id} />
+														</div>
+													</div>
+												);
+											})
+										}
+									</div>
+								);
+							})
+						}
+					</div>
+				</Scrollbars>
 			</nav>
 		);
 	}

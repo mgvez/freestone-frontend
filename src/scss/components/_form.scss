@@ -2,6 +2,7 @@
 
 textarea,
 input[type="text"],
+input[type="search"],
 input[type="password"],
 input[type="email"],
 input[role="combobox"] {
@@ -32,21 +33,6 @@ input[role="combobox"] {
 textarea{
 	height: 130px;
 	line-height: 1.4em;
-}
-
-.button-search {
-	height: 40px;
-	line-height: 40px;
-
-	padding: 0;
-	width: 40px;
-
-	border-radius: 5px;
-	margin-left: 10px;
-
-	i {
-		margin-right: 0;
-	}
 }
 
 .mce-tinymce {

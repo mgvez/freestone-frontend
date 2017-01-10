@@ -141,7 +141,7 @@ export class RootForm extends Component {
 			return (<section className="root-form">
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
-				<FormHeader {...this.props} hasLanguageToggle setLanguageState={this.setLanguageState} buttons={actionBtns}>
+				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
 					<Header table={this.props.table} />
 				</FormHeader>
 

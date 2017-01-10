@@ -31,6 +31,7 @@ export class RecordInteractions extends Component {
 
 		rememberListPage: React.PropTypes.func,
 		lockScroll: React.PropTypes.func,
+		hasPreview: React.PropTypes.bool,
 	};
 
 	constructor(props) {
@@ -102,6 +103,8 @@ export class RecordInteractions extends Component {
 		const recordLink = `../main.php?i=${prikeyVal}&t=${this.props.table.name}`;
 		const activeClass = this.state.active ? 'active' : '';
 
+		const preview = this.props.table.hasTemplate ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="record-action accent"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</a>) : null;
+
 		return (<div>
 			<div className="actions">
 				<div className={`record-actions ${activeClass}`}>
@@ -112,9 +115,7 @@ export class RecordInteractions extends Component {
 						</Link>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
-						<a href={recordLink} onClick={this.changePort} target="_blank" className="record-action accent">
-							<i className="fa fa-eye"></i>{PREVIEW_LABEL}
-						</a>
+						{preview}
 					</div>
 				</div>
 				<InfosFcn
