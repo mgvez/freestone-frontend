@@ -43,7 +43,7 @@ export const listRecordsSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, paramsSelector],
 	(schema, stateRecords, params) => {
 
-		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage } = stateRecords;
+		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage, swappedRecords } = stateRecords;
 		const { page: requestedPage, search: requestedSearch } = params;
 
 		const nPages = Math.ceil(nRecords / pageSize);
@@ -99,6 +99,7 @@ export const listRecordsSelector = createSelector(
 			nRecords,
 			search: providedSearch,
 			qstr: stateRecords.qstr,
+			swappedRecords,
 		};
 	}
 );

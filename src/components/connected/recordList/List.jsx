@@ -38,6 +38,7 @@ export class List extends Component {
 		curPage: React.PropTypes.number,
 		nRecords: React.PropTypes.number,
 		search: React.PropTypes.string,
+		swappedRecords: React.PropTypes.array,
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
@@ -181,6 +182,7 @@ export class List extends Component {
 														isLarge={this.state.isLarge}
 														isHovering={isHovering}
 														handleHover={this.handleHover}
+														swappedRecords={this.props.swappedRecords}
 													/>
 												);
 											})
