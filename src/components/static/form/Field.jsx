@@ -20,7 +20,7 @@ export class Field extends Component {
 		origVal: React.PropTypes.any,
 		lang: React.PropTypes.string,
 		//isRoot can be true if table has property forceAsRoot that make it "main table" even if it is also subforms. 
-		isRoot: React.PropTypes.number,
+		isRoot: React.PropTypes.bool,
 
 		setFieldVal: React.PropTypes.func,
 	};

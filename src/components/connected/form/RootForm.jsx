@@ -10,6 +10,7 @@ import { rootFormMapStateToProps } from 'selectors/rootForm';
 
 import { Save } from 'components/connected/process/Save';
 import { Cancel } from 'components/connected/process/Cancel';
+import { CopyRecord } from 'components/connected/form/buttons/CopyRecord';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
@@ -134,6 +135,8 @@ export class RootForm extends Component {
 					<Cancel key="fcn_3" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Close" />,
 				];
 			}
+
+			actionBtns.push(<CopyRecord key="fcn_copy" recordId={this.props.params.recordId} tableId={this.props.table.id} />);
 
 			return (<section className="root-form">
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
