@@ -12,6 +12,7 @@ export const SET_RECORD_DELETED = 'SET_RECORD_DELETED';
 export const RECEIVE_MTM_OPTIONS = 'RECEIVE_MTM_OPTIONS';
 export const TOGGLE_MTM_VALUE = 'TOGGLE_MTM_VALUE';
 export const CANCEL_EDIT_RECORD = 'CANCEL_EDIT_RECORD';
+export const SWAPPED_ANIMATED = 'SWAPPED_ANIMATED';
 
 
 export function fetchList(tableName, search = '', page = 1) {
@@ -179,5 +180,13 @@ export function setOrder(tableId, fieldId, records) {
 			order += 10;
 		});
 
+	};
+}
+
+export function swapAnimated() {
+	return (dispatch) => {
+		return dispatch({
+			type: SWAPPED_ANIMATED,
+		});
 	};
 }

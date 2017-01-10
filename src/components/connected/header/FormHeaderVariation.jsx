@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as devActionCreators from 'actions/dev';
+import * as authActionCreators from 'actions/auth';
+
+const actionCreators = { ...authActionCreators, ...devActionCreators };
 
 import { LanguageToggler } from 'components/connected/form/LanguageToggler';
+import { GOD_USER_GROUP } from 'freestone/settings';
+
+@connect(
+	state => {
+		// console.log(state.auth.usergroup, GOD_USER_GROUP);
+		return {
+			isGod: state.auth.usergroup === GOD_USER_GROUP,
+		};
+	},
+	dispatch => bindActionCreators(actionCreators, dispatch)
+)
 
 /**
  * FormHeaderVariation
@@ -13,6 +30,7 @@ import { LanguageToggler } from 'components/connected/form/LanguageToggler';
  */
 export class FormHeaderVariation extends Component {
 	static propTypes = {
+		isGod: React.PropTypes.bool,
 		params: React.PropTypes.shape({
 			tableName: React.PropTypes.string,
 			recordId: React.PropTypes.string,
@@ -56,9 +74,8 @@ export class FormHeaderVariation extends Component {
 		const preview = this.props.table.hasTemplate ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
-		const canEditSchema = true; // TODO: plug this with user permissions
 		const editSchemaLink = `#/edit/zva_table/${this.props.table.id}`;
-		const editSchema = canEditSchema ? (<a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>) : null;
+		const editSchema = this.props.isGod ? (<a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>) : null;
 
 		const infos = (this.props.isLight) ? '' : (
 			<div className="texts">
