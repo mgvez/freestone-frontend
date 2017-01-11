@@ -118,7 +118,7 @@ export class RootForm extends Component {
 		if (this.props.table) {
 
 			if (this.state.saving) {
-				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.state.afterSave} afterSaveLocation={this.state.afterSaveLocation} cancelSave={this.cancelSave} />;
+				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.state.afterSave} cancelSave={this.cancelSave} />;
 			}
 
 			let actionBtns;
@@ -136,7 +136,7 @@ export class RootForm extends Component {
 				];
 			}
 
-			actionBtns.push(<CopyRecord key="fcn_copy" recordId={this.props.params.recordId} tableId={this.props.table.id} />);
+			// actionBtns.push(<CopyRecord key="fcn_copy" recordId={this.props.params.recordId} tableId={this.props.table.id} />);
 
 			return (<section className="root-form">
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />

@@ -108,17 +108,20 @@ function getRecordIds(branch, allRecords, records = []) {
  * Build a list of all records to remove from the state when cancelling edit. This will also unlock these records in the backend.
  */
 export const buildCancelRecordSelector = createSelector(
-	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
+	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, listPageAfterSaveSelector],
+	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = mainTableSchema;
 		const { tables } = allSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecordIds(tree, allRecords);
 
+		const afterCancelLocation = table && allListPageAfterSave[table.name] && allListPageAfterSave[table.name][recordId];
+
 		return {
 			records,
 			table,
+			afterCancelLocation,
 		};
 	}
 );
@@ -159,13 +162,13 @@ function getRecordsAsNew(branch, allRecords, allTables, parentTableId, parentRec
 export const buildCopyRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
 	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
-		const { table } = mainTableSchema;
-		const { tables } = allSchema;
-		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
-		const records = getRecordsAsNew(tree, allRecords, tables);
-		console.log(records);
+		// const { table } = mainTableSchema;
+		// const { tables } = allSchema;
+		// const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
+		// const records = getRecordsAsNew(tree, allRecords, tables);
+		// console.log(records);
 		return {
-			tree,
+			// tree,
 		};
 	},
 );
