@@ -16,6 +16,7 @@ export class Cancel extends Component {
 		tableName: React.PropTypes.string,
 		recordId: React.PropTypes.string,
 		label: React.PropTypes.string,
+		afterCancelLocation: React.PropTypes.string,
 
 		records: React.PropTypes.array,
 
@@ -45,7 +46,7 @@ export class Cancel extends Component {
 		if (this.props.callback) {
 			this.props.callback();
 		} else {
-			this.props.goTo(`list/${this.props.tableName}`);
+			this.props.goTo(this.props.afterCancelLocation ? this.props.afterCancelLocation : `list/${this.props.tableName}`);
 		}
 	};
 

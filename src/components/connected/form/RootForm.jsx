@@ -3,12 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as schemaActionCreators from 'actions/schema';
 import { goTo } from 'actions/nav';
+import { fetchRecordRevisionList } from 'actions/record';
 import DocumentMeta from 'react-document-meta';
 
 import { rootFormMapStateToProps } from 'selectors/rootForm';
 
 import { Save } from 'components/connected/process/Save';
 import { Cancel } from 'components/connected/process/Cancel';
+import { CopyRecord } from 'components/connected/form/buttons/CopyRecord';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
 
@@ -16,7 +18,7 @@ import { FormHeader } from 'components/connected/header/FormHeader';
 
 @connect(
 	rootFormMapStateToProps,
-	dispatch => bindActionCreators({ ...schemaActionCreators, goTo }, dispatch)
+	dispatch => bindActionCreators({ ...schemaActionCreators, goTo, fetchRecordRevisionList }, dispatch)
 )
 export class RootForm extends Component {
 	static propTypes = {
@@ -36,6 +38,7 @@ export class RootForm extends Component {
 		finishCallback: React.PropTypes.func,
 		fetchTable: React.PropTypes.func,
 		goTo: React.PropTypes.func,
+		fetchRecordRevisionList: React.PropTypes.func,
 	};
 
 	componentWillMount() {
@@ -51,6 +54,7 @@ export class RootForm extends Component {
 			afterSave: null,
 			language: null,
 		});
+
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -99,7 +103,11 @@ export class RootForm extends Component {
 
 	requireData(props) {
 		const { tableName } = props.params;
-		if (!props.table) this.props.fetchTable(tableName);
+		if (!props.table) {
+			this.props.fetchTable(tableName);
+		} else {
+			// this.props.fetchRecordRevisionList(this.props.table.id, this.props.params.recordId);		
+		}
 	}
 
 	render() {
@@ -110,7 +118,7 @@ export class RootForm extends Component {
 		if (this.props.table) {
 
 			if (this.state.saving) {
-				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.state.afterSave} afterSaveLocation={this.state.afterSaveLocation} cancelSave={this.cancelSave} />;
+				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.state.afterSave} cancelSave={this.cancelSave} />;
 			}
 
 			let actionBtns;
@@ -127,6 +135,8 @@ export class RootForm extends Component {
 					<Cancel key="fcn_3" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Close" />,
 				];
 			}
+
+			// actionBtns.push(<CopyRecord key="fcn_copy" recordId={this.props.params.recordId} tableId={this.props.table.id} />);
 
 			return (<section className="root-form">
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />

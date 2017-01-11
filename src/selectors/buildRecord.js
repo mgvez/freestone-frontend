@@ -3,8 +3,9 @@ import { tableSchemaSelector } from 'selectors/tableSchema';
 import { schemaSelector } from 'selectors/schema';
 import { getForeignFieldId, getChildrenRecordIds } from 'freestone/schemaHelpers';
 import { isNew } from 'utils/UniqueId';
+import createRecord from 'freestone/createRecord';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM, LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS } from 'freestone/schemaProps';
 
 const recordsSelector = state => state.recordForm.records;
 const mtmRecordsSelector = state => state.recordForm.mtmRecords;
@@ -103,18 +104,24 @@ function getRecordIds(branch, allRecords, records = []) {
 	}, records);
 }
 
+/**
+ * Build a list of all records to remove from the state when cancelling edit. This will also unlock these records in the backend.
+ */
 export const buildCancelRecordSelector = createSelector(
-	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
+	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, listPageAfterSaveSelector],
+	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = mainTableSchema;
 		const { tables } = allSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecordIds(tree, allRecords);
 
+		const afterCancelLocation = table && allListPageAfterSave[table.name] && allListPageAfterSave[table.name][recordId];
+
 		return {
 			records,
 			table,
+			afterCancelLocation,
 		};
 	}
 );
@@ -126,6 +133,42 @@ export const buildSaveRecordSelector = createSelector(
 		return {
 			...builtRecord,
 			saveState,
+		};
+	},
+);
+
+
+/*
+* 
+*/
+function getRecordsAsNew(branch, allRecords, allTables, parentTableId, parentRecordId, newRecords = []) {
+	const { tableId, recordId, children } = branch;
+	const record = allRecords[tableId] && allRecords[tableId][recordId];
+	if (record && allTables[tableId]) {
+		const copy = createRecord(allTables[tableId], parentTableId, parentRecordId, null, record);
+		newRecords.push(copy.newRecord);
+		const newRecordId = copy.newRecordId;
+		return children.reduce((carry, childBranch) => {
+			return getRecordsAsNew(childBranch, allRecords, allTables, tableId, newRecordId, carry);
+		}, newRecords);
+	}
+
+	return newRecords;
+}
+
+/**
+ * Copy entire structure of record, but by removing non-copiable values (files) and changing IDs
+ */
+export const buildCopyRecordSelector = createSelector(
+	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
+	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
+		// const { table } = mainTableSchema;
+		// const { tables } = allSchema;
+		// const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
+		// const records = getRecordsAsNew(tree, allRecords, tables);
+		// console.log(records);
+		return {
+			// tree,
 		};
 	},
 );

@@ -3,6 +3,7 @@ import { FREESTONE_API, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } fro
 
 export const REQUEST_RECORD_LIST = 'REQUEST_RECORD_LIST';
 export const RECEIVE_RECORD_LIST = 'RECEIVE_RECORD_LIST';
+export const RECEIVE_RECORD_REVISION_LIST = 'RECEIVE_RECORD_REVISION_LIST';
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
@@ -103,6 +104,18 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
 				route: `record/${tableName}/${parentTable}/${id}`,
 				redirectOnError: `list/${tableName}`,
+			},
+		});
+	};
+}
+
+export function fetchRecordRevisionList(tableName, id) {
+	return (dispatch) => {
+		// console.log(`record/${tableName}/${parentTable}/${id}`);
+		return dispatch({
+			[FREESTONE_API]: {
+				types: ['api::fetch-record-revision-list', RECEIVE_RECORD_REVISION_LIST, FREESTONE_API_FATAL_FAILURE],
+				route: `recordRevision/list/${tableName}/${id}`,
 			},
 		});
 	};

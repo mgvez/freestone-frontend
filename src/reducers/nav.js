@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
 import { CLEAR_DATA } from 'actions/dev';
-import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL, REMEMBER_LIST_PAGE } from 'actions/nav';
+import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL, REMEMBER_LIST_PAGE, ADD_PAGE_HASH_PATH } from 'actions/nav';
 import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
 
 const navInitialState = {
@@ -82,11 +82,32 @@ function listPageAfterSave(state = {}, action) {
 		// console.log(action);
 		return {
 			...state,
-			[action.data.table]: {
-				...state[action.data.table],
+			[action.data.tableName]: {
+				...state[action.data.tableName],
 				[action.data.recId]: action.data.path,
 			},
 		};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
+function pageHashes(state = {}, action) {
+
+	switch (action.type) {
+	case ADD_PAGE_HASH_PATH:
+		// console.log(action.data);
+		return {
+			...state,
+			[action.data.hash]: {
+				path: action.data.path,
+				pageId: action.data.pageId,
+			},
+		};
+	case CLEAR_DATA:
+	case LOGOUT_SUCCESS:
+		return {};
 	default:
 		// console.log('no change');
 		return state;
@@ -100,4 +121,5 @@ export default combineReducers({
 	toggleState,
 	scrollLock,
 	listPageAfterSave,
+	pageHashes,
 });
