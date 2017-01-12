@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as devActionCreators from 'actions/dev';
 import * as authActionCreators from 'actions/auth';
+import { isNew } from 'utils/UniqueId';
 
 const actionCreators = { ...authActionCreators, ...devActionCreators };
 
@@ -70,11 +71,11 @@ export class FormHeaderVariation extends Component {
 
 		const languageToggler = this.props.hasLanguageToggle ? <LanguageToggler onChangeLang={this.props.isModal ? this.props.setLanguageState : null} localLanguage={language} /> : null;
 		
-		const recordLink = `../main.php?i=${this.props.params.recordId}&t=${this.props.params.tableName}`;
-		const preview = this.props.table.hasTemplate ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
+		const recordLink = this.props.params ? `../main.php?i=${this.props.params.recordId}&t=${this.props.params.tableName}` : '';
+		const preview = this.props.table && this.props.table.hasTemplate && !isNew(this.props.params.recordId) ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
-		const editSchemaLink = `#/edit/zva_table/${this.props.table.id}`;
+		const editSchemaLink = this.props.table ? `#/edit/zva_table/${this.props.table.id}` : '';
 		const editSchema = this.props.isGod ? (<a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>) : null;
 
 		const infos = (this.props.isLight) ? '' : (
