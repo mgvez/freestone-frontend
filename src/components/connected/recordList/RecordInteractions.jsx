@@ -11,7 +11,7 @@ import { DuplicateBtn } from 'components/connected/recordList/DuplicateBtn';
 import { OrderFcn } from 'components/connected/recordList/OrderFcn';
 import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
 
-import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 const DEFAULT_LABEL = 'Actions';
 const EDIT_LABEL = 'Edit';
@@ -89,14 +89,6 @@ export class RecordInteractions extends Component {
 		window.removeEventListener('click', this.onWindowClick);
 	}
 
-	//in dev (local) change port from node to apache
-	changePort(e) {
-		const port = Number(window.location.port);
-		if (port === 3000) {
-			e.target.port = 80;
-		}
-	}
-
 	render() {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
@@ -104,10 +96,10 @@ export class RecordInteractions extends Component {
 			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} />;
 		}
 
-		const recordLink = `../main.php?i=${prikeyVal}&t=${this.props.table.name}`;
+		const recordLink = this.props.values[SLUG_PSEUDOFIELD_ALIAS];//`../main.php?i=${prikeyVal}&t=${this.props.table.name}`;
 		const activeClass = this.state.active ? 'active' : '';
 
-		const preview = this.props.table.hasTemplate ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="record-action accent"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</a>) : null;
+		const preview = this.props.table.hasTemplate ? (<a href={recordLink} target="_blank" className="record-action accent"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</a>) : null;
 
 		return (<div>
 			<div className="actions">
