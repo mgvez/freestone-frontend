@@ -96,10 +96,10 @@ export class RecordInteractions extends Component {
 			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} />;
 		}
 
-		const recordLink = this.props.values[SLUG_PSEUDOFIELD_ALIAS];//`../main.php?i=${prikeyVal}&t=${this.props.table.name}`;
+		const recordLink = this.props.values[SLUG_PSEUDOFIELD_ALIAS];
 		const activeClass = this.state.active ? 'active' : '';
 
-		const preview = this.props.table.hasTemplate ? (<a href={recordLink} target="_blank" className="record-action accent"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</a>) : null;
+		const preview = recordLink ? (<a href={recordLink} target="_blank" className="record-action accent"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</a>) : null;
 
 		return (<div>
 			<div className="actions">

@@ -41,7 +41,7 @@ export class FormHeaderVariation extends Component {
 		isModal: React.PropTypes.bool,
 		language: React.PropTypes.string,
 		hasLanguageToggle: React.PropTypes.bool,
-		hasPreview: React.PropTypes.bool,
+		slug: React.PropTypes.string,
 		lastmodifdate: React.PropTypes.string,
 
 		setLanguageState: React.PropTypes.func,
@@ -62,17 +62,12 @@ export class FormHeaderVariation extends Component {
 		this.context.setHeight(this.props.isLight, h);
 	}
 
-	changePort(e) {
-		e.target.port = 80;
-	}
-
 	render() {
 		const language = this.props.language;
 
 		const languageToggler = this.props.hasLanguageToggle ? <LanguageToggler onChangeLang={this.props.isModal ? this.props.setLanguageState : null} localLanguage={language} /> : null;
 		
-		const recordLink = this.props.params ? `../main.php?i=${this.props.params.recordId}&t=${this.props.params.tableName}` : '';
-		const preview = this.props.table && this.props.table.hasTemplate && !isNew(this.props.params.recordId) ? (<a href={recordLink} onClick={this.changePort} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
+		const preview = this.props.slug ? (<a href={this.props.slug} onClick={this.changePort} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
 		const editSchemaLink = this.props.table ? `#/edit/zva_table/${this.props.table.id}` : '';

@@ -9,7 +9,7 @@ export class FormHeader extends Component {
 		table: React.PropTypes.object,
 		setLanguageState: React.PropTypes.func,
 		hasLanguageToggle: React.PropTypes.bool,
-		hasPreview: React.PropTypes.bool,
+		slug: React.PropTypes.string,
 		isModal: React.PropTypes.bool,
 		buttons: React.PropTypes.array,
 		children: React.PropTypes.any,

@@ -33,6 +33,7 @@ export class RootForm extends Component {
 		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
+		slug: React.PropTypes.string,
 
 		//once saved/cancelled, we can override the defualt action (which is to go to table's list). For example, when bank items are edited, they do not redirect, they only set a state on the insert component
 		finishCallback: React.PropTypes.func,
