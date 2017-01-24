@@ -89,8 +89,12 @@ export class RecordInteractions extends Component {
 		window.removeEventListener('click', this.onWindowClick);
 	}
 
+	//in dev (local) change port from node to apache
 	changePort(e) {
-		e.target.port = 80;
+		const port = Number(window.location.port);
+		if (port === 3000) {
+			e.target.port = 80;
+		}
 	}
 
 	render() {
