@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import uniqueId from '../../utils/UniqueId';
+import uniqueId from 'utils/UniqueId';
 
 import DocumentMeta from 'react-document-meta';
 import { pageSelector } from 'selectors/page';
@@ -36,20 +36,27 @@ export class Page extends Component {
 		setPageHash: React.PropTypes.func,
 		goTo: React.PropTypes.func,
 		lockScroll: React.PropTypes.func,
+
 	};
 
 	componentWillMount() {
 		window.addEventListener('message', this.receiveEditCommand, false);
 	}
 
-	componentWillUnMount() {
+	componentWillUnmount() {
 		window.removeEventListener('message', this.receiveEditCommand);
 	}
 
 	receiveEditCommand = (message) => {
 		// console.log(message.data);
-		if (message.data && message.data.command && message.data.command === 'edit') {
-			const { tableName, recordId, backUrl } = message.data;
+		if (message.data && message.data.command) {
+			const { tableName, backUrl } = message.data;
+			let recordId;
+			if (message.data.command === 'edit') {
+				recordId = message.data.recordId;
+			} else if (message.data.command === 'newrec') {
+				recordId = uniqueId();
+			}
 			// console.log(tableName, recordId, backUrl);
 
 			const hash = `__${this.props.id}`;
