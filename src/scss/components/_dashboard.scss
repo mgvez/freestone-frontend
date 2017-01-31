@@ -12,3 +12,144 @@
 		}
 	}
 }
+
+.analytics {
+
+	.analytics-section {
+		padding: 35px 0;
+	}
+
+	.summary-items {
+		display: flex;
+	}
+
+	.summary-item {
+		width: calc(100% / 3);
+		padding: 0 15px;
+
+		display: flex;
+		align-items: center;
+
+		.number {
+			background-color: $color-accent-primary;
+			width: 135px;
+			height: 135px;
+
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			align-content: center;
+
+			text-align: center;
+
+			color: $white;
+			font-weight: $font-weight-bold;
+			font-size: 30px;
+
+			> * {
+				flex: 0 0 100%;	
+			}
+		}
+
+		.infos {
+			background-color: $white;
+			border: 1px solid $gray76;
+			border-left: none;
+
+			padding: 15px 25px;
+			text-align: center;
+
+			.name {
+				font-size: 30px;
+			}
+
+			.modifier {
+				margin: 5px 0;
+
+				i {
+					@include triangle((
+						side: 'top',
+						width: 8px,
+						color: $color-text-primary
+					));
+
+					display: inline-block;
+					vertical-align: middle;
+					margin-right: 10px;
+				}
+
+				&.up {
+					color: $color-accent-primary;
+
+					i {
+						border-bottom-color: $color-accent-primary;
+					}
+				}
+
+				&.down {
+					color: $color-warn-primary;
+
+					i {
+						@include triangle((
+							side: 'bottom',
+							width: 8px,
+							color: $color-warn-primary
+						));
+						border-bottom: none;
+						display: inline-block;
+					}
+				}
+
+				&.danger {
+					color: $color-danger-primary;
+
+					i {
+						@include triangle((
+							side: 'bottom',
+							width: 8px,
+							color: $color-danger-primary
+						));
+						border-bottom: none;
+						display: inline-block;
+					}
+				}
+			}
+
+			.modifier-period {
+				font-size: 12px;
+				text-transform: uppercase;
+
+				&.up {
+					color: $color-accent-primary;
+				}
+
+				&.down {
+					color: $color-warn-primary;
+				}
+
+				&.danger {
+					color: $color-danger-primary;
+				}
+			}
+		}
+	}
+
+
+	.browsers-list {
+		padding: 0 15px;
+		display: flex;
+		align-content: stretch;
+
+		.browser {
+			flex: 0 0 33.33333%;
+			padding: 30px;
+			color: $white;
+
+			
+
+			.name {
+				font-size: 30px;
+			}
+		}
+	}
+}

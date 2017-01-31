@@ -52,7 +52,7 @@ export class GoogleAnalytics extends Component {
 	}
 
 	renderAnalyticsTimeline() {
-		//console.log('render timeline');
+		console.log('Render analytics timeline');
 		const gapi = window.gapi;
 
 		// Get data and do something with it.
@@ -91,17 +91,20 @@ export class GoogleAnalytics extends Component {
 	renderAnalytics() {
 		if (!this.props.clientId) return undefined;
 		const gapi = window.gapi;
-		// console.log('render analytics...');
+		console.log('render analytics...');
 		gapi.analytics.ready(() => {
-			// console.log('analytics ready');
+			console.log('analytics ready');
+			// console.log(gapi);
 			if (gapi.analytics.auth.isAuthorized()) {
 				// console.log('authorized');
 				this.renderAnalyticsTimeline();
 				return undefined;
 			}
-			// console.log('authorize...');
+			
+			console.log('Not authorized');
 			const auth2 = gapi.auth2;
 			if (!auth2.getAuthInstance()) {
+				console.log('Try to auth');
 				gapi.analytics.auth.authorize({
 					container: this._authbtn,
 					clientid: this.props.clientId,
@@ -109,13 +112,14 @@ export class GoogleAnalytics extends Component {
 			}
 
 			gapi.analytics.auth.on('success', () => {
-				// console.log('authorized');
+				console.log('authorized');
 				this.renderAnalyticsTimeline();
 			});
 		});
 	}
 
 	render() {
+
 		let gaInfos;
 		if (this.state.gaInfos) {
 
@@ -218,9 +222,76 @@ export class GoogleAnalytics extends Component {
 		}
 
 		return (
-			<section data-id={this.props.clientId}>
+			<section data-id={this.props.clientId} className="analytics">
 				<section ref={el => this._authbtn = el}></section>
-				<section ref={el => this._timeline = el}></section>
+
+				<section className="padded-content analytics-section summary">
+					<h2>Résumé du traffic du site</h2>
+
+					<div className="summary-items">
+						<div className="summary-item page-views">
+							<div className="number">
+								<i className="fa fa-eye"></i>
+								<strong>1101</strong>
+							</div>
+							<div className="infos">
+								<div className="name">Page views</div>
+								<div className="modifier up"><i></i>48%</div>
+								<div className="modifier-period up">Dernière semaine</div>
+							</div>
+						</div>
+
+						<div className="summary-item sessions">
+							<div className="number">
+								<i className="fa fa-desktop"></i>
+								<strong>343</strong>
+							</div>
+							<div className="infos">
+								<div className="name">Sessions</div>
+								<div className="modifier down"><i></i>3%</div>
+								<div className="modifier-period down">Dernière semaine</div>
+							</div>
+						</div>
+
+						<div className="summary-item avg-time">
+							<div className="number">
+								<i className="fa fa-clock-o"></i>
+								<strong>17:38</strong>
+							</div>
+							<div className="infos">
+								<div className="name">Temps moy.</div>
+								<div className="modifier"><i></i>0%</div>
+								<div className="modifier-period">Dernière semaine</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section className="padded-content analytics-section browsers">
+					<h2>Navigateurs utilisés</h2>
+
+					<div className="browsers-list">
+						<div className="browser">
+							<div className="percentage">
+								<i className="fa fa-chrome">40%</i>
+							</div>
+							<div className="name">Google Chrome</div>
+						</div>
+						<div className="browser">
+							<div className="percentage">
+								<i className="fa fa-safari">30%</i>
+							</div>
+							<div className="name">Safari</div>
+						</div>
+						<div className="browser">
+							<div className="percentage">
+								<i className="fa fa-firefox">11%</i>
+							</div>
+							<div className="name">Mozilla Firefox</div>
+						</div>
+					</div>
+				</section>
+				
 				{gaInfos}
 			</section>
 		);
