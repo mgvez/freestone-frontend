@@ -210,4 +210,65 @@
 			background: $color-warn-primary;
 		}
 	}
+
+	.graphs {
+		display: flex;
+		justify-content: space-between;
+		align-items: stretch;
+		padding: 0 15px;
+
+		.column {
+			flex: 0 0 calc(50% - 15px);
+
+			.graph + .graph {
+				margin-top: 30px;
+			}
+		}
+	}
+
+	.graph {
+		flex: 0 0 calc(50% - 15px);
+		padding: 40px 30px;
+		background: $white;
+
+		h2 {
+			text-align: center;
+			font-weight: $font-weight-bold;
+		}
+
+		.data {
+			display: flex;
+			align-items: center;
+			margin-top: 40px;
+
+			.name {
+				width: 110px;
+			}
+
+			.line {
+				height: 15px;
+				background: $gray86;
+				width: 100%;
+				position: relative;
+
+				&:after {
+					content: attr(data-value);
+					position: absolute;
+						top: -5px;
+						right: 0;
+
+					transform: translate(0, -100%);
+
+					color: $color-accent-primary;
+					font-weight: $font-weight-bold;
+
+				}
+
+				.span {
+					height: 100%;
+					background: $color-accent-primary;
+				}
+			}
+		}
+	}
 }

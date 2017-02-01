@@ -319,7 +319,125 @@ export class GoogleAnalytics extends Component {
 						</div>
 					</div>
 				</section>
-				
+
+				<section className="padded-content analytics-section platforms">
+					<h2>Plateformes utilisées par vos utilisateurs</h2>
+
+					<div className="graphs">
+						<div className="graph">
+							<h2>Type d'appareil utilisé</h2>
+
+							<div className="data">
+								<div className="name">Desktop</div>
+								<div className="line" data-value="501">
+									<div className="span" style={{ width: '50%' }}></div>
+								</div>
+							</div>
+							
+							<div className="data">
+								<div className="name">Mobile</div>
+								<div className="line" data-value="300">
+									<div className="span" style={{ width: '30%' }}></div>
+								</div>
+							</div>
+
+							<div className="data">
+								<div className="name">Tablette</div>
+								<div className="line" data-value="198">
+									<div className="span" style={{ width: '20%' }}></div>
+								</div>
+							</div>
+						</div>
+
+						<div className="graph">
+							<h2>Système d'exploitation</h2>
+
+							<div className="data">
+								<div className="name">Windows</div>
+								<div className="line" data-value="801">
+									<div className="span" style={{ width: '70%' }}></div>
+								</div>
+							</div>
+							
+							<div className="data">
+								<div className="name">Mac OS</div>
+								<div className="line" data-value="200">
+									<div className="span" style={{ width: '15%' }}></div>
+								</div>
+							</div>
+
+							<div className="data">
+								<div className="name">Linux</div>
+								<div className="line" data-value="50">
+									<div className="span" style={{ width: '5%' }}></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section className="padded-content analytics-section infographies">
+					<h2>Infographie des visites</h2>
+					
+					<div className="graphs">
+						<div className="column">
+							<div className="graph round">
+							
+							</div>
+						</div>
+						<div className="column">
+							<div className="graph">
+								<h2>Type d'appareil utilisé</h2>
+
+								<div className="data">
+									<div className="name">Desktop</div>
+									<div className="line" data-value="501">
+										<div className="span" style={{ width: '50%' }}></div>
+									</div>
+								</div>
+								
+								<div className="data">
+									<div className="name">Mobile</div>
+									<div className="line" data-value="300">
+										<div className="span" style={{ width: '30%' }}></div>
+									</div>
+								</div>
+
+								<div className="data">
+									<div className="name">Tablette</div>
+									<div className="line" data-value="198">
+										<div className="span" style={{ width: '20%' }}></div>
+									</div>
+								</div>
+							</div>
+
+							<div className="graph">
+								<h2>Système d'exploitation</h2>
+
+								<div className="data">
+									<div className="name">Windows</div>
+									<div className="line" data-value="801">
+										<div className="span" style={{ width: '70%' }}></div>
+									</div>
+								</div>
+								
+								<div className="data">
+									<div className="name">Mac OS</div>
+									<div className="line" data-value="200">
+										<div className="span" style={{ width: '15%' }}></div>
+									</div>
+								</div>
+
+								<div className="data">
+									<div className="name">Linux</div>
+									<div className="line" data-value="50">
+										<div className="span" style={{ width: '5%' }}></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 				{gaInfos}
 			</section>
 		);
