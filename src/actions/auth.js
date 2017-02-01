@@ -105,7 +105,7 @@ export function loginUser(username = null, password = null, remember = null, pro
 	};
 }
 
-export function loginGoogleAPI(token) {
+export function loginGoogleAPI(token_id, token_access) {
 	return (dispatch) => {
 		// console.log(redirect);
 		// console.log(action);
@@ -114,7 +114,8 @@ export function loginGoogleAPI(token) {
 				types: [LOGIN_REQUEST, null, null],
 				route: 'login',
 				data: {
-					googletoken: token,
+					googletoken_id: token_id,
+					googletoken_access: token_access,
 				},
 			},
 		});

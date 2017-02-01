@@ -10,6 +10,7 @@ import { fetchVariable } from 'actions/env';
 		if (!state.envVariables.api_google) return {};
 		return {
 			...state.envVariables.api_google,
+			gapi_token_access: state.auth.gapi_token_access,
 		};
 	},
 	dispatch => bindActionCreators({ fetchVariable }, dispatch)
@@ -18,6 +19,7 @@ export class GoogleAnalytics extends Component {
 	static propTypes = {
 		clientId: React.PropTypes.string,
 		property: React.PropTypes.string,
+		gapi_token_access: React.PropTypes.string,
 
 		// dbg: React.PropTypes.number,
 		fetchVariable: React.PropTypes.func,
@@ -52,23 +54,72 @@ export class GoogleAnalytics extends Component {
 	}
 
 	renderAnalyticsTimeline() {
-		console.log('Render analytics timeline');
+		console.log('Render analytics timeline', this.props.property);
+		const property = this.props.property || '113782268';
 		const gapi = window.gapi;
 
-		// Get data and do something with it.
-		gapi.client.analytics.data.ga.get({
-			dimensions: 'ga:date,ga:source,ga:browser,ga:browserVersion',
-			metrics: 'ga:sessions,ga:pageviews',
-			'start-date': '30daysAgo',
-			'end-date': 'yesterday',
-			ids: `ga:${this.props.property}`,
+		//v4
+		// gapi.client.analyticsreporting.reports.batchGet({
+		gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						dimensions: [
+							{
+								name: 'ga:date',
+							},
+							{
+								name: 'ga:source',
+							},
+							{
+								name: 'ga:browser',
+							},
+							{
+								name: 'ga:browserVersion',
+							},
+						],
+						metrics: [
+							{
+								expression: 'ga:sessions',
+							},
+							{
+								expression: 'ga:pageviews',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
 		}).then((res) => {
-			console.log('Sessions and pageviews', res);
+			console.log('Sessions and pageviews', res.result.reports);
 
-			this.setState({
-				gaInfos: res.result,
-			});
+			// this.setState({
+			// 	gaInfos: res.result,
+			// });
+		}, (err) => {
+			console.log(err);	
 		});
+
+		//v3
+		// gapi.client.analytics.data.ga.get({
+		// 	dimensions: 'ga:date,ga:source,ga:browser,ga:browserVersion',
+		// 	metrics: 'ga:sessions,ga:pageviews',
+		// 	'start-date': '30daysAgo',
+		// 	'end-date': 'yesterday',
+		// 	ids: `ga:${property}`,
+		// }).then((r) => {
+		// 	console.log(r);
+		// });
+
 
 		// Get a timeline component (graph)
 		/*const timeline = new gapi.analytics.googleCharts.DataChart({
@@ -89,31 +140,36 @@ export class GoogleAnalytics extends Component {
 	}
 
 	renderAnalytics() {
-		if (!this.props.clientId) return undefined;
 		const gapi = window.gapi;
-		console.log('render analytics...');
-		gapi.analytics.ready(() => {
-			console.log('analytics ready');
-			// console.log(gapi);
-			if (gapi.analytics.auth.isAuthorized()) {
-				// console.log('authorized');
-				this.renderAnalyticsTimeline();
-				return undefined;
-			}
-			
-			console.log('Not authorized');
-			const auth2 = gapi.auth2;
-			if (!auth2.getAuthInstance()) {
-				console.log('Try to auth');
-				gapi.analytics.auth.authorize({
-					container: this._authbtn,
-					clientid: this.props.clientId,
-				});
-			}
+		if (!gapi || !this.props.clientId || !this.props.gapi_token_access) return undefined;
+		// this.renderAnalyticsTimeline();
+		// console.log(gapi);
+		gapi.load('analytics', () => {
 
-			gapi.analytics.auth.on('success', () => {
-				console.log('authorized');
-				this.renderAnalyticsTimeline();
+			const analytics = gapi.analytics;
+			// console.log('render analytics...');
+			analytics.ready(() => {
+				// console.log('analytics ready');
+				// console.log(gapi);
+				if (analytics.auth.isAuthorized()) {
+					// console.log('authorized');
+					this.renderAnalyticsTimeline();
+					return undefined;
+				}
+				
+				analytics.auth.on('success', (a) => {
+					this.renderAnalyticsTimeline();
+				});
+				// console.log('authorizing analytics with', this.props.gapi_token_access);
+				analytics.auth.authorize({
+					serverAuth: {
+						access_token: this.props.gapi_token_access,
+					},
+					scopes: [
+						'https://www.googleapis.com/auth/analytics.readonly',
+					],
+				});
+				
 			});
 		});
 	}
