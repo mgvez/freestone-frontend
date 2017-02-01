@@ -14,6 +14,8 @@ const initialState = {
 	userId: null,
 	picture: '',
 	usergroup: 0,
+	gapi_token_id: null,
+	gapi_token_access: null,
 };
 
 export function auth(state = initialState, action) {
@@ -45,10 +47,13 @@ export function auth(state = initialState, action) {
 			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
 		};
 	case LOGIN_REQUEST:
+		// console.log(action.data);
 		return {
 			...state,
 			isAuthenticating: true,
 			statusText: 'Checking credentials...',
+			gapi_token_id: action.data.googletoken_id,
+			gapi_token_access: action.data.googletoken_access,
 		};
 	case LOGIN_USER_SUCCESS:
 		// console.log(action.payload);

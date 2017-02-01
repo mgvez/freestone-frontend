@@ -13,7 +13,7 @@ import { fetchVariable, setVariable } from 'actions/env';
 			apiGoogle: state.envVariables && state.envVariables.api_google,
 		};
 	},
-	dispatch => bindActionCreators({ ...authActionCreators, fetchVariable, setVariable }, dispatch)
+	dispatch => bindActionCreators({ ...authActionCreators, fetchVariable }, dispatch)
 )
 export class GoogleAuthenticate extends Component {
 	static propTypes = {
@@ -28,7 +28,7 @@ export class GoogleAuthenticate extends Component {
 	};
 
 	static defaultProps = {
-		scope: 'profile email',
+		scope: 'profile email https://www.googleapis.com/auth/analytics.readonly',
 		cookiePolicy: 'single_host_origin',
 	};
 
@@ -50,60 +50,51 @@ export class GoogleAuthenticate extends Component {
 
 	onReceiveUser = (user) => {
 		//si user pas loggé, l'envoie au backend pour l'authentifier
+		// console.log(user);
 		if (!this.props.isAuthenticated) {
-			// console.log(user);
 			const response = user.getAuthResponse();
-			const token = response.id_token;
+			const token_id = response.id_token;
+			const token_access = response.access_token;
 			// console.log(token);
-			this.props.loginGoogleAPI(token);
+			this.props.loginGoogleAPI(token_id, token_access);
 		}
 	}
 
 	initGoogleApi() {
 		// console.log('gapi..?', this.gapi);
 		if (this.gapi) return this.gapi;
-		// console.log('pas gapi');
+
 		if (this.props.apiGoogle && this.props.apiGoogle.clientId) {
 
 			const { clientId } = this.props.apiGoogle;
 			// console.log(clientId);
 			const { scope, cookiePolicy } = this.props;
-			((d, s, id, cb) => {
-				const element = d.getElementsByTagName(s)[0];
-				const fjs = element;
-				let js = element;
-				js = d.createElement(s);
-				js.id = id;
-				js.src = '//apis.google.com/js/platform.js';
-				fjs.parentNode.insertBefore(js, fjs);
-				js.onload = cb;
-			})(document, 'script', 'google-login', () => {
-				const params = {
-					client_id: clientId,
-					cookiepolicy: cookiePolicy,
-					// login_hint: loginHint,
-					// hosted_domain: hostedDomain,
-					scope,
-				};
-				const gapi = window.gapi;
-				gapi.load('auth2', () => {
-					const auth2 = gapi.auth2;
-					if (!auth2.getAuthInstance()) {
-						// console.log('gapi authenticate loaded');
-						const GoogleAuth = auth2.init(params);
+			const params = {
+				client_id: clientId,
+				cookiepolicy: cookiePolicy,
+				// login_hint: loginHint,
+				// hosted_domain: hostedDomain,
+				scope,
+			};
+			const gapi = window.gapi;
+			gapi.load('auth2', () => {
+				const auth2 = gapi.auth2;
+				if (!auth2.getAuthInstance()) {
+					// console.log('gapi authenticate loaded');
+					const GoogleAuth = auth2.init(params);
 
-						GoogleAuth.then(() => {
-							// console.log('gapi inited callback');
-							if (GoogleAuth.isSignedIn.get()) {
-								const user = GoogleAuth.currentUser.get();
-								this.onReceiveUser(user);
-							}
-							GoogleAuth.isSignedIn.listen(this.onIsLogged);
-							GoogleAuth.currentUser.listen(this.onReceiveUser);
-						});
-					}
+					GoogleAuth.then(() => {
+						// console.log(scope);
+						// console.log('gapi inited callback');
+						if (GoogleAuth.isSignedIn.get()) {
+							const user = GoogleAuth.currentUser.get();
+							this.onReceiveUser(user);
+						}
+						GoogleAuth.isSignedIn.listen(this.onIsLogged);
+						GoogleAuth.currentUser.listen(this.onReceiveUser);
+					});
+				}
 
-				});
 			});
 			this.gapi = true;
 			return true;
