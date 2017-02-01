@@ -16,7 +16,16 @@
 .analytics {
 
 	.analytics-section {
-		padding: 35px 0;
+		padding: 35px 0 0;
+
+		&:after {
+			position: relative;
+			content: ' ';
+			display: block;
+			height: 1px;
+			background: $gray76;
+			margin-top: 35px;
+		}
 	}
 
 	.summary-items {
@@ -58,6 +67,7 @@
 
 			padding: 15px 25px;
 			text-align: center;
+			flex: 1 1 calc(100% - 135px);
 
 			.name {
 				font-size: 30px;
@@ -134,7 +144,6 @@
 		}
 	}
 
-
 	.browsers-list {
 		padding: 0 15px;
 		display: flex;
@@ -144,12 +153,61 @@
 			flex: 0 0 33.33333%;
 			padding: 30px;
 			color: $white;
+			background: $color-accent-primary;
 
-			
+			text-align: center;
+
+			.percentage {
+				font-size: 40px;
+				font-weight: 900;
+
+				i {
+					display: inline-block;
+					vertical-align: middle;
+					font-size: 60px;
+					margin-right: 20px;
+				}
+			}
 
 			.name {
+				margin-top: 10px;
+				font-weight: $font-weight-bold;
 				font-size: 30px;
 			}
+
+			&.chrome {
+				background: #4caf50;
+			}
+
+			&.safari {
+				background: #0088cc;
+			}
+
+			&.firefox {
+				background: #e66000;
+			}
+		}
+	}
+
+	.user-infos {
+		display: flex;
+	}
+
+	.user-infos-item {
+		@extend .summary-item;
+		width: 50%;
+
+		.name {
+			margin-bottom: 15px;
+			color: $color-text-primary;
+		}
+
+		a {
+			color: $color-accent-primary;
+		}
+
+		&.warn .number {
+			background: $color-warn-primary;
 		}
 	}
 }

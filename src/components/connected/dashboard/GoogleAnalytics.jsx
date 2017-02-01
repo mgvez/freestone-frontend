@@ -271,23 +271,51 @@ export class GoogleAnalytics extends Component {
 					<h2>Navigateurs utilisés</h2>
 
 					<div className="browsers-list">
-						<div className="browser">
+						<div className="browser chrome">
 							<div className="percentage">
-								<i className="fa fa-chrome">40%</i>
+								<i className="fa fa-chrome"></i>40%
 							</div>
 							<div className="name">Google Chrome</div>
 						</div>
-						<div className="browser">
+						<div className="browser safari">
 							<div className="percentage">
-								<i className="fa fa-safari">30%</i>
+								<i className="fa fa-safari"></i>30%
 							</div>
 							<div className="name">Safari</div>
 						</div>
-						<div className="browser">
+						<div className="browser firefox">
 							<div className="percentage">
-								<i className="fa fa-firefox">11%</i>
+								<i className="fa fa-firefox"></i>11%
 							</div>
 							<div className="name">Mozilla Firefox</div>
+						</div>
+					</div>
+				</section>
+
+				<section className="padded-content analytics-section summary">
+					<h2>Informations sur vos utilisateurs</h2>
+
+					<div className="user-infos">
+						<div className="user-infos-item">
+							<div className="number">
+								<i className="fa fa-eye"></i>
+								<strong>670</strong>
+							</div>
+							<div className="infos">
+								<div className="name">Page la plus visitée</div>
+								<a href="#">http://google.ca</a>
+							</div>
+						</div>
+
+						<div className="user-infos-item warn">
+							<div className="number">
+								<i className="fa fa-eye"></i>
+								<strong>598</strong>
+							</div>
+							<div className="infos">
+								<div className="name">Page la plus quittée</div>
+								<a href="#">http://google.ca</a>
+							</div>
 						</div>
 					</div>
 				</section>
