@@ -382,7 +382,26 @@ export class GoogleAnalytics extends Component {
 					<div className="graphs">
 						<div className="column">
 							<div className="graph round">
-							
+								<div className="c100 p75">
+									<div className="slice">
+										<div className="bar"></div>
+										<div className="fill"></div>
+									</div>
+								</div>
+
+								<div className="legend">
+									<div className="legend-item highlight">
+										<div className="color"></div>
+										<div className="name">Nouveaux visiteurs</div>
+										<div className="value">75%</div>
+									</div>
+									
+									<div className="legend-item">
+										<div className="color"></div>
+										<div className="name">Anciens visiteurs</div>
+										<div className="value">25%</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="column">

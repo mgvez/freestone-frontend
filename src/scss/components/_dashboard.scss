@@ -62,7 +62,7 @@
 
 		.infos {
 			background-color: $white;
-			border: 1px solid $gray76;
+			border: 1px solid $gray86;
 			border-left: none;
 
 			padding: 15px 25px;
@@ -230,6 +230,7 @@
 		flex: 0 0 calc(50% - 15px);
 		padding: 40px 30px;
 		background: $white;
+		border: 1px solid $gray86;
 
 		h2 {
 			text-align: center;
@@ -267,6 +268,49 @@
 				.span {
 					height: 100%;
 					background: $color-accent-primary;
+				}
+			}
+		}
+
+		&.round {
+			@import "../utils/_circle";
+			min-height: 100%;
+
+			.legend {
+				margin-top: 40px;
+
+				.legend-item {
+					display: flex;
+					//align-content: center;
+					align-items: center;
+
+					.color {
+						width: 20px;
+						height: 20px;
+						background: $gray86;
+						margin-right: 20px;
+					}
+
+					.name {
+						font-size: 20px;
+					}
+
+					.value {
+						margin-left: auto;
+						font-weight: $font-weight-bold;
+						font-size: 30px;
+						color: $gray86;
+					}
+
+					&.highlight {
+						.color {
+							background: $color-accent-primary;
+						}
+						
+						.value {
+							color: $color-accent-primary;
+						}
+					}
 				}
 			}
 		}
