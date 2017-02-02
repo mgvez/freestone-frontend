@@ -92,6 +92,9 @@ export class GoogleAnalytics extends Component {
 							{
 								expression: 'ga:pageviews',
 							},
+							{
+								expression: 'ga:percentNewSessions',
+							},
 						],
 						dateRanges: [
 							{
@@ -215,6 +218,7 @@ export class GoogleAnalytics extends Component {
 			
 			const totalPageViews = data.totals[0].values[getMetricIndex('ga:pageviews')];
 			const totalSessions = data.totals[0].values[getMetricIndex('ga:sessions')];
+			const percentNewSessions = Math.round(data.totals[0].values[getMetricIndex('ga:percentNewSessions')]);
 
 			const averageSessionDuration = data.totals[0].values[getMetricIndex('ga:avgSessionDuration')];
 			const avgSessionMinutes = Math.floor(averageSessionDuration / 60);
@@ -388,7 +392,7 @@ export class GoogleAnalytics extends Component {
 						<div className="graphs">
 							<div className="column">
 								<div className="graph round">
-									<div className="c100 p75">
+									<div className={`c100 p${percentNewSessions}`}>
 										<div className="slice">
 											<div className="bar"></div>
 											<div className="fill"></div>
@@ -399,13 +403,13 @@ export class GoogleAnalytics extends Component {
 										<div className="legend-item highlight">
 											<div className="color"></div>
 											<div className="name">Nouveaux visiteurs</div>
-											<div className="value">75%</div>
+											<div className="value">{percentNewSessions}%</div>
 										</div>
 										
 										<div className="legend-item">
 											<div className="color"></div>
 											<div className="name">Anciens visiteurs</div>
-											<div className="value">25%</div>
+											<div className="value">{100 - percentNewSessions}%</div>
 										</div>
 									</div>
 								</div>
