@@ -22,11 +22,14 @@ export const allForeignOptionsSelector = createSelector(
 
 			const values = current.options.map(rawOption => {
 				const row = rawOption.row;
-				const label = row && Object.keys(row).reduce((parsedLabel, field) => {
-					const val = row[field];
-					return parsedLabel.replace(`{${field}}`, val || '');
+				const FLDSTART = '°°';
+				const EMPTY = '_____';
+				let label = row && Object.keys(row).reduce((parsedLabel, field) => {
+					const val = row[field] || '';
+					return parsedLabel.replace(`{${field}}`, (val && `${FLDSTART}${val}`) || EMPTY);
 				}, rawLabel) || '';
-				// console.log(row);
+				//enleve les separateurs entre les champs vides
+				label = label.replace(new RegExp(`${EMPTY}[\\s\\S]*?${FLDSTART}`, 'g'), '').replace(new RegExp(`${FLDSTART}`, 'g'), '');
 
 				const image = imageField && row && row[imageField.alias] && {
 					dir: row[imageField.alias + '_path'],
