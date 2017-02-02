@@ -75,6 +75,12 @@ export class GoogleAnalytics extends Component {
 							{
 								name: 'ga:browser',
 							},
+							{
+								name: 'ga:deviceCategory',
+							},
+							{
+								name: 'ga:operatingSystem',
+							},
 						],
 						metrics: [
 							{
@@ -189,6 +195,23 @@ export class GoogleAnalytics extends Component {
 			const getDimensionIndex = (headerName) => {
 				return headers.dimensions.indexOf(headers.dimensions.filter(x => x === headerName)[0]);
 			};
+
+			const getArrayFromMap = (map) => {
+				return Array.from(map).map((mapEntry) => {
+					return {
+						name: mapEntry[0],
+						...mapEntry[1],
+					};
+				});
+			};
+
+			const sortArrayBySessions = (array) => {
+				return array.sort((a, b) => {
+					if (a.totalSessions > b.totalSessions) { return -1; }
+					if (a.totalSessions < b.totalSessions) { return 1; }
+					return 0;
+				});
+			};
 			
 			const totalPageViews = data.totals[0].values[getMetricIndex('ga:pageviews')];
 			const totalSessions = data.totals[0].values[getMetricIndex('ga:sessions')];
@@ -199,34 +222,34 @@ export class GoogleAnalytics extends Component {
 			const formattedAvgSessionDuration = `${avgSessionMinutes}:${avgSessionSeconds}`;
 
 			const browsers = new Map();
+			const operatingSystems = new Map();
+			const devices = new Map();
 			data.rows.forEach((row) => {
 				const browserName = row.dimensions[getDimensionIndex('ga:browser')];
+				const osName = row.dimensions[getDimensionIndex('ga:operatingSystem')];
+				const deviceName = row.dimensions[getDimensionIndex('ga:deviceCategory')];
 				const sessions = parseInt(row.metrics[0].values[getMetricIndex('ga:sessions')], 10);
 
-				const browserObject = browsers.get(browserName) || { totalSessions: 0 };
+				const browserObject = browsers.get(browserName) || { totalSessions: 0, sessionPercentage: 0 };
 				browserObject.totalSessions += sessions;
+				browserObject.sessionPercentage = Math.round(browserObject.totalSessions / totalSessions * 100);
 				browsers.set(browserName, browserObject);
+
+				const osObject = operatingSystems.get(osName) || { totalSessions: 0, sessionPercentage: 0 };
+				osObject.totalSessions += sessions;
+				osObject.sessionPercentage = Math.round(osObject.totalSessions / totalSessions * 100);
+				operatingSystems.set(osName, osObject);
+
+				const deviceObject = devices.get(deviceName) || { totalSessions: 0, sessionPercentage: 0 };
+				deviceObject.totalSessions += sessions;
+				deviceObject.sessionPercentage = Math.round(deviceObject.totalSessions / totalSessions * 100);
+				devices.set(deviceName, deviceObject);
 			});
 
-			let browserList = Array.from(browsers).map((mapEntry) => {
-				return {
-					name: mapEntry[0],
-					...mapEntry[1],
-				};
-			});
-			
-			browserList.sort((a, b) => {
-				if (a.totalSessions > b.totalSessions) { return -1; }
-				if (a.totalSessions < b.totalSessions) { return 1; }
-				return 0;
-			});
 
-			browserList = browserList.map((browser) => {
-				return {
-					...browser,
-					sessionPercentage: Math.round(browser.totalSessions / totalSessions * 100),
-				};
-			});
+			const browserList = sortArrayBySessions(getArrayFromMap(browsers)).slice(0, 3);
+			const osList = sortArrayBySessions(getArrayFromMap(operatingSystems)).slice(0, 3);
+			const deviceList = sortArrayBySessions(getArrayFromMap(devices)).slice(0, 3);
 
 			gaInfos = (
 				<div>
@@ -276,24 +299,18 @@ export class GoogleAnalytics extends Component {
 						<h2>Navigateurs utilisés</h2>
 
 						<div className="browsers-list">
-							<div className="browser chrome">
-								<div className="percentage">
-									<i className="fa fa-chrome"></i>{browserList[0].sessionPercentage}%
-								</div>
-								<div className="name">{browserList[0].name}</div>
-							</div>
-							<div className="browser safari">
-								<div className="percentage">
-									<i className="fa fa-safari"></i>{browserList[1].sessionPercentage}%
-								</div>
-								<div className="name">{browserList[1].name}</div>
-							</div>
-							<div className="browser firefox">
-								<div className="percentage">
-									<i className="fa fa-firefox"></i>{browserList[2].sessionPercentage}%
-								</div>
-								<div className="name">{browserList[2].name}</div>
-							</div>
+							{
+								browserList.map((browser) => {
+									return (
+										<div className="browser chrome">
+											<div className="percentage">
+												<i className="fa fa-chrome"></i>{browser.sessionPercentage}%
+											</div>
+											<div className="name">{browser.name}</div>
+										</div>
+									);
+								})
+							}
 						</div>
 					</section>
 
@@ -332,51 +349,35 @@ export class GoogleAnalytics extends Component {
 							<div className="graph">
 								<h2>Type d'appareil utilisé</h2>
 
-								<div className="data">
-									<div className="name">Desktop</div>
-									<div className="line" data-value="501">
-										<div className="span" style={{ width: '50%' }}></div>
-									</div>
-								</div>
-								
-								<div className="data">
-									<div className="name">Mobile</div>
-									<div className="line" data-value="300">
-										<div className="span" style={{ width: '30%' }}></div>
-									</div>
-								</div>
-
-								<div className="data">
-									<div className="name">Tablette</div>
-									<div className="line" data-value="198">
-										<div className="span" style={{ width: '20%' }}></div>
-									</div>
-								</div>
+								{
+									deviceList.map((device) => {
+										return (
+											<div className="data">
+												<div className="name">{device.name}</div>
+												<div className="line" data-value={device.totalSessions}>
+													<div className="span" style={{ width: `${device.sessionPercentage}%` }}></div>
+												</div>
+											</div>
+										);
+									})
+								}
 							</div>
 
 							<div className="graph">
 								<h2>Système d'exploitation</h2>
 
-								<div className="data">
-									<div className="name">Windows</div>
-									<div className="line" data-value="801">
-										<div className="span" style={{ width: '70%' }}></div>
-									</div>
-								</div>
-								
-								<div className="data">
-									<div className="name">Mac OS</div>
-									<div className="line" data-value="200">
-										<div className="span" style={{ width: '15%' }}></div>
-									</div>
-								</div>
-
-								<div className="data">
-									<div className="name">Linux</div>
-									<div className="line" data-value="50">
-										<div className="span" style={{ width: '5%' }}></div>
-									</div>
-								</div>
+								{
+									osList.map((os) => {
+										return (
+											<div className="data">
+												<div className="name">{os.name}</div>
+												<div className="line" data-value={os.totalSessions}>
+													<div className="span" style={{ width: `${os.sessionPercentage}%` }}></div>
+												</div>
+											</div>
+										);
+									})
+								}
 							</div>
 						</div>
 					</section>
