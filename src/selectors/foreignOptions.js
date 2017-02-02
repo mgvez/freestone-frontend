@@ -29,7 +29,7 @@ export const allForeignOptionsSelector = createSelector(
 					return parsedLabel.replace(`{${field}}`, (val && `${FLDSTART}${val}`) || EMPTY);
 				}, rawLabel) || '';
 				//enleve les separateurs entre les champs vides
-				label = label.replace(new RegExp(`${EMPTY}[\\s\\S]*?${FLDSTART}`, 'g'), '').replace(new RegExp(`${FLDSTART}`, 'g'), '');
+				label = label.replace(new RegExp(`${EMPTY}[\\s\\S]*?${FLDSTART}`, 'g'), '').replace(new RegExp(`${FLDSTART}|${EMPTY}`, 'g'), '');
 
 				const image = imageField && row && row[imageField.alias] && {
 					dir: row[imageField.alias + '_path'],
