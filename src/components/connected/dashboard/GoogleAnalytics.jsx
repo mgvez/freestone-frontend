@@ -247,6 +247,21 @@ export class GoogleAnalytics extends Component {
 				const browserObject = browsers.get(browserName) || { totalSessions: 0, sessionPercentage: 0 };
 				browserObject.totalSessions += sessions;
 				browserObject.sessionPercentage = Math.round(browserObject.totalSessions / totalSessions * 100);
+				
+				let cssClass = '';
+				if (browserName.toLowerCase().indexOf('chrome') > -1) {
+					cssClass = 'chrome';
+				} else if (browserName.toLowerCase().indexOf('firefox') > -1) {
+					cssClass = 'firefox';
+				} else if (browserName.toLowerCase().indexOf('safari') > -1) {
+					cssClass = 'safari';
+				} else if (browserName.toLowerCase().indexOf('explorer') > -1) {
+					cssClass = 'internet-explorer';
+				} else if (browserName.toLowerCase().indexOf('edge') > -1) {
+					cssClass = 'edge';
+				}
+
+				browserObject.cssClass = cssClass;
 				browsers.set(browserName, browserObject);
 
 				const osObject = operatingSystems.get(osName) || { totalSessions: 0, sessionPercentage: 0 };
@@ -333,9 +348,9 @@ export class GoogleAnalytics extends Component {
 							{
 								browserList.map((browser) => {
 									return (
-										<div className="browser chrome">
+										<div className={`browser ${browser.cssClass}`}>
 											<div className="percentage">
-												<i className="fa fa-chrome"></i>{browser.sessionPercentage}%
+												<i className={`fa fa-${browser.cssClass}`}></i>{browser.sessionPercentage}%
 											</div>
 											<div className="name">{browser.name}</div>
 										</div>
