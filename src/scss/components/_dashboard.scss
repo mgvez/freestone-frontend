@@ -243,7 +243,8 @@
 			margin-top: 40px;
 
 			.name {
-				width: 110px;
+				flex: 0 0 120px;
+				text-transform: capitalize;
 			}
 
 			.line {

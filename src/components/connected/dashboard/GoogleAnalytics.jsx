@@ -81,6 +81,12 @@ export class GoogleAnalytics extends Component {
 							{
 								name: 'ga:operatingSystem',
 							},
+							{
+								name: 'ga:medium',
+							},
+							{
+								name: 'ga:socialNetwork',
+							},
 						],
 						metrics: [
 							{
@@ -228,10 +234,14 @@ export class GoogleAnalytics extends Component {
 			const browsers = new Map();
 			const operatingSystems = new Map();
 			const devices = new Map();
+			const sources = new Map();
+			const socialRefs = new Map();
 			data.rows.forEach((row) => {
 				const browserName = row.dimensions[getDimensionIndex('ga:browser')];
 				const osName = row.dimensions[getDimensionIndex('ga:operatingSystem')];
 				const deviceName = row.dimensions[getDimensionIndex('ga:deviceCategory')];
+				const sourceName = row.dimensions[getDimensionIndex('ga:medium')];
+				const socialNetwork = row.dimensions[getDimensionIndex('ga:socialNetwork')];
 				const sessions = parseInt(row.metrics[0].values[getMetricIndex('ga:sessions')], 10);
 
 				const browserObject = browsers.get(browserName) || { totalSessions: 0, sessionPercentage: 0 };
@@ -248,12 +258,29 @@ export class GoogleAnalytics extends Component {
 				deviceObject.totalSessions += sessions;
 				deviceObject.sessionPercentage = Math.round(deviceObject.totalSessions / totalSessions * 100);
 				devices.set(deviceName, deviceObject);
-			});
 
+				const sourceObject = sources.get(sourceName) || { totalSessions: 0, sessionPercentage: 0 };
+				sourceObject.totalSessions += sessions;
+				sourceObject.sessionPercentage = Math.round(sourceObject.totalSessions / totalSessions * 100);
+				sources.set(sourceName, sourceObject);
+
+				const socialRefObject = socialRefs.get(socialNetwork) || { totalSessions: 0, sessionPercentage: 0 };
+				socialRefObject.totalSessions += sessions;
+				socialRefObject.sessionPercentage = Math.round(socialRefObject.totalSessions / totalSessions * 100);
+				socialRefs.set(socialNetwork, socialRefObject);
+			});
 
 			const browserList = sortArrayBySessions(getArrayFromMap(browsers)).slice(0, 3);
 			const osList = sortArrayBySessions(getArrayFromMap(operatingSystems)).slice(0, 3);
 			const deviceList = sortArrayBySessions(getArrayFromMap(devices)).slice(0, 3);
+			const sourceList = sortArrayBySessions(
+				getArrayFromMap(sources).map(source => {
+					const s = { ...source };
+					s.name = s.name === '(none)' ? 'Direct' : s.name;
+					return s;
+				})
+			).slice(0, 3);
+			const socialRefList = sortArrayBySessions(getArrayFromMap(socialRefs).filter(ref => ref.name !== '(not set)')).slice(0, 3);
 
 			gaInfos = (
 				<div>
@@ -416,53 +443,37 @@ export class GoogleAnalytics extends Component {
 							</div>
 							<div className="column">
 								<div className="graph">
-									<h2>Type d'appareil utilisé</h2>
+									<h2>Source du traffic</h2>
 
-									<div className="data">
-										<div className="name">Desktop</div>
-										<div className="line" data-value="501">
-											<div className="span" style={{ width: '50%' }}></div>
-										</div>
-									</div>
-									
-									<div className="data">
-										<div className="name">Mobile</div>
-										<div className="line" data-value="300">
-											<div className="span" style={{ width: '30%' }}></div>
-										</div>
-									</div>
-
-									<div className="data">
-										<div className="name">Tablette</div>
-										<div className="line" data-value="198">
-											<div className="span" style={{ width: '20%' }}></div>
-										</div>
-									</div>
+									{
+										sourceList.map((source) => {
+											return (
+												<div className="data">
+													<div className="name">{source.name}</div>
+													<div className="line" data-value={source.totalSessions}>
+														<div className="span" style={{ width: `${source.sessionPercentage}%` }}></div>
+													</div>
+												</div>
+											);
+										})
+									}
 								</div>
 
 								<div className="graph">
-									<h2>Système d'exploitation</h2>
+									<h2>Réseaux sociaux</h2>
 
-									<div className="data">
-										<div className="name">Windows</div>
-										<div className="line" data-value="801">
-											<div className="span" style={{ width: '70%' }}></div>
-										</div>
-									</div>
-									
-									<div className="data">
-										<div className="name">Mac OS</div>
-										<div className="line" data-value="200">
-											<div className="span" style={{ width: '15%' }}></div>
-										</div>
-									</div>
-
-									<div className="data">
-										<div className="name">Linux</div>
-										<div className="line" data-value="50">
-											<div className="span" style={{ width: '5%' }}></div>
-										</div>
-									</div>
+									{
+										socialRefList.map((socialRef) => {
+											return (
+												<div className="data">
+													<div className="name">{socialRef.name}</div>
+													<div className="line" data-value={socialRef.totalSessions}>
+														<div className="span" style={{ width: `${socialRef.sessionPercentage}%` }}></div>
+													</div>
+												</div>
+											);
+										})
+									}
 								</div>
 							</div>
 						</div>
