@@ -58,17 +58,20 @@ export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback
 				return carry;
 			}, {});
 			// console.log(tree, records);
+
+			const data = JSON.stringify({
+				tree,
+				records,
+				deleted,
+				tableName,
+				fileNames,
+			});
+
 			const onSaved = dispatch({
 				[FREESTONE_API]: {
 					types: [SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR],
 					route: `save/${tableName}`,
-					data: {
-						tree,
-						records,
-						deleted,
-						tableName,
-						fileNames,
-					},
+					data: { data },
 				},
 			});
 
