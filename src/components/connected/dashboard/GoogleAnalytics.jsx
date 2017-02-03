@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { fetchVariable } from 'actions/env';
 
+import GAPI_Helper from './GAPI_Helper';
+
 const PAST_MONTH_REQUEST_ID = 'pastMonth';
 const CURRENT_MONTH_REQUEST_ID = 'currentMonth';
 const BROWSER_REQUEST_ID = 'browserRequest';
@@ -13,6 +15,18 @@ const MEDIUM_REQUEST_ID = 'mediumRequest';
 const SOCIAL_REQUEST_ID = 'socialRequest';
 const PAGE_PATH_REQUEST_ID = 'pagePathRequest';
 const EXIT_PAGE_REQUEST_ID = 'exitPageRequest';
+
+const GA_BROWSER = 'ga:browser';
+const GA_DEVICE = 'ga:deviceCategory';
+const GA_OS = 'ga:operatingSystem';
+const GA_MEDIUM = 'ga:medium';
+const GA_SOCIAL = 'ga:socialNetwork';
+const GA_PAGE_PATH = 'ga:pagePath';
+const GA_EXIT_PAGE = 'ga:exitPagePath';
+const GA_SESSIONS = 'ga:sessions';
+const GA_AVG_SESSION_DURATION = 'ga:avgSessionDuration';
+const GA_PAGEVIEWS = 'ga:pageviews';
+const GA_PERCENT_NEW_SESSIONS = 'ga:percentNewSessions';
 
 @connect(
 	state => { 
@@ -68,247 +82,17 @@ export class GoogleAnalytics extends Component {
 		const gapi = window.gapi;
 
 		const batch = gapi.client.newBatch();
-		//v4
-		// gapi.client.analyticsreporting.reports.batchGet({
-		const browserRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:browser',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
 
-		const deviceRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:deviceCategory',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
+		const browserRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_BROWSER);
+		const deviceRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_DEVICE);
+		const osRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_OS);
+		const mediumRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_MEDIUM);
+		const socialNetworkRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_SOCIAL);
+		const pagePathRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_PAGE_PATH);
+		const exitPageRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_EXIT_PAGE);
 
-		const osRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:operatingSystem',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
-
-		const mediumRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:medium',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
-
-		const socialNetworkRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:socialNetwork',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
-
-		const pagePathRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:pagePath',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
-
-		const exitPageRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:exitPagePath',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
-
-		const pastMonthRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						metrics: [
-							{
-								expression: 'ga:sessions',
-							},
-							{
-								expression: 'ga:avgSessionDuration',
-							},
-							{
-								expression: 'ga:pageviews',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '60daysAgo',
-								endDate: '30daysAgo',
-							},
-						],
-					},
-				],
-			},
-		});
-
-		const currentMonthRequest = gapi.client.request({
-			path: '/v4/reports:batchGet',
-			root: 'https://analyticsreporting.googleapis.com/',
-			method: 'POST',
-			body: {
-				reportRequests: [
-					{
-						viewId: property,
-						pageSize: 10000,
-						metrics: [
-							{
-								expression: 'ga:sessions',
-							},
-							{
-								expression: 'ga:avgSessionDuration',
-							},
-							{
-								expression: 'ga:pageviews',
-							},
-							{
-								expression: 'ga:percentNewSessions',
-							},
-						],
-						dateRanges: [
-							{
-								startDate: '30daysAgo',
-								endDate: 'yesterday',
-							},
-						],
-					},
-				],
-			},
-		});
+		const pastMonthRequest = GAPI_Helper.createMetricRequest(gapi, property, [GA_SESSIONS, GA_AVG_SESSION_DURATION, GA_PAGEVIEWS], [{ startDate: '60daysAgo', endDate: '30daysAgo' }]);
+		const currentMonthRequest = GAPI_Helper.createMetricRequest(gapi, property, [GA_SESSIONS, GA_AVG_SESSION_DURATION, GA_PAGEVIEWS, GA_PERCENT_NEW_SESSIONS], [{ startDate: '30daysAgo', endDate: 'yesterday' }]);
 
 		batch.add(pastMonthRequest, { id: PAST_MONTH_REQUEST_ID });
 		batch.add(currentMonthRequest, { id: CURRENT_MONTH_REQUEST_ID });
@@ -377,57 +161,6 @@ export class GoogleAnalytics extends Component {
 
 		let gaInfos;
 		if (this.state.currentMonthData) {
-
-			const GAPI_HELPER = {
-				
-			};
-
-			const getMetricIndex = (headerName, source) => {
-				return source.metricHeader.metricHeaderEntries.indexOf(source.metricHeader.metricHeaderEntries.filter(x => x.name === headerName)[0]);
-			};
-
-			const getDimensionIndex = (headerName, source) => {
-				return source.dimensions.indexOf(source.dimensions.filter(x => x === headerName)[0]);
-			};
-
-			const sortArrayBySessions = (array) => {
-				return array.sort((a, b) => {
-					if (a.totalSessions > b.totalSessions) { return -1; }
-					if (a.totalSessions < b.totalSessions) { return 1; }
-					return 0;
-				});
-			};
-
-			const formatSimpleData = (data, headers, gaTag, totalSessions) => {
-				return sortArrayBySessions(data.rows.map((row) => {
-					const sessions = parseInt(row.metrics[0].values[getMetricIndex('ga:visits', headers)], 10);
-
-					return {
-						name: row.dimensions[getDimensionIndex(gaTag, headers)],
-						totalSessions: sessions,
-						sessionPercentage: Math.round(sessions / totalSessions * 100),
-					};
-				}));
-			};
-
-			const formatSessionDuration = (sessionDuration) => {
-				const avgSessionMinutes = Math.floor(sessionDuration / 60);
-				const avgSessionSeconds = Math.round(sessionDuration % 60);
-				return `${avgSessionMinutes}:${avgSessionSeconds < 10 ? `0${avgSessionSeconds}` : avgSessionSeconds}`;
-			};
-
-			const getClassFromDelta = (delta) => {
-				if (delta > 0) {
-					return 'up';
-				} else if (delta < 0 && delta > -25) {
-					return 'down';
-				} else if (delta < 0 && delta <= -25) {
-					return 'danger';
-				}
-				
-				return '';
-			};
-			
 			/**
 			 * Current and past month specific numbers
 			 */
@@ -437,15 +170,15 @@ export class GoogleAnalytics extends Component {
 			const pastMonthData = this.state.pastMonthData.data;
 			const pastMonthHeaders = this.state.pastMonthData.columnHeader;
 
-			const totalPageViews = currentMonthData.totals[0].values[getMetricIndex('ga:pageviews', currentMonthHeaders)];
-			const totalSessions = currentMonthData.totals[0].values[getMetricIndex('ga:sessions', currentMonthHeaders)];
-			const percentNewSessions = Math.round(currentMonthData.totals[0].values[getMetricIndex('ga:percentNewSessions', currentMonthHeaders)]);
-			const averageSessionDuration = currentMonthData.totals[0].values[getMetricIndex('ga:avgSessionDuration', currentMonthHeaders)];
-			const formattedAvgSessionDuration = formatSessionDuration(averageSessionDuration);
+			const totalPageViews = currentMonthData.totals[0].values[GAPI_Helper.getMetricIndex(GA_PAGEVIEWS, currentMonthHeaders)];
+			const totalSessions = currentMonthData.totals[0].values[GAPI_Helper.getMetricIndex(GA_SESSIONS, currentMonthHeaders)];
+			const percentNewSessions = Math.round(currentMonthData.totals[0].values[GAPI_Helper.getMetricIndex(GA_PERCENT_NEW_SESSIONS, currentMonthHeaders)]);
+			const averageSessionDuration = currentMonthData.totals[0].values[GAPI_Helper.getMetricIndex(GA_AVG_SESSION_DURATION, currentMonthHeaders)];
+			const formattedAvgSessionDuration = GAPI_Helper.formatSessionDuration(averageSessionDuration);
 
-			const pastTotalPageViews = pastMonthData.totals[0].values[getMetricIndex('ga:pageviews', pastMonthHeaders)];
-			const pastTotalSessions = pastMonthData.totals[0].values[getMetricIndex('ga:sessions', pastMonthHeaders)];
-			const pastAverageSessionDuration = pastMonthData.totals[0].values[getMetricIndex('ga:avgSessionDuration', pastMonthHeaders)];
+			const pastTotalPageViews = pastMonthData.totals[0].values[GAPI_Helper.getMetricIndex(GA_PAGEVIEWS, pastMonthHeaders)];
+			const pastTotalSessions = pastMonthData.totals[0].values[GAPI_Helper.getMetricIndex(GA_SESSIONS, pastMonthHeaders)];
+			const pastAverageSessionDuration = pastMonthData.totals[0].values[GAPI_Helper.getMetricIndex(GA_AVG_SESSION_DURATION, pastMonthHeaders)];
 
 			const deltaPageViews = Math.round((totalPageViews - pastTotalPageViews) / pastTotalPageViews * 100);
 			const deltaSessions = Math.round((totalSessions - pastTotalSessions) / pastTotalSessions * 100);
@@ -453,9 +186,8 @@ export class GoogleAnalytics extends Component {
 
 
 			/**
-			 * 
+			 * Dimensions (Browsers, Devices, OSs, etc)
 			 */
-
 			const browserData = this.state.browserData.data;
 			const browserHeaders = this.state.browserData.columnHeader;
 
@@ -477,7 +209,7 @@ export class GoogleAnalytics extends Component {
 			const exitPageData = this.state.exitPageData.data;
 			const exitPageHeaders = this.state.exitPageData.columnHeader;
 
-			const browserList = formatSimpleData(browserData, browserHeaders, 'ga:browser', totalSessions).map((row) => {
+			const browserList = GAPI_Helper.formatSimpleData(browserData, browserHeaders, GA_BROWSER, totalSessions).map((row) => {
 				row.cssClass = '';
 				if (row.name.toLowerCase().indexOf('chrome') > -1) {
 					row.cssClass = 'chrome';
@@ -494,17 +226,17 @@ export class GoogleAnalytics extends Component {
 				return row;
 			}).slice(0, 3);
 
-			const sourceList = formatSimpleData(mediumData, mediumHeaders, 'ga:medium', totalSessions).map((row) => {
+			const sourceList = GAPI_Helper.formatSimpleData(mediumData, mediumHeaders, GA_MEDIUM, totalSessions).map((row) => {
 				row.name = row.name === '(none)' ? 'Direct' : row.name;
 				return row;
 			}).slice(0, 3);
 
-			const deviceList = formatSimpleData(deviceData, deviceHeaders, 'ga:deviceCategory', totalSessions).slice(0, 3);
-			const osList = formatSimpleData(osData, osHeaders, 'ga:operatingSystem', totalSessions).slice(0, 3);
-			const socialRefList = formatSimpleData(socialNetworkData, socialNetworkHeaders, 'ga:socialNetwork', totalSessions).filter(ref => ref.name !== '(not set)').slice(0, 3);
+			const deviceList = GAPI_Helper.formatSimpleData(deviceData, deviceHeaders, GA_DEVICE, totalSessions).slice(0, 3);
+			const osList = GAPI_Helper.formatSimpleData(osData, osHeaders, GA_OS, totalSessions).slice(0, 3);
+			const socialRefList = GAPI_Helper.formatSimpleData(socialNetworkData, socialNetworkHeaders, GA_SOCIAL, totalSessions).filter(ref => ref.name !== '(not set)').slice(0, 3);
 
-			const mostViewedPagePath = formatSimpleData(pagePathData, pagePathHeaders, 'ga:pagePath', totalSessions)[0];
-			const mostExitedPagePath = formatSimpleData(exitPageData, exitPageHeaders, 'ga:exitPagePath', totalSessions)[0];
+			const mostViewedPagePath = GAPI_Helper.formatSimpleData(pagePathData, pagePathHeaders, GA_PAGE_PATH, totalSessions)[0];
+			const mostExitedPagePath = GAPI_Helper.formatSimpleData(exitPageData, exitPageHeaders, GA_EXIT_PAGE, totalSessions)[0];
 
 			gaInfos = (
 				<div>
@@ -519,8 +251,8 @@ export class GoogleAnalytics extends Component {
 								</div>
 								<div className="infos">
 									<div className="name">Page views</div>
-									<div className={`modifier ${getClassFromDelta(deltaPageViews)}`}><i></i>{deltaPageViews}%</div>
-									<div className={`modifier-period ${getClassFromDelta(deltaPageViews)}`}>Derniers 30 jours</div>
+									<div className={`modifier ${GAPI_Helper.getClassFromDelta(deltaPageViews)}`}><i></i>{deltaPageViews}%</div>
+									<div className={`modifier-period ${GAPI_Helper.getClassFromDelta(deltaPageViews)}`}>Derniers 30 jours</div>
 								</div>
 							</div>
 
@@ -531,8 +263,8 @@ export class GoogleAnalytics extends Component {
 								</div>
 								<div className="infos">
 									<div className="name">Sessions</div>
-									<div className={`modifier ${getClassFromDelta(deltaSessions)}`}><i></i>{deltaSessions}%</div>
-									<div className={`modifier-period ${getClassFromDelta(deltaSessions)}`}>Derniers 30 jours</div>
+									<div className={`modifier ${GAPI_Helper.getClassFromDelta(deltaSessions)}`}><i></i>{deltaSessions}%</div>
+									<div className={`modifier-period ${GAPI_Helper.getClassFromDelta(deltaSessions)}`}>Derniers 30 jours</div>
 								</div>
 							</div>
 
@@ -543,8 +275,8 @@ export class GoogleAnalytics extends Component {
 								</div>
 								<div className="infos">
 									<div className="name">Temps moy.</div>
-									<div className={`modifier ${getClassFromDelta(deltaAvgSessionDuration)}`}><i></i>{deltaAvgSessionDuration}%</div>
-									<div className={`modifier-period ${getClassFromDelta(deltaAvgSessionDuration)}`}>Derniers 30 jours</div>
+									<div className={`modifier ${GAPI_Helper.getClassFromDelta(deltaAvgSessionDuration)}`}><i></i>{deltaAvgSessionDuration}%</div>
+									<div className={`modifier-period ${GAPI_Helper.getClassFromDelta(deltaAvgSessionDuration)}`}>Derniers 30 jours</div>
 								</div>
 							</div>
 						</div>
