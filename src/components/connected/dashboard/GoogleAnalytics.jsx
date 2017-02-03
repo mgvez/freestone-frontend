@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 
 import { fetchVariable } from 'actions/env';
 
+const PAST_MONTH_REQUEST_ID = 'pastMonth';
+const CURRENT_MONTH_REQUEST_ID = 'currentMonth';
 
 @connect(
 	state => { 
@@ -58,9 +60,40 @@ export class GoogleAnalytics extends Component {
 		const property = this.props.property || '84012906';
 		const gapi = window.gapi;
 
+		const batch = gapi.client.newBatch();
 		//v4
 		// gapi.client.analyticsreporting.reports.batchGet({
-		gapi.client.request({
+		const pastMonthRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						metrics: [
+							{
+								expression: 'ga:sessions',
+							},
+							{
+								expression: 'ga:avgSessionDuration',
+							},
+							{
+								expression: 'ga:pageviews',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '60daysAgo',
+								endDate: '30daysAgo',
+							},
+						],
+					},
+				],
+			},
+		});
+
+		const currentMonthRequest = gapi.client.request({
 			path: '/v4/reports:batchGet',
 			root: 'https://analyticsreporting.googleapis.com/',
 			method: 'POST',
@@ -69,9 +102,6 @@ export class GoogleAnalytics extends Component {
 					{
 						viewId: property,
 						dimensions: [
-							{
-								name: 'ga:date',
-							},
 							{
 								name: 'ga:browser',
 							},
@@ -86,6 +116,12 @@ export class GoogleAnalytics extends Component {
 							},
 							{
 								name: 'ga:socialNetwork',
+							},
+							{
+								name: 'ga:pagePath',
+							},
+							{
+								name: 'ga:exitPagePath',
 							},
 						],
 						metrics: [
@@ -111,44 +147,20 @@ export class GoogleAnalytics extends Component {
 					},
 				],
 			},
-		}).then((res) => {
-			//console.log('Sessions and pageviews', res.result.reports);
+		});
 
+		batch.add(pastMonthRequest, { id: PAST_MONTH_REQUEST_ID });
+		batch.add(currentMonthRequest, { id: CURRENT_MONTH_REQUEST_ID });
+
+		batch.then((res) => {
 			this.setState({
-				gaInfos: res.result.reports[0],
-			});
+				currentMonthData: res.result[`${CURRENT_MONTH_REQUEST_ID}`].result.reports[0],
+				pastMonthData: res.result[PAST_MONTH_REQUEST_ID].result.reports[0],
+				//gaInfosPast: res.result.reports[1],
+			});/**/
 		}, (err) => {
 			console.log(err);	
 		});
-
-		//v3
-		// gapi.client.analytics.data.ga.get({
-		// 	dimensions: 'ga:date,ga:source,ga:browser,ga:browserVersion',
-		// 	metrics: 'ga:sessions,ga:pageviews',
-		// 	'start-date': '30daysAgo',
-		// 	'end-date': 'yesterday',
-		// 	ids: `ga:${property}`,
-		// }).then((r) => {
-		// 	console.log(r);
-		// });
-
-
-		// Get a timeline component (graph)
-		/*const timeline = new gapi.analytics.googleCharts.DataChart({
-			reportType: 'ga',
-			query: {
-				dimensions: 'ga:date',
-				metrics: 'ga:sessions',
-				'start-date': '30daysAgo',
-				'end-date': 'yesterday',
-				ids: `ga:${this.props.property}`,
-			},
-			chart: {
-				type: 'LINE',
-				container: this._timeline,
-			},
-		});
-		timeline.execute();/**/
 	}
 
 	renderAnalytics() {
@@ -190,19 +202,20 @@ export class GoogleAnalytics extends Component {
 	render() {
 
 		let gaInfos;
-		if (this.state.gaInfos) {
+		if (this.state.currentMonthData) {
 
-			const data = this.state.gaInfos.data;
-			const headers = this.state.gaInfos.columnHeader;
-			console.log(headers);
-			console.log(data);
-			
-			const getMetricIndex = (headerName) => {
-				return headers.metricHeader.metricHeaderEntries.indexOf(headers.metricHeader.metricHeaderEntries.filter(x => x.name === headerName)[0]);
+			const currentMonthData = this.state.currentMonthData.data;
+			const currentMonthHeaders = this.state.currentMonthData.columnHeader;
+
+			const pastMonthData = this.state.pastMonthData.data;
+			const pastMonthHeaders = this.state.pastMonthData.columnHeader;
+
+			const getMetricIndex = (headerName, source = currentMonthHeaders) => {
+				return source.metricHeader.metricHeaderEntries.indexOf(source.metricHeader.metricHeaderEntries.filter(x => x.name === headerName)[0]);
 			};
 
-			const getDimensionIndex = (headerName) => {
-				return headers.dimensions.indexOf(headers.dimensions.filter(x => x === headerName)[0]);
+			const getDimensionIndex = (headerName, source = currentMonthHeaders) => {
+				return source.dimensions.indexOf(source.dimensions.filter(x => x === headerName)[0]);
 			};
 
 			const getArrayFromMap = (map) => {
@@ -221,28 +234,66 @@ export class GoogleAnalytics extends Component {
 					return 0;
 				});
 			};
-			
-			const totalPageViews = data.totals[0].values[getMetricIndex('ga:pageviews')];
-			const totalSessions = data.totals[0].values[getMetricIndex('ga:sessions')];
-			const percentNewSessions = Math.round(data.totals[0].values[getMetricIndex('ga:percentNewSessions')]);
 
-			const averageSessionDuration = data.totals[0].values[getMetricIndex('ga:avgSessionDuration')];
-			const avgSessionMinutes = Math.floor(averageSessionDuration / 60);
-			const avgSessionSeconds = Math.round(averageSessionDuration % 60);
-			const formattedAvgSessionDuration = `${avgSessionMinutes}:${avgSessionSeconds}`;
+			const formatSessionDuration = (sessionDuration) => {
+				const avgSessionMinutes = Math.floor(sessionDuration / 60);
+				const avgSessionSeconds = Math.round(sessionDuration % 60);
+				return `${avgSessionMinutes}:${avgSessionSeconds < 10 ? `0${avgSessionSeconds}` : avgSessionSeconds}`;
+			};
+
+			const getClassFromDelta = (delta) => {
+				if (delta > 0) {
+					return 'up';
+				} else if (delta < 0 && delta > -25) {
+					return 'down';
+				} else if (delta < 0 && delta <= -25) {
+					return 'danger';
+				}
+				
+				return '';
+			};
+			
+			const totalPageViews = currentMonthData.totals[0].values[getMetricIndex('ga:pageviews')];
+			const totalSessions = currentMonthData.totals[0].values[getMetricIndex('ga:sessions')];
+			const percentNewSessions = Math.round(currentMonthData.totals[0].values[getMetricIndex('ga:percentNewSessions')]);
+			const averageSessionDuration = currentMonthData.totals[0].values[getMetricIndex('ga:avgSessionDuration')];
+			const formattedAvgSessionDuration = formatSessionDuration(averageSessionDuration);
+			// const mostExitedPagePath = currentMonthData.totals[0].values[getMetricIndex('ga:exitPagePath')];
+
+			const pastTotalPageViews = pastMonthData.totals[0].values[getMetricIndex('ga:pageviews', pastMonthHeaders)];
+			const pastTotalSessions = pastMonthData.totals[0].values[getMetricIndex('ga:sessions', pastMonthHeaders)];
+			const pastAverageSessionDuration = pastMonthData.totals[0].values[getMetricIndex('ga:avgSessionDuration', pastMonthHeaders)];
+
+			const deltaPageViews = Math.round((totalPageViews - pastTotalPageViews) / pastTotalPageViews * 100);
+			const deltaSessions = Math.round((totalSessions - pastTotalSessions) / pastTotalSessions * 100);
+			const deltaAvgSessionDuration = Math.round((averageSessionDuration - pastAverageSessionDuration) / pastAverageSessionDuration * 100);
 
 			const browsers = new Map();
 			const operatingSystems = new Map();
 			const devices = new Map();
 			const sources = new Map();
 			const socialRefs = new Map();
-			data.rows.forEach((row) => {
+			const exitPages = new Map();
+			const viewedPages = new Map();
+			currentMonthData.rows.forEach((row) => {
 				const browserName = row.dimensions[getDimensionIndex('ga:browser')];
 				const osName = row.dimensions[getDimensionIndex('ga:operatingSystem')];
 				const deviceName = row.dimensions[getDimensionIndex('ga:deviceCategory')];
 				const sourceName = row.dimensions[getDimensionIndex('ga:medium')];
 				const socialNetwork = row.dimensions[getDimensionIndex('ga:socialNetwork')];
+				const exitPagePath = row.dimensions[getDimensionIndex('ga:exitPagePath')];
+				const pagePath = row.dimensions[getDimensionIndex('ga:pagePath')];
 				const sessions = parseInt(row.metrics[0].values[getMetricIndex('ga:sessions')], 10);
+
+				const exitPageObject = exitPages.get(exitPagePath) || { totalSessions: 0, sessionPercentage: 0 };
+				exitPageObject.totalSessions += sessions;
+				exitPageObject.sessionPercentage = Math.round(exitPageObject.totalSessions / totalSessions * 100);
+				exitPages.set(exitPagePath, exitPageObject);
+
+				const pageObject = viewedPages.get(pagePath) || { totalSessions: 0, sessionPercentage: 0 };
+				pageObject.totalSessions += sessions;
+				pageObject.sessionPercentage = Math.round(pageObject.totalSessions / totalSessions * 100);
+				viewedPages.set(pagePath, pageObject);
 
 				const browserObject = browsers.get(browserName) || { totalSessions: 0, sessionPercentage: 0 };
 				browserObject.totalSessions += sessions;
@@ -285,6 +336,8 @@ export class GoogleAnalytics extends Component {
 				socialRefs.set(socialNetwork, socialRefObject);
 			});
 
+			console.log(sortArrayBySessions(getArrayFromMap(browsers)));
+
 			const browserList = sortArrayBySessions(getArrayFromMap(browsers)).slice(0, 3);
 			const osList = sortArrayBySessions(getArrayFromMap(operatingSystems)).slice(0, 3);
 			const deviceList = sortArrayBySessions(getArrayFromMap(devices)).slice(0, 3);
@@ -296,6 +349,8 @@ export class GoogleAnalytics extends Component {
 				})
 			).slice(0, 3);
 			const socialRefList = sortArrayBySessions(getArrayFromMap(socialRefs).filter(ref => ref.name !== '(not set)')).slice(0, 3);
+			const mostExitedPagePath = sortArrayBySessions(getArrayFromMap(exitPages))[0];
+			const mostViewedPagePath = sortArrayBySessions(getArrayFromMap(viewedPages))[0];
 
 			gaInfos = (
 				<div>
@@ -310,8 +365,8 @@ export class GoogleAnalytics extends Component {
 								</div>
 								<div className="infos">
 									<div className="name">Page views</div>
-									<div className="modifier up"><i></i>48%</div>
-									<div className="modifier-period up">Derniers 30 jours</div>
+									<div className={`modifier ${getClassFromDelta(deltaPageViews)}`}><i></i>{deltaPageViews}%</div>
+									<div className={`modifier-period ${getClassFromDelta(deltaPageViews)}`}>Derniers 30 jours</div>
 								</div>
 							</div>
 
@@ -322,8 +377,8 @@ export class GoogleAnalytics extends Component {
 								</div>
 								<div className="infos">
 									<div className="name">Sessions</div>
-									<div className="modifier down"><i></i>3%</div>
-									<div className="modifier-period down">Derniers 30 jours</div>
+									<div className={`modifier ${getClassFromDelta(deltaSessions)}`}><i></i>{deltaSessions}%</div>
+									<div className={`modifier-period ${getClassFromDelta(deltaSessions)}`}>Derniers 30 jours</div>
 								</div>
 							</div>
 
@@ -334,8 +389,8 @@ export class GoogleAnalytics extends Component {
 								</div>
 								<div className="infos">
 									<div className="name">Temps moy.</div>
-									<div className="modifier"><i></i>0%</div>
-									<div className="modifier-period">Derniers 30 jours</div>
+									<div className={`modifier ${getClassFromDelta(deltaAvgSessionDuration)}`}><i></i>{deltaAvgSessionDuration}%</div>
+									<div className={`modifier-period ${getClassFromDelta(deltaAvgSessionDuration)}`}>Derniers 30 jours</div>
 								</div>
 							</div>
 						</div>
@@ -367,22 +422,22 @@ export class GoogleAnalytics extends Component {
 							<div className="user-infos-item">
 								<div className="number">
 									<i className="fa fa-eye"></i>
-									<strong>670</strong>
+									<strong>{mostViewedPagePath.totalSessions}</strong>
 								</div>
 								<div className="infos">
 									<div className="name">Page la plus visitée</div>
-									<a href="#">http://google.ca</a>
+									<a href={`"${mostViewedPagePath.name}"`}>{mostViewedPagePath.name}</a>
 								</div>
 							</div>
 
 							<div className="user-infos-item warn">
 								<div className="number">
 									<i className="fa fa-eye"></i>
-									<strong>598</strong>
+									<strong>{mostExitedPagePath.totalSessions}</strong>
 								</div>
 								<div className="infos">
 									<div className="name">Page la plus quittée</div>
-									<a href="#">http://google.ca</a>
+									<a href={`"${mostExitedPagePath.name}"`}>{mostExitedPagePath.name}</a>
 								</div>
 							</div>
 						</div>
