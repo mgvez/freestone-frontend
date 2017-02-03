@@ -1,0 +1,33 @@
+
+
+					<section className="padded-content analytics-section summary">
+						<h2>Informations sur vos utilisateurs</h2>
+
+						<div className="user-infos">
+							<div className="user-infos-item">
+								<div className="number">
+									<i className="fa fa-eye"></i>
+									<strong>{mostViewedPagePath.totalSessions}</strong>
+								</div>
+								<div className="infos">
+									<div className="name">Page la plus visitée</div>
+									<a href={`"${mostViewedPagePath.name}"`}>{mostViewedPagePath.name}</a>
+								</div>
+							</div>
+
+							<div className="user-infos-item warn">
+								<div className="number">
+									<i className="fa fa-eye"></i>
+									<strong>{mostExitedPagePath.totalSessions}</strong>
+								</div>
+								<div className="infos">
+									<div className="name">Page la plus quittée</div>
+									<a href={`"${mostExitedPagePath.name}"`}>{mostExitedPagePath.name}</a>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					
+
+					

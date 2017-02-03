@@ -6,6 +6,11 @@ import { fetchVariable } from 'actions/env';
 
 const PAST_MONTH_REQUEST_ID = 'pastMonth';
 const CURRENT_MONTH_REQUEST_ID = 'currentMonth';
+const BROWSER_REQUEST_ID = 'browserRequest';
+const DEVICE_REQUEST_ID = 'deviceRequest';
+const OS_REQUEST_ID = 'osRequest';
+const MEDIUM_REQUEST_ID = 'mediumRequest';
+const SOCIAL_REQUEST_ID = 'socialRequest';
 
 @connect(
 	state => { 
@@ -63,6 +68,131 @@ export class GoogleAnalytics extends Component {
 		const batch = gapi.client.newBatch();
 		//v4
 		// gapi.client.analyticsreporting.reports.batchGet({
+		const browserRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						pageSize: 10000,
+						dimensions: [
+							{
+								name: 'ga:browser',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
+		});
+
+		const deviceRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						pageSize: 10000,
+						dimensions: [
+							{
+								name: 'ga:deviceCategory',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
+		});
+
+		const osRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						pageSize: 10000,
+						dimensions: [
+							{
+								name: 'ga:operatingSystem',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
+		});
+
+		const mediumRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						pageSize: 10000,
+						dimensions: [
+							{
+								name: 'ga:medium',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
+		});
+
+		const socialNetworkRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						pageSize: 10000,
+						dimensions: [
+							{
+								name: 'ga:socialNetwork',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
+		});
+
 		const pastMonthRequest = gapi.client.request({
 			path: '/v4/reports:batchGet',
 			root: 'https://analyticsreporting.googleapis.com/',
@@ -71,6 +201,7 @@ export class GoogleAnalytics extends Component {
 				reportRequests: [
 					{
 						viewId: property,
+						pageSize: 10000,
 						metrics: [
 							{
 								expression: 'ga:sessions',
@@ -101,22 +232,8 @@ export class GoogleAnalytics extends Component {
 				reportRequests: [
 					{
 						viewId: property,
+						pageSize: 10000,
 						dimensions: [
-							{
-								name: 'ga:browser',
-							},
-							{
-								name: 'ga:deviceCategory',
-							},
-							{
-								name: 'ga:operatingSystem',
-							},
-							{
-								name: 'ga:medium',
-							},
-							{
-								name: 'ga:socialNetwork',
-							},
 							{
 								name: 'ga:pagePath',
 							},
@@ -151,12 +268,21 @@ export class GoogleAnalytics extends Component {
 
 		batch.add(pastMonthRequest, { id: PAST_MONTH_REQUEST_ID });
 		batch.add(currentMonthRequest, { id: CURRENT_MONTH_REQUEST_ID });
+		batch.add(browserRequest, { id: BROWSER_REQUEST_ID });
+		batch.add(deviceRequest, { id: DEVICE_REQUEST_ID });
+		batch.add(osRequest, { id: OS_REQUEST_ID });
+		batch.add(mediumRequest, { id: MEDIUM_REQUEST_ID });
+		batch.add(socialNetworkRequest, { id: SOCIAL_REQUEST_ID });
 
 		batch.then((res) => {
 			this.setState({
-				currentMonthData: res.result[`${CURRENT_MONTH_REQUEST_ID}`].result.reports[0],
+				currentMonthData: res.result[CURRENT_MONTH_REQUEST_ID].result.reports[0],
 				pastMonthData: res.result[PAST_MONTH_REQUEST_ID].result.reports[0],
-				//gaInfosPast: res.result.reports[1],
+				browserData: res.result[BROWSER_REQUEST_ID].result.reports[0],
+				deviceData: res.result[DEVICE_REQUEST_ID].result.reports[0],
+				osData: res.result[OS_REQUEST_ID].result.reports[0],
+				mediumData: res.result[MEDIUM_REQUEST_ID].result.reports[0],
+				socialNetworkData: res.result[SOCIAL_REQUEST_ID].result.reports[0],
 			});/**/
 		}, (err) => {
 			console.log(err);	
@@ -204,27 +330,16 @@ export class GoogleAnalytics extends Component {
 		let gaInfos;
 		if (this.state.currentMonthData) {
 
-			const currentMonthData = this.state.currentMonthData.data;
-			const currentMonthHeaders = this.state.currentMonthData.columnHeader;
+			const GAPI_HELPER = {
+				
+			};
 
-			const pastMonthData = this.state.pastMonthData.data;
-			const pastMonthHeaders = this.state.pastMonthData.columnHeader;
-
-			const getMetricIndex = (headerName, source = currentMonthHeaders) => {
+			const getMetricIndex = (headerName, source) => {
 				return source.metricHeader.metricHeaderEntries.indexOf(source.metricHeader.metricHeaderEntries.filter(x => x.name === headerName)[0]);
 			};
 
-			const getDimensionIndex = (headerName, source = currentMonthHeaders) => {
+			const getDimensionIndex = (headerName, source) => {
 				return source.dimensions.indexOf(source.dimensions.filter(x => x === headerName)[0]);
-			};
-
-			const getArrayFromMap = (map) => {
-				return Array.from(map).map((mapEntry) => {
-					return {
-						name: mapEntry[0],
-						...mapEntry[1],
-					};
-				});
 			};
 
 			const sortArrayBySessions = (array) => {
@@ -233,6 +348,18 @@ export class GoogleAnalytics extends Component {
 					if (a.totalSessions < b.totalSessions) { return 1; }
 					return 0;
 				});
+			};
+
+			const formatSimpleData = (data, headers, gaTag, totalSessions) => {
+				return sortArrayBySessions(data.rows.map((row) => {
+					const sessions = parseInt(row.metrics[0].values[getMetricIndex('ga:visits', headers)], 10);
+
+					return {
+						name: row.dimensions[getDimensionIndex(gaTag, headers)],
+						totalSessions: sessions,
+						sessionPercentage: Math.round(sessions / totalSessions * 100),
+					};
+				}));
 			};
 
 			const formatSessionDuration = (sessionDuration) => {
@@ -253,10 +380,19 @@ export class GoogleAnalytics extends Component {
 				return '';
 			};
 			
-			const totalPageViews = currentMonthData.totals[0].values[getMetricIndex('ga:pageviews')];
-			const totalSessions = currentMonthData.totals[0].values[getMetricIndex('ga:sessions')];
-			const percentNewSessions = Math.round(currentMonthData.totals[0].values[getMetricIndex('ga:percentNewSessions')]);
-			const averageSessionDuration = currentMonthData.totals[0].values[getMetricIndex('ga:avgSessionDuration')];
+			/**
+			 * Current and past month specific numbers
+			 */
+			const currentMonthData = this.state.currentMonthData.data;
+			const currentMonthHeaders = this.state.currentMonthData.columnHeader;
+
+			const pastMonthData = this.state.pastMonthData.data;
+			const pastMonthHeaders = this.state.pastMonthData.columnHeader;
+
+			const totalPageViews = currentMonthData.totals[0].values[getMetricIndex('ga:pageviews', currentMonthHeaders)];
+			const totalSessions = currentMonthData.totals[0].values[getMetricIndex('ga:sessions', currentMonthHeaders)];
+			const percentNewSessions = Math.round(currentMonthData.totals[0].values[getMetricIndex('ga:percentNewSessions', currentMonthHeaders)]);
+			const averageSessionDuration = currentMonthData.totals[0].values[getMetricIndex('ga:avgSessionDuration', currentMonthHeaders)];
 			const formattedAvgSessionDuration = formatSessionDuration(averageSessionDuration);
 			// const mostExitedPagePath = currentMonthData.totals[0].values[getMetricIndex('ga:exitPagePath')];
 
@@ -268,89 +404,50 @@ export class GoogleAnalytics extends Component {
 			const deltaSessions = Math.round((totalSessions - pastTotalSessions) / pastTotalSessions * 100);
 			const deltaAvgSessionDuration = Math.round((averageSessionDuration - pastAverageSessionDuration) / pastAverageSessionDuration * 100);
 
-			const browsers = new Map();
-			const operatingSystems = new Map();
-			const devices = new Map();
-			const sources = new Map();
-			const socialRefs = new Map();
-			const exitPages = new Map();
-			const viewedPages = new Map();
-			currentMonthData.rows.forEach((row) => {
-				const browserName = row.dimensions[getDimensionIndex('ga:browser')];
-				const osName = row.dimensions[getDimensionIndex('ga:operatingSystem')];
-				const deviceName = row.dimensions[getDimensionIndex('ga:deviceCategory')];
-				const sourceName = row.dimensions[getDimensionIndex('ga:medium')];
-				const socialNetwork = row.dimensions[getDimensionIndex('ga:socialNetwork')];
-				const exitPagePath = row.dimensions[getDimensionIndex('ga:exitPagePath')];
-				const pagePath = row.dimensions[getDimensionIndex('ga:pagePath')];
-				const sessions = parseInt(row.metrics[0].values[getMetricIndex('ga:sessions')], 10);
 
-				const exitPageObject = exitPages.get(exitPagePath) || { totalSessions: 0, sessionPercentage: 0 };
-				exitPageObject.totalSessions += sessions;
-				exitPageObject.sessionPercentage = Math.round(exitPageObject.totalSessions / totalSessions * 100);
-				exitPages.set(exitPagePath, exitPageObject);
+			/**
+			 * 
+			 */
 
-				const pageObject = viewedPages.get(pagePath) || { totalSessions: 0, sessionPercentage: 0 };
-				pageObject.totalSessions += sessions;
-				pageObject.sessionPercentage = Math.round(pageObject.totalSessions / totalSessions * 100);
-				viewedPages.set(pagePath, pageObject);
+			const browserData = this.state.browserData.data;
+			const browserHeaders = this.state.browserData.columnHeader;
 
-				const browserObject = browsers.get(browserName) || { totalSessions: 0, sessionPercentage: 0 };
-				browserObject.totalSessions += sessions;
-				browserObject.sessionPercentage = Math.round(browserObject.totalSessions / totalSessions * 100);
-				
-				let cssClass = '';
-				if (browserName.toLowerCase().indexOf('chrome') > -1) {
-					cssClass = 'chrome';
-				} else if (browserName.toLowerCase().indexOf('firefox') > -1) {
-					cssClass = 'firefox';
-				} else if (browserName.toLowerCase().indexOf('safari') > -1) {
-					cssClass = 'safari';
-				} else if (browserName.toLowerCase().indexOf('explorer') > -1) {
-					cssClass = 'internet-explorer';
-				} else if (browserName.toLowerCase().indexOf('edge') > -1) {
-					cssClass = 'edge';
+			const deviceData = this.state.deviceData.data;
+			const deviceHeaders = this.state.deviceData.columnHeader;
+
+			const osData = this.state.osData.data;
+			const osHeaders = this.state.osData.columnHeader;
+			
+			const mediumData = this.state.mediumData.data;
+			const mediumHeaders = this.state.mediumData.columnHeader;
+			
+			const socialNetworkData = this.state.socialNetworkData.data;
+			const socialNetworkHeaders = this.state.socialNetworkData.columnHeader;/** */
+
+			const browserList = formatSimpleData(browserData, browserHeaders, 'ga:browser', totalSessions).map((row) => {
+				row.cssClass = '';
+				if (row.name.toLowerCase().indexOf('chrome') > -1) {
+					row.cssClass = 'chrome';
+				} else if (row.name.toLowerCase().indexOf('firefox') > -1) {
+					row.cssClass = 'firefox';
+				} else if (row.name.toLowerCase().indexOf('safari') > -1) {
+					row.cssClass = 'safari';
+				} else if (row.name.toLowerCase().indexOf('explorer') > -1) {
+					row.cssClass = 'internet-explorer';
+				} else if (row.name.toLowerCase().indexOf('edge') > -1) {
+					row.cssClass = 'edge';
 				}
 
-				browserObject.cssClass = cssClass;
-				browsers.set(browserName, browserObject);
+				return row;
+			}).slice(0, 3);
 
-				const osObject = operatingSystems.get(osName) || { totalSessions: 0, sessionPercentage: 0 };
-				osObject.totalSessions += sessions;
-				osObject.sessionPercentage = Math.round(osObject.totalSessions / totalSessions * 100);
-				operatingSystems.set(osName, osObject);
-
-				const deviceObject = devices.get(deviceName) || { totalSessions: 0, sessionPercentage: 0 };
-				deviceObject.totalSessions += sessions;
-				deviceObject.sessionPercentage = Math.round(deviceObject.totalSessions / totalSessions * 100);
-				devices.set(deviceName, deviceObject);
-
-				const sourceObject = sources.get(sourceName) || { totalSessions: 0, sessionPercentage: 0 };
-				sourceObject.totalSessions += sessions;
-				sourceObject.sessionPercentage = Math.round(sourceObject.totalSessions / totalSessions * 100);
-				sources.set(sourceName, sourceObject);
-
-				const socialRefObject = socialRefs.get(socialNetwork) || { totalSessions: 0, sessionPercentage: 0 };
-				socialRefObject.totalSessions += sessions;
-				socialRefObject.sessionPercentage = Math.round(socialRefObject.totalSessions / totalSessions * 100);
-				socialRefs.set(socialNetwork, socialRefObject);
-			});
-
-			console.log(sortArrayBySessions(getArrayFromMap(browsers)));
-
-			const browserList = sortArrayBySessions(getArrayFromMap(browsers)).slice(0, 3);
-			const osList = sortArrayBySessions(getArrayFromMap(operatingSystems)).slice(0, 3);
-			const deviceList = sortArrayBySessions(getArrayFromMap(devices)).slice(0, 3);
-			const sourceList = sortArrayBySessions(
-				getArrayFromMap(sources).map(source => {
-					const s = { ...source };
-					s.name = s.name === '(none)' ? 'Direct' : s.name;
-					return s;
-				})
-			).slice(0, 3);
-			const socialRefList = sortArrayBySessions(getArrayFromMap(socialRefs).filter(ref => ref.name !== '(not set)')).slice(0, 3);
-			const mostExitedPagePath = sortArrayBySessions(getArrayFromMap(exitPages))[0];
-			const mostViewedPagePath = sortArrayBySessions(getArrayFromMap(viewedPages))[0];
+			const deviceList = formatSimpleData(deviceData, deviceHeaders, 'ga:deviceCategory', totalSessions).slice(0, 3);
+			const osList = formatSimpleData(osData, osHeaders, 'ga:operatingSystem', totalSessions).slice(0, 3);
+			const sourceList = formatSimpleData(mediumData, mediumHeaders, 'ga:medium', totalSessions).map((row) => {
+				row.name = row.name === '(none)' ? 'Direct' : row.name;
+				return row;
+			}).slice(0, 3);
+			const socialRefList = formatSimpleData(socialNetworkData, socialNetworkHeaders, 'ga:socialNetwork', totalSessions).filter(ref => ref.name !== '(not set)').slice(0, 3);
 
 			gaInfos = (
 				<div>
@@ -412,34 +509,6 @@ export class GoogleAnalytics extends Component {
 									);
 								})
 							}
-						</div>
-					</section>
-
-					<section className="padded-content analytics-section summary">
-						<h2>Informations sur vos utilisateurs</h2>
-
-						<div className="user-infos">
-							<div className="user-infos-item">
-								<div className="number">
-									<i className="fa fa-eye"></i>
-									<strong>{mostViewedPagePath.totalSessions}</strong>
-								</div>
-								<div className="infos">
-									<div className="name">Page la plus visitée</div>
-									<a href={`"${mostViewedPagePath.name}"`}>{mostViewedPagePath.name}</a>
-								</div>
-							</div>
-
-							<div className="user-infos-item warn">
-								<div className="number">
-									<i className="fa fa-eye"></i>
-									<strong>{mostExitedPagePath.totalSessions}</strong>
-								</div>
-								<div className="infos">
-									<div className="name">Page la plus quittée</div>
-									<a href={`"${mostExitedPagePath.name}"`}>{mostExitedPagePath.name}</a>
-								</div>
-							</div>
 						</div>
 					</section>
 
