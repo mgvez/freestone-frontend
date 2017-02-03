@@ -11,6 +11,8 @@ const DEVICE_REQUEST_ID = 'deviceRequest';
 const OS_REQUEST_ID = 'osRequest';
 const MEDIUM_REQUEST_ID = 'mediumRequest';
 const SOCIAL_REQUEST_ID = 'socialRequest';
+const PAGE_PATH_REQUEST_ID = 'pagePathRequest';
+const EXIT_PAGE_REQUEST_ID = 'exitPageRequest';
 
 @connect(
 	state => { 
@@ -193,6 +195,56 @@ export class GoogleAnalytics extends Component {
 			},
 		});
 
+		const pagePathRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						pageSize: 10000,
+						dimensions: [
+							{
+								name: 'ga:pagePath',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
+		});
+
+		const exitPageRequest = gapi.client.request({
+			path: '/v4/reports:batchGet',
+			root: 'https://analyticsreporting.googleapis.com/',
+			method: 'POST',
+			body: {
+				reportRequests: [
+					{
+						viewId: property,
+						pageSize: 10000,
+						dimensions: [
+							{
+								name: 'ga:exitPagePath',
+							},
+						],
+						dateRanges: [
+							{
+								startDate: '30daysAgo',
+								endDate: 'yesterday',
+							},
+						],
+					},
+				],
+			},
+		});
+
 		const pastMonthRequest = gapi.client.request({
 			path: '/v4/reports:batchGet',
 			root: 'https://analyticsreporting.googleapis.com/',
@@ -233,14 +285,6 @@ export class GoogleAnalytics extends Component {
 					{
 						viewId: property,
 						pageSize: 10000,
-						dimensions: [
-							{
-								name: 'ga:pagePath',
-							},
-							{
-								name: 'ga:exitPagePath',
-							},
-						],
 						metrics: [
 							{
 								expression: 'ga:sessions',
@@ -273,6 +317,8 @@ export class GoogleAnalytics extends Component {
 		batch.add(osRequest, { id: OS_REQUEST_ID });
 		batch.add(mediumRequest, { id: MEDIUM_REQUEST_ID });
 		batch.add(socialNetworkRequest, { id: SOCIAL_REQUEST_ID });
+		batch.add(pagePathRequest, { id: PAGE_PATH_REQUEST_ID });
+		batch.add(exitPageRequest, { id: EXIT_PAGE_REQUEST_ID });
 
 		batch.then((res) => {
 			this.setState({
@@ -283,6 +329,8 @@ export class GoogleAnalytics extends Component {
 				osData: res.result[OS_REQUEST_ID].result.reports[0],
 				mediumData: res.result[MEDIUM_REQUEST_ID].result.reports[0],
 				socialNetworkData: res.result[SOCIAL_REQUEST_ID].result.reports[0],
+				pagePathData: res.result[PAGE_PATH_REQUEST_ID].result.reports[0],
+				exitPageData: res.result[EXIT_PAGE_REQUEST_ID].result.reports[0],
 			});/**/
 		}, (err) => {
 			console.log(err);	
@@ -394,7 +442,6 @@ export class GoogleAnalytics extends Component {
 			const percentNewSessions = Math.round(currentMonthData.totals[0].values[getMetricIndex('ga:percentNewSessions', currentMonthHeaders)]);
 			const averageSessionDuration = currentMonthData.totals[0].values[getMetricIndex('ga:avgSessionDuration', currentMonthHeaders)];
 			const formattedAvgSessionDuration = formatSessionDuration(averageSessionDuration);
-			// const mostExitedPagePath = currentMonthData.totals[0].values[getMetricIndex('ga:exitPagePath')];
 
 			const pastTotalPageViews = pastMonthData.totals[0].values[getMetricIndex('ga:pageviews', pastMonthHeaders)];
 			const pastTotalSessions = pastMonthData.totals[0].values[getMetricIndex('ga:sessions', pastMonthHeaders)];
@@ -422,7 +469,13 @@ export class GoogleAnalytics extends Component {
 			const mediumHeaders = this.state.mediumData.columnHeader;
 			
 			const socialNetworkData = this.state.socialNetworkData.data;
-			const socialNetworkHeaders = this.state.socialNetworkData.columnHeader;/** */
+			const socialNetworkHeaders = this.state.socialNetworkData.columnHeader;
+
+			const pagePathData = this.state.pagePathData.data;
+			const pagePathHeaders = this.state.pagePathData.columnHeader;
+
+			const exitPageData = this.state.exitPageData.data;
+			const exitPageHeaders = this.state.exitPageData.columnHeader;
 
 			const browserList = formatSimpleData(browserData, browserHeaders, 'ga:browser', totalSessions).map((row) => {
 				row.cssClass = '';
@@ -441,13 +494,17 @@ export class GoogleAnalytics extends Component {
 				return row;
 			}).slice(0, 3);
 
-			const deviceList = formatSimpleData(deviceData, deviceHeaders, 'ga:deviceCategory', totalSessions).slice(0, 3);
-			const osList = formatSimpleData(osData, osHeaders, 'ga:operatingSystem', totalSessions).slice(0, 3);
 			const sourceList = formatSimpleData(mediumData, mediumHeaders, 'ga:medium', totalSessions).map((row) => {
 				row.name = row.name === '(none)' ? 'Direct' : row.name;
 				return row;
 			}).slice(0, 3);
+
+			const deviceList = formatSimpleData(deviceData, deviceHeaders, 'ga:deviceCategory', totalSessions).slice(0, 3);
+			const osList = formatSimpleData(osData, osHeaders, 'ga:operatingSystem', totalSessions).slice(0, 3);
 			const socialRefList = formatSimpleData(socialNetworkData, socialNetworkHeaders, 'ga:socialNetwork', totalSessions).filter(ref => ref.name !== '(not set)').slice(0, 3);
+
+			const mostViewedPagePath = formatSimpleData(pagePathData, pagePathHeaders, 'ga:pagePath', totalSessions)[0];
+			const mostExitedPagePath = formatSimpleData(exitPageData, exitPageHeaders, 'ga:exitPagePath', totalSessions)[0];
 
 			gaInfos = (
 				<div>
@@ -509,6 +566,34 @@ export class GoogleAnalytics extends Component {
 									);
 								})
 							}
+						</div>
+					</section>
+
+					<section className="padded-content analytics-section summary">
+						<h2>Informations sur vos utilisateurs</h2>
+
+						<div className="user-infos">
+							<div className="user-infos-item">
+								<div className="number">
+									<i className="fa fa-eye"></i>
+									<strong>{mostViewedPagePath.totalSessions}</strong>
+								</div>
+								<div className="infos">
+									<div className="name">Page la plus visitée</div>
+									<a href={`"${mostViewedPagePath.name}"`}>{mostViewedPagePath.name}</a>
+								</div>
+							</div>
+
+							<div className="user-infos-item warn">
+								<div className="number">
+									<i className="fa fa-eye"></i>
+									<strong>{mostExitedPagePath.totalSessions}</strong>
+								</div>
+								<div className="infos">
+									<div className="name">Page la plus quittée</div>
+									<a href={`"${mostExitedPagePath.name}"`}>{mostExitedPagePath.name}</a>
+								</div>
+							</div>
 						</div>
 					</section>
 
