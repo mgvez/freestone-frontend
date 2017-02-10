@@ -13,6 +13,7 @@ const recordIdSelector = (state, props) => props.params && props.params.recordId
 const recordsSelector = state => state.recordForm.records;
 const isModalSelector = (state, props) => props.isModal;
 const childrenSelector = state => state.schema.children;
+const defaultLanguageSelector = state => state.env.defaultLanguage;
 
 //check si le record ou un de ses enfants a été edité
 function getIsEdited(allTables, allChildren, allRecords, tableId, recordId) {
@@ -43,21 +44,24 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId) {
 
 function makeSelector() {
 	return createSelector(
-		[tableSchemaMapStateToProps(), recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, childrenSelector, schemaSelector],
-		(schema, recordId, records, isModal, userViewLanguage, allChildren, allSchema) => {
+		[tableSchemaMapStateToProps(), recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector],
+		(schema, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema) => {
 			const { table } = schema;
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
 			// console.log(allChildren);
-			// console.log(records);
+			// console.log(record);
+			// console.log(userViewLanguage);
 			const hasLanguageToggle = table && table.fields.some((f) => {
 				return !!f.language;
 			});
+
+			const currentLanguage = (userViewLanguage && userViewLanguage.language) || defaultLanguage;
 
 			return {
 				table,
 				hasLanguageToggle,
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
-				slug: record && record[SLUG_PSEUDOFIELD_ALIAS],
+				slug: record && record[`${SLUG_PSEUDOFIELD_ALIAS}_${currentLanguage}`],
 				...userViewLanguage,
 				isEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId),
 			};
