@@ -66,6 +66,7 @@ export class Field extends Component {
 			input = <FileInput {...this.props} />;
 			break;
 		case 'bool':
+		case 'ispublished':
 			input = <BoolInput {...this.props} />;
 			break;
 		case 'permissions':
