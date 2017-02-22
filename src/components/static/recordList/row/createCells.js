@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, ROLE_N_USES } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED } from 'freestone/schemaProps';
 import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
 import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
 import { BankNUses } from 'components/connected/widgets/BankNUses';
+import { BoolSwitch } from 'components/connected/recordList/BoolSwitch';
 
 const MAX_THUMB_SIZE = 200;
 
@@ -32,6 +33,19 @@ export function createCells(table, fields, values, elementType = 'td', options =
 				{
 					id: values[field.listAlias],
 					maxSize: MAX_THUMB_SIZE,
+				}
+			);
+		}
+		
+		if (field.type === TYPE_BOOL || field.type === TYPE_ISPUBLISHED) {
+			// console.log(values);
+			// console.log(values[PRIKEY_ALIAS]);
+			val = React.createElement(
+				BoolSwitch,
+				{
+					field,
+					val: values[field.listAlias],
+					recordId: values[PRIKEY_ALIAS],
 				}
 			);
 		}

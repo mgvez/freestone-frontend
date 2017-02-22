@@ -20,6 +20,7 @@ export const TYPE_BANKIMG = 'bankimg';
 export const TYPE_FILE = 'file';
 export const TYPE_DATETIME = 'datetime';
 export const TYPE_BOOL = 'bool';
+export const TYPE_ISPUBLISHED = 'ispublished';
 export const TYPE_LANGUAGE = 'language';
 
 export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM];

@@ -119,6 +119,23 @@ export function swapOrder(tableName, recordId, direction) {
 	};
 }
 
+/**
+ Updates the value for a single field in a record
+*/
+export function saveSingleValue(tableIdOrName, recordId, fieldId, value) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: [SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR],
+				route: `saveValue/${tableIdOrName}/${recordId}/${fieldId}`,
+				data: {
+					value,
+				},
+			},
+		});
+	};
+}
+
 export function deleteRecord(tableName, recordId) {
 	return (dispatch) => {
 		// console.log(tableName, recordId);
