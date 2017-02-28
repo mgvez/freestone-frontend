@@ -64,7 +64,7 @@ export class FormHeaderVariation extends Component {
 	}
 
 	requireData(props) {
-		if (props.slugs === null) {
+		if (props.slugs === undefined) {
 			this.props.fetchSlug(props.table.id, props.params.recordId);
 		}
 	}
