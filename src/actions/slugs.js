@@ -16,3 +16,25 @@ export function fetchSlug(tableNameId, recordId) {
 		});
 	};
 }
+
+export function navigateToSlug(tableNameId, recordId, currentLanguage) {
+	return (dispatch) => {
+		// console.log(tableNameId, recordId);
+
+		const onSlugReceived = dispatch({
+			[FREESTONE_API]: {
+				types: ['api::fetch-slug', null, null],
+				route: `slug/${tableNameId}/${recordId}`,
+				data: {
+				},
+			},
+		});
+
+		onSlugReceived.then((res) => {
+			if (!res || !res.slugs) return;
+			const lang = currentLanguage || Object.keys(res.slugs).shift();
+			const slug = res.slugs[lang];
+			window.open(slug);
+		});
+	};
+}

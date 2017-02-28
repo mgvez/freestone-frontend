@@ -13,6 +13,7 @@ function makeSelector(slugsSelector) {
 
 			return {
 				slug,
+				currentLanguage,
 			};
 		}
 	);
