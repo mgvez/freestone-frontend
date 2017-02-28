@@ -15,6 +15,7 @@ import { default as recordForm } from './recordForm';
 import { mtmOptions } from './mtmOptions';
 import { default as subform } from './subform';
 import { default as bank } from './bank';
+import { default as slugs } from './slugs';
 import save from './save';
 
 const rootReducer = combineReducers({
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
 	envVariables,
 	translations,
 	recordRevision,
+	slugs,
 });
 
 export default rootReducer;

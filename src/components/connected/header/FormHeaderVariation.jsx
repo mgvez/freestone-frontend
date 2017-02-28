@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as devActionCreators from 'actions/dev';
-import * as authActionCreators from 'actions/auth';
-import { isNew } from 'utils/UniqueId';
+import { fetchSlug } from 'actions/slugs';
 
-const actionCreators = { ...authActionCreators, ...devActionCreators };
+import { formHeaderSelector } from 'selectors/formHeader';
+const actionCreators = { fetchSlug };
 
 import { LanguageToggler } from 'components/connected/form/LanguageToggler';
-import { GOD_USER_GROUP } from 'freestone/settings';
-
-@connect(
-	state => {
-		// console.log(state.auth.usergroup, GOD_USER_GROUP);
-		return {
-			isGod: state.auth.usergroup === GOD_USER_GROUP,
-		};
-	},
-	dispatch => bindActionCreators(actionCreators, dispatch)
-)
+import { PreviewRecord } from 'components/connected/form/buttons/PreviewRecord';
 
 /**
  * FormHeaderVariation
@@ -29,9 +18,14 @@ import { GOD_USER_GROUP } from 'freestone/settings';
  * pour ne pas avoir à recalculer la hauteur du header et l'ajouter au
  * padding-top du body.
  */
+@connect(
+	formHeaderSelector,
+	dispatch => bindActionCreators(actionCreators, dispatch)
+)
 export class FormHeaderVariation extends Component {
 	static propTypes = {
 		isGod: React.PropTypes.bool,
+		slugs: React.PropTypes.array,
 		params: React.PropTypes.shape({
 			tableName: React.PropTypes.string,
 			recordId: React.PropTypes.string,
@@ -41,25 +35,38 @@ export class FormHeaderVariation extends Component {
 		isModal: React.PropTypes.bool,
 		language: React.PropTypes.string,
 		hasLanguageToggle: React.PropTypes.bool,
-		slug: React.PropTypes.string,
 		lastmodifdate: React.PropTypes.string,
-
-		setLanguageState: React.PropTypes.func,
-
 		isLight: React.PropTypes.bool,
-
 		buttons: React.PropTypes.any,
 		children: React.PropTypes.any,
+
+		setLanguageState: React.PropTypes.func,
+		fetchSlug: React.PropTypes.func,
 	};
 
 	static contextTypes = {
 		setHeight: React.PropTypes.func,
 	};
 
+	componentWillMount() {
+		this.requireData(this.props);
+	}
+
 	componentDidMount() {
 		const h = this._header.getBoundingClientRect().height;
 		// console.log('didMount', this.props.isLight, h);
 		this.context.setHeight(this.props.isLight, h);
+		this.requireData(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.requireData(nextProps);
+	}
+
+	requireData(props) {
+		if (props.slugs === null) {
+			this.props.fetchSlug(props.table.id, props.params.recordId);
+		}
 	}
 
 	render() {
@@ -67,16 +74,26 @@ export class FormHeaderVariation extends Component {
 
 		const languageToggler = this.props.hasLanguageToggle ? <LanguageToggler onChangeLang={this.props.isModal ? this.props.setLanguageState : null} localLanguage={language} /> : null;
 		
-		const preview = this.props.slug ? (<a href={this.props.slug} target="_blank" className="button-preview"><i className="fa fa-eye"></i>Preview</a>) : null;
+		const preview = <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} />;
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
 		const editSchemaLink = this.props.table ? `#/edit/zva_table/${this.props.table.id}` : '';
 		const editSchema = this.props.isGod ? (<a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>) : null;
 
+		const slugs = this.props.slugs && this.props.slugs.length ? (
+			<div>
+				<h4>Links</h4>
+				{this.props.slugs.map(slugDef => {
+					return <div key={`slug-${slugDef.lang}`} className="permalinks"><span>{slugDef.lang}</span> <a href={slugDef.slug} target="_blank">{slugDef.slug}</a></div>;
+				})}
+			</div>
+		) : null;
+
 		const infos = (this.props.isLight) ? '' : (
 			<div className="texts">
 				{this.props.children}
 				{lastModif}
+				{slugs}
 			</div>
 		);
 

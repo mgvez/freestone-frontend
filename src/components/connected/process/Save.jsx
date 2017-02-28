@@ -21,6 +21,7 @@ export class Save extends Component {
 		deleted: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		saveState: React.PropTypes.object,
+		isTemporary: React.PropTypes.bool,
 
 		callback: React.PropTypes.func,
 		saveRecord: React.PropTypes.func,
@@ -30,7 +31,7 @@ export class Save extends Component {
 	componentWillMount() {
 		// console.log('MOUNT', this.props.records, this.props.deleted);
 		//callback has priority over afterSaveLocation. If a callback is present, it will execute instead of redirecting to the location.
-		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.afterSaveLocation, this.props.callback);
+		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.isTemporary, this.props.afterSaveLocation, this.props.callback);
 	}
 
 	render() {
