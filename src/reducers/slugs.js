@@ -5,6 +5,7 @@ import { CLEAR_DATA } from 'actions/dev';
 
 function removeSlugs(state, records) {
 	// console.log(records);
+	if (!records) return state;
 	return records.reduce((modifiedState, record) => {
 		const { tableId, recordId } = record;
 		if (!modifiedState[tableId] || !modifiedState[tableId][recordId]) return modifiedState;

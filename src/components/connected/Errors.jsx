@@ -40,6 +40,7 @@ export class Errors extends Component {
 			<Modal
 				isOpen
 				closeTimeoutMS={300}
+				contentLabel="."
 				style={customStyle}
 			>
 				{
