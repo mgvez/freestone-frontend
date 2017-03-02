@@ -97,6 +97,7 @@
     "yargs": "^3.18.0"
   },
   "dependencies": {
-    "react-custom-scrollbars": "^4.0.1"
+    "react-custom-scrollbars": "^4.0.1",
+    "react-load-script": "0.0.2"
   }
 }
