@@ -100,7 +100,7 @@ export class AutocompleteInput extends Input {
 	};
 
 	onChange = (event, { newValue }) => {
-		console.log(newValue);
+		// console.log(newValue);
 		this.setCurrentText(newValue);
 		this.regexMatchOption = new RegExp(newValue.split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
@@ -154,7 +154,7 @@ export class AutocompleteInput extends Input {
 
 	render() {
 
-		console.log(`VAL ${this.props.val}`);
+		// console.log(`VAL ${this.props.val}`);
 		if (!this.props.foreignOptions || !this.props.foreignOptions.values.length) return null;
 
 		const current = this.getCurrentOption();
