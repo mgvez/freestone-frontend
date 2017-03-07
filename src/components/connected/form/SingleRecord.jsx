@@ -19,6 +19,7 @@ export class SingleRecord extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,
+		parentRecordId: React.PropTypes.string,
 
 		table: React.PropTypes.object,
 		children: React.PropTypes.array,
@@ -103,6 +104,7 @@ export class SingleRecord extends Component {
 								recordId={this.props.recordId}
 								val={this.props.record[field.id]}
 								origVal={this.props.recordUnaltered[field.id]}
+								parentRecordId={this.props.parentRecordId}
 								setFieldVal={this.props.setFieldVal}
 								env={this.props.env}
 								lang={field.language}

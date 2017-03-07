@@ -14,6 +14,7 @@ export class SubformTabbed extends CollapsableForm {
 		activeRecord: React.PropTypes.object,
 		childrenRecords: React.PropTypes.array,
 		language: React.PropTypes.string,
+		parentRecordId: React.PropTypes.string,
 		isCollapsed: React.PropTypes.bool,
 	};
 
@@ -24,7 +25,7 @@ export class SubformTabbed extends CollapsableForm {
 
 		return (<div ref={this.setCollapsable}>
 			<TabList {...this.props} activeRecordId={activeRecordId} />
-			<SingleRecord tableId={this.props.table.id} recordId={activeRecordId} language={this.props.language} />
+			<SingleRecord tableId={this.props.table.id} parentRecordId={this.props.parentRecordId} recordId={activeRecordId} language={this.props.language} />
 		</div>);
 	}
 
