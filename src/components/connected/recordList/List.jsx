@@ -65,12 +65,17 @@ export class List extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		// console.log(nextProps);
+		// console.log(this.props);
 		this.requireData(nextProps);
 	}
 
 	shouldComponentUpdate(nextProps) {
+		// console.log(nextProps);
+		// console.log(this.props);
+		// console.log(this.props.groupedRecords === nextProps.groupedRecords);
 		//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
-		return !!(nextProps.groupedRecords);
+		return !!(nextProps.groupedRecords) && this.props.groupedRecords !== nextProps.groupedRecords;
 	}
 
 	componentWillUnmount() {
@@ -115,7 +120,7 @@ export class List extends Component {
 
 	render() {
 		// console.log(this.props.table);
-		// console.log('render list');
+		// console.log('render list', this.props.table);
 		// console.log(this.props.searchableFields);
 		let output;
 		let readyToScroll = false;
@@ -131,7 +136,7 @@ export class List extends Component {
 					/>
 				</thead>);
 			}
-
+			// console.profile('render');
 			output = (
 				<section>
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
@@ -202,6 +207,8 @@ export class List extends Component {
 					</div>
 				</section>
 			);
+			// console.profileEnd('render');
+			
 		}
 		return (
 			<InScroll isReady={readyToScroll}>
