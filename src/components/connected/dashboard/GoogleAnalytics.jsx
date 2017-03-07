@@ -78,7 +78,8 @@ export class GoogleAnalytics extends Component {
 
 	renderAnalyticsTimeline() {
 		console.log('Render analytics timeline', this.props.property);
-		const property = this.props.property || '84012906';
+		const property = this.props.property;// || '84012906';
+		if (!property) return;
 		const gapi = window.gapi;
 
 		const batch = gapi.client.newBatch();

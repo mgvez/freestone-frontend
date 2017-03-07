@@ -30,7 +30,7 @@ function catchError(res) {
 }
 
 
-export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback) {
+export function saveRecord(table, tree, records, deleted, isTemporary, gotoOnFinish, callback) {
 	return (dispatch) => {
 		// console.log(tree);
 		// console.log(records);
@@ -65,6 +65,7 @@ export function saveRecord(table, tree, records, deleted, gotoOnFinish, callback
 				deleted,
 				tableName,
 				fileNames,
+				isTemporary,
 			});
 
 			const onSaved = dispatch({

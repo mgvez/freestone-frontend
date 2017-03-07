@@ -100,6 +100,7 @@ export class AutocompleteInput extends Input {
 	};
 
 	onChange = (event, { newValue }) => {
+		// console.log(newValue);
 		this.setCurrentText(newValue);
 		this.regexMatchOption = new RegExp(newValue.split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
@@ -114,7 +115,7 @@ export class AutocompleteInput extends Input {
 
 	onSuggestionsFetchRequested = ({ value }) => {
 		// console.log(value);
-		if (!value) this.changeVal(null);
+		if (!value) this.changeVal(0);
 		this.setState({
 			suggestions: this.getSuggestions(value),
 		});

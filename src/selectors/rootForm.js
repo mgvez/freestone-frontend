@@ -1,7 +1,7 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
 
 import { getForeignFieldId, getChildrenRecordIds } from 'freestone/schemaHelpers';
 
@@ -55,13 +55,10 @@ function makeSelector() {
 				return !!f.language;
 			});
 
-			const currentLanguage = (userViewLanguage && userViewLanguage.language) || defaultLanguage;
-
 			return {
 				table,
 				hasLanguageToggle,
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
-				slug: record && record[`${SLUG_PSEUDOFIELD_ALIAS}_${currentLanguage}`],
 				...userViewLanguage,
 				isEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId),
 			};

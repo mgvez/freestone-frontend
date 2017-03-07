@@ -54,18 +54,29 @@ function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfi
 	return branch;
 }
 
+//Hook record before sending to db (for example to encrypt value)
+function hookRecord(record) {
+	const hook = window.freestone && window.freestone.hooks && window.freestone.hooks.setFieldValue;
+	if (!hook) return record;
+	return Object.keys(record).reduce((hookedRecord, fieldId) => {
+		hookedRecord[fieldId] = hook(fieldId, hookedRecord[fieldId]);
+		return hookedRecord;
+	}, { ...record });
+}
+
 //utilise le tree pour retriever les records référencés dans ce tree
 function getRecords(branch, allRecords, getDeleted, records = {}) {
 	const { tableId, recordId, children } = branch;
 	const record = allRecords[tableId] && allRecords[tableId][recordId];
 	records[tableId] = records[tableId] || {};
 
-	if (record && ((getDeleted && record[DELETED_PSEUDOFIELD_ALIAS] && !isNew(recordId)) || (!getDeleted && !record[DELETED_PSEUDOFIELD_ALIAS]))) records[tableId][recordId] = record;
+	if (record && ((getDeleted && record[DELETED_PSEUDOFIELD_ALIAS] && !isNew(recordId)) || (!getDeleted && !record[DELETED_PSEUDOFIELD_ALIAS]))) records[tableId][recordId] = hookRecord(record);
 
 	return children.reduce((carry, childBranch) => {
 		return getRecords(childBranch, allRecords, getDeleted, carry);
 	}, records);
 }
+
 
 const buildRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, listPageAfterSaveSelector],
@@ -79,6 +90,8 @@ const buildRecordSelector = createSelector(
 		// console.log(tree);
 		// console.log(tables);
 		// console.log(records);
+		
+
 		// console.log(unfilteredChildren);
 		const afterSaveLocation = table && allListPageAfterSave[table.name] && allListPageAfterSave[table.name][recordId];
 		// console.log(afterSaveLocation);

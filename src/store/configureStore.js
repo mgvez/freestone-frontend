@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import apiMiddleware from 'middleware/api';
 import authMiddleware from 'middleware/auth';
+import hooksMiddleware from 'middleware/hooks';
 import createLogger from 'redux-logger';
 import reduxLocalstorage from 'redux-simple-localstorage';
 import { routerMiddleware } from 'react-router-redux';
@@ -18,6 +19,7 @@ const routeMiddleware = routerMiddleware(hashHistory);
 const createStoreWithMiddleware = applyMiddleware(
 	thunkMiddleware,
 	apiMiddleware,
+	hooksMiddleware,
 	authMiddleware,
 	logger,
     write,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Script from 'react-load-script';
 
 import * as authActionCreators from 'actions/auth';
 import * as envActionCreators from 'actions/env';
@@ -54,11 +55,20 @@ export class Freestone extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
 	}
+	
+	onScriptLoaded = () => {
+		// console.log(arguments);
+	}
+	
+	onScriptError = () => {
+
+	}
 
 	requireData(props) {
 		// console.log(props.env);
 		//s'assure que l'env est loadé
 		if (!props.env.clientPath) this.props.fetchEnv();
+
 	}
 
 	render() {
@@ -85,6 +95,11 @@ export class Freestone extends Component {
 					<Errors {...this.props} />
 				</div>
 				<GoogleAuthenticate />
+				{
+					this.props.env.clientScripts.map((scriptPath, i) => { 
+						return <Script key={i} url={scriptPath} onError={this.onScriptError} onLoad={this.onScriptLoaded} />;
+					})
+				}
 			</div>
 		);
 	}

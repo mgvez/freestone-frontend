@@ -32,11 +32,11 @@ function images(state = initialState, action) {
 	case RECEIVE_BANK_IMAGE: {
 		// console.log(action.data.nRecords);
 		if (!action.data) return state;
-		const { id, markup } = action.data;
+		const { id, maxSize, markup } = action.data;
 		// console.log(action.data);
 		return {
 			...state,
-			[id]: markup,
+			[`${id}_${maxSize}`]: markup,
 		};
 	}
 	default:
