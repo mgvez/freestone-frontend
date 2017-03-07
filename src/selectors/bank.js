@@ -12,6 +12,7 @@ const allUsesSelector = state => state.bank.uses;
 const languageSelector = (state, props) => { return props.lang ? props.lang : state.env.defaultLanguage; };
 
 const idSelector = (state, props) => props.id;
+const maxSizeSelector = (state, props) => props.maxSize;
 const bankNameSelector = (state, props) => props.bankName;
 
 function buildByCategory(records, categFieldAlias) {
@@ -75,10 +76,10 @@ export function bankSelector(bankName) {
 }
 
 export const bankImgThumbnailSelector = createSelector(
-	[idSelector, bankImgSelector, languageSelector],
-	(id, allImages, lang) => {
+	[idSelector, maxSizeSelector, bankImgSelector, languageSelector],
+	(id, maxSize, allImages, lang) => {
 		// console.log(allImages);
-		const markup = allImages[id];
+		const markup = allImages[`${id}_${maxSize}`];
 		return {
 			markup,
 			lang,
