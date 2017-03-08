@@ -20,7 +20,6 @@ export class HotspotInsert extends Component {
 	};
 
 	componentWillMount() {
-		console.log('will mount', this.props.parsedVal);
 		this.setState({
 			x: this.props.parsedVal.x,
 			y: this.props.parsedVal.y,

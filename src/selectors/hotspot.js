@@ -12,8 +12,6 @@ export const hotspotSelector = createSelector(
 		const tableId = fields[fieldId].table_id;
 		const imageId = records[tableId][mainRecordId][fieldId];
 
-		console.log(val);
-
 		return {
 			imageId,
 			parsedVal: (val) ? JSON.parse(val) : { x: -1, y: -1 },
