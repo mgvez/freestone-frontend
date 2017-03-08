@@ -9,7 +9,7 @@ import { FileInput } from 'components/static/form/inputTypes/FileInput';
 import { DateInput } from 'components/static/form/inputTypes/DateInput';
 import { BankImgInput } from 'components/static/form/inputTypes/BankImgInput';
 import { BankFileInput } from 'components/static/form/inputTypes/BankFileInput';
-import { HotspotInput } from 'components/static/form/inputTypes/HotspotInput';
+import { HotspotInput } from 'components/connected/form/inputTypes/HotspotInput';
 import { UrlInput } from 'components/static/form/inputTypes/UrlInput';
 import { AutocompleteInput } from 'components/connected/form/inputTypes/AutocompleteInput';
 

@@ -1,18 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Input } from 'components/static/form/inputTypes/Input';
 import { HotspotInsert } from 'components/connected/form/helpers/HotspotInsert';
+import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
 
+import { hotspotSelector } from 'selectors/hotspot.js';
+
+@connect(
+	hotspotSelector,
+)
 export class HotspotInput extends Input {
 	static propTypes = {
 		lang: React.PropTypes.string,
 		field: React.PropTypes.object,
+		imageId: React.PropTypes.string,
+		parsedVal: React.PropTypes.object,
 	};
 
 	constructor(props) {
 		super(props);
-
-		console.log(props);
 
 		this.state = {
 			isChoosing: false,
@@ -28,27 +35,31 @@ export class HotspotInput extends Input {
 	};
 
 	handleEditorChange = (v) => {
-		console.log('set val', v);
 		this.changeVal(v);
 	};
 
-	delete = (e) => {
+	delete = () => {
 		this.handleEditorChange(null);
 	};
 
 	render() {
-		const value = (this.props.val) ? JSON.parse(this.props.val) : { x: 0.5, y: 0.5 };
-
 		if (this.state.isChoosing) {
-			return (<HotspotInsert parentRecordId={this.props.parentRecordId} imageFieldId={this.props.field.hotspot.imageFieldId} onClose={this.closeModal} val={value} setVal={this.handleEditorChange} lang={this.props.lang} />);
+			return (<HotspotInsert {...this.props} onClose={this.closeModal} onSave={this.handleEditorChange} />);
 		}
 
 		const label = (!this.props.val) ? 'Add a hotspot' : 'Modify hotspot';
+
+		const preview = this.props.parsedVal.x !== -1 ? (<div className="hotspot-image-container preview" onClick={this.openModal}>
+			<div className="hotspot" style={{ left: `${this.props.parsedVal.x * 100}%`, top: `${this.props.parsedVal.y * 100}%` }}></div>
+			<BankImgThumbnail id={this.props.imageId} maxSize={400} />
+		</div>) : '';
 
 		return (
 			<div>
 				<input type="hidden" value={this.props.val} />
 				<button onClick={this.openModal} className="button-round-bordered-action">{label}</button>
+				<br />
+				{preview}
 			</div>
 		);
 	}

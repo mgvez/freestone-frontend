@@ -1,9 +1,29 @@
+.hotspot-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 0 20px;
+}
+
+.hotspot-buttons {
+	[class^=button] {
+		margin-left: 10px;
+	}
+}
+
+.hotspot-title {
+	margin: 0;
+}
+
 .hotspot-image-container {
-	margin-top: 20px;
 	position: relative;
 	cursor: pointer;
 	display: inline-block;
 	overflow: hidden;
+
+	&.preview {
+		margin-top: 20px;
+	}
 
 	.hotspot {
 		position: absolute;
@@ -12,7 +32,7 @@
 		border: 1px solid #fff;
 		transform: translate(-50%, -50%);
 		cursor: pointer;
-		transition: left 0.15s ease, top 0.15s ease;
+		// transition: left 0.15s ease, top 0.15s ease;
 		pointer-events: none;
 
 		&:before, &:after {
