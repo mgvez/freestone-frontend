@@ -84,13 +84,13 @@ export class GoogleAnalytics extends Component {
 
 		const batch = gapi.client.newBatch();
 
-		const browserRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_BROWSER);
-		const deviceRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_DEVICE);
-		const osRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_OS);
-		const mediumRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_MEDIUM);
-		const socialNetworkRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_SOCIAL);
-		const pagePathRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_PAGE_PATH);
-		const exitPageRequest = GAPI_Helper.createDimensionRequest(gapi, property, GA_EXIT_PAGE);
+		const browserRequest = GAPI_Helper.createDimensionRequest(gapi, property, [GA_BROWSER]);
+		const deviceRequest = GAPI_Helper.createDimensionRequest(gapi, property, [GA_DEVICE]);
+		const osRequest = GAPI_Helper.createDimensionRequest(gapi, property, [GA_OS]);
+		const mediumRequest = GAPI_Helper.createDimensionRequest(gapi, property, [GA_MEDIUM]);
+		const socialNetworkRequest = GAPI_Helper.createDimensionRequest(gapi, property, [GA_SOCIAL]);
+		const pagePathRequest = GAPI_Helper.createDimensionRequest(gapi, property, [GA_PAGE_PATH]);
+		const exitPageRequest = GAPI_Helper.createDimensionRequest(gapi, property, [GA_EXIT_PAGE]);
 
 		const pastMonthRequest = GAPI_Helper.createMetricRequest(gapi, property, [GA_SESSIONS, GA_AVG_SESSION_DURATION, GA_PAGEVIEWS], [{ startDate: '60daysAgo', endDate: '30daysAgo' }]);
 		const currentMonthRequest = GAPI_Helper.createMetricRequest(gapi, property, [GA_SESSIONS, GA_AVG_SESSION_DURATION, GA_PAGEVIEWS, GA_PERCENT_NEW_SESSIONS], [{ startDate: '30daysAgo', endDate: 'yesterday' }]);
@@ -239,8 +239,15 @@ export class GoogleAnalytics extends Component {
 			const mostViewedPagePath = GAPI_Helper.formatSimpleData(pagePathData, pagePathHeaders, GA_PAGE_PATH, totalSessions)[0];
 			const mostExitedPagePath = GAPI_Helper.formatSimpleData(exitPageData, exitPageHeaders, GA_EXIT_PAGE, totalSessions)[0];
 
+			mostViewedPagePath.name = mostViewedPagePath.name === '/' ? 'Home' : mostViewedPagePath.name;
+			mostExitedPagePath.name = mostExitedPagePath.name === '/' ? 'Home' : mostExitedPagePath.name;
+
 			gaInfos = (
 				<div>
+					<section className="padded-content analytics-section">
+						<h1>Analytics Dashboard</h1>
+						<p>Stats are based on the last 30 days</p>
+					</section>
 					<section className="padded-content analytics-section summary">
 						<h2>Résumé du traffic du site</h2>
 

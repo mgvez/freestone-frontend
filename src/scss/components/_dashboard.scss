@@ -70,7 +70,7 @@
 			flex: 1 1 calc(100% - 135px);
 
 			.name {
-				font-size: 30px;
+				font-size: 24px;
 			}
 
 			.modifier {
@@ -321,6 +321,16 @@
 						}
 					}
 				}
+			}
+		}
+	}
+
+	@include at-most(1700px) {
+		.summary-item {
+			display: block;
+
+			.number {
+				width: 100%;
 			}
 		}
 	}
