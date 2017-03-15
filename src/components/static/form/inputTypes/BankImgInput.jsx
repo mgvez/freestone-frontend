@@ -20,7 +20,6 @@ export class BankImgInput extends Input {
 	}
 
 	openModal = () => {
-		console.log('Hello');
 		this.setState({ isChoosing: true });
 	}
 
