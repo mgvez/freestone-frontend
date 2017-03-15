@@ -47,6 +47,7 @@
 
 //thumbnail d'un input de bank image (placé dans input type bank_img)
 .bank-image-input-thumbnail, .bank-file-input-thumbnail {
+	cursor: pointer;
 
 	[class|=button] + [class|=button] {
 		margin-left: 10px;

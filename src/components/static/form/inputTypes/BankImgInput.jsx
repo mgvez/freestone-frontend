@@ -20,6 +20,7 @@ export class BankImgInput extends Input {
 	}
 
 	openModal = () => {
+		console.log('Hello');
 		this.setState({ isChoosing: true });
 	}
 
@@ -46,7 +47,7 @@ export class BankImgInput extends Input {
 		const hasLocalFile = bankImgId !== 0 && !bankImgId;
 		const localFileId = hasLocalFile ? this.props.val : null;
 
-		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} /> : null;
+		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.openModal} /> : null;
 
 		const label = bankImgId ? 'Change' : 'Choose image from bank';
 		const deleteBtn = bankImgId ? <button className="button-round-danger-bordered" onClick={this.delete}>Remove value</button> : undefined;
