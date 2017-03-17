@@ -44,15 +44,26 @@ export class PermissionsForm extends Component {
 		}
 	}
 
+	changeVal = (e) => {
+		const v = e.target.value;
+		const groupId = e.target.dataset.groupid;
+		console.log(v, groupId);
+	}
+
 	render() {
 		if (!this.props.recordPermissions || !this.props.tablePermissions || !this.props.userGroups) return null;
-		console.log(this.props.recordPermissions);
-		console.log(this.props.userGroups);
 		return (
 			<div>
 				{
-					this.props.userGroups.map(group => {
-						return <div key={group.id}>{group.name}</div>;
+					this.props.recordPermissions.map(group => {
+						return (<div key={group.id}>
+							{group.name}
+							<div className="toggle-container">
+								<input id={`perm-rec-${group.id}`} data-groupid={group.id} type="checkbox" value={group.isPermitted ? '1' : '0'} onChange={this.changeVal} checked={group.isPermitted === true} />
+								<label className="toggle" htmlFor={`perm-rec-${group.id}`} data-on-label="1" data-off-label="0"></label>
+							</div>
+							({group.disabledMessage})
+						</div>);
 					})
 				}
 			</div>

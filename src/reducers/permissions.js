@@ -20,12 +20,12 @@ function removeRecords(state, recordsToRemove) {
 function singleTableRecords(state, singleTable) {
 	if (!singleTable.tableId || !singleTable.permissions) return state;
 	const { tableId, recordId, permissions } = singleTable;
-	
-	state[tableId] = {
-		...state[tableId],
+	const newState = { ...state };
+	newState[tableId] = {
+		...newState[tableId],
 		[recordId]: permissions,
 	};
-	return state;
+	return newState;
 }
 
 function sitePermissions(state = {}, action) {
