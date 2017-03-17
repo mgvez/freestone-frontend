@@ -12,6 +12,10 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 import { Cancel } from 'components/connected/process/Cancel';
 
+function leftPad(n) {
+	return n < 10 ? `0${n}` : n;
+}
+
 @connect(
 	loadedRecords,
 	dispatch => bindActionCreators({ fetchTable, fetchForeignOptions, toggleLoadedRecords }, dispatch)
@@ -53,16 +57,12 @@ export class LoadedRecords extends Component {
 	}
 
 	getSeconds = (record) => {
-		const seconds = this.leftPad(parseInt(record.hasBeenOpenedFor % 60, 10));
+		const seconds = leftPad(parseInt(record.hasBeenOpenedFor % 60, 10));
 		return seconds === '00' ? '' : `${seconds}s`;
 	}
 
 	getTimeElapsed = (record) => {
 		return this.getMinutes(record) + this.getSeconds(record);
-	}
-
-	leftPad = (n) => {
-		return n < 10 ? `0${n}` : n;
 	}
 
 	requireData(props) {

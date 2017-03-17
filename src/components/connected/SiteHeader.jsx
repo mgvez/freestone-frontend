@@ -6,7 +6,7 @@ import * as devActionCreators from 'actions/dev';
 import * as authActionCreators from 'actions/auth';
 import { clearSchema } from 'actions/schema';
 
-import { GOD_USER_GROUP } from 'freestone/settings';
+import { GOD_USER_GROUP } from 'freestone/schemaProps';
 
 import { HomeButton } from 'components/connected/widgets/HomeButton';
 import { NavToggler } from 'components/connected/widgets/NavToggler';

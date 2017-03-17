@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
-import { PRIKEY_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, ALL_RECORDS_ID } from 'freestone/schemaProps';
 
 import * as schemaActionCreators from 'actions/schema';
 import * as recordActionCreators from 'actions/record';
@@ -13,6 +13,7 @@ import { Paging } from 'components/static/recordList/Paging';
 import { Row } from 'components/static/recordList/Row';
 import { ListSearch } from 'components/static/recordList/ListSearch';
 import { InScroll } from 'components/connected/InScroll';
+import { PermissionsForm } from 'components/connected/permissions/PermissionsForm';
 
 import createRecord from 'freestone/createRecord';
 import { listRecordsSelector } from 'selectors/listRecords';
@@ -136,6 +137,12 @@ export class List extends Component {
 					/>
 				</thead>);
 			}
+
+			let permsWidget = null;
+			if (this.props.table.hasSitePermission) {
+				permsWidget = <PermissionsForm tableId={this.props.table.id} recordId={ALL_RECORDS_ID} />;
+			}
+
 			// console.profile('render');
 			output = (
 				<section>
@@ -151,6 +158,8 @@ export class List extends Component {
 							<button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button>
 						</div>
 					</header>
+					
+					{permsWidget}
 
 					<div className="padded-content search-ctn">
 						<ListSearch tableName={this.props.table.name} numRecords={this.getNumRecords()} search={this.props.params.search} curPage={this.props.curPage} router={this.context.router} />

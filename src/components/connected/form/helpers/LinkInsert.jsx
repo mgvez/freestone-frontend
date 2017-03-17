@@ -65,7 +65,7 @@ export class LinkInsert extends Component {
 			));
 			this.closeModal();
 		} catch (e) {
-			console.log(e);
+			console.log(e);// eslint-disable-line
 			alert('Cross domain error. If you want to link to an external site, please paste the link in the external link input');// eslint-disable-line
 		}
 	};

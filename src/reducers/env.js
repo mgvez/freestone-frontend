@@ -1,5 +1,5 @@
 
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
+import { LOGOUT_SUCCESS } from 'actions/auth';
 import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE, SET_ENV_VARIABLE } from 'actions/env';
 import { CLEAR_DATA } from 'actions/dev';
 

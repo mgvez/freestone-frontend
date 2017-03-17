@@ -17,7 +17,7 @@ const processing = {};
 
 let isError = false;
 
-export default store => next => action => {
+export default store => next => action => { // eslint-disable-line
 	//if clear errors, unflag recoverable error state
 	if (action.type === CLEAR_ERRORS) {
 		isError = false;

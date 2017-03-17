@@ -76,7 +76,6 @@ export class GenericFileInput extends Component {
 	}
 
 	triggerSelectFile = () => {
-		console.log(this.fileinp);
 		if (this.fileinp) {
 			this.fileinp.click();
 			// console.log(this.fileinp);

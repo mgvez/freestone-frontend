@@ -10,9 +10,10 @@ import { rootFormMapStateToProps } from 'selectors/rootForm';
 
 import { Save } from 'components/connected/process/Save';
 import { Cancel } from 'components/connected/process/Cancel';
-import { CopyRecord } from 'components/connected/form/buttons/CopyRecord';
+// import { CopyRecord } from 'components/connected/form/buttons/CopyRecord';
 import { Header } from 'components/static/form/Header';
 import { SingleRecord } from 'components/connected/form/SingleRecord';
+import { PermissionsForm } from 'components/connected/permissions/PermissionsForm';
 
 import { FormHeader } from 'components/connected/header/FormHeader'; 
 
@@ -81,7 +82,7 @@ export class RootForm extends Component {
 	saveAndForm = () => {
 		this.setState({
 			saving: true,
-			afterSave: ({ recordId, tableName }) => {
+			afterSave: ({ recordId }) => {
 				// console.log(recordId, tableName);
 				//si record Id est meme, on ne fait que cancel le save, ca reload les vals
 				if (String(recordId) === this.props.params.recordId) {
@@ -137,6 +138,10 @@ export class RootForm extends Component {
 			}
 
 			// actionBtns.push(<CopyRecord key="fcn_copy" recordId={this.props.params.recordId} tableId={this.props.table.id} />);
+			let permsWidget = null;
+			if (this.props.table.hasSitePermission) {
+				permsWidget = <PermissionsForm tableId={this.props.table.id} recordId={this.props.params.recordId} />;
+			}
 
 			return (<section className="root-form">
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
@@ -144,6 +149,8 @@ export class RootForm extends Component {
 				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
 					<Header table={this.props.table} />
 				</FormHeader>
+
+				{permsWidget}
 
 				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
 

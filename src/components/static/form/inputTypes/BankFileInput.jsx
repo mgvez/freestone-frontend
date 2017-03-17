@@ -32,7 +32,7 @@ export class BankFileInput extends Input {
 		this.changeVal(v);
 	};
 
-	delete = (e) => {
+	delete = () => {
 		this.handleEditorChange(null);
 	};
 

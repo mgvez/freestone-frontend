@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 /* actions */
 import * as authActionCreators from 'actions/auth';
-import { fetchVariable, setVariable } from 'actions/env';
+import { fetchVariable } from 'actions/env';
 
 @connect(
 	state => {
@@ -44,7 +44,7 @@ export class GoogleAuthenticate extends Component {
 		this.initGoogleApi();
 	}
 
-	onIsLogged = (isLogged) => {
+	onIsLogged = () => {
 		// console.log(isLogged);
 	}
 

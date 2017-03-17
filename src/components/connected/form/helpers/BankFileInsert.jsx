@@ -87,12 +87,11 @@ export class BankFileInsert extends Component {
 
 		if (this.props.setMarkup) {
 			callApi(`bank/files/link/${id}/${this.props.lang}`).then(res => {
-				console.log(res);
-
+				// console.log(res);
 				this.props.setMarkup(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
 				this.closeModal(true);
 			}, err => {
-				console.dir(err);
+				console.dir(err);// eslint-disable-line
 			});
 		}
 	};

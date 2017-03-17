@@ -32,7 +32,7 @@ export class BankImgInput extends Input {
 		this.changeVal(v);
 	};
 
-	delete = (e) => {
+	delete = () => {
 		this.handleEditorChange(null);
 	};
 

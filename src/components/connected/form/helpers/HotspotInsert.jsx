@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import { hotspotSelector } from 'selectors/hotspot.js';
-
 import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
 
 import Modal from 'react-modal';

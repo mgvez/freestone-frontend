@@ -1,5 +1,4 @@
 import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
-import { BANK_FILE_TABLE } from 'freestone/schemaProps';
 
 export const RECEIVE_BANK_IMAGE = 'RECEIVE_BANK_IMAGE';
 export const RECEIVE_BANK_FILE = 'RECEIVE_BANK_FILE';

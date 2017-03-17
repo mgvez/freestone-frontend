@@ -77,7 +77,7 @@ export class GoogleAnalytics extends Component {
 	}
 
 	renderAnalyticsTimeline() {
-		console.log('Render analytics timeline', this.props.property);
+		// console.log('Render analytics timeline', this.props.property);
 		const property = this.props.property;// || '84012906';
 		if (!property) return;
 		const gapi = window.gapi;
@@ -118,7 +118,7 @@ export class GoogleAnalytics extends Component {
 				exitPageData: res.result[EXIT_PAGE_REQUEST_ID].result.reports[0],
 			});/**/
 		}, (err) => {
-			console.log(err);	
+			console.log(err);// eslint-disable-line
 		});
 	}
 
@@ -140,7 +140,7 @@ export class GoogleAnalytics extends Component {
 					return undefined;
 				}
 				
-				analytics.auth.on('success', (a) => {
+				analytics.auth.on('success', () => {
 					this.renderAnalyticsTimeline();
 				});
 				// console.log('authorizing analytics with', this.props.gapi_token_access);
