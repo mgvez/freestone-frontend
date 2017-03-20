@@ -21,6 +21,7 @@ export class PermissionsForm extends Component {
 
 		fetchSitePermissions: React.PropTypes.func,
 		fetchUsergroups: React.PropTypes.func,
+		toggleRecordPermission: React.PropTypes.func,
 	};
 	
 	componentWillMount() {
@@ -29,6 +30,30 @@ export class PermissionsForm extends Component {
 
 	componentWillReceiveProps(props) {
 		this.requireData(props);
+	}
+
+	getForm(prefix, permissions) {
+		return permissions.map(group => {
+
+			const disabledMessage = group.disabledMessage ? `(${group.disabledMessage})` : '';
+
+			return (<div key={`${prefix}-${group.id}`}>
+				{group.name}
+				<div className="toggle-container">
+					<input
+						id={`perm-${prefix}-${group.id}`} 
+						data-groupid={group.id} 
+						type="checkbox" 
+						disabled={group.isDisabled}
+						value={group.isPermitted ? 0 : 1}
+						onChange={this.changeVal}
+						checked={group.isPermitted === true}
+					/>
+					<label className="toggle" htmlFor={`perm-${prefix}-${group.id}`} data-on-label="1" data-off-label="0"></label>
+				</div>
+				{disabledMessage}
+			</div>);
+		});
 	}
 
 	requireData(props) {
@@ -45,27 +70,18 @@ export class PermissionsForm extends Component {
 	}
 
 	changeVal = (e) => {
-		const v = e.target.value;
-		const groupId = e.target.dataset.groupid;
-		console.log(v, groupId);
+		// console.log(e.target.value);
+		this.props.toggleRecordPermission(this.props.tableId, this.props.recordId, Number(e.target.dataset.groupid), Number(e.target.value));
 	}
 
 	render() {
 		if (!this.props.recordPermissions || !this.props.tablePermissions || !this.props.userGroups) return null;
+				// 		<h2>Table permissions</h2>
+				// {this.getForm('t', this.props.tablePermissions)}
 		return (
-			<div>
-				{
-					this.props.recordPermissions.map(group => {
-						return (<div key={group.id}>
-							{group.name}
-							<div className="toggle-container">
-								<input id={`perm-rec-${group.id}`} data-groupid={group.id} type="checkbox" value={group.isPermitted ? '1' : '0'} onChange={this.changeVal} checked={group.isPermitted === true} />
-								<label className="toggle" htmlFor={`perm-rec-${group.id}`} data-on-label="1" data-off-label="0"></label>
-							</div>
-							({group.disabledMessage})
-						</div>);
-					})
-				}
+			<div className="permissions">
+				<h2>Record permissions</h2>
+				{this.getForm('g', this.props.recordPermissions)}
 			</div>
 		);
 	}

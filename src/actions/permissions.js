@@ -1,6 +1,7 @@
 import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
 
 export const RECEIVE_SITE_PERMISSIONS = 'RECEIVE_SITE_PERMISSIONS';
+export const TOGGLE_SITE_PERMISSION = 'TOGGLE_SITE_PERMISSION';
 export const RECEIVE_USER_GROUPS = 'RECEIVE_USER_GROUPS';
 
 
@@ -21,6 +22,20 @@ export function fetchUsergroups() {
 			[FREESTONE_API]: {
 				types: ['api::fetch-user-groups', RECEIVE_USER_GROUPS, FREESTONE_API_FAILURE],
 				route: 'sitePermissions/groups',
+			},
+		});
+	};
+}
+
+export function toggleRecordPermission(tableId, recordId, groupId, val) {
+	return (dispatch) => {
+		return dispatch({
+			type: TOGGLE_SITE_PERMISSION,
+			data: {
+				tableId,
+				recordId,
+				groupId,
+				val,
 			},
 		});
 	};
