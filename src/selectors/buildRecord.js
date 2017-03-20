@@ -12,6 +12,8 @@ const mtmRecordsSelector = state => state.recordForm.mtmRecords;
 const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.schema.children;
 
+const allPermsSelector = state => state.permissions.sitePermissions;
+
 const saveStateSelector = state => state.save;
 const listPageAfterSaveSelector = state => state.nav.listPageAfterSave;
 
@@ -79,8 +81,8 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 
 
 const buildRecordSelector = createSelector(
-	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, listPageAfterSaveSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
+	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, allPermsSelector, childrenSelector, listPageAfterSaveSelector],
+	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, allPerms, unfilteredChildren, allListPageAfterSave) => {
 		// console.log(`build record for ${recordId}`);
 		const { table } = mainTableSchema;
 		const { tables } = allSchema;
