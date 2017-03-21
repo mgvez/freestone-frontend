@@ -17,7 +17,7 @@ export class BankImgThumbnail extends Component {
 		id: React.PropTypes.any,
 		markup: React.PropTypes.string,
 		maxSize: React.PropTypes.number,
-
+		onClick: React.PropTypes.func,
 		fetchBankImage: React.PropTypes.func,
 	};
 
@@ -37,7 +37,7 @@ export class BankImgThumbnail extends Component {
 	render() {
 		if (!this.props.id) return null;
 		return (
-			<div className="bank-image-thumbnail" dangerouslySetInnerHTML={{ __html: this.props.markup }} />
+			<div className="bank-image-thumbnail" onClick={this.props.onClick} dangerouslySetInnerHTML={{ __html: this.props.markup }} />
 		);
 	}
 }

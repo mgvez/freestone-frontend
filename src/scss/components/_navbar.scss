@@ -63,7 +63,8 @@
 	}
 
 	.table-group {
-		display: block;
+		display: flex;
+		align-items: center;
 		padding: 10px 15px;
 		position: relative;
 
@@ -74,8 +75,18 @@
 			margin-left: 10px;
 		}
 
+		.nav-label + .fa {
+			margin-left: auto;
+			position: relative;
+			transition: transform 0.3s;
+		}
+
 		&:hover, &.active {
-			background: $color-background-dark_hover;
+			background: lighten($color-background-dark, 10%);
+
+			.nav-label + .fa {
+				transform: rotate(180deg);
+			}
 		}
 	}
 
@@ -85,12 +96,13 @@
 		a {
 			display: block;
 			position: relative;
-			padding: 10px 50px 10px 30px;
-			background: lighten($color-background-dark, 10%);
+			padding: 10px 50px 10px 15px;
 			transition: background 0.3s;
 			border-left: 2px solid $color-accent-primary;
 			font-size: 12px;
-			color: rgba($white, 0.85);
+			//color: rgba($white, 0.85);
+			background: lighten($color-background-dark, 70%);
+			color: $color-background-dark;
 
 
 			.nrecords, .flag {
@@ -123,8 +135,8 @@
 			}
 
 			&:hover, &.active {
-				background: lighten($color-background-dark, 2%);
-				color: $white;
+				background: lighten($color-background-dark, 60%);
+				//color: $white;
 			}
 		}
 	}
@@ -136,14 +148,14 @@
 		.sub-nav {
 			height: 0;
 			border-left: 2px solid $color-accent-primary;
-			background: lighten($color-background-dark, 10%);
+			background: lighten($color-background-dark, 20%);
 			transition: background 0.3s;
 
 			.table-group {
 				padding: 10px 15px;
 
 				&:hover, &.active {
-					background: $color-background-dark;
+					background: lighten($color-background-dark, 35%);
 				}
 			}
 

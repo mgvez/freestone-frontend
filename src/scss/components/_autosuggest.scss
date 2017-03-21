@@ -1,6 +1,17 @@
 .react-autosuggest__container {
 	position: relative;
 
+	&:after {
+		position: absolute;
+			top: 50%;
+			right: 20px;
+
+		content: '\f107';
+		font-family: 'FontAwesome';
+		font-size: 20px;
+		color: $color-text-primary;
+		transform: translate(0, -50%);
+	}
 }
 
 
