@@ -102,7 +102,7 @@ export class AutocompleteInput extends Input {
 	onChange = (event, { newValue }) => {
 		// console.log(newValue);
 		this.setCurrentText(newValue);
-		this.regexMatchOption = new RegExp(newValue.split('').join('\\w*').replace(/\W/, ''), 'i');
+		this.regexMatchOption = newValue.length > 8 ? new RegExp(newValue, 'i') : new RegExp(newValue.replace(/[^a-z\s]/ig, '').split('').join('\\w*').replace(/\W/, ''), 'i');
 	};
 
 	onBlur = () => {
