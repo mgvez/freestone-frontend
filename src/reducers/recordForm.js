@@ -128,7 +128,11 @@ function childrenAreLoaded(state = {}, action) {
 
 function setRecordIsEdited(state, data) {
 	const { tableId, recordId } = data;
-	if (state[tableId] && state[tableId][recordId] && state[tableId][recordId][EDITED_PSEUDOFIELD_ALIAS] === true) return state;
+	if (
+		!state[tableId]
+		|| !state[tableId][recordId]
+		|| state[tableId][recordId][EDITED_PSEUDOFIELD_ALIAS] === true
+	) return state;
 	return {
 		...state,
 		[tableId]: {

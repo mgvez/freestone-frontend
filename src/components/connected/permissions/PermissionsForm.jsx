@@ -13,8 +13,9 @@ import * as permissionsActionCreators from 'actions/permissions';
 )
 export class PermissionsForm extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
+		table: React.PropTypes.object,
 		recordId: React.PropTypes.string,
+		
 		recordPermissions: React.PropTypes.array,
 		tablePermissions: React.PropTypes.array,
 		userGroups: React.PropTypes.array,
@@ -59,10 +60,10 @@ export class PermissionsForm extends Component {
 	requireData(props) {
 		// console.log(props);
 		if (!props.recordPermissions) {
-			this.props.fetchSitePermissions(props.tableId, props.recordId);
+			this.props.fetchSitePermissions(props.table.id, props.recordId);
 		}
 		if (!props.tablePermissions) {
-			this.props.fetchSitePermissions(props.tableId, ALL_RECORDS_ID);
+			this.props.fetchSitePermissions(props.table.id, ALL_RECORDS_ID);
 		}
 		if (!props.userGroups) {
 			this.props.fetchUsergroups();
@@ -71,16 +72,15 @@ export class PermissionsForm extends Component {
 
 	changeVal = (e) => {
 		// console.log(e.target.value);
-		this.props.toggleRecordPermission(this.props.tableId, this.props.recordId, Number(e.target.dataset.groupid), Number(e.target.value));
+		this.props.toggleRecordPermission(this.props.table.id, this.props.recordId, Number(e.target.dataset.groupid), Number(e.target.value));
 	}
 
 	render() {
+
 		if (!this.props.recordPermissions || !this.props.tablePermissions || !this.props.userGroups) return null;
-				// 		<h2>Table permissions</h2>
-				// {this.getForm('t', this.props.tablePermissions)}
+		
 		return (
 			<div className="permissions">
-				<h2>Record permissions</h2>
 				{this.getForm('g', this.props.recordPermissions)}
 			</div>
 		);

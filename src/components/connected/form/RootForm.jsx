@@ -140,7 +140,7 @@ export class RootForm extends Component {
 			// actionBtns.push(<CopyRecord key="fcn_copy" recordId={this.props.params.recordId} tableId={this.props.table.id} />);
 			let permsWidget = null;
 			if (this.props.table.hasSitePermission) {
-				permsWidget = <PermissionsForm tableId={this.props.table.id} recordId={this.props.params.recordId} />;
+				permsWidget = <PermissionsForm table={this.props.table} recordId={this.props.params.recordId} />;
 			}
 
 			return (<section className="root-form">
