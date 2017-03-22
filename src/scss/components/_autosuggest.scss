@@ -3,7 +3,7 @@
 
 	&:after {
 		position: absolute;
-			top: 50%;
+			top: calc(50% - 5px);
 			right: 20px;
 
 		content: '\f107';
