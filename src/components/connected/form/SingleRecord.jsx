@@ -61,6 +61,40 @@ export class SingleRecord extends Component {
 		}
 	}
 
+	renderField = (field, canBeSubform = true) => {
+		if (field.subformPlaceholder) {
+			if (canBeSubform) {
+				return (
+					<Subform
+						key={field.subformPlaceholder}
+						tableId={field.subformPlaceholder}
+						parentTableId={this.props.table.id}
+						parentRecordId={this.props.recordId}
+						language={this.props.language}
+					/>
+				);
+			}
+			
+			return false;
+		}
+
+		//if field is language-specific, display it only if the current language is the field's
+		// console.log(field.name, field.language, this.props.language);
+		return ((field.language && field.language === this.props.language) || !field.language) ? (<Field
+			key={field.id} 
+			field={field}
+			tableName={this.props.table.name}
+			recordId={this.props.recordId}
+			val={this.props.record[field.id]}
+			origVal={this.props.recordUnaltered[field.id]}
+			parentRecordId={this.props.parentRecordId}
+			setFieldVal={this.props.setFieldVal}
+			env={this.props.env}
+			lang={field.language}
+			isRoot={this.props.isRoot}
+		/>) : null;
+	}
+
 	render() {
 		let form;
 		let sub;
@@ -77,41 +111,37 @@ export class SingleRecord extends Component {
 				/>);
 			}
 
+			const secondaryFields = this.props.fields.filter(f => f.isSecondary);
+			const normalFields = this.props.fields.filter(f => !f.isSecondary);
+
+			let sidebar;
+			if (secondaryFields.length > 0) {
+				sidebar = (
+					<div className="col-md-4">
+						<div className="sidebar">
+							{
+								secondaryFields.map(f => this.renderField(f, false))
+							}
+						</div>
+					</div>
+				);
+			}
+
 			form = (
 				<article>
-					{deleteBtn}
-					{
-						this.props.fields.map((field) => {
-
-							if (field.subformPlaceholder) {
-								return (
-									<Subform
-										key={field.subformPlaceholder}
-										tableId={field.subformPlaceholder}
-										parentTableId={this.props.table.id}
-										parentRecordId={this.props.recordId}
-										language={this.props.language}
-									/>
-								);
+					<div className="row">
+						<div className="col-md-12 close-row">
+							{deleteBtn}
+						</div>
+					</div>
+					<div className="row">
+						<div className={`${sidebar ? 'col-md-8' : 'col-md-12'}`}>
+							{
+								normalFields.map(this.renderField)
 							}
-
-							//if field is language-specific, display it only if the current language is the field's
-							// console.log(field.name, field.language, this.props.language);
-							return ((field.language && field.language === this.props.language) || !field.language) ? (<Field
-								key={field.id} 
-								field={field}
-								tableName={this.props.table.name}
-								recordId={this.props.recordId}
-								val={this.props.record[field.id]}
-								origVal={this.props.recordUnaltered[field.id]}
-								parentRecordId={this.props.parentRecordId}
-								setFieldVal={this.props.setFieldVal}
-								env={this.props.env}
-								lang={field.language}
-								isRoot={this.props.isRoot}
-							/>) : null;
-						})
-					}
+						</div>
+						{sidebar}
+					</div>
 				</article>
 			);
 

@@ -13,7 +13,7 @@ input[role="combobox"] {
 	border: 2px solid transparent;
 
 	padding: 0 10px;
-	margin: 10px 0;
+	margin: 0 0 10px;
 
 	&:focus {
 		border: 2px solid $color-accent-primary;
@@ -58,23 +58,42 @@ textarea{
 	font-size: 12px;
 }
 
+.field {
+	margin-bottom: 10px;
+}
+
+.link-field {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+
+	input {
+		margin-bottom: 0px;
+	}
+
+	button {
+		flex: 0 0 auto;
+		margin-left: 20px;
+	}
+}
+
 .field-label {
 	padding-top: 10px;
+	margin-bottom: 10px;
 	font-weight: $font-weight-normal;
-	text-align: right;
+	//text-align: right;
 
 	label {
 		display: block;
 		position: relative;
 		padding-right: 45px;
+		font-weight: bold;
 	}
 
 	.lang-append {
-		position: absolute;
-			top: 50%;
-			right: 0;
+		display: inline-block;
+		vertical-align: -2%;
 
-		transform: translate(0, -50%);
 		font-style: normal;
 		text-transform: uppercase;
 

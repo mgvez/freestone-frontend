@@ -110,13 +110,13 @@ export class Field extends Component {
 		if (input) {
 			return (
 				<div className="field row">
-					<div className="col-md-4 field-label">
-						<label>{this.props.field.label} {languageAppend}</label>
-					</div>
-					<div className="col-md-8">
-						{input}
+					<div className="col-md-12">
+						<div className="field-label">
+							<label>{this.props.field.label} {languageAppend}</label>
+						</div>
 						<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
 						<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.descriptionAppend }}></em>
+						{input}
 					</div>
 				</div>
 			);
