@@ -3,12 +3,10 @@ import React, { Component } from 'react';
 import { getWebsiteUrl } from 'freestone/settings';
 import Modal from 'react-modal';
 import customStyle from 'components/styles/modalStyles.js';
-let target;
 
 function buildlink(contents, link, linkLabel, linkTarget) {
 	let val = link.trim();
 	
-	console.log(linkTarget);
 	// console.log(val, !!~val.indexOf('{lnk'), !!~val.indexOf('//'));
 
 	if (!~val.indexOf('//') && !~val.indexOf('{lnk')) {
@@ -61,13 +59,12 @@ export class LinkInsert extends Component {
 		try {
 			const ifr = this.refs.ifr;
 			const link = internalUrl || ifr.contentWindow.location.href;
-			target = '_self';
 			// console.log(link);
 			this.props.setVal(buildlink(
 				this.props.contentAfter,
 				link,
 				this.props.isUrlOnly ? null : (this.refs.linkLabel && this.refs.linkLabel.value) || 'link',
-				target
+				'_self'
 			));
 			this.closeModal();
 		} catch (e) {
@@ -77,12 +74,11 @@ export class LinkInsert extends Component {
 	};
 
 	selectExternal = () => {
-		target = '_blank';
 		this.props.setVal(buildlink(
 			this.props.contentAfter,
 			this.refs.linkExternal.value,
 			this.props.isUrlOnly ? null : (this.refs.linkLabel && this.refs.linkLabel.value) || 'link',
-			target
+			'_blank'
 		));
 		this.closeModal();
 	};
