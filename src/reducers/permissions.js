@@ -25,9 +25,8 @@ function singleTableRecords(state, data) {
 		const { groupId, val } = data;
 		permissions = state[tableId] && state[tableId][recordId] && [...state[tableId][recordId]];
 		// console.log(permissions);
-		console.log(state, data);
+		// console.log(state, data);
 		const permIndex = permissions.indexOf(groupId);
-		console.log(permIndex, !!~permIndex);
 		if (~permIndex) permissions.splice(permIndex, 1);
 		// console.log(permissions);
 		

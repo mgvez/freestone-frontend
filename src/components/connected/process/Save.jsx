@@ -18,6 +18,7 @@ export class Save extends Component {
 		table: React.PropTypes.object,
 		tree: React.PropTypes.object,
 		records: React.PropTypes.object,
+		permissions: React.PropTypes.object,
 		deleted: React.PropTypes.object,
 		fields: React.PropTypes.array,
 		saveState: React.PropTypes.object,
@@ -31,7 +32,7 @@ export class Save extends Component {
 	componentWillMount() {
 		// console.log('MOUNT', this.props.records, this.props.deleted);
 		//callback has priority over afterSaveLocation. If a callback is present, it will execute instead of redirecting to the location.
-		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.isTemporary, this.props.afterSaveLocation, this.props.callback);
+		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, this.props.permissions, this.props.isTemporary, this.props.afterSaveLocation, this.props.callback);
 	}
 
 	render() {

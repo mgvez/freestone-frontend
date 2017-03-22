@@ -72,13 +72,29 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 	const record = allRecords[tableId] && allRecords[tableId][recordId];
 	records[tableId] = records[tableId] || {};
 
-	if (record && ((getDeleted && record[DELETED_PSEUDOFIELD_ALIAS] && !isNew(recordId)) || (!getDeleted && !record[DELETED_PSEUDOFIELD_ALIAS]))) records[tableId][recordId] = hookRecord(record);
+	if (
+		record && 
+		(
+			(getDeleted && record[DELETED_PSEUDOFIELD_ALIAS] && !isNew(recordId))
+			|| (!getDeleted && !record[DELETED_PSEUDOFIELD_ALIAS])
+		)
+	) {
+		records[tableId][recordId] = hookRecord(record);
+	}
 
 	return children.reduce((carry, childBranch) => {
 		return getRecords(childBranch, allRecords, getDeleted, carry);
 	}, records);
 }
 
+function getPermissions(branch, allPerms, permissions = {}) {
+	const { tableId, recordId, children } = branch;
+	permissions[tableId] = permissions[tableId] || {};
+	permissions[tableId][recordId] = allPerms[tableId] && allPerms[tableId][recordId];
+	return children.reduce((carry, childBranch) => {
+		return getPermissions(childBranch, allPerms, carry);
+	}, permissions);
+}
 
 const buildRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, allPermsSelector, childrenSelector, listPageAfterSaveSelector],
@@ -89,21 +105,23 @@ const buildRecordSelector = createSelector(
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecords(tree, allRecords, false);
 		const deleted = getRecords(tree, allRecords, true);
+		const permissions = getPermissions(tree, allPerms);
 		// console.log(tree);
 		// console.log(tables);
 		// console.log(records);
-		
+		// console.log(permissions);
 
 		// console.log(unfilteredChildren);
 		const afterSaveLocation = table && allListPageAfterSave[table.name] && allListPageAfterSave[table.name][recordId];
 		// console.log(afterSaveLocation);
 		return {
 			tree,
+			table,
+			fields: table && table.fields,
 			records,
 			deleted,
-			table,
+			permissions,
 			afterSaveLocation,
-			fields: table && table.fields,
 		};
 	}
 );
