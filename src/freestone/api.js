@@ -41,7 +41,7 @@ export function callApi(route, data) {
 			data,
 			headers,
 		}).then(resolve).catch(res => {
-			console.log(res);
+			console.log(res);// eslint-disable-line
 			const err = new Error('API Error');
 			err.status = res.status;
 			err.statusText = res.statusText;

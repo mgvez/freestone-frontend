@@ -182,7 +182,12 @@ textarea{
 			}
 		}
 
-		.list-records & {
+		&:disabled + .toggle {
+			opacity: 0.4;
+			cursor: default;
+		}
+
+		.permissions &, .list-records & {
 			&:checked + .toggle {
 				&:after {
 					left: calc(100% - 16px);
@@ -240,7 +245,7 @@ textarea{
 		line-height: 30px;
 	}
 
-	.list-records & {
+	.permissions &, .list-records & {
 		height: 22px;
 		padding: 0 23px;
 		border-radius: 11px;

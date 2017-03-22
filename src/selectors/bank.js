@@ -5,7 +5,6 @@ import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_FILE_CATEG_
 
 const recordsSelector = state => state.recordList;
 // const recordListSelector = state => state.imageBankList;
-const envSelector = state => state.env;
 const bankImgSelector = state => state.bank.images;
 const bankFileSelector = state => state.bank.files;
 const allUsesSelector = state => state.bank.uses;

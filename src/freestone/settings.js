@@ -17,4 +17,3 @@ export function getWebsiteUrl() {
 	return `${window.location.protocol}//${hostname}`;
 }
 
-export const GOD_USER_GROUP = 1;

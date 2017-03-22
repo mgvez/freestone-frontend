@@ -13,6 +13,7 @@ import { Paging } from 'components/static/recordList/Paging';
 import { Row } from 'components/static/recordList/Row';
 import { ListSearch } from 'components/static/recordList/ListSearch';
 import { InScroll } from 'components/connected/InScroll';
+import { TablePermissions } from 'components/connected/permissions/TablePermissions';
 
 import createRecord from 'freestone/createRecord';
 import { listRecordsSelector } from 'selectors/listRecords';
@@ -136,6 +137,7 @@ export class List extends Component {
 					/>
 				</thead>);
 			}
+			
 			// console.profile('render');
 			output = (
 				<section>
@@ -151,6 +153,8 @@ export class List extends Component {
 							<button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button>
 						</div>
 					</header>
+					
+					<TablePermissions table={this.props.table} />
 
 					<div className="padded-content search-ctn">
 						<ListSearch tableName={this.props.table.name} numRecords={this.getNumRecords()} search={this.props.params.search} curPage={this.props.curPage} router={this.context.router} />

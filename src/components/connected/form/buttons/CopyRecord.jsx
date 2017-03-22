@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { buildCopyRecordSelector } from 'selectors/buildRecord';
@@ -15,8 +14,8 @@ export class CopyRecord extends Component {
 	};
 
 	copyRecord = () => {
-		console.log(`copy ${this.props.tableId} ${this.props.recordId}`);
-		console.log(this.props.records);
+		// console.log(`copy ${this.props.tableId} ${this.props.recordId}`);
+		// console.log(this.props.records);
 	};
 
 	render() {

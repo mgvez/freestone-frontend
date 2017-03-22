@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
 import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
+import { TOGGLE_SITE_PERMISSION } from 'actions/permissions';
 import { CLEAR_DATA } from 'actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
 import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
@@ -125,6 +126,24 @@ function childrenAreLoaded(state = {}, action) {
 	}
 }
 
+function setRecordIsEdited(state, data) {
+	const { tableId, recordId } = data;
+	if (
+		!state[tableId]
+		|| !state[tableId][recordId]
+		|| state[tableId][recordId][EDITED_PSEUDOFIELD_ALIAS] === true
+	) return state;
+	return {
+		...state,
+		[tableId]: {
+			...state[tableId],
+			[recordId]: {
+				...state[tableId][recordId],
+				[EDITED_PSEUDOFIELD_ALIAS]: true,
+			},
+		},
+	};
+}
 
 function records(state = {}, action) {
 	switch (action.type) {
@@ -146,6 +165,8 @@ function records(state = {}, action) {
 	case DELETE_RECORD_SUCCESS:
 		// console.log(action.data);
 		return removeRecords(state, action.data.records);
+	case TOGGLE_SITE_PERMISSION:
+		return setRecordIsEdited(state, action.data);
 	default:
 		// console.log('no change');
 		return state;

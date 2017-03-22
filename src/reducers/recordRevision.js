@@ -14,7 +14,7 @@ function list(state = {}, action) {
 	case DELETE_RECORD_SUCCESS:
 		return {};
 	case RECEIVE_RECORD_REVISION_LIST:
-		console.log(action.data);
+		// console.log(action.data);
 		if (!action.data) return state;
 		return action.data;
 	default:

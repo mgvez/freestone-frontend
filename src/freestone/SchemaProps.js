@@ -43,3 +43,8 @@ export const BANK_FILE_PATH_ALIAS = 'file_path';
 export const BANK_FILE_CATEG_ALIAS = 'categ_id_label';
 
 export const ROLE_N_USES = 'ROLE_N_USES';
+
+//ID representing all records (for example in permissions)
+export const ALL_RECORDS_ID = '-1';
+export const EVERYBODY_GROUP_ID = 0;
+export const GOD_USER_GROUP = 1;

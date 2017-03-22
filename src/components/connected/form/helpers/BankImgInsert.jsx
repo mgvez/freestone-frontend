@@ -91,7 +91,7 @@ export class BankImgInsert extends Component {
 				this.props.setMarkup(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
 				this.closeModal(true);
 			}, err => {
-				console.dir(err);
+				console.dir(err);// eslint-disable-line
 			});
 		}
 	};

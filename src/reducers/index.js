@@ -16,6 +16,7 @@ import { mtmOptions } from './mtmOptions';
 import { default as subform } from './subform';
 import { default as bank } from './bank';
 import { default as slugs } from './slugs';
+import { default as permissions } from './permissions';
 import save from './save';
 
 const rootReducer = combineReducers({
@@ -39,6 +40,7 @@ const rootReducer = combineReducers({
 	translations,
 	recordRevision,
 	slugs,
+	permissions,
 });
 
 export default rootReducer;

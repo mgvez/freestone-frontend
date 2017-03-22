@@ -3,12 +3,11 @@ import { TYPE_BANKIMG, TYPE_IMG, TYPE_LANGUAGE } from 'freestone/schemaProps';
 
 const rawForeignOptionsSelector = state => state.foreignOptions;
 const fieldSelector = (state, props) => props.field;
-const envSelector = state => state.env;
 const langSelector = state => state.env.languages;
 
 export const allForeignOptionsSelector = createSelector(
-	[rawForeignOptionsSelector, envSelector],
-	(rawOptions, env) => {
+	[rawForeignOptionsSelector],
+	(rawOptions) => {
 		// console.log(rawOptions);
 		const options = Object.keys(rawOptions).reduce((carry, fieldId) => {
 			const current = rawOptions[fieldId];
