@@ -12,6 +12,39 @@
 				width: 100%;
 			}
 		}
+
+
+		/**
+			Test, meh.
+			
+			.navbar-default {
+				width: 52px;
+
+				.table-group > i {
+					font-size: 20px;
+				}
+
+				.nav-label {
+					font-size: 0;
+
+					& + .fa {
+						font-size: 0;
+					}
+				}
+
+				.user {
+					display: none;
+				}
+			}
+			
+			& + .main-content {
+				padding-left: 52px;
+
+				header {
+					width: calc(100% - 52px);
+				}
+			}
+		/**/
 	}
 }
 

@@ -141,6 +141,12 @@
 		margin-left: auto;
 		margin-right: auto;
 	}
+
+	@include at-most($screen-md-max) {
+		> .single-record {
+			width: 90%;
+		}
+	}
 }
 
 .mtm-group {
