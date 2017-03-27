@@ -46,7 +46,6 @@ export class NavGroup extends Component {
 		if (!this.collapser.getOpenState()) return null;
 		const level = this.props.level + 1;
 		return (<ul className="sub-nav" ref={(el) => this._children = el}>
-			{this.getChildrenGroups(level)}
 			{
 				this.props.data.tables.map((item) => {
 					return 	<li className="nav-item" key={item.id}><Table name={item.name} id={item.id} displayLabel={item.displayLabel} nrecords={item.nrecords} /></li>;
@@ -67,6 +66,7 @@ export class NavGroup extends Component {
 					return <li className="nav-item" key={`pg-${item.id}`}><Page {...item} /></li>;
 				})
 			}
+			{this.getChildrenGroups(level)}
 		</ul>);
 	}
 
