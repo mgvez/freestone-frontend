@@ -40,6 +40,7 @@ export class LinkInsert extends Component {
 		selection: React.PropTypes.string,
 		//indique si on veut un link <a href...> ou juste une url
 		isUrlOnly: React.PropTypes.bool,
+		lang: React.PropTypes.string,
 	};
 
 	componentWillMount() {
@@ -96,7 +97,7 @@ export class LinkInsert extends Component {
 		const n = 300;
 
 		const labelInput = this.props.isUrlOnly ? null : <p>link label: <input defaultValue={this.props.selection} ref="linkLabel" /></p>;
-
+		const lang = this.props.lang || '';
 		return (
 			<Modal
 				isOpen
@@ -128,7 +129,7 @@ export class LinkInsert extends Component {
 						</div>
 					</div>
 				</section>
-				<iframe src={getWebsiteUrl()} style={{ width: '100%', height: '500px' }} ref="ifr" />
+				<iframe src={getWebsiteUrl() + lang} style={{ width: '100%', height: '500px' }} ref="ifr" />
 			</Modal>
 		);
 	}

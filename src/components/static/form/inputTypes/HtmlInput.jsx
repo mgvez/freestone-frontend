@@ -105,7 +105,7 @@ export class HtmlInput extends Input {
 			// console.log(command);
 			switch (name) {
 			case 'insertLink':
-				return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...params} />;
+				return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...params} lang={this.props.lang} />;
 			case 'addImageFromBank':
 				return <BankImgInsert onClose={this.closeModal} setMarkup={this.handleEditorChange} lang={this.props.lang} {...params} />;
 			case 'addDocFromBank':
