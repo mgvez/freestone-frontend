@@ -8,12 +8,17 @@ export const RECORD_LOADED_SAFE_LIFE = 3600;
 //how much time max can the app be idle between API calls (to make sure session is still open)
 export const MAX_TIME_BETWEEN_API_CALLS = 3600;
 
+let websiteUrl;
 export function getWebsiteUrl() {
-	let hostname = window.location.hostname;
+	if (websiteUrl) return websiteUrl;
+	let { hostname, pathname } = window.location;
+	
+	pathname = pathname.substr(0, pathname.indexOf('admin/'));
+
 	if (hostname === 'localhost') {
-		// hostname = 'celeste.freestone-2';
 		hostname = 'freestone_dev.freestone-2';
 	}
-	return `${window.location.protocol}//${hostname}`;
+	websiteUrl = `${window.location.protocol}//${hostname}${pathname}`;
+	// console.log(websiteUrl);
+	return websiteUrl;
 }
-

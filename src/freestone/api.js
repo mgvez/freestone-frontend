@@ -13,12 +13,12 @@ function getJWT() {
 }
 
 export function getApiUrl() {
-	return getWebsiteUrl() + '/api';
+	return getWebsiteUrl() + 'api';
 }
 
 function getEndpoint(route) {
 	const hostname = getApiUrl();
-	// console.log(window.location);
+	console.log(hostname);
 	return `${hostname}/${route}`;
 }
 
