@@ -40,7 +40,9 @@ export class Module extends Component {
 	render() {
 		// console.log(this.props);
 		const host = getApiUrl();
-		const url = `${host}/module/${this.props.params.url}?jwt=${this.props.jwt}`;
+		//adds a time to get to prevent over-aggressive server cache (I'm looking at you Radio-Canada)
+		const time = (new Date()).getMilliseconds();
+		const url = `${host}/module/${this.props.params.url}/?jwt=${this.props.jwt}&nocache=${time}`;
 		return (
 			<section>
 				<DocumentMeta {...metaData} />

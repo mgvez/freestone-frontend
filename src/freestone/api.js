@@ -18,20 +18,29 @@ export function getApiUrl() {
 
 function getEndpoint(route) {
 	const hostname = getApiUrl();
-	console.log(hostname);
-	return `${hostname}/${route}`;
+	let slashedRoute = route;
+	if (~slashedRoute.indexOf('?')) {
+		slashedRoute = slashedRoute.split('?');
+		slashedRoute.splice(1, 0, '/');
+		slashedRoute.splice(2, 0, '?');
+		slashedRoute = slashedRoute.join('');
+	} else {
+		slashedRoute += '/';
+	}
+	// console.log(slashedRoute);
+	// console.log(route);
+	return `${hostname}/${slashedRoute}`;
 }
 
 export function callApi(route, data) {
 	// console.log(`post data ${route}`, data);
 	// console.log(`JWT: ${jwt}`);
-	const method = data ? 'post' : 'get';
+	const method = 'post';//data ? 'post' : 'get';
 	const headers = { Accept: 'application/json' };
 	const jwt = getJWT();
 	if (jwt) {
 		headers.Authorization = `Bearer ${jwt}`;
 	}
-
 	return new Promise((resolve, reject) => {
 		reqwest({
 			url: getEndpoint(route),

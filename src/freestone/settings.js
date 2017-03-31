@@ -20,5 +20,6 @@ export function getWebsiteUrl() {
 	}
 	websiteUrl = `${window.location.protocol}//${hostname}${pathname}`;
 	// console.log(websiteUrl);
+	if (websiteUrl[websiteUrl.length - 1] !== '/') websiteUrl += '/';
 	return websiteUrl;
 }
