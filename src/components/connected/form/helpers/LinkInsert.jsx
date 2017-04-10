@@ -14,8 +14,15 @@ function buildlink(contents, link, linkLabel, linkTarget) {
 	}
 	
 	// console.log(val);
+
 	if (linkLabel) {
-		val = `<a href="${val}" target="${linkTarget}">${linkLabel}</a>`;
+		// If linking on a Bank image
+		if (linkLabel.indexOf('<figure') === 0) {
+			const tags = linkLabel.match(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[\^'">\s]+))?)+\s*|\s*)\/?>/g); // Array de tags HTML
+			val = tags[0] + `<a href=${val} target=${linkTarget}>${tags[1]}</a>` + tags[2];
+		} else {
+			val = `<a href="${val}" target="${linkTarget}">${linkLabel}</a>`;
+		}
 	}
 
 	if (contents && ~contents.indexOf('{{placeholder}}')) {
