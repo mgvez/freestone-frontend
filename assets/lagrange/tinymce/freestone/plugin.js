@@ -3,15 +3,27 @@
 (function(){
 	
 	function pepareContent(placeholder, ed) {
-		var contentBefore = ed.getContent();
-		var selection = ed.selection.getContent();
-		ed.execCommand('mceInsertContent', false, placeholder);
-		var contentAfter = ed.getContent();
+		const contentBefore = ed.getContent();
+		const selectedNode = ed.selection.getNode();
 
+		const container = document.createElement('div');
+		container.appendChild(selectedNode.cloneNode(true));
+		// console.log(container.innerHTML);
+		const links = container.querySelectorAll('a');
+		let link = null;
+		if (links.length) {
+			link = links[0].getAttribute('href');
+		}
+
+		// console.log(links);
+		const selection = ed.selection.getContent();
+		ed.execCommand('mceInsertContent', false, placeholder);
+		const contentAfter = ed.getContent();
 		return {
 			contentBefore: contentBefore,
 			contentAfter: contentAfter,
 			selection: selection,
+			link: link,
 		};
 	}
 
