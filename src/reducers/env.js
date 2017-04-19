@@ -10,7 +10,7 @@ const envInitialState = {
 	thumbsDir: '',
 	siteName: '',
 	adminPath: '',
-	websitePath: '',
+	domain: '',
 	clientPath: '',
 	pathCss: [],
 	languages: [],

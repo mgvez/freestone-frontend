@@ -17,6 +17,7 @@ import { Nav } from 'components/connected/Nav';
 import { LoadedRecords } from 'components/connected/LoadedRecords';
 import { Login } from 'components/connected/auth/Login';
 import { GoogleAuthenticate } from 'components/connected/auth/GoogleAuthenticate';
+import qstrParams from 'utils/qstrParams';
 
 import 'style!scss/style.scss';
 import 'style!font-awesome/scss/font-awesome.scss';
@@ -27,6 +28,7 @@ import 'style!font-awesome/scss/font-awesome.scss';
 			isAuthenticated: state.auth.isAuthenticated,
 			lastRequestTime: state.auth.lastRequestTime,
 			env: state.env,
+			jwt: state.auth.jwt,
 		};
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
@@ -36,6 +38,7 @@ export class Freestone extends Component {
 		isAuthenticated: React.PropTypes.bool,
 		lastRequestTime: React.PropTypes.number,
 		env: React.PropTypes.object,
+		jwt: React.PropTypes.string,
 
 		loginUser: React.PropTypes.func,
 		fetchVariable: React.PropTypes.func,
@@ -82,6 +85,16 @@ export class Freestone extends Component {
 					<GoogleAuthenticate />
 				</div>
 			);
+		}
+
+		//on login, if we want to redirect to public site (i.e. we may use the admin's login for public website access)
+		const onLogin = qstrParams('onlogin');
+		if (onLogin) {
+			// console.log(this.props.env);
+			const loc = onLogin === 'home' ? '' : onLogin;
+			const root = `//${this.props.env.domain}/${loc}?jwt=${this.props.jwt}`;
+			window.location = root;
+			return null;
 		}
 
 		return (

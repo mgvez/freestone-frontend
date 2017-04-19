@@ -74,7 +74,7 @@ export class FormHeaderVariation extends Component {
 
 		const languageToggler = this.props.hasLanguageToggle ? <LanguageToggler onChangeLang={this.props.isModal ? this.props.setLanguageState : null} localLanguage={language} /> : null;
 		
-		const preview = this.props.table.hasTemplate ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} /> : null;
+		const preview = this.props.table && this.props.table.hasTemplate ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} /> : null;
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
 		const editSchemaLink = this.props.table ? `#/edit/zva_table/${this.props.table.id}` : '';
