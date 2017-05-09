@@ -132,7 +132,7 @@ export class LinkInsert extends Component {
 						<div className="col-md-6">
 							<h4>External Link</h4>
 							<p>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
-							<p><input type="text" ref="linkExternal" className="bordered" value={this.props.link} /></p>
+							<p><input type="text" ref="linkExternal" className="bordered" defaultValue={this.props.link} /></p>
 							<button className="button-round-action-bordered" onClick={this.selectExternal}>use this url</button>
 						</div>
 					</div>
