@@ -22,9 +22,11 @@ export class GoogleAuthenticate extends Component {
 		scope: React.PropTypes.string,
 		isAuthenticated: React.PropTypes.bool,
 		cookiePolicy: React.PropTypes.string,
+		gapi_ready: React.PropTypes.number,
 
 		fetchVariable: React.PropTypes.func,
 		loginGoogleAPI: React.PropTypes.func,
+		googleReady: React.PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -35,13 +37,12 @@ export class GoogleAuthenticate extends Component {
 	componentWillMount() {
 		// console.log(this.props.apiGoogle);
 		this.requireData(this.props);
-		this.initGoogleApi();
+		this.initGoogleApi(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// console.log(this.props.apiGoogle);
 		this.requireData(nextProps);
-		this.initGoogleApi();
+		this.initGoogleApi(nextProps);
 	}
 
 	onIsLogged = () => {
@@ -60,15 +61,15 @@ export class GoogleAuthenticate extends Component {
 		}
 	}
 
-	initGoogleApi() {
-		// console.log('gapi..?', this.gapi);
+	initGoogleApi(props) {
+
 		if (this.gapi) return this.gapi;
 
-		if (this.props.apiGoogle && this.props.apiGoogle.clientId) {
+		if (props.apiGoogle && props.apiGoogle.clientId) {
 
-			const { clientId } = this.props.apiGoogle;
+			const { clientId } = props.apiGoogle;
 			// console.log(clientId);
-			const { scope, cookiePolicy } = this.props;
+			const { scope, cookiePolicy } = props;
 			const params = {
 				client_id: clientId,
 				cookiepolicy: cookiePolicy,
@@ -78,9 +79,9 @@ export class GoogleAuthenticate extends Component {
 			};
 			const gapi = window.gapi;
 			gapi.load('auth2', () => {
+				
 				const auth2 = gapi.auth2;
 				if (!auth2.getAuthInstance()) {
-					// console.log('gapi authenticate loaded');
 					const GoogleAuth = auth2.init(params);
 
 					GoogleAuth.then(() => {
@@ -94,7 +95,6 @@ export class GoogleAuthenticate extends Component {
 						GoogleAuth.currentUser.listen(this.onReceiveUser);
 					});
 				}
-
 			});
 			this.gapi = true;
 			return true;
