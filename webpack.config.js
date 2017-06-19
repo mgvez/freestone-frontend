@@ -1,22 +1,23 @@
-const path = require('path');
 const webpack = require('webpack');
+const path = require('path');
+
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const fs = require('fs');
-const csswring = require('csswring');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
 
-
 const jsSourcePath = path.join(__dirname, './src');
 const buildPath = path.join(__dirname, './dist');
-const imgPath = path.join(__dirname, './assets');
+const assetsPath = path.join(__dirname, './src/assets');
 const sourcePath = path.join(__dirname, './src');
 
+
+
+// Common plugins
 const plugins = [
 	new webpack.optimize.CommonsChunkPlugin({
 		name: 'vendor',
@@ -50,16 +51,11 @@ const plugins = [
 			context: sourcePath,
 		},
 	}),
-
-	new webpack.ProvidePlugin({
-		jQuery: 'jquery',
-	}),
 ];
 
 
 // Common rules
 const rules = [
-	
 	{
 		test: /\.(js|jsx)$/,
 		exclude: /node_modules/,
@@ -70,40 +66,22 @@ const rules = [
 		],
 	},
 	{
-		test: /\.(png|jpg|jpeg|gif|woff|woff2|eot|ttf|otf)$/,
-		include: imgPath,
-		use: 'url-loader?limit=20480&name=assets/[name].[ext]',
+		test: /\.(ttf|eot|svg|woff|woff2|otf)(\?v=\d+\.\d+\.\d+)?/,
+		use: [
+			{
+				loader: 'url-loader?limit=20480',
+			},
+		],
 	},
-
-			
-			// {
-			// 	test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-			// 	use: 'url?limit=10000&mimetype=application/font-woff',
-			// }, {
-			// 	test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-			// 	use: 'url?limit=10000&mimetype=application/font-woff2',
-			// }, {
-			// 	test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-			// 	use: 'url?limit=10000&mimetype=application/octet-stream',
-			// }, {
-			// 	test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-			// 	use: 'url?limit=10000&mimetype=application/font-otf',
-			// }, {
-			// 	test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-			// 	use: 'file',
-			// }, {
-			// 	test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-			// 	use: 'url?limit=10000&mimetype=image/svg+xml',
-			// },
-			// {
-			// 	test: /\.png$/,
-			// 	loader: 'file?name=[name].[ext]',
-			// },
-			// {
-			// 	test: /\.jpg$/,
-			// 	loader: 'file?name=[name].[ext]',
-			// },
-
+	{
+		test: /\.(svg|png|jpg|jpeg|gif)(\?v=\d+\.\d+\.\d+)?$/,
+		include: assetsPath,
+		use: [
+			{
+				loader: 'file-loader?limit=20480',
+			},
+		],
+	},
 ];
 
 if (isProduction) {
@@ -128,7 +106,7 @@ if (isProduction) {
 		}),
 		new ExtractTextPlugin('bundle.css'),
 		new CopyWebpackPlugin([
-			{ from: imgPath + '/**/*' }
+			{ from: assetsPath + '/**/*' }
 		])
 	);
 
@@ -153,7 +131,6 @@ if (isProduction) {
 	rules.push(
 		{
 			test: /\.scss$/,
-			exclude: /node_modules/,
 			use: [
 				'style-loader',
 				// Using source maps breaks urls in the CSS loader
@@ -162,44 +139,33 @@ if (isProduction) {
 				// https://github.com/webpack/css-loader/issues/232#issuecomment-240449998
 				// 'css-loader?sourceMap',
 				'css-loader',
-				'postcss-loader',
+				{
+					loader: 'postcss-loader',
+					options: { sourceMap: true },
+				},
 				'sass-loader?sourceMap',
 			],
+			
 		}
 	);
 }
 
-
-
 module.exports = {
-	devtool: 'cheap-module-eval-source-map',
-	entry: [
-		'webpack-hot-middleware/client',
-		jsSourcePath + '/index',
-	],
+	devtool: isProduction ? false : 'source-map',
+	context: jsSourcePath,
+	entry: {
+		js: './index.js',
+	},
 	output: {
+		path: buildPath,
+		publicPath: isProduction ? '' : '/',
 		filename: 'bundle.js',
-		path: path.join(__dirname, '/dist/'),
-		publicPath: '/dist/',
 	},
-
-	// quiet: false,
-	// noInfo: false,
-	stats: {
-		// Config for minimal console.log mess.
-		assets: false,
-		colors: true,
-		version: true,
-		hash: false,
-		timings: true,
-		chunks: false,
-		chunkModules: false,
+	module: {
+		rules,
 	},
-
-	plugins,
-
 	resolve: {
-		extensions: ['.js', '.json', '.jsx'],
+		extensions: ['.webpack-loader.js', '.web-loader.js', '.loader.js', '.js', '.jsx'],
 		modules: [
 			path.resolve(__dirname, 'node_modules'),
 			jsSourcePath,
@@ -208,11 +174,9 @@ module.exports = {
 			// require('tinymce') will do require('tinymce/tinymce') 
 			tinymce: 'tinymce/tinymce',
 		},
-	},
 
-	module: {
-		rules,
 	},
+	plugins,
 	devServer: {
 		contentBase: isProduction ? buildPath : sourcePath,
 		historyApiFallback: true,
@@ -221,6 +185,8 @@ module.exports = {
 		inline: !isProduction,
 		hot: !isProduction,
 		host: '0.0.0.0',
+		//to make sure that any host will work (provided it points to 127.0.0.1 and has the correct port)
+		disableHostCheck: true,
 		stats: {
 			assets: true,
 			children: false,

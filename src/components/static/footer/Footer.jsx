@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
 /* component styles */
-import styles from './styles';
-
+import styles from 'style-loader!./styles/styles.scss';
 
 export class Footer extends Component {
 	render() {
@@ -13,6 +12,7 @@ export class Footer extends Component {
 					<div className="row">
 						<div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						
+
 						</div>
 					</div>
 				</div>

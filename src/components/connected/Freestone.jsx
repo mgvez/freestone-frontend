@@ -11,7 +11,7 @@ const actionCreators = { ...authActionCreators, ...envActionCreators };
 
 /* application components */
 import { SiteHeader } from 'components/connected/SiteHeader';
-import { Footer } from 'components/static/Footer';
+import { Footer } from 'components/static/footer/Footer';
 import { Errors } from 'components/connected/Errors';
 import { Nav } from 'components/connected/Nav';
 import { LoadedRecords } from 'components/connected/LoadedRecords';
@@ -19,8 +19,10 @@ import { Login } from 'components/connected/auth/Login';
 import { GoogleAuthenticate } from 'components/connected/auth/GoogleAuthenticate';
 import qstrParams from 'utils/qstrParams';
 
-import 'style!scss/style.scss';
-import 'style!font-awesome/scss/font-awesome.scss';
+import 'style-loader!scss/style.scss';
+import 'font-awesome/scss/font-awesome.scss';
+// import 'style-loader!font-awesome/scss/font-awesome.scss';
+// require('font-awesome-webpack-2');
 
 @connect(
 	state => {

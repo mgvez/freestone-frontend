@@ -78,6 +78,7 @@ export class GoogleAuthenticate extends Component {
 				scope,
 			};
 			const gapi = window.gapi;
+			if (!gapi) return false;
 			gapi.load('auth2', () => {
 				
 				const auth2 = gapi.auth2;
