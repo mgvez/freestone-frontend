@@ -1,10 +1,11 @@
 {
   "name": "freestone-admin",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "",
   "scripts": {
     "start-wp1": "node server.js",
     "start": "webpack-dev-server --colors",
+    "build": "rm -rf ./dist; env NODE_ENV=production webpack",
     "lint": "eslint src"
   },
   "repository": {
@@ -14,6 +15,7 @@
   "files": [
     "dist",
     "assets",
+	"src",
     "index.html"
   ],
   "author": "",
