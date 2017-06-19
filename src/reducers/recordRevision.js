@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { CLEAR_DATA } from 'actions/dev';
-import { UNAUTHORIZED } from 'actions/auth';
-import { RECEIVE_RECORD_REVISION_LIST } from 'actions/record';
-import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
+import { CLEAR_DATA } from '../actions/dev';
+import { UNAUTHORIZED } from '../actions/auth';
+import { RECEIVE_RECORD_REVISION_LIST } from '../actions/record';
+import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
 
 function list(state = {}, action) {
 	switch (action.type) {

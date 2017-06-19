@@ -1,6 +1,6 @@
-import { UNAUTHORIZED } from 'actions/auth';
-import { RECEIVE_RECORD_LIST, SWAPPED_ANIMATED } from 'actions/record';
-import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED } from '../actions/auth';
+import { RECEIVE_RECORD_LIST, SWAPPED_ANIMATED } from '../actions/record';
+import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
 
 const initialState = {
 	table: null,

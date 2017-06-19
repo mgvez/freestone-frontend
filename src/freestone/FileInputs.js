@@ -1,4 +1,4 @@
-import uniqueId from 'utils/UniqueId';
+import uniqueId from '../utils/UniqueId';
 /**
 Conserve les nodes des inputs file en mémoire pour pouvoir les poster, il est impossible de les recréer (on ne peut pas mettre dynamiquement une valeur à un input file pour raisons de sécurité
 */

@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { Header } from 'components/static/form/Header';
-import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
-import { AddRecord } from 'components/connected/form/buttons/AddRecord';
-import { CollapsableForm } from 'components/static/form/subform/CollapsableForm';
-import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
+import { SingleRecord } from '../../../connected/form/SingleRecord';
+import { Header } from '../Header';
+import { ChangeSubformView } from '../../../connected/form/buttons/ChangeSubformView';
+import { AddRecord } from '../../../connected/form/buttons/AddRecord';
+import { CollapsableForm } from './CollapsableForm';
+import { ToggleSubform } from '../../../connected/form/buttons/ToggleSubform';
 
 export class SubformList extends CollapsableForm {
 	static propTypes = {

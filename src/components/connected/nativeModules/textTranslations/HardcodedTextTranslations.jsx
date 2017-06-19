@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { SingleTranslation } from 'components/connected/nativeModules/textTranslations/SingleTranslation';
-import { Field } from 'components/connected/nativeModules/textTranslations/Field';
-import { HeaderContainer } from 'components/static/header/HeaderContainer';
+import { SingleTranslation } from './SingleTranslation';
+import { Field } from './Field';
+import { HeaderContainer } from '../../../static/header/HeaderContainer';
 
-import * as translationActions from 'actions/translations';
-import { coreTranslations } from 'selectors/translations';
+import * as translationActions from '../../../../actions/translations';
+import { coreTranslations } from '../../../../selectors/translations';
 
 @connect(
 	coreTranslations,

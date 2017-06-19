@@ -1,4 +1,4 @@
-import { FREESTONE_API } from 'middleware/api';
+import { FREESTONE_API } from '../middleware/api';
 
 export const ADD_ENV = 'ADD_ENV';
 export const SET_FIELD_VIEW_LANGUAGE = 'SET_FIELD_VIEW_LANGUAGE';

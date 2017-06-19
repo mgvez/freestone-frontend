@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { TYPE_FILE } from 'freestone/schemaProps';
+import { TYPE_FILE } from '../../../freestone/schemaProps';
 
 @connect(
 	state => {

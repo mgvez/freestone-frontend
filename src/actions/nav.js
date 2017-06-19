@@ -1,6 +1,6 @@
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
-
 import { push as pushPath } from 'react-router-redux';
+import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
+
 
 export const ADD_NAV = 'ADD_NAV';
 export const TOGGLE_NAV = 'TOGGLE_NAV';

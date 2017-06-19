@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 /* actions */
-import * as authActionCreators from 'actions/auth';
-import { fetchVariable } from 'actions/env';
+import * as authActionCreators from '../../../actions/auth';
+import { fetchVariable } from '../../../actions/env';
 
 @connect(
 	state => {

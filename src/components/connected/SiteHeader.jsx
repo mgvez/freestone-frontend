@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as devActionCreators from 'actions/dev';
-import * as authActionCreators from 'actions/auth';
-import { clearSchema } from 'actions/schema';
+import * as devActionCreators from '../../actions/dev';
+import * as authActionCreators from '../../actions/auth';
+import { clearSchema } from '../../actions/schema';
 
-import { GOD_USER_GROUP } from 'freestone/schemaProps';
+import { GOD_USER_GROUP } from '../../freestone/schemaProps';
 
-import { HomeButton } from 'components/connected/widgets/HomeButton';
-import { NavToggler } from 'components/connected/widgets/NavToggler';
-import { LoadedRecordsToggler } from 'components/connected/widgets/LoadedRecordsToggler';
+import { HomeButton } from './widgets/HomeButton';
+import { NavToggler } from './widgets/NavToggler';
+import { LoadedRecordsToggler } from './widgets/LoadedRecordsToggler';
 
 const actionCreators = { ...authActionCreators, ...devActionCreators, clearSchema };
 

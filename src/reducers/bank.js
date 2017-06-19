@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { RECEIVE_BANK_IMAGE, RECEIVE_BANK_USES, RECEIVE_BANK_FILE } from 'actions/bank';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
-import { BANK_IMG_TABLE, BANK_FILE_TABLE } from 'freestone/schemaProps';
-import { CLEAR_DATA } from 'actions/dev';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from '../actions/auth';
+import { RECEIVE_BANK_IMAGE, RECEIVE_BANK_USES, RECEIVE_BANK_FILE } from '../actions/bank';
+import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
+import { BANK_IMG_TABLE, BANK_FILE_TABLE } from '../freestone/schemaProps';
+import { CLEAR_DATA } from '../actions/dev';
 
 const initialState = {};
 

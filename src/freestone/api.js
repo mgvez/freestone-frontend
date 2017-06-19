@@ -1,6 +1,6 @@
-import { getWebsiteUrl } from 'freestone/settings';
 import reqwest from 'reqwest';
 import Promise from 'bluebird';
+import { getWebsiteUrl } from './settings';
 
 let store;
 export function setStore(s) {

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { dashboardSelector } from 'selectors/nav';
+import { dashboardSelector } from '../../../selectors/nav';
 
 
-import { Table } from 'components/static/menu/Table';
-import { Module } from 'components/static/menu/Module';
-import { Page } from 'components/static/menu/Page';
-import { NativeModule } from 'components/static/menu/NativeModule';
+import { Table } from '../../static/menu/Table';
+import { Module } from '../../static/menu/Module';
+import { Page } from '../../static/menu/Page';
+import { NativeModule } from '../../static/menu/NativeModule';
 
 @connect(
 	dashboardSelector

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { toggleNavVisibility } from 'actions/siteHeader';
+import { toggleNavVisibility } from '../../../actions/siteHeader';
 
 @connect(
 	state => { 

@@ -1,4 +1,4 @@
-import { unauthorized, LOGIN_USER_FAILURE, LOGOUT_USER, UNAUTHORIZED } from 'actions/auth';
+import { unauthorized, LOGIN_USER_FAILURE, LOGOUT_USER, UNAUTHORIZED } from '../actions/auth';
 
 export default store => next => action => {// eslint-disable-line
 

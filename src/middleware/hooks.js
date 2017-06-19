@@ -1,4 +1,4 @@
-import { RECEIVE_RECORD } from 'actions/record';
+import { RECEIVE_RECORD } from '../actions/record';
 
 export default store => next => action => {// eslint-disable-line
 

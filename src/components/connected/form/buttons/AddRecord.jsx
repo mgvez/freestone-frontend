@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import createRecord from 'freestone/createRecord';
-import { addRecord, setShownRecord } from 'actions/record';
+import createRecord from '../../../../freestone/createRecord';
+import { addRecord, setShownRecord } from '../../../../actions/record';
 
 @connect(
 	null,

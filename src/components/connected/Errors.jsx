@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import Modal from 'react-modal';
-import customStyle from 'components/styles/modalStyles.js';
 
-import * as errorsActionCreators from 'actions/errors';
-import { goTo } from 'actions/nav';
+import customStyle from '../styles/modalStyles.js';
+
+import * as errorsActionCreators from '../../actions/errors';
+import { goTo } from '../../actions/nav';
 
 @connect(
 	state => {

@@ -1,7 +1,7 @@
 
 import { createSelector } from 'reselect';
-import { schemaSelector } from 'selectors/schema';
-import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_FILE_CATEG_ALIAS } from 'freestone/schemaProps';
+import { schemaSelector } from './schema';
+import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_FILE_CATEG_ALIAS } from '../freestone/schemaProps';
 
 const recordsSelector = state => state.recordList;
 // const recordListSelector = state => state.imageBankList;

@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { TOGGLE_SITE_PERMISSION } from 'actions/permissions';
-import { CLEAR_DATA } from 'actions/dev';
-import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from 'actions/record';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from '../actions/auth';
+import { TOGGLE_SITE_PERMISSION } from '../actions/permissions';
+import { CLEAR_DATA } from '../actions/dev';
+import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from '../actions/record';
+import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
 
 
 function removeRecords(state, recordsToRemove) {

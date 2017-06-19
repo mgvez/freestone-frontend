@@ -3,20 +3,20 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
-import { PRIKEY_ALIAS } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS } from '../../../freestone/schemaProps';
 
-import * as schemaActionCreators from 'actions/schema';
-import * as recordActionCreators from 'actions/record';
+import * as schemaActionCreators from '../../../actions/schema';
+import * as recordActionCreators from '../../../actions/record';
 
-import { Heading } from 'components/static/recordList/Heading';
-import { Paging } from 'components/static/recordList/Paging';
-import { Row } from 'components/static/recordList/Row';
-import { ListSearch } from 'components/static/recordList/ListSearch';
-import { InScroll } from 'components/connected/InScroll';
-import { TablePermissions } from 'components/connected/permissions/TablePermissions';
+import { Heading } from '../../static/recordList/Heading';
+import { Paging } from '../../static/recordList/Paging';
+import { Row } from '../../static/recordList/Row';
+import { ListSearch } from '../../static/recordList/ListSearch';
+import { InScroll } from '../InScroll';
+import { TablePermissions } from '../permissions/TablePermissions';
 
-import createRecord from 'freestone/createRecord';
-import { listRecordsSelector } from 'selectors/listRecords';
+import createRecord from '../../../freestone/createRecord';
+import { listRecordsSelector } from '../../../selectors/listRecords';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 

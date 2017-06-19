@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as translationActions from 'actions/translations';
-import { singleTranslationMapStateToProps } from 'selectors/translations';
+import * as translationActions from '../../../../actions/translations';
+import { singleTranslationMapStateToProps } from '../../../../selectors/translations';
 
 @connect(
 	singleTranslationMapStateToProps,

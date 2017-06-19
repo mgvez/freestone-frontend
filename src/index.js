@@ -9,10 +9,11 @@ import { Router, Route, Redirect } from 'react-router';
 import { appHistory, store } from './appHistory';
 
 import routes from './routes';
-import { Freestone } from 'components/connected/Freestone';
+import { Freestone } from './components/connected/Freestone';
+
 
 // <Router onUpdate={() => window.scrollTo(0, 0)}
-import { setStore } from 'freestone/api';
+import { setStore } from './freestone/api';
 setStore(store);
 
 ReactDOM.render(

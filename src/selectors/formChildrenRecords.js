@@ -1,15 +1,15 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
-import { tableRecordsMapStateToProps } from 'selectors/record';
-import { subformViewSelector } from 'selectors/subformView';
-import { schemaSelector } from 'selectors/schema';
-import { isNew } from 'utils/UniqueId';
-import { getForeignFieldId } from 'freestone/schemaHelpers';
+import { tableSchemaMapStateToProps } from './tableSchema';
+import { tableRecordsMapStateToProps } from './record';
+import { subformViewSelector } from './subformView';
+import { schemaSelector } from './schema';
+import { isNew } from '../utils/UniqueId';
+import { getForeignFieldId } from '../freestone/schemaHelpers';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
-import { MAX_TAB_LABEL_LENGTH } from 'freestone/settings';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
+import { MAX_TAB_LABEL_LENGTH } from '../freestone/settings';
 
 const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
 const shownRecordsSelector = (state) => state.recordForm.shownRecords;

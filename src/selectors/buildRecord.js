@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/tableSchema';
-import { schemaSelector } from 'selectors/schema';
-import { getForeignFieldId, getChildrenRecordIds } from 'freestone/schemaHelpers';
-import { isNew } from 'utils/UniqueId';
+import { tableSchemaSelector } from './tableSchema';
+import { schemaSelector } from './schema';
+import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
+import { isNew } from '../utils/UniqueId';
 // import createRecord from 'freestone/createRecord';
 
-import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from 'freestone/schemaProps';
+import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
 
 const recordsSelector = state => state.recordForm.records;
 const mtmRecordsSelector = state => state.recordForm.mtmRecords;

@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { Tab } from 'components/static/form/subform/Tab';
-import { AddRecord } from 'components/connected/form/buttons/AddRecord';
+import { Tab } from './Tab';
+import { AddRecord } from '../../../connected/form/buttons/AddRecord';
 
 @dragDropContext(HTML5Backend)
 export class TabList extends Component {

@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
-import GoogleLoginBtn from 'components/connected/auth/GoogleLoginBtn';
+import GoogleLoginBtn from './GoogleLoginBtn';
 
 
 /* actions */
-import * as authActionCreators from 'actions/auth';
-import { fetchVariable, setVariable } from 'actions/env';
+import * as authActionCreators from '../../../actions/auth';
+import { fetchVariable, setVariable } from '../../../actions/env';
 
 
 const metaData = {

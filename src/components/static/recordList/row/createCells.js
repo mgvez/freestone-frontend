@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED } from 'freestone/schemaProps';
-import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
-import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
-import { BankNUses } from 'components/connected/widgets/BankNUses';
-import { BoolSwitch } from 'components/connected/recordList/BoolSwitch';
+import { FileThumbnail } from '../../../connected/fileThumbnail/FileThumbnail';
+import { BankImgThumbnail } from '../../../connected/fileThumbnail/BankImgThumbnail';
+import { BankNUses } from '../../../connected/widgets/BankNUses';
+import { BoolSwitch } from '../../../connected/recordList/BoolSwitch';
 
 const MAX_THUMB_SIZE = 200;
 

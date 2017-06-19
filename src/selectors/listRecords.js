@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from 'selectors/tableSchema';
-import { getRecordLabel } from 'selectors/recordLabel';
+import { tableSchemaSelector } from './tableSchema';
+import { getRecordLabel } from './recordLabel';
 
-import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from 'freestone/schemaProps';
+import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
 
 const recordsSelector = state => state.recordList;
 const paramsSelector = (state, props) => props.params;

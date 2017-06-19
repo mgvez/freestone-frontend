@@ -1,11 +1,11 @@
 
 //basé sur redux-api-middleware, mais comme pas de release depuis un bout, pis que le official release fonctionne pas (as of 2016-01-13), j'ai réécrit
-
-import { receiveToken, loginUserFailure } from 'actions/auth';
-import { CLEAR_ERRORS } from 'actions/errors';
-import sha1 from 'sha1';
 import Promise from 'bluebird';
-import { callApi } from 'freestone/api';
+import sha1 from 'sha1';
+
+import { receiveToken, loginUserFailure } from '../actions/auth';
+import { CLEAR_ERRORS } from '../actions/errors';
+import { callApi } from '../freestone/api';
 
 export const FREESTONE_API = Symbol('Freestone API');
 export const FREESTONE_API_REQUEST = 'FREESTONE_API_REQUEST';

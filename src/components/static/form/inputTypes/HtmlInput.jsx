@@ -1,12 +1,12 @@
 import React from 'react';
-
-import { Input } from 'components/static/form/inputTypes/Input';
-import { LinkInsert } from 'components/connected/form/helpers/LinkInsert';
-import { BankImgInsert } from 'components/connected/form/helpers/BankImgInsert';
-import { BankFileInsert } from 'components/connected/form/helpers/BankFileInsert';
 import TinyMCEInput from 'react-tinymce-input';
 
-import VALID_ELEMENTS from 'components/static/form/inputTypes/tinymce/validElements';
+import { Input } from './Input';
+import { LinkInsert } from '../../../connected/form/helpers/LinkInsert';
+import { BankImgInsert } from '../../../connected/form/helpers/BankImgInsert';
+import { BankFileInsert } from '../../../connected/form/helpers/BankFileInsert';
+
+import VALID_ELEMENTS from './tinymce/validElements';
 
 const TINYMCE_CONFIG = {
 	theme: 'modern',

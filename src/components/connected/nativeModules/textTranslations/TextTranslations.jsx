@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { SingleTranslation } from 'components/connected/nativeModules/textTranslations/SingleTranslation';
-import { Field } from 'components/connected/nativeModules/textTranslations/Field';
-import { FormHeader } from 'components/connected/header/FormHeader'; 
+import { SingleTranslation } from './SingleTranslation';
+import { Field } from './Field';
+import { FormHeader } from '../../header/FormHeader'; 
 
-import * as translationActions from 'actions/translations';
-import { goTo } from 'actions/nav';
-import { coreTranslations } from 'selectors/translations';
+import * as translationActions from '../../../../actions/translations';
+import { goTo } from '../../../../actions/nav';
+import { coreTranslations } from '../../../../selectors/translations';
 
 @connect(
 	coreTranslations,

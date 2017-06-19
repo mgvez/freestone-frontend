@@ -1,6 +1,6 @@
 
 import { createSelector } from 'reselect';
-import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
+import { tableSchemaMapStateToProps } from './tableSchema';
 
 const recordIdSelector = (state, props) => props.recordId;
 const recordsUnalteredSelector = state => state.recordForm.recordsUnaltered;

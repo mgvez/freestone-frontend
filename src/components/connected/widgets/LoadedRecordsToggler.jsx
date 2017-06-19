@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { toggleLoadedRecords } from 'actions/siteHeader';
-import { loadedRecordsStatusSelector } from 'selectors/loadedRecordsStatus';
+import { toggleLoadedRecords } from '../../../actions/siteHeader';
+import { loadedRecordsStatusSelector } from '../../../selectors/loadedRecordsStatus';
 
 @connect(
 	loadedRecordsStatusSelector,

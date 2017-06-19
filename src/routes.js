@@ -3,12 +3,12 @@ import { Route } from 'react-router';
 
 
 /* containers */
-import { Home } from 'components/connected/Home';
-import { List } from 'components/connected/recordList/List';
-import { RootForm } from 'components/connected/form/RootForm';
-import { Module } from 'components/connected/Module';
-import { Page } from 'components/connected/Page';
-import { NativeModule } from 'components/connected/nativeModules/NativeModule';
+import { Home } from './components/connected/Home';
+import { List } from './components/connected/recordList/List';
+import { RootForm } from './components/connected/form/RootForm';
+import { Module } from './components/connected/Module';
+import { Page } from './components/connected/Page';
+import { NativeModule } from './components/connected/nativeModules/NativeModule';
 
 export default (
 	<div>

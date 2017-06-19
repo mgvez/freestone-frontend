@@ -1,7 +1,7 @@
 
-import { RECEIVE_SLUG } from 'actions/slugs';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
-import { CLEAR_DATA } from 'actions/dev';
+import { RECEIVE_SLUG } from '../actions/slugs';
+import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
+import { CLEAR_DATA } from '../actions/dev';
 
 function removeSlugs(state, records) {
 	// console.log(records);

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input } from 'components/static/form/inputTypes/Input';
+import { Input } from './Input';
 
 export class TextInput extends Input {
 

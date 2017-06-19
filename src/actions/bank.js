@@ -1,4 +1,4 @@
-import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FAILURE } from '../middleware/api';
 
 export const RECEIVE_BANK_IMAGE = 'RECEIVE_BANK_IMAGE';
 export const RECEIVE_BANK_FILE = 'RECEIVE_BANK_FILE';

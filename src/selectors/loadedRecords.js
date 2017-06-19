@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
-import { schemaSelector } from 'selectors/schema';
-import { allForeignOptionsSelector } from 'selectors/foreignOptions';
-import { getUnloadedOptions, getRecordLabel } from 'selectors/recordLabel';
+import { schemaSelector } from './schema';
+import { allForeignOptionsSelector } from './foreignOptions';
+import { getUnloadedOptions, getRecordLabel } from './recordLabel';
 
-import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from 'freestone/schemaProps';
-import { RECORD_LOADED_SAFE_LIFE } from 'freestone/settings';
+import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from '../freestone/schemaProps';
+import { RECORD_LOADED_SAFE_LIFE } from '../freestone/settings';
 
 const recordsSelector = state => state.recordForm.records;
 const toggleLoadedRecordsSelector = state => state.siteHeader.loaded_records_visibility;

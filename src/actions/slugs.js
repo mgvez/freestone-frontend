@@ -1,4 +1,4 @@
-import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FAILURE } from '../middleware/api';
 
 export const RECEIVE_SLUG = 'RECEIVE_SLUG';
 

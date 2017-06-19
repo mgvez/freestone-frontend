@@ -1,4 +1,4 @@
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 
 export const RECEIVE_FOREIGN_OPTIONS = 'RECEIVE_FOREIGN_OPTIONS';
 

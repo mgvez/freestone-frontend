@@ -1,13 +1,13 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 
-import { getForeignFieldId, getChildrenRecordIds } from 'freestone/schemaHelpers';
+import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
 
-import { userViewLanguageSelector } from 'selectors/userViewLanguage';
-import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
-import { schemaSelector } from 'selectors/schema';
+import { userViewLanguageSelector } from './userViewLanguage';
+import { tableSchemaMapStateToProps } from './tableSchema';
+import { schemaSelector } from './schema';
 
 const recordIdSelector = (state, props) => props.params && props.params.recordId;
 const recordsSelector = state => state.recordForm.records;

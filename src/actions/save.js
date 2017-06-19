@@ -1,8 +1,8 @@
-import { FREESTONE_API } from 'middleware/api';
-import { sendRecordFiles } from 'actions/sendFile';
 import { push as pushPath } from 'react-router-redux';
+import { FREESTONE_API } from '../middleware/api';
+import { sendRecordFiles } from './sendFile';
+import { CLEAR_SCHEMA } from './schema';
 
-import { CLEAR_SCHEMA } from 'actions/schema';
 
 export const SAVE_RECORD_REQUEST = 'SAVE_RECORD_REQUEST';
 export const SAVE_RECORD_SUCCESS = 'SAVE_RECORD_SUCCESS';

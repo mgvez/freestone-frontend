@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
-import { SET_TRANSLATIONS, SET_PLACED_TRANSLATIONS, EDIT_TRANSLATION, SAVE_TRANSLATIONS, CLOSE_TRANSLATIONS } from 'actions/translations';
-import { CLEAR_DATA } from 'actions/dev';
+import { SET_TRANSLATIONS, SET_PLACED_TRANSLATIONS, EDIT_TRANSLATION, SAVE_TRANSLATIONS, CLOSE_TRANSLATIONS } from '../actions/translations';
+import { CLEAR_DATA } from '../actions/dev';
 
 function translations(state = {}, action) {
 	switch (action.type) {

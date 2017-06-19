@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { NavGroup } from 'components/static/menu/NavGroup';
-import { UserInfos } from 'components/connected/widgets/UserInfos';
-import { HomeButton } from 'components/connected/widgets/HomeButton';
+import { NavGroup } from '../static/menu/NavGroup';
+import { UserInfos } from './widgets/UserInfos';
+import { HomeButton } from './widgets/HomeButton';
 
-import * as navActionCreators from 'actions/nav';
-import { navSelector } from 'selectors/nav';
+import * as navActionCreators from '../../actions/nav';
+import { navSelector } from '../../selectors/nav';
 
 
 @connect(

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
-import { CLEAR_SCHEMA, RECEIVE_SCHEMA } from 'actions/schema';
-import { SAVE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from '../actions/auth';
+import { CLEAR_ERRORS, CLEAR_DATA } from '../actions/dev';
+import { CLEAR_SCHEMA, RECEIVE_SCHEMA } from '../actions/schema';
+import { SAVE_RECORD_SUCCESS } from '../actions/save';
 
 function tables(state = {}, action) {
 	switch (action.type) {

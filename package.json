@@ -14,9 +14,7 @@
   },
   "files": [
     "dist",
-    "assets",
-	"src",
-    "index.html"
+	"src"
   ],
   "author": "",
   "license": "MIT",

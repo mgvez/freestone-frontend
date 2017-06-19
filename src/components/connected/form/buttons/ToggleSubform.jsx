@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { formCollapsedMapStateToProps } from 'selectors/formCollapsed';
-import { setSubformCollapsed } from 'actions/subform';
+import { formCollapsedMapStateToProps } from '../../../../selectors/formCollapsed';
+import { setSubformCollapsed } from '../../../../actions/subform';
 
 @connect(
 	formCollapsedMapStateToProps,

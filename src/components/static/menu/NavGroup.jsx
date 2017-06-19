@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import { Table } from 'components/static/menu/Table';
-import { Module } from 'components/static/menu/Module';
-import { Page } from 'components/static/menu/Page';
-import { NativeModule } from 'components/static/menu/NativeModule';
-import { Collapser } from 'animation/Collapser';
+import { Table } from './Table';
+import { Module } from './Module';
+import { Page } from './Page';
+import { NativeModule } from './NativeModule';
+import { Collapser } from '../../../animation/Collapser';
 
 export class NavGroup extends Component {
 	static propTypes = {

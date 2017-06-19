@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { LoadedRecordsToggler } from 'components/connected/widgets/LoadedRecordsToggler';
-
-import { fetchTable } from 'actions/schema';
-import { fetchForeignOptions } from 'actions/foreignOptions';
-import { toggleLoadedRecords } from 'actions/siteHeader';
-import { loadedRecords } from 'selectors/loadedRecords';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import { Cancel } from 'components/connected/process/Cancel';
+import { LoadedRecordsToggler } from './widgets/LoadedRecordsToggler';
+import { Cancel } from './process/Cancel';
+import { fetchTable } from '../../actions/schema';
+import { fetchForeignOptions } from '../../actions/foreignOptions';
+import { toggleLoadedRecords } from '../../actions/siteHeader';
+import { loadedRecords } from '../../selectors/loadedRecords';
+
 
 function leftPad(n) {
 	return n < 10 ? `0${n}` : n;

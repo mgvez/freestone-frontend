@@ -1,4 +1,4 @@
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 
 export const RECEIVE_SCHEMA = 'RECEIVE_SCHEMA';
 export const CLEAR_SCHEMA = 'CLEAR_SCHEMA';

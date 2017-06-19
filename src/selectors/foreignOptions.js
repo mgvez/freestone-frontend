@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { TYPE_BANKIMG, TYPE_IMG, TYPE_LANGUAGE } from 'freestone/schemaProps';
+import { TYPE_BANKIMG, TYPE_IMG, TYPE_LANGUAGE } from '../freestone/schemaProps';
 
 const rawForeignOptionsSelector = state => state.foreignOptions;
 const fieldSelector = (state, props) => props.field;

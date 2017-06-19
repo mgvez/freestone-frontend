@@ -1,7 +1,7 @@
-import { UNAUTHORIZED } from 'actions/auth';
-import { CLEAR_DATA } from 'actions/dev';
-import { RECEIVE_MTM_OPTIONS } from 'actions/record';
-import { SAVE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED } from '../actions/auth';
+import { CLEAR_DATA } from '../actions/dev';
+import { RECEIVE_MTM_OPTIONS } from '../actions/record';
+import { SAVE_RECORD_SUCCESS } from '../actions/save';
 
 
 export function mtmOptions(state = {}, action) {

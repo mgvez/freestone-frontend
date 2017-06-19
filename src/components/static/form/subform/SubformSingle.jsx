@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import { AddRecord } from 'components/connected/form/buttons/AddRecord';
-import { Header } from 'components/static/form/Header';
-import { SingleRecord } from 'components/connected/form/SingleRecord';
+import { AddRecord } from '../../../connected/form/buttons/AddRecord';
+import { Header } from '../Header';
+import { SingleRecord } from '../../../connected/form/SingleRecord';
 
 
 export class SubformSingle extends Component {

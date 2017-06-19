@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from 'freestone/schemaProps';
+import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from '../freestone/schemaProps';
 
 //build le schema complet en tree
 

@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { ALL_RECORDS_ID } from 'freestone/schemaProps';
 
-import { sitePermissionsSelector } from 'selectors/sitePermissions';
-import * as permissionsActionCreators from 'actions/permissions';
+import { sitePermissionsSelector } from '../../../selectors/sitePermissions';
+import * as permissionsActionCreators from '../../../actions/permissions';
 
 @connect(
 	sitePermissionsSelector,

@@ -1,6 +1,6 @@
 
-import uniqueId from 'utils/UniqueId';
-import { PRIKEY_ALIAS, TYPE_ORDER } from 'freestone/schemaProps';
+import uniqueId from '../utils/UniqueId';
+import { PRIKEY_ALIAS, TYPE_ORDER } from './schemaProps';
 
 export default (table, parentTableId, parentRecordId, orderVal, model) => {
 	const newRecord = table.fields.reduce((record, field) => {

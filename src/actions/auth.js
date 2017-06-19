@@ -1,5 +1,5 @@
 import jwtDecode from 'jwt-decode';
-import { FREESTONE_API } from 'middleware/api';
+import { FREESTONE_API } from '../middleware/api';
 
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { navTreeSelector } from 'selectors/navTree';
+import { navTreeSelector } from './navTree';
 const toggleStateSelector = state => state.nav.toggleState;
 const toggleVisibilitySelector = state => state.siteHeader.nav_visibility;
 

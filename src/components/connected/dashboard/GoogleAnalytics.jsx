@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchVariable } from 'actions/env';
+import { fetchVariable } from '../../../actions/env';
 
 import GAPI_Helper from './GAPI_Helper';
 

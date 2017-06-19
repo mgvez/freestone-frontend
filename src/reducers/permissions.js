@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { CLEAR_DATA } from 'actions/dev';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
-import { RECEIVE_SITE_PERMISSIONS, RECEIVE_USER_GROUPS, TOGGLE_SITE_PERMISSION, SAVE_SITE_PERMISSIONS } from 'actions/permissions';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from '../actions/auth';
+import { CLEAR_DATA } from '../actions/dev';
+import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
+import { RECEIVE_SITE_PERMISSIONS, RECEIVE_USER_GROUPS, TOGGLE_SITE_PERMISSION, SAVE_SITE_PERMISSIONS } from '../actions/permissions';
 
 function removeRecords(state, recordsToRemove) {
 	if (!recordsToRemove) return state;

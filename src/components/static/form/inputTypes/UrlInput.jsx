@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { LinkInsert } from 'components/connected/form/helpers/LinkInsert';
-import { Input } from 'components/static/form/inputTypes/Input';
+import { LinkInsert } from '../../../connected/form/helpers/LinkInsert';
+import { Input } from './Input';
 
 export class UrlInput extends Input {
 

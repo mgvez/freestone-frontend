@@ -1,4 +1,4 @@
-import { TOGGLE_NAV_VISIBILITY, TOGGLE_LOADED_RECORDS } from 'actions/siteHeader';
+import { TOGGLE_NAV_VISIBILITY, TOGGLE_LOADED_RECORDS } from '../actions/siteHeader';
 
 const initialState = {
 	loaded_records_visibility: false,

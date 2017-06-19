@@ -1,7 +1,7 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
+import { tableSchemaMapStateToProps } from './tableSchema';
 
 const allMtmOptionsSelector = state => state.mtmOptions;
 const recordsSelector = state => state.recordForm.mtmRecords;

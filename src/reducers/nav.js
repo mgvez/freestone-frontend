@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { CLEAR_DATA } from 'actions/dev';
-import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL, REMEMBER_LIST_PAGE, ADD_PAGE_HASH_PATH } from 'actions/nav';
-import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED, LOGOUT_SUCCESS } from '../actions/auth';
+import { CLEAR_DATA } from '../actions/dev';
+import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL, REMEMBER_LIST_PAGE, ADD_PAGE_HASH_PATH } from '../actions/nav';
+import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
 
 const navInitialState = {
 	navGroups: [],

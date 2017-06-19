@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { schemaSelector } from 'selectors/schema';
+import { schemaSelector } from './schema';
 //retourne la table du store dont le nom est celui qui est en props.tableName OU tableId du component sur lequel ce selector est pluggé
 
 const tableNameSelector = (state, props) => props.tableName || (props.params && props.params.tableName);

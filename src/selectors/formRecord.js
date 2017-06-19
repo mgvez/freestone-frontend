@@ -2,8 +2,8 @@
 
 const fieldsSelector = state => state.schema.fields;
 import { createSelector } from 'reselect';
-import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
-import { recordMapStateToProps, recordUnalteredMapStateToProps } from 'selectors/record';
+import { tableSchemaMapStateToProps } from './tableSchema';
+import { recordMapStateToProps, recordUnalteredMapStateToProps } from './record';
 // import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 

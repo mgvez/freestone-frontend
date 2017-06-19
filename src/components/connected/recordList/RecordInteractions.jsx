@@ -3,15 +3,15 @@ import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { routeSelector } from 'selectors/route';
-import { lockScroll, rememberListPage } from 'actions/nav';
+import { routeSelector } from '../../../selectors/route';
+import { lockScroll, rememberListPage } from '../../../actions/nav';
 
-import { InfosFcn } from 'components/static/recordList/InfosFcn';
-import { DuplicateBtn } from 'components/connected/recordList/DuplicateBtn';
-import { OrderFcn } from 'components/connected/recordList/OrderFcn';
-import { DeleteBtn } from 'components/connected/recordList/DeleteBtn';
+import { InfosFcn } from '../../static/recordList/InfosFcn';
+import { DuplicateBtn } from '../recordList/DuplicateBtn';
+import { OrderFcn } from '../recordList/OrderFcn';
+import { DeleteBtn } from '../recordList/DeleteBtn';
 
-import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from 'freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../../freestone/schemaProps';
 
 const DEFAULT_LABEL = 'Actions';
 const EDIT_LABEL = 'Edit';

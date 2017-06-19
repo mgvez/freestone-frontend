@@ -1,5 +1,5 @@
 import { push as pushPath } from 'react-router-redux';
-import { FREESTONE_API, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { FREESTONE_API, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 
 export const REQUEST_RECORD_LIST = 'REQUEST_RECORD_LIST';
 export const RECEIVE_RECORD_LIST = 'RECEIVE_RECORD_LIST';

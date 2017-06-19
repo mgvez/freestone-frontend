@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import debounce from 'utils/Debounce.js';
+import debounce from '../../../utils/Debounce.js';
 
 export class ListSearch extends Component {
 	static propTypes = {

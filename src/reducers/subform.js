@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { SET_SUBFORM_VIEW_TYPE, SET_SUBFORM_COLLAPSED } from 'actions/subform';
+import { SET_SUBFORM_VIEW_TYPE, SET_SUBFORM_COLLAPSED } from '../actions/subform';
 
 
 export function viewState(state = {}, action) {
