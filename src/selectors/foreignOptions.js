@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 import { TYPE_BANKIMG, TYPE_IMG, TYPE_LANGUAGE } from '../freestone/schemaProps';
 
-const rawForeignOptionsSelector = state => state.foreignOptions;
+const rawForeignOptionsSelector = state => state.freestone.foreignOptions;
 const fieldSelector = (state, props) => props.field;
-const langSelector = state => state.env.languages;
+const langSelector = state => state.freestone.env.languages;
 
 export const allForeignOptionsSelector = createSelector(
 	[rawForeignOptionsSelector],

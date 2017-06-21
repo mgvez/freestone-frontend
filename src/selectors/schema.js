@@ -3,10 +3,10 @@ import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from '../freest
 
 //build le schema complet en tree
 
-const tablesSelector = state => state.schema.tables;
-const fieldsSelector = state => state.schema.fields;
-const fieldDependenciesSelector = state => state.schema.fieldDependencies;
-const childrenSelector = state => state.schema.children;
+const tablesSelector = state => state.freestone.schema.tables;
+const fieldsSelector = state => state.freestone.schema.fields;
+const fieldDependenciesSelector = state => state.freestone.schema.fieldDependencies;
+const childrenSelector = state => state.freestone.schema.children;
 
 
 export const schemaSelector = createSelector(

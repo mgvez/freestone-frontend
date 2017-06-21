@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { languageKeysSelector } from './translations';
 
-const currentLanguageSelector = state => state.userViewSettings.language;
+const currentLanguageSelector = state => state.freestone.userViewSettings.language;
 
 export const userViewLanguageSelector = createSelector(
 	[languageKeysSelector, currentLanguageSelector],

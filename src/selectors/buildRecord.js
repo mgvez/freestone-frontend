@@ -7,15 +7,15 @@ import { isNew } from '../utils/UniqueId';
 
 import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
 
-const recordsSelector = state => state.recordForm.records;
-const mtmRecordsSelector = state => state.recordForm.mtmRecords;
+const recordsSelector = state => state.freestone.recordForm.records;
+const mtmRecordsSelector = state => state.freestone.recordForm.mtmRecords;
 const recordIdSelector = (state, props) => props.recordId;
-const childrenSelector = state => state.schema.children;
+const childrenSelector = state => state.freestone.schema.children;
 
-const allPermsSelector = state => state.permissions.sitePermissions;
+const allPermsSelector = state => state.freestone.permissions.sitePermissions;
 
-const saveStateSelector = state => state.save;
-const listPageAfterSaveSelector = state => state.nav.listPageAfterSave;
+const saveStateSelector = state => state.freestone.save;
+const listPageAfterSaveSelector = state => state.freestone.nav.listPageAfterSave;
 
 //get un tree de IDs de records et de ses children
 function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {

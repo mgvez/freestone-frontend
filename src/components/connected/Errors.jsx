@@ -5,14 +5,14 @@ import Modal from 'react-modal';
 
 import customStyle from '../styles/modalStyles.js';
 
-import * as errorsActionCreators from '../../actions/errors';
+import { clearErrors } from '../../actions/errors';
 import { goTo } from '../../actions/nav';
 
 @connect(
 	state => {
-		return { errors: state.errors };
+		return { errors: state.freestone.errors };
 	},
-	dispatch => bindActionCreators({ ...errorsActionCreators, goTo }, dispatch)
+	dispatch => bindActionCreators({ clearErrors, goTo }, dispatch)
 )
 export class Errors extends Component {
 	static propTypes = {

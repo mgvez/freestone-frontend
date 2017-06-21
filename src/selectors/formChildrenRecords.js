@@ -11,12 +11,12 @@ import { getForeignFieldId } from '../freestone/schemaHelpers';
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from '../freestone/settings';
 
-const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
-const shownRecordsSelector = (state) => state.recordForm.shownRecords;
+const childrenAreLoadedSelector = state => state.freestone.recordForm.childrenAreLoaded;
+const shownRecordsSelector = (state) => state.freestone.recordForm.shownRecords;
 
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
-const rawForeignOptionsSelector = state => state.foreignOptions;
+const rawForeignOptionsSelector = state => state.freestone.foreignOptions;
 
 
 function getRecordsFromParent(records, parentRecordId, linkFieldId) {

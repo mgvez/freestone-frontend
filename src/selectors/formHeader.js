@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { recordSlugsMapStateToProps } from './recordSlugs';
 import { GOD_USER_GROUP } from '../freestone/schemaProps';
 
-const isGodSelector = state => state.auth.usergroup === GOD_USER_GROUP;
+const isGodSelector = state => state.freestone.auth.usergroup === GOD_USER_GROUP;
 
 
 export const formHeaderSelector = createSelector(

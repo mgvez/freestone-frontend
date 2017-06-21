@@ -1,17 +1,17 @@
 //SHARED
 
-const fieldsSelector = state => state.schema.fields;
+const fieldsSelector = state => state.freestone.schema.fields;
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
 import { recordMapStateToProps, recordUnalteredMapStateToProps } from './record';
 // import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 
-// const recordsSelector = state => state.recordForm.records;
-// const recordsUnalteredSelector = state => state.recordForm.recordsUnaltered;
-const envSelector = state => state.env;
+// const recordsSelector = state => state.freestone.recordForm.records;
+// const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
+const envSelector = state => state.freestone.env;
 // const recordIdSelector = (state, props) => props.recordId;
-const childrenSelector = state => state.schema.children;
+const childrenSelector = state => state.freestone.schema.children;
 
 
 function checkRule(rule, val) {

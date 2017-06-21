@@ -6,8 +6,8 @@ import { getUnloadedOptions, getRecordLabel } from './recordLabel';
 import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from '../freestone/schemaProps';
 import { RECORD_LOADED_SAFE_LIFE } from '../freestone/settings';
 
-const recordsSelector = state => state.recordForm.records;
-const toggleLoadedRecordsSelector = state => state.siteHeader.loaded_records_visibility;
+const recordsSelector = state => state.freestone.recordForm.records;
+const toggleLoadedRecordsSelector = state => state.freestone.siteHeader.loaded_records_visibility;
 
 export const loadedRecords = createSelector(
 	[schemaSelector, recordsSelector, allForeignOptionsSelector, toggleLoadedRecordsSelector],

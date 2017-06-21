@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 
 import { ALL_RECORDS_ID } from '../../../freestone/schemaProps';
 import { PermissionsForm } from './PermissionsForm';
-import * as permissionsActionCreators from '../../../actions/permissions';
+import { savePermissions } from '../../../actions/permissions';
 import { tableSitePermissionsSelector } from '../../../selectors/sitePermissions';
 
 @connect(
 	tableSitePermissionsSelector,
-	dispatch => bindActionCreators(permissionsActionCreators, dispatch)
+	dispatch => bindActionCreators({ savePermissions }, dispatch)
 )
 export class TablePermissions extends Component {
 	static propTypes = {

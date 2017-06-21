@@ -3,8 +3,8 @@ import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
 
 const recordIdSelector = (state, props) => props.recordId;
-const recordsUnalteredSelector = state => state.recordForm.recordsUnaltered;
-const recordsSelector = state => state.recordForm.records;
+const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
+const recordsSelector = state => state.freestone.recordForm.records;
 
 function makeTableRecordSelector(tableSchemaSelector) {
 	return createSelector(

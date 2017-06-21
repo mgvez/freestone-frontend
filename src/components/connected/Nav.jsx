@@ -6,13 +6,12 @@ import { NavGroup } from '../static/menu/NavGroup';
 import { UserInfos } from './widgets/UserInfos';
 import { HomeButton } from './widgets/HomeButton';
 
-import * as navActionCreators from '../../actions/nav';
+import { toggleCollapse, fetchNav } from '../../actions/nav';
 import { navSelector } from '../../selectors/nav';
-
 
 @connect(
 	navSelector,
-	dispatch => bindActionCreators(navActionCreators, dispatch)
+	dispatch => bindActionCreators({ toggleCollapse, fetchNav }, dispatch)
 )
 export class Nav extends Component {
 	static propTypes = {

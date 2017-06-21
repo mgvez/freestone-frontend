@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { formChildrenRecordsMapStateToProps } from 'selectors/formChildrenRecords';
-import * as recordActionCreators from 'actions/record';
-import { fetchTable } from 'actions/schema';
+import { formChildrenRecordsMapStateToProps } from '../../../../selectors/formChildrenRecords';
+import { fetchRecord, setOrder } from '../../../../actions/record';
+import { fetchTable } from '../../../../actions/schema';
 
-import { SubformTabbed } from 'components/static/form/subform/SubformTabbed';
-import { SubformList } from 'components/static/form/subform/SubformList';
-import { SubformSingle } from 'components/static/form/subform/SubformSingle';
+import { SubformTabbed } from '../../../static/form/subform/SubformTabbed';
+import { SubformList } from '../../../static/form/subform/SubformList';
+import { SubformSingle } from '../../../static/form/subform/SubformSingle';
 
-import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from 'freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from '../../../../freestone/schemaProps';
 
 @connect(
 	formChildrenRecordsMapStateToProps,
-	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
+	dispatch => bindActionCreators({ fetchRecord, setOrder, fetchTable }, dispatch)
 )
 export class SubformStandard extends Component {
 	static propTypes = {

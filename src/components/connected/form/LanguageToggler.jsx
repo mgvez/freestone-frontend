@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { userViewLanguageSelector } from 'selectors/userViewLanguage';
+import { userViewLanguageSelector } from '../../../selectors/userViewLanguage';
 
-import { setFieldViewLanguage } from 'actions/env';
+import { setFieldViewLanguage } from '../../../actions/env';
 
 @connect(
 	userViewLanguageSelector,

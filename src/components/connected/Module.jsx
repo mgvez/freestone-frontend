@@ -16,13 +16,13 @@ const metaData = {
 @connect(
 	(state, props) => {
 		const { url } = props.params;
-		const modules = state.nav.structure.modules;
+		const modules = state.freestone.nav.structure.modules;
 		let module = {};
 		if (modules) {
 			module = modules.find(mod => mod.url === url);
 		}
 		return { 
-			jwt: state.auth.jwt,
+			jwt: state.freestone.auth.jwt,
 			...module,
 		};
 	}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Input } from 'components/static/form/inputTypes/Input';
-import { HotspotInsert } from 'components/connected/form/helpers/HotspotInsert';
-import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
+import { Input } from '../../../static/form/inputTypes/Input';
+import { HotspotInsert } from '../helpers/HotspotInsert';
+import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
 
-import { hotspotSelector } from 'selectors/hotspot.js';
+import { hotspotSelector } from '../../../../selectors/hotspot.js';
 
 @connect(
 	hotspotSelector,

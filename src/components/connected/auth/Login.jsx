@@ -7,7 +7,7 @@ import GoogleLoginBtn from './GoogleLoginBtn';
 
 
 /* actions */
-import * as authActionCreators from '../../../actions/auth';
+import { loginUser } from '../../../actions/auth';
 import { fetchVariable, setVariable } from '../../../actions/env';
 
 
@@ -22,12 +22,12 @@ const metaData = {
 @connect(
 	state => {
 		return {
-			...state.auth,
-			isInstalled: state.envVariables && state.envVariables.isInstalled,
-			apiGoogle: state.envVariables && state.envVariables.api_google,
+			...state.freestone.auth,
+			isInstalled: state.freestone.envVariables && state.freestone.envVariables.isInstalled,
+			apiGoogle: state.freestone.envVariables && state.freestone.envVariables.api_google,
 		};
 	},
-	dispatch => bindActionCreators({ ...authActionCreators, fetchVariable, setVariable }, dispatch)
+	dispatch => bindActionCreators({ loginUser, fetchVariable, setVariable }, dispatch)
 )
 export class Login extends Component {
 	static propTypes = {

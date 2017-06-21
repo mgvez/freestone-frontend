@@ -6,13 +6,13 @@ import { SingleTranslation } from './SingleTranslation';
 import { Field } from './Field';
 import { FormHeader } from '../../header/FormHeader'; 
 
-import * as translationActions from '../../../../actions/translations';
+import { saveTranslations, fetchTranslations, closeTranslations } from '../../../../actions/translations';
 import { goTo } from '../../../../actions/nav';
 import { coreTranslations } from '../../../../selectors/translations';
 
 @connect(
 	coreTranslations,
-	dispatch => bindActionCreators({ ...translationActions, goTo }, dispatch)
+	dispatch => bindActionCreators({ saveTranslations, fetchTranslations, closeTranslations, goTo }, dispatch)
 )
 export class TextTranslations extends Component {
 	static propTypes = {

@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-const fieldSelector = state => state.schema.fields;
+const fieldSelector = state => state.freestone.schema.fields;
 const fieldIdSelector = (state, props) => props.imageFieldId || (props.field && props.field.hotspot.imageFieldId);
-const recordSelector = (state) => state.recordForm.records;
+const recordSelector = (state) => state.freestone.recordForm.records;
 const mainRecordIdSelector = (state, props) => props.parentRecordId;
 const valSelector = (state, props) => props.val;
 

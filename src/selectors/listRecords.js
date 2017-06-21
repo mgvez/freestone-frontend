@@ -4,7 +4,7 @@ import { getRecordLabel } from './recordLabel';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
 
-const recordsSelector = state => state.recordList;
+const recordsSelector = state => state.freestone.recordList;
 const paramsSelector = (state, props) => props.params;
 
 function flatten(records, flat = [], breadcrumb = [], level = 0) {

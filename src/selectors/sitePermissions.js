@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 import { ALL_RECORDS_ID, EVERYBODY_GROUP_ID } from '../freestone/schemaProps';
 
-const allPermsSelector = state => state.permissions.sitePermissions;
-const allGroupsSelector = state => state.permissions.groups;
-const permsModifiedSelector = state => state.permissions.sitePermissionsModified;
+const allPermsSelector = state => state.freestone.permissions.sitePermissions;
+const allGroupsSelector = state => state.freestone.permissions.groups;
+const permsModifiedSelector = state => state.freestone.permissions.sitePermissionsModified;
 const recordIdSelector = (state, props) => props.recordId;
 const tableIdSelector = (state, props) => props.tableId || (props.table && props.table.id);
 

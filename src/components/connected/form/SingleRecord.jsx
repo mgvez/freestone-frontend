@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as schemaActionCreators from 'actions/schema';
-import * as recordActionCreators from 'actions/record';
+import { fetchTable } from '../../../actions/schema';
+import { fetchRecord, setFieldVal } from '../../../actions/record';
 
-import { formRecordMapStateToProps } from 'selectors/formRecord';
+import { formRecordMapStateToProps } from '../../../selectors/formRecord';
 
-import { Subform } from 'components/connected/form/subform/Subform';
-import { Field } from 'components/static/form/Field';
-import { DeleteRecord } from 'components/connected/form/buttons/DeleteRecord';
+import { Subform } from './subform/Subform';
+import { Field } from '../../static/form/Field';
+import { DeleteRecord } from './buttons/DeleteRecord';
 
 @connect(
 	formRecordMapStateToProps,
-	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
+	dispatch => bindActionCreators({ fetchTable, fetchRecord, setFieldVal }, dispatch)
 )
 export class SingleRecord extends Component {
 	static propTypes = {

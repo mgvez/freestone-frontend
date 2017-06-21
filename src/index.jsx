@@ -4,12 +4,14 @@ import ReactDOM from 'react-dom';
 // import createHistory from 'history/lib/createBrowserHistory';
 // import createHistory from 'history/lib/createHashHistory';
 import { Provider } from 'react-redux';
-// import { historyApi } from './config';
-import { Router, Route, Redirect } from 'react-router';
-import { appHistory, store } from './appHistory';
+
+import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+
+import { ConnectedRouter } from 'react-router-redux';
+
+import { history, store } from './store';
 
 import routes from './routes';
-import { Freestone } from './components/connected/Freestone';
 
 
 // <Router onUpdate={() => window.scrollTo(0, 0)}
@@ -18,11 +20,13 @@ setStore(store);
 
 ReactDOM.render(
 	<Provider store={store}>
-		<Router history={appHistory}>
-			<Redirect from="/" to="home" />
-			<Route path="/" component={Freestone}>
+		<Router history={history}>
+			<div>
+				<Redirect from="/" to="home" />
+				
 				{routes}
-			</Route>
+
+			</div>
 		</Router>
 	</Provider>,
 	document.getElementById('root')

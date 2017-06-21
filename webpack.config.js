@@ -154,7 +154,7 @@ module.exports = {
 	devtool: isProduction ? false : 'source-map',
 	context: jsSourcePath,
 	entry: {
-		js: './index.js',
+		js: './index.jsx',
 	},
 	output: {
 		path: buildPath,

@@ -10,10 +10,10 @@ import { tableSchemaMapStateToProps } from './tableSchema';
 import { schemaSelector } from './schema';
 
 const recordIdSelector = (state, props) => props.params && props.params.recordId;
-const recordsSelector = state => state.recordForm.records;
+const recordsSelector = state => state.freestone.recordForm.records;
 const isModalSelector = (state, props) => props.isModal;
-const childrenSelector = state => state.schema.children;
-const defaultLanguageSelector = state => state.env.defaultLanguage;
+const childrenSelector = state => state.freestone.schema.children;
+const defaultLanguageSelector = state => state.freestone.env.defaultLanguage;
 
 //check si le record ou un de ses enfants a été edité
 function getIsEdited(allTables, allChildren, allRecords, tableId, recordId) {

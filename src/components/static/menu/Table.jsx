@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 
 export class Table extends Component {
@@ -15,12 +15,12 @@ export class Table extends Component {
 		// console.log('table rendered', this.oldtable, this.oldtable === this.props);
 		// this.oldtable = this.props;
 		return (
-			<Link to={`/list/${this.props.name}`} activeClassName="active" className={this.props.className}>
+			<NavLink to={`/list/${this.props.name}`} activeClassName="active" className={this.props.className}>
 				{this.props.displayLabel}
 				<span className="nrecords">
 					<span className="n">{this.props.nrecords}</span>
 				</span>
-			</Link>
+			</NavLink>
 		);
 	}
 }

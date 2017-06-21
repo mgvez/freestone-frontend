@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 
 export class Paging extends Component {
@@ -35,7 +35,7 @@ export class Paging extends Component {
 		if (this.props.onChangePage) {
 			lnk = <a data-page={num} onClick={this.onClickPage} activeClassName="active" className="">{display}</a>;
 		} else {
-			lnk = <Link to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</Link>;
+			lnk = <NavLink to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</NavLink>;
 		}
 
 		return (

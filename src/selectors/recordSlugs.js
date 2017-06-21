@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 
 const recordIdSelector = (state, props) => props.recordId || (props.params && props.params.recordId);
 const tableIdSelector = (state, props) => props.tableId || (props.params && props.params.tableId) || (props.table && props.table.id);
-const slugsSelector = state => state.slugs;
+const slugsSelector = state => state.freestone.slugs;
 
 function makeSelector() {
 	return createSelector(

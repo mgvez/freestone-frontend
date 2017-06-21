@@ -3,20 +3,20 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
-import customStyle from 'components/styles/modalStyles.js';
+import customStyle from '../../../styles/modalStyles.js';
 
-import { addRecord, fetchList } from 'actions/record';
-import { fetchTable } from 'actions/schema';
+import { addRecord, fetchList } from '../../../../actions/record';
+import { fetchTable } from '../../../../actions/schema';
 
-import { PRIKEY_ALIAS, BANK_FILE_FILE_ALIAS, BANK_FILE_TABLE, BANK_FILE_TITLE_ALIAS, BANK_FILE_COMMENTS_ALIAS } from 'freestone/schemaProps';
-import { callApi } from 'freestone/api';
-import { BankFileThumbnail } from 'components/connected/fileThumbnail/BankFileThumbnail';
+import { PRIKEY_ALIAS, BANK_FILE_FILE_ALIAS, BANK_FILE_TABLE, BANK_FILE_TITLE_ALIAS, BANK_FILE_COMMENTS_ALIAS } from '../../../../freestone/schemaProps';
+import { callApi } from '../../../../freestone/api';
+import { BankFileThumbnail } from '../../fileThumbnail/BankFileThumbnail';
 
-import { RootForm } from 'components/connected/form/RootForm';
-import { Paging } from 'components/static/recordList/Paging';
+import { RootForm } from '../RootForm';
+import { Paging } from '../../../static/recordList/Paging';
 
-import createRecord from 'freestone/createRecord';
-import { bankSelector } from 'selectors/bank';
+import createRecord from '../../../../freestone/createRecord';
+import { bankSelector } from '../../../../selectors/bank';
 
 @connect(
 	bankSelector(BANK_FILE_TABLE),

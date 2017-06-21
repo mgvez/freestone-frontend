@@ -1,9 +1,9 @@
 //SHARED
 import { createSelector } from 'reselect';
 
-const allTranslationsSelector = state => state.translations && state.translations.translations;
-const placedTranslationsSelector = state => state.translations.placedTranslations && state.translations.placedTranslations;
-const allLanguagesSelector = state => state.env.languages;
+const allTranslationsSelector = state => state.freestone.translations && state.freestone.translations.translations;
+const placedTranslationsSelector = state => state.freestone.translations.placedTranslations && state.freestone.translations.placedTranslations;
+const allLanguagesSelector = state => state.freestone.env.languages;
 const keySelector = (state, props) => props.translationKey;
 const langSelector = (state, props) => props.language;
 

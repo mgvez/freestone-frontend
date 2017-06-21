@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 /* actions */
-import * as authActionCreators from '../../../actions/auth';
+import { loginGoogleAPI } from '../../../actions/auth';
 import { fetchVariable } from '../../../actions/env';
 
 @connect(
 	state => {
 		return {
-			...state.auth,
-			apiGoogle: state.envVariables && state.envVariables.api_google,
+			...state.freestone.auth,
+			apiGoogle: state.freestone.envVariables && state.freestone.envVariables.api_google,
 		};
 	},
-	dispatch => bindActionCreators({ ...authActionCreators, fetchVariable }, dispatch)
+	dispatch => bindActionCreators({ loginGoogleAPI, fetchVariable }, dispatch)
 )
 export class GoogleAuthenticate extends Component {
 	static propTypes = {
@@ -26,7 +26,6 @@ export class GoogleAuthenticate extends Component {
 
 		fetchVariable: React.PropTypes.func,
 		loginGoogleAPI: React.PropTypes.func,
-		googleReady: React.PropTypes.func,
 	};
 
 	static defaultProps = {

@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchTable } from 'actions/schema';
-import { setSubformCollapsed } from 'actions/subform';
-import { subformMapStateToProps } from 'selectors/subform';
+import { fetchTable } from '../../../../actions/schema';
+import { setSubformCollapsed } from '../../../../actions/subform';
+import { subformMapStateToProps } from '../../../../selectors/subform';
 
-import { SubformMtm } from 'components/connected/form/subform/SubformMtm';
-import { SubformStandard } from 'components/connected/form/subform/SubformStandard';
+import { SubformMtm } from './SubformMtm';
+import { SubformStandard } from './SubformStandard';
 
-import { TYPE_MTM } from 'freestone/schemaProps';
+import { TYPE_MTM } from '../../../../freestone/schemaProps';
 
 
 @connect(

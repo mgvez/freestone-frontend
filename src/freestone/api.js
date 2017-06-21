@@ -9,7 +9,7 @@ export function setStore(s) {
 
 function getJWT() {
 	// console.log(store);
-	return store.getState().auth.jwt;
+	return store.getState().freestone.auth.jwt;
 }
 
 export function getApiUrl() {

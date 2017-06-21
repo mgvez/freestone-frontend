@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Script from 'react-load-script';
 
-import * as authActionCreators from '../../actions/auth';
-import * as envActionCreators from '../../actions/env';
+import { loginUser } from '../../actions/auth';
+import { fetchVariable, fetchEnv } from '../../actions/env';
 import { MAX_TIME_BETWEEN_API_CALLS } from '../../freestone/settings';
 
-const actionCreators = { ...authActionCreators, ...envActionCreators };
+const actionCreators = { loginUser, fetchVariable, fetchEnv };
 
 /* application components */
 import { SiteHeader } from './SiteHeader';
@@ -27,10 +27,10 @@ import 'font-awesome/scss/font-awesome.scss';
 @connect(
 	state => {
 		return {
-			isAuthenticated: state.auth.isAuthenticated,
-			lastRequestTime: state.auth.lastRequestTime,
-			env: state.env,
-			jwt: state.auth.jwt,
+			isAuthenticated: state.freestone.auth.isAuthenticated,
+			lastRequestTime: state.freestone.auth.lastRequestTime,
+			env: state.freestone.env,
+			jwt: state.freestone.auth.jwt,
 		};
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)

@@ -5,8 +5,8 @@ import DocumentMeta from 'react-document-meta';
 
 import { PRIKEY_ALIAS } from '../../../freestone/schemaProps';
 
-import * as schemaActionCreators from '../../../actions/schema';
-import * as recordActionCreators from '../../../actions/record';
+import { fetchTable } from '../../../actions/schema';
+import { fetchList, addRecord } from '../../../actions/record';
 
 import { Heading } from '../../static/recordList/Heading';
 import { Paging } from '../../static/recordList/Paging';
@@ -22,7 +22,7 @@ const LARGE_MINW_BREAKPOINT = 1024;
 
 @connect(
 	listRecordsSelector,
-	dispatch => bindActionCreators({ ...schemaActionCreators, ...recordActionCreators }, dispatch)
+	dispatch => bindActionCreators({ fetchTable, fetchList, addRecord }, dispatch)
 )
 export class List extends Component {
 	static propTypes = {

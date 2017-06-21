@@ -6,7 +6,7 @@ import { toggleNavVisibility } from '../../../actions/siteHeader';
 
 @connect(
 	state => { 
-		return { nav_visibility: state.siteHeader.nav_visibility };
+		return { nav_visibility: state.freestone.siteHeader.nav_visibility };
 	},
 	dispatch => bindActionCreators({ toggleNavVisibility }, dispatch)
 )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 import { fetchBankUses } from '../../../actions/bank';
 import { bankUsesSelector } from '../../../selectors/bank';
@@ -67,7 +67,7 @@ export class BankNUses extends Component {
 		const activeClass = this.state.active ? 'active' : '';
 
 		const listRecords = this.props.records && this.props.records.map((rec, i) => {
-			return <Link to={`/edit/${rec.tableId}/${rec.recordId}`} key={i} onClick={this.toggleActions} className="record-action">{rec.tableLabel} - {rec.label}</Link>;
+			return <NavLink to={`/edit/${rec.tableId}/${rec.recordId}`} key={i} onClick={this.toggleActions} className="record-action">{rec.tableLabel} - {rec.label}</NavLink>;
 		});
 
 		return (

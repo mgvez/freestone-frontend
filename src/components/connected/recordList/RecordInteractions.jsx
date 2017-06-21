@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -106,9 +106,9 @@ export class RecordInteractions extends Component {
 				<div className={`record-actions ${activeClass}`}>
 					<div className="button-round-bordered-info record-action-control" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></div>
 					<div className="record-actions-group">
-						<Link to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="record-action accent">
+						<NavLink to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="record-action accent">
 							<i className="fa fa-pencil"></i>{EDIT_LABEL}
-						</Link>
+						</NavLink>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						{preview}
