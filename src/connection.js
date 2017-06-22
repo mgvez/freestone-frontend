@@ -1,16 +1,20 @@
+import { hashHistory } from 'react-router';
+
+import { syncHistoryWithStore, routerMiddleware, routerReducer } from 'react-router-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import apiMiddleware from 'middleware/api';
-import authMiddleware from 'middleware/auth';
-import hooksMiddleware from 'middleware/hooks';
 import createLogger from 'redux-logger';
 import reduxLocalstorage from 'redux-simple-localstorage';
-import { routerReducer } from 'react-router-redux';
 
+import apiMiddleware from './middleware/api';
+import authMiddleware from './middleware/auth';
+import hooksMiddleware from './middleware/hooks';
 import rootReducer from './reducers';
 
 const logger = createLogger({ collapsed: true });
 const { read, write } = reduxLocalstorage('freestone');
+
+const routeMiddleware = routerMiddleware(hashHistory);
 
 // console.log(apiMiddleware);
 
@@ -21,13 +25,23 @@ const middleWares = [
 	authMiddleware,
 	logger,
 	write,
+	routeMiddleware,
 ];
+
+const reducers = {
+	freestone: rootReducer,
+	routing: routerReducer,
+};
 
 export function addMiddleware(m) {
 	middleWares.push(m);
 }
 
-export function configureStore(initialState) {
+export function addReducer(n, r) {
+	reducers[n] = r;
+}
+
+function configureStore(initialState) {
 	const currentState = read() || initialState;
 	//remove current routing from local storage state, to return to home at refresh if fatal error
 	if (currentState && currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
@@ -39,10 +53,7 @@ export function configureStore(initialState) {
 		...middleWares
 	)(createStore);
 
-	const store = createStoreWithMiddleware(combineReducers({
-		freestone: rootReducer,
-		routing: routerReducer,
-	}), currentState);
+	const store = createStoreWithMiddleware(combineReducers(reducers), currentState);
 
 	if (module.hot) {
 		// Enable Webpack hot module replacement for reducers
@@ -54,3 +65,7 @@ export function configureStore(initialState) {
 
 	return store;
 }
+
+
+export const store = configureStore();
+export const history = syncHistoryWithStore(hashHistory, store);

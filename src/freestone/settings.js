@@ -1,6 +1,7 @@
 
 export const THUMBNAIL_SIZE = 200;
 export const MAX_TAB_LABEL_LENGTH = 30;
+const PROD_FREESTONE_LOCATION = '';
 
 //how many seconds a record can be open on the front-end and still considered "safe". Should be the same as lock time on the backend
 export const RECORD_LOADED_SAFE_LIFE = 3600;
@@ -17,9 +18,12 @@ export function getWebsiteUrl() {
 
 	if (hostname === 'localhost') {
 		hostname = 'freestone_dev.freestone-2';
+	} else {
+		hostname = `${hostname}${PROD_FREESTONE_LOCATION}`;
 	}
 	websiteUrl = `${window.location.protocol}//${hostname}${pathname}`;
 	// console.log(websiteUrl);
 	if (websiteUrl[websiteUrl.length - 1] !== '/') websiteUrl += '/';
 	return websiteUrl;
 }
+

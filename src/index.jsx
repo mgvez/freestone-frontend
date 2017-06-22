@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 // import { historyApi } from './config';
 import { Route, Router, Redirect } from 'react-router';
-import { appHistory, store } from './appHistory';
-import { Freestone } from 'components/connected/Freestone';
+import { history, store } from './connection';
+import { Freestone } from './components/connected/Freestone';
 
 import routes from './routes';
 
@@ -16,7 +16,7 @@ setStore(store);
 
 ReactDOM.render(
 	<Provider store={store}>
-		<Router history={appHistory}>
+		<Router history={history}>
 			<Redirect from="/" to="home" />
 			<Route path="/" component={Freestone}>
 				{routes}
