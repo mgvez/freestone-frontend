@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router';
 
 export class HomeButton extends Component {
 	static propTypes = {
@@ -10,7 +10,7 @@ export class HomeButton extends Component {
 	render() {
 		const icon = this.props.showIcon ? <i className="fa fa-home fa-fw"></i> : null;
 		return (
-			<NavLink to={'/'} className={`home-button ${this.props.customClass}`}>{icon}<span className="nav-label">Dashboard</span></NavLink>
+			<Link to={'/'} className={`home-button ${this.props.customClass}`}>{icon}<span className="nav-label">Dashboard</span></Link>
 		);
 	}
 }

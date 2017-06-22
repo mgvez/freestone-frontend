@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router';
 
 import { Gravatar } from '../../static/widgets/Gravatar';
 
@@ -20,7 +20,7 @@ export class UserInfos extends Component {
 		return (
 			<div className="user">
 				<Gravatar picture={this.props.picture} email={this.props.email} />
-				<p><NavLink to={`/edit/zva_user/${this.props.userId}`}>{this.props.realName}</NavLink></p>
+				<p><Link to={`/edit/zva_user/${this.props.userId}`}>{this.props.realName}</Link></p>
 			</div>
 		);
 	}

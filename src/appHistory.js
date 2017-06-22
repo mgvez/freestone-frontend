@@ -1,7 +1,11 @@
 import { hashHistory } from 'react-router';
 
-import configureStore from './store';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { addMiddleware, configureStore } from './store';
+import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
+
+const routeMiddleware = routerMiddleware(hashHistory);
+
+addMiddleware(routeMiddleware);
 
 export const store = configureStore();
 //changer dans configurestore aussi si on passe à browserHistory

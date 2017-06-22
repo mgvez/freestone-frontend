@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
 import { default as nav } from './nav';
 import { default as siteHeader } from './siteHeader';
 import { default as schema } from './schema';
@@ -19,7 +18,6 @@ import { default as permissions } from './permissions';
 import save from './save';
 
 const rootReducer = combineReducers({
-	routing: routerReducer,
 	siteHeader,
 	nav,
 	env,
