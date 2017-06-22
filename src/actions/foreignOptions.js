@@ -1,12 +1,14 @@
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
+import { FREESTONE_API } from '../middleware/api';
+import { createRequestTypes } from './apiAction';
 
-export const RECEIVE_FOREIGN_OPTIONS = 'RECEIVE_FOREIGN_OPTIONS';
+export const FOREIGN_OPTIONS_API = createRequestTypes('FOREIGN_OPTIONS_API');
+
 
 export function fetchForeignOptions(fieldId, search = '') {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-foreign-options', RECEIVE_FOREIGN_OPTIONS, FREESTONE_API_FATAL_FAILURE],
+				types: FOREIGN_OPTIONS_API,
 				route: `optionList/${fieldId}/${search}`,
 			},
 		});

@@ -5,13 +5,18 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 // import { historyApi } from './config';
 import { Route, Router, Redirect } from 'react-router';
-import { history, store } from './connection';
+import { configureHistory, configureStore } from './connection';
 import { Freestone } from './components/connected/Freestone';
 
 import routes from './routes';
 
 // <Router onUpdate={() => window.scrollTo(0, 0)}
 import { setStore } from 'freestone/api';
+
+const store = configureStore();
+const history = configureHistory(store);
+
+
 setStore(store);
 
 ReactDOM.render(

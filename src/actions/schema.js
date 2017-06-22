@@ -1,14 +1,15 @@
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
+import { FREESTONE_API } from '../middleware/api';
+import { createRequestTypes } from './apiAction';
 
-export const RECEIVE_SCHEMA = 'RECEIVE_SCHEMA';
 export const CLEAR_SCHEMA = 'CLEAR_SCHEMA';
+export const SCHEMA_API = createRequestTypes('SCHEMA_API');
 
 
 export function fetchTable(name) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [`api::fetch-schema ${name}`, RECEIVE_SCHEMA, FREESTONE_API_FATAL_FAILURE],
+				types: SCHEMA_API,
 				route: `table/${name}`,
 			},
 		});

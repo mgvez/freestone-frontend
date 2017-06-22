@@ -1,6 +1,10 @@
 import { FREESTONE_API } from '../middleware/api';
+import { createRequestTypes } from './apiAction';
 
-export const ADD_ENV = 'ADD_ENV';
+
+export const ENV_API = createRequestTypes('ENV_API');
+export const ENV_VAR_API = createRequestTypes('ENV_VAR_API');
+
 export const SET_FIELD_VIEW_LANGUAGE = 'SET_FIELD_VIEW_LANGUAGE';
 export const SET_ENV_VARIABLE = 'SET_ENV_VARIABLE';
 
@@ -9,7 +13,7 @@ export function fetchEnv() {
 		// console.log('fetch env');
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [null, ADD_ENV, null],
+				types: ENV_API,
 				route: 'env',
 			},
 		});
@@ -21,7 +25,7 @@ export function fetchVariable(name) {
 		// console.log('fetch env');
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [null, SET_ENV_VARIABLE, null],
+				types: ENV_VAR_API,
 				route: `env/clientvar/${name}`,
 			},
 		});

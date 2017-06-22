@@ -1,25 +1,28 @@
 import { push as pushPath } from 'react-router-redux';
-import { FREESTONE_API, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
+import { FREESTONE_API } from '../middleware/api';
+import { createRequestTypes } from './apiAction';
 
-export const REQUEST_RECORD_LIST = 'REQUEST_RECORD_LIST';
-export const RECEIVE_RECORD_LIST = 'RECEIVE_RECORD_LIST';
-export const RECEIVE_RECORD_REVISION_LIST = 'RECEIVE_RECORD_REVISION_LIST';
+
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
-export const RECEIVE_MTM_RECORDS = 'RECEIVE_MTM_RECORDS';
 export const SET_RECORD_DELETED = 'SET_RECORD_DELETED';
-export const RECEIVE_MTM_OPTIONS = 'RECEIVE_MTM_OPTIONS';
 export const TOGGLE_MTM_VALUE = 'TOGGLE_MTM_VALUE';
 export const CANCEL_EDIT_RECORD = 'CANCEL_EDIT_RECORD';
 export const SWAPPED_ANIMATED = 'SWAPPED_ANIMATED';
+
+export const RECORD_LIST_API = createRequestTypes('RECORD_LIST_API');
+export const RECORD_SINGLE_API = createRequestTypes('RECORD_SINGLE_API');
+export const RECORD_REVISION_LIST_API = createRequestTypes('RECORD_REVISION_LIST_API');
+export const MTM_RECORD_API = createRequestTypes('MTM_RECORD_API');
+export const MTM_OPTIONS_API = createRequestTypes('MTM_OPTIONS_API');
 
 
 export function fetchList(tableName, search = '', page = 1) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [REQUEST_RECORD_LIST, RECEIVE_RECORD_LIST, FREESTONE_API_FAILURE],
+				types: RECORD_LIST_API,
 				route: `list/${tableName}/${page}?search=${search}`,
 			},
 		});
@@ -30,7 +33,7 @@ export function cancelEdit(records) {
 	return (dispatch) => {
 		dispatch({
 			[FREESTONE_API]: {
-				types: [REQUEST_RECORD_LIST, RECEIVE_RECORD_LIST, FREESTONE_API_FAILURE],
+				types: RECORD_LIST_API,
 				route: 'lock',
 				data: {
 					records,
@@ -77,7 +80,7 @@ export function setShownRecord(tableId, parentRecordId, recordId) {
 export function addRecord(tableId, newRecord) {
 	return (dispatch) => {
 		return dispatch({
-			type: RECEIVE_RECORD,
+			type: RECORD_SINGLE_API.SUCCESS,
 			data: {
 				tables: [
 					{ tableId, records: [newRecord] },
@@ -101,7 +104,7 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 		// console.log(`record/${tableName}/${parentTable}/${id}`);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-record', RECEIVE_RECORD, FREESTONE_API_FATAL_FAILURE],
+				types: RECORD_SINGLE_API,
 				route: `record/${tableName}/${parentTable}/${id}`,
 				redirectOnError: `list/${tableName}`,
 			},
@@ -114,7 +117,7 @@ export function fetchRecordRevisionList(tableName, id) {
 		// console.log(`record/${tableName}/${parentTable}/${id}`);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-record-revision-list', RECEIVE_RECORD_REVISION_LIST, FREESTONE_API_FATAL_FAILURE],
+				types: RECORD_REVISION_LIST_API,
 				route: `recordRevision/list/${tableName}/${id}`,
 			},
 		});
@@ -126,7 +129,7 @@ export function duplicateRecord(tableName, id) {
 		// console.log(`record/${tableName}/${parentTable}/${id}`);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::duplicate-record', RECEIVE_RECORD, FREESTONE_API_FAILURE],
+				types: RECORD_SINGLE_API,
 				route: `duplicate/${tableName}/${id}`,
 			},
 		}).then((res) => {
@@ -142,7 +145,7 @@ export function fetchMtmRecords(tableName, id, parentTable = 0) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-mtm-records', RECEIVE_MTM_RECORDS, FREESTONE_API_FAILURE],
+				types: MTM_RECORD_API,
 				route: `record/${tableName}/${parentTable}/${id}`,
 				redirectOnError: `list/${parentTable}`,
 			},
@@ -155,7 +158,7 @@ export function fetchMtmOptions(tableName) {
 
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-mtm-options', RECEIVE_MTM_OPTIONS, FREESTONE_API_FAILURE],
+				types: MTM_OPTIONS_API,
 				route: `mtmOptions/${tableName}`,
 				redirectOnError: '/',
 			},

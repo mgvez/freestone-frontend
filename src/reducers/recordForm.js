@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from '../actions/auth';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { TOGGLE_SITE_PERMISSION } from '../actions/permissions';
 import { CLEAR_DATA } from '../actions/dev';
-import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECEIVE_RECORD, SET_RECORD_DELETED, RECEIVE_MTM_RECORDS, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from '../actions/record';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
+import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECORD_SINGLE_API, SET_RECORD_DELETED, MTM_RECORD_API, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from '../actions/record';
+import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
 
 
 function removeRecords(state, recordsToRemove) {
@@ -90,8 +90,8 @@ function childrenAreLoaded(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_MTM_RECORDS:
-	case RECEIVE_RECORD: {
+	case MTM_RECORD_API.SUCCESS:
+	case RECORD_SINGLE_API.SUCCESS: {
 		if (!action.data || !action.data.tables) return state;
 
 		const newState = action.data.tables.reduce((bldState, tableRecords) => {
@@ -113,12 +113,12 @@ function childrenAreLoaded(state = {}, action) {
 		return newState;
 	}
 	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		//m fonction que pour les records eux meme (structure fonctionne)
 		return removeRecords(state, action.data.records);
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {};
 	default:
 		// console.log('no change');
@@ -149,20 +149,20 @@ function records(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_RECORD:
+	case RECORD_SINGLE_API.SUCCESS:
 		return receiveRecord(state, action.data);
 	case SET_RECORD_DELETED:
 		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
 	case SET_FIELD_VALUE:
 		return setFieldValue(state, action.data);
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {};
 	case TOGGLE_MTM_VALUE:
 		return toggleMainEditedFromMtm(state, action.data);
 	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		// console.log(action.data);
 		return removeRecords(state, action.data.records);
 	case TOGGLE_SITE_PERMISSION:
@@ -260,16 +260,16 @@ function mtmRecords(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_MTM_RECORDS:
-	case RECEIVE_RECORD:
+	case MTM_RECORD_API.SUCCESS:
+	case RECORD_SINGLE_API.SUCCESS:
 		return receiveMtmRecords(state, action.data);
 	case TOGGLE_MTM_VALUE:
 		return toggleMtmValue(state, action.data);
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {};
 	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 		return removeMtmRecords(state, action.data.records);
 	default:
 		// console.log('no change');
@@ -282,16 +282,16 @@ function recordsUnaltered(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_RECORD:
+	case RECORD_SINGLE_API.SUCCESS:
 		return receiveRecord(state, action.data);
-	case RECEIVE_MTM_RECORDS:
+	case MTM_RECORD_API.SUCCESS:
 		return receiveMtmRecords(state, action.data);
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {};
 	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		// console.log(action);
 		return removeRecords(state, action.data.records);
 	default:

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from '../actions/auth';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { CLEAR_DATA } from '../actions/dev';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from '../actions/save';
-import { RECEIVE_SITE_PERMISSIONS, RECEIVE_USER_GROUPS, TOGGLE_SITE_PERMISSION, SAVE_SITE_PERMISSIONS } from '../actions/permissions';
+import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
+import { SITE_PERMISSIONS_API, USER_GROUPS_API, TOGGLE_SITE_PERMISSION, SAVE_SITE_PERMISSIONS_API } from '../actions/permissions';
 
 function removeRecords(state, recordsToRemove) {
 	if (!recordsToRemove) return state;
@@ -46,16 +46,16 @@ function sitePermissions(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
 	case UNAUTHORIZED:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return {};
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return removeRecords(state, action.data.records);
 	case TOGGLE_SITE_PERMISSION:
-	case RECEIVE_SITE_PERMISSIONS:
-	case SAVE_SITE_PERMISSIONS:
+	case SITE_PERMISSIONS_API.SUCCESS:
+	case SAVE_SITE_PERMISSIONS_API.SUCCESS:
 		return singleTableRecords(state, action.data);
 	default:
 		return state;
@@ -66,15 +66,15 @@ function sitePermissionsModified(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
 	case UNAUTHORIZED:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return {};
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return removeRecords(state, action.data.records);
-	case RECEIVE_SITE_PERMISSIONS:
-	case SAVE_SITE_PERMISSIONS:
+	case SITE_PERMISSIONS_API.SUCCESS:
+	case SAVE_SITE_PERMISSIONS_API.SUCCESS:
 		return removeRecords(state, [action.data]);
 	case TOGGLE_SITE_PERMISSION: {
 		const { tableId, recordId } = action.data;
@@ -95,14 +95,14 @@ function groups(state = [], action) {
 	// console.log(action);
 	switch (action.type) {
 	case UNAUTHORIZED:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return null;
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return null;
-	case RECEIVE_USER_GROUPS:
+	case USER_GROUPS_API.SUCCESS:
 		// console.log(action);
 		return action.data;
 	default:

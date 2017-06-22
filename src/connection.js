@@ -41,7 +41,7 @@ export function addReducer(n, r) {
 	reducers[n] = r;
 }
 
-function configureStore(initialState) {
+export function configureStore(initialState) {
 	const currentState = read() || initialState;
 	//remove current routing from local storage state, to return to home at refresh if fatal error
 	if (currentState && currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
@@ -66,6 +66,6 @@ function configureStore(initialState) {
 	return store;
 }
 
-
-export const store = configureStore();
-export const history = syncHistoryWithStore(hashHistory, store);
+export function configureHistory(store) {
+	return syncHistoryWithStore(hashHistory, store);
+}

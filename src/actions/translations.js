@@ -1,16 +1,19 @@
+import { FREESTONE_API } from '../middleware/api';
+import { createRequestTypes } from './apiAction';
 
-import { FREESTONE_API, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
-export const SET_TRANSLATIONS = 'SET_TRANSLATIONS';
 export const SET_PLACED_TRANSLATIONS = 'SET_PLACED_TRANSLATIONS';
 export const EDIT_TRANSLATION = 'EDIT_TRANSLATION';
-export const SAVE_TRANSLATIONS = 'SAVE_TRANSLATIONS';
-export const CLOSE_TRANSLATIONS = 'CLOSE_TRANSLATIONS';
+
+export const TRANSLATIONS_API = createRequestTypes('TRANSLATIONS_API');
+export const SAVE_TRANSLATIONS_API = createRequestTypes('SAVE_TRANSLATIONS_API');
+export const CLOSE_TRANSLATIONS_API = createRequestTypes('CLOSE_TRANSLATIONS_API');
+
 
 export function fetchTranslations(lang) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [`api::fetch-translations ${lang}`, SET_TRANSLATIONS, FREESTONE_API_FATAL_FAILURE],
+				types: TRANSLATIONS_API,
 				route: `translations/getKeys/${lang}`,
 			},
 		});
@@ -48,7 +51,7 @@ export function saveTranslations(translations) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::save-translations', SAVE_TRANSLATIONS, null],
+				types: SAVE_TRANSLATIONS_API,
 				route: 'translations/save',
 				data: translations,
 			},
@@ -60,7 +63,7 @@ export function closeTranslations() {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::save-translations', CLOSE_TRANSLATIONS, null],
+				types: CLOSE_TRANSLATIONS_API,
 				route: 'translations/unlock',
 			},
 		});

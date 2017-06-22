@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { SET_TRANSLATIONS, SET_PLACED_TRANSLATIONS, EDIT_TRANSLATION, SAVE_TRANSLATIONS, CLOSE_TRANSLATIONS } from '../actions/translations';
+import { TRANSLATIONS_API, SET_PLACED_TRANSLATIONS, EDIT_TRANSLATION, SAVE_TRANSLATIONS_API, CLOSE_TRANSLATIONS_API } from '../actions/translations';
 import { CLEAR_DATA } from '../actions/dev';
 
 function translations(state = {}, action) {
 	switch (action.type) {
-	case SET_TRANSLATIONS: {
+	case TRANSLATIONS_API.SUCCESS: {
 		const lang = action.data.language;
 		// console.log(action);
 		const newState = {
@@ -27,8 +27,8 @@ function translations(state = {}, action) {
 		return newState; 
 	}
 	case CLEAR_DATA:
-	case SAVE_TRANSLATIONS:
-	case CLOSE_TRANSLATIONS:
+	case SAVE_TRANSLATIONS_API.SUCCESS:
+	case CLOSE_TRANSLATIONS_API.SUCCESS:
 		return {};
 	default:
 		return state;

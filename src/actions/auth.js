@@ -1,13 +1,15 @@
 import jwtDecode from 'jwt-decode';
 import { FREESTONE_API } from '../middleware/api';
+import { createRequestTypes } from './apiAction';
 
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
-export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+
+export const LOGOUT_API = createRequestTypes('LOGOUT_API');
+export const LOGIN_API = createRequestTypes('LOGIN_API');
+
 
 //login api actions don't return their values directly through a api succes, but are rather caught by the middleware. Login can be included in any API response, not only login requests.
 
@@ -65,7 +67,7 @@ export function logout() {
 		// console.log(action);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAILURE],
+				types: LOGOUT_API, //[LOGOUT_REQUEST, LOGOUT_API.SUCCESS, LOGOUT_FAILURE],
 				route: 'login',
 				data: {
 					logout: true,
@@ -97,7 +99,7 @@ export function loginUser(username = null, password = null, remember = null, pro
 		} : {};
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [LOGIN_REQUEST, null, null],
+				types: LOGIN_API,
 				route: 'login',
 				data,
 			},
@@ -111,7 +113,7 @@ export function loginGoogleAPI(token_id, token_access) {
 		// console.log(action);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [LOGIN_REQUEST, null, null],
+				types: LOGIN_API,
 				route: 'login',
 				data: {
 					googletoken_id: token_id,
