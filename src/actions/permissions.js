@@ -2,13 +2,9 @@ import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 
 export const TOGGLE_SITE_PERMISSION = 'TOGGLE_SITE_PERMISSION';
-
-
 export const SITE_PERMISSIONS_API = createRequestTypes('SITE_PERMISSIONS_API');
 export const USER_GROUPS_API = createRequestTypes('USER_GROUPS_API');
 export const SAVE_SITE_PERMISSIONS_API = createRequestTypes('SAVE_SITE_PERMISSIONS_API');
-
-
 
 export function fetchSitePermissions(tableId, recordId) {
 	return (dispatch) => {

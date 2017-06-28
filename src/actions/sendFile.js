@@ -1,6 +1,6 @@
 import { Promise } from 'bluebird';
 
-import { FREESTONE_API, FREESTONE_API_FAILURE } from '../middleware/api';
+import { FREESTONE_API } from '../middleware/api';
 import { getFileVal } from '../freestone/fileInputs';
 import { createRequestTypes } from './apiAction';
 

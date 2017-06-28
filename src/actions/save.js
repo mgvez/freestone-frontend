@@ -135,7 +135,7 @@ export function deleteRecord(tableName, recordId) {
 		// console.log(tableName, recordId);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [DELETE_RECORD_REQUEST, DELETE_RECORD_API.SUCCESS, DELETE_RECORD_ERROR],
+				types: DELETE_RECORD_API,
 				route: `delete/${tableName}/${recordId}`,
 				data: {
 					tableName,

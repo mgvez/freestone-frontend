@@ -1,4 +1,4 @@
-import { FREESTONE_API, FREESTONE_API_FAILURE } from '../middleware/api';
+import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 
 export const SLUG_API = createRequestTypes('SLUG_API');
