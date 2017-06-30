@@ -49,6 +49,11 @@ export class Freestone extends Component {
 	};
 
 	componentWillMount() {
+
+		this.state = {
+			gapiready: false,
+		};
+
 		this.requireData(this.props);
 
 		//at load of app, force an API call to revalidate the JWT if last validation is too old
@@ -59,6 +64,10 @@ export class Freestone extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
+	}
+
+	onGapiReady = () => {
+		this.setState({ gapiready: true });
 	}
 	
 	onScriptLoaded = () => {
@@ -78,13 +87,12 @@ export class Freestone extends Component {
 
 	render() {
 		// console.log('%cRender Freestone (auth)', 'font-weight: bold');
-
 		if (!this.props.isAuthenticated) {
 			return (
 				<div>
 					<Errors {...this.props} />
-					<Login />
-					<GoogleAuthenticate />
+					<Login gapiready={this.state.gapiready} />
+					<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				</div>
 			);
 		}
@@ -109,7 +117,7 @@ export class Freestone extends Component {
 					<Footer />
 					<Errors {...this.props} />
 				</div>
-				<GoogleAuthenticate />
+				<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				{
 					this.props.env.clientScripts.map((scriptPath, i) => { 
 						return <Script key={i} url={scriptPath} onError={this.onScriptError} onLoad={this.onScriptLoaded} />;

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { formChildrenRecordsMapStateToProps } from '../../../../selectors/formChildrenRecords';
-import { fetchRecord, setOrder } from '../../../../actions/record';
+import { fetchRecord, setOrder, setShownRecord } from '../../../../actions/record';
 import { fetchTable } from '../../../../actions/schema';
 
 import { SubformTabbed } from '../../../static/form/subform/SubformTabbed';
@@ -14,7 +14,7 @@ import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from '../../../../freesto
 
 @connect(
 	formChildrenRecordsMapStateToProps,
-	dispatch => bindActionCreators({ fetchRecord, setOrder, fetchTable }, dispatch)
+	dispatch => bindActionCreators({ fetchRecord, setOrder, setShownRecord, fetchTable }, dispatch)
 )
 export class SubformStandard extends Component {
 	static propTypes = {
@@ -32,6 +32,7 @@ export class SubformStandard extends Component {
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,
 		setOrder: React.PropTypes.func,
+		setShownRecord: React.PropTypes.func,
 	};
 
 	componentWillMount() {

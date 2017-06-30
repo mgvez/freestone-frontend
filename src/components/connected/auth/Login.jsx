@@ -38,6 +38,7 @@ export class Login extends Component {
 		username: React.PropTypes.string,
 		isAuthenticating: React.PropTypes.bool,
 		isInstalled: React.PropTypes.bool,
+		gapiready: React.PropTypes.bool,
 
 		loginUser: React.PropTypes.func,
 		fetchVariable: React.PropTypes.func,
@@ -93,7 +94,7 @@ export class Login extends Component {
 		}
 
 		let googleLoginBtn = null;
-		if (this.props.apiGoogle && this.props.apiGoogle.clientId) {
+		if (this.props.apiGoogle && this.props.apiGoogle.clientId && this.props.gapiready) {
 			googleLoginBtn = <GoogleLoginBtn cssClass="button-round-danger-fw" />;
 		}
 

@@ -46,7 +46,7 @@ export function auth(state = initialState, action) {
 			email: null,
 			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
 		};
-	case LOGIN_API.SUCCESS:
+	case LOGIN_API.REQUEST:
 		// console.log(action.data);
 		return {
 			...state,

@@ -37,8 +37,8 @@ export default store => next => action => { // eslint-disable-line
 		// console.log(finalAction);
 		return finalAction;
 	}
-
-	let [requestType, successType, failureType] = types;
+	// console.log(types);
+	let { REQUEST: requestType, SUCCESS: successType, FAILURE: failureType } = types;
 	requestType = requestType || FREESTONE_API_REQUEST;
 	successType = successType || FREESTONE_API_SUCCESS;
 	failureType = failureType || FREESTONE_API_FAILURE;
