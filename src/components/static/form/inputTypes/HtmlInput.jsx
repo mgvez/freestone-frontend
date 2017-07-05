@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchVariable } from 'actions/env';
 
 import { Input } from 'components/static/form/inputTypes/Input';
 import { LinkInsert } from 'components/connected/form/helpers/LinkInsert';
@@ -39,6 +42,14 @@ const TINYMCE_CONFIG = {
 	force_p_newlines: true,
 };
 
+@connect(
+	state => {
+		return {
+			settings: state.envVariables && state.envVariables.settings || undefined,
+		};
+	},
+	dispatch => bindActionCreators({ fetchVariable }, dispatch)
+)
 export class HtmlInput extends Input {
 	static propTypes = {
 		lang: React.PropTypes.string,
@@ -77,21 +88,36 @@ export class HtmlInput extends Input {
 
 	}
 
+	componentWillMount() {
+		this.requireData(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.requireData(nextProps);
+	}
+
+	requireData(nextProps) {
+		if (undefined === nextProps.settings) {
+			this.props.fetchVariable('settings');
+		}
+	}
+
 	handleEditorChange = (v) => {
 		this.changeVal(v);
 	};
 
 	getConfig = () => {
-		if (this.tinymceConfig) return this.tinymceConfig;
+		const settings = this.props.settings && this.props.settings.tinymceConfig;
 
-		this.tinymceConfig = {
+		const tinymceConfig = {
 			...TINYMCE_CONFIG,
+			...settings,
 			body_class: `${this.tableName}_${this.name} ${this.props.lang}`,
 		};
 		if (this.props.env.pathCss && this.props.env.pathCss.length) {
-			this.tinymceConfig.content_css = this.props.env.pathCss.map(p => `${this.props.env.clientPath}${p}`);
+			tinymceConfig.content_css = this.props.env.pathCss.map(p => `${this.props.env.clientPath}${p}`);
 		}
-		return this.tinymceConfig;
+		return tinymceConfig;
 	};
 
 	closeModal = () => {
