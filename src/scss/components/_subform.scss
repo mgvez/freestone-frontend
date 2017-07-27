@@ -32,6 +32,14 @@
 		input[role="combobox"] {
 			color: $color-text-primary;
 		}
+
+		ul li {
+			color: $color-text-primary;
+
+			&:hover, &:focus {
+				color: $white;
+			}
+		}
 	}
 }
 
