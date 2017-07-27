@@ -1,22 +1,14 @@
-import { FREESTONE_API } from 'middleware/api';
-import { sendRecordFiles } from 'actions/sendFile';
 import { push as pushPath } from 'react-router-redux';
-
-import { CLEAR_SCHEMA } from 'actions/schema';
-
-export const SAVE_RECORD_REQUEST = 'SAVE_RECORD_REQUEST';
-export const SAVE_RECORD_SUCCESS = 'SAVE_RECORD_SUCCESS';
-export const SAVE_RECORD_ERROR = 'SAVE_RECORD_ERROR';
-
-export const SWAP_ORDER_REQUEST = 'SWAP_ORDER_REQUEST';
-export const SWAP_ORDER_SUCCESS = 'SWAP_ORDER_SUCCESS';
-export const SWAP_ORDER_ERROR = 'SWAP_ORDER_ERROR';
-
-export const DELETE_RECORD_REQUEST = 'DELETE_RECORD_REQUEST';
-export const DELETE_RECORD_SUCCESS = 'DELETE_RECORD_SUCCESS';
-export const DELETE_RECORD_ERROR = 'DELETE_RECORD_ERROR';
+import { FREESTONE_API } from '../middleware/api';
+import { sendRecordFiles } from './sendFile';
+import { CLEAR_SCHEMA } from './schema';
+import { createRequestTypes } from './apiAction';
 
 export const INIT_SAVE = 'INIT_SAVE';
+export const SAVE_RECORD_API = createRequestTypes('SAVE_RECORD_API');
+export const SWAP_ORDER_API = createRequestTypes('SWAP_ORDER_API');
+export const DELETE_RECORD_API = createRequestTypes('DELETE_RECORD_API');
+
 
 function catchError(res) {
 
@@ -71,7 +63,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 
 			const onSaved = dispatch({
 				[FREESTONE_API]: {
-					types: [SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR],
+					types: SAVE_RECORD_API,
 					route: `save/${tableName}`,
 					data: { data },
 				},
@@ -109,7 +101,7 @@ export function swapOrder(tableName, recordId, direction) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [SWAP_ORDER_REQUEST, SWAP_ORDER_SUCCESS, SWAP_ORDER_ERROR],
+				types: SWAP_ORDER_API,
 				route: `swapOrder/${tableName}`,
 				data: {
 					tableName,
@@ -128,7 +120,7 @@ export function saveSingleValue(tableIdOrName, recordId, fieldId, value) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR],
+				types: SAVE_RECORD_API,
 				route: `saveValue/${tableIdOrName}/${recordId}/${fieldId}`,
 				data: {
 					value,
@@ -143,7 +135,7 @@ export function deleteRecord(tableName, recordId) {
 		// console.log(tableName, recordId);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: [DELETE_RECORD_REQUEST, DELETE_RECORD_SUCCESS, DELETE_RECORD_ERROR],
+				types: DELETE_RECORD_API,
 				route: `delete/${tableName}/${recordId}`,
 				data: {
 					tableName,

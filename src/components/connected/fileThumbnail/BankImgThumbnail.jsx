@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchBankImage } from 'actions/bank';
-import { bankImgThumbnailSelector } from 'selectors/bank';
+import { fetchBankImage } from '../../../actions/bank';
+import { bankImgThumbnailSelector } from '../../../selectors/bank';
 
 //dimension max des images, selon grille
 const MAX_SIZE = 400;

@@ -3,17 +3,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 /* actions */
-import * as authActionCreators from 'actions/auth';
-import { fetchVariable } from 'actions/env';
+import { loginGoogleAPI } from '../../../actions/auth';
+import { fetchVariable } from '../../../actions/env';
 
 @connect(
 	state => {
 		return {
-			...state.auth,
-			apiGoogle: state.envVariables && state.envVariables.api_google,
+			...state.freestone.auth,
+			apiGoogle: state.freestone.envVariables && state.freestone.envVariables.api_google,
 		};
 	},
-	dispatch => bindActionCreators({ ...authActionCreators, fetchVariable }, dispatch)
+	dispatch => bindActionCreators({ loginGoogleAPI, fetchVariable }, dispatch)
 )
 export class GoogleAuthenticate extends Component {
 	static propTypes = {
@@ -26,7 +26,7 @@ export class GoogleAuthenticate extends Component {
 
 		fetchVariable: React.PropTypes.func,
 		loginGoogleAPI: React.PropTypes.func,
-		googleReady: React.PropTypes.func,
+		onGapiReady: React.PropTypes.func,
 	};
 
 	static defaultProps = {
@@ -73,18 +73,18 @@ export class GoogleAuthenticate extends Component {
 			const params = {
 				client_id: clientId,
 				cookiepolicy: cookiePolicy,
-				// login_hint: loginHint,
-				// hosted_domain: hostedDomain,
 				scope,
 			};
 			const gapi = window.gapi;
+			if (!gapi) return false;
 			gapi.load('auth2', () => {
-				
 				const auth2 = gapi.auth2;
 				if (!auth2.getAuthInstance()) {
+					
 					const GoogleAuth = auth2.init(params);
 
 					GoogleAuth.then(() => {
+						if (this.props.onGapiReady) this.props.onGapiReady();
 						// console.log(scope);
 						// console.log('gapi inited callback');
 						if (GoogleAuth.isSignedIn.get()) {
@@ -94,6 +94,7 @@ export class GoogleAuthenticate extends Component {
 						GoogleAuth.isSignedIn.listen(this.onIsLogged);
 						GoogleAuth.currentUser.listen(this.onReceiveUser);
 					});
+
 				}
 			});
 			this.gapi = true;
@@ -103,6 +104,7 @@ export class GoogleAuthenticate extends Component {
 	}
 
 	requireData(nextProps) {
+		// console.log(nextProps.apiGoogle);
 		if (typeof nextProps.apiGoogle === 'undefined') this.props.fetchVariable('api.google');
 	}
 

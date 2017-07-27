@@ -1,9 +1,10 @@
 import { Promise } from 'bluebird';
 
-import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
-import { getFileVal } from 'freestone/fileInputs';
+import { FREESTONE_API } from '../middleware/api';
+import { getFileVal } from '../freestone/fileInputs';
+import { createRequestTypes } from './apiAction';
 
-export const SEND_FILE = 'SEND_FILE';
+export const FILE_API = createRequestTypes('FILE_API');
 
 const CHUNK_SIZE = 500 * 1024;
 
@@ -28,7 +29,7 @@ function sendChunk(dispatch, fileDef, rangeStart = 0) {
 
 	const chunkReqAction = dispatch({
 		[FREESTONE_API]: {
-			types: [null, SEND_FILE, FREESTONE_API_FAILURE],
+			types: FILE_API,
 			route: 'file',
 			data,
 		},

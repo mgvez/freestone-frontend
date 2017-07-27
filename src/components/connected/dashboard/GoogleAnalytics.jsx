@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchVariable } from 'actions/env';
+import { fetchVariable } from '../../../actions/env';
 
 import GAPI_Helper from './GAPI_Helper';
 
@@ -30,10 +30,10 @@ const GA_PERCENT_NEW_SESSIONS = 'ga:percentNewSessions';
 
 @connect(
 	state => { 
-		if (!state.envVariables.api_google) return {};
+		if (!state.freestone.envVariables.api_google) return {};
 		return {
-			...state.envVariables.api_google,
-			gapi_token_access: state.auth.gapi_token_access,
+			...state.freestone.envVariables.api_google,
+			gapi_token_access: state.freestone.auth.gapi_token_access,
 		};
 	},
 	dispatch => bindActionCreators({ fetchVariable }, dispatch)

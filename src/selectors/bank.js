@@ -1,14 +1,14 @@
 
 import { createSelector } from 'reselect';
-import { schemaSelector } from 'selectors/schema';
-import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_FILE_CATEG_ALIAS } from 'freestone/schemaProps';
+import { schemaSelector } from './schema';
+import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_FILE_CATEG_ALIAS } from '../freestone/schemaProps';
 
-const recordsSelector = state => state.recordList;
-// const recordListSelector = state => state.imageBankList;
-const bankImgSelector = state => state.bank.images;
-const bankFileSelector = state => state.bank.files;
-const allUsesSelector = state => state.bank.uses;
-const languageSelector = (state, props) => { return props.lang ? props.lang : state.env.defaultLanguage; };
+const recordsSelector = state => state.freestone.recordList;
+// const recordListSelector = state => state.freestone.imageBankList;
+const bankImgSelector = state => state.freestone.bank.images;
+const bankFileSelector = state => state.freestone.bank.files;
+const allUsesSelector = state => state.freestone.bank.uses;
+const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.defaultLanguage; };
 
 const idSelector = (state, props) => props.id;
 const maxSizeSelector = (state, props) => props.maxSize;

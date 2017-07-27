@@ -1,9 +1,9 @@
 import React from 'react';
-
-import { TYPE_DATETIME } from 'freestone/schemaProps';
-import { Input } from 'components/static/form/inputTypes/Input';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+
+import { TYPE_DATETIME } from '../../../../freestone/schemaProps';
+import { Input } from './Input';
 
 export class DateInput extends Input {
 

@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
 
-import { GoogleAnalytics } from 'components/connected/dashboard/GoogleAnalytics';
-import { Shortcuts } from 'components/connected/dashboard/Shortcuts';
+import { GoogleAnalytics } from './dashboard/GoogleAnalytics';
+import { Shortcuts } from './dashboard/Shortcuts';
 
 const metaData = {
 	title: 'Freestone Home',

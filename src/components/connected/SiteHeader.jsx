@@ -2,23 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import * as devActionCreators from 'actions/dev';
-import * as authActionCreators from 'actions/auth';
-import { clearSchema } from 'actions/schema';
+import { clearData, startPerf, stopPerf } from '../../actions/dev';
+import { clearErrors } from '../../actions/errors';
+import { logout } from '../../actions/auth';
+import { clearSchema } from '../../actions/schema';
 
-import { GOD_USER_GROUP } from 'freestone/schemaProps';
+import { GOD_USER_GROUP } from '../../freestone/schemaProps';
 
-import { HomeButton } from 'components/connected/widgets/HomeButton';
-import { NavToggler } from 'components/connected/widgets/NavToggler';
-import { LoadedRecordsToggler } from 'components/connected/widgets/LoadedRecordsToggler';
+import { HomeButton } from './widgets/HomeButton';
+import { NavToggler } from './widgets/NavToggler';
+import { LoadedRecordsToggler } from './widgets/LoadedRecordsToggler';
 
-const actionCreators = { ...authActionCreators, ...devActionCreators, clearSchema };
+const actionCreators = { clearErrors, clearData, startPerf, stopPerf, clearSchema, logout };
 
 @connect(
 	state => {
-		// console.log(state.auth.usergroup, GOD_USER_GROUP);
+		// console.log(state.freestone.auth.usergroup, GOD_USER_GROUP);
 		return {
-			isGod: state.auth.usergroup === GOD_USER_GROUP,
+			isGod: state.freestone.auth.usergroup === GOD_USER_GROUP,
 		};
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)

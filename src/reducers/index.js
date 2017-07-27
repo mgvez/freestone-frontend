@@ -1,6 +1,4 @@
 import { combineReducers } from 'redux';
-import { routerReducer } from 'react-router-redux';
-import { reducer as formReducer } from 'redux-form';
 import { default as nav } from './nav';
 import { default as siteHeader } from './siteHeader';
 import { default as schema } from './schema';
@@ -20,8 +18,6 @@ import { default as permissions } from './permissions';
 import save from './save';
 
 const rootReducer = combineReducers({
-	form: formReducer,
-	routing: routerReducer,
 	siteHeader,
 	nav,
 	env,

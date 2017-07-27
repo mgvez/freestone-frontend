@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export class Header extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
-
+		label: React.PropTypes.string,
 	};
 
 	render() {
@@ -11,7 +11,8 @@ export class Header extends Component {
 		if (this.props.table) {
 			return (
 				<div>
-					<h1>{this.props.table.displayLabel}</h1>
+					<div>{this.props.table.displayLabel}</div>
+					<h1>{this.props.label}</h1>
 					<div className="table-help" dangerouslySetInnerHTML={{ __html: this.props.table.help }}></div>
 				</div>
 			);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { swapOrder } from 'actions/save';
+import { swapOrder } from '../../../actions/save';
 
 @connect(
 	null,

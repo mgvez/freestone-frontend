@@ -1,8 +1,8 @@
 //SHARED
 import { createSelector } from 'reselect';
 
-import { recordSlugsMapStateToProps } from 'selectors/recordSlugs';
-import { userViewLanguageSelector } from 'selectors/userViewLanguage';
+import { recordSlugsMapStateToProps } from './recordSlugs';
+import { userViewLanguageSelector } from './userViewLanguage';
 
 function makeSelector(slugsSelector) {
 	return createSelector(

@@ -1,15 +1,27 @@
 import React from 'react';
 
-import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED } from 'freestone/schemaProps';
-import { FileThumbnail } from 'components/connected/fileThumbnail/FileThumbnail';
-import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
-import { BankNUses } from 'components/connected/widgets/BankNUses';
-import { BoolSwitch } from 'components/connected/recordList/BoolSwitch';
+import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS } from '../../../../freestone/schemaProps';
+import { FileThumbnail } from '../../../connected/fileThumbnail/FileThumbnail';
+import { BankImgThumbnail } from '../../../connected/fileThumbnail/BankImgThumbnail';
+import { BankNUses } from '../../../connected/widgets/BankNUses';
+import { BoolSwitch } from '../../../connected/recordList/BoolSwitch';
 
 const MAX_THUMB_SIZE = 200;
 
 
 export function createCells(table, fields, values, elementType = 'td', options = {}) {
+	if (fields.length === 0) {
+		// console.log(values);
+		return React.createElement(
+			elementType,
+			{
+				key: 'v_0',
+				'data-field-label': '',
+				...options,
+			},
+			values[LABEL_PSEUDOFIELD_ALIAS]
+		);
+	}
 	return fields.map((field, index) => {
 		if (field.isGroup) return null;
 
@@ -66,7 +78,7 @@ export function createCells(table, fields, values, elementType = 'td', options =
 		return React.createElement(
 			elementType,
 			{
-				key: index,
+				key: `val_${field.id}`,
 				'data-field-label': field.label,
 				...options,
 			},

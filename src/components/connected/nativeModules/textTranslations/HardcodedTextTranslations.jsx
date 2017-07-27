@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { SingleTranslation } from 'components/connected/nativeModules/textTranslations/SingleTranslation';
-import { Field } from 'components/connected/nativeModules/textTranslations/Field';
-import { HeaderContainer } from 'components/static/header/HeaderContainer';
+import { HeaderContainer } from '../../../static/header/HeaderContainer';
 
-import * as translationActions from 'actions/translations';
-import { coreTranslations } from 'selectors/translations';
+import { fetchPlacedTranslations } from '../../../../actions/translations';
+import { coreTranslations } from '../../../../selectors/translations';
 
 @connect(
 	coreTranslations,
-	dispatch => bindActionCreators(translationActions, dispatch)
+	dispatch => bindActionCreators({ fetchPlacedTranslations }, dispatch)
 )
 export class HardcodedTextTranslations extends Component {
 	static propTypes = {

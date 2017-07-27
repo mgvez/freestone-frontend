@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { SingleTranslation } from 'components/connected/nativeModules/textTranslations/SingleTranslation';
-import { Field } from 'components/connected/nativeModules/textTranslations/Field';
-import { FormHeader } from 'components/connected/header/FormHeader'; 
+import { SingleTranslation } from './SingleTranslation';
+import { Field } from './Field';
+import { FormHeader } from '../../header/FormHeader'; 
 
-import * as translationActions from 'actions/translations';
-import { goTo } from 'actions/nav';
-import { coreTranslations } from 'selectors/translations';
+import { saveTranslations, fetchTranslations, closeTranslations } from '../../../../actions/translations';
+import { goTo } from '../../../../actions/nav';
+import { coreTranslations } from '../../../../selectors/translations';
 
 @connect(
 	coreTranslations,
-	dispatch => bindActionCreators({ ...translationActions, goTo }, dispatch)
+	dispatch => bindActionCreators({ saveTranslations, fetchTranslations, closeTranslations, goTo }, dispatch)
 )
 export class TextTranslations extends Component {
 	static propTypes = {

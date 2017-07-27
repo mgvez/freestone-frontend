@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
-const tablesSelector = state => state.nav.structure.tables;
-const modulesSelector = state => state.nav.structure.modules;
-const pagesSelector = state => state.nav.structure.pages;
-const navGroupsSelector = state => state.nav.structure.navGroups;
+const tablesSelector = state => state.freestone.nav.structure.tables;
+const modulesSelector = state => state.freestone.nav.structure.modules;
+const pagesSelector = state => state.freestone.nav.structure.pages;
+const navGroupsSelector = state => state.freestone.nav.structure.navGroups;
 
 function checkGroupFilled(group) {
 	group.childrenGroups = group.childrenGroups.filter(checkGroupFilled);

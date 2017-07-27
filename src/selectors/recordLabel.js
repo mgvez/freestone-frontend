@@ -15,13 +15,12 @@ export function getUnloadedOptions(table, allForeignOptions) {
 	Prend un record et retourne un string qui le représente, pour afficher dans les widgets (e.g. loaded records)
 */
 export function getRecordLabel(rec, table, allForeignOptions = []) {
-	// console.log(rec);
-	return table.searchableFields.map(field => {
+	return table.labelFields.map(field => {
 		const val = rec[field.id] || rec[field.alias];
 		if (field.foreign) {
 			const foreignValues = allForeignOptions[field.id];
 			if (!foreignValues) {
-				return val;
+				return null;
 			}
 			// console.log(typeof val, val);
 			const foreignRec = foreignValues.values.find(foreignValue => {

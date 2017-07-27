@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 const tableIdSelector = (state, props) => { 
 	return props.tableId || (props.table && props.table.id);
 };
-const viewStateSelector = state => state.subform.viewState;
+const viewStateSelector = state => state.freestone.subform.viewState;
 
 
 export const subformViewSelector = createSelector(

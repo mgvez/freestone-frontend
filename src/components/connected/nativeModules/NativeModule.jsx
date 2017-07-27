@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { TextTranslations } from 'components/connected/nativeModules/textTranslations/TextTranslations';
+import { TextTranslations } from './textTranslations/TextTranslations';
 
 @connect(
-	state => { return { jwt: state.auth.jwt }; }
+	state => { return { jwt: state.freestone.auth.jwt }; }
 )
 export class NativeModule extends Component {
 	static propTypes = {

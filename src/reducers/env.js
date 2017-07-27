@@ -1,7 +1,7 @@
 
-import { LOGOUT_SUCCESS } from 'actions/auth';
-import { ADD_ENV, SET_FIELD_VIEW_LANGUAGE, SET_ENV_VARIABLE } from 'actions/env';
-import { CLEAR_DATA } from 'actions/dev';
+import { LOGOUT_API } from '../actions/auth';
+import { ENV_API, SET_FIELD_VIEW_LANGUAGE, ENV_VAR_API, SET_ENV_VARIABLE } from '../actions/env';
+import { CLEAR_DATA } from '../actions/dev';
 
 const envInitialState = {
 	openedFrom: '',
@@ -20,7 +20,7 @@ const envInitialState = {
 export function env(state = envInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
-	case ADD_ENV: {
+	case ENV_API.SUCCESS: {
 		// console.log(action.data);
 		const data = action.data;
 		const defaults = envInitialState;
@@ -30,7 +30,7 @@ export function env(state = envInitialState, action) {
 		}, {});
 	}
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return envInitialState;
 	default:
 		// console.log('no change');
@@ -61,8 +61,9 @@ export function userViewSettings(state = userViewSettingsInitialState, action) {
 export function envVariables(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {};
+	case ENV_VAR_API.SUCCESS:
 	case SET_ENV_VARIABLE: {
 		// console.log(action.data);
 		const { name, value } = action.data;

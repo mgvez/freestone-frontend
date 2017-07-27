@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import DocumentMeta from 'react-document-meta';
-import { getApiUrl } from 'freestone/api';
+
+import { getAdminUrl } from '../../freestone/api';
 
 
 const metaData = {
@@ -16,13 +16,13 @@ const metaData = {
 @connect(
 	(state, props) => {
 		const { url } = props.params;
-		const modules = state.nav.structure.modules;
+		const modules = state.freestone.nav.structure.modules;
 		let module = {};
 		if (modules) {
 			module = modules.find(mod => mod.url === url);
 		}
 		return { 
-			jwt: state.auth.jwt,
+			jwt: state.freestone.auth.jwt,
 			...module,
 		};
 	}
@@ -39,7 +39,7 @@ export class Module extends Component {
 	
 	render() {
 		// console.log(this.props);
-		const host = getApiUrl();
+		const host = getAdminUrl();
 		//adds a time to get to prevent over-aggressive server cache (I'm looking at you Radio-Canada)
 		const time = (new Date()).getMilliseconds();
 		const url = `${host}/module/${this.props.params.url}/?jwt=${this.props.jwt}&nocache=${time}`;

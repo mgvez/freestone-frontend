@@ -1,11 +1,12 @@
 
 //basé sur redux-api-middleware, mais comme pas de release depuis un bout, pis que le official release fonctionne pas (as of 2016-01-13), j'ai réécrit
-
-import { receiveToken, loginUserFailure } from 'actions/auth';
-import { CLEAR_ERRORS } from 'actions/errors';
-import sha1 from 'sha1';
 import Promise from 'bluebird';
-import { callApi } from 'freestone/api';
+import sha1 from 'sha1';
+
+import { receiveToken, loginUserFailure } from '../actions/auth';
+import { CLEAR_ERRORS } from '../actions/errors';
+import { callApi, getEndpoint } from '../freestone/api';
+
 
 export const FREESTONE_API = Symbol('Freestone API');
 export const FREESTONE_API_REQUEST = 'FREESTONE_API_REQUEST';
@@ -36,35 +37,33 @@ export default store => next => action => { // eslint-disable-line
 		// console.log(finalAction);
 		return finalAction;
 	}
-
-	let [requestType, successType, failureType] = types;
+	// console.log(types);
+	let { REQUEST: requestType, SUCCESS: successType, FAILURE: failureType } = types;
 	requestType = requestType || FREESTONE_API_REQUEST;
 	successType = successType || FREESTONE_API_SUCCESS;
 	failureType = failureType || FREESTONE_API_FAILURE;
 	// console.log(requestType, successType);
 
-	const hash = sha1(route + ':::' + successType + ':::' + JSON.stringify(data));
 
-	// console.log(`issuing ${successType}`, route, processing[hash]);
+	const finalRoute = getEndpoint(route);
 
-	if (!Array.isArray(types) || types.length !== 3) {
-		throw new Error('Expected an array of three action types.');
-	}
+	const hash = sha1(finalRoute + ':::' + successType + ':::' + JSON.stringify(data));
 
 	//when API has had a fatal error, we don't retry any API call until errors are cleared (to avoid eternal calls)
 	if (isError) {
 		return Promise.reject(new Error('Api has had a failure.'));
 	}
 
+	//api call has already been requested and has not resolved yet. Return the previous, identical call
 	if (processing[hash]) return processing[hash];
 
 	next(actionWith({ data, type: requestType }));
 	//enforce que le default API_REQUEST est triggeré si le request type est spécifique
 	if (FREESTONE_API_REQUEST !== requestType) {
-		next(actionWith({ data, type: FREESTONE_API_REQUEST }));
+		next(actionWith({ data: { route: finalRoute }, type: FREESTONE_API_REQUEST }));
 	}
 
-	processing[hash] = callApi(route, data).then(
+	processing[hash] = callApi(finalRoute, data).then(
 		res => {
 			if (res.jwt) {
 				next(receiveToken(res.jwt));

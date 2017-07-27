@@ -1,6 +1,6 @@
 
-import { UNAUTHORIZED, LOGIN_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_SUCCESS } from 'actions/auth';
-import { FREESTONE_API_REQUEST, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { UNAUTHORIZED, LOGIN_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API } from '../actions/auth';
+import { FREESTONE_API_REQUEST, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 
 const initialState = {
 	jwt: null,
@@ -46,7 +46,7 @@ export function auth(state = initialState, action) {
 			email: null,
 			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
 		};
-	case LOGIN_REQUEST:
+	case LOGIN_API.REQUEST:
 		// console.log(action.data);
 		return {
 			...state,
@@ -83,7 +83,7 @@ export function auth(state = initialState, action) {
 			statusText: `Authentication Error: ${err}`,
 		};
 	}
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {
 			...state,
 			isAuthenticated: false,

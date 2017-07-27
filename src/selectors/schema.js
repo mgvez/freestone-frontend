@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect';
-import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from 'freestone/schemaProps';
+import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from '../freestone/schemaProps';
 
 //build le schema complet en tree
 
-const tablesSelector = state => state.schema.tables;
-const fieldsSelector = state => state.schema.fields;
-const fieldDependenciesSelector = state => state.schema.fieldDependencies;
-const childrenSelector = state => state.schema.children;
+const tablesSelector = state => state.freestone.schema.tables;
+const fieldsSelector = state => state.freestone.schema.fields;
+const fieldDependenciesSelector = state => state.freestone.schema.fieldDependencies;
+const childrenSelector = state => state.freestone.schema.children;
 
 
 export const schemaSelector = createSelector(
@@ -20,6 +20,7 @@ export const schemaSelector = createSelector(
 				...table,
 				fields: [],
 				searchableFields: [],
+				labelFields: [],
 				fieldDependencies: {},
 				prikey: null,
 				parentLink: {},
@@ -45,7 +46,7 @@ export const schemaSelector = createSelector(
 			const field = fields[fieldId];
 			const { table_id } = field;
 			const table = carry[table_id];
-			table.fields.push(field);
+			if (field.isPermitted) table.fields.push(field);
 
 			if (fieldDependencies[fieldId]) {
 				table.fieldDependencies[fieldId] = fieldDependencies[fieldId];
@@ -60,8 +61,12 @@ export const schemaSelector = createSelector(
 						table.isSelfTree = true;
 					}
 				} else {
-					table.searchableFields.push(field);
+					//search fields have to be permitted, as they potentially are editable from the list (booleans, order...)
+					if (field.isPermitted) table.searchableFields.push(field);
 				}
+
+				//label fields don't depend on permissions. Their purpose is to identify the record. Group fields may be part of the label
+				table.labelFields.push(field);
 
 			}
 

@@ -1,11 +1,11 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
+import { tableSchemaMapStateToProps } from './tableSchema';
 
-const allMtmOptionsSelector = state => state.mtmOptions;
-const recordsSelector = state => state.recordForm.mtmRecords;
-const childrenAreLoadedSelector = state => state.recordForm.childrenAreLoaded;
+const allMtmOptionsSelector = state => state.freestone.mtmOptions;
+const recordsSelector = state => state.freestone.recordForm.mtmRecords;
+const childrenAreLoadedSelector = state => state.freestone.recordForm.childrenAreLoaded;
 
 const tableIdSelector = (state, props) => props.table && props.table.id;
 const parentRecordIdSelector = (state, props) => props.parentRecordId;

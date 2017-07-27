@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { TabList } from 'components/static/form/subform/TabList';
-import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { ChangeSubformView } from 'components/connected/form/buttons/ChangeSubformView';
-import { Header } from 'components/static/form/Header';
-import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
-import { CollapsableForm } from 'components/static/form/subform/CollapsableForm';
+import { TabList } from './TabList';
+import { CollapsableForm } from './CollapsableForm';
+import { SingleRecord } from '../../../connected/form/SingleRecord';
+import { ChangeSubformView } from '../../../connected/form/buttons/ChangeSubformView';
+import { Header } from '../Header';
+import { ToggleSubform } from '../../../connected/form/buttons/ToggleSubform';
 
 
 export class SubformTabbed extends CollapsableForm {

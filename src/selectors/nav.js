@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect';
 
-import { navTreeSelector } from 'selectors/navTree';
-const toggleStateSelector = state => state.nav.toggleState;
-const toggleVisibilitySelector = state => state.siteHeader.nav_visibility;
+import { navTreeSelector } from './navTree';
+const toggleStateSelector = state => state.freestone.nav.toggleState;
+const toggleVisibilitySelector = state => state.freestone.siteHeader.nav_visibility;
 
-const tablesSelector = state => state.nav.structure.tables;
-const modulesSelector = state => state.nav.structure.modules;
-const pagesSelector = state => state.nav.structure.pages;
+const tablesSelector = state => state.freestone.nav.structure.tables;
+const modulesSelector = state => state.freestone.nav.structure.modules;
+const pagesSelector = state => state.freestone.nav.structure.pages;
 
 export const navSelector = createSelector(
 	[navTreeSelector, toggleStateSelector, toggleVisibilitySelector],

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { cancelEdit } from 'actions/record';
-import { goTo } from 'actions/nav';
+import { cancelEdit } from '../../../actions/record';
+import { goTo } from '../../../actions/nav';
 
-import { buildCancelRecordSelector } from 'selectors/buildRecord';
+import { buildCancelRecordSelector } from '../../../selectors/buildRecord';
 
 @connect(
 	buildCancelRecordSelector,

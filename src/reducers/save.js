@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
-import { SAVE_SUCCESS, SAVE_ERROR, SAVE_PROCESSING, SAVE_IDLE } from 'freestone/codes';
-import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
-import { SAVE_RECORD_REQUEST, SAVE_RECORD_SUCCESS, SAVE_RECORD_ERROR, INIT_SAVE } from 'actions/save';
-import { SEND_FILE } from 'actions/sendFile';
+import { SAVE_SUCCESS, SAVE_ERROR, SAVE_PROCESSING, SAVE_IDLE } from '../freestone/codes';
+import { CLEAR_ERRORS, CLEAR_DATA } from '../actions/dev';
+import { SAVE_RECORD_API, INIT_SAVE } from '../actions/save';
+import { FILE_API } from '../actions/sendFile';
 
 function files(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case SEND_FILE: {
+	case FILE_API.SUCCESS: {
 		// console.log(action.data);
 		const { tmpName, progress } = action.data;
 		return {
@@ -32,19 +32,19 @@ const statusDefault = {
 };
 function status(state = statusDefault, action) {
 	switch (action.type) {
-	case SAVE_RECORD_REQUEST:
+	case SAVE_RECORD_API.REQUEST:
 		return {
 			code: SAVE_PROCESSING,
 			msg: 'saving record',
 			error: null,
 		};
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 		return {
 			code: SAVE_SUCCESS,
 			msg: 'record saved',
 			error: null,
 		};
-	case SAVE_RECORD_ERROR:
+	case SAVE_RECORD_API.FAILURE:
 		// console.log(action);
 		return {
 			code: SAVE_ERROR,

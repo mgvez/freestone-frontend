@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { BoolInput } from 'components/static/form/inputTypes/BoolInput';
-import { saveSingleValue } from 'actions/save';
+import { BoolInput } from '../../static/form/inputTypes/BoolInput';
+import { saveSingleValue } from '../../../actions/save';
 
 /*
 	Boolean switch used in record lists, to change value without opening record for edition.

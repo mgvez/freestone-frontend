@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-import { TextInput } from 'components/static/form/inputTypes/TextInput';
-import { BoolInput } from 'components/static/form/inputTypes/BoolInput';
+import { TextInput } from './inputTypes/TextInput';
+import { BoolInput } from './inputTypes/BoolInput';
 // import { SelectInput } from 'components/Form/InputTypes/SelectInput';
-import { NoEditInput } from 'components/static/form/inputTypes/NoEditInput';
-import { HtmlInput } from 'components/static/form/inputTypes/HtmlInput';
-import { FileInput } from 'components/static/form/inputTypes/FileInput';
-import { DateInput } from 'components/static/form/inputTypes/DateInput';
-import { BankImgInput } from 'components/static/form/inputTypes/BankImgInput';
-import { BankFileInput } from 'components/static/form/inputTypes/BankFileInput';
-import { HotspotInput } from 'components/connected/form/inputTypes/HotspotInput';
-import { UrlInput } from 'components/static/form/inputTypes/UrlInput';
-import { AutocompleteInput } from 'components/connected/form/inputTypes/AutocompleteInput';
+import { NoEditInput } from './inputTypes/NoEditInput';
+import { HtmlInput } from './inputTypes/HtmlInput';
+import { FileInput } from './inputTypes/FileInput';
+import { DateInput } from './inputTypes/DateInput';
+import { BankImgInput } from './inputTypes/BankImgInput';
+import { BankFileInput } from './inputTypes/BankFileInput';
+import { UrlInput } from './inputTypes/UrlInput';
+import { HotspotInput } from '../../connected/form/inputTypes/HotspotInput';
+import { AutocompleteInput } from '../../connected/form/inputTypes/AutocompleteInput';
 
 export class Field extends Component {
 	static propTypes = {

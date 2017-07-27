@@ -1,5 +1,5 @@
-import { CLEAR_ERRORS } from 'actions/errors';
-import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from 'middleware/api';
+import { CLEAR_ERRORS } from '../actions/errors';
+import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 
 export function errors(state = [], action) {
 	// console.log(action);

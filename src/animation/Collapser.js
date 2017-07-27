@@ -1,4 +1,4 @@
-import { TweenMax } from 'utils/Greensock';
+import { TweenMax } from '../utils/Greensock';
 
 const TOGGLE_ANIM_TIME = 0.5;
 

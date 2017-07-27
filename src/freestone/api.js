@@ -1,6 +1,9 @@
-import { getWebsiteUrl } from 'freestone/settings';
 import reqwest from 'reqwest';
 import Promise from 'bluebird';
+import { getWebsiteUrl } from './settings';
+
+export const ADMIN_API = 'admin';
+export const FRONTEND_API = 'gestion';
 
 let store;
 export function setStore(s) {
@@ -9,16 +12,34 @@ export function setStore(s) {
 
 function getJWT() {
 	// console.log(store);
-	return store.getState().auth.jwt;
+	return store.getState().freestone.auth.jwt;
 }
 
-export function getApiUrl() {
-	return getWebsiteUrl() + 'api';
+export function getAdminUrl() {
+	return getWebsiteUrl() + 'api/';
 }
 
-function getEndpoint(route) {
-	const hostname = getApiUrl();
+export function getFrontendUrl() {
+	return getWebsiteUrl();
+}
+
+export function getEndpoint(route) {
+	let hostname;
 	let slashedRoute = route;
+
+	//les routes peuvent être soit sur l'admin de simoneau (pour les calls de save, etc) ou sur l'api de twig (fetch du data)
+	slashedRoute = slashedRoute.split('/');
+	if (slashedRoute[0] === FRONTEND_API) {
+		hostname = getFrontendUrl();
+		slashedRoute.shift();
+	} else {
+		if (slashedRoute[0] === ADMIN_API) slashedRoute.shift();
+		hostname = getAdminUrl();
+	}
+
+	slashedRoute = slashedRoute.join('/');
+
+
 	if (~slashedRoute.indexOf('?')) {
 		slashedRoute = slashedRoute.split('?');
 		slashedRoute.splice(1, 0, '/');
@@ -27,10 +48,11 @@ function getEndpoint(route) {
 	} else {
 		slashedRoute += '/';
 	}
-	// console.log(slashedRoute);
+	// console.log(`${hostname}${slashedRoute}`);
 	// console.log(route);
-	return `${hostname}/${slashedRoute}`;
+	return `${hostname}${slashedRoute}`;
 }
+
 
 export function callApi(route, data) {
 	// console.log(`post data ${route}`, data);
@@ -43,7 +65,7 @@ export function callApi(route, data) {
 	}
 	return new Promise((resolve, reject) => {
 		reqwest({
-			url: getEndpoint(route),
+			url: route,
 			crossOrigin: true,
 			processData: !(data instanceof FormData), // les Formdata doivent pas etre processés pour que ca marche
 			method,

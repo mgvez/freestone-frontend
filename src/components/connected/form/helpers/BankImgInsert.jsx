@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
 import Modal from 'react-modal';
-import customStyle from 'components/styles/modalStyles.js';
 
-import { addRecord, fetchList } from 'actions/record';
-import { fetchTable } from 'actions/schema';
+import customStyle from '../../../styles/modalStyles.js';
 
-import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from 'freestone/schemaProps';
-import { callApi } from 'freestone/api';
+import { addRecord, fetchList } from '../../../../actions/record';
+import { fetchTable } from '../../../../actions/schema';
 
-import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
-import { RootForm } from 'components/connected/form/RootForm';
-import { Paging } from 'components/static/recordList/Paging';
+import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from '../../../../freestone/schemaProps';
+import { callApi } from '../../../../freestone/api';
 
-import createRecord from 'freestone/createRecord';
-import { bankSelector } from 'selectors/bank';
+import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
+import { RootForm } from '../RootForm';
+import { Paging } from '../../../static/recordList/Paging';
+
+import createRecord from '../../../../freestone/createRecord';
+import { bankSelector } from '../../../../selectors/bank';
 
 @connect(
 	bankSelector(BANK_IMG_TABLE),

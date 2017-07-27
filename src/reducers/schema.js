@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { CLEAR_ERRORS, CLEAR_DATA } from 'actions/dev';
-import { CLEAR_SCHEMA, RECEIVE_SCHEMA } from 'actions/schema';
-import { SAVE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
+import { CLEAR_ERRORS, CLEAR_DATA } from '../actions/dev';
+import { CLEAR_SCHEMA, SCHEMA_API } from '../actions/schema';
+import { SAVE_RECORD_API } from '../actions/save';
 
 function tables(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_SCHEMA:
+	case SCHEMA_API.SUCCESS:
 		// console.log(action.data);
 		if (!action.data.tables) return state;
 		return {
@@ -18,7 +18,7 @@ function tables(state = {}, action) {
 				return newState;
 			}, {}),
 		};
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 		// console.log(action.data.mainRecord);
 		if (action.data.mainRecord && action.data.mainRecord.isMeta) {
 			return {};
@@ -28,7 +28,7 @@ function tables(state = {}, action) {
 		return {};
 	case CLEAR_DATA:
 	case CLEAR_SCHEMA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {};
 	default:
 		// console.log('no change');
@@ -40,7 +40,7 @@ function children(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_SCHEMA:
+	case SCHEMA_API.SUCCESS:
 		// console.log(action);
 		if (!action.data.children) return state;
 		return {
@@ -52,14 +52,14 @@ function children(state = {}, action) {
 		};
 	case CLEAR_ERRORS:
 		return {};
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 		// console.log(action.data.mainRecord);
 		if (action.data.mainRecord && action.data.mainRecord.isMeta) {
 			return {};
 		}
 		return state;
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_SCHEMA:
 		return {};
 	default:
@@ -72,7 +72,7 @@ function fields(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_SCHEMA:
+	case SCHEMA_API.SUCCESS:
 		// console.log(action.data.fields);
 		if (!action.data.fields) return state;
 		return {
@@ -82,7 +82,7 @@ function fields(state = {}, action) {
 				return newState;
 			}, {}),
 		};
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 		// console.log(action.data.mainRecord);
 		if (action.data.mainRecord && action.data.mainRecord.isMeta) {
 			return {};
@@ -91,7 +91,7 @@ function fields(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_SCHEMA:
 		return {};
 	default:
@@ -104,14 +104,14 @@ function fieldDependencies(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_SCHEMA:
+	case SCHEMA_API.SUCCESS:
 		// console.log(action.data.fields);
 		if (!action.data.fieldDependencies) return state;
 		return {
 			...state,
 			...action.data.fieldDependencies,
 		};
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 		// console.log(action.data.mainRecord);
 		if (action.data.mainRecord && action.data.mainRecord.isMeta) {
 			return {};
@@ -120,7 +120,7 @@ function fieldDependencies(state = {}, action) {
 	case CLEAR_ERRORS:
 		return {};
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_SCHEMA:
 		return {};
 	default:

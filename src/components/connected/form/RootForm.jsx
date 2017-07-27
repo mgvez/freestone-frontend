@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as schemaActionCreators from 'actions/schema';
-import { goTo } from 'actions/nav';
-import { fetchRecordRevisionList } from 'actions/record';
 import DocumentMeta from 'react-document-meta';
 
-import { rootFormMapStateToProps } from 'selectors/rootForm';
+import { fetchTable } from '../../../actions/schema';
+import { goTo } from '../../../actions/nav';
+import { fetchRecordRevisionList } from '../../../actions/record';
 
-import { Save } from 'components/connected/process/Save';
-import { Cancel } from 'components/connected/process/Cancel';
+import { rootFormMapStateToProps } from '../../../selectors/rootForm';
+
+import { Save } from '../process/Save';
+import { Cancel } from '../process/Cancel';
 // import { CopyRecord } from 'components/connected/form/buttons/CopyRecord';
-import { Header } from 'components/static/form/Header';
-import { SingleRecord } from 'components/connected/form/SingleRecord';
-import { PermissionsForm } from 'components/connected/permissions/PermissionsForm';
+import { Header } from '../../static/form/Header';
+import { SingleRecord } from './SingleRecord';
+import { PermissionsForm } from '../permissions/PermissionsForm';
 
-import { FormHeader } from 'components/connected/header/FormHeader'; 
+import { FormHeader } from '../header/FormHeader'; 
 
 @connect(
 	rootFormMapStateToProps,
-	dispatch => bindActionCreators({ ...schemaActionCreators, goTo, fetchRecordRevisionList }, dispatch)
+	dispatch => bindActionCreators({ fetchTable, goTo, fetchRecordRevisionList }, dispatch)
 )
 export class RootForm extends Component {
 	static propTypes = {
@@ -34,6 +35,7 @@ export class RootForm extends Component {
 		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
+		recordLabel: React.PropTypes.string,
 
 		//once saved/cancelled, we can override the defualt action (which is to go to table's list). For example, when bank items are edited, they do not redirect, they only set a state on the insert component
 		finishCallback: React.PropTypes.func,
@@ -147,7 +149,7 @@ export class RootForm extends Component {
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
 				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
-					<Header table={this.props.table} />
+					<Header table={this.props.table} label={this.props.recordLabel} />
 				</FormHeader>
 
 				{permsWidget}

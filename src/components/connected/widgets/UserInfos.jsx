@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { Gravatar } from 'components/static/widgets/Gravatar';
+import { Gravatar } from '../../static/widgets/Gravatar';
 
 @connect(
-	state => { return state.auth; },
+	state => { return state.freestone.auth; },
 )
 export class UserInfos extends Component {
 	static propTypes = {

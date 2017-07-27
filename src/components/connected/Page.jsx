@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-import uniqueId from 'utils/UniqueId';
-
 import DocumentMeta from 'react-document-meta';
-import { pageSelector } from 'selectors/page';
-import { lockScroll, rememberListPage, goTo, setPageHash } from 'actions/nav';
 
-import { getWebsiteUrl } from 'freestone/settings';
+import { pageSelector } from '../../selectors/page';
+import uniqueId from '../../utils/UniqueId';
+import { lockScroll, rememberListPage, goTo, setPageHash } from '../../actions/nav';
+
+import { getWebsiteUrl } from '../../freestone/settings';
 
 const metaData = {
 	title: 'Page',

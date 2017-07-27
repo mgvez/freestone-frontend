@@ -1,7 +1,7 @@
 
-import { RECEIVE_SLUG } from 'actions/slugs';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
-import { CLEAR_DATA } from 'actions/dev';
+import { SLUG_API } from '../actions/slugs';
+import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
+import { CLEAR_DATA } from '../actions/dev';
 
 function removeSlugs(state, records) {
 	// console.log(records);
@@ -24,7 +24,7 @@ export default function(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA: 
 		return {};
-	case RECEIVE_SLUG: {
+	case SLUG_API.SUCCESS: {
 		const { tableId, recordId, slugs } = action.data;
 		// console.log(action);
 		const newState = {
@@ -36,8 +36,8 @@ export default function(state = {}, action) {
 		};
 		return newState;
 	}
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		// console.log(action.data);
 		return removeSlugs(state, action.data.records);
 	default:

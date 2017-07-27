@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
-
 import Modal from 'react-modal';
-import customStyle from 'components/styles/modalStyles.js';
+
+import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
+import customStyle from '../../../styles/modalStyles.js';
 
 export class HotspotInsert extends Component {
 	static propTypes = {

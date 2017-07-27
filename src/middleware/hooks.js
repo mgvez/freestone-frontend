@@ -1,8 +1,8 @@
-import { RECEIVE_RECORD } from 'actions/record';
+import { RECORD_SINGLE_API } from '../actions/record';
 
 export default store => next => action => {// eslint-disable-line
 
-	if (action.type === RECEIVE_RECORD) {
+	if (action.type === RECORD_SINGLE_API.SUCCESS) {
 		const hook = window.freestone && window.freestone.hooks && window.freestone.hooks.getFieldValue;
 		if (hook) {
 			action.data.tables = action.data.tables.map((table) => {

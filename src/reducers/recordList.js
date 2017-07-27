@@ -1,6 +1,6 @@
-import { UNAUTHORIZED } from 'actions/auth';
-import { RECEIVE_RECORD_LIST, SWAPPED_ANIMATED } from 'actions/record';
-import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED } from '../actions/auth';
+import { RECORD_LIST_API, SWAPPED_ANIMATED } from '../actions/record';
+import { SAVE_RECORD_API, SWAP_ORDER_API, DELETE_RECORD_API } from '../actions/save';
 
 const initialState = {
 	table: null,
@@ -16,14 +16,14 @@ const initialState = {
 export function recordList(state = initialState, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return initialState;
 	case SWAPPED_ANIMATED:
 		return { ...state, swappedRecords: [] };
-	case SWAP_ORDER_SUCCESS:
+	case SWAP_ORDER_API.SUCCESS:
 		return { ...initialState, swappedRecords: action.data.result };
-	case RECEIVE_RECORD_LIST:
+	case RECORD_LIST_API.SUCCESS:
 		// console.log(action.data.nRecords);
 		if (!action.data) return state;
 		return { ...action.data, swappedRecords: state.swappedRecords };

@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
-import GoogleLoginBtn from 'components/connected/auth/GoogleLoginBtn';
+import GoogleLoginBtn from './GoogleLoginBtn';
 
 
 /* actions */
-import * as authActionCreators from 'actions/auth';
-import { fetchVariable, setVariable } from 'actions/env';
+import { loginUser } from '../../../actions/auth';
+import { fetchVariable, setVariable } from '../../../actions/env';
 
 
 const metaData = {
@@ -22,12 +22,12 @@ const metaData = {
 @connect(
 	state => {
 		return {
-			...state.auth,
-			isInstalled: state.envVariables && state.envVariables.isInstalled,
-			apiGoogle: state.envVariables && state.envVariables.api_google,
+			...state.freestone.auth,
+			isInstalled: state.freestone.envVariables && state.freestone.envVariables.isInstalled,
+			apiGoogle: state.freestone.envVariables && state.freestone.envVariables.api_google,
 		};
 	},
-	dispatch => bindActionCreators({ ...authActionCreators, fetchVariable, setVariable }, dispatch)
+	dispatch => bindActionCreators({ loginUser, fetchVariable, setVariable }, dispatch)
 )
 export class Login extends Component {
 	static propTypes = {
@@ -38,6 +38,7 @@ export class Login extends Component {
 		username: React.PropTypes.string,
 		isAuthenticating: React.PropTypes.bool,
 		isInstalled: React.PropTypes.bool,
+		gapiready: React.PropTypes.bool,
 
 		loginUser: React.PropTypes.func,
 		fetchVariable: React.PropTypes.func,
@@ -93,7 +94,7 @@ export class Login extends Component {
 		}
 
 		let googleLoginBtn = null;
-		if (this.props.apiGoogle && this.props.apiGoogle.clientId) {
+		if (this.props.apiGoogle && this.props.apiGoogle.clientId && this.props.gapiready) {
 			googleLoginBtn = <GoogleLoginBtn cssClass="button-round-danger-fw" />;
 		}
 

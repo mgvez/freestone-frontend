@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { setSubformViewType } from 'actions/subform';
-import { subformViewSelector } from 'selectors/subformView';
+import { setSubformViewType } from '../../../../actions/subform';
+import { subformViewSelector } from '../../../../selectors/subformView';
 
-import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from 'freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from '../../../../freestone/schemaProps';
 
 @connect(
 	subformViewSelector,

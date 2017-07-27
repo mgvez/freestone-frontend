@@ -1,7 +1,7 @@
 
 import { createSelector } from 'reselect';
-import { formCollapsedMapStateToProps } from 'selectors/formCollapsed';
-import { tableSchemaMapStateToProps } from 'selectors/tableSchema';
+import { formCollapsedMapStateToProps } from './formCollapsed';
+import { tableSchemaMapStateToProps } from './tableSchema';
 
 function makeSelector(tableSchemaSelector, formCollapsedSelector) {
 	return createSelector(

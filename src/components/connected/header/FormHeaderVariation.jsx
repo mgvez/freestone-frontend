@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchSlug } from 'actions/slugs';
+import { fetchSlug } from '../../../actions/slugs';
 
-import { formHeaderSelector } from 'selectors/formHeader';
+import { formHeaderSelector } from '../../../selectors/formHeader';
 const actionCreators = { fetchSlug };
 
-import { LanguageToggler } from 'components/connected/form/LanguageToggler';
-import { PreviewRecord } from 'components/connected/form/buttons/PreviewRecord';
+import { LanguageToggler } from '../form/LanguageToggler';
+import { PreviewRecord } from '../form/buttons/PreviewRecord';
 
 /**
  * FormHeaderVariation

@@ -1,13 +1,15 @@
-import { FREESTONE_API, FREESTONE_API_FAILURE } from 'middleware/api';
+import { FREESTONE_API } from '../middleware/api';
+import { createRequestTypes } from './apiAction';
 
-export const RECEIVE_SLUG = 'RECEIVE_SLUG';
+export const SLUG_API = createRequestTypes('SLUG_API');
+
 
 export function fetchSlug(tableNameId, recordId) {
 	return (dispatch) => {
 		// console.log(tableName, recordId);
 		return dispatch({
 			[FREESTONE_API]: {
-				types: ['api::fetch-slug', RECEIVE_SLUG, FREESTONE_API_FAILURE],
+				types: SLUG_API,
 				route: `slug/${tableNameId}/${recordId}`,
 				data: {
 				},

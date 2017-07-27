@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Save } from 'components/connected/process/Save';
-import { navigateToSlug } from 'actions/slugs';
 
-import { previewBtnMapStateToProps } from 'selectors/previewBtnSelector';
+import { Save } from '../../process/Save';
+import { navigateToSlug } from '../../../../actions/slugs';
+import { previewBtnMapStateToProps } from '../../../../selectors/previewBtnSelector';
 
 @connect(
 	previewBtnMapStateToProps,

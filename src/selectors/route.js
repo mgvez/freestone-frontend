@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 */
 
 const stateLocationSelector = state => state.routing.locationBeforeTransitions;
-const scrollLockSelector = state => state.nav.scrollLock;
+const scrollLockSelector = state => state.freestone.nav.scrollLock;
 
 export const routeSelector = createSelector(
 	[stateLocationSelector, scrollLockSelector],

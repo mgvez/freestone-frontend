@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { CLEAR_DATA } from 'actions/dev';
-import { ADD_NAV, TOGGLE_NAV, LOCK_SCROLL, REMEMBER_LIST_PAGE, ADD_PAGE_HASH_PATH } from 'actions/nav';
-import { SAVE_RECORD_SUCCESS, SWAP_ORDER_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
+import { CLEAR_DATA } from '../actions/dev';
+import { NAV_API, TOGGLE_NAV, LOCK_SCROLL, REMEMBER_LIST_PAGE, ADD_PAGE_HASH_PATH } from '../actions/nav';
+import { SAVE_RECORD_API, SWAP_ORDER_API, DELETE_RECORD_API } from '../actions/save';
 
 const navInitialState = {
 	navGroups: [],
@@ -14,15 +14,15 @@ const navInitialState = {
 function structure(state = navInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 	case UNAUTHORIZED:
-	case SWAP_ORDER_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
-	case LOGOUT_SUCCESS:
+	case SWAP_ORDER_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return navInitialState;
-	case ADD_NAV:
+	case NAV_API.SUCCESS:
 		return {
 			...state,
 			...action.data,
@@ -106,7 +106,7 @@ function pageHashes(state = {}, action) {
 			},
 		};
 	case CLEAR_DATA:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 		return {};
 	default:
 		// console.log('no change');

@@ -2,18 +2,18 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchTable } from 'actions/schema';
-import * as recordActionCreators from 'actions/record';
+import { fetchTable } from '../../../../actions/schema';
+import { fetchMtmOptions, fetchMtmRecords, toggleMtm } from '../../../../actions/record';
 
-import { formMtmMapStateToProps } from 'selectors/formMtm';
+import { formMtmMapStateToProps } from '../../../../selectors/formMtm';
 
-import { Header } from 'components/static/form/Header';
-import { ToggleSubform } from 'components/connected/form/buttons/ToggleSubform';
-import { CollapsableForm } from 'components/static/form/subform/CollapsableForm';
+import { Header } from '../../../static/form/Header';
+import { ToggleSubform } from '../buttons/ToggleSubform';
+import { CollapsableForm } from '../../../static/form/subform/CollapsableForm';
 
 @connect(
 	formMtmMapStateToProps,
-	dispatch => bindActionCreators({ ...recordActionCreators, fetchTable }, dispatch)
+	dispatch => bindActionCreators({ fetchMtmOptions, fetchMtmRecords, toggleMtm, fetchTable }, dispatch)
 )
 export class SubformMtm extends CollapsableForm {
 	static propTypes = {

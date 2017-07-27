@@ -18,6 +18,7 @@ export default class GoogleLoginBtn extends Component {
 	}
 
 	render() {
+		if (!window.gapi || !window.gapi.auth2) return null;
 		const style = {
 			display: 'inline-block',
 			background: '#d14836',

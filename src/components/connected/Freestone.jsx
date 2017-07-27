@@ -3,32 +3,34 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Script from 'react-load-script';
 
-import * as authActionCreators from 'actions/auth';
-import * as envActionCreators from 'actions/env';
-import { MAX_TIME_BETWEEN_API_CALLS } from 'freestone/settings';
+import { loginUser } from '../../actions/auth';
+import { fetchVariable, fetchEnv } from '../../actions/env';
+import { MAX_TIME_BETWEEN_API_CALLS } from '../../freestone/settings';
 
-const actionCreators = { ...authActionCreators, ...envActionCreators };
+const actionCreators = { loginUser, fetchVariable, fetchEnv };
 
 /* application components */
-import { SiteHeader } from 'components/connected/SiteHeader';
-import { Footer } from 'components/static/Footer';
-import { Errors } from 'components/connected/Errors';
-import { Nav } from 'components/connected/Nav';
-import { LoadedRecords } from 'components/connected/LoadedRecords';
-import { Login } from 'components/connected/auth/Login';
-import { GoogleAuthenticate } from 'components/connected/auth/GoogleAuthenticate';
-import qstrParams from 'utils/qstrParams';
+import { SiteHeader } from './SiteHeader';
+import { Footer } from '../static/footer/Footer';
+import { Errors } from './Errors';
+import { Nav } from './Nav';
+import { LoadedRecords } from './LoadedRecords';
+import { Login } from './auth/Login';
+import { GoogleAuthenticate } from './auth/GoogleAuthenticate';
+import qstrParams from '../../utils/qstrParams';
 
-import 'style!scss/style.scss';
-import 'style!font-awesome/scss/font-awesome.scss';
+import 'style-loader!../../scss/style.scss';
+import 'font-awesome/scss/font-awesome.scss';
+// import 'style-loader!font-awesome/scss/font-awesome.scss';
+// require('font-awesome-webpack-2');
 
 @connect(
 	state => {
 		return {
-			isAuthenticated: state.auth.isAuthenticated,
-			lastRequestTime: state.auth.lastRequestTime,
-			env: state.env,
-			jwt: state.auth.jwt,
+			isAuthenticated: state.freestone.auth.isAuthenticated,
+			lastRequestTime: state.freestone.auth.lastRequestTime,
+			env: state.freestone.env,
+			jwt: state.freestone.auth.jwt,
 		};
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
@@ -47,6 +49,11 @@ export class Freestone extends Component {
 	};
 
 	componentWillMount() {
+
+		this.state = {
+			gapiready: false,
+		};
+
 		this.requireData(this.props);
 
 		//at load of app, force an API call to revalidate the JWT if last validation is too old
@@ -57,6 +64,10 @@ export class Freestone extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
+	}
+
+	onGapiReady = () => {
+		this.setState({ gapiready: true });
 	}
 	
 	onScriptLoaded = () => {
@@ -76,13 +87,12 @@ export class Freestone extends Component {
 
 	render() {
 		// console.log('%cRender Freestone (auth)', 'font-weight: bold');
-
 		if (!this.props.isAuthenticated) {
 			return (
 				<div>
 					<Errors {...this.props} />
-					<Login />
-					<GoogleAuthenticate />
+					<Login gapiready={this.state.gapiready} />
+					<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				</div>
 			);
 		}
@@ -107,7 +117,7 @@ export class Freestone extends Component {
 					<Footer />
 					<Errors {...this.props} />
 				</div>
-				<GoogleAuthenticate />
+				<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				{
 					this.props.env.clientScripts.map((scriptPath, i) => { 
 						return <Script key={i} url={scriptPath} onError={this.onScriptError} onLoad={this.onScriptLoaded} />;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { setRecordDeleted, setShownRecord } from 'actions/record';
+import { setRecordDeleted, setShownRecord } from '../../../../actions/record';
 
 @connect(
 	null,

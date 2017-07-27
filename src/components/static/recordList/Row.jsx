@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { TweenMax } from 'utils/Greensock';
+import { TweenMax } from '../../../utils/Greensock';
 
-import { RecordInteractions } from 'components/connected/recordList/RecordInteractions';
-import { createCells } from 'components/static/recordList/row/createCells';
-import { PRIKEY_ALIAS } from 'freestone/schemaProps';
-import { swapAnimated } from 'actions/record';
+import { RecordInteractions } from '../../connected/recordList/RecordInteractions';
+import { createCells } from './row/createCells';
+import { PRIKEY_ALIAS } from '../../../freestone/schemaProps';
+import { swapAnimated } from '../../../actions/record';
 
 @connect(
 	null,

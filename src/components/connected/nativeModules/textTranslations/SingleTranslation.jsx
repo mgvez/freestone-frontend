@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as translationActions from 'actions/translations';
-import { singleTranslationMapStateToProps } from 'selectors/translations';
+import { editTranslation } from '../../../../actions/translations';
+import { singleTranslationMapStateToProps } from '../../../../selectors/translations';
 
 @connect(
 	singleTranslationMapStateToProps,
-	dispatch => bindActionCreators(translationActions, dispatch)
+	dispatch => bindActionCreators({ editTranslation }, dispatch)
 )
 export class SingleTranslation extends Component {
 	static propTypes = {

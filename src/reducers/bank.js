@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-import { UNAUTHORIZED, LOGOUT_SUCCESS } from 'actions/auth';
-import { RECEIVE_BANK_IMAGE, RECEIVE_BANK_USES, RECEIVE_BANK_FILE } from 'actions/bank';
-import { SAVE_RECORD_SUCCESS, DELETE_RECORD_SUCCESS } from 'actions/save';
-import { BANK_IMG_TABLE, BANK_FILE_TABLE } from 'freestone/schemaProps';
-import { CLEAR_DATA } from 'actions/dev';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
+import { BANK_IMAGE_API, BANK_USES_API, BANK_FILE_API } from '../actions/bank';
+import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
+import { BANK_IMG_TABLE, BANK_FILE_TABLE } from '../freestone/schemaProps';
+import { CLEAR_DATA } from '../actions/dev';
 
 const initialState = {};
 
@@ -22,14 +22,14 @@ function removeRecords(state, recordsToRemove, checkingTable) {
 function images(state = initialState, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 		return initialState;
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		//m fonction que pour les records eux meme (structure fonctionne)
 		return removeRecords(state, action.data.records, BANK_IMG_TABLE);
-	case RECEIVE_BANK_IMAGE: {
+	case BANK_IMAGE_API.SUCCESS: {
 		// console.log(action.data.nRecords);
 		if (!action.data) return state;
 		const { id, maxSize, markup } = action.data;
@@ -48,14 +48,14 @@ function images(state = initialState, action) {
 function files(state = initialState, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 		return initialState;
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		//m fonction que pour les records eux meme (structure fonctionne)
 		return removeRecords(state, action.data.records, BANK_FILE_TABLE);
-	case RECEIVE_BANK_FILE: {
+	case BANK_FILE_API.SUCCESS: {
 		if (!action.data) return state;
 		const { id, item } = action.data;
 		// console.log(action.data);
@@ -73,12 +73,12 @@ function files(state = initialState, action) {
 function uses(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
-	case LOGOUT_SUCCESS:
+	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
-	case SAVE_RECORD_SUCCESS:
-	case DELETE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return {};
-	case RECEIVE_BANK_USES: {
+	case BANK_USES_API.SUCCESS: {
 		// console.log(action.data.nRecords);
 		if (!action.data) return state;
 		const { bankName, itemId, records } = action.data;

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Input } from 'components/static/form/inputTypes/Input';
-import { BankImgThumbnail } from 'components/connected/fileThumbnail/BankImgThumbnail';
-import { BankImgInsert } from 'components/connected/form/helpers/BankImgInsert';
-import { GenericFileInput } from 'components/static/form/genericInputs/GenericFileInput';
-import { TYPE_IMG } from 'freestone/schemaProps';
+import { Input } from './Input';
+import { BankImgThumbnail } from '../../../connected/fileThumbnail/BankImgThumbnail';
+import { BankImgInsert } from '../../../connected/form/helpers/BankImgInsert';
+import { GenericFileInput } from '../genericInputs/GenericFileInput';
+import { TYPE_IMG } from '../../../../freestone/schemaProps';
 
 export class BankImgInput extends Input {
 	static propTypes = {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { saveRecord } from 'actions/save';
 
-import { buildSaveRecordSelector } from 'selectors/buildRecord';
+import { saveRecord } from '../../../actions/save';
+import { buildSaveRecordSelector } from '../../../selectors/buildRecord';
 
 @connect(
 	buildSaveRecordSelector,

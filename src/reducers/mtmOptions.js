@@ -1,16 +1,16 @@
-import { UNAUTHORIZED } from 'actions/auth';
-import { CLEAR_DATA } from 'actions/dev';
-import { RECEIVE_MTM_OPTIONS } from 'actions/record';
-import { SAVE_RECORD_SUCCESS } from 'actions/save';
+import { UNAUTHORIZED } from '../actions/auth';
+import { CLEAR_DATA } from '../actions/dev';
+import { MTM_OPTIONS_API } from '../actions/record';
+import { SAVE_RECORD_API } from '../actions/save';
 
 
 export function mtmOptions(state = {}, action) {
 	switch (action.type) {
-	case SAVE_RECORD_SUCCESS:
+	case SAVE_RECORD_API.SUCCESS:
 	case CLEAR_DATA:
 	case UNAUTHORIZED:
 		return {};
-	case RECEIVE_MTM_OPTIONS: {
+	case MTM_OPTIONS_API.SUCCESS: {
 		const tableId = action.data.tableId;
 		// console.log(action);
 		const newState = {

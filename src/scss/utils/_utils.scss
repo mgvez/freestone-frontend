@@ -183,7 +183,7 @@
 		$height: map-get($thisSetting, height);
 
 		background-size: cover;
-		background: url('../img/#{$image}@#{$dppx}x.#{$image-format}');
+		background: url('../assets/img/#{$image}@#{$dppx}x.#{$image-format}');
 
 		@if $dppx != null and $min-width != null {
 			@include combined-retina-query($dppx, $min-width) {
