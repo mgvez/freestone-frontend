@@ -18,15 +18,20 @@ export class Heading extends Component {
 				</tr>
 			);
 		}
-		//sinon, une cell pour chaque field de recherche
+		//sinon, une cell pour chaque field de recherche. Si aucun, en ajoute un vide pour mettre le label du record dedans
+		// console.log(this.props.fields);
+		let cells;
+		if (this.props.fields.length) {
+			cells = this.props.fields.map((field) => {
+				if (field.isGroup) return null;
+				return <th key={`fld_${field.id}`}>{field.label}</th>;
+			});
+		} else {
+			cells = <th />;
+		}
 		return (
 			<tr>
-				{
-					this.props.fields.map((field, index) => {
-						if (field.isGroup) return null;
-						return <th key={index}>{field.label}</th>;
-					})
-				}
+				{cells}
 				<th>Functions</th>
 			</tr>
 		);

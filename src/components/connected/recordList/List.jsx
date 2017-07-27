@@ -40,6 +40,7 @@ export class List extends Component {
 		nRecords: React.PropTypes.number,
 		search: React.PropTypes.string,
 		swappedRecords: React.PropTypes.array,
+		canAdd: React.PropTypes.bool,
 
 		fetchTable: React.PropTypes.func,
 		fetchList: React.PropTypes.func,
@@ -137,6 +138,8 @@ export class List extends Component {
 					/>
 				</thead>);
 			}
+
+			const addBtn = this.props.canAdd ? <button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button> : null;
 			
 			// console.profile('render');
 			output = (
@@ -150,7 +153,7 @@ export class List extends Component {
 						</div>
 
 						<div className="btns">
-							<button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button>
+							{addBtn}
 						</div>
 					</header>
 					

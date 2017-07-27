@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
-import { getApiUrl } from '../../freestone/api';
+import { getAdminUrl } from '../../freestone/api';
 
 
 const metaData = {
@@ -39,7 +39,7 @@ export class Module extends Component {
 	
 	render() {
 		// console.log(this.props);
-		const host = getApiUrl();
+		const host = getAdminUrl();
 		//adds a time to get to prevent over-aggressive server cache (I'm looking at you Radio-Canada)
 		const time = (new Date()).getMilliseconds();
 		const url = `${host}/module/${this.props.params.url}/?jwt=${this.props.jwt}&nocache=${time}`;

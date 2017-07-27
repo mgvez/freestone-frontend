@@ -43,7 +43,7 @@ export const listRecordsSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, paramsSelector],
 	(schema, stateRecords, params) => {
 
-		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage, swappedRecords } = stateRecords;
+		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage, swappedRecords, canAdd } = stateRecords;
 		const { page: requestedPage, search: requestedSearch } = params;
 
 		const nPages = Math.ceil(nRecords / pageSize);
@@ -54,8 +54,10 @@ export const listRecordsSelector = createSelector(
 
 		// console.log(table + ' && ' + recordsTable + '===' + table.name + ' && ' + providedPage + '===' + requestedPage + ' && ' + providedSearch + '===' + requestedSearch);
 		if (table && recordsTable === table.name && Number(providedPage) === Number(requestedPage || 1) && providedSearch === (requestedSearch || '')) {
-			let records = loadedRecords.map(record => {
-				record[LABEL_PSEUDOFIELD_ALIAS] = getRecordLabel(record, table);
+			let records = loadedRecords.map(rawrecord => {
+				const record = { ...rawrecord };
+				//creates a label field, if not set by the backend
+				if (!record[LABEL_PSEUDOFIELD_ALIAS]) record[LABEL_PSEUDOFIELD_ALIAS] = getRecordLabel(record, table);
 				return record;
 			});
 
@@ -90,6 +92,7 @@ export const listRecordsSelector = createSelector(
 				];
 			}
 		}
+
 		return {
 			table,
 			searchableFields: table && table.searchableFields,
@@ -99,6 +102,7 @@ export const listRecordsSelector = createSelector(
 			nRecords,
 			search: providedSearch,
 			qstr: stateRecords.qstr,
+			canAdd,
 			swappedRecords,
 		};
 	}
