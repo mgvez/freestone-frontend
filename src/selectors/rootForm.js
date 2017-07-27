@@ -8,6 +8,7 @@ import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelp
 import { userViewLanguageSelector } from './userViewLanguage';
 import { tableSchemaMapStateToProps } from './tableSchema';
 import { schemaSelector } from './schema';
+import { loadedRecords } from './loadedRecords';
 
 const recordIdSelector = (state, props) => props.params && props.params.recordId;
 const recordsSelector = state => state.freestone.recordForm.records;
@@ -44,10 +45,23 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId) {
 
 function makeSelector() {
 	return createSelector(
-		[tableSchemaMapStateToProps(), recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector],
-		(schema, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema) => {
+		[tableSchemaMapStateToProps(), recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords],
+		(schema, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords) => {
 			const { table } = schema;
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
+
+			//loaded records have a general label for the records, use this as the heading label for the form
+			const recordLabel = allLoadedRecords && allLoadedRecords.records && allLoadedRecords.records.reduce((carry, tableRecords) => {
+				if (table.id !== tableRecords.table.id) return carry;
+				const candidate = tableRecords.records.filter(loadedRecord => {
+					return recordId === loadedRecord.id; 
+				});
+				return candidate[0] && candidate[0].label;
+			}, null);
+			// console.log(allLoadedRecords);
+			// console.log(thisRecord);
+
+
 			// console.log(allChildren);
 			// console.log(record);
 			// console.log(userViewLanguage);
@@ -58,6 +72,7 @@ function makeSelector() {
 			return {
 				table,
 				hasLanguageToggle,
+				recordLabel,
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
 				...userViewLanguage,
 				isEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId),

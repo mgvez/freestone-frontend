@@ -35,6 +35,7 @@ export class RootForm extends Component {
 		hasLanguageToggle: React.PropTypes.bool,
 		table: React.PropTypes.object,
 		lastmodifdate: React.PropTypes.string,
+		recordLabel: React.PropTypes.string,
 
 		//once saved/cancelled, we can override the defualt action (which is to go to table's list). For example, when bank items are edited, they do not redirect, they only set a state on the insert component
 		finishCallback: React.PropTypes.func,
@@ -148,7 +149,7 @@ export class RootForm extends Component {
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
 				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
-					<Header table={this.props.table} />
+					<Header table={this.props.table} label={this.props.recordLabel} />
 				</FormHeader>
 
 				{permsWidget}

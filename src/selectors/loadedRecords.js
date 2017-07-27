@@ -12,7 +12,6 @@ const toggleLoadedRecordsSelector = state => state.freestone.siteHeader.loaded_r
 export const loadedRecords = createSelector(
 	[schemaSelector, recordsSelector, allForeignOptionsSelector, toggleLoadedRecordsSelector],
 	(schema, allRecords, allForeignOptions, visible) => {
-		// console.log(schema);
 		const tableIds = Object.keys(allRecords);
 		let unloadedForeignOptions = [];
 		const now = new Date().getTime() / 1000;
