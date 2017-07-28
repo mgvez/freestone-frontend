@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 // import { historyApi } from './config';
 import { Route, Router, Redirect } from 'react-router';
 import { configureHistory, configureStore } from './connection';
-import { Freestone } from './components/connected/Freestone';
+import { Freestone } from './components/Freestone';
 
 import routes from './routes';
 
