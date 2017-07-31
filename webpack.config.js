@@ -15,18 +15,16 @@ const buildPath = path.join(__dirname, './dist');
 const assetsPath = path.join(__dirname, './src/assets');
 const sourcePath = path.join(__dirname, './src');
 
-
-
 // Common plugins
 const plugins = [
-	new webpack.optimize.CommonsChunkPlugin({
-		name: 'vendor',
-		filename: 'vendor.js',
-		minChunks(module) {
-			const context = module.context;
-			return context && context.indexOf('node_modules') >= 0;
-		},
-	}),
+	// new webpack.optimize.CommonsChunkPlugin({
+	// 	name: 'vendor',
+	// 	filename: 'vendor.js',
+	// 	minChunks(module) {
+	// 		const context = module.context;
+	// 		return context && context.indexOf('node_modules') >= 0;
+	// 	},
+	// }),
 	new webpack.DefinePlugin({
 		'process.env': {
 			NODE_ENV: JSON.stringify(nodeEnv),
