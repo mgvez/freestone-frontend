@@ -51,8 +51,9 @@ function makeSelector() {
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
 
 			//loaded records have a general label for the records, use this as the heading label for the form
-			const recordLabel = allLoadedRecords && allLoadedRecords.records && allLoadedRecords.records.reduce((carry, tableRecords) => {
-				if (table.id !== tableRecords.table.id) return carry;
+			const recordLabel = table && allLoadedRecords && allLoadedRecords.records && allLoadedRecords.records.reduce((carry, tableRecords) => {
+
+				if (tableRecords.table && table.id !== tableRecords.table.id) return carry;
 				const candidate = tableRecords.records.filter(loadedRecord => {
 					return recordId === loadedRecord.id; 
 				});

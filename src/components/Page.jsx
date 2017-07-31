@@ -6,6 +6,7 @@ import DocumentMeta from 'react-document-meta';
 import { pageSelector } from '../selectors/page';
 import uniqueId from '../utils/UniqueId';
 import { lockScroll, rememberListPage, goTo, setPageHash } from '../actions/nav';
+import { duplicateRecord } from '../actions/record';
 
 import { getWebsiteUrl } from '../freestone/settings';
 
@@ -19,7 +20,7 @@ const metaData = {
 
 @connect(
 	pageSelector,
-	dispatch => bindActionCreators({ goTo, lockScroll, rememberListPage, setPageHash }, dispatch)
+	dispatch => bindActionCreators({ goTo, lockScroll, rememberListPage, setPageHash, duplicateRecord }, dispatch)
 )
 export class Page extends Component {
 	static propTypes = {
@@ -35,6 +36,7 @@ export class Page extends Component {
 		setPageHash: React.PropTypes.func,
 		goTo: React.PropTypes.func,
 		lockScroll: React.PropTypes.func,
+		duplicateRecord: React.PropTypes.func,
 
 	};
 
@@ -51,7 +53,7 @@ export class Page extends Component {
 		if (message.data && message.data.command) {
 			const { tableName, backUrl } = message.data;
 			let recordId;
-			if (message.data.command === 'edit') {
+			if (message.data.command === 'edit' || message.data.command === 'duplicate') {
 				recordId = message.data.recordId;
 			} else if (message.data.command === 'newrec') {
 				recordId = uniqueId();
@@ -61,7 +63,11 @@ export class Page extends Component {
 			const hash = `__${this.props.id}`;
 			this.props.setPageHash(hash, this.props.id, backUrl);
 			this.props.rememberListPage(tableName, recordId, `page/${hash}`);
-			this.props.goTo(`/edit/${tableName}/${recordId}`);
+			if (message.data.command === 'duplicate') {
+				this.props.duplicateRecord(tableName, recordId);
+			} else {
+				this.props.goTo(`/edit/${tableName}/${recordId}`);
+			}
 		}
 	}
 
