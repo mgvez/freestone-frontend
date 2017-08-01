@@ -3,7 +3,8 @@ import Promise from 'bluebird';
 import { getWebsiteUrl } from './settings';
 
 export const ADMIN_API = 'admin';
-export const FRONTEND_API = 'gestion';
+export const FRONTEND_API = 'frontend';
+const API_PATH = 'fsapi';
 
 let store;
 export function setStore(s) {
@@ -16,7 +17,7 @@ function getJWT() {
 }
 
 export function getAdminUrl() {
-	return getWebsiteUrl() + 'api/';
+	return getWebsiteUrl() + API_PATH + '/';
 }
 
 export function getFrontendUrl() {
