@@ -22,6 +22,8 @@ export class Subform extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		language: React.PropTypes.string,
+		titleOverride: React.PropTypes.string,
+		descriptionAppend: React.PropTypes.string,
 
 		isCollapsed: React.PropTypes.bool,
 		table: React.PropTypes.object,
@@ -53,6 +55,8 @@ export class Subform extends Component {
 				parentTableId={this.props.parentTableId}
 				isCollapsed={this.props.isCollapsed}
 				setSubformCollapsed={this.props.setSubformCollapsed}
+				titleOverride={this.props.titleOverride}
+				descriptionAppend={this.props.descriptionAppend}
 			/>);
 		}
 		// console.log(this.props.language);
@@ -63,6 +67,8 @@ export class Subform extends Component {
 			parentTableId={this.props.parentTableId}
 			isCollapsed={this.props.isCollapsed}
 			setSubformCollapsed={this.props.setSubformCollapsed}
+			titleOverride={this.props.titleOverride}
+			descriptionAppend={this.props.descriptionAppend}
 			language={this.props.language}
 		/>);
 

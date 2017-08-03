@@ -24,6 +24,8 @@ export class SubformMtm extends CollapsableForm {
 		parentRecordId: React.PropTypes.string,
 		mtmOptions: React.PropTypes.array,
 		isCollapsed: React.PropTypes.bool,
+		titleOverride: React.PropTypes.string,
+		descriptionAppend: React.PropTypes.string,
 
 		fetchTable: React.PropTypes.func,
 		fetchMtmOptions: React.PropTypes.func,
@@ -102,7 +104,7 @@ export class SubformMtm extends CollapsableForm {
 				<section className="subform">
 					<header className="row">
 						<div className="col-md-8">
-							<FormHeaderContent table={this.props.table} />
+							<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 						</div>
 						<div className="col-md-3 col-md-offset-1 fcn">
 							<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />

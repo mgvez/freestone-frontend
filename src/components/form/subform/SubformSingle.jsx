@@ -12,6 +12,9 @@ export class SubformSingle extends Component {
 		childrenRecords: React.PropTypes.array,
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
+		titleOverride: React.PropTypes.string,
+		descriptionAppend: React.PropTypes.string,
+
 		language: React.PropTypes.string,
 		isCollapsed: React.PropTypes.bool,
 
@@ -34,7 +37,7 @@ export class SubformSingle extends Component {
 		return (
 			<section className="subform">
 				<header>
-					<FormHeaderContent table={this.props.table} />
+					<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 					<nav className="tabs">
 						{addBtn}
 					</nav>

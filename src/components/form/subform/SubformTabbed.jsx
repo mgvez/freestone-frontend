@@ -16,6 +16,9 @@ export class SubformTabbed extends CollapsableForm {
 		language: React.PropTypes.string,
 		parentRecordId: React.PropTypes.string,
 		parentTableId: React.PropTypes.number,
+		titleOverride: React.PropTypes.string,
+		descriptionAppend: React.PropTypes.string,
+
 		isCollapsed: React.PropTypes.bool,
 	};
 
@@ -45,7 +48,7 @@ export class SubformTabbed extends CollapsableForm {
 			<section className="subform">
 				<header className="row">
 					<div className="col-md-8">
-						<FormHeaderContent table={this.props.table} />
+						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}

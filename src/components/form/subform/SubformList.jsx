@@ -17,7 +17,8 @@ export class SubformList extends CollapsableForm {
 		highestOrder: React.PropTypes.number,
 		language: React.PropTypes.string,
 		isCollapsed: React.PropTypes.bool,
-
+		titleOverride: React.PropTypes.string,
+		descriptionAppend: React.PropTypes.string,
 		swapRecords: React.PropTypes.func,
 		setShownRecord: React.PropTypes.func,
 
@@ -60,7 +61,7 @@ export class SubformList extends CollapsableForm {
 			<section className="subform subform-list">
 				<header className="row">
 					<div className="col-md-8">
-						<FormHeaderContent table={this.props.table} />
+						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}

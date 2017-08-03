@@ -28,6 +28,8 @@ export class SubformStandard extends Component {
 		currentViewType: React.PropTypes.string,
 		language: React.PropTypes.string,
 		isCollapsed: React.PropTypes.bool,
+		titleOverride: React.PropTypes.string,
+		descriptionAppend: React.PropTypes.string,
 		
 		fetchTable: React.PropTypes.func,
 		fetchRecord: React.PropTypes.func,

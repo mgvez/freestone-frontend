@@ -62,18 +62,25 @@ export class SingleRecord extends Component {
 		}
 	}
 
+	renderChild = (child) => {
+		return child && child.isDisplay ? (
+			<Subform
+				key={child.tableId}
+				tableId={child.tableId}
+				titleOverride={child.titleOverride}
+				descriptionAppend={child.descriptionAppend}
+				parentTableId={this.props.table.id}
+				parentRecordId={this.props.recordId}
+				language={this.props.language}
+			/>
+		) : null;
+	}
+
 	renderField = (field, canBeSubform = true) => {
 		if (field.subformPlaceholder) {
 			if (canBeSubform) {
-				return (
-					<Subform
-						key={field.subformPlaceholder}
-						tableId={field.subformPlaceholder}
-						parentTableId={this.props.table.id}
-						parentRecordId={this.props.recordId}
-						language={this.props.language}
-					/>
-				);
+				const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
+				return this.renderChild(child);
 			}
 			
 			return false;
@@ -146,22 +153,11 @@ export class SingleRecord extends Component {
 				</article>
 			);
 
+			//shows child forms that are not previously placed through a placeholder
 			if (this.props.children) {
 				sub = (
 					<div>
-						{
-							this.props.children.map((tableId) => {
-								return (
-									<Subform
-										key={tableId}
-										tableId={tableId}
-										parentTableId={this.props.table.id}
-										parentRecordId={this.props.recordId}
-										language={this.props.language}
-									/>
-								);
-							})
-						}
+						{this.props.children.map(child => (!child.hasPlaceholder || null) && this.renderChild(child))}
 					</div>
 				);
 

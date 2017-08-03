@@ -103,7 +103,12 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 			if (table) {
 				//clone pour pas muter l'objet du state
 				table = { ...table };
-				children = [...unfilteredChildren[table.id]];
+				children = unfilteredChildren[table.id].map(tableId => {
+					return {
+						tableId,
+						isDisplay: true,
+					};	
+				});
 				//delete les champs / sous-forms de la définition dépendant des field dependencies
 				dependencies = parseDependencies(table, record);
 
@@ -111,10 +116,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				const { table: parentTable } = parentSchema;
 				if (parentTable && parentRecord) {
 					const parentDependencies = parseDependencies(parentTable, parentRecord);
-					// console.log(parentSchema);
-					// console.log(parentRecord);
-					// console.log(dependencies);
-					// console.log(parentDependencies);
 					if (parentDependencies) {
 						dependencies = dependencies || {};
 						dependencies = {
@@ -124,9 +125,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					}
 				}
 
-
-				// console.log(children);
-				// console.log(allFields);
 				if (dependencies) {
 					table.fields = table.fields.map(field => {
 						if (dependencies[field.id] === undefined) return field;
@@ -146,31 +144,27 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					}).filter(field => field);
 					//certains fields sont le rel field d'un sous-form, ce qui indique que ce sous-form doit s'afficher au non
 					Object.keys(dependencies).forEach((targetFieldId) => {
-						const isShow = dependencies[targetFieldId] && dependencies[targetFieldId].isDisplay;
-						if (isShow) return;
-						// console.log(targetFieldId, isShow);
-
+						
 						const field = allFields[targetFieldId];
 						// console.log(field);
 						//pour indiquer si le subform s'affiche ou pas dépendant de la value, on se fie sur le champ foreign qui lie le subform à son parent. Les autres fields seront traités dans le subform, s'il s'affiche.
 						if (field.foreign && field.foreign.foreignTableId === table.id) {
-							const subFormTableId = field.table_id;
-							const idx = children.indexOf(subFormTableId);
-							if (idx !== -1) children.splice(idx, 1);
+							//trouve ce child
+							const child = children.find(candidate => candidate.tableId === field.table_id);
+							child.isDisplay = dependencies[targetFieldId].isDisplay;
+							child.titleOverride = dependencies[targetFieldId].titleOverride;
+							child.descriptionAppend = dependencies[targetFieldId].descriptionAppend;
+
 						}
 					});
 				}
 
-				children = table && table.fields.reduce((filteredChildren, field) => {
-					if (field.subformPlaceholder) {
-						// console.log(filteredChildren.indexOf(field.subformPlaceholder));
-						const idx = filteredChildren.indexOf(field.subformPlaceholder);
-						if (idx !== -1) filteredChildren.splice(idx, 1);
-					}
-					return filteredChildren;
-				}, children);
-
-				// console.log(table.fields);
+				//enleve les children qui seront placés par un placeholder de la liste (qui sera loopée)
+				children = children.map(child => {
+					//détermine si ce subform est déplacé ailleurs par un placeholder
+					child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
+					return child;
+				});
 
 			}
 
@@ -183,8 +177,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				table,
 				fields: table && table.fields,
 				env,
-				//passe les dependencies, pour les envoyer aux children, dont certains champs peuvent dépendre de la valeur du record parent
-				dependencies,
 			};
 		}
 	);
