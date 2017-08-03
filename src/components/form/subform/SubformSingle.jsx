@@ -39,7 +39,13 @@ export class SubformSingle extends Component {
 						{addBtn}
 					</nav>
 				</header>
-				<SingleRecord tableId={this.props.table.id} recordId={activeRecordId} parentRecordId={this.props.parentRecordId} language={this.props.language} />
+				<SingleRecord
+					tableId={this.props.table.id}
+					recordId={activeRecordId}
+					parentRecordId={this.props.parentRecordId}
+					parentTableId={this.props.parentTableId}
+					language={this.props.language}
+				/>
 			</section>
 		);
 

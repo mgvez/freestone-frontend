@@ -3,9 +3,10 @@ import { schemaSelector } from './schema';
 //retourne la table du store dont le nom est celui qui est en props.tableName OU tableId du component sur lequel ce selector est pluggé
 
 const tableNameSelector = (state, props) => props.tableName || (props.params && props.params.tableName);
-const tableIdSelector = (state, props) => props.tableId || (props.params && props.params.tableId);
+const mainTableIdSelector = (state, props) => props.tableId || (props.params && props.params.tableId);
+const parentTableIdSelector = (state, props) => props.parentTableId;
 
-function makeSelector() {
+function makeSelector(tableIdSelector) {
 	return createSelector(
 		[schemaSelector, tableNameSelector, tableIdSelector],
 		(schema, tableName, tableId) => {
@@ -22,10 +23,18 @@ function makeSelector() {
 	);
 }
 
-export const tableSchemaSelector = makeSelector();
+export const tableSchemaSelector = makeSelector(mainTableIdSelector);
 
 export function tableSchemaMapStateToProps() {
-	const selectorInst = makeSelector();
+	const selectorInst = makeSelector(mainTableIdSelector);
+	return (state, props) => {
+		// console.log('reselect table', (props.tableId || (props.params && props.params.tableId)) || props.tableName || (props.params && props.params.tableName));
+		return selectorInst(state, props);
+	};
+}
+
+export function parentTableSchemaMapStateToProps() {
+	const selectorInst = makeSelector(parentTableIdSelector);
 	return (state, props) => {
 		// console.log('reselect table', (props.tableId || (props.params && props.params.tableId)) || props.tableName || (props.params && props.params.tableName));
 		return selectorInst(state, props);

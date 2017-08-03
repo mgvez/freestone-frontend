@@ -20,7 +20,8 @@ export class SingleRecord extends Component {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,
 		parentRecordId: React.PropTypes.string,
-
+		parentTableId: React.PropTypes.number,
+		
 		table: React.PropTypes.object,
 		children: React.PropTypes.array,
 		record: React.PropTypes.object,

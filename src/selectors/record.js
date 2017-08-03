@@ -3,6 +3,9 @@ import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
 
 const recordIdSelector = (state, props) => props.recordId;
+const parentRecordIdSelector = (state, props) => props.parentRecordId;
+const parentTableIdSelector = (state, props) => props.parentTableId;
+
 const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
 const recordsSelector = state => state.freestone.recordForm.records;
 
@@ -27,6 +30,15 @@ function makeRecordSelector(tableSchemaSelector) {
 	);
 }
 
+function makeParentRecordSelector() {
+	return createSelector(
+		[parentTableIdSelector, recordsSelector, parentRecordIdSelector],
+		(parentTableId, records, parentRecordId) => {
+			return parentRecordId && records[parentTableId] && records[parentTableId][parentRecordId];
+		}
+	);
+}
+
 function makeRecordUnalteredSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, recordsUnalteredSelector, recordIdSelector],
@@ -47,6 +59,13 @@ export function tableRecordsMapStateToProps() {
 
 export function recordMapStateToProps() {
 	const selectorInst = makeRecordSelector(tableSchemaMapStateToProps());
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
+
+export function parentRecordMapStateToProps() {
+	const selectorInst = makeParentRecordSelector();
 	return (state, props) => {
 		return selectorInst(state, props);
 	};

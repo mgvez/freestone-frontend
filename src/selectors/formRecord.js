@@ -2,8 +2,9 @@
 
 const fieldsSelector = state => state.freestone.schema.fields;
 import { createSelector } from 'reselect';
-import { tableSchemaMapStateToProps } from './tableSchema';
-import { recordMapStateToProps, recordUnalteredMapStateToProps } from './record';
+import { tableSchemaMapStateToProps, parentTableSchemaMapStateToProps } from './tableSchema';
+import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps } from './record';
+
 // import { PRIKEY_ALIAS } from 'freestone/schemaProps';
 
 
@@ -49,6 +50,7 @@ function parseDependencies(table, record) {
 
 	// console.log(fieldDependencies);
 	// console.log(record);
+	// console.log(table.fields);
 
 	//defaults all depending fields to the inverse of their set rules, that is, if rules are for displaying a field, hide it until we match a rule
 	const dependenciesValues = controlFieldIds.reduce((defaults, controlFieldId) => {
@@ -59,6 +61,7 @@ function parseDependencies(table, record) {
 				carry[dependingFieldId] = {
 					isDisplay: !rule.isDisplay,
 					descriptionAppend: '',
+					titleOverride: '',
 					forceDisplay: undefined,
 				};
 			}
@@ -73,6 +76,7 @@ function parseDependencies(table, record) {
 
 				carry[dependingFieldId].isDisplay = typeof carry[dependingFieldId].forceDisplay === 'undefined' ? rule.isDisplay : carry[dependingFieldId].forceDisplay;
 				carry[dependingFieldId].descriptionAppend = carry[dependingFieldId].descriptionAppend + rule.descriptionAppend;
+				carry[dependingFieldId].titleOverride = rule.titleOverride;
 			}
 
 			return carry;
@@ -84,36 +88,58 @@ function parseDependencies(table, record) {
 }
 
 
-function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector) {
+function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector) {
 	return createSelector(
-		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector],
-		(schema, allFields, record, recordUnaltered, unfilteredChildren, env) => {
+		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector],
+		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord) => {
 			let { table } = schema;
 			let children;
+			let dependencies;
 			// const recordId = record && record[PRIKEY_ALIAS];
 			// console.log(`build record for ${recordId}`, table && table.name);
 			// console.log(formCollapsed);
-
+			
 			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
 			if (table) {
 				//clone pour pas muter l'objet du state
 				table = { ...table };
 				children = [...unfilteredChildren[table.id]];
 				//delete les champs / sous-forms de la définition dépendant des field dependencies
-				const dependencies = parseDependencies(table, record);
+				dependencies = parseDependencies(table, record);
+
+				//fields on this table that might depend on the parent record's
+				const { table: parentTable } = parentSchema;
+				if (parentTable && parentRecord) {
+					const parentDependencies = parseDependencies(parentTable, parentRecord);
+					// console.log(parentSchema);
+					// console.log(parentRecord);
+					// console.log(dependencies);
+					// console.log(parentDependencies);
+					if (parentDependencies) {
+						dependencies = dependencies || {};
+						dependencies = {
+							...parentDependencies,
+							...dependencies,
+						};
+					}
+				}
+
+
 				// console.log(children);
 				// console.log(allFields);
 				if (dependencies) {
 					table.fields = table.fields.map(field => {
 						if (dependencies[field.id] === undefined) return field;
 						//field depends on another?
-						const { isDisplay, descriptionAppend } = dependencies[field.id];
+						const { isDisplay, descriptionAppend, titleOverride } = dependencies[field.id];
+
 						if (isDisplay) {
 							//field description can have an append that is set by dependencies
 							// console.log('DISPLAY', field.id);
 							return {
 								...field,
 								descriptionAppend,
+								label: titleOverride || field.label,
 							};
 						}
 						return false;
@@ -122,10 +148,16 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					Object.keys(dependencies).forEach((targetFieldId) => {
 						const isShow = dependencies[targetFieldId] && dependencies[targetFieldId].isDisplay;
 						if (isShow) return;
+						// console.log(targetFieldId, isShow);
+
 						const field = allFields[targetFieldId];
-						const subFormTableId = field.table_id;
-						const idx = children.indexOf(subFormTableId);
-						if (idx !== -1) children.splice(idx, 1);
+						// console.log(field);
+						//pour indiquer si le subform s'affiche ou pas dépendant de la value, on se fie sur le champ foreign qui lie le subform à son parent. Les autres fields seront traités dans le subform, s'il s'affiche.
+						if (field.foreign && field.foreign.foreignTableId === table.id) {
+							const subFormTableId = field.table_id;
+							const idx = children.indexOf(subFormTableId);
+							if (idx !== -1) children.splice(idx, 1);
+						}
 					});
 				}
 
@@ -151,6 +183,8 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				table,
 				fields: table && table.fields,
 				env,
+				//passe les dependencies, pour les envoyer aux children, dont certains champs peuvent dépendre de la valeur du record parent
+				dependencies,
 			};
 		}
 	);
@@ -158,7 +192,13 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 
 
 export function formRecordMapStateToProps() {
-	const selectorInst = makeSelector(tableSchemaMapStateToProps(), recordMapStateToProps(), recordUnalteredMapStateToProps());
+	const selectorInst = makeSelector(
+		tableSchemaMapStateToProps(),
+		recordMapStateToProps(),
+		recordUnalteredMapStateToProps(),
+		parentTableSchemaMapStateToProps(),
+		parentRecordMapStateToProps()
+	);
 	return (state, props) => {
 		return selectorInst(state, props);
 	};

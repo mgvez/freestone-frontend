@@ -30,7 +30,14 @@ export class SubformList extends CollapsableForm {
 		return (<div ref={this.setCollapsable}>
 			{
 				this.props.childrenRecords.map((record) => {
-					return <SingleRecord key={record.id} tableId={this.props.table.id} recordId={record.id} language={this.props.language} />;
+					return (<SingleRecord 
+						key={record.id}
+						tableId={this.props.table.id}
+						recordId={record.id}
+						parentRecordId={this.props.parentRecordId}
+						parentTableId={this.props.parentTableId}
+						language={this.props.language}
+					/>);
 				})
 			}
 			{
