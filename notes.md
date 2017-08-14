@@ -14,7 +14,7 @@ et voir ensuite dans .babelrc
 
 ## builder
 
-webpack --verbose --colors --display-error-details --config webpack/prod.config.js
+env NODE_ENV=production webpack
 
 ## update submodule dans backend
 

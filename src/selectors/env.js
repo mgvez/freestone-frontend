@@ -9,12 +9,13 @@ const clientPathSelector = state => state.freestone.env && state.freestone.env.c
 export const mceConfigSelector = createSelector(
 	[settingsSelector, cssPathSelector, clientPathSelector],
 	(settings, cssPath, clientPath) => {
+		const config = (settings && settings.tinymceConfig) || {};
 		const tinymceConfig = {
 			...TINYMCE_CONFIG,
-			...settings.tinymceConfig,
+			...config,
 		};
 
-		console.log(settings, tinymceConfig);
+		// console.log(settings, tinymceConfig);
 
 		if (cssPath && cssPath.length) {
 			tinymceConfig.content_css = cssPath.map(p => `${clientPath}${p}`);
