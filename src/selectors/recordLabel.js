@@ -17,6 +17,7 @@ export function getUnloadedOptions(table, allForeignOptions) {
 export function getRecordLabel(rec, table, allForeignOptions = []) {
 	return table.labelFields.map(field => {
 		const val = rec[field.id] || rec[field.alias];
+		if (!val) return null;
 		if (field.foreign) {
 			const foreignValues = allForeignOptions[field.id];
 			if (!foreignValues) {

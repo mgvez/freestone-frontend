@@ -21,11 +21,13 @@ export class AddRecord extends Component {
 	};
 
 	addRecord = () => {
-		const { newRecord, newRecordId } = createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, (this.props.highestOrder || 0) + 10);
+		createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, (this.props.highestOrder || 0) + 10).then(res => {
+			const { newRecord, newRecordId } = res;
 
-		// console.log(newRecord);
-		this.props.addRecord(this.props.table.id, newRecord);
-		this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);
+			// console.log(newRecord);
+			this.props.addRecord(this.props.table.id, newRecord);
+			this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId);
+		});
 	};
 
 	render() {

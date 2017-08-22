@@ -18,6 +18,7 @@ export class InScroll extends Component {
 		path: React.PropTypes.string,
 		scroll: React.PropTypes.number,
 		isReady: React.PropTypes.bool,
+		autoLock: React.PropTypes.bool,
 		
 		lockScroll: React.PropTypes.func,
 
@@ -45,6 +46,9 @@ export class InScroll extends Component {
 			this.props.lockScroll(this.props.path, 0);
 
 		}
+	}
+	componentWillUnmount() {
+		if (this.props.autoLock) this.props.lockScroll(this.props.path, window.scrollY);
 	}
 
 	render() {

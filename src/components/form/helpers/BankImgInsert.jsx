@@ -101,10 +101,12 @@ export class BankImgInsert extends Component {
 	};
 
 	addRecord = () => {
-		const { newRecord, newRecordId } = createRecord(this.props.table);
-		this.props.addRecord(this.props.table.id, newRecord);
-		this.setState({
-			editing: newRecordId,
+		createRecord(this.props.table).then(res => {
+			const { newRecord, newRecordId } = res;
+			this.props.addRecord(this.props.table.id, newRecord);
+			this.setState({
+				editing: newRecordId,
+			});
 		});
 	};
 
