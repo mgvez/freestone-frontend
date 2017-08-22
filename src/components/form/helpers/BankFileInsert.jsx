@@ -9,7 +9,8 @@ import { addRecord, fetchList } from '../../../actions/record';
 import { fetchTable } from '../../../actions/schema';
 
 import { PRIKEY_ALIAS, BANK_FILE_FILE_ALIAS, BANK_FILE_TABLE, BANK_FILE_TITLE_ALIAS, BANK_FILE_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
-import { callApi } from '../../../freestone/api';
+import { callApi, getEndpoint } from '../../../freestone/api';
+
 import { BankFileThumbnail } from '../../fileThumbnail/BankFileThumbnail';
 
 import { RootForm } from '../RootForm';
@@ -86,7 +87,7 @@ export class BankFileInsert extends Component {
 		}
 
 		if (this.props.setMarkup) {
-			callApi(`bank/files/link/${id}/${this.props.lang}`).then(res => {
+			callApi(getEndpoint(`bank/files/link/${id}/${this.props.lang}`)).then(res => {
 				// console.log(res);
 				this.props.setMarkup(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
 				this.closeModal(true);

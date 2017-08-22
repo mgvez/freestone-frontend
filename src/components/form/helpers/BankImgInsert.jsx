@@ -9,7 +9,7 @@ import { addRecord, fetchList } from '../../../actions/record';
 import { fetchTable } from '../../../actions/schema';
 
 import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
-import { callApi } from '../../../freestone/api';
+import { callApi, getEndpoint } from '../../../freestone/api';
 
 import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
 import { RootForm } from '../RootForm';
@@ -86,7 +86,7 @@ export class BankImgInsert extends Component {
 		}
 
 		if (this.props.setMarkup) {
-			callApi(`bank/images/figure/${id}`).then(res => {
+			callApi(getEndpoint(`bank/images/figure/${id}`)).then(res => {
 				// console.log(res);
 				this.props.setMarkup(this.props.contentAfter.replace('{{placeholder}}', res.data.markup));
 				this.closeModal(true);
