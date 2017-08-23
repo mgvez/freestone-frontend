@@ -23,8 +23,8 @@ const metaData = {
 	state => {
 		return {
 			...state.freestone.auth,
-			isInstalled: state.freestone.envVariables && state.freestone.envVariables.isInstalled,
-			apiGoogle: state.freestone.envVariables && state.freestone.envVariables.api_google,
+			isInstalled: state.freestone.env.clientVariables && state.freestone.env.clientVariables.isInstalled,
+			apiGoogle: state.freestone.env.clientVariables && state.freestone.env.clientVariables.api_google,
 		};
 	},
 	dispatch => bindActionCreators({ loginUser, fetchVariable, setVariable }, dispatch)

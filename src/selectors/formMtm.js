@@ -3,7 +3,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
 
-const allMtmOptionsSelector = state => state.freestone.mtmOptions;
+const allMtmOptionsSelector = state => state.freestone.foreign.mtm;
 const recordsSelector = state => state.freestone.recordForm.mtmRecords;
 const childrenAreLoadedSelector = state => state.freestone.recordForm.childrenAreLoaded;
 

@@ -7,7 +7,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { LoadedRecordsToggler } from '../widgets/LoadedRecordsToggler';
 import { Cancel } from '../process/Cancel';
 import { fetchTable } from '../../actions/schema';
-import { fetchForeignOptions } from '../../actions/foreignOptions';
+import { fetchForeignLabel } from '../../actions/foreignOptions';
 import { toggleLoadedRecords } from '../../actions/siteHeader';
 import { loadedRecords } from '../../selectors/loadedRecords';
 
@@ -18,16 +18,16 @@ function leftPad(n) {
 
 @connect(
 	loadedRecords,
-	dispatch => bindActionCreators({ fetchTable, fetchForeignOptions, toggleLoadedRecords }, dispatch)
+	dispatch => bindActionCreators({ fetchTable, fetchForeignLabel, toggleLoadedRecords }, dispatch)
 )
 export class LoadedRecords extends Component {
 	static propTypes = {
 		fetchTable: React.PropTypes.func,
-		fetchForeignOptions: React.PropTypes.func,
+		fetchForeignLabel: React.PropTypes.func,
 		toggleLoadedRecords: React.PropTypes.func,
 
 		records: React.PropTypes.array,
-		unloadedForeignOptions: React.PropTypes.array,
+		unloadedForeignLabels: React.PropTypes.array,
 		toggleState: React.PropTypes.object,
 		visible: React.PropTypes.bool,
 	};
@@ -66,15 +66,16 @@ export class LoadedRecords extends Component {
 	}
 
 	requireData(props) {
-		// console.log(props);
 		if (props.records) {
 			props.records.filter(records => !records.table).forEach(records => {
 				this.props.fetchTable(records.tableId);
 			});
 		}
-		if (props.unloadedForeignOptions) {
-			props.unloadedForeignOptions.forEach(unloadedForeignOption => {
-				this.props.fetchForeignOptions(unloadedForeignOption);
+		if (props.unloadedForeignLabels) {
+			// console.log(props.records);
+			props.unloadedForeignLabels.forEach(unloadedForeignLabel => {
+				// console.log('fetch', unloadedForeignLabel.fieldId, unloadedForeignLabel.foreignRecordId);
+				this.props.fetchForeignLabel(unloadedForeignLabel.fieldId, unloadedForeignLabel.foreignRecordId);
 			});
 		}
 	}

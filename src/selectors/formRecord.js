@@ -10,7 +10,7 @@ import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapS
 
 // const recordsSelector = state => state.freestone.recordForm.records;
 // const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
-const envSelector = state => state.freestone.env;
+const envSelector = state => state.freestone.env.freestone;
 // const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.freestone.schema.children;
 

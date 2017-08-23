@@ -13,7 +13,7 @@ const initialState = {
 	swappedRecords: [],
 };
 
-export function recordList(state = initialState, action) {
+export default function(state = initialState, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case SAVE_RECORD_API.SUCCESS:

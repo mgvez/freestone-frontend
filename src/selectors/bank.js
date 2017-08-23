@@ -8,7 +8,7 @@ const recordsSelector = state => state.freestone.recordList;
 const bankImgSelector = state => state.freestone.bank.images;
 const bankFileSelector = state => state.freestone.bank.files;
 const allUsesSelector = state => state.freestone.bank.uses;
-const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.defaultLanguage; };
+const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
 
 const idSelector = (state, props) => props.id;
 const maxSizeSelector = (state, props) => props.maxSize;

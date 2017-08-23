@@ -30,9 +30,9 @@ const GA_PERCENT_NEW_SESSIONS = 'ga:percentNewSessions';
 
 @connect(
 	state => { 
-		if (!state.freestone.envVariables.api_google) return {};
+		if (!state.freestone.env.clientVariables.api_google) return {};
 		return {
-			...state.freestone.envVariables.api_google,
+			...state.freestone.env.clientVariables.api_google,
 			gapi_token_access: state.freestone.auth.gapi_token_access,
 		};
 	},

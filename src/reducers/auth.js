@@ -18,7 +18,7 @@ const initialState = {
 	gapi_token_access: null,
 };
 
-export function auth(state = initialState, action) {
+export default function(state = initialState, action) {
 
 	switch (action.type) {
 	case FREESTONE_API_REQUEST:
