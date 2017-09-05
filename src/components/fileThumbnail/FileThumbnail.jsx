@@ -6,7 +6,7 @@ import { TYPE_FILE } from '../../freestone/schemaProps';
 @connect(
 	state => {
 		return {
-			env: state.freestone.env,
+			env: state.freestone.env.freestone,
 		};
 	}
 )

@@ -10,7 +10,7 @@ import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapS
 
 // const recordsSelector = state => state.freestone.recordForm.records;
 // const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
-const envSelector = state => state.freestone.env;
+const envSelector = state => state.freestone.env.freestone;
 // const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.freestone.schema.children;
 
@@ -75,7 +75,7 @@ function parseDependencies(table, record) {
 				// console.log(rule.rule, record[controlFieldId]);
 
 				carry[dependingFieldId].isDisplay = typeof carry[dependingFieldId].forceDisplay === 'undefined' ? rule.isDisplay : carry[dependingFieldId].forceDisplay;
-				carry[dependingFieldId].descriptionAppend = carry[dependingFieldId].descriptionAppend + rule.descriptionAppend;
+				carry[dependingFieldId].descriptionAppend = (carry[dependingFieldId].descriptionAppend || '') + (rule.descriptionAppend || '');
 				carry[dependingFieldId].titleOverride = rule.titleOverride;
 			}
 
@@ -133,7 +133,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 
 						if (isDisplay) {
 							//field description can have an append that is set by dependencies
-							// console.log('DISPLAY', field.id);
+							// console.log(descriptionAppend);
 							return {
 								...field,
 								descriptionAppend,

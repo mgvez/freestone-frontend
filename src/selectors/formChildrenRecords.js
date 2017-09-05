@@ -16,7 +16,7 @@ const shownRecordsSelector = (state) => state.freestone.recordForm.shownRecords;
 
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
-const rawForeignOptionsSelector = state => state.freestone.foreignOptions;
+const rawForeignOptionsSelector = state => state.freestone.foreign.options;
 
 
 function getRecordsFromParent(records, parentRecordId, linkFieldId) {

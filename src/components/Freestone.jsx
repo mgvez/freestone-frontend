@@ -29,7 +29,7 @@ import 'font-awesome/scss/font-awesome.scss';
 		return {
 			isAuthenticated: state.freestone.auth.isAuthenticated,
 			lastRequestTime: state.freestone.auth.lastRequestTime,
-			env: state.freestone.env,
+			freestone: state.freestone.env.freestone,
 			jwt: state.freestone.auth.jwt,
 		};
 	},
@@ -39,7 +39,7 @@ export class Freestone extends Component {
 	static propTypes = {
 		isAuthenticated: React.PropTypes.bool,
 		lastRequestTime: React.PropTypes.number,
-		env: React.PropTypes.object,
+		freestone: React.PropTypes.object,
 		jwt: React.PropTypes.string,
 
 		loginUser: React.PropTypes.func,
@@ -81,7 +81,7 @@ export class Freestone extends Component {
 	requireData(props) {
 		// console.log(props.env);
 		//s'assure que l'env est loadé
-		if (!props.env.clientPath) this.props.fetchEnv();
+		if (!props.freestone.clientPath) this.props.fetchEnv();
 
 	}
 
@@ -102,7 +102,7 @@ export class Freestone extends Component {
 		if (onLogin) {
 			// console.log(this.props.env);
 			const loc = onLogin === 'home' ? '' : onLogin;
-			const root = `//${this.props.env.domain}/${loc}?jwt=${this.props.jwt}`;
+			const root = `//${this.props.freestone.domain}/${loc}?jwt=${this.props.jwt}`;
 			window.location = root;
 			return null;
 		}
@@ -119,7 +119,7 @@ export class Freestone extends Component {
 				</div>
 				<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				{
-					this.props.env.clientScripts.map((scriptPath, i) => { 
+					this.props.freestone.clientScripts.map((scriptPath, i) => { 
 						return <Script key={i} url={scriptPath} onError={this.onScriptError} onLoad={this.onScriptLoaded} />;
 					})
 				}

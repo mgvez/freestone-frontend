@@ -10,7 +10,7 @@ import { fetchVariable } from '../../actions/env';
 	state => {
 		return {
 			...state.freestone.auth,
-			apiGoogle: state.freestone.envVariables && state.freestone.envVariables.api_google,
+			apiGoogle: state.freestone.env.clientVariables && state.freestone.env.clientVariables.api_google,
 		};
 	},
 	dispatch => bindActionCreators({ loginGoogleAPI, fetchVariable }, dispatch)

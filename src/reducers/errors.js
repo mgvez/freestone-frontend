@@ -1,7 +1,7 @@
 import { CLEAR_ERRORS } from '../actions/errors';
 import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 
-export function errors(state = [], action) {
+export default function(state = [], action) {
 	// console.log(action);
 	switch (action.type) {
 	case FREESTONE_API_FAILURE:

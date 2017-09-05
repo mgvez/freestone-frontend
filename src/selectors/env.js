@@ -2,9 +2,9 @@
 import { createSelector } from 'reselect';
 import { TINYMCE_CONFIG } from '../tinymce/default';
 
-const settingsSelector = state => state.freestone.envVariables && state.freestone.envVariables.settings;
-const cssPathSelector = state => state.freestone.env && state.freestone.env.pathCss;
-const clientPathSelector = state => state.freestone.env && state.freestone.env.clientPath;
+const settingsSelector = state => state.freestone.env.clientVariables.settings;
+const cssPathSelector = state => state.freestone.env.freestone.pathCss;
+const clientPathSelector = state => state.freestone.env.freestone.clientPath;
 
 export const mceConfigSelector = createSelector(
 	[settingsSelector, cssPathSelector, clientPathSelector],

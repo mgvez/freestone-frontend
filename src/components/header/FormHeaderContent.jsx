@@ -24,12 +24,12 @@ export class FormHeaderContent extends Component {
 		} else {
 			titles = <h1>{h1}</h1>;
 		}
-
+		const descriptionAppend = this.props.descriptionAppend || '';
 		if (this.props.table) {
 			return (
 				<div>
 					{titles}
-					<div className="table-help" dangerouslySetInnerHTML={{ __html: `${this.props.table.help} ${this.props.descriptionAppend}` }}></div>
+					<div className="table-help" dangerouslySetInnerHTML={{ __html: `${this.props.table.help} ${descriptionAppend}` }}></div>
 				</div>
 			);
 		}
