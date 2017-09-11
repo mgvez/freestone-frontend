@@ -28,7 +28,7 @@ export class PreviewRecord extends Component {
 	}
 
 	saveAndView = (e) => {
-		// console.log('save');
+		// console.log('save temp');
 		e.preventDefault();
 		this.setState({
 			saving: true,

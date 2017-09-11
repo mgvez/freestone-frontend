@@ -32,9 +32,11 @@ export function navigateToSlug(tableNameId, recordId, currentLanguage) {
 		});
 
 		onSlugReceived.then((res) => {
+			// console.log(res, currentLanguage);
 			if (!res || !res.slugs) return;
 			const lang = currentLanguage || Object.keys(res.slugs).shift();
 			const slug = res.slugs[lang];
+			// console.log(slug);
 			window.open(slug);
 		});
 	};
