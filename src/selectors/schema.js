@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER } from '../freestone/schemaProps';
+import { TYPE_MTM, TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER, TYPE_LANGUAGE } from '../freestone/schemaProps';
 
 //build le schema complet en tree
 
@@ -28,6 +28,8 @@ export const schemaSelector = createSelector(
 				isSelfTree: false,
 				hasOrder: false,
 				orderField: null,
+				hasLanguage: false,
+				languageField: null,
 				mtmOptionField: null,
 				hasChildren: !!(allChildren[tableId] && allChildren[tableId].length),
 			};
@@ -74,6 +76,18 @@ export const schemaSelector = createSelector(
 				table.hasOrder = true;
 				table.orderField = field;
 			}
+
+			if (field.type === TYPE_ORDER) {
+				table.hasOrder = true;
+				table.orderField = field;
+			}
+
+			if (field.type === TYPE_LANGUAGE) {
+				table.hasLanguage = true;
+				table.languageField = field;
+				// console.log(field);
+			}
+
 			if (field.type === TYPE_PRIMARY) table.prikey = field;
 			if (~TYPES_PARENT_LINK.indexOf(field.type) && field.foreign) {
 				table.parentLink[field.foreign.foreignTableId] = field;

@@ -303,13 +303,16 @@ function recordsUnaltered(state = {}, action) {
 function shownRecords(state = {}, action) {
 	switch (action.type) {
 	case SET_SHOWN_RECORD: {
-		const tableId = action.data.tableId;
+		const { tableId, parentRecordId, recordId, language } = action.data;
 		// console.log(action);
 		const newState = {
 			...state,
 			[tableId]: {
 				...state[tableId],
-				[action.data.parentRecordId]: action.data.recordId,
+				[parentRecordId]: language ? {
+					...state[tableId][parentRecordId],
+					[language]: recordId,
+				} : recordId,
 			},
 		};
 		// console.log(action.data);

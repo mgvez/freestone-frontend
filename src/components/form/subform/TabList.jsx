@@ -14,6 +14,7 @@ export class TabList extends Component {
 		parentTableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,
 		activeRecordId: React.PropTypes.string,
+		language: React.PropTypes.string,
 		highestOrder: React.PropTypes.number,
 
 		swapRecords: React.PropTypes.func,
@@ -34,6 +35,7 @@ export class TabList extends Component {
 						recordId={record.id}
 						index={index}
 						tableId={this.props.table.id}
+						language={this.props.table.languageField ? this.props.language : null}
 						parentRecordId={this.props.parentRecordId}
 						setShownRecord={this.props.setShownRecord}
 						swapRecords={this.props.swapRecords}
@@ -46,6 +48,7 @@ export class TabList extends Component {
 				parentRecordId={this.props.parentRecordId}
 				parentTableId={this.props.parentTableId}
 				highestOrder={this.props.highestOrder}
+				language={this.props.language}
 			/>
 		</nav>);
 	}

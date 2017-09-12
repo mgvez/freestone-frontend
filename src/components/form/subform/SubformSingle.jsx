@@ -48,6 +48,7 @@ export class SubformSingle extends Component {
 					parentRecordId={this.props.parentRecordId}
 					parentTableId={this.props.parentTableId}
 					language={this.props.language}
+					isSubform
 				/>
 			</section>
 		);

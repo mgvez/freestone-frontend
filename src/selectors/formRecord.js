@@ -14,7 +14,7 @@ const envSelector = state => state.freestone.env.freestone;
 // const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.freestone.schema.children;
 
-
+//checks if the value of a field matches a rule, so as to influence the display/hide of other fields
 function checkRule(rule, val) {
 	const boolRule = rule.toUpperCase();
 	if (boolRule === '*') return true;

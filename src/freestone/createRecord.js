@@ -4,6 +4,7 @@ import { callApi, getEndpoint } from './api';
 import { PRIKEY_ALIAS, TYPE_ORDER } from './schemaProps';
 
 export default (table, parentTableId, parentRecordId, orderVal, model) => {
+
 	const newRecordPromise = table.fields.reduce((recordPromise, field) => {
 		// console.log(field.name, field.default);
 		return recordPromise.then(record => {

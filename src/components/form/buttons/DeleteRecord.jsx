@@ -13,6 +13,7 @@ export class DeleteRecord extends Component {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,
 		parentRecordId: React.PropTypes.string,
+		language: React.PropTypes.string,
 
 		setShownRecord: React.PropTypes.func,
 		setRecordDeleted: React.PropTypes.func,
@@ -21,7 +22,7 @@ export class DeleteRecord extends Component {
 	deleteRecord = () => {
 		this.props.setRecordDeleted(this.props.tableId, this.props.recordId);
 		if (this.props.parentRecordId) {
-			this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, null);
+			this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, null, this.props.language);
 		}
 	};
 

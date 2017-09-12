@@ -7,6 +7,7 @@ import { subformViewSelector } from './subformView';
 import { schemaSelector } from './schema';
 import { isNew } from '../utils/UniqueId';
 import { getForeignFieldId } from '../freestone/schemaHelpers';
+import { userViewLanguageSelector } from './userViewLanguage';
 
 import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from '../freestone/settings';
@@ -34,6 +35,13 @@ function sortRecords(records, orderField) {
 		});
 	}
 	return records;
+}
+
+function filterLangRecords(records, languageField, currentLanguage) {
+	// console.log(records, languageField, currentLanguage);
+	if (!languageField) return records;
+	const langFieldId = languageField.id;
+	return records.filter(r => r[langFieldId] === currentLanguage);
 }
 
 function getLabeledRecords(records, searchableFields, orderField, rawForeignOptions) {
@@ -74,8 +82,8 @@ function getLabeledRecords(records, searchableFields, orderField, rawForeignOpti
 
 function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 	return createSelector(
-		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector, rawForeignOptionsSelector],
-		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions) => {
+		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector, rawForeignOptionsSelector, userViewLanguageSelector],
+		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions, userViewLanguage) => {
 			const { table } = schema;
 			const { tables } = allSchema;
 
@@ -93,10 +101,20 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 					// console.log(subformFieldId);
 					// console.log(tableRecords);
 					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, subformFieldId) : [];
+
+					//if table has language field, only show children that are the current
+					childrenRecords = filterLangRecords(childrenRecords, table.languageField, userViewLanguage.language);
+					
 					// console.log(childrenRecords);
 					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField, rawForeignOptions);
+					
 					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+
+					//if record is part of a subform with a language field (so that you have french records and english records)
+					if (activeRecordId && typeof activeRecordId === 'object') activeRecordId = activeRecordId[userViewLanguage.language];
+
 					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);
+
 				}
 
 				//highest order, pour quand on add un record, qu'il soit à la suite

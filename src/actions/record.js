@@ -68,11 +68,11 @@ export function toggleMtm(tableId, parentTableId, parentRecordId, optionId) {
 	};
 }
 
-export function setShownRecord(tableId, parentRecordId, recordId) {
+export function setShownRecord(tableId, parentRecordId, recordId, language) {
 	return (dispatch) => {
 		return dispatch({
 			type: SET_SHOWN_RECORD,
-			data: { tableId, parentRecordId, recordId },
+			data: { tableId, parentRecordId, recordId, language },
 		});
 	};
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { fetchTable } from '../../actions/schema';
 import { fetchRecord, setFieldVal } from '../../actions/record';
+import { TYPE_LANGUAGE } from '../../freestone/schemaProps';
 
 import { formRecordMapStateToProps } from '../../selectors/formRecord';
 
@@ -21,6 +22,7 @@ export class SingleRecord extends Component {
 		recordId: React.PropTypes.string,
 		parentRecordId: React.PropTypes.string,
 		parentTableId: React.PropTypes.number,
+		isSubform: React.PropTypes.bool,
 		
 		table: React.PropTypes.object,
 		children: React.PropTypes.array,
@@ -88,7 +90,9 @@ export class SingleRecord extends Component {
 
 		//if field is language-specific, display it only if the current language is the field's
 		// console.log(field.name, field.language, this.props.language);
-		return ((field.language && field.language === this.props.language) || !field.language) ? (<Field
+		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
+		const isShowField = (field.language && field.language === this.props.language) || !field.language || (this.props.isSubform && field.type !== TYPE_LANGUAGE);
+		return isShowField ? (<Field
 			key={field.id} 
 			field={field}
 			tableName={this.props.table.name}
@@ -116,6 +120,7 @@ export class SingleRecord extends Component {
 				deleteBtn = (<DeleteRecord 
 					tableId={this.props.table.id}
 					recordId={this.props.recordId}
+					language={this.props.table.hasLanguage ? this.props.language : null}
 				/>);
 			}
 

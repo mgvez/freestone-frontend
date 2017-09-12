@@ -48,6 +48,7 @@ export class Tab extends Component {
 		recordId: React.PropTypes.string,
 		isActive: React.PropTypes.bool,
 		displayLabel: React.PropTypes.string,
+		language: React.PropTypes.string,
 		index: React.PropTypes.number,
 		hasOrder: React.PropTypes.bool,
 
@@ -59,7 +60,7 @@ export class Tab extends Component {
 	};
 
 	setShownRecord = () => {
-		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.recordId);
+		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.recordId, this.props.language);
 	};
 
 	getMarkup(opacity = 1) {
