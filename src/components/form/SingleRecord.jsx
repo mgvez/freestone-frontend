@@ -91,7 +91,8 @@ export class SingleRecord extends Component {
 		//if field is language-specific, display it only if the current language is the field's
 		// console.log(field.name, field.language, this.props.language);
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
-		const isShowField = (field.language && field.language === this.props.language) || !field.language || (this.props.isSubform && field.type !== TYPE_LANGUAGE);
+		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
+
 		return isShowField ? (<Field
 			key={field.id} 
 			field={field}

@@ -38,6 +38,7 @@ export class SubformList extends CollapsableForm {
 						parentRecordId={this.props.parentRecordId}
 						parentTableId={this.props.parentTableId}
 						language={this.props.language}
+						isSubform
 					/>);
 				})
 			}
@@ -47,6 +48,7 @@ export class SubformList extends CollapsableForm {
 					parentRecordId={this.props.parentRecordId}
 					parentTableId={this.props.parentTableId}
 					highestOrder={this.props.highestOrder}
+					language={this.props.language}
 				/>
 			}
 		</div>);
@@ -61,7 +63,7 @@ export class SubformList extends CollapsableForm {
 			<section className="subform subform-list">
 				<header className="row">
 					<div className="col-md-8">
-						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
+						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}

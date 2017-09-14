@@ -149,7 +149,7 @@ export class RootForm extends Component {
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
 				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
-					<FormHeaderContent table={this.props.table} label={this.props.recordLabel} />
+					<FormHeaderContent table={this.props.table} label={this.props.recordLabel} language={this.props.language} />
 				</FormHeader>
 
 				{permsWidget}

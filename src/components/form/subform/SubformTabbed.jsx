@@ -35,6 +35,7 @@ export class SubformTabbed extends CollapsableForm {
 				parentTableId={this.props.parentTableId}
 				recordId={activeRecordId}
 				language={this.props.language}
+				isSubform
 			/>
 		</div>);
 	}
@@ -48,7 +49,7 @@ export class SubformTabbed extends CollapsableForm {
 			<section className="subform">
 				<header className="row">
 					<div className="col-md-8">
-						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
+						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}
