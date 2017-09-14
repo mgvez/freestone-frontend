@@ -308,9 +308,9 @@ function shownRecords(state = {}, action) {
 		const newState = {
 			...state,
 			[tableId]: {
-				...state[tableId],
+				...(state[tableId] || {}),
 				[parentRecordId]: language ? {
-					...state[tableId][parentRecordId],
+					...(state[tableId][parentRecordId] || {}),
 					[language]: recordId,
 				} : recordId,
 			},
