@@ -310,7 +310,7 @@ function shownRecords(state = {}, action) {
 			[tableId]: {
 				...(state[tableId] || {}),
 				[parentRecordId]: language ? {
-					...(state[tableId][parentRecordId] || {}),
+					...((state[tableId] && state[tableId][parentRecordId]) || {}),
 					[language]: recordId,
 				} : recordId,
 			},
