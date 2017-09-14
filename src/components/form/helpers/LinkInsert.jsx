@@ -9,7 +9,7 @@ function buildlink(contents, link, linkLabel, linkTarget) {
 	
 	// console.log(val, !!~val.indexOf('{lnk'), !!~val.indexOf('//'));
 
-	if (!~val.indexOf('//') && !~val.indexOf('{lnk')) {
+	if (!~val.indexOf('mailto:') && !~val.indexOf('//') && !~val.indexOf('{lnk')) {
 		val = `//${val}`;
 	}
 	
