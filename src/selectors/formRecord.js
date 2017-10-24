@@ -146,15 +146,13 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					Object.keys(dependencies).forEach((targetFieldId) => {
 						
 						const field = allFields[targetFieldId];
-						// console.log(field);
 						//pour indiquer si le subform s'affiche ou pas dépendant de la value, on se fie sur le champ foreign qui lie le subform à son parent. Les autres fields seront traités dans le subform, s'il s'affiche.
-						if (field.foreign && field.foreign.foreignTableId === table.id) {
+						if (field && field.foreign && field.foreign.foreignTableId === table.id) {
 							//trouve ce child
 							const child = children.find(candidate => candidate.tableId === field.table_id);
 							child.isDisplay = dependencies[targetFieldId].isDisplay;
 							child.titleOverride = dependencies[targetFieldId].titleOverride;
 							child.descriptionAppend = dependencies[targetFieldId].descriptionAppend;
-
 						}
 					});
 				}
