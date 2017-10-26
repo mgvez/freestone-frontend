@@ -9,8 +9,8 @@ const valSelector = (state, props) => props.val;
 export const hotspotSelector = createSelector(
 	[fieldSelector, fieldIdSelector, recordSelector, mainRecordIdSelector, valSelector],
 	(fields, fieldId, records, mainRecordId, val) => {
-		const tableId = fields[fieldId].table_id;
-		const imageId = records[tableId][mainRecordId][fieldId];
+		const tableId = fields && fields[fieldId] && fields[fieldId].table_id;
+		const imageId = records[tableId] && records[tableId][mainRecordId] && records[tableId][mainRecordId][fieldId];
 
 		return {
 			imageId,
