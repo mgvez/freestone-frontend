@@ -8,12 +8,13 @@ export default (table, parentTableId, parentRecordId, orderVal, model) => {
 	const newRecordPromise = table.fields.reduce((recordPromise, field) => {
 		// console.log(field.name, field.default);
 		return recordPromise.then(record => {
+			// console.log(record);
 			if (field.type === TYPE_ORDER) {
 				record[field.id] = orderVal || '';
 			} else if (model && (model[field.id] || model[field.name])) {
 				record[field.id] = model[field.id] || model[field.name];
 			} else {
-				let val = String(field.default);
+				let val = field.default === null ? '' : String(field.default);
 				switch (val.toLowerCase().trim()) {
 				case 'now':
 				case 'now()': {
