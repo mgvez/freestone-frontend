@@ -1,16 +1,13 @@
 import { createSelector } from 'reselect';
 
 import { recordSlugsMapStateToProps } from './recordSlugs';
-import { GOD_USER_GROUP } from '../freestone/schemaProps';
-
-const isGodSelector = state => state.freestone.auth.usergroup === GOD_USER_GROUP;
+import { isGodSelector } from './credentials';
 
 
 export const formHeaderSelector = createSelector(
 	[recordSlugsMapStateToProps(), isGodSelector],
 	(recordSlugs, isGod) => {
 		// console.log(recordSlugs);
-
 		const slugs = recordSlugs && Object.keys(recordSlugs).map(lang => {
 			return {
 				lang,
@@ -20,7 +17,7 @@ export const formHeaderSelector = createSelector(
 
 		return {
 			slugs,
-			isGod,
+			...isGod,
 		};
 	}
 );

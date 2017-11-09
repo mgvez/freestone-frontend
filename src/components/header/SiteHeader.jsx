@@ -1,29 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
-import { clearData, startPerf, stopPerf } from '../../actions/dev';
-import { clearErrors } from '../../actions/errors';
-import { logout } from '../../actions/auth';
-import { clearSchema } from '../../actions/schema';
-
-import { GOD_USER_GROUP } from '../../freestone/schemaProps';
 
 import { HomeButton } from '../widgets/HomeButton';
 import { NavToggler } from '../widgets/NavToggler';
 import { LoadedRecordsToggler } from '../widgets/LoadedRecordsToggler';
 
-const actionCreators = { clearErrors, clearData, startPerf, stopPerf, clearSchema, logout };
-
-@connect(
-	state => {
-		// console.log(state.freestone.auth.usergroup, GOD_USER_GROUP);
-		return {
-			isGod: state.freestone.auth.usergroup === GOD_USER_GROUP,
-		};
-	},
-	dispatch => bindActionCreators(actionCreators, dispatch)
-)
 export class SiteHeader extends Component {
 	static propTypes = {
 		isGod: React.PropTypes.bool,
@@ -35,12 +15,6 @@ export class SiteHeader extends Component {
 		stopPerf: React.PropTypes.func,
 		clearSchema: React.PropTypes.func,
 	};
-
-	// hideHeader() {
-	// 	const opacity = 1 - (window.pageYOffset / 200).toFixed(1);
-	// 	this.refs.header.style.opacity = opacity;
-	// }
-
 
 	render() {
 		// console.log(this.props);

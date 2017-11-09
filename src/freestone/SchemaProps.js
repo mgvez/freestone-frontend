@@ -7,6 +7,7 @@ export const DELETED_PSEUDOFIELD_ALIAS = '__deleted';
 export const LABEL_PSEUDOFIELD_ALIAS = '__label';
 export const EDITED_PSEUDOFIELD_ALIAS = '__isedited';
 export const SLUG_PSEUDOFIELD_ALIAS = '__slug';
+export const SUBSITE_FIELD = '___sub';
 
 export const TYPE_MAIN = 'main';
 

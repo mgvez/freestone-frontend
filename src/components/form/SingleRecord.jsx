@@ -23,6 +23,7 @@ export class SingleRecord extends Component {
 		parentRecordId: React.PropTypes.string,
 		parentTableId: React.PropTypes.number,
 		isSubform: React.PropTypes.bool,
+		isGod: React.PropTypes.bool,
 		
 		table: React.PropTypes.object,
 		children: React.PropTypes.array,
@@ -46,12 +47,6 @@ export class SingleRecord extends Component {
 		// console.log('receive', nextProps.table.id, nextProps.table === this.props.table);
 		this.requireData(nextProps);
 	}
-
-	// shouldComponentUpdate(nextProps) {
-	// 	console.log('should ', nextProps.table.id, nextProps.table === this.props.table);
-	// 	return true;
-	// 	//return nextProps.id !== this.props.id;
-	// }
 
 	requireData(props) {
 		const { tableId, recordId } = props;
@@ -141,8 +136,11 @@ export class SingleRecord extends Component {
 				);
 			}
 
+			const subsiteField = (this.props.isGod && this.props.table.isSubsiteDependent) ? <div>subsite</div> : null;
+
 			form = (
 				<article>
+					{subsiteField}
 					<div className="row">
 						<div className="col-md-12 close-row">
 							{deleteBtn}

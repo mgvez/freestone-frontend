@@ -4,14 +4,9 @@ const fieldsSelector = state => state.freestone.schema.fields;
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps, parentTableSchemaMapStateToProps } from './tableSchema';
 import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps } from './record';
+import { isGodSelector } from './credentials';
 
-// import { PRIKEY_ALIAS } from 'freestone/schemaProps';
-
-
-// const recordsSelector = state => state.freestone.recordForm.records;
-// const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
 const envSelector = state => state.freestone.env.freestone;
-// const recordIdSelector = (state, props) => props.recordId;
 const childrenSelector = state => state.freestone.schema.children;
 
 //checks if the value of a field matches a rule, so as to influence the display/hide of other fields
@@ -90,8 +85,8 @@ function parseDependencies(table, record) {
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector) {
 	return createSelector(
-		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector],
-		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord) => {
+		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector],
+		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod) => {
 			let { table } = schema;
 			let children;
 			let dependencies;
@@ -175,6 +170,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				table,
 				fields: table && table.fields,
 				env,
+				...isGod,
 			};
 		}
 	);
@@ -187,7 +183,7 @@ export function formRecordMapStateToProps() {
 		recordMapStateToProps(),
 		recordUnalteredMapStateToProps(),
 		parentTableSchemaMapStateToProps(),
-		parentRecordMapStateToProps()
+		parentRecordMapStateToProps(),
 	);
 	return (state, props) => {
 		return selectorInst(state, props);

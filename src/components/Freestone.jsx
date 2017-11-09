@@ -10,7 +10,7 @@ import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 const actionCreators = { loginUser, fetchVariable, fetchEnv };
 
 /* application components */
-import { SiteHeader } from './header/SiteHeader';
+import SiteHeader from '../containers/SiteHeader';
 import { Footer } from './footer/Footer';
 import { Errors } from './Errors';
 import { Nav } from './menu/Nav';
