@@ -13,6 +13,10 @@
 .search-inputs-ctn {
 	display: flex;
 	align-items: center;
+
+	input {
+		margin-bottom: 0;
+	}
 }
 
 .button-search {
