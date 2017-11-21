@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { TRANSLATIONS_API, SET_PLACED_TRANSLATIONS, EDIT_TRANSLATION, SAVE_TRANSLATIONS_API, CLOSE_TRANSLATIONS_API } from '../actions/translations';
+import { TRANSLATIONS_API, EDIT_TRANSLATION, SAVE_TRANSLATIONS_API, CLOSE_TRANSLATIONS_API } from '../actions/translations';
 import { CLEAR_DATA } from '../actions/dev';
 
 function translations(state = {}, action) {
@@ -35,14 +35,18 @@ function translations(state = {}, action) {
 	}
 }
 
-function placedTranslations(state = null, action) {
+function schema(state = {}, action) {
 	switch (action.type) {
-	case SET_PLACED_TRANSLATIONS: {
+	case TRANSLATIONS_API.SUCCESS: {
 		// console.log(action);
-		return action.data;
+		const newState = {
+			...state,
+			...action.data.schema,
+		};
+		return newState;
 	}
 	case CLEAR_DATA:
-		return null;
+		return {};
 	default:
 		return state;
 	}
@@ -51,5 +55,5 @@ function placedTranslations(state = null, action) {
 
 export default combineReducers({
 	translations,
-	placedTranslations,
+	schema,
 });

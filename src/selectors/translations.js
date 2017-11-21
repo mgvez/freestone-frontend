@@ -2,7 +2,7 @@
 import { createSelector } from 'reselect';
 
 const allTranslationsSelector = state => state.freestone.translations && state.freestone.translations.translations;
-const placedTranslationsSelector = state => state.freestone.translations.placedTranslations && state.freestone.translations.placedTranslations;
+const translationsSchemaSelector = state => state.freestone.translations.schema && state.freestone.translations.schema;
 const allLanguagesSelector = state => state.freestone.env.freestone.languages;
 const keySelector = (state, props) => props.translationKey;
 const langSelector = (state, props) => props.language;
@@ -41,9 +41,10 @@ function onlyUnique(value, index, self) {
 }
 
 export const coreTranslations = createSelector(
-	[allTranslationsSelector, languageKeysSelector, placedTranslationsSelector],
-	(translations, languages, placedTranslations) => {
-
+	[allTranslationsSelector, languageKeysSelector, translationsSchemaSelector],
+	(translations, languages, schema) => {
+		// console.log(translations);
+		// console.log(schema);
 		const translationKeys = languages.reduce((allKeys, lang) => {
 			const langTranslations = translations[lang];
 			if (langTranslations) {
@@ -57,8 +58,8 @@ export const coreTranslations = createSelector(
 			translationKeys,
 			translations,
 			isEdited: translations.isEdited,
-			placedTranslations,
 			languages,
+			schema,
 		};
 	}
 );

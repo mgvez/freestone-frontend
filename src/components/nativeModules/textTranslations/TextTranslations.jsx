@@ -19,6 +19,7 @@ export class TextTranslations extends Component {
 		translations: React.PropTypes.object,
 		translationKeys: React.PropTypes.array,
 		languages: React.PropTypes.array,
+		schema: React.PropTypes.object,
 		isEdited: React.PropTypes.bool,
 
 		saveTranslations: React.PropTypes.func,
@@ -80,10 +81,12 @@ export class TextTranslations extends Component {
 		if (this.props.translationKeys) {
 			keys = (<div className="container">
 				{this.props.translationKeys.map((translationKey, tIdx) => {
-					return (<div key={tIdx}>
+					const label = this.props.schema[translationKey];
+					const labelNode = label ? <div>{label} <span className="key">{translationKey}</span></div> : <div>{translationKey}</div>;
+					return (<div key={tIdx} className="translation">
 						<div className="row">
-							<div className="col-md-12">
-								<h3>{translationKey}</h3>
+							<div className="col-md-12 translation-label">
+								{labelNode}
 							</div>
 						</div>
 						<div>

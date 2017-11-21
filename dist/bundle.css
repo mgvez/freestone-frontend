@@ -1219,6 +1219,19 @@ textarea {
     flex: 0 0 auto;
     margin-left: 20px; }
 
+.translation {
+  border-bottom: 1px #bababb solid;
+  padding: 0.3em; }
+
+.translation-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 1.1em; }
+  .translation-label .key {
+    font-weight: normal;
+    font-size: 0.8em;
+    margin-left: 2em; }
+
 .field-label {
   padding-top: 10px;
   margin-bottom: 10px;
@@ -3049,6 +3062,8 @@ textarea {
 .search-inputs-ctn {
   display: flex;
   align-items: center; }
+  .search-inputs-ctn input {
+    margin-bottom: 0; }
 
 .button-search {
   height: 40px;

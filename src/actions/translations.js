@@ -1,7 +1,6 @@
 import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 
-export const SET_PLACED_TRANSLATIONS = 'SET_PLACED_TRANSLATIONS';
 export const EDIT_TRANSLATION = 'EDIT_TRANSLATION';
 
 export const TRANSLATIONS_API = createRequestTypes('TRANSLATIONS_API');
@@ -19,18 +18,6 @@ export function fetchTranslations(lang) {
 		});
 	};
 }
-
-// export function fetchPlacedTranslations() {
-// 	return (dispatch) => {
-// 		return dispatch({
-// 			[FREESTONE_API]: {
-// 				types: ['api::fetch-placed-translations', SET_PLACED_TRANSLATIONS, FREESTONE_API_FATAL_FAILURE],
-// 				route: 'translations/getFromTemplates',
-// 			},
-// 		});
-// 	};
-// }
-
 
 export function editTranslation(language, key, value) {
 	return (dispatch) => {
