@@ -22,7 +22,7 @@ export class Field extends Component {
 		lang: React.PropTypes.string,
 		//isRoot can be true if table has property forceAsRoot that make it "main table" even if it is also subforms. 
 		isRoot: React.PropTypes.bool,
-
+		absolutePath: React.PropTypes.string,
 		setFieldVal: React.PropTypes.func,
 	};
 
@@ -73,6 +73,7 @@ export class Field extends Component {
 				break;
 			case 'img':
 			case 'file':
+				// console.log(this.props);
 				input = <FileInput {...this.props} />;
 				break;
 			case 'hotspot':

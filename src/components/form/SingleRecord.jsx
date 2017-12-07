@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { fetchTable } from '../../actions/schema';
 import { fetchRecord, setFieldVal } from '../../actions/record';
-import { TYPE_LANGUAGE } from '../../freestone/schemaProps';
+import { TYPE_LANGUAGE, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
 
 import { formRecordMapStateToProps } from '../../selectors/formRecord';
 
@@ -87,13 +87,14 @@ export class SingleRecord extends Component {
 		// console.log(field.name, field.language, this.props.language);
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
 		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
-
+		// console.log(this.props.record);
 		return isShowField ? (<Field
 			key={field.id} 
 			field={field}
 			tableName={this.props.table.name}
 			recordId={this.props.recordId}
 			val={this.props.record[field.id]}
+			absolutePath={this.props.record[`${field.id}${BANK_FILE_PATH_ALIAS}`]}
 			origVal={this.props.recordUnaltered[field.id]}
 			parentRecordId={this.props.parentRecordId}
 			setFieldVal={this.props.setFieldVal}

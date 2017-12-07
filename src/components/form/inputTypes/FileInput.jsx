@@ -14,6 +14,7 @@ export class FileInput extends Input {
 			folder={this.props.field.folder}
 			fieldId={this.props.field.id}
 			recordId={this.props.recordId}
+			absolutePath={this.props.absolutePath}
 			changeVal={this.changeVal}
 		/>);
 

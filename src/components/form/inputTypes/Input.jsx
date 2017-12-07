@@ -6,6 +6,7 @@ export class Input extends Component {
 		recordId: React.PropTypes.string,
 		val: React.PropTypes.any,
 		origVal: React.PropTypes.any,
+		absolutePath: React.PropTypes.string,
 		env: React.PropTypes.object,
 
 		setFieldVal: React.PropTypes.func,

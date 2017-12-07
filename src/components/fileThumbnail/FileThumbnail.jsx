@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 
 import { TYPE_FILE } from '../../freestone/schemaProps';
 
+const css = {
+	maxHeight: 200,
+	maxWidth: 200,
+};
+
 @connect(
 	state => {
 		return {
@@ -16,20 +21,17 @@ export class FileThumbnail extends Component {
 		dir: React.PropTypes.string,
 		val: React.PropTypes.string,
 		localVal: React.PropTypes.string,
+		absolutePath: React.PropTypes.string,
 		type: React.PropTypes.string,
 	};
 
-	componentWillMount() {
-		this.css = {
-			maxHeight: 200,
-			maxWidth: 200,
-		};
+	getLocalPath() {
+		return `${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`;
 	}
-
 
 	render() {
 
-		if (!this.props.val && !this.props.localVal) return null;
+		if (!this.props.val && !this.props.localVal && !this.props.absolutePath) return null;
 
 		let display;
 		if (this.props.type === TYPE_FILE) {
@@ -37,12 +39,13 @@ export class FileThumbnail extends Component {
 		} else {
 			//image
 			//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
-			const val = this.props.val ? `${this.props.env.thumbsDir}/${this.props.dir}/${this.props.val}` : this.props.localVal;
-			display = <img src={val} style={this.css} />;
+			const thumbVal = (this.props.val && (this.props.absolutePath || `${this.props.env.thumbsDir}/${this.props.dir}/${this.props.val}`)) || this.props.localVal;
+			display = <img src={thumbVal} style={css} />;
 		}
+		
+		const path = this.props.absolutePath || this.getLocalPath();
 
-
-		return <a href={`${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`} target="_blank">{display}</a>;
+		return <a href={path} target="_blank">{display}</a>;
 
 	}
 }

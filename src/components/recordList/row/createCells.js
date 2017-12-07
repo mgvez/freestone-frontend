@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS } from '../../../freestone/schemaProps';
+import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_FILE_PATH_ALIAS } from '../../../freestone/schemaProps';
 import { FileThumbnail } from '../../fileThumbnail/FileThumbnail';
 import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
 import { BankNUses } from '../../widgets/BankNUses';
@@ -34,6 +34,7 @@ export function createCells(table, fields, values, elementType = 'td', options =
 				FileThumbnail,
 				{
 					val: values[field.listAlias],
+					absolutePath: values[field.listAlias + BANK_FILE_PATH_ALIAS],
 					dir: field.folder,
 					type: field.type,
 				}
