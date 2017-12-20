@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SingleRecord } from '../SingleRecord';
-import { FormHeaderContent } from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/FormHeaderContent';
 import { ChangeSubformView } from '../buttons/ChangeSubformView';
 import { AddRecord } from '../buttons/AddRecord';
 import { CollapsableForm } from './CollapsableForm';

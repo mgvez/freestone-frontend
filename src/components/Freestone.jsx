@@ -5,7 +5,7 @@ import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 
 /* application components */
 import SiteHeader from '../containers/SiteHeader';
-import { Footer } from './footer/Footer';
+import Footer from './footer/Footer';
 import Errors from '../containers/Errors';
 import { Nav } from './menu/Nav';
 import LoadedRecords from '../containers/dashboard/LoadedRecords';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class HeaderContainer extends Component {
+export default class HeaderContainer extends Component {
 	static propTypes = {
 		children: React.PropTypes.any,
 	};

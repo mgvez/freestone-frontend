@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class FormHeaderContent extends Component {
+export default class FormHeaderContent extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		//optional label, that will be combined with the table's default title if present 

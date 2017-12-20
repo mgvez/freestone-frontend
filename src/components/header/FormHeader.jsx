@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import { HeaderContainer } from './HeaderContainer'; 
+import HeaderContainer from './HeaderContainer'; 
 import { FormHeaderVariation } from './FormHeaderVariation'; 
 
 
-export class FormHeader extends Component {
+export default class FormHeader extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		setLanguageState: React.PropTypes.func,

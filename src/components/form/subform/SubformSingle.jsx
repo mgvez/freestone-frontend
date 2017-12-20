@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { AddRecord } from '../buttons/AddRecord';
-import { FormHeaderContent } from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/FormHeaderContent';
 import { SingleRecord } from '../SingleRecord';
 
 

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 /* component styles */
 import styles from 'style-loader!./styles/styles.scss';
 
-export class Footer extends Component {
+export default class Footer extends Component {
 	render() {
 
 		return (

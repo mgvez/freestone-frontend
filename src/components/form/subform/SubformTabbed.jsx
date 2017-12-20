@@ -4,7 +4,7 @@ import { TabList } from './TabList';
 import { CollapsableForm } from './CollapsableForm';
 import { SingleRecord } from '../SingleRecord';
 import { ChangeSubformView } from '../buttons/ChangeSubformView';
-import { FormHeaderContent } from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/FormHeaderContent';
 import { ToggleSubform } from '../buttons/ToggleSubform';
 
 

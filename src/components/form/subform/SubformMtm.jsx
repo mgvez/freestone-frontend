@@ -7,7 +7,7 @@ import { fetchMtmOptions, fetchMtmRecords, toggleMtm } from '../../../actions/re
 
 import { formMtmMapStateToProps } from '../../../selectors/formMtm';
 
-import { FormHeaderContent } from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/FormHeaderContent';
 import { ToggleSubform } from '../buttons/ToggleSubform';
 import { CollapsableForm } from './CollapsableForm';
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { SingleTranslation } from './SingleTranslation';
 import { Field } from './Field';
-import { FormHeader } from '../../header/FormHeader'; 
+import FormHeader from '../../header/FormHeader'; 
 
 import { saveTranslations, fetchTranslations, closeTranslations } from '../../../actions/translations';
 import { goTo } from '../../../actions/nav';
