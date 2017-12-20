@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { fetchBankImage } from '../../actions/bank';
-import { bankImgThumbnailSelector } from '../../selectors/bank';
 
 //dimension max des images, selon grille
 const MAX_SIZE = 400;
 
-@connect(
-	bankImgThumbnailSelector,
-	dispatch => bindActionCreators({ fetchBankImage }, dispatch)
-)
-export class BankImgThumbnail extends Component {
+export default class BankImgThumbnail extends Component {
 	static propTypes = {
 		id: React.PropTypes.any,
 		markup: React.PropTypes.string,

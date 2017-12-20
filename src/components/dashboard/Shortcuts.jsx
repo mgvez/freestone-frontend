@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import { dashboardSelector } from '../../selectors/nav';
-
 
 import { Table } from '../menu/Table';
 import { Module } from '../menu/Module';
 import { Page } from '../menu/Page';
 import { NativeModule } from '../menu/NativeModule';
 
-@connect(
-	dashboardSelector
-)
 export default class Shortcuts extends Component {
 	static propTypes = {
 		tables: React.PropTypes.array,

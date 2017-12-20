@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { fetchBankFile } from '../../actions/bank';
-import { bankFileItemSelector } from '../../selectors/bank';
 import { BANK_FILE_FILE_ALIAS, BANK_FILE_TITLE_ALIAS, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
 
-@connect(
-	bankFileItemSelector,
-	dispatch => bindActionCreators({ fetchBankFile }, dispatch)
-)
-export class BankFileThumbnail extends Component {
+export default class BankFileThumbnail extends Component {
 	static propTypes = {
 		id: React.PropTypes.any,
 		item: React.PropTypes.object,

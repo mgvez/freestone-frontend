@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 
-import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
+import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import customStyle from '../../styles/modalStyles.js';
 
 export class HotspotInsert extends Component {

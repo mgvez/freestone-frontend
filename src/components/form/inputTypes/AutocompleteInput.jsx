@@ -5,7 +5,7 @@ import Autosuggest from 'react-autosuggest';
 
 import { Input } from './Input';
 import { FileThumbnail } from '../../fileThumbnail/FileThumbnail';
-import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
+import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 
 import { fetchForeignOptions } from '../../../actions/foreignOptions';
 import { foreignOptionsMapStateToProps } from '../../../selectors/foreignOptions';

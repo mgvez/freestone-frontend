@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Input } from './Input';
 import { HotspotInsert } from '../helpers/HotspotInsert';
-import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
+import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 
 import { hotspotSelector } from '../../../selectors/hotspot.js';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_FILE_PATH_ALIAS } from '../../../freestone/schemaProps';
 import { FileThumbnail } from '../../fileThumbnail/FileThumbnail';
-import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
+import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import { BankNUses } from '../../widgets/BankNUses';
 import { BoolSwitch } from '../BoolSwitch';
 

@@ -11,7 +11,7 @@ import { fetchTable } from '../../../actions/schema';
 import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
 import { callApi, getEndpoint } from '../../../freestone/api';
 
-import { BankImgThumbnail } from '../../fileThumbnail/BankImgThumbnail';
+import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import { RootForm } from '../RootForm';
 import { Paging } from '../../recordList/Paging';
 
