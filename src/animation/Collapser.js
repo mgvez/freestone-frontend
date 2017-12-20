@@ -2,7 +2,7 @@ import { TweenMax } from '../utils/Greensock';
 
 const TOGGLE_ANIM_TIME = 0.5;
 
-export class Collapser {
+export default class Collapser {
 	constructor({ getOpenState, changeState, getContainer, animTime = TOGGLE_ANIM_TIME }) {
 		this.getOpenState = getOpenState;
 		this.animTime = animTime;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import HeaderContainer from './HeaderContainer'; 
-import { FormHeaderVariation } from './FormHeaderVariation'; 
+import FormHeaderVariation from '../../containers/header/FormHeaderVariation'; 
 
 
 export default class FormHeader extends Component {

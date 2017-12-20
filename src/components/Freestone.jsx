@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import Script from 'react-load-script';
 
 import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
+import qstrParams from '../utils/qstrParams';
 
 /* application components */
-import SiteHeader from '../containers/SiteHeader';
 import Footer from './footer/Footer';
+import SiteHeader from '../containers/SiteHeader';
 import Errors from '../containers/Errors';
-import { Nav } from './menu/Nav';
+import Nav from '../containers/menu/Nav';
 import LoadedRecords from '../containers/dashboard/LoadedRecords';
 import Login from '../containers/auth/Login';
 import GoogleAuthenticate from '../containers/auth/GoogleAuthenticate';
-import qstrParams from '../utils/qstrParams';
-
 
 import 'style-loader!../scss/style.scss';
 import 'font-awesome/scss/font-awesome.scss';

@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { NavGroup } from './NavGroup';
+import NavGroup from './NavGroup';
 import { UserInfos } from '../widgets/UserInfos';
-import { HomeButton } from '../widgets/HomeButton';
+import HomeButton from '../widgets/HomeButton';
 
-import { toggleCollapse, fetchNav } from '../../actions/nav';
-import { navSelector } from '../../selectors/nav';
-
-@connect(
-	navSelector,
-	dispatch => bindActionCreators({ toggleCollapse, fetchNav }, dispatch)
-)
-export class Nav extends Component {
+export default class Nav extends Component {
 	static propTypes = {
 		fetchNav: React.PropTypes.func,
 		toggleCollapse: React.PropTypes.func,

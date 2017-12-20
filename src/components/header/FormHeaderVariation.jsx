@@ -1,10 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchSlug } from '../../actions/slugs';
-
-import { formHeaderSelector } from '../../selectors/formHeader';
-const actionCreators = { fetchSlug };
 
 import { LanguageToggler } from '../form/LanguageToggler';
 import { PreviewRecord } from '../form/buttons/PreviewRecord';
@@ -18,11 +12,7 @@ import { PreviewRecord } from '../form/buttons/PreviewRecord';
  * pour ne pas avoir à recalculer la hauteur du header et l'ajouter au
  * padding-top du body.
  */
-@connect(
-	formHeaderSelector,
-	dispatch => bindActionCreators(actionCreators, dispatch)
-)
-export class FormHeaderVariation extends Component {
+export default class FormHeaderVariation extends Component {
 	static propTypes = {
 		isGod: React.PropTypes.bool,
 		slugs: React.PropTypes.array,

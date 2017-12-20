@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-export class Page extends Component {
+export default class Page extends Component {
 	static propTypes = {
 		label: React.PropTypes.string,
 		id: React.PropTypes.number,

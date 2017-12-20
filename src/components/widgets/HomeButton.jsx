@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-export class HomeButton extends Component {
+export default class HomeButton extends Component {
 	static propTypes = {
 		showIcon: React.PropTypes.bool,
 		customClass: React.PropTypes.string,

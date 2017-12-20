@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import { Table } from './Table';
-import { Module } from './Module';
-import { Page } from './Page';
-import { NativeModule } from './NativeModule';
-import { Collapser } from '../../animation/Collapser';
+import Table from './Table';
+import Module from './Module';
+import Page from './Page';
+import NativeModule from './NativeModule';
+import Collapser from '../../animation/Collapser';
 
-export class NavGroup extends Component {
+export default class NavGroup extends Component {
 	static propTypes = {
 		toggleCollapse: React.PropTypes.func,
 

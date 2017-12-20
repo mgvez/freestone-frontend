@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { HomeButton } from '../widgets/HomeButton';
+import HomeButton from '../widgets/HomeButton';
 import { NavToggler } from '../widgets/NavToggler';
 import { LoadedRecordsToggler } from '../widgets/LoadedRecordsToggler';
 

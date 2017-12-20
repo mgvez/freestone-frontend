@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-export class NativeModule extends Component {
+export default class NativeModule extends Component {
 	static propTypes = {
 		label: React.PropTypes.string,
 		url: React.PropTypes.string,

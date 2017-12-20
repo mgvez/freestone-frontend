@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 
 
-export class Table extends Component {
+export default class Table extends Component {
 	static propTypes = {
 		name: React.PropTypes.string,
 		displayLabel: React.PropTypes.string,
