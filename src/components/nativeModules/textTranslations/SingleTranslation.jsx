@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { editTranslation } from '../../../actions/translations';
-import { singleTranslationMapStateToProps } from '../../../selectors/translations';
-
-@connect(
-	singleTranslationMapStateToProps,
-	dispatch => bindActionCreators({ editTranslation }, dispatch)
-)
-export class SingleTranslation extends Component {
+export default class SingleTranslation extends Component {
 	static propTypes = {
 		translationKey: React.PropTypes.string,
 		translationValue: React.PropTypes.string,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Field extends Component {
+export default class Field extends Component {
 	static propTypes = {
 		children: React.PropTypes.any,
 		label: React.PropTypes.string,

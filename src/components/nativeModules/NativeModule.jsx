@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import { TextTranslations } from './textTranslations/TextTranslations';
+import TextTranslations from '../../containers/nativeModules/textTranslations/TextTranslations';
 
-@connect(
-	state => { return { jwt: state.freestone.auth.jwt }; }
-)
-export class NativeModule extends Component {
+export default class NativeModule extends Component {
 	static propTypes = {
 		params: React.PropTypes.shape({
 			name: React.PropTypes.string,
