@@ -1,27 +1,15 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
-
-import { fetchTable } from '../../actions/schema';
-import { goTo } from '../../actions/nav';
-import { fetchRecordRevisionList } from '../../actions/record';
-
-import { rootFormMapStateToProps } from '../../selectors/rootForm';
 
 import Save from '../../containers/process/Save';
 import Cancel from '../../containers/process/Cancel';
-import { SingleRecord } from './SingleRecord';
+import SingleRecord from '../../containers/form/SingleRecord';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
 
 import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
 
-@connect(
-	rootFormMapStateToProps,
-	dispatch => bindActionCreators({ fetchTable, goTo, fetchRecordRevisionList }, dispatch)
-)
-export class RootForm extends Component {
+export default class RootForm extends Component {
 	static propTypes = {
 		params: React.PropTypes.shape({
 			tableName: React.PropTypes.string,

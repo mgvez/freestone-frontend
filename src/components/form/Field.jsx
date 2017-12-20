@@ -12,7 +12,7 @@ import { UrlInput } from './inputTypes/UrlInput';
 import { HotspotInput } from './inputTypes/HotspotInput';
 import { AutocompleteInput } from './inputTypes/AutocompleteInput';
 
-export class Field extends Component {
+export default class Field extends Component {
 	static propTypes = {
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,

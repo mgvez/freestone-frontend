@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { fetchTable } from '../../actions/schema';
-import { fetchRecord, setFieldVal } from '../../actions/record';
 import { TYPE_LANGUAGE, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
 
-import { formRecordMapStateToProps } from '../../selectors/formRecord';
-
 import { Subform } from './subform/Subform';
-import { Field } from './Field';
+
+import Field from './Field';
 import { DeleteRecord } from './buttons/DeleteRecord';
 
-@connect(
-	formRecordMapStateToProps,
-	dispatch => bindActionCreators({ fetchTable, fetchRecord, setFieldVal }, dispatch)
-)
-export class SingleRecord extends Component {
+
+export default class SingleRecord extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,

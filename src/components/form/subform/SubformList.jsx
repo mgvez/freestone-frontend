@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SingleRecord } from '../SingleRecord';
+import SingleRecord from '../../../containers/form/SingleRecord';
 import FormHeaderContent from '../../header/FormHeaderContent';
 import { ChangeSubformView } from '../buttons/ChangeSubformView';
 import { AddRecord } from '../buttons/AddRecord';

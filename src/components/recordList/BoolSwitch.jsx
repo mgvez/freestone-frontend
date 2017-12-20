@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { BoolInput } from '../form/inputTypes/BoolInput';
+import BoolInput from '../form/inputTypes/BoolInput';
 
 /*
 	Boolean switch used in record lists, to change value without opening record for edition.

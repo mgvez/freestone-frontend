@@ -13,7 +13,7 @@ const metaData = {
 	},
 };
 
-export class Home extends Component {
+export default class Home extends Component {
 
 	render() {
 		// console.log(this.props);
