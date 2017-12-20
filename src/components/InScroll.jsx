@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { routeSelector } from '../selectors/route';
-import { lockScroll } from '../actions/nav';
+
 /**
 	Permet de se souvenir d'un scroll dans une page. Quand on la quitte, on call l'action "lockScroll" avec le scroll current, et si ce component est placé dans le component, quand on reviendra à ce path, le scroll sera le même que quand on l'a quitté.
 */
 
-@connect(
-	routeSelector,
-	dispatch => bindActionCreators({ lockScroll }, dispatch)
-)
-export class InScroll extends Component {
+export default class InScroll extends Component {
 	static propTypes = {
 		children: React.PropTypes.any,
 		path: React.PropTypes.string,
@@ -21,7 +14,6 @@ export class InScroll extends Component {
 		autoLock: React.PropTypes.bool,
 		
 		lockScroll: React.PropTypes.func,
-
 	};
 
 	constructor(props) {

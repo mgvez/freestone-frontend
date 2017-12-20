@@ -12,7 +12,7 @@ import { Heading } from './Heading';
 import { Paging } from './Paging';
 import { Row } from './Row';
 import { ListSearch } from './ListSearch';
-import { InScroll } from '../InScroll';
+import InScroll from '../../containers/InScroll';
 import { TablePermissions } from '../permissions/TablePermissions';
 
 import createRecord from '../../freestone/createRecord';

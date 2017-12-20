@@ -6,7 +6,7 @@ import { clearErrors } from '../actions/errors';
 import { logout } from '../actions/auth';
 import { clearSchema } from '../actions/schema';
 
-import { SiteHeader as SiteHeaderComp } from '../components/header/SiteHeader';
+import SiteHeaderComp from '../components/header/SiteHeader';
 import { isGodSelector } from '../selectors/credentials';
 
 const actionCreators = { clearErrors, clearData, startPerf, stopPerf, clearSchema, logout };

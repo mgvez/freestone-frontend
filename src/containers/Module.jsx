@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { Module as ModuleComp } from '../components/Module';
+import ModuleComp from '../components/Module';
 
 const Module = connect(
 	(state, props) => {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Errors as ErrorsComp } from '../components/Errors';
+import ErrorsComp from '../components/Errors';
 
 import { clearErrors } from '../actions/errors';
 import { goTo } from '../actions/nav';

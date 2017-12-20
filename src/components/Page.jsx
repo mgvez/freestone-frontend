@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import DocumentMeta from 'react-document-meta';
 
-import { pageSelector } from '../selectors/page';
 import uniqueId from '../utils/UniqueId';
-import { lockScroll, rememberListPage, goTo, setPageHash } from '../actions/nav';
-import { duplicateRecord } from '../actions/record';
 
 import { getWebsiteUrl } from '../freestone/settings';
 
@@ -18,11 +13,7 @@ const metaData = {
 	},
 };
 
-@connect(
-	pageSelector,
-	dispatch => bindActionCreators({ goTo, lockScroll, rememberListPage, setPageHash, duplicateRecord }, dispatch)
-)
-export class Page extends Component {
+export default class Page extends Component {
 	static propTypes = {
 		params: React.PropTypes.shape({
 			id: React.PropTypes.string,

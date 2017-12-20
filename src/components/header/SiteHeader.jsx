@@ -4,7 +4,7 @@ import { HomeButton } from '../widgets/HomeButton';
 import { NavToggler } from '../widgets/NavToggler';
 import { LoadedRecordsToggler } from '../widgets/LoadedRecordsToggler';
 
-export class SiteHeader extends Component {
+export default class SiteHeader extends Component {
 	static propTypes = {
 		isGod: React.PropTypes.bool,
 

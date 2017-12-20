@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
 
@@ -14,9 +13,6 @@ const metaData = {
 	},
 };
 
-@connect(
-	state => state,
-)
 export class Home extends Component {
 
 	render() {

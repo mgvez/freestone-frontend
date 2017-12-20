@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Script from 'react-load-script';
 
-import { loginUser } from '../actions/auth';
-import { fetchVariable, fetchEnv } from '../actions/env';
 import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
-
-const actionCreators = { loginUser, fetchVariable, fetchEnv };
 
 /* application components */
 import SiteHeader from '../containers/SiteHeader';
@@ -24,18 +18,7 @@ import 'font-awesome/scss/font-awesome.scss';
 // import 'style-loader!font-awesome/scss/font-awesome.scss';
 // require('font-awesome-webpack-2');
 
-@connect(
-	state => {
-		return {
-			isAuthenticated: state.freestone.auth.isAuthenticated,
-			lastRequestTime: state.freestone.auth.lastRequestTime,
-			freestone: state.freestone.env.freestone,
-			jwt: state.freestone.auth.jwt,
-		};
-	},
-	dispatch => bindActionCreators(actionCreators, dispatch)
-)
-export class Freestone extends Component {
+export default class Freestone extends Component {
 	static propTypes = {
 		isAuthenticated: React.PropTypes.bool,
 		lastRequestTime: React.PropTypes.number,

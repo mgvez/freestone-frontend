@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 
 import customStyle from './styles/modalStyles.js';
 
-export class Errors extends Component {
+export default class Errors extends Component {
 	static propTypes = {
 		errors: React.PropTypes.array,
 

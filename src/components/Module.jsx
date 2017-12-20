@@ -10,7 +10,7 @@ const metaData = {
 	},
 };
 
-export class Module extends Component {
+export default class Module extends Component {
 	static propTypes = {
 		params: React.PropTypes.shape({
 			url: React.PropTypes.string,

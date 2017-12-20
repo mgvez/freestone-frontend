@@ -6,7 +6,7 @@ import { Home } from './components/Home';
 import { List } from './components/recordList/List';
 import { RootForm } from './components/form/RootForm';
 import { Module } from './containers/Module';
-import { Page } from './components/Page';
+import Page from './containers/Page';
 import { NativeModule } from './components/nativeModules/NativeModule';
 
 export default (
