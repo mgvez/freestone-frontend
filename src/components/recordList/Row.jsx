@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import { TweenMax } from '../../utils/Greensock';
 
-import { RecordInteractions } from './RecordInteractions';
+import RecordInteractions from '../../containers/recordList/RecordInteractions';
 import { createCells } from './row/createCells';
 import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
-import { swapAnimated } from '../../actions/record';
 
-@connect(
-	null,
-	dispatch => bindActionCreators({ swapAnimated }, dispatch)
-)
-
-export class Row extends Component {
+export default class Row extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		fields: React.PropTypes.array,

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import HomeButton from '../widgets/HomeButton';
-import { NavToggler } from '../widgets/NavToggler';
-import LoadedRecordsToggler from '../../components/widgets/LoadedRecordsToggler';
+import NavToggler from '../../containers/widgets/NavToggler';
+import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
 
 export default class SiteHeader extends Component {
 	static propTypes = {

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-
-export class Paging extends Component {
+export default class Paging extends Component {
 	static propTypes = {
 		tableName: React.PropTypes.string,
 		nPages: React.PropTypes.number,

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 
-import LoadedRecordsToggler from '../../components/widgets/LoadedRecordsToggler';
+import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
 import Cancel from '../../containers/process/Cancel';
 
 function leftPad(n) {

@@ -4,10 +4,9 @@ import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import BankNUses from '../../../containers/widgets/BankNUses';
-import { BoolSwitch } from '../BoolSwitch';
+import BoolSwitch from '../../../containers/recordList/BoolSwitch';
 
 const MAX_THUMB_SIZE = 200;
-
 
 export function createCells(table, fields, values, elementType = 'td', options = {}) {
 	if (fields.length === 0) {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { Link } from 'react-router';
 
 
-export class InfosFcn extends Component {
+export default class InfosFcn extends Component {
 	static propTypes = {
 		prikey: React.PropTypes.string,
 		createddate: React.PropTypes.string,

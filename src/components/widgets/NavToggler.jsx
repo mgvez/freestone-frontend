@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { toggleNavVisibility } from '../../actions/siteHeader';
-
-@connect(
-	state => { 
-		return { nav_visibility: state.freestone.siteHeader.nav_visibility };
-	},
-	dispatch => bindActionCreators({ toggleNavVisibility }, dispatch)
-)
-export class NavToggler extends Component {
+export default class NavToggler extends Component {
 	static propTypes = {
 		toggleNavVisibility: React.PropTypes.func,
 

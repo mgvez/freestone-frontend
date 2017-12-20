@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { duplicateRecord } from '../../actions/record';
-
-@connect(
-	null,
-	dispatch => bindActionCreators({ duplicateRecord }, dispatch)
-)
-export class DuplicateBtn extends Component {
+export default class DuplicateBtn extends Component {
 	static propTypes = {
 		prikey: React.PropTypes.string,
 		tableName: React.PropTypes.string,

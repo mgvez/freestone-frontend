@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import debounce from '../../utils/Debounce.js';
 
-export class ListSearch extends Component {
+export default class ListSearch extends Component {
 	static propTypes = {
 		tableName: React.PropTypes.string,
 		search: React.PropTypes.string,

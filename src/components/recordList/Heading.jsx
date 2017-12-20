@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-export class Heading extends Component {
+export default class Heading extends Component {
 	static propTypes = {
 		fields: React.PropTypes.array,
 		isSelfTree: React.PropTypes.bool,

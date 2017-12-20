@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { TextInput } from './inputTypes/TextInput';
 import { BoolInput } from './inputTypes/BoolInput';
-// import { SelectInput } from 'components/Form/InputTypes/SelectInput';
 import { NoEditInput } from './inputTypes/NoEditInput';
 import { HtmlInput } from './inputTypes/HtmlInput';
 import { FileInput } from './inputTypes/FileInput';

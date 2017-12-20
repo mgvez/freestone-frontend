@@ -1,30 +1,19 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
 
 import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
 
-import { fetchTable } from '../../actions/schema';
-import { fetchList, addRecord } from '../../actions/record';
-
-import { Heading } from './Heading';
-import { Paging } from './Paging';
-import { Row } from './Row';
-import { ListSearch } from './ListSearch';
+import Heading from './Heading';
+import Paging from './Paging';
+import Row from '../../containers/recordList/Row';
+import ListSearch from './ListSearch';
 import InScroll from '../../containers/InScroll';
 import TablePermissions from '../../containers/permissions/TablePermissions';
-
 import createRecord from '../../freestone/createRecord';
-import { listRecordsSelector } from '../../selectors/listRecords';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
-@connect(
-	listRecordsSelector,
-	dispatch => bindActionCreators({ fetchTable, fetchList, addRecord }, dispatch)
-)
-export class List extends Component {
+export default class List extends Component {
 	static propTypes = {
 		params: React.PropTypes.shape({
 			tableName: React.PropTypes.string,

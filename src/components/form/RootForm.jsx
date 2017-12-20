@@ -11,7 +11,6 @@ import { rootFormMapStateToProps } from '../../selectors/rootForm';
 
 import Save from '../../containers/process/Save';
 import Cancel from '../../containers/process/Cancel';
-// import { CopyRecord } from 'components/connected/form/buttons/CopyRecord';
 import { SingleRecord } from './SingleRecord';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
 

@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 
 /* containers */
 import { Home } from './components/Home';
-import { List } from './components/recordList/List';
+import List from './containers/recordList/List';
 import { RootForm } from './components/form/RootForm';
 import Module from './containers/Module';
 import Page from './containers/Page';

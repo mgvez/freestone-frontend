@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { deleteRecord } from '../../actions/save';
-
-@connect(
-	null,
-	dispatch => bindActionCreators({ deleteRecord }, dispatch)
-)
-export class DeleteBtn extends Component {
+export default class DeleteBtn extends Component {
 	static propTypes = {
 		prikey: React.PropTypes.string,
 		tableName: React.PropTypes.string,

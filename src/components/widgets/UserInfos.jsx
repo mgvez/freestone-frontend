@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import { Gravatar } from './Gravatar';
+import Gravatar from './Gravatar';
 
 export default class UserInfos extends Component {
 	static propTypes = {

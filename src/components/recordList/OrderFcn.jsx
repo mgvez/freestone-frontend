@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { swapOrder } from '../../actions/save';
-
-@connect(
-	null,
-	dispatch => bindActionCreators({ swapOrder }, dispatch)
-)
-export class OrderFcn extends Component {
+export default class OrderFcn extends Component {
 	static propTypes = {
 		prikey: React.PropTypes.string,
 		tableName: React.PropTypes.string,

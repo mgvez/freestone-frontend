@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import { BoolInput } from '../form/inputTypes/BoolInput';
-import { saveSingleValue } from '../../actions/save';
 
 /*
 	Boolean switch used in record lists, to change value without opening record for edition.
 */
-
-@connect(
-	null,
-	dispatch => bindActionCreators({ saveSingleValue }, dispatch)
-)
-export class BoolSwitch extends Component {
+export default class BoolSwitch extends Component {
 	static propTypes = {
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,

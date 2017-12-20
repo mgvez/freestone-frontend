@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { routeSelector } from '../../selectors/route';
-import { lockScroll, rememberListPage } from '../../actions/nav';
-
-import { InfosFcn } from './InfosFcn';
-import { DuplicateBtn } from './DuplicateBtn';
-import { OrderFcn } from './OrderFcn';
-import { DeleteBtn } from './DeleteBtn';
+import InfosFcn from './InfosFcn';
+import DuplicateBtn from '../../containers/recordList/DuplicateBtn';
+import OrderFcn from '../../containers/recordList/OrderFcn';
+import DeleteBtn from '../../containers/recordList/DeleteBtn';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/schemaProps';
 
@@ -17,12 +12,7 @@ const DEFAULT_LABEL = 'Actions';
 const EDIT_LABEL = 'Edit';
 const PREVIEW_LABEL = 'Preview';
 
-
-@connect(
-	routeSelector,
-	dispatch => bindActionCreators({ lockScroll, rememberListPage }, dispatch)
-)
-export class RecordInteractions extends Component {
+export default class RecordInteractions extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		fields: React.PropTypes.array,
