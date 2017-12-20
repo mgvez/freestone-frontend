@@ -12,7 +12,7 @@ import { NativeModule } from '../menu/NativeModule';
 @connect(
 	dashboardSelector
 )
-export class Shortcuts extends Component {
+export default class Shortcuts extends Component {
 	static propTypes = {
 		tables: React.PropTypes.array,
 		modules: React.PropTypes.array,

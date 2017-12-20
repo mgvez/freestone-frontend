@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import DocumentMeta from 'react-document-meta';
 
-import { GoogleAnalytics } from './dashboard/GoogleAnalytics';
-import { Shortcuts } from './dashboard/Shortcuts';
+import GoogleAnalytics from '../containers/dashboard/GoogleAnalytics';
+import Shortcuts from './dashboard/Shortcuts';
 
 const metaData = {
 	title: 'Freestone Home',

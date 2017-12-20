@@ -1,26 +1,16 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import { LoadedRecordsToggler } from '../widgets/LoadedRecordsToggler';
 import { Cancel } from '../process/Cancel';
-import { fetchTable } from '../../actions/schema';
-import { fetchForeignLabel } from '../../actions/foreignOptions';
-import { toggleLoadedRecords } from '../../actions/siteHeader';
-import { loadedRecords } from '../../selectors/loadedRecords';
-
 
 function leftPad(n) {
 	return n < 10 ? `0${n}` : n;
 }
 
-@connect(
-	loadedRecords,
-	dispatch => bindActionCreators({ fetchTable, fetchForeignLabel, toggleLoadedRecords }, dispatch)
-)
-export class LoadedRecords extends Component {
+export default class LoadedRecords extends Component {
 	static propTypes = {
 		fetchTable: React.PropTypes.func,
 		fetchForeignLabel: React.PropTypes.func,

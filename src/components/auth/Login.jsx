@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import DocumentMeta from 'react-document-meta';
 import GoogleLoginBtn from './GoogleLoginBtn';
-
-
-/* actions */
-import { loginUser } from '../../actions/auth';
-import { fetchVariable, setVariable } from '../../actions/env';
-
 
 const metaData = {
 	title: 'Freestone',
@@ -19,17 +11,7 @@ const metaData = {
 	},
 };
 
-@connect(
-	state => {
-		return {
-			...state.freestone.auth,
-			isInstalled: state.freestone.env.clientVariables && state.freestone.env.clientVariables.isInstalled,
-			apiGoogle: state.freestone.env.clientVariables && state.freestone.env.clientVariables.api_google,
-		};
-	},
-	dispatch => bindActionCreators({ loginUser, fetchVariable, setVariable }, dispatch)
-)
-export class Login extends Component {
+export default class Login extends Component {
 	static propTypes = {
 		location: React.PropTypes.object,
 		apiGoogle: React.PropTypes.object,

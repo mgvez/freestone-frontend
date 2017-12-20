@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { fetchVariable } from '../../actions/env';
 
 import GAPI_Helper from './GAPI_Helper';
 
@@ -28,17 +24,7 @@ const GA_AVG_SESSION_DURATION = 'ga:avgSessionDuration';
 const GA_PAGEVIEWS = 'ga:pageviews';
 const GA_PERCENT_NEW_SESSIONS = 'ga:percentNewSessions';
 
-@connect(
-	state => { 
-		if (!state.freestone.env.clientVariables.api_google) return {};
-		return {
-			...state.freestone.env.clientVariables.api_google,
-			gapi_token_access: state.freestone.auth.gapi_token_access,
-		};
-	},
-	dispatch => bindActionCreators({ fetchVariable }, dispatch)
-)
-export class GoogleAnalytics extends Component {
+export default class GoogleAnalytics extends Component {
 	static propTypes = {
 		clientId: React.PropTypes.string,
 		property: React.PropTypes.string,

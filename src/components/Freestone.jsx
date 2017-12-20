@@ -8,10 +8,11 @@ import SiteHeader from '../containers/SiteHeader';
 import { Footer } from './footer/Footer';
 import Errors from '../containers/Errors';
 import { Nav } from './menu/Nav';
-import { LoadedRecords } from './dashboard/LoadedRecords';
-import { Login } from './auth/Login';
+import LoadedRecords from '../containers/dashboard/LoadedRecords';
+import Login from '../containers/auth/Login';
 import GoogleAuthenticate from '../containers/auth/GoogleAuthenticate';
 import qstrParams from '../utils/qstrParams';
+
 
 import 'style-loader!../scss/style.scss';
 import 'font-awesome/scss/font-awesome.scss';
