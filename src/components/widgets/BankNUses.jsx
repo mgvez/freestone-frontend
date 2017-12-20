@@ -1,16 +1,7 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import { fetchBankUses } from '../../actions/bank';
-import { bankUsesSelector } from '../../selectors/bank';
-
-@connect(
-	bankUsesSelector,
-	dispatch => bindActionCreators({ fetchBankUses }, dispatch)
-)
-export class BankNUses extends Component {
+export default class BankNUses extends Component {
 	static propTypes = {
 		bankName: React.PropTypes.string,
 		//id de l'item de banque

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import NavGroup from './NavGroup';
-import { UserInfos } from '../widgets/UserInfos';
+import UserInfos from '../../containers/widgets/UserInfos';
 import HomeButton from '../widgets/HomeButton';
 
 export default class Nav extends Component {

@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import { toggleLoadedRecords } from '../../actions/siteHeader';
-import { loadedRecordsStatusSelector } from '../../selectors/loadedRecordsStatus';
-
-@connect(
-	loadedRecordsStatusSelector,
-	dispatch => bindActionCreators({ toggleLoadedRecords }, dispatch)
-)
-export class LoadedRecordsToggler extends Component {
+export default class LoadedRecordsToggler extends Component {
 	static propTypes = {
 		nLoadedRecords: React.PropTypes.number,
 		toggleLoadedRecords: React.PropTypes.func,

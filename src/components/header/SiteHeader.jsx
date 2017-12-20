@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import HomeButton from '../widgets/HomeButton';
 import { NavToggler } from '../widgets/NavToggler';
-import { LoadedRecordsToggler } from '../widgets/LoadedRecordsToggler';
+import LoadedRecordsToggler from '../../components/widgets/LoadedRecordsToggler';
 
 export default class SiteHeader extends Component {
 	static propTypes = {
