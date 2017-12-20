@@ -10,7 +10,7 @@ import Errors from '../containers/Errors';
 import { Nav } from './menu/Nav';
 import { LoadedRecords } from './dashboard/LoadedRecords';
 import { Login } from './auth/Login';
-import { GoogleAuthenticate } from './auth/GoogleAuthenticate';
+import GoogleAuthenticate from '../containers/auth/GoogleAuthenticate';
 import qstrParams from '../utils/qstrParams';
 
 import 'style-loader!../scss/style.scss';

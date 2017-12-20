@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import FreestoneComp from '../components/Freestone';
+import Freestone from '../components/Freestone';
 
 import { loginUser } from '../actions/auth';
 import { fetchVariable, fetchEnv } from '../actions/env';
 
 const actionCreators = { loginUser, fetchVariable, fetchEnv };
 
-const Freestone = connect(
+export default connect(
 	state => {
 		return {
 			isAuthenticated: state.freestone.auth.isAuthenticated,
@@ -18,6 +18,4 @@ const Freestone = connect(
 		};
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)
-)(FreestoneComp);
-
-export default Freestone;
+)(Freestone);

@@ -1,21 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-/* actions */
-import { loginGoogleAPI } from '../../actions/auth';
-import { fetchVariable } from '../../actions/env';
-
-@connect(
-	state => {
-		return {
-			...state.freestone.auth,
-			apiGoogle: state.freestone.env.clientVariables && state.freestone.env.clientVariables.api_google,
-		};
-	},
-	dispatch => bindActionCreators({ loginGoogleAPI, fetchVariable }, dispatch)
-)
-export class GoogleAuthenticate extends Component {
+export default class GoogleAuthenticate extends Component {
 	static propTypes = {
 		children: React.PropTypes.any,
 		apiGoogle: React.PropTypes.object,

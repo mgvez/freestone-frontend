@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 
-import ModuleComp from '../components/Module';
+import Module from '../components/Module';
 
-const Module = connect(
+export default connect(
 	(state, props) => {
 		const { url } = props.params;
 		const modules = state.freestone.nav.structure.modules;
@@ -15,6 +15,4 @@ const Module = connect(
 			...module,
 		};
 	}
-)(ModuleComp);
-
-export default Module;
+)(Module);

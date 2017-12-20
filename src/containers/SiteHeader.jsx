@@ -6,14 +6,12 @@ import { clearErrors } from '../actions/errors';
 import { logout } from '../actions/auth';
 import { clearSchema } from '../actions/schema';
 
-import SiteHeaderComp from '../components/header/SiteHeader';
+import SiteHeader from '../components/header/SiteHeader';
 import { isGodSelector } from '../selectors/credentials';
 
 const actionCreators = { clearErrors, clearData, startPerf, stopPerf, clearSchema, logout };
 
-const SiteHeader = connect(
+export default connect(
 	isGodSelector,
 	dispatch => bindActionCreators(actionCreators, dispatch)
-)(SiteHeaderComp);
-
-export default SiteHeader;
+)(SiteHeader);
