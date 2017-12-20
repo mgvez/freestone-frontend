@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+
 import Modal from 'react-modal';
 
 import customStyle from './styles/modalStyles.js';
 
-import { clearErrors } from '../actions/errors';
-import { goTo } from '../actions/nav';
-
-@connect(
-	state => {
-		return { errors: state.freestone.errors };
-	},
-	dispatch => bindActionCreators({ clearErrors, goTo }, dispatch)
-)
 export class Errors extends Component {
 	static propTypes = {
 		errors: React.PropTypes.array,

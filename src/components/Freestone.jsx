@@ -12,7 +12,7 @@ const actionCreators = { loginUser, fetchVariable, fetchEnv };
 /* application components */
 import SiteHeader from '../containers/SiteHeader';
 import { Footer } from './footer/Footer';
-import { Errors } from './Errors';
+import Errors from '../containers/Errors';
 import { Nav } from './menu/Nav';
 import { LoadedRecords } from './dashboard/LoadedRecords';
 import { Login } from './auth/Login';

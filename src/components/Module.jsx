@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import DocumentMeta from 'react-document-meta';
-
 import { getAdminUrl } from '../freestone/api';
-
 
 const metaData = {
 	title: 'Module',
@@ -13,20 +10,6 @@ const metaData = {
 	},
 };
 
-@connect(
-	(state, props) => {
-		const { url } = props.params;
-		const modules = state.freestone.nav.structure.modules;
-		let module = {};
-		if (modules) {
-			module = modules.find(mod => mod.url === url);
-		}
-		return { 
-			jwt: state.freestone.auth.jwt,
-			...module,
-		};
-	}
-)
 export class Module extends Component {
 	static propTypes = {
 		params: React.PropTypes.shape({
