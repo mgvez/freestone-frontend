@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
 import { TYPE_FILE } from '../../freestone/schemaProps';
 
@@ -8,14 +7,7 @@ const css = {
 	maxWidth: 200,
 };
 
-@connect(
-	state => {
-		return {
-			env: state.freestone.env.freestone,
-		};
-	}
-)
-export class FileThumbnail extends Component {
+export default class FileThumbnail extends Component {
 	static propTypes = {
 		env: React.PropTypes.object,
 		dir: React.PropTypes.string,

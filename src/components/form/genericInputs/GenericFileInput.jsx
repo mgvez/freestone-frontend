@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
-import { FileThumbnail } from '../../fileThumbnail/FileThumbnail';
+import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import { TYPE_IMG } from '../../../freestone/schemaProps';
 
 export class GenericFileInput extends Component {
