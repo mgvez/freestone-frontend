@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
 import { ALL_RECORDS_ID } from '../../freestone/schemaProps';
-import { sitePermissionsSelector } from '../../selectors/sitePermissions';
-import { fetchSitePermissions, fetchUsergroups, toggleRecordPermission } from '../../actions/permissions';
 
-@connect(
-	sitePermissionsSelector,
-	dispatch => bindActionCreators({ fetchSitePermissions, fetchUsergroups, toggleRecordPermission }, dispatch)
-)
-export class PermissionsForm extends Component {
+export default class PermissionsForm extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		recordId: React.PropTypes.string,

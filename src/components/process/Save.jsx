@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { saveRecord } from '../../actions/save';
-import { buildSaveRecordSelector } from '../../selectors/buildRecord';
-
-@connect(
-	buildSaveRecordSelector,
-	dispatch => bindActionCreators({ saveRecord }, dispatch)
-)
-export class Save extends Component {
+export default class Save extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,

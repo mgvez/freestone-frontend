@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import { LoadedRecordsToggler } from '../widgets/LoadedRecordsToggler';
-import { Cancel } from '../process/Cancel';
+import Cancel from '../../containers/process/Cancel';
 
 function leftPad(n) {
 	return n < 10 ? `0${n}` : n;

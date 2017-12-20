@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Save } from '../../process/Save';
+import Save from '../../../containers/process/Save';
 import { navigateToSlug } from '../../../actions/slugs';
 import { previewBtnMapStateToProps } from '../../../selectors/previewBtnSelector';
 

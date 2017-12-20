@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { cancelEdit } from '../../actions/record';
-import { goTo } from '../../actions/nav';
-
-import { buildCancelRecordSelector } from '../../selectors/buildRecord';
-
-@connect(
-	buildCancelRecordSelector,
-	dispatch => bindActionCreators({ cancelEdit, goTo }, dispatch)
-)
-export class Cancel extends Component {
+export default class Cancel extends Component {
 	static propTypes = {
 		tableName: React.PropTypes.string,
 		recordId: React.PropTypes.string,
