@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Input } from './Input';
-import { HotspotInsert } from '../helpers/HotspotInsert';
+import HotspotInsert from '../helpers/HotspotInsert';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 
 import { hotspotSelector } from '../../../selectors/hotspot.js';

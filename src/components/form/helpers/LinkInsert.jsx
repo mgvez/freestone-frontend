@@ -38,7 +38,7 @@ function receiveUrl(event) {
 	internalUrl = event.data;
 }
 
-export class LinkInsert extends Component {
+export default class LinkInsert extends Component {
 	static propTypes = {
 		onClose: React.PropTypes.func,
 		setVal: React.PropTypes.func,

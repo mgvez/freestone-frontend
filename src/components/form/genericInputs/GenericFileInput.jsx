@@ -4,7 +4,7 @@ import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import { TYPE_IMG } from '../../../freestone/schemaProps';
 
-export class GenericFileInput extends Component {
+export default class GenericFileInput extends Component {
 
 	static propTypes = {
 		fieldId: React.PropTypes.number,

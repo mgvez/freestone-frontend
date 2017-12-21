@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LinkInsert } from '../helpers/LinkInsert';
+import LinkInsert from '../helpers/LinkInsert';
 import { Input } from './Input';
 
 export class UrlInput extends Input {

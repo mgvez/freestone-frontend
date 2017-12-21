@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import Modal from 'react-modal';
 import customStyle from '../../styles/modalStyles.js';
-
-import { addRecord, fetchList } from '../../../actions/record';
-import { fetchTable } from '../../../actions/schema';
 
 import { PRIKEY_ALIAS, BANK_FILE_FILE_ALIAS, BANK_FILE_TABLE, BANK_FILE_TITLE_ALIAS, BANK_FILE_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
 import { callApi, getEndpoint } from '../../../freestone/api';
@@ -17,13 +12,8 @@ import { RootForm } from '../RootForm';
 import { Paging } from '../../recordList/Paging';
 
 import createRecord from '../../../freestone/createRecord';
-import { bankSelector } from '../../../selectors/bank';
 
-@connect(
-	bankSelector(BANK_FILE_TABLE),
-	dispatch => bindActionCreators({ fetchList, addRecord, fetchTable }, dispatch)
-)
-export class BankFileInsert extends Component {
+export default class BankFileInsert extends Component {
 	static propTypes = {
 		onClose: React.PropTypes.func,
 		//callback to set ID of chosen image as opener value

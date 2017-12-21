@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input } from './Input';
-import { GenericFileInput } from '../genericInputs/GenericFileInput';
+import GenericFileInput from '../genericInputs/GenericFileInput';
 
 export class FileInput extends Input {
 

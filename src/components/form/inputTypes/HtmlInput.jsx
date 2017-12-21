@@ -6,9 +6,9 @@ import TinyMCEInput from 'react-tinymce-input';
 
 import { Input } from './Input';
 import { fetchVariable } from '../../../actions/env';
-import { LinkInsert } from '../helpers/LinkInsert';
-import { BankImgInsert } from '../helpers/BankImgInsert';
-import { BankFileInsert } from '../helpers/BankFileInsert';
+import LinkInsert from '../helpers/LinkInsert';
+import BankImgInsert from '../../../containers/from/helpers/BankImgInsert';
+import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
 import { mceConfigSelector } from '../../../selectors/env';
 
 

@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Input } from './Input';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
-import { BankImgInsert } from '../helpers/BankImgInsert';
-import { GenericFileInput } from '../genericInputs/GenericFileInput';
+import BankImgInsert from '../../../containers/from/helpers/BankImgInsert';
+import GenericFileInput from '../genericInputs/GenericFileInput';
 import { TYPE_IMG } from '../../../freestone/schemaProps';
 
 export class BankImgInput extends Input {

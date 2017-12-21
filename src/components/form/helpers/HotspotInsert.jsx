@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import customStyle from '../../styles/modalStyles.js';
 
-export class HotspotInsert extends Component {
+export default class HotspotInsert extends Component {
 	static propTypes = {
 		lang: React.PropTypes.string,
 		onClose: React.PropTypes.func,
