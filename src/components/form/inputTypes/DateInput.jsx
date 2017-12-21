@@ -3,9 +3,9 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import { TYPE_DATETIME } from '../../../freestone/schemaProps';
-import { Input } from './Input';
+import Input from './Input';
 
-export class DateInput extends Input {
+export default class DateInput extends Input {
 
 	onSelectDate = (d) => {
 		// console.log(a);

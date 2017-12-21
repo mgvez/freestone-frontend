@@ -1,9 +1,9 @@
 import React from 'react';
 
 import LinkInsert from '../helpers/LinkInsert';
-import { Input } from './Input';
+import Input from './Input';
 
-export class UrlInput extends Input {
+export default class UrlInput extends Input {
 
 	constructor(props) {
 		super(props);

@@ -1,22 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import TinyMCEInput from 'react-tinymce-input';
 
-import { Input } from './Input';
-import { fetchVariable } from '../../../actions/env';
+import Input from './Input';
 import LinkInsert from '../helpers/LinkInsert';
-import BankImgInsert from '../../../containers/from/helpers/BankImgInsert';
+import BankImgInsert from '../../../containers/form/helpers/BankImgInsert';
 import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
-import { mceConfigSelector } from '../../../selectors/env';
 
-
-@connect(
-	mceConfigSelector,
-	dispatch => bindActionCreators({ fetchVariable }, dispatch)
-)
-export class HtmlInput extends Input {
+export default class HtmlInput extends Input {
 	static propTypes = {
 		lang: React.PropTypes.string,
 	};

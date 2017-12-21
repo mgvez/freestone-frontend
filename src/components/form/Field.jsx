@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 
-import { TextInput } from './inputTypes/TextInput';
-import { BoolInput } from './inputTypes/BoolInput';
-import { NoEditInput } from './inputTypes/NoEditInput';
-import { HtmlInput } from './inputTypes/HtmlInput';
-import { FileInput } from './inputTypes/FileInput';
-import { DateInput } from './inputTypes/DateInput';
-import { BankImgInput } from './inputTypes/BankImgInput';
-import { BankFileInput } from './inputTypes/BankFileInput';
-import { UrlInput } from './inputTypes/UrlInput';
-import { HotspotInput } from './inputTypes/HotspotInput';
-import { AutocompleteInput } from './inputTypes/AutocompleteInput';
+import TextInput from './inputTypes/TextInput';
+import BoolInput from './inputTypes/BoolInput';
+import FileInput from './inputTypes/FileInput';
+import DateInput from './inputTypes/DateInput';
+import BankImgInput from './inputTypes/BankImgInput';
+import BankFileInput from './inputTypes/BankFileInput';
+import UrlInput from './inputTypes/UrlInput';
+import HotspotInput from './inputTypes/HotspotInput';
+
+import NoEditInput from '../../containers/form/inputTypes/NoEditInput';
+import HtmlInput from '../../containers/form/inputTypes/HtmlInput';
+import AutocompleteInput from '../../containers/form/inputTypes/AutocompleteInput';
 
 export default class Field extends Component {
 	static propTypes = {

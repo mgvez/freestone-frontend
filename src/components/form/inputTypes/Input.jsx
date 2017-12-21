@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Input extends Component {
+export default class Input extends Component {
 	static propTypes = {
 		field: React.PropTypes.object,
 		recordId: React.PropTypes.string,

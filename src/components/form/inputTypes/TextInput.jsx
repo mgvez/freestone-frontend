@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Input } from './Input';
+import Input from './Input';
 
-export class TextInput extends Input {
+export default class TextInput extends Input {
 
 	render() {
 		// console.log(`render input ${this.props.field.name}`);

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Input } from './Input';
+import Input from './Input';
 
-export class BoolInput extends Input {
+export default class BoolInput extends Input {
 
 	render() {
 		// console.log(`render input ${this.props.field.name}`);

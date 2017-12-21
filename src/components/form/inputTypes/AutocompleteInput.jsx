@@ -1,14 +1,9 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import Autosuggest from 'react-autosuggest';
 
-import { Input } from './Input';
+import Input from './Input';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
-
-import { fetchForeignOptions } from '../../../actions/foreignOptions';
-import { foreignOptionsMapStateToProps } from '../../../selectors/foreignOptions';
 
 function getItemValue(item) {
 	return item.label;
@@ -44,11 +39,7 @@ function shouldRenderSuggestions() {
 	return true;
 }
 
-@connect(
-	foreignOptionsMapStateToProps,
-	dispatch => bindActionCreators({ fetchForeignOptions }, dispatch)	
-)
-export class AutocompleteInput extends Input {
+export default class AutocompleteInput extends Input {
 	static propTypes = {
 		fetchForeignOptions: React.PropTypes.func,
 		foreignOptions: React.PropTypes.object,

@@ -1,17 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchForeignLabel } from '../../../actions/foreignOptions';
-import { foreignUneditableMapStateToProps } from '../../../selectors/foreignOptions';
 
-import { Input } from './Input';
+import Input from './Input';
 
-@connect(
-	foreignUneditableMapStateToProps,
-	dispatch => bindActionCreators({ fetchForeignLabel }, dispatch)	
-)
-export class NoEditInput extends Input {
+export default class NoEditInput extends Input {
 	static propTypes = {
 		field: PropTypes.object,
 		recordId: PropTypes.string,
