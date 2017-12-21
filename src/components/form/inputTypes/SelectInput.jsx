@@ -2,7 +2,6 @@ import React from 'react';
 
 import Input from './Input';
 
-
 export default class SelectInput extends Input {
 	static propTypes = {
 		foreignOptions: React.PropTypes.object,

@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 
 import { TYPE_LANGUAGE, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
 
-import { Subform } from './subform/Subform';
-
-import Field from './Field';
+import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
+import Field from './Field';
 
 
 export default class SingleRecord extends Component {

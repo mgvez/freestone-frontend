@@ -4,7 +4,7 @@ import SingleRecord from '../../../containers/form/SingleRecord';
 import FormHeaderContent from '../../header/FormHeaderContent';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
-import { CollapsableForm } from './CollapsableForm';
+import CollapsableForm from './CollapsableForm';
 import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
 
 export default class SubformList extends CollapsableForm {

@@ -1,10 +1,11 @@
 import React from 'react';
 
+import { TYPE_IMG } from '../../../freestone/schemaProps';
+
 import Input from './Input';
 import BankFileThumbnail from '../../../containers/fileThumbnail/BankFileThumbnail';
 import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
 import GenericFileInput from '../genericInputs/GenericFileInput';
-import { TYPE_IMG } from '../../../freestone/schemaProps';
 
 export default class BankFileInput extends Input {
 	static propTypes = {

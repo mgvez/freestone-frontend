@@ -41,7 +41,7 @@ function getTabGroup(props) {
 		};
 	}
 )
-export class Tab extends Component {
+export default class Tab extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		parentRecordId: React.PropTypes.string,

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Collapser from '../../../animation/Collapser';
 
-export class CollapsableForm extends Component {
+export default class CollapsableForm extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		isCollapsed: React.PropTypes.bool,

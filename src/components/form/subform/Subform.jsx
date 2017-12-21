@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
-import { fetchTable } from '../../../actions/schema';
-import { setSubformCollapsed } from '../../../actions/subform';
-import { subformMapStateToProps } from '../../../selectors/subform';
-
-import { SubformMtm } from './SubformMtm';
-import { SubformStandard } from './SubformStandard';
 
 import { TYPE_MTM } from '../../../freestone/schemaProps';
 
+import SubformMtm from '../../../containers/form/subform/SubformMtm';
+import SubformStandard from '../../../containers/form/subform/SubformStandard';
 
-@connect(
-	subformMapStateToProps,
-	dispatch => bindActionCreators({ fetchTable, setSubformCollapsed }, dispatch)
-)
-export class Subform extends Component {
+export default class Subform extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		parentTableId: React.PropTypes.number,

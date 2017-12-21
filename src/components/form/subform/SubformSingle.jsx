@@ -5,7 +5,7 @@ import FormHeaderContent from '../../header/FormHeaderContent';
 import SingleRecord from '../../../containers/form/SingleRecord';
 
 
-export class SubformSingle extends Component {
+export default class SubformSingle extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		activeRecord: React.PropTypes.object,

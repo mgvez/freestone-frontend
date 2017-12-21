@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { formChildrenRecordsMapStateToProps } from '../../../selectors/formChildrenRecords';
-import { fetchRecord, setOrder, setShownRecord } from '../../../actions/record';
-import { fetchTable } from '../../../actions/schema';
-
-import { SubformTabbed } from './SubformTabbed';
-import { SubformList } from './SubformList';
-import { SubformSingle } from './SubformSingle';
+import SubformTabbed from './SubformTabbed';
+import SubformList from './SubformList';
+import SubformSingle from './SubformSingle';
 
 import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/schemaProps';
 
-@connect(
-	formChildrenRecordsMapStateToProps,
-	dispatch => bindActionCreators({ fetchRecord, setOrder, setShownRecord, fetchTable }, dispatch)
-)
-export class SubformStandard extends Component {
+export default class SubformStandard extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		table: React.PropTypes.object,

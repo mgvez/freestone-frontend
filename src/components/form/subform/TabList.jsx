@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import { Tab } from './Tab';
+import Tab from './Tab';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
 
 @dragDropContext(HTML5Backend)
-export class TabList extends Component {
+export default class TabList extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		childrenRecords: React.PropTypes.array,

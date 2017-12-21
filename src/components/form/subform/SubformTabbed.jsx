@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { TabList } from './TabList';
-import { CollapsableForm } from './CollapsableForm';
+import TabList from './TabList';
+import CollapsableForm from './CollapsableForm';
 import SingleRecord from '../../../containers/form/SingleRecord';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
-import FormHeaderContent from '../../header/FormHeaderContent';
 import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
+import FormHeaderContent from '../../header/FormHeaderContent';
 
-export class SubformTabbed extends CollapsableForm {
+export default class SubformTabbed extends CollapsableForm {
 	static propTypes = {
 		table: React.PropTypes.object,
 		activeRecord: React.PropTypes.object,
