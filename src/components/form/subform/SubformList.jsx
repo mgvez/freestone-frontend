@@ -2,12 +2,12 @@ import React from 'react';
 
 import SingleRecord from '../../../containers/form/SingleRecord';
 import FormHeaderContent from '../../header/FormHeaderContent';
-import { ChangeSubformView } from '../buttons/ChangeSubformView';
-import { AddRecord } from '../buttons/AddRecord';
+import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
+import AddRecord from '../../../containers/form/buttons/AddRecord';
 import { CollapsableForm } from './CollapsableForm';
-import { ToggleSubform } from '../buttons/ToggleSubform';
+import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
 
-export class SubformList extends CollapsableForm {
+export default class SubformList extends CollapsableForm {
 	static propTypes = {
 		table: React.PropTypes.object,
 		activeRecord: React.PropTypes.object,

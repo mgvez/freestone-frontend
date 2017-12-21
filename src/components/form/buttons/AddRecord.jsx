@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-
 import createRecord from '../../../freestone/createRecord';
-import { addRecord, setShownRecord } from '../../../actions/record';
 
-@connect(
-	null,
-	dispatch => bindActionCreators({ addRecord, setShownRecord }, dispatch)
-)
-export class AddRecord extends Component {
+export default class AddRecord extends Component {
 	static propTypes = {
 		table: React.PropTypes.object,
 		highestOrder: React.PropTypes.number,

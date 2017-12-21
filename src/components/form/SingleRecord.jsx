@@ -5,7 +5,7 @@ import { TYPE_LANGUAGE, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps
 import { Subform } from './subform/Subform';
 
 import Field from './Field';
-import { DeleteRecord } from './buttons/DeleteRecord';
+import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 
 
 export default class SingleRecord extends Component {

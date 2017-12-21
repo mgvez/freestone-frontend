@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { LanguageToggler } from '../form/LanguageToggler';
-import { PreviewRecord } from '../form/buttons/PreviewRecord';
+import PreviewRecord from '../../containers/form/buttons/PreviewRecord';
 
 /**
  * FormHeaderVariation

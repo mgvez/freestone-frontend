@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-import { buildCopyRecordSelector } from '../../../selectors/buildRecord';
-
-@connect(
-	buildCopyRecordSelector
-)
-export class CopyRecord extends Component {
+export default class CopyRecord extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
 		recordId: React.PropTypes.string,

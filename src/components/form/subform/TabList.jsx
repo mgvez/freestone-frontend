@@ -4,7 +4,7 @@ import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import { Tab } from './Tab';
-import { AddRecord } from '../buttons/AddRecord';
+import AddRecord from '../../../containers/form/buttons/AddRecord';
 
 @dragDropContext(HTML5Backend)
 export class TabList extends Component {

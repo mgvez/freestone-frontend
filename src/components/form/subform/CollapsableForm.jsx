@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Collapser } from '../../../animation/Collapser';
+import Collapser from '../../../animation/Collapser';
 
 export class CollapsableForm extends Component {
 	static propTypes = {

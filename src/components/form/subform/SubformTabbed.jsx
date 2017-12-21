@@ -3,9 +3,9 @@ import React from 'react';
 import { TabList } from './TabList';
 import { CollapsableForm } from './CollapsableForm';
 import SingleRecord from '../../../containers/form/SingleRecord';
-import { ChangeSubformView } from '../buttons/ChangeSubformView';
+import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import FormHeaderContent from '../../header/FormHeaderContent';
-import { ToggleSubform } from '../buttons/ToggleSubform';
+import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
 
 export class SubformTabbed extends CollapsableForm {
 	static propTypes = {

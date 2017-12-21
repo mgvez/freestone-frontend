@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import Save from '../../../containers/process/Save';
-import { navigateToSlug } from '../../../actions/slugs';
-import { previewBtnMapStateToProps } from '../../../selectors/previewBtnSelector';
 
-@connect(
-	previewBtnMapStateToProps,
-	dispatch => bindActionCreators({ navigateToSlug }, dispatch)
-)
-export class PreviewRecord extends Component {
+export default class PreviewRecord extends Component {
 	static propTypes = {
 		slug: React.PropTypes.string,
 		tableId: React.PropTypes.number,
