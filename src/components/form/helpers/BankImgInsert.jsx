@@ -7,8 +7,8 @@ import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, 
 import { callApi, getEndpoint } from '../../../freestone/api';
 
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
-import { RootForm } from '../RootForm';
-import { Paging } from '../../recordList/Paging';
+import RootForm from '../../../containers/form/RootForm';
+import Paging from '../../recordList/Paging';
 
 import createRecord from '../../../freestone/createRecord';
 

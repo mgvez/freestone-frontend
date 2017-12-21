@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { LanguageToggler } from '../form/LanguageToggler';
+import LanguageToggler from '../../containers/form/LanguageToggler';
 import PreviewRecord from '../../containers/form/buttons/PreviewRecord';
 
 /**

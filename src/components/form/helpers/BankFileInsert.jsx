@@ -8,8 +8,8 @@ import { callApi, getEndpoint } from '../../../freestone/api';
 
 import BankFileThumbnail from '../../../containers/fileThumbnail/BankFileThumbnail';
 
-import { RootForm } from '../RootForm';
-import { Paging } from '../../recordList/Paging';
+import RootForm from '../../../containers/form/RootForm';
+import Paging from '../../recordList/Paging';
 
 import createRecord from '../../../freestone/createRecord';
 

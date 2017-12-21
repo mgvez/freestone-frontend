@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
-import { userViewLanguageSelector } from '../../selectors/userViewLanguage';
-
-import { setFieldViewLanguage } from '../../actions/env';
-
-@connect(
-	userViewLanguageSelector,
-	dispatch => bindActionCreators({ setFieldViewLanguage }, dispatch)
-)
-export class LanguageToggler extends Component {
+export default class LanguageToggler extends Component {
 	static propTypes = {
 		allLanguages: React.PropTypes.array,
 		language: React.PropTypes.string,

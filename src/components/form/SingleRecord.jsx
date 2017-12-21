@@ -6,7 +6,6 @@ import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import Field from './Field';
 
-
 export default class SingleRecord extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
