@@ -19,9 +19,12 @@ export default class Module extends Component {
 		description: React.PropTypes.string,
 		jwt: React.PropTypes.string,
 	};
+
+	shouldComponentRender(props) {
+		return this.props.params && props.params && this.props.params.url !== props.params.url;
+	}
 	
 	render() {
-		// console.log(this.props);
 		const host = getAdminUrl();
 		//adds a time to get to prevent over-aggressive server cache (I'm looking at you Radio-Canada)
 		const time = (new Date()).getMilliseconds();
