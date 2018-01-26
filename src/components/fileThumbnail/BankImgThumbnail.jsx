@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-//dimension max des images, selon grille
-const MAX_SIZE = 400;
 
 export default class BankImgThumbnail extends Component {
 	static propTypes = {
@@ -32,7 +30,3 @@ export default class BankImgThumbnail extends Component {
 		);
 	}
 }
-
-BankImgThumbnail.defaultProps = {
-	maxSize: MAX_SIZE,
-};
