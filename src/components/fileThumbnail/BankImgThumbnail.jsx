@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { THUMBNAIL_SIZE } from '../../freestone/settings';
 
 
 export default class BankImgThumbnail extends Component {
@@ -20,7 +21,7 @@ export default class BankImgThumbnail extends Component {
 
 	requireData(props) {
 		// console.log(props);
-		if (props.id && !props.markup) this.props.fetchBankImage(props.id, this.props.maxSize);
+		if (props.id && !props.markup) this.props.fetchBankImage(props.id, this.props.maxSize || THUMBNAIL_SIZE);
 	}
 
 	render() {

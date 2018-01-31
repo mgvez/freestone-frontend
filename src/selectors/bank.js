@@ -2,8 +2,8 @@
 import { createSelector } from 'reselect';
 import { schemaSelector } from './schema';
 import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_FILE_CATEG_ALIAS } from '../freestone/schemaProps';
+import { THUMBNAIL_SIZE } from '../freestone/settings';
 
-const MAX_SIZE = 400;
 
 const recordsSelector = state => state.freestone.recordList;
 // const recordListSelector = state => state.freestone.imageBankList;
@@ -13,7 +13,7 @@ const allUsesSelector = state => state.freestone.bank.uses;
 const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
 
 const idSelector = (state, props) => props.id;
-const maxSizeSelector = (state, props) => props.maxSize || MAX_SIZE;
+const maxSizeSelector = (state, props) => props.maxSize || THUMBNAIL_SIZE;
 const bankNameSelector = (state, props) => props.bankName;
 
 function buildByCategory(records, categFieldAlias) {

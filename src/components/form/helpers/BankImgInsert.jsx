@@ -174,6 +174,7 @@ export default class BankImgInsert extends Component {
 				onAfterOpen={this.afterOpenModal}
 				onRequestClose={this.cancelChange}
 				closeTimeoutMS={300}
+				contentLabel="Image Insert"
 				style={customStyle}
 			>
 				<div className="bank-image-list-actions">
@@ -183,7 +184,7 @@ export default class BankImgInsert extends Component {
 					</div>
 					<div className="padded-content search-ctn">
 						<form onSubmit={this.handleSearch}>
-							<input className="search-input" type="text" placeholder="search" ref={(el) => this._searchInput = el} initialValue={this.props.search} />
+							<input className="search-input" type="text" placeholder="search" ref={(el) => this._searchInput = el} defaultValue={this.props.search} />
 							<button className="button-search"><i className="fa fa-search"></i></button>
 						</form>
 					</div>
