@@ -47,6 +47,23 @@
 
 .subform {
 	margin-bottom: 30px;
+	margin-top: 30px;
+	padding-left: 30px;
+	border-top: 1px solid $gray86;
+	border-bottom: 1px solid $gray86;
+	border-left: 10px solid $gray86;
+	position: relative;
+	border-radius: 5px;
+
+	header {
+		margin-top: 20px;
+		padding-top: 10px;
+		// border-top: 1px solid $gray86;
+
+		h1 {
+			margin-bottom: 10px;
+		}
+	}
 
 	.fcn {
 		text-align: right;
@@ -57,16 +74,6 @@
 
 		[class^=button] + [class^=button] {
 			margin-left: 15px;
-		}
-	}
-
-	> header {
-		margin-top: 30px;
-		padding-top: 30px;
-		border-top: 1px solid $gray86;
-
-		h1 {
-			margin-bottom: 10px;
 		}
 	}
 
@@ -105,30 +112,6 @@
 		}
 	}
 
-	.subform {
-		margin-top: 30px;
-		padding-left: 60px;
-		border-top: 1px solid $gray86;
-		position: relative;
-
-		&:before {
-			position: absolute;
-				top: 30px;
-				left: 0;
-
-			content: ' ';
-			display: block;
-
-			width: 10px;
-			height: calc(100% - 30px);
-			background: $gray86;
-		}
-
-		> header {
-			border-top: none;
-			margin-top: 0;
-		}
-	}
 }
 
 

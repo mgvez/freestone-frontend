@@ -13,7 +13,7 @@ export default class TextInput extends Input {
 			);
 		}
 		return (
-			<input type="text" value={this.props.val} className="form-control" onChange={this.changeVal} />
+			<input type="text" size={this.props.field.size} value={this.props.val} className="form-control" onChange={this.changeVal} />
 		);
 	}
 }

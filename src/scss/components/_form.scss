@@ -30,6 +30,12 @@ input[role="combobox"] {
 	}
 }
 
+input[type="text"] {
+	&[size]{
+		width: auto;
+	}
+}
+
 textarea{
 	height: 130px;
 	line-height: 1.4em;

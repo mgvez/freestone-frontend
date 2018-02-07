@@ -6,6 +6,8 @@ import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import Field from './Field';
 
+const GRID_COLUMNS = 12;
+
 export default class SingleRecord extends Component {
 	static propTypes = {
 		tableId: React.PropTypes.number,
@@ -63,14 +65,14 @@ export default class SingleRecord extends Component {
 		) : null;
 	}
 
-	renderField = (field, canBeSubform = true) => {
+	renderField = (field, isAside = false) => {
 		if (field.subformPlaceholder) {
-			if (canBeSubform) {
+			if (!isAside) {
 				const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
 				return this.renderChild(child);
 			}
 			
-			return false;
+			return null;
 		}
 
 		//if field is language-specific, display it only if the current language is the field's
@@ -92,6 +94,42 @@ export default class SingleRecord extends Component {
 			lang={field.language}
 			isRoot={this.props.isRoot}
 		/>) : null;
+	}
+
+	wrapRow(all) {
+		all.rows.push(<div className="row" key={all.currentKey}>{all.currentRow}</div>);
+		return all;
+	}
+
+	//Wrap fields in rows, depending on number of columns they fill. Row will be 12 cols max
+	renderRows = (all, field) => {
+		
+		const renderedField = this.renderField(field, all.isAside);
+		if (!renderedField) return all;
+
+		const cols = Number(field.columns || GRID_COLUMNS);
+		all.currentColumns += cols;
+		console.log(field.name, cols, all.currentColumns);
+		//make new row
+		if (all.currentColumns > GRID_COLUMNS) {
+			this.wrapRow(all);
+			all.currentColumns = cols;
+			all.currentRow = [];
+			all.currentKey = '';
+		}
+		all.currentKey += field.name;
+		all.currentRow.push(renderedField);
+		return all;
+	}
+
+	renderFields = (fields, isAside) => {
+		return this.wrapRow(fields.reduce(this.renderRows, {
+			rows: [],
+			currentRow: [],
+			currentColumns: 0,
+			currentKey: '',
+			isAside,
+		})).rows;
 	}
 
 	render() {
@@ -120,14 +158,14 @@ export default class SingleRecord extends Component {
 					<div className="col-md-4">
 						<div className="sidebar">
 							{
-								secondaryFields.map(f => this.renderField(f, false))
+								this.renderFields(secondaryFields, false)
 							}
 						</div>
 					</div>
 				);
 			}
 
-			const subsiteField = (this.props.isGod && this.props.table.isSubsiteDependent) ? <div>subsite</div> : null;
+			const subsiteField = null;//(this.props.isGod && this.props.table.isSubsiteDependent) ? <div>subsite</div> : null;
 
 			form = (
 				<article>
@@ -140,7 +178,7 @@ export default class SingleRecord extends Component {
 					<div className="row">
 						<div className={`${sidebar ? 'col-md-8' : 'col-md-12'}`}>
 							{
-								normalFields.map(this.renderField)
+								this.renderFields(normalFields)
 							}
 						</div>
 						{sidebar}
