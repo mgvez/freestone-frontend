@@ -49,6 +49,7 @@ export default class AutocompleteInput extends Input {
 	constructor(props) {
 		super(props);
 		this.regexMatchOption = /./;
+		this.fetchTimeout = null;
 
 		this.state = {
 			currentText: '',
@@ -76,7 +77,10 @@ export default class AutocompleteInput extends Input {
 	}
 
 	requireData(props) {
-		if (!props.foreignOptions) this.props.fetchForeignOptions(props.field.id);
+		if (!props.foreignOptions) {
+			// console.log('fetch original %s', props.field.name);
+			this.props.fetchForeignOptions(props.field.id, null, props.val);
+		}
 	}
 
 	setCurrentText(tx) {
@@ -85,13 +89,27 @@ export default class AutocompleteInput extends Input {
 		});
 	}
 
+	//when we select a value among the suggestions
 	onSelect = (event, { suggestion, suggestionValue }) => {
+		// console.log('select %s', suggestion.value);
 		this.changeVal(suggestion.value);
 		this.setCurrentText(suggestionValue);
+		clearTimeout(this.fetchTimeout);
+		// this.props.fetchForeignOptions(this.props.field.id, suggestion.value);
 	};
 
+	//when we type in the field
 	onChange = (event, { newValue }) => {
-		// console.log(newValue);
+		// console.log('type %s', newValue);
+		clearTimeout(this.fetchTimeout);
+
+		//if we don't have all db records for options, fetch suggestions
+		if (this.props.foreignOptions.is_partial) {
+			this.fetchTimeout = setTimeout(() => {
+				this.props.fetchForeignOptions(this.props.field.id, newValue);
+			}, 500);
+		}
+
 		this.setCurrentText(newValue);
 		if (newValue.length > 8) {
 			const regexpVal = newValue.replace(/[[\]{}]/g, '\\$&');
@@ -110,7 +128,7 @@ export default class AutocompleteInput extends Input {
 	};
 
 	onSuggestionsFetchRequested = ({ value }) => {
-		// console.log(value);
+		// console.log('fetch requested %s', value);
 		if (!value) this.changeVal(0);
 		this.setState({
 			suggestions: this.getSuggestions(value),

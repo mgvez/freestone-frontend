@@ -109,7 +109,6 @@ export default class SingleRecord extends Component {
 
 		const cols = Number(field.columns || GRID_COLUMNS);
 		all.currentColumns += cols;
-		console.log(field.name, cols, all.currentColumns);
 		//make new row
 		if (all.currentColumns > GRID_COLUMNS) {
 			this.wrapRow(all);

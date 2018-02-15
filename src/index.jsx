@@ -16,6 +16,8 @@ import { setStore } from 'freestone/api';
 const store = configureStore();
 const history = configureHistory(store);
 
+window.React = React;
+window.ReactDOM = ReactDOM;
 
 setStore(store);
 
