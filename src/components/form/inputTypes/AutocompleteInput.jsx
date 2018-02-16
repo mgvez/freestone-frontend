@@ -100,12 +100,14 @@ export default class AutocompleteInput extends Input {
 
 	//when we type in the field
 	onChange = (event, { newValue }) => {
-		// console.log('type %s', newValue);
+		console.log('type %s', newValue);
+		console.log(this.props);
 		clearTimeout(this.fetchTimeout);
 
 		//if we don't have all db records for options, fetch suggestions
 		if (this.props.foreignOptions.is_partial) {
 			this.fetchTimeout = setTimeout(() => {
+				console.log('fetch');
 				this.props.fetchForeignOptions(this.props.field.id, newValue);
 			}, 500);
 		}
