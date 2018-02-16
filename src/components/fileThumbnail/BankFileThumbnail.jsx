@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { BANK_FILE_FILE_ALIAS, BANK_FILE_TITLE_ALIAS, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
 
 export default class BankFileThumbnail extends Component {
 	static propTypes = {
-		id: React.PropTypes.any,
-		item: React.PropTypes.object,
-		lang: React.PropTypes.string,
+		id: PropTypes.any,
+		item: PropTypes.object,
+		lang: PropTypes.string,
 
-		fetchBankFile: React.PropTypes.func,
+		fetchBankFile: PropTypes.func,
 	};
 
 	componentWillMount() {

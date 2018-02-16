@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import TextTranslations from '../../containers/nativeModules/textTranslations/TextTranslations';
 
 export default class NativeModule extends Component {
 	static propTypes = {
-		params: React.PropTypes.shape({
-			name: React.PropTypes.string,
+		params: PropTypes.shape({
+			name: PropTypes.string,
 		}),
 	};
 

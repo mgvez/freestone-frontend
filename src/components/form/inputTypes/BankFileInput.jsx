@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { TYPE_IMG } from '../../../freestone/schemaProps';
 
@@ -9,7 +10,7 @@ import GenericFileInput from '../genericInputs/GenericFileInput';
 
 export default class BankFileInput extends Input {
 	static propTypes = {
-		lang: React.PropTypes.string,
+		lang: PropTypes.string,
 	};
 
 	constructor(props) {

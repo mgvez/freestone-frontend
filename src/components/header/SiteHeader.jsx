@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import HomeButton from '../widgets/HomeButton';
 import NavToggler from '../../containers/widgets/NavToggler';
 import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
+import ClientComponent from '../../containers/utils/ClientComponent';
 
 export default class SiteHeader extends Component {
 	static propTypes = {
-		isGod: React.PropTypes.bool,
+		isGod: PropTypes.bool,
 
-		logout: React.PropTypes.func,
-		clearErrors: React.PropTypes.func,
-		clearData: React.PropTypes.func,
-		startPerf: React.PropTypes.func,
-		stopPerf: React.PropTypes.func,
-		clearSchema: React.PropTypes.func,
+		logout: PropTypes.func,
+		clearErrors: PropTypes.func,
+		clearData: PropTypes.func,
+		startPerf: PropTypes.func,
+		stopPerf: PropTypes.func,
+		clearSchema: PropTypes.func,
 	};
 
 	render() {
@@ -40,7 +42,7 @@ export default class SiteHeader extends Component {
 			<header id="main-header" ref="header">
 
 				<NavToggler />
-
+				<ClientComponent name="TestComponent" />
 				<div className="logout">
 					<HomeButton />
 					<a onClick={this.props.logout}>

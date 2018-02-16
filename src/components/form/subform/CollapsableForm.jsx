@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Collapser from '../../../animation/Collapser';
 
 export default class CollapsableForm extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		isCollapsed: React.PropTypes.bool,
-		setSubformCollapsed: React.PropTypes.func,
+		tableId: PropTypes.number,
+		isCollapsed: PropTypes.bool,
+		setSubformCollapsed: PropTypes.func,
 	};
 
 	constructor(props) {

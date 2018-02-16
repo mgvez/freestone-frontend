@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 
 import Input from './Input';
@@ -41,9 +42,9 @@ function shouldRenderSuggestions() {
 
 export default class AutocompleteInput extends Input {
 	static propTypes = {
-		fetchForeignOptions: React.PropTypes.func,
-		foreignOptions: React.PropTypes.object,
-		field: React.PropTypes.object,
+		fetchForeignOptions: PropTypes.func,
+		foreignOptions: PropTypes.object,
+		field: PropTypes.object,
 	};
 
 	constructor(props) {

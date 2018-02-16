@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import debounce from '../../utils/Debounce.js';
 
 export default class ListSearch extends Component {
 	static propTypes = {
-		tableName: React.PropTypes.string,
-		search: React.PropTypes.string,
-		curPage: React.PropTypes.number,
-		router: React.PropTypes.object,
-		numRecords: React.PropTypes.number,
+		tableName: PropTypes.string,
+		search: PropTypes.string,
+		curPage: PropTypes.number,
+		router: PropTypes.object,
+		numRecords: PropTypes.number,
 	};
 
 	componentDidMount() {

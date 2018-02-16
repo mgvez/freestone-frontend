@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class LoadedRecordsToggler extends Component {
 	static propTypes = {
-		nLoadedRecords: React.PropTypes.number,
-		toggleLoadedRecords: React.PropTypes.func,
-		loaded_records_visibility: React.PropTypes.bool,
-		isClose: React.PropTypes.bool,
+		nLoadedRecords: PropTypes.number,
+		toggleLoadedRecords: PropTypes.func,
+		loaded_records_visibility: PropTypes.bool,
+		isClose: PropTypes.bool,
 	};
 
 	loadedRecordsToggler = () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import FormHeaderContent from '../../header/FormHeaderContent';
 import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
@@ -6,23 +7,23 @@ import CollapsableForm from './CollapsableForm';
 
 export default class SubformMtm extends CollapsableForm {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		table: React.PropTypes.object,
-		records: React.PropTypes.array,
-		parentTableId: React.PropTypes.number,
-		parentRecordId: React.PropTypes.string,
-		mtmOptions: React.PropTypes.array,
-		isCollapsed: React.PropTypes.bool,
-		titleOverride: React.PropTypes.string,
-		descriptionAppend: React.PropTypes.string,
+		tableId: PropTypes.number,
+		table: PropTypes.object,
+		records: PropTypes.array,
+		parentTableId: PropTypes.number,
+		parentRecordId: PropTypes.string,
+		mtmOptions: PropTypes.array,
+		isCollapsed: PropTypes.bool,
+		titleOverride: PropTypes.string,
+		descriptionAppend: PropTypes.string,
 
-		fetchTable: React.PropTypes.func,
-		fetchMtmOptions: React.PropTypes.func,
-		fetchMtmRecords: React.PropTypes.func,
-		toggleMtm: React.PropTypes.func,
+		fetchTable: PropTypes.func,
+		fetchMtmOptions: PropTypes.func,
+		fetchMtmRecords: PropTypes.func,
+		toggleMtm: PropTypes.func,
 		
-		setSubformCollapsed: React.PropTypes.func,
-		onRequestToggleCollapse: React.PropTypes.func,
+		setSubformCollapsed: PropTypes.func,
+		onRequestToggleCollapse: PropTypes.func,
 	};
 	
 	componentWillMount() {

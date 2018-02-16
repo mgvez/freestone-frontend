@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import SingleTranslation from '../../../containers/nativeModules/textTranslations/SingleTranslation';
 import Field from './Field';
@@ -6,16 +7,16 @@ import FormHeader from '../../header/FormHeader';
 
 export default class TextTranslations extends Component {
 	static propTypes = {
-		translations: React.PropTypes.object,
-		translationKeys: React.PropTypes.array,
-		languages: React.PropTypes.array,
-		schema: React.PropTypes.object,
-		isEdited: React.PropTypes.bool,
+		translations: PropTypes.object,
+		translationKeys: PropTypes.array,
+		languages: PropTypes.array,
+		schema: PropTypes.object,
+		isEdited: PropTypes.bool,
 
-		saveTranslations: React.PropTypes.func,
-		fetchTranslations: React.PropTypes.func,
-		closeTranslations: React.PropTypes.func,
-		goTo: React.PropTypes.func,
+		saveTranslations: PropTypes.func,
+		fetchTranslations: PropTypes.func,
+		closeTranslations: PropTypes.func,
+		goTo: PropTypes.func,
 	};
 
 	constructor(props) {

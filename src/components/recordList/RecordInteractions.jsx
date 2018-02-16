@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import InfosFcn from './InfosFcn';
@@ -14,14 +15,14 @@ const PREVIEW_LABEL = 'Preview';
 
 export default class RecordInteractions extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
-		fields: React.PropTypes.array,
-		path: React.PropTypes.string,
-		values: React.PropTypes.object,
+		table: PropTypes.object,
+		fields: PropTypes.array,
+		path: PropTypes.string,
+		values: PropTypes.object,
 
-		rememberListPage: React.PropTypes.func,
-		lockScroll: React.PropTypes.func,
-		hasPreview: React.PropTypes.bool,
+		rememberListPage: PropTypes.func,
+		lockScroll: PropTypes.func,
+		hasPreview: PropTypes.bool,
 	};
 
 	constructor(props) {

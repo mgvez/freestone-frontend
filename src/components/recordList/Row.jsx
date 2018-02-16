@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { TweenMax } from '../../utils/Greensock';
 
@@ -8,15 +9,15 @@ import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
 
 export default class Row extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
-		fields: React.PropTypes.array,
-		values: React.PropTypes.object,
-		isLarge: React.PropTypes.bool,
-		isHovering: React.PropTypes.bool,
+		table: PropTypes.object,
+		fields: PropTypes.array,
+		values: PropTypes.object,
+		isLarge: PropTypes.bool,
+		isHovering: PropTypes.bool,
 
-		handleHover: React.PropTypes.func,
-		swappedRecords: React.PropTypes.array,
-		swapAnimated: React.PropTypes.func,
+		handleHover: PropTypes.func,
+		swappedRecords: PropTypes.array,
+		swapAnimated: PropTypes.func,
 	};
 
 	constructor(props) {

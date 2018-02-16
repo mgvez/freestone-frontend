@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 export default class Page extends Component {
 	static propTypes = {
-		label: React.PropTypes.string,
-		id: React.PropTypes.number,
-		flag: React.PropTypes.oneOfType([
-			React.PropTypes.string,
-			React.PropTypes.number,
+		label: PropTypes.string,
+		id: PropTypes.number,
+		flag: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number,
 		]),
-		flag_type: React.PropTypes.string,
-		className: React.PropTypes.string,
+		flag_type: PropTypes.string,
+		className: PropTypes.string,
 	};
 
 	render() {

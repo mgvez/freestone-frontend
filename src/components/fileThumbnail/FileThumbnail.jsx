@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { TYPE_FILE } from '../../freestone/schemaProps';
 
@@ -9,12 +10,12 @@ const css = {
 
 export default class FileThumbnail extends Component {
 	static propTypes = {
-		env: React.PropTypes.object,
-		dir: React.PropTypes.string,
-		val: React.PropTypes.string,
-		localVal: React.PropTypes.string,
-		absolutePath: React.PropTypes.string,
-		type: React.PropTypes.string,
+		env: PropTypes.object,
+		dir: PropTypes.string,
+		val: PropTypes.string,
+		localVal: PropTypes.string,
+		absolutePath: PropTypes.string,
+		type: PropTypes.string,
 	};
 
 	getLocalPath() {

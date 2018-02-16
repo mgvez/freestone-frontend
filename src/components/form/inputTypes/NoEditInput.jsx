@@ -11,7 +11,7 @@ export default class NoEditInput extends Input {
 		//if from foreign foreign
 		label: PropTypes.string,
 
-		fetchForeignLabel: React.PropTypes.func,
+		fetchForeignLabel: PropTypes.func,
 	};
 
 	componentWillMount() {

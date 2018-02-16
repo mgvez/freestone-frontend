@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import AddRecord from '../../../containers/form/buttons/AddRecord';
 import FormHeaderContent from '../../header/FormHeaderContent';
@@ -7,16 +8,16 @@ import SingleRecord from '../../../containers/form/SingleRecord';
 
 export default class SubformSingle extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
-		activeRecord: React.PropTypes.object,
-		childrenRecords: React.PropTypes.array,
-		parentTableId: React.PropTypes.number,
-		parentRecordId: React.PropTypes.string,
-		titleOverride: React.PropTypes.string,
-		descriptionAppend: React.PropTypes.string,
+		table: PropTypes.object,
+		activeRecord: PropTypes.object,
+		childrenRecords: PropTypes.array,
+		parentTableId: PropTypes.number,
+		parentRecordId: PropTypes.string,
+		titleOverride: PropTypes.string,
+		descriptionAppend: PropTypes.string,
 
-		language: React.PropTypes.string,
-		isCollapsed: React.PropTypes.bool,
+		language: PropTypes.string,
+		isCollapsed: PropTypes.bool,
 
 	};
 

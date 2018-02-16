@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { ALL_RECORDS_ID } from '../../freestone/schemaProps';
 
 export default class PermissionsForm extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
-		recordId: React.PropTypes.string,
+		table: PropTypes.object,
+		recordId: PropTypes.string,
 		
-		recordPermissions: React.PropTypes.array,
-		tablePermissions: React.PropTypes.array,
-		userGroups: React.PropTypes.array,
+		recordPermissions: PropTypes.array,
+		tablePermissions: PropTypes.array,
+		userGroups: PropTypes.array,
 
-		fetchSitePermissions: React.PropTypes.func,
-		fetchUsergroups: React.PropTypes.func,
-		toggleRecordPermission: React.PropTypes.func,
+		fetchSitePermissions: PropTypes.func,
+		fetchUsergroups: PropTypes.func,
+		toggleRecordPermission: PropTypes.func,
 	};
 	
 	componentWillMount() {

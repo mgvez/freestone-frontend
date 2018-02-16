@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import DocumentMeta from 'react-document-meta';
 import GoogleLoginBtn from './GoogleLoginBtn';
@@ -13,18 +14,18 @@ const metaData = {
 
 export default class Login extends Component {
 	static propTypes = {
-		location: React.PropTypes.object,
-		apiGoogle: React.PropTypes.object,
-		statusText: React.PropTypes.string,
-		jwt: React.PropTypes.string,
-		username: React.PropTypes.string,
-		isAuthenticating: React.PropTypes.bool,
-		isInstalled: React.PropTypes.bool,
-		gapiready: React.PropTypes.bool,
+		location: PropTypes.object,
+		apiGoogle: PropTypes.object,
+		statusText: PropTypes.string,
+		jwt: PropTypes.string,
+		username: PropTypes.string,
+		isAuthenticating: PropTypes.bool,
+		isInstalled: PropTypes.bool,
+		gapiready: PropTypes.bool,
 
-		loginUser: React.PropTypes.func,
-		fetchVariable: React.PropTypes.func,
-		setVariable: React.PropTypes.func,
+		loginUser: PropTypes.func,
+		fetchVariable: PropTypes.func,
+		setVariable: PropTypes.func,
 	};
 
 	constructor(props) {

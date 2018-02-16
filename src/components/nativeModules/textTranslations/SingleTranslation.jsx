@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class SingleTranslation extends Component {
 	static propTypes = {
-		translationKey: React.PropTypes.string,
-		translationValue: React.PropTypes.string,
-		language: React.PropTypes.string,
+		translationKey: PropTypes.string,
+		translationValue: PropTypes.string,
+		language: PropTypes.string,
 
-		editTranslation: React.PropTypes.func,
+		editTranslation: PropTypes.func,
 	};
 
 	changeVal = (e) => {

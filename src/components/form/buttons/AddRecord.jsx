@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import createRecord from '../../../freestone/createRecord';
 
 export default class AddRecord extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
-		highestOrder: React.PropTypes.number,
-		parentTableId: React.PropTypes.number,
-		parentRecordId: React.PropTypes.string,
-		language: React.PropTypes.string,
+		table: PropTypes.object,
+		highestOrder: PropTypes.number,
+		parentTableId: PropTypes.number,
+		parentRecordId: PropTypes.string,
+		language: PropTypes.string,
 
-		addRecord: React.PropTypes.func,
-		setShownRecord: React.PropTypes.func,
+		addRecord: PropTypes.func,
+		setShownRecord: PropTypes.func,
 	};
 
 	addRecord = () => {

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Save from '../../../containers/process/Save';
 
 export default class PreviewRecord extends Component {
 	static propTypes = {
-		slug: React.PropTypes.string,
-		tableId: React.PropTypes.number,
-		recordId: React.PropTypes.string,
-		currentLanguage: React.PropTypes.string,
+		slug: PropTypes.string,
+		tableId: PropTypes.number,
+		recordId: PropTypes.string,
+		currentLanguage: PropTypes.string,
 
-		navigateToSlug: React.PropTypes.func,
+		navigateToSlug: PropTypes.func,
 	};
 
 	componentWillMount() {

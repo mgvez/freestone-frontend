@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { Link } from 'react-router';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -12,14 +13,14 @@ function leftPad(n) {
 
 export default class LoadedRecords extends Component {
 	static propTypes = {
-		fetchTable: React.PropTypes.func,
-		fetchForeignLabel: React.PropTypes.func,
-		toggleLoadedRecords: React.PropTypes.func,
+		fetchTable: PropTypes.func,
+		fetchForeignLabel: PropTypes.func,
+		toggleLoadedRecords: PropTypes.func,
 
-		records: React.PropTypes.array,
-		unloadedForeignLabels: React.PropTypes.array,
-		toggleState: React.PropTypes.object,
-		visible: React.PropTypes.bool,
+		records: PropTypes.array,
+		unloadedForeignLabels: PropTypes.array,
+		toggleState: PropTypes.object,
+		visible: PropTypes.bool,
 	};
 
 	constructor(props) {

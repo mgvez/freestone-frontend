@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import { getWebsiteUrl } from '../../../freestone/settings';
@@ -40,15 +41,15 @@ function receiveUrl(event) {
 
 export default class LinkInsert extends Component {
 	static propTypes = {
-		onClose: React.PropTypes.func,
-		setVal: React.PropTypes.func,
-		contentBefore: React.PropTypes.string,
-		contentAfter: React.PropTypes.string,
-		selection: React.PropTypes.string,
-		link: React.PropTypes.string,
+		onClose: PropTypes.func,
+		setVal: PropTypes.func,
+		contentBefore: PropTypes.string,
+		contentAfter: PropTypes.string,
+		selection: PropTypes.string,
+		link: PropTypes.string,
 		//indique si on veut un link <a href...> ou juste une url
-		isUrlOnly: React.PropTypes.bool,
-		lang: React.PropTypes.string,
+		isUrlOnly: PropTypes.bool,
+		lang: PropTypes.string,
 	};
 
 	componentWillMount() {

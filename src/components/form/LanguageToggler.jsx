@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class LanguageToggler extends Component {
 	static propTypes = {
-		allLanguages: React.PropTypes.array,
-		language: React.PropTypes.string,
-		localLanguage: React.PropTypes.string,
+		allLanguages: PropTypes.array,
+		language: PropTypes.string,
+		localLanguage: PropTypes.string,
 
-		onChangeLang: React.PropTypes.func,
-		setFieldViewLanguage: React.PropTypes.func,
+		onChangeLang: PropTypes.func,
+		setFieldViewLanguage: PropTypes.func,
 	};
 
 	changeLanguage = (e) => {

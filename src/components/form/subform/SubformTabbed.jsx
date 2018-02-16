@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import TabList from './TabList';
 import CollapsableForm from './CollapsableForm';
@@ -9,16 +10,16 @@ import FormHeaderContent from '../../header/FormHeaderContent';
 
 export default class SubformTabbed extends CollapsableForm {
 	static propTypes = {
-		table: React.PropTypes.object,
-		activeRecord: React.PropTypes.object,
-		childrenRecords: React.PropTypes.array,
-		language: React.PropTypes.string,
-		parentRecordId: React.PropTypes.string,
-		parentTableId: React.PropTypes.number,
-		titleOverride: React.PropTypes.string,
-		descriptionAppend: React.PropTypes.string,
+		table: PropTypes.object,
+		activeRecord: PropTypes.object,
+		childrenRecords: PropTypes.array,
+		language: PropTypes.string,
+		parentRecordId: PropTypes.string,
+		parentTableId: PropTypes.number,
+		titleOverride: PropTypes.string,
+		descriptionAppend: PropTypes.string,
 
-		isCollapsed: React.PropTypes.bool,
+		isCollapsed: PropTypes.bool,
 	};
 
 	getContent() {

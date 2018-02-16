@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Table from '../menu/Table';
 import Module from '../menu/Module';
@@ -7,9 +8,9 @@ import NativeModule from '../menu/NativeModule';
 
 export default class Shortcuts extends Component {
 	static propTypes = {
-		tables: React.PropTypes.array,
-		modules: React.PropTypes.array,
-		pages: React.PropTypes.array,
+		tables: PropTypes.array,
+		modules: PropTypes.array,
+		pages: PropTypes.array,
 	};
 
 	render() {

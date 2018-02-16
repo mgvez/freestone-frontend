@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import TextInput from './inputTypes/TextInput';
 import BoolInput from './inputTypes/BoolInput';
@@ -15,15 +16,15 @@ import AutocompleteInput from '../../containers/form/inputTypes/AutocompleteInpu
 
 export default class Field extends Component {
 	static propTypes = {
-		field: React.PropTypes.object,
-		recordId: React.PropTypes.string,
-		val: React.PropTypes.any,
-		origVal: React.PropTypes.any,
-		lang: React.PropTypes.string,
+		field: PropTypes.object,
+		recordId: PropTypes.string,
+		val: PropTypes.any,
+		origVal: PropTypes.any,
+		lang: PropTypes.string,
 		//isRoot can be true if table has property forceAsRoot that make it "main table" even if it is also subforms. 
-		isRoot: React.PropTypes.bool,
-		absolutePath: React.PropTypes.string,
-		setFieldVal: React.PropTypes.func,
+		isRoot: PropTypes.bool,
+		absolutePath: PropTypes.string,
+		setFieldVal: PropTypes.func,
 	};
 
 	render() {

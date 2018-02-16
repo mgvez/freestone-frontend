@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import TinyMCEInput from 'react-tinymce-input';
 
@@ -9,7 +10,7 @@ import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
 
 export default class HtmlInput extends Input {
 	static propTypes = {
-		lang: React.PropTypes.string,
+		lang: PropTypes.string,
 	};
 	
 	constructor(props) {

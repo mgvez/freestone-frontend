@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Save extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		recordId: React.PropTypes.string,
-		afterSaveLocation: React.PropTypes.string,
+		tableId: PropTypes.number,
+		recordId: PropTypes.string,
+		afterSaveLocation: PropTypes.string,
 
-		table: React.PropTypes.object,
-		tree: React.PropTypes.object,
-		records: React.PropTypes.object,
-		permissions: React.PropTypes.object,
-		deleted: React.PropTypes.object,
-		fields: React.PropTypes.array,
-		saveState: React.PropTypes.object,
-		isTemporary: React.PropTypes.bool,
+		table: PropTypes.object,
+		tree: PropTypes.object,
+		records: PropTypes.object,
+		permissions: PropTypes.object,
+		deleted: PropTypes.object,
+		fields: PropTypes.array,
+		saveState: PropTypes.object,
+		isTemporary: PropTypes.bool,
 
-		callback: React.PropTypes.func,
-		saveRecord: React.PropTypes.func,
-		cancelSave: React.PropTypes.func,
+		callback: PropTypes.func,
+		saveRecord: PropTypes.func,
+		cancelSave: PropTypes.func,
 	};
 
 	componentWillMount() {

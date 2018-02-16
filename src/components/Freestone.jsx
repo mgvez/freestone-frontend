@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Script from 'react-load-script';
+import PropTypes from 'prop-types';
 
 import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 import qstrParams from '../utils/qstrParams';
+import Script from 'react-load-script';
 
 /* application components */
 import Footer from './footer/Footer';
@@ -18,17 +19,21 @@ import 'font-awesome/scss/font-awesome.scss';
 // import 'style-loader!font-awesome/scss/font-awesome.scss';
 // require('font-awesome-webpack-2');
 
+function noop() {
+
+}
+
 export default class Freestone extends Component {
 	static propTypes = {
-		isAuthenticated: React.PropTypes.bool,
-		lastRequestTime: React.PropTypes.number,
-		freestone: React.PropTypes.object,
-		jwt: React.PropTypes.string,
+		isAuthenticated: PropTypes.bool,
+		lastRequestTime: PropTypes.number,
+		freestone: PropTypes.object,
+		jwt: PropTypes.string,
 
-		loginUser: React.PropTypes.func,
-		fetchVariable: React.PropTypes.func,
-		fetchEnv: React.PropTypes.func,
-		children: React.PropTypes.any,
+		loginUser: PropTypes.func,
+		fetchVariable: PropTypes.func,
+		fetchEnv: PropTypes.func,
+		children: PropTypes.any,
 	};
 
 	componentWillMount() {
@@ -52,14 +57,7 @@ export default class Freestone extends Component {
 	onGapiReady = () => {
 		this.setState({ gapiready: true });
 	}
-	
-	onScriptLoaded = () => {
-		// console.log(arguments);
-	}
-	
-	onScriptError = () => {
 
-	}
 
 	requireData(props) {
 		// console.log(props.env);
@@ -102,8 +100,8 @@ export default class Freestone extends Component {
 				</div>
 				<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				{
-					this.props.freestone.clientScripts.map((scriptPath, i) => { 
-						return <Script key={i} url={scriptPath} onError={this.onScriptError} onLoad={this.onScriptLoaded} />;
+					this.props.freestone.clientScripts.map((scriptInfos) => {
+						return <Script url={scriptInfos.url} onError={noop} onLoad={noop} />;
 					})
 				}
 			</div>

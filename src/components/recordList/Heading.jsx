@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 
 export default class Heading extends Component {
 	static propTypes = {
-		fields: React.PropTypes.array,
-		isSelfTree: React.PropTypes.bool,
+		fields: PropTypes.array,
+		isSelfTree: PropTypes.bool,
 	};
 
 	render() {

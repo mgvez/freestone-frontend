@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from '../../../freestone/schemaProps';
 
 export default class ChangeSubformView extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		currentViewType: React.PropTypes.string,
-		setSubformViewType: React.PropTypes.func,
+		tableId: PropTypes.number,
+		currentViewType: PropTypes.string,
+		setSubformViewType: PropTypes.func,
 	};
 
 	setType = () => {

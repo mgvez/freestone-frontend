@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import NavGroup from './NavGroup';
 import UserInfos from '../../containers/widgets/UserInfos';
@@ -6,13 +7,13 @@ import HomeButton from '../widgets/HomeButton';
 
 export default class Nav extends Component {
 	static propTypes = {
-		fetchNav: React.PropTypes.func,
-		toggleCollapse: React.PropTypes.func,
+		fetchNav: PropTypes.func,
+		toggleCollapse: PropTypes.func,
 
-		tree: React.PropTypes.array,
-		toggleState: React.PropTypes.object,
-		username: React.PropTypes.string,
-		visible: React.PropTypes.bool,
+		tree: PropTypes.array,
+		toggleState: PropTypes.object,
+		username: PropTypes.string,
+		visible: PropTypes.bool,
 	};
 	
 	componentWillMount() {
