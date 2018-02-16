@@ -100,7 +100,7 @@ export default class AutocompleteInput extends Input {
 
 	//when we type in the field
 	onChange = (event, { newValue }) => {
-		// console.log('type %s', newValue);
+		console.log('type %s', newValue);
 		clearTimeout(this.fetchTimeout);
 
 		//if we don't have all db records for options, fetch suggestions
