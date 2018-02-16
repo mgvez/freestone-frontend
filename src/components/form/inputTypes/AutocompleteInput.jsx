@@ -69,7 +69,7 @@ export default class AutocompleteInput extends Input {
 		}
 
 		if (nextProps.foreignOptions !== this.props.foreignOptions) {
-			// console.log(nextProps.foreignOptions);
+			console.log(nextProps.foreignOptions);
 			this.setState({
 				suggestions: this.getSuggestions(null, nextProps.foreignOptions),
 			});
@@ -100,7 +100,7 @@ export default class AutocompleteInput extends Input {
 
 	//when we type in the field
 	onChange = (event, { newValue }) => {
-		console.log('type %s', newValue);
+		// console.log('type %s', newValue);
 		clearTimeout(this.fetchTimeout);
 
 		//if we don't have all db records for options, fetch suggestions
