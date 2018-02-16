@@ -53,6 +53,7 @@ function buildOptions(rawOptions) {
 			fieldId,
 			values,
 			search: current.search,
+			is_partial: current.is_partial,
 		};
 		return carry;
 
