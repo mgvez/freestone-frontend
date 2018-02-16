@@ -6,7 +6,7 @@ export const FOREIGN_LABELS_API = createRequestTypes('FOREIGN_LABELS_API');
 
 
 export function fetchForeignOptions(fieldId, search, val) {
-	console.log('action %s search %s val %s', fieldId, search, val);
+	// console.log('action %s search %s val %s', fieldId, search, val);
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
@@ -27,7 +27,11 @@ export function fetchForeignLabel(fieldId, foreignRecordId) {
 		return dispatch({
 			[FREESTONE_API]: {
 				types: FOREIGN_LABELS_API,
-				route: `optionList/${fieldId}/${foreignRecordId}`,
+				route: `optionList/${fieldId}`,
+				data: {
+					val: foreignRecordId,
+					aslabel: true,
+				},
 			},
 		});
 	};

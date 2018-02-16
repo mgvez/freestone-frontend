@@ -1184,6 +1184,9 @@ input[role="combobox"] {
   input[role="combobox"].bordered {
     border: 2px solid #293846; }
 
+input[type="text"][size] {
+  width: auto; }
+
 textarea {
   height: 130px;
   line-height: 1.4em; }
@@ -1728,7 +1731,7 @@ textarea {
         display: inline-block;
         vertical-align: middle;
         color: #19aa8d;
-        background: #fff;
+        background: #e7eaec;
         height: 30px;
         line-height: 30px;
         padding: 0 20px;
@@ -1748,7 +1751,7 @@ textarea {
           background: #19aa8d;
           color: #fff; }
   .root-form > .single-record {
-    width: 72.50755%;
+    width: 84.59215%;
     margin-left: auto;
     margin-right: auto; }
   @media all and (max-width: 1300px) {
@@ -1797,19 +1800,25 @@ textarea {
         color: #fff; }
 
 .subform {
-  margin-bottom: 30px; }
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding-left: 30px;
+  border-top: 1px solid #d4d8d9;
+  border-bottom: 1px solid #d4d8d9;
+  border-left: 10px solid #d4d8d9;
+  position: relative;
+  border-radius: 5px; }
+  .subform header {
+    margin-top: 20px;
+    padding-top: 10px; }
+    .subform header h1 {
+      margin-bottom: 10px; }
   .subform .fcn {
     text-align: right; }
     .subform .fcn [class^=button] {
       margin-bottom: 15px; }
     .subform .fcn [class^=button] + [class^=button] {
       margin-left: 15px; }
-  .subform > header {
-    margin-top: 30px;
-    padding-top: 30px;
-    border-top: 1px solid #d4d8d9; }
-    .subform > header h1 {
-      margin-bottom: 10px; }
   .subform .tabs {
     border-bottom: 1px solid #19aa8d;
     margin-top: 40px; }
@@ -1832,23 +1841,6 @@ textarea {
         color: #fff;
         background-color: #19aa8d;
         text-decoration: none; }
-  .subform .subform {
-    margin-top: 30px;
-    padding-left: 60px;
-    border-top: 1px solid #d4d8d9;
-    position: relative; }
-    .subform .subform:before {
-      position: absolute;
-      top: 30px;
-      left: 0;
-      content: ' ';
-      display: block;
-      width: 10px;
-      height: calc(100% - 30px);
-      background: #d4d8d9; }
-    .subform .subform > header {
-      border-top: none;
-      margin-top: 0; }
 
 .subform-list .single-record {
   position: relative; }
