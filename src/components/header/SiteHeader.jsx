@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import HomeButton from '../widgets/HomeButton';
 import NavToggler from '../../containers/widgets/NavToggler';
 import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
-import ClientComponent from '../../containers/utils/ClientComponent';
 
 export default class SiteHeader extends Component {
 	static propTypes = {
@@ -42,7 +41,6 @@ export default class SiteHeader extends Component {
 			<header id="main-header" ref="header">
 
 				<NavToggler />
-				<ClientComponent name="TestComponent" />
 				<div className="logout">
 					<HomeButton />
 					<a onClick={this.props.logout}>
