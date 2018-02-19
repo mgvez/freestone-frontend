@@ -67,7 +67,8 @@ function parseDependencies(table, record) {
 			const ruleApplies = checkRule(rule.rule, record[controlFieldId]);
 			// console.log(rule.rule, controlFieldId, dependingFieldId, ruleApplies);
 			if (ruleApplies) {
-				// console.log(rule.rule, record[controlFieldId]);
+				// console.log('%s applies', rule.rule);
+				// console.log(carry[dependingFieldId]);
 
 				carry[dependingFieldId].isDisplay = typeof carry[dependingFieldId].forceDisplay === 'undefined' ? rule.isDisplay : carry[dependingFieldId].forceDisplay;
 				carry[dependingFieldId].descriptionAppend = (carry[dependingFieldId].descriptionAppend || '') + (rule.descriptionAppend || '');
