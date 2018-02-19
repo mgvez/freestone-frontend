@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import LanguageToggler from '../../containers/form/LanguageToggler';
 import PreviewRecord from '../../containers/form/buttons/PreviewRecord';
@@ -14,28 +15,28 @@ import PreviewRecord from '../../containers/form/buttons/PreviewRecord';
  */
 export default class FormHeaderVariation extends Component {
 	static propTypes = {
-		isGod: React.PropTypes.bool,
-		slugs: React.PropTypes.array,
-		params: React.PropTypes.shape({
-			tableName: React.PropTypes.string,
-			recordId: React.PropTypes.string,
+		isGod: PropTypes.bool,
+		slugs: PropTypes.array,
+		params: PropTypes.shape({
+			tableName: PropTypes.string,
+			recordId: PropTypes.string,
 		}),
 		
-		table: React.PropTypes.object,
-		isModal: React.PropTypes.bool,
-		language: React.PropTypes.string,
-		hasLanguageToggle: React.PropTypes.bool,
-		lastmodifdate: React.PropTypes.string,
-		isLight: React.PropTypes.bool,
-		buttons: React.PropTypes.any,
-		children: React.PropTypes.any,
+		table: PropTypes.object,
+		isModal: PropTypes.bool,
+		language: PropTypes.string,
+		hasLanguageToggle: PropTypes.bool,
+		lastmodifdate: PropTypes.string,
+		isLight: PropTypes.bool,
+		buttons: PropTypes.any,
+		children: PropTypes.any,
 
-		setLanguageState: React.PropTypes.func,
-		fetchSlug: React.PropTypes.func,
+		setLanguageState: PropTypes.func,
+		fetchSlug: PropTypes.func,
 	};
 
 	static contextTypes = {
-		setHeight: React.PropTypes.func,
+		setHeight: PropTypes.func,
 	};
 
 	componentWillMount() {

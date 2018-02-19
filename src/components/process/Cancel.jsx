@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Cancel extends Component {
 	static propTypes = {
-		tableName: React.PropTypes.string,
-		recordId: React.PropTypes.string,
-		label: React.PropTypes.string,
-		afterCancelLocation: React.PropTypes.string,
+		tableName: PropTypes.string,
+		recordId: PropTypes.string,
+		label: PropTypes.string,
+		afterCancelLocation: PropTypes.string,
 
-		records: React.PropTypes.array,
+		records: PropTypes.array,
 
-		callback: React.PropTypes.func,
-		cancelEdit: React.PropTypes.func,
-		goTo: React.PropTypes.func,
+		callback: PropTypes.func,
+		cancelEdit: PropTypes.func,
+		goTo: PropTypes.func,
 	};
 
 	static defaultProps = {

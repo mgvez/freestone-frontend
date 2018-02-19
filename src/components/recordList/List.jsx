@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 
 import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
@@ -15,30 +16,30 @@ const LARGE_MINW_BREAKPOINT = 1024;
 
 export default class List extends Component {
 	static propTypes = {
-		params: React.PropTypes.shape({
-			tableName: React.PropTypes.string,
-			page: React.PropTypes.string,
-			search: React.PropTypes.string,
+		params: PropTypes.shape({
+			tableName: PropTypes.string,
+			page: PropTypes.string,
+			search: PropTypes.string,
 		}),
 
-		table: React.PropTypes.object,
-		searchableFields: React.PropTypes.array,
-		groupedRecords: React.PropTypes.array,
-		nPages: React.PropTypes.number,
-		curPage: React.PropTypes.number,
-		nRecords: React.PropTypes.number,
-		search: React.PropTypes.string,
-		swappedRecords: React.PropTypes.array,
-		canAdd: React.PropTypes.bool,
+		table: PropTypes.object,
+		searchableFields: PropTypes.array,
+		groupedRecords: PropTypes.array,
+		nPages: PropTypes.number,
+		curPage: PropTypes.number,
+		nRecords: PropTypes.number,
+		search: PropTypes.string,
+		swappedRecords: PropTypes.array,
+		canAdd: PropTypes.bool,
 
-		fetchTable: React.PropTypes.func,
-		fetchList: React.PropTypes.func,
-		addRecord: React.PropTypes.func,
+		fetchTable: PropTypes.func,
+		fetchList: PropTypes.func,
+		addRecord: PropTypes.func,
 
 	};
 
 	static contextTypes = {
-		router: React.PropTypes.object,
+		router: PropTypes.object,
 	};
 
 	constructor(props) {

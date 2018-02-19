@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
@@ -7,14 +8,14 @@ import { TYPE_IMG } from '../../../freestone/schemaProps';
 export default class GenericFileInput extends Component {
 
 	static propTypes = {
-		fieldId: React.PropTypes.number,
-		val: React.PropTypes.string,
-		origVal: React.PropTypes.string,
-		type: React.PropTypes.string,
-		folder: React.PropTypes.string,
-		recordId: React.PropTypes.string,
-		changeVal: React.PropTypes.func,
-		absolutePath: React.PropTypes.string,
+		fieldId: PropTypes.number,
+		val: PropTypes.string,
+		origVal: PropTypes.string,
+		type: PropTypes.string,
+		folder: PropTypes.string,
+		recordId: PropTypes.string,
+		changeVal: PropTypes.func,
+		absolutePath: PropTypes.string,
 	};
 
 	constructor(props) {

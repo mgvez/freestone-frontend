@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 export default class BankNUses extends Component {
 	static propTypes = {
-		bankName: React.PropTypes.string,
+		bankName: PropTypes.string,
 		//id de l'item de banque
-		id: React.PropTypes.string,
-		nUses: React.PropTypes.string,
-		records: React.PropTypes.array,
+		id: PropTypes.string,
+		nUses: PropTypes.string,
+		records: PropTypes.array,
 
-		fetchBankUses: React.PropTypes.func,
+		fetchBankUses: PropTypes.func,
 	};
 
 	constructor(props) {

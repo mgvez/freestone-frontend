@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import SingleRecord from '../../../containers/form/SingleRecord';
 import FormHeaderContent from '../../header/FormHeaderContent';
@@ -9,21 +10,21 @@ import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
 
 export default class SubformList extends CollapsableForm {
 	static propTypes = {
-		table: React.PropTypes.object,
-		activeRecord: React.PropTypes.object,
-		childrenRecords: React.PropTypes.array,
-		parentTableId: React.PropTypes.number,
-		parentRecordId: React.PropTypes.string,
-		highestOrder: React.PropTypes.number,
-		language: React.PropTypes.string,
-		isCollapsed: React.PropTypes.bool,
-		titleOverride: React.PropTypes.string,
-		descriptionAppend: React.PropTypes.string,
-		swapRecords: React.PropTypes.func,
-		setShownRecord: React.PropTypes.func,
+		table: PropTypes.object,
+		activeRecord: PropTypes.object,
+		childrenRecords: PropTypes.array,
+		parentTableId: PropTypes.number,
+		parentRecordId: PropTypes.string,
+		highestOrder: PropTypes.number,
+		language: PropTypes.string,
+		isCollapsed: PropTypes.bool,
+		titleOverride: PropTypes.string,
+		descriptionAppend: PropTypes.string,
+		swapRecords: PropTypes.func,
+		setShownRecord: PropTypes.func,
 
-		setSubformCollapsed: React.PropTypes.func,
-		onRequestToggleCollapse: React.PropTypes.func,
+		setSubformCollapsed: PropTypes.func,
+		onRequestToggleCollapse: PropTypes.func,
 	};
 
 	getContent() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 
 function getTabGroup(props) {
@@ -43,20 +44,20 @@ function getTabGroup(props) {
 )
 export default class Tab extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		parentRecordId: React.PropTypes.string,
-		recordId: React.PropTypes.string,
-		isActive: React.PropTypes.bool,
-		displayLabel: React.PropTypes.string,
-		language: React.PropTypes.string,
-		index: React.PropTypes.number,
-		hasOrder: React.PropTypes.bool,
+		tableId: PropTypes.number,
+		parentRecordId: PropTypes.string,
+		recordId: PropTypes.string,
+		isActive: PropTypes.bool,
+		displayLabel: PropTypes.string,
+		language: PropTypes.string,
+		index: PropTypes.number,
+		hasOrder: PropTypes.bool,
 
-		setShownRecord: React.PropTypes.func,
+		setShownRecord: PropTypes.func,
 
-		isDragging: React.PropTypes.bool,
-		connectDragSource: React.PropTypes.func,
-		connectDropTarget: React.PropTypes.func,
+		isDragging: PropTypes.bool,
+		connectDragSource: PropTypes.func,
+		connectDropTarget: PropTypes.func,
 	};
 
 	setShownRecord = () => {

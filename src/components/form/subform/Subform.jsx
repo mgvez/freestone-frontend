@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { TYPE_MTM } from '../../../freestone/schemaProps';
 
@@ -7,18 +8,18 @@ import SubformStandard from '../../../containers/form/subform/SubformStandard';
 
 export default class Subform extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		parentTableId: React.PropTypes.number,
-		parentRecordId: React.PropTypes.string,
-		language: React.PropTypes.string,
-		titleOverride: React.PropTypes.string,
-		descriptionAppend: React.PropTypes.string,
+		tableId: PropTypes.number,
+		parentTableId: PropTypes.number,
+		parentRecordId: PropTypes.string,
+		language: PropTypes.string,
+		titleOverride: PropTypes.string,
+		descriptionAppend: PropTypes.string,
 
-		isCollapsed: React.PropTypes.bool,
-		table: React.PropTypes.object,
+		isCollapsed: PropTypes.bool,
+		table: PropTypes.object,
 
-		fetchTable: React.PropTypes.func,
-		setSubformCollapsed: React.PropTypes.func,
+		fetchTable: PropTypes.func,
+		setSubformCollapsed: PropTypes.func,
 	};
 
 	componentWillMount() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
 
@@ -6,10 +7,10 @@ import customStyle from './styles/modalStyles.js';
 
 export default class Errors extends Component {
 	static propTypes = {
-		errors: React.PropTypes.array,
+		errors: PropTypes.array,
 
-		clearErrors: React.PropTypes.func,
-		goTo: React.PropTypes.func,
+		clearErrors: PropTypes.func,
+		goTo: PropTypes.func,
 	};
 
 	closeModal = () => {

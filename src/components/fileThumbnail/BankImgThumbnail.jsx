@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { THUMBNAIL_SIZE } from '../../freestone/settings';
 
 
 export default class BankImgThumbnail extends Component {
 	static propTypes = {
-		id: React.PropTypes.any,
-		markup: React.PropTypes.string,
-		maxSize: React.PropTypes.number,
-		onClick: React.PropTypes.func,
-		fetchBankImage: React.PropTypes.func,
+		id: PropTypes.any,
+		markup: PropTypes.string,
+		maxSize: PropTypes.number,
+		onClick: PropTypes.func,
+		fetchBankImage: PropTypes.func,
 	};
 
 	componentWillMount() {

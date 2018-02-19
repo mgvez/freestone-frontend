@@ -1,11 +1,12 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 //anthonyjgrove/react-google-login
 
 export default class GoogleLoginBtn extends Component {
 	static propTypes = {
 		buttonText: PropTypes.string,
 		cssClass: PropTypes.string,
-		children: React.PropTypes.node,
+		children: PropTypes.node,
 	};
 
 	static defaultProps = {

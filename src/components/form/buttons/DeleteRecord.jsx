@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class DeleteRecord extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		recordId: React.PropTypes.string,
-		parentRecordId: React.PropTypes.string,
-		language: React.PropTypes.string,
+		tableId: PropTypes.number,
+		recordId: PropTypes.string,
+		parentRecordId: PropTypes.string,
+		language: PropTypes.string,
 
-		setShownRecord: React.PropTypes.func,
-		setRecordDeleted: React.PropTypes.func,
+		setShownRecord: PropTypes.func,
+		setRecordDeleted: PropTypes.func,
 	};
 
 	deleteRecord = () => {

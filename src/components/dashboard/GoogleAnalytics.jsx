@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import GAPI_Helper from './GAPI_Helper';
 
@@ -26,12 +27,12 @@ const GA_PERCENT_NEW_SESSIONS = 'ga:percentNewSessions';
 
 export default class GoogleAnalytics extends Component {
 	static propTypes = {
-		clientId: React.PropTypes.string,
-		property: React.PropTypes.string,
-		gapi_token_access: React.PropTypes.string,
+		clientId: PropTypes.string,
+		property: PropTypes.string,
+		gapi_token_access: PropTypes.string,
 
-		// dbg: React.PropTypes.number,
-		fetchVariable: React.PropTypes.func,
+		// dbg: PropTypes.number,
+		fetchVariable: PropTypes.func,
 	};
 
 	constructor(props) {

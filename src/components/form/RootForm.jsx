@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 
 import Save from '../../containers/process/Save';
@@ -11,24 +12,24 @@ import FormHeader from '../header/FormHeader';
 
 export default class RootForm extends Component {
 	static propTypes = {
-		params: React.PropTypes.shape({
-			tableName: React.PropTypes.string,
-			recordId: React.PropTypes.string,
+		params: PropTypes.shape({
+			tableName: PropTypes.string,
+			recordId: PropTypes.string,
 		}),
 
-		isModal: React.PropTypes.bool,
-		isEdited: React.PropTypes.bool,
-		language: React.PropTypes.string,
-		hasLanguageToggle: React.PropTypes.bool,
-		table: React.PropTypes.object,
-		lastmodifdate: React.PropTypes.string,
-		recordLabel: React.PropTypes.string,
+		isModal: PropTypes.bool,
+		isEdited: PropTypes.bool,
+		language: PropTypes.string,
+		hasLanguageToggle: PropTypes.bool,
+		table: PropTypes.object,
+		lastmodifdate: PropTypes.string,
+		recordLabel: PropTypes.string,
 
 		//once saved/cancelled, we can override the defualt action (which is to go to table's list). For example, when bank items are edited, they do not redirect, they only set a state on the insert component
-		finishCallback: React.PropTypes.func,
-		fetchTable: React.PropTypes.func,
-		goTo: React.PropTypes.func,
-		fetchRecordRevisionList: React.PropTypes.func,
+		finishCallback: PropTypes.func,
+		fetchTable: PropTypes.func,
+		goTo: PropTypes.func,
+		fetchRecordRevisionList: PropTypes.func,
 	};
 
 	componentWillMount() {

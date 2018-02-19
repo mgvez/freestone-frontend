@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class ToggleSubform extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		isCollapsed: React.PropTypes.bool,
-		toggle: React.PropTypes.func,
+		tableId: PropTypes.number,
+		isCollapsed: PropTypes.bool,
+		toggle: PropTypes.func,
 	};
 
 	render() {

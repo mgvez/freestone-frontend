@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class DuplicateBtn extends Component {
 	static propTypes = {
-		prikey: React.PropTypes.string,
-		tableName: React.PropTypes.string,
-		duplicateRecord: React.PropTypes.func,
+		prikey: PropTypes.string,
+		tableName: PropTypes.string,
+		duplicateRecord: PropTypes.func,
 	};
 
 	process = () => {

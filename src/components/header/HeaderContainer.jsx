@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class HeaderContainer extends Component {
 	static propTypes = {
-		children: React.PropTypes.any,
+		children: PropTypes.any,
 	};
 	
 	static childContextTypes = {
-		setHeight: React.PropTypes.func,
+		setHeight: PropTypes.func,
 	};
 
 	constructor(props) {

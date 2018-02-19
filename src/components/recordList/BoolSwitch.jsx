@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import BoolInput from '../form/inputTypes/BoolInput';
 
@@ -7,11 +8,11 @@ import BoolInput from '../form/inputTypes/BoolInput';
 */
 export default class BoolSwitch extends Component {
 	static propTypes = {
-		field: React.PropTypes.object,
-		recordId: React.PropTypes.string,
-		val: React.PropTypes.any,
+		field: PropTypes.object,
+		recordId: PropTypes.string,
+		val: PropTypes.any,
 
-		saveSingleValue: React.PropTypes.func,
+		saveSingleValue: PropTypes.func,
 	};
 
 	captureBool = (tableId, recordId, fieldId, boolVal) => {

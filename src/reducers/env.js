@@ -7,6 +7,7 @@ import { combineReducers } from 'redux';
 const envInitialState = {
 	openedFrom: '',
 	clientScripts: [],
+	clientComponents: [],
 	filesDir: '',
 	thumbsDir: '',
 	siteName: '',

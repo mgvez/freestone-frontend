@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class OrderFcn extends Component {
 	static propTypes = {
-		prikey: React.PropTypes.string,
-		tableName: React.PropTypes.string,
-		swapOrder: React.PropTypes.func,
+		prikey: PropTypes.string,
+		tableName: PropTypes.string,
+		swapOrder: PropTypes.func,
 	};
 
 	swapOrder(direction) {

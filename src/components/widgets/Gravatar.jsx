@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import md5 from 'md5';
 
 const DEFAULT_SIZE = 75;
 
 export default class Gravatar extends Component {
 	static propTypes = {
-		email: React.PropTypes.string,
-		picture: React.PropTypes.string,
-		size: React.PropTypes.number,
+		email: PropTypes.string,
+		picture: PropTypes.string,
+		size: PropTypes.number,
 	};
 
 	render() {

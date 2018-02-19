@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 export default class Module extends Component {
 	static propTypes = {
-		label: React.PropTypes.string,
-		url: React.PropTypes.string,
-		id: React.PropTypes.number,
-		className: React.PropTypes.string,
+		label: PropTypes.string,
+		url: PropTypes.string,
+		id: PropTypes.number,
+		className: PropTypes.string,
 	};
 
 	render() {

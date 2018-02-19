@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class GoogleAuthenticate extends Component {
 	static propTypes = {
-		children: React.PropTypes.any,
-		apiGoogle: React.PropTypes.object,
-		scope: React.PropTypes.string,
-		isAuthenticated: React.PropTypes.bool,
-		cookiePolicy: React.PropTypes.string,
-		gapi_ready: React.PropTypes.number,
+		children: PropTypes.any,
+		apiGoogle: PropTypes.object,
+		scope: PropTypes.string,
+		isAuthenticated: PropTypes.bool,
+		cookiePolicy: PropTypes.string,
+		gapi_ready: PropTypes.number,
 
-		fetchVariable: React.PropTypes.func,
-		loginGoogleAPI: React.PropTypes.func,
-		onGapiReady: React.PropTypes.func,
+		fetchVariable: PropTypes.func,
+		loginGoogleAPI: PropTypes.func,
+		onGapiReady: PropTypes.func,
 	};
 
 	static defaultProps = {

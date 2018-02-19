@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Input from './Input';
 import HotspotInsert from '../helpers/HotspotInsert';
@@ -6,10 +7,10 @@ import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail
 
 export default class HotspotInput extends Input {
 	static propTypes = {
-		lang: React.PropTypes.string,
-		field: React.PropTypes.object,
-		imageId: React.PropTypes.string,
-		parsedVal: React.PropTypes.object,
+		lang: PropTypes.string,
+		field: PropTypes.object,
+		imageId: PropTypes.string,
+		parsedVal: PropTypes.object,
 	};
 
 	constructor(props) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import HeaderContainer from './HeaderContainer'; 
 import FormHeaderVariation from '../../containers/header/FormHeaderVariation'; 
@@ -6,14 +7,14 @@ import FormHeaderVariation from '../../containers/header/FormHeaderVariation';
 
 export default class FormHeader extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
-		setLanguageState: React.PropTypes.func,
-		hasLanguageToggle: React.PropTypes.bool,
-		isModal: React.PropTypes.bool,
-		buttons: React.PropTypes.array,
-		children: React.PropTypes.any,
-		language: React.PropTypes.string,
-		lastmodifdate: React.PropTypes.string,
+		table: PropTypes.object,
+		setLanguageState: PropTypes.func,
+		hasLanguageToggle: PropTypes.bool,
+		isModal: PropTypes.bool,
+		buttons: PropTypes.array,
+		children: PropTypes.any,
+		language: PropTypes.string,
+		lastmodifdate: PropTypes.string,
 	};
 
 	render() {

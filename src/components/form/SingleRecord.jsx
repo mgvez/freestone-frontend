@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { TYPE_LANGUAGE, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
 
@@ -10,25 +11,25 @@ const GRID_COLUMNS = 12;
 
 export default class SingleRecord extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		recordId: React.PropTypes.string,
-		parentRecordId: React.PropTypes.string,
-		parentTableId: React.PropTypes.number,
-		isSubform: React.PropTypes.bool,
-		isGod: React.PropTypes.bool,
+		tableId: PropTypes.number,
+		recordId: PropTypes.string,
+		parentRecordId: PropTypes.string,
+		parentTableId: PropTypes.number,
+		isSubform: PropTypes.bool,
+		isGod: PropTypes.bool,
 		
-		table: React.PropTypes.object,
-		children: React.PropTypes.array,
-		record: React.PropTypes.object,
-		recordUnaltered: React.PropTypes.object,
-		fields: React.PropTypes.array,
-		env: React.PropTypes.object,
-		language: React.PropTypes.string,
-		isRoot: React.PropTypes.bool,
+		table: PropTypes.object,
+		children: PropTypes.array,
+		record: PropTypes.object,
+		recordUnaltered: PropTypes.object,
+		fields: PropTypes.array,
+		env: PropTypes.object,
+		language: PropTypes.string,
+		isRoot: PropTypes.bool,
 
-		fetchTable: React.PropTypes.func,
-		fetchRecord: React.PropTypes.func,
-		setFieldVal: React.PropTypes.func,
+		fetchTable: PropTypes.func,
+		fetchRecord: PropTypes.func,
+		setFieldVal: PropTypes.func,
 	};
 
 	componentWillMount() {

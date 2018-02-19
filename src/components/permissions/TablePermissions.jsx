@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { ALL_RECORDS_ID } from '../../freestone/schemaProps';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
 
 export default class TablePermissions extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
-		tablePermissions: React.PropTypes.array,
-		isModified: React.PropTypes.bool,
+		table: PropTypes.object,
+		tablePermissions: PropTypes.array,
+		isModified: PropTypes.bool,
 
-		savePermissions: React.PropTypes.func,
+		savePermissions: PropTypes.func,
 	};
 
 	savePermissions = () => {

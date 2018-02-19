@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 import Gravatar from './Gravatar';
 
 export default class UserInfos extends Component {
 	static propTypes = {
-		email: React.PropTypes.string,
-		username: React.PropTypes.string,
-		realName: React.PropTypes.string,
-		picture: React.PropTypes.string,
-		userId: React.PropTypes.number,
+		email: PropTypes.string,
+		username: PropTypes.string,
+		realName: PropTypes.string,
+		picture: PropTypes.string,
+		userId: PropTypes.number,
 	};
 
 	render() {

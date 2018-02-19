@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 
 import uniqueId from '../utils/UniqueId';
@@ -15,19 +16,19 @@ const metaData = {
 
 export default class Page extends Component {
 	static propTypes = {
-		params: React.PropTypes.shape({
-			id: React.PropTypes.string,
+		params: PropTypes.shape({
+			id: PropTypes.string,
 		}),
-		resolvedUrl: React.PropTypes.string,
-		title: React.PropTypes.string,
-		jwt: React.PropTypes.string,
-		id: React.PropTypes.number,
+		resolvedUrl: PropTypes.string,
+		title: PropTypes.string,
+		jwt: PropTypes.string,
+		id: PropTypes.number,
 
-		rememberListPage: React.PropTypes.func,
-		setPageHash: React.PropTypes.func,
-		goTo: React.PropTypes.func,
-		lockScroll: React.PropTypes.func,
-		duplicateRecord: React.PropTypes.func,
+		rememberListPage: PropTypes.func,
+		setPageHash: PropTypes.func,
+		goTo: PropTypes.func,
+		lockScroll: PropTypes.func,
+		duplicateRecord: PropTypes.func,
 
 	};
 

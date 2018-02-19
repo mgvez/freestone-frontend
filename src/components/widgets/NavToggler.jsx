@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class NavToggler extends Component {
 	static propTypes = {
-		toggleNavVisibility: React.PropTypes.func,
+		toggleNavVisibility: PropTypes.func,
 
-		nav_visibility: React.PropTypes.bool,
+		nav_visibility: PropTypes.bool,
 	};
 
 	navToggler = () => {

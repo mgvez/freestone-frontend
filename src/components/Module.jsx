@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 import { getAdminUrl } from '../freestone/api';
 
@@ -12,12 +13,12 @@ const metaData = {
 
 export default class Module extends Component {
 	static propTypes = {
-		params: React.PropTypes.shape({
-			url: React.PropTypes.string,
+		params: PropTypes.shape({
+			url: PropTypes.string,
 		}),
-		label: React.PropTypes.string,
-		description: React.PropTypes.string,
-		jwt: React.PropTypes.string,
+		label: PropTypes.string,
+		description: PropTypes.string,
+		jwt: PropTypes.string,
 	};
 
 	shouldComponentRender(props) {

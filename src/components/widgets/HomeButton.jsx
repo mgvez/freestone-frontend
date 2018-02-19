@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 export default class HomeButton extends Component {
 	static propTypes = {
-		showIcon: React.PropTypes.bool,
-		customClass: React.PropTypes.string,
+		showIcon: PropTypes.bool,
+		customClass: PropTypes.string,
 	};
 
 	render() {

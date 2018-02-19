@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 // import { Link } from 'react-router';
 
 
 export default class InfosFcn extends Component {
 	static propTypes = {
-		prikey: React.PropTypes.string,
-		createddate: React.PropTypes.string,
-		lastmodifdate: React.PropTypes.string,
-		label: React.PropTypes.string,
+		prikey: PropTypes.string,
+		createddate: PropTypes.string,
+		lastmodifdate: PropTypes.string,
+		label: PropTypes.string,
 	};
 
 	constructor(props) {

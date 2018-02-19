@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class FormHeaderContent extends Component {
 	static propTypes = {
-		table: React.PropTypes.object,
+		table: PropTypes.object,
 		//optional label, that will be combined with the table's default title if present 
-		label: React.PropTypes.string,
-		language: React.PropTypes.string,
-		titleOverride: React.PropTypes.string,
-		descriptionAppend: React.PropTypes.string,
+		label: PropTypes.string,
+		language: PropTypes.string,
+		titleOverride: PropTypes.string,
+		descriptionAppend: PropTypes.string,
 	};
 
 	render() {

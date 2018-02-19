@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
 import customStyle from '../../styles/modalStyles.js';
@@ -15,25 +16,25 @@ import createRecord from '../../../freestone/createRecord';
 
 export default class BankFileInsert extends Component {
 	static propTypes = {
-		onClose: React.PropTypes.func,
+		onClose: PropTypes.func,
 		//callback to set ID of chosen image as opener value
-		setVal: React.PropTypes.func,
+		setVal: PropTypes.func,
 		//callback to insert markup of chosen image in opener value
-		setMarkup: React.PropTypes.func,
-		contentBefore: React.PropTypes.string,
-		contentAfter: React.PropTypes.string,
-		table: React.PropTypes.object,
+		setMarkup: PropTypes.func,
+		contentBefore: PropTypes.string,
+		contentAfter: PropTypes.string,
+		table: PropTypes.object,
 
-		records: React.PropTypes.array,
-		page: React.PropTypes.number,
-		nPages: React.PropTypes.number,
-		curPage: React.PropTypes.number,
-		search: React.PropTypes.string,
-		lang: React.PropTypes.string,
+		records: PropTypes.array,
+		page: PropTypes.number,
+		nPages: PropTypes.number,
+		curPage: PropTypes.number,
+		search: PropTypes.string,
+		lang: PropTypes.string,
 
-		fetchList: React.PropTypes.func,
-		addRecord: React.PropTypes.func,
-		fetchTable: React.PropTypes.func,
+		fetchList: PropTypes.func,
+		addRecord: PropTypes.func,
+		fetchTable: PropTypes.func,
 	};
 	
 

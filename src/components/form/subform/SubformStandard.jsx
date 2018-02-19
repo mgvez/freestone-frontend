@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import SubformTabbed from './SubformTabbed';
 import SubformList from './SubformList';
@@ -8,23 +9,23 @@ import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/
 
 export default class SubformStandard extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		table: React.PropTypes.object,
-		activeRecord: React.PropTypes.object,
-		childrenRecords: React.PropTypes.array,
-		parentTableId: React.PropTypes.number,
-		parentRecordId: React.PropTypes.string,
-		highestOrder: React.PropTypes.number,
-		currentViewType: React.PropTypes.string,
-		language: React.PropTypes.string,
-		isCollapsed: React.PropTypes.bool,
-		titleOverride: React.PropTypes.string,
-		descriptionAppend: React.PropTypes.string,
+		tableId: PropTypes.number,
+		table: PropTypes.object,
+		activeRecord: PropTypes.object,
+		childrenRecords: PropTypes.array,
+		parentTableId: PropTypes.number,
+		parentRecordId: PropTypes.string,
+		highestOrder: PropTypes.number,
+		currentViewType: PropTypes.string,
+		language: PropTypes.string,
+		isCollapsed: PropTypes.bool,
+		titleOverride: PropTypes.string,
+		descriptionAppend: PropTypes.string,
 		
-		fetchTable: React.PropTypes.func,
-		fetchRecord: React.PropTypes.func,
-		setOrder: React.PropTypes.func,
-		setShownRecord: React.PropTypes.func,
+		fetchTable: PropTypes.func,
+		fetchRecord: PropTypes.func,
+		setOrder: PropTypes.func,
+		setShownRecord: PropTypes.func,
 	};
 
 	componentWillMount() {

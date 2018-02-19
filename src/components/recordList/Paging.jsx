@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 export default class Paging extends Component {
 	static propTypes = {
-		tableName: React.PropTypes.string,
-		nPages: React.PropTypes.number,
-		curPage: React.PropTypes.number,
-		search: React.PropTypes.string,
-		onChangePage: React.PropTypes.func,
+		tableName: PropTypes.string,
+		nPages: PropTypes.number,
+		curPage: PropTypes.number,
+		search: PropTypes.string,
+		onChangePage: PropTypes.func,
 	};
 
 	onClickPage = (e) => {

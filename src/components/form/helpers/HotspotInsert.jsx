@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
@@ -6,13 +7,13 @@ import customStyle from '../../styles/modalStyles.js';
 
 export default class HotspotInsert extends Component {
 	static propTypes = {
-		lang: React.PropTypes.string,
-		onClose: React.PropTypes.func,
-		parentRecordId: React.PropTypes.string,
-		imageFieldId: React.PropTypes.number,
-		onSave: React.PropTypes.func,
-		imageId: React.PropTypes.string,
-		parsedVal: React.PropTypes.object,
+		lang: PropTypes.string,
+		onClose: PropTypes.func,
+		parentRecordId: PropTypes.string,
+		imageFieldId: PropTypes.number,
+		onSave: PropTypes.func,
+		imageId: PropTypes.string,
+		parsedVal: PropTypes.object,
 	};
 
 	componentWillMount() {

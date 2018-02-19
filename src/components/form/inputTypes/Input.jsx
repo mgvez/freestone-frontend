@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Input extends Component {
 	static propTypes = {
-		field: React.PropTypes.object,
-		recordId: React.PropTypes.string,
-		val: React.PropTypes.any,
-		origVal: React.PropTypes.any,
-		absolutePath: React.PropTypes.string,
-		env: React.PropTypes.object,
+		field: PropTypes.object,
+		recordId: PropTypes.string,
+		val: PropTypes.any,
+		origVal: PropTypes.any,
+		absolutePath: PropTypes.string,
+		env: PropTypes.object,
 
-		setFieldVal: React.PropTypes.func,
+		setFieldVal: PropTypes.func,
 	};
 
 	changeVal = (e) => {

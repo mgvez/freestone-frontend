@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 
 
 export default class Table extends Component {
 	static propTypes = {
-		name: React.PropTypes.string,
-		displayLabel: React.PropTypes.string,
-		nrecords: React.PropTypes.any,
-		id: React.PropTypes.number,
-		className: React.PropTypes.string,
+		name: PropTypes.string,
+		displayLabel: PropTypes.string,
+		nrecords: PropTypes.any,
+		id: PropTypes.number,
+		className: PropTypes.string,
 	};
 
 	render() {

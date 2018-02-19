@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Table from './Table';
 import Module from './Module';
@@ -8,12 +9,12 @@ import Collapser from '../../animation/Collapser';
 
 export default class NavGroup extends Component {
 	static propTypes = {
-		toggleCollapse: React.PropTypes.func,
+		toggleCollapse: PropTypes.func,
 
-		childrenGroups: React.PropTypes.array,
-		data: React.PropTypes.object,
-		level: React.PropTypes.number,
-		toggleState: React.PropTypes.object,
+		childrenGroups: PropTypes.array,
+		data: PropTypes.object,
+		level: PropTypes.number,
+		toggleState: PropTypes.object,
 	};
 
 	constructor(props) {

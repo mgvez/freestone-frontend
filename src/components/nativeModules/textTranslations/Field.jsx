@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Field extends Component {
 	static propTypes = {
-		children: React.PropTypes.any,
-		label: React.PropTypes.string,
-		description: React.PropTypes.string,
-		val: React.PropTypes.any,
-		lang: React.PropTypes.string,
+		children: PropTypes.any,
+		label: PropTypes.string,
+		description: PropTypes.string,
+		val: PropTypes.any,
+		lang: PropTypes.string,
 
-		onChange: React.PropTypes.func,
+		onChange: PropTypes.func,
 	};
 
 	render() {

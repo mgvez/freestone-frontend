@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class CopyRecord extends Component {
 	static propTypes = {
-		tableId: React.PropTypes.number,
-		recordId: React.PropTypes.string,
-		records: React.PropTypes.object,
+		tableId: PropTypes.number,
+		recordId: PropTypes.string,
+		records: PropTypes.object,
 	};
 
 	copyRecord = () => {

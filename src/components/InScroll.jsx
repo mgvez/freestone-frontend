@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 
 /**
@@ -7,13 +8,13 @@ import React, { Component } from 'react';
 
 export default class InScroll extends Component {
 	static propTypes = {
-		children: React.PropTypes.any,
-		path: React.PropTypes.string,
-		scroll: React.PropTypes.number,
-		isReady: React.PropTypes.bool,
-		autoLock: React.PropTypes.bool,
+		children: PropTypes.any,
+		path: PropTypes.string,
+		scroll: PropTypes.number,
+		isReady: PropTypes.bool,
+		autoLock: PropTypes.bool,
 		
-		lockScroll: React.PropTypes.func,
+		lockScroll: PropTypes.func,
 	};
 
 	constructor(props) {
