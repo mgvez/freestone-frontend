@@ -115,9 +115,12 @@ export default class Field extends Component {
 
 		if (input) {
 			const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
-			const columnsClass = 'col-md-' + (this.props.field.columns || 12);
+			const classes = ['col-md-' + (this.props.field.columns || 12)];
+			
+			classes.push(`field-${this.props.field.displaySize}`);
+
 			return (
-				<div className={`field ${columnsClass}`}>
+				<div className={`field ${classes.join(' ')}`}>
 					<div className="field-label">
 						<label>{this.props.field.label} {languageAppend}</label>
 					</div>

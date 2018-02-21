@@ -1,44 +1,94 @@
 
+.field {
 
-textarea,
-input[type="text"],
-input[type="search"],
-input[type="password"],
-input[type="email"],
-input[role="combobox"] {
-	display: inline-block;
-	width: 100%;
-	height: 35px;
-	line-height: 35px;
-	border: 2px solid transparent;
+	margin-bottom: 0.7em;
 
-	padding: 0 10px;
-	margin: 0 0 10px;
+	&.field-small {
+		@extend %text_small;
+	}
+	&.field-medium{
+		@extend %text_medium;
+	}
+	
 
-	&:focus {
-		border: 2px solid $color-accent-primary;
-		outline: none;
+	textarea,
+	input[type="text"],
+	input[type="search"],
+	input[type="password"],
+	input[type="email"],
+	input[role="combobox"] {
+		display: inline-block;
+		width: 100%;
+		height: 2.2em;
+		line-height:2.2em;
+		border: 2px solid transparent;
+
+		padding: 0 10px;
+		margin: 0 0 0.7em;
+
+		&:focus {
+			border: 2px solid $color-accent-primary;
+			outline: none;
+		}
+
+		&.search-input {
+			width: 200px;
+			vertical-align: middle;
+		}
+
+		&.bordered{
+			border: 2px solid $color-border-dark;
+		}
 	}
 
-	&.search-input {
-		width: 200px;
-		vertical-align: middle;
+	input[type="text"] {
+		&[size]{
+			width: auto;
+		}
 	}
 
-	&.bordered{
-		border: 2px solid $color-border-dark;
+	textarea{
+		height: 10em;
+		line-height: 1.4em;
 	}
-}
 
-input[type="text"] {
-	&[size]{
-		width: auto;
+
+	.field-description {
+		display: block;
+		margin-bottom: 0.7em;
+		font-size: 0.9em;
+
+		&:empty {
+			display:none;
+		}
+
 	}
-}
 
-textarea{
-	height: 130px;
-	line-height: 1.4em;
+	.field-label {
+		padding-top: 0.7em;
+		margin-bottom: 0.7em;
+		font-weight: $font-weight-normal;
+		//text-align: right;
+
+		label {
+			display: block;
+			position: relative;
+			padding-right: 45px;
+			font-weight: bold;
+		}
+
+		.lang-append {
+			display: inline-block;
+			vertical-align: -2%;
+
+			font-style: normal;
+			text-transform: uppercase;
+
+			span {
+				color: $color-accent-primary;
+			}
+		}
+	}
 }
 
 .mce-tinymce {
@@ -56,16 +106,6 @@ textarea{
 	vertical-align: middle;
 	border: 1px solid #000;
 	margin-right: 6px;
-}
-
-.field-description {
-	display: block;
-	margin-bottom: 10px;
-	font-size: 12px;
-}
-
-.field {
-	margin-bottom: 10px;
 }
 
 .link-field {
@@ -170,35 +210,6 @@ textarea{
 			&:hover, &:focus {
 				color: $white;
 			}
-		}
-	}
-}
-
-
-
-
-.field-label {
-	padding-top: 10px;
-	margin-bottom: 10px;
-	font-weight: $font-weight-normal;
-	//text-align: right;
-
-	label {
-		display: block;
-		position: relative;
-		padding-right: 45px;
-		font-weight: bold;
-	}
-
-	.lang-append {
-		display: inline-block;
-		vertical-align: -2%;
-
-		font-style: normal;
-		text-transform: uppercase;
-
-		span {
-			color: $color-accent-primary;
 		}
 	}
 }
