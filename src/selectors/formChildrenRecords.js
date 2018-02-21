@@ -3,7 +3,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
 import { tableRecordsMapStateToProps } from './record';
-import { subformViewSelector } from './subformView';
+import { subformViewSelector } from './subform';
 import { schemaSelector } from './schema';
 import { isNew } from '../utils/UniqueId';
 import { getForeignFieldId } from '../freestone/schemaHelpers';
