@@ -1,6 +1,7 @@
 //SHARED
 
 const fieldsSelector = state => state.freestone.schema.fields;
+import md5 from 'md5';
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps, parentTableSchemaMapStateToProps } from './tableSchema';
 import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps } from './record';
@@ -83,11 +84,56 @@ function parseDependencies(table, record) {
 	return dependenciesValues;
 }
 
+//create groups according to separators
+function createFieldGroups(fields) {
+	return (fields || []).reduce((groups, curField) => {
+		const isSeparator = curField.type === 'separator';
+		const isPlaceholder = !!curField.subformPlaceholder;
+		let curGroup = groups[groups.length - 1];
+		//new group when separator, or when current or previous field was a subfrom placeholder. Placeholders are always alone in their group
+		if (isSeparator || isPlaceholder || !curGroup || curGroup.isPlaceholder) {
+			curGroup = {
+				label: (isSeparator && curField.label) || null,
+				key: '',
+				isPlaceholder,
+				fields: [],
+			};
+			groups.push(curGroup);
+		}
+		curGroup.key += `${curField.id}-`;
+		if (!isSeparator) {
+			curGroup.fields.push(curField);
+		}
+		return groups;
+	}, []).map(gr => {
+		gr.key = md5(gr.key);
+		return gr;
+	});
+}
+
+function makeFieldGroupsSelector(tableSchemaSelector) {
+	return createSelector(
+		[tableSchemaSelector],
+		(schema) => {
+			const { table } = schema;
+			const mainFields = createFieldGroups(table && table.fields.filter(f => !f.isSecondary));
+			const asideFields = createFieldGroups(table && table.fields.filter(f => f.isSecondary));
+			return {
+				mainFields,
+				asideFields,
+			};
+		}
+	);
+}
+
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector) {
+
+	const fieldGroupsSelector = makeFieldGroupsSelector(tableSchemaSelector);
+
 	return createSelector(
-		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector],
-		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod) => {
+		[tableSchemaSelector, fieldGroupsSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector],
+		(schema, fieldGroups, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod) => {
 			let { table } = schema;
 			let children;
 			let dependencies;
@@ -162,15 +208,14 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 
 			}
 
-
 			// console.log(tableSchema, records, recordId);
 			return {
 				record,
 				recordUnaltered,
 				children,
 				table,
-				fields: table && table.fields,
 				env,
+				...fieldGroups,
 				...isGod,
 			};
 		}

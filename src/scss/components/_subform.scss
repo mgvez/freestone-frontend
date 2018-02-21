@@ -1,60 +1,16 @@
-.single-record {
-	position: relative;
-	padding-top: 40px;
-	padding-bottom: 1px;
-
-	h2 {
-		font-weight: $font-weight-semibold;
-	}
-
-
-	.close-row {
-		text-align: right;
-		margin-bottom: 20px;
-	}
-
-	h2:nth-of-type(n+2) {
-		margin-top: 40px;
-		padding-top: 40px;
-		border-top: 1px solid $gray86;
-	}
-
-	.sidebar {
-		padding: 30px;
-		background: $color-background-dark;
-		color: $white;
-
-		textarea,
-		input[type="text"],
-		input[type="search"],
-		input[type="password"],
-		input[type="email"],
-		input[role="combobox"] {
-			color: $color-text-primary;
-		}
-
-		ul li {
-			color: $color-text-primary;
-
-			&:hover, &:focus {
-				color: $white;
-			}
-		}
-	}
-}
-
-
 
 .subform {
 	margin-bottom: 30px;
 	margin-top: 30px;
 	padding-left: 30px;
+	padding-right: 10px;
 	border-top: 1px solid $gray86;
 	border-bottom: 1px solid $gray86;
 	border-left: 10px solid $gray86;
 	position: relative;
 	border-radius: 5px;
-
+	background: rgba(255, 255, 255, 0.4);
+	
 	header {
 		margin-top: 20px;
 		padding-top: 10px;

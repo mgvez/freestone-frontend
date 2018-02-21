@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SingleRecord from '../../../containers/form/SingleRecord';
 import FormHeaderContent from '../../header/FormHeaderContent';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
-import CollapsableForm from './CollapsableForm';
-import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
+import Collapsable from '../../animation/Collapsable';
+import ToggleCollapse from '../buttons/ToggleCollapse';
 
-export default class SubformList extends CollapsableForm {
+export default class SubformList extends Component {
 	static propTypes = {
 		table: PropTypes.object,
 		activeRecord: PropTypes.object,
@@ -23,13 +23,11 @@ export default class SubformList extends CollapsableForm {
 		swapRecords: PropTypes.func,
 		setShownRecord: PropTypes.func,
 
-		setSubformCollapsed: PropTypes.func,
-		onRequestToggleCollapse: PropTypes.func,
+		changeCollapsedState: PropTypes.func,
 	};
 
 	getContent() {
-		if (!this.collapser.getOpenState()) return null;
-		return (<div ref={this.setCollapsable}>
+		return (<Collapsable isCollapsed={this.props.isCollapsed}>
 			{
 				this.props.childrenRecords.map((record) => {
 					return (<SingleRecord 
@@ -52,7 +50,7 @@ export default class SubformList extends CollapsableForm {
 					language={this.props.language}
 				/>
 			}
-		</div>);
+		</Collapsable>);
 	}
 
 	render() {
@@ -68,7 +66,7 @@ export default class SubformList extends CollapsableForm {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}
-						<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
+						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 					</div>
 				</header>
 				{content}

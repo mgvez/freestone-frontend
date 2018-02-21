@@ -99,6 +99,84 @@ textarea{
 	}
 }
 
+
+.single-record {
+	position: relative;
+	padding-top: 40px;
+	padding-bottom: 1px;
+
+	h2.field-group-title {
+		font-weight: $font-weight-semibold;
+		margin-bottom: 20px;
+	}
+
+	.field-group {
+		padding: 10px 20px;
+		margin-bottom: 30px;
+		&.field-group-collapsable {
+			border-top: 4px solid $gray86;
+			background: rgba(255, 255, 255, 0.25);
+
+			.field-group-fields {
+				// height:auto;
+				max-height:5000px;
+				overflow:hidden;
+				transition: height 5s ease-in;
+			}
+
+			&.field-group-collapsed {
+				.field-group-fields {
+					max-height:0;
+					transition: max-height 5s ease-in;
+				}
+			}
+
+		}
+
+		.field-group-fcn {
+			text-align: right;
+		}
+
+	}
+
+	.close-row {
+		text-align: right;
+		margin-bottom: 20px;
+	}
+
+	h2:nth-of-type(n+2) {
+		margin-top: 40px;
+		padding-top: 40px;
+		border-top: 1px solid $gray86;
+	}
+
+	.sidebar {
+		padding: 30px;
+		background: $color-background-dark;
+		color: $white;
+
+		textarea,
+		input[type="text"],
+		input[type="search"],
+		input[type="password"],
+		input[type="email"],
+		input[role="combobox"] {
+			color: $color-text-primary;
+		}
+
+		ul li {
+			color: $color-text-primary;
+
+			&:hover, &:focus {
+				color: $white;
+			}
+		}
+	}
+}
+
+
+
+
 .field-label {
 	padding-top: 10px;
 	margin-bottom: 10px;

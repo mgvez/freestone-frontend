@@ -26,6 +26,7 @@ export default class SubformStandard extends Component {
 		fetchRecord: PropTypes.func,
 		setOrder: PropTypes.func,
 		setShownRecord: PropTypes.func,
+		changeCollapsedState: PropTypes.func,
 	};
 
 	componentWillMount() {

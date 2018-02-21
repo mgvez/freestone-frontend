@@ -5,9 +5,15 @@ import { TYPE_LANGUAGE, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
+import FieldGroup from '../../containers/form/FieldGroup';
 import Field from './Field';
 
 const GRID_COLUMNS = 12;
+
+function wrapCurrentRow(all) {
+	all.rows.push(<div className="row" key={all.currentKey}>{all.currentRow}</div>);
+	return all;
+}
 
 export default class SingleRecord extends Component {
 	static propTypes = {
@@ -22,7 +28,8 @@ export default class SingleRecord extends Component {
 		children: PropTypes.array,
 		record: PropTypes.object,
 		recordUnaltered: PropTypes.object,
-		fields: PropTypes.array,
+		mainFields: PropTypes.array,
+		asideFields: PropTypes.array,
 		env: PropTypes.object,
 		language: PropTypes.string,
 		isRoot: PropTypes.bool,
@@ -70,9 +77,9 @@ export default class SingleRecord extends Component {
 		if (field.subformPlaceholder) {
 			if (!isAside) {
 				const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
+				// console.log(child);
 				return this.renderChild(child);
 			}
-			
 			return null;
 		}
 
@@ -97,11 +104,6 @@ export default class SingleRecord extends Component {
 		/>) : null;
 	}
 
-	wrapRow(all) {
-		all.rows.push(<div className="row" key={all.currentKey}>{all.currentRow}</div>);
-		return all;
-	}
-
 	//Wrap fields in rows, depending on number of columns they fill. Row will be 12 cols max
 	renderRows = (all, field) => {
 		
@@ -112,7 +114,7 @@ export default class SingleRecord extends Component {
 		all.currentColumns += cols;
 		//make new row
 		if (all.currentColumns > GRID_COLUMNS) {
-			this.wrapRow(all);
+			wrapCurrentRow(all);
 			all.currentColumns = cols;
 			all.currentRow = [];
 			all.currentKey = '';
@@ -122,14 +124,22 @@ export default class SingleRecord extends Component {
 		return all;
 	}
 
-	renderFields = (fields, isAside) => {
-		return this.wrapRow(fields.reduce(this.renderRows, {
-			rows: [],
-			currentRow: [],
-			currentColumns: 0,
-			currentKey: '',
-			isAside,
-		})).rows;
+	renderGroups(fields, isAside) {
+		const fieldGroups = fields.map((group) => {
+			
+			const groupFieldRows = wrapCurrentRow(group.fields.reduce(this.renderRows, {
+				rows: [],
+				currentRow: [],
+				currentColumns: 0,
+				currentKey: '',
+				isAside,
+			})).rows;
+			// console.log(groupFieldRows);
+			// return this.createGroup(groupFieldRows, group.key, group.isPlaceholder, group.label);
+			return <FieldGroup key={group.key} id={group.key} isPlaceholder={group.isPlaceholder} label={group.label}>{groupFieldRows}</FieldGroup>;
+		}, []);
+		// console.log(fieldGroups);
+		return <div>{fieldGroups}</div>;
 	}
 
 	render() {
@@ -149,17 +159,12 @@ export default class SingleRecord extends Component {
 				/>);
 			}
 
-			const secondaryFields = this.props.fields.filter(f => f.isSecondary);
-			const normalFields = this.props.fields.filter(f => !f.isSecondary);
-
 			let sidebar;
-			if (secondaryFields.length > 0) {
+			if (this.props.asideFields.length > 0) {
 				sidebar = (
 					<div className="col-md-4">
 						<div className="sidebar">
-							{
-								this.renderFields(secondaryFields, false)
-							}
+							{this.renderGroups(this.props.asideFields, true)}
 						</div>
 					</div>
 				);
@@ -177,9 +182,7 @@ export default class SingleRecord extends Component {
 					</div>
 					<div className="row">
 						<div className={`${sidebar ? 'col-md-8' : 'col-md-12'}`}>
-							{
-								this.renderFields(normalFields)
-							}
+							{this.renderGroups(this.props.mainFields)}
 						</div>
 						{sidebar}
 					</div>

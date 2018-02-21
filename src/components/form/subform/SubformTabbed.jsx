@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import TabList from './TabList';
-import CollapsableForm from './CollapsableForm';
+import Collapsable from '../../animation/Collapsable';
 import SingleRecord from '../../../containers/form/SingleRecord';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
-import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
+import ToggleCollapse from '../buttons/ToggleCollapse';
 import FormHeaderContent from '../../header/FormHeaderContent';
 
-export default class SubformTabbed extends CollapsableForm {
+export default class SubformTabbed extends Component {
 	static propTypes = {
 		table: PropTypes.object,
 		activeRecord: PropTypes.object,
@@ -18,16 +18,15 @@ export default class SubformTabbed extends CollapsableForm {
 		parentTableId: PropTypes.number,
 		titleOverride: PropTypes.string,
 		descriptionAppend: PropTypes.string,
+		changeCollapsedState: PropTypes.func,
 
 		isCollapsed: PropTypes.bool,
 	};
 
 	getContent() {
-		if (!this.collapser.getOpenState()) return null;
-
 		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
-		return (<div ref={this.setCollapsable}>
+		return (<Collapsable isCollapsed={this.props.isCollapsed}>
 			<TabList {...this.props} activeRecordId={activeRecordId} />
 			<SingleRecord
 				tableId={this.props.table.id}
@@ -37,7 +36,7 @@ export default class SubformTabbed extends CollapsableForm {
 				language={this.props.language}
 				isSubform
 			/>
-		</div>);
+		</Collapsable>);
 	}
 
 	render() {
@@ -53,7 +52,7 @@ export default class SubformTabbed extends CollapsableForm {
 					</div>
 					<div className="col-md-3 col-md-offset-1 fcn">
 						{changeViewBtn}
-						<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
+						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 					</div>
 				</header>
 				{content}

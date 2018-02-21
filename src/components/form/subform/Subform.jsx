@@ -36,6 +36,10 @@ export default class Subform extends Component {
 		if (!props.table) this.props.fetchTable(tableId);
 	}
 
+	changeCollapsedState = () => {
+		this.props.setSubformCollapsed(this.props.table.id, !this.props.isCollapsed);
+	}
+
 	render() {
 		if (!this.props.table) return null;
 		if (this.props.table.type === TYPE_MTM) {
@@ -44,7 +48,7 @@ export default class Subform extends Component {
 				parentRecordId={this.props.parentRecordId}
 				parentTableId={this.props.parentTableId}
 				isCollapsed={this.props.isCollapsed}
-				setSubformCollapsed={this.props.setSubformCollapsed}
+				changeCollapsedState={this.changeCollapsedState}
 				titleOverride={this.props.titleOverride}
 				descriptionAppend={this.props.descriptionAppend}
 			/>);
@@ -56,7 +60,7 @@ export default class Subform extends Component {
 			parentRecordId={this.props.parentRecordId}
 			parentTableId={this.props.parentTableId}
 			isCollapsed={this.props.isCollapsed}
-			setSubformCollapsed={this.props.setSubformCollapsed}
+			changeCollapsedState={this.changeCollapsedState}
 			titleOverride={this.props.titleOverride}
 			descriptionAppend={this.props.descriptionAppend}
 			language={this.props.language}

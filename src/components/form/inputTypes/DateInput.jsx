@@ -5,6 +5,11 @@ import moment from 'moment';
 import { TYPE_DATETIME } from '../../../freestone/schemaProps';
 import Input from './Input';
 
+const wrapperCss = {
+	position: 'absolute',
+	zIndex: 200,
+};
+
 export default class DateInput extends Input {
 
 	onSelectDate = (d) => {
@@ -36,9 +41,9 @@ export default class DateInput extends Input {
 		let timeInputs;
 		if (this.props.field.type === TYPE_DATETIME) {
 			timeInputs = (<div>
-				<input ref={el => this._hour = el} value={d && d.hour()} onChange={this.onChangeTime} /> h
-				<input ref={el => this._minute = el} value={d && d.minute()} onChange={this.onChangeTime} /> m
-				<input ref={el => this._second = el} value={d && d.second()} onChange={this.onChangeTime} /> s
+				<input ref={el => this._hour = el} value={d && d.hour()} onChange={this.onChangeTime} placeholder="HH" size="2" /> h 
+				<input ref={el => this._minute = el} value={d && d.minute()} onChange={this.onChangeTime} placeholder="MM" size="2" /> m 
+				<input ref={el => this._second = el} value={d && d.second()} onChange={this.onChangeTime} placeholder="SS" size="2" /> s 
 			</div>);
 		}
 

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import FormHeaderContent from '../../header/FormHeaderContent';
-import ToggleSubform from '../../../containers/form/buttons/ToggleSubform';
-import CollapsableForm from './CollapsableForm';
+import Collapsable from '../../animation/Collapsable';
+import ToggleCollapse from '../buttons/ToggleCollapse';
 
-export default class SubformMtm extends CollapsableForm {
+export default class SubformMtm extends Component {
 	static propTypes = {
 		tableId: PropTypes.number,
 		table: PropTypes.object,
@@ -22,8 +22,7 @@ export default class SubformMtm extends CollapsableForm {
 		fetchMtmRecords: PropTypes.func,
 		toggleMtm: PropTypes.func,
 		
-		setSubformCollapsed: PropTypes.func,
-		onRequestToggleCollapse: PropTypes.func,
+		changeCollapsedState: PropTypes.func,
 	};
 	
 	componentWillMount() {
@@ -35,7 +34,6 @@ export default class SubformMtm extends CollapsableForm {
 	}
 
 	getOptions() {
-		if (!this.collapser.getOpenState()) return null;
 
 		return this.props.mtmOptions.map((optionGroup, groupIndex) => {
 			// console.log(optionGroup);
@@ -97,11 +95,11 @@ export default class SubformMtm extends CollapsableForm {
 							<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 						</div>
 						<div className="col-md-3 col-md-offset-1 fcn">
-							<ToggleSubform isCollapsed={this.props.isCollapsed} tableId={this.props.table.id} toggle={this.collapser.toggle} />
+							<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 						</div>
 					</header>
-					<div className="row" ref={this.setCollapsable}>
-						{options}
+					<div className="row">
+						<Collapsable isCollapsed={this.props.isCollapsed}>{options}</Collapsable>
 					</div>
 				</section>
 			);

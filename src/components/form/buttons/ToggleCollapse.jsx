@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class ToggleSubform extends Component {
+export default class ToggleCollapse extends Component {
 	static propTypes = {
-		tableId: PropTypes.number,
 		isCollapsed: PropTypes.bool,
 		toggle: PropTypes.func,
 	};

@@ -11,6 +11,7 @@ import recordList from './recordList';
 import recordRevision from './recordRevision';
 import recordForm from './recordForm';
 import subform from './subform';
+import fieldgroup from './fieldgroup';
 import bank from './bank';
 import slugs from './slugs';
 import permissions from './permissions';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
 	foreign,
 	save,
 	subform,
+	fieldgroup,
 	bank,
 	translations,
 	recordRevision,

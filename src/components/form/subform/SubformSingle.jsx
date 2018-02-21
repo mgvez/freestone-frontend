@@ -17,7 +17,6 @@ export default class SubformSingle extends Component {
 		descriptionAppend: PropTypes.string,
 
 		language: PropTypes.string,
-		isCollapsed: PropTypes.bool,
 
 	};
 
