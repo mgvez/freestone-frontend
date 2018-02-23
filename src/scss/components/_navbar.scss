@@ -180,7 +180,7 @@
 		overflow: hidden;
 
 		.sub-nav {
-			height: 0;
+			// height: 0;
 			border-left: 2px solid $color-accent-primary;
 			background: lighten($color-background-dark, 20%);
 			transition: background 0.3s;

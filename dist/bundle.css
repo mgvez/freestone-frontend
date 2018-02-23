@@ -1562,7 +1562,6 @@ iframe {
     border-top: 1px solid #293846;
     overflow: hidden; }
     .navbar-default .nav-group .sub-nav {
-      height: 0;
       border-left: 2px solid #19aa8d;
       background: #557390;
       transition: background 0.3s; }
