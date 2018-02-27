@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import Input from './Input';
 import GenericFileInput from '../genericInputs/GenericFileInput';
 
-export default class FileInput extends Input {
+export default class FileInput extends Component {
+	static propTypes = {
+		changeVal: PropTypes.func,
+	
+		field: PropTypes.object,
+		recordId: PropTypes.string,
+		val: PropTypes.any,
+		origVal: PropTypes.any,
+		absolutePath: PropTypes.string,
+	};
 
 	render() {
 
@@ -15,7 +24,7 @@ export default class FileInput extends Input {
 			fieldId={this.props.field.id}
 			recordId={this.props.recordId}
 			absolutePath={this.props.absolutePath}
-			changeVal={this.changeVal}
+			changeVal={this.props.changeVal}
 		/>);
 
 	}

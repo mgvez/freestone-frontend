@@ -68,7 +68,7 @@ function parseDependencies(table, record) {
 			const ruleApplies = checkRule(rule.rule, record[controlFieldId]);
 			// console.log(rule.rule, controlFieldId, dependingFieldId, ruleApplies);
 			if (ruleApplies) {
-				// console.log('%s applies', rule.rule);
+				// console.log('%s applies displays (%s)', rule.rule, rule.isDisplay);
 				// console.log(carry[dependingFieldId]);
 
 				carry[dependingFieldId].isDisplay = typeof carry[dependingFieldId].forceDisplay === 'undefined' ? rule.isDisplay : carry[dependingFieldId].forceDisplay;
@@ -111,38 +111,23 @@ function createFieldGroups(fields) {
 	});
 }
 
-function makeFieldGroupsSelector(tableSchemaSelector) {
-	return createSelector(
-		[tableSchemaSelector],
-		(schema) => {
-			const { table } = schema;
-			const mainFields = createFieldGroups(table && table.fields.filter(f => !f.isSecondary));
-			const asideFields = createFieldGroups(table && table.fields.filter(f => f.isSecondary));
-			return {
-				mainFields,
-				asideFields,
-			};
-		}
-	);
-}
-
-
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector) {
 
-	const fieldGroupsSelector = makeFieldGroupsSelector(tableSchemaSelector);
-
 	return createSelector(
-		[tableSchemaSelector, fieldGroupsSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector],
-		(schema, fieldGroups, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod) => {
+		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector],
+		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod) => {
 			let { table } = schema;
 			let children;
-			let dependencies;
+			let mainFields;
+			let asideFields;
 			// const recordId = record && record[PRIKEY_ALIAS];
 			// console.log(`build record for ${recordId}`, table && table.name);
 			// console.log(formCollapsed);
 			
 			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
 			if (table) {
+				let dependencies;
+				
 				//clone pour pas muter l'objet du state
 				table = { ...table };
 				children = unfilteredChildren[table.id].map(tableId => {
@@ -168,6 +153,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				}
 
 				if (dependencies) {
+					// console.log(dependencies);
 					table.fields = table.fields.map(field => {
 						if (dependencies[field.id] === undefined) return field;
 						//field depends on another?
@@ -182,8 +168,10 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 								label: titleOverride || field.label,
 							};
 						}
+						// console.log('field %s.%s hidden', table.name, field.name);
 						return false;
 					}).filter(field => field);
+					
 					//certains fields sont le rel field d'un sous-form, ce qui indique que ce sous-form doit s'afficher au non
 					Object.keys(dependencies).forEach((targetFieldId) => {
 						
@@ -206,6 +194,10 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					return child;
 				});
 
+
+				mainFields = createFieldGroups(table.fields.filter(f => !f.isSecondary));
+				asideFields = createFieldGroups(table.fields.filter(f => f.isSecondary));
+
 			}
 
 			// console.log(tableSchema, records, recordId);
@@ -215,7 +207,8 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				children,
 				table,
 				env,
-				...fieldGroups,
+				mainFields,
+				asideFields,
 				...isGod,
 			};
 		}

@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Input from './Input';
 import HotspotInsert from '../helpers/HotspotInsert';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 
-export default class HotspotInput extends Input {
+export default class HotspotInput extends Component {
 	static propTypes = {
+		changeVal: PropTypes.func,
 		lang: PropTypes.string,
 		field: PropTypes.object,
 		imageId: PropTypes.string,
 		parsedVal: PropTypes.object,
+		val: PropTypes.any,
 	};
 
 	constructor(props) {
@@ -30,7 +31,7 @@ export default class HotspotInput extends Input {
 	};
 
 	handleEditorChange = (v) => {
-		this.changeVal(v);
+		this.props.changeVal(v);
 	};
 
 	delete = () => {

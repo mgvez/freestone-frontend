@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import Input from './Input';
-
-export default class TextInput extends Input {
+export default class TextInput extends Component {
+	static propTypes = {
+		changeVal: PropTypes.func,
+		field: PropTypes.object,
+		val: PropTypes.any,
+	};
 
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
 		// console.log(this.props.val);
 		if (this.props.field.size > 100) {
 			return (
-				<textarea value={this.props.val} className="form-control" onChange={this.changeVal} />
+				<textarea value={this.props.val} className="form-control" onChange={this.props.changeVal} />
 			);
 		}
 		return (
-			<input type="text" size={this.props.field.size} value={this.props.val} className="form-control" onChange={this.changeVal} />
+			<input type="text" size={this.props.field.size} value={this.props.val} className="form-control" onChange={this.props.changeVal} />
 		);
 	}
 }

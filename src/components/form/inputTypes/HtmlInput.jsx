@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import TinyMCEInput from 'react-tinymce-input';
 
-import Input from './Input';
 import LinkInsert from '../helpers/LinkInsert';
 import BankImgInsert from '../../../containers/form/helpers/BankImgInsert';
 import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
 
-export default class HtmlInput extends Input {
+export default class HtmlInput extends Component {
 	static propTypes = {
+		changeVal: PropTypes.func,
+		fetchVariable: PropTypes.func,
 		lang: PropTypes.string,
+
+		field: PropTypes.object,
+		tinymceConfig: PropTypes.object,
+		val: PropTypes.any,
+
 	};
 	
 	constructor(props) {
@@ -61,7 +67,7 @@ export default class HtmlInput extends Input {
 	}
 
 	handleEditorChange = (v) => {
-		this.changeVal(v);
+		this.props.changeVal(v);
 	};
 
 	closeModal = () => {

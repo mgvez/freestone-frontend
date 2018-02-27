@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { TYPE_IMG } from '../../../freestone/schemaProps';
 
-import Input from './Input';
 import BankFileThumbnail from '../../../containers/fileThumbnail/BankFileThumbnail';
 import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
 import GenericFileInput from '../genericInputs/GenericFileInput';
 
-export default class BankFileInput extends Input {
+export default class BankFileInput extends Component {
 	static propTypes = {
+		changeVal: PropTypes.func,
 		lang: PropTypes.string,
+
+		field: PropTypes.object,
+		recordId: PropTypes.string,
+		val: PropTypes.any,
 	};
 
 	constructor(props) {
@@ -31,7 +35,7 @@ export default class BankFileInput extends Input {
 
 	handleEditorChange = (v) => {
 		// console.log('set val', v);
-		this.changeVal(v);
+		this.props.changeVal(v);
 	};
 
 	delete = () => {

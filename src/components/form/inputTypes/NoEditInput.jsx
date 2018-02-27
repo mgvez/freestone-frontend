@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Input from './Input';
 
-export default class NoEditInput extends Input {
+export default class NoEditInput extends Component {
 	static propTypes = {
 		field: PropTypes.object,
 		recordId: PropTypes.string,

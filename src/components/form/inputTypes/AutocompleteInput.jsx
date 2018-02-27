@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
 
-import Input from './Input';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 
@@ -40,11 +39,14 @@ function shouldRenderSuggestions() {
 	return true;
 }
 
-export default class AutocompleteInput extends Input {
+export default class AutocompleteInput extends Component {
 	static propTypes = {
+		changeVal: PropTypes.func,
 		fetchForeignOptions: PropTypes.func,
 		foreignOptions: PropTypes.object,
 		field: PropTypes.object,
+		recordId: PropTypes.string,
+		val: PropTypes.any,
 	};
 
 	constructor(props) {
@@ -92,7 +94,7 @@ export default class AutocompleteInput extends Input {
 	//when we select a value among the suggestions
 	onSelect = (event, { suggestion, suggestionValue }) => {
 		// console.log('select %s', suggestion.value);
-		this.changeVal(suggestion.value);
+		this.props.changeVal(suggestion.value);
 		this.setCurrentText(suggestionValue);
 		clearTimeout(this.fetchTimeout);
 		// this.props.fetchForeignOptions(this.props.field.id, suggestion.value);
@@ -129,7 +131,7 @@ export default class AutocompleteInput extends Input {
 
 	onSuggestionsFetchRequested = ({ value }) => {
 		// console.log('fetch requested %s', value);
-		if (!value) this.changeVal(0);
+		if (!value) this.props.changeVal(0);
 		this.setState({
 			suggestions: this.getSuggestions(value),
 		});

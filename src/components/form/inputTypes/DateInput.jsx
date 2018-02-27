@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import { TYPE_DATETIME } from '../../../freestone/schemaProps';
-import Input from './Input';
 
-const wrapperCss = {
-	position: 'absolute',
-	zIndex: 200,
-};
-
-export default class DateInput extends Input {
+export default class DateInput extends Component {
+	static propTypes = {
+		changeVal: PropTypes.func,
+		field: PropTypes.object,
+		recordId: PropTypes.string,
+		val: PropTypes.any,
+	};
 
 	onSelectDate = (d) => {
 		// console.log(a);
@@ -26,7 +28,7 @@ export default class DateInput extends Input {
 			}
 
 		}
-		this.changeVal(dateStr);
+		this.props.changeVal(dateStr);
 	};
 
 	onChangeTime = () => {

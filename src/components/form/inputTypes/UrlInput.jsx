@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import LinkInsert from '../helpers/LinkInsert';
-import Input from './Input';
 
-export default class UrlInput extends Input {
+export default class UrlInput extends Component {
+	static propTypes = {
+		changeVal: PropTypes.func,
+		val: PropTypes.any,
+	};
 
 	constructor(props) {
 		super(props);
@@ -22,7 +26,7 @@ export default class UrlInput extends Input {
 	};
 
 	handleEditorChange = (v) => {
-		this.changeVal(v);
+		this.props.changeVal(v);
 	};
 
 	render() {
@@ -30,7 +34,7 @@ export default class UrlInput extends Input {
 			return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} isUrlOnly />;
 		}
 		return (<div className="link-field">
-			<input type="text" value={this.props.val} className="form-control" onChange={this.changeVal} />
+			<input type="text" value={this.props.val} className="form-control" onChange={this.props.changeVal} />
 			<button className="button-round-action-bordered" onClick={this.openModal}>Url select helper</button>
 		</div>);
 	}

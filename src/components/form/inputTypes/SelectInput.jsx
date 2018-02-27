@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Input from './Input';
-
-export default class SelectInput extends Input {
+export default class SelectInput extends Component {
 	static propTypes = {
+		changeVal: PropTypes.func,
+		fetchForeignOptions: PropTypes.func,
 		foreignOptions: PropTypes.object,
+
+		field: PropTypes.object,
+		val: PropTypes.any,
+
 	};
 
 	componentWillMount() {
@@ -36,7 +40,7 @@ export default class SelectInput extends Input {
 		}
 
 		return (
-			<select value={this.props.val} onChange={this.changeVal}>
+			<select value={this.props.val} onChange={this.props.changeVal}>
 				{options}
 			</select>
 		);
