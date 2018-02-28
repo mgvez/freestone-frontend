@@ -33,6 +33,7 @@ export default class FormHeaderVariation extends Component {
 
 		setLanguageState: PropTypes.func,
 		fetchSlug: PropTypes.func,
+		editSchemaAction: PropTypes.func,
 	};
 
 	static contextTypes = {
@@ -68,8 +69,16 @@ export default class FormHeaderVariation extends Component {
 		const preview = this.props.table && this.props.table.hasTemplate ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} /> : null;
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
-		const editSchemaLink = this.props.table ? `#/edit/zva_table/${this.props.table.id}` : '';
-		const editSchema = this.props.isGod ? (<a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>) : null;
+		let editSchema = null;
+		if (this.props.isGod) {
+			const editSchemaLink = this.props.table ? `#/edit/zva_table/${this.props.table.id}` : '';
+			if (editSchemaLink) {
+				editSchema = <a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>;
+			} else if (this.props.editSchemaAction) {
+				editSchema = <a onClick={this.props.editSchemaAction} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>;
+			}
+		}
+		
 
 		const slugs = this.props.slugs && this.props.slugs.length ? (
 			<div>

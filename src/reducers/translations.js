@@ -16,6 +16,7 @@ function translations(state = {}, action) {
 	}
 	case EDIT_TRANSLATION: {
 		const { language, key, value } = action.data;
+		if (!language) return state;
 		const newState = {
 			...state,
 			isEdited: true,
@@ -35,18 +36,33 @@ function translations(state = {}, action) {
 	}
 }
 
-function schema(state = {}, action) {
+function schema(state = { labels: {} }, action) {
 	switch (action.type) {
 	case TRANSLATIONS_API.SUCCESS: {
 		// console.log(action);
 		const newState = {
-			...state,
-			...action.data.schema,
+			isEdited: false,
+			labels: {
+				...action.data.schema,
+			},
 		};
 		return newState;
 	}
+	case EDIT_TRANSLATION: {
+		const { language, key, value } = action.data;
+		if (language) return state;
+		const newState = {
+			...state,
+			isEdited: true,
+			labels: {
+				...state.labels,
+				[key]: value,
+			},
+		};
+		return newState; 
+	}
 	case CLEAR_DATA:
-		return {};
+		return { labels: {} };
 	default:
 		return state;
 	}

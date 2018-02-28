@@ -19,7 +19,7 @@ export default class Field extends Component {
 		return (
 			<div className="field row">
 				<div className="col-sm-2 field-label">
-					<label className="pull-right">{this.props.label} {languageAppend}</label>
+					<label>{this.props.label} {languageAppend}</label>
 				</div>
 				<div className="col-sm-8">
 					{this.props.children}

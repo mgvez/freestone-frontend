@@ -15,12 +15,18 @@ export const languageKeysSelector = createSelector(
 	}
 );
 
+
 function makeSingleTranslationSelector() {
 	return createSelector(
-		[allTranslationsSelector, keySelector, langSelector],
-		(allTranslations, key, lang) => {
+		[allTranslationsSelector, keySelector, langSelector, translationsSchemaSelector],
+		(allTranslations, key, lang, translationsSchema) => {
 			// console.log(allTranslations);
-			const translationValue = allTranslations && allTranslations[lang] && allTranslations[lang][key];
+			let translationValue;
+			if (lang) {
+				translationValue = allTranslations && allTranslations[lang] && allTranslations[lang][key];
+			} else {
+				translationValue = translationsSchema && translationsSchema.labels && translationsSchema.labels[key];
+			}
 
 			return {
 				translationValue,
@@ -57,9 +63,9 @@ export const coreTranslations = createSelector(
 		return {
 			translationKeys,
 			translations,
-			isEdited: translations.isEdited,
+			isEdited: translations.isEdited || schema.isEdited,
 			languages,
-			schema,
+			schema: schema.labels,
 		};
 	}
 );

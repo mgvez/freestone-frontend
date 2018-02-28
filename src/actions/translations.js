@@ -33,14 +33,17 @@ export function editTranslation(language, key, value) {
 }
 
 
-export function saveTranslations(translations) {
+export function saveTranslations(translations, schema) {
 	// console.log(translations);
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
 				types: SAVE_TRANSLATIONS_API,
 				route: 'translations/save',
-				data: translations,
+				data: {
+					translations,
+					schema,
+				},
 			},
 		});
 	};

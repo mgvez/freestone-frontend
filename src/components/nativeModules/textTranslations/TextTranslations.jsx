@@ -23,6 +23,7 @@ export default class TextTranslations extends Component {
 		super(props);
 		this.state = {
 			closing: false,
+			isSchema: false,
 		};
 	}
 
@@ -62,16 +63,39 @@ export default class TextTranslations extends Component {
 
 	saveAndBack = () => {
 		this.setState({ closing: true });
-		const onSaved = this.props.saveTranslations(this.props.translations);
+		const onSaved = this.props.saveTranslations(this.props.translations, this.props.schema);
 		onSaved.then(this.goHome);
+	}
+
+	onEditSchema = () => {
+		this.setState({
+			isSchema: !this.state.isSchema,
+		});
 	}
 
 	render() {
 		// console.log(this.props);
 		let keys;
 		if (this.props.translationKeys) {
-			keys = (<div className="container">
-				{this.props.translationKeys.map((translationKey, tIdx) => {
+			if (this.state.isSchema) {
+				keys = this.props.translationKeys.map((translationKey, tIdx) => {
+					const labelNode = <div>{translationKey}</div>;
+					return (<div key={tIdx} className="translation">
+						<div className="row">
+							<div className="col-md-12 translation-label">
+								{labelNode}
+							</div>
+						</div>
+						<div>
+							<Field label="label">
+								<SingleTranslation translationKey={translationKey} />
+							</Field>
+						</div>
+					</div>);
+				});
+			} else {
+				
+				keys = this.props.translationKeys.map((translationKey, tIdx) => {
 					const label = this.props.schema[translationKey];
 					const labelNode = label ? <div>{label} <span className="key">{translationKey}</span></div> : <div>{translationKey}</div>;
 					return (<div key={tIdx} className="translation">
@@ -90,8 +114,11 @@ export default class TextTranslations extends Component {
 						})}
 						</div>
 					</div>);
-				})}
-			</div>);
+				});
+			}
+
+			keys = (<div className="container">{keys}</div>);
+
 		}
 
 		let actionBtns;
@@ -108,11 +135,12 @@ export default class TextTranslations extends Component {
 				<a key="fcn_3" onClick={this.close} className="button-round-danger">Close</a>,
 			];
 		}
-
+		const title = 'Text translations' + (this.state.isSchema ? ' SCHEMA' : '');
+		const rootClass = this.state.isSchema ? 'translation-schema-form' : '';
 		return (
-			<section className="root-form">
-				<FormHeader hasLanguageToggle={false} buttons={actionBtns}>
-					<h1>Text translations</h1>
+			<section className={`root-form ${rootClass}`}>
+				<FormHeader hasLanguageToggle={false} buttons={actionBtns} editSchemaAction={this.onEditSchema}>
+					<h1>{title}</h1>
 				</FormHeader>
 				{keys}
 			</section>
