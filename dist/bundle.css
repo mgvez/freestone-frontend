@@ -1002,10 +1002,10 @@ body, ul, ol, li, .record-header .texts, .record-header .btns, .module-header .t
 .root-form .fixed-header > header .lang-toggler {
   font-size: 14px; }
 
-.field.field-medium {
+.field.field-medium, .form-group.field-medium {
   font-size: 11px; }
 
-.field.field-small {
+.field.field-small, .form-group.field-small {
   font-size: 9px; }
 
 body {
@@ -1153,14 +1153,19 @@ iframe {
     height: 30px;
     line-height: 30px; }
 
-.field {
+.field, .form-group {
   margin-bottom: 0.7em; }
   .field textarea,
   .field input[type="text"],
   .field input[type="search"],
   .field input[type="password"],
   .field input[type="email"],
-  .field input[role="combobox"] {
+  .field input[role="combobox"], .form-group textarea,
+  .form-group input[type="text"],
+  .form-group input[type="search"],
+  .form-group input[type="password"],
+  .form-group input[type="email"],
+  .form-group input[role="combobox"] {
     display: inline-block;
     width: 100%;
     height: 2.2em;
@@ -1173,7 +1178,12 @@ iframe {
     .field input[type="search"]:focus,
     .field input[type="password"]:focus,
     .field input[type="email"]:focus,
-    .field input[role="combobox"]:focus {
+    .field input[role="combobox"]:focus, .form-group textarea:focus,
+    .form-group input[type="text"]:focus,
+    .form-group input[type="search"]:focus,
+    .form-group input[type="password"]:focus,
+    .form-group input[type="email"]:focus,
+    .form-group input[role="combobox"]:focus {
       border: 2px solid #19aa8d;
       outline: none; }
     .field textarea.search-input,
@@ -1181,7 +1191,12 @@ iframe {
     .field input[type="search"].search-input,
     .field input[type="password"].search-input,
     .field input[type="email"].search-input,
-    .field input[role="combobox"].search-input {
+    .field input[role="combobox"].search-input, .form-group textarea.search-input,
+    .form-group input[type="text"].search-input,
+    .form-group input[type="search"].search-input,
+    .form-group input[type="password"].search-input,
+    .form-group input[type="email"].search-input,
+    .form-group input[role="combobox"].search-input {
       width: 200px;
       vertical-align: middle; }
     .field textarea.bordered,
@@ -1189,34 +1204,39 @@ iframe {
     .field input[type="search"].bordered,
     .field input[type="password"].bordered,
     .field input[type="email"].bordered,
-    .field input[role="combobox"].bordered {
+    .field input[role="combobox"].bordered, .form-group textarea.bordered,
+    .form-group input[type="text"].bordered,
+    .form-group input[type="search"].bordered,
+    .form-group input[type="password"].bordered,
+    .form-group input[type="email"].bordered,
+    .form-group input[role="combobox"].bordered {
       border: 2px solid #293846; }
-  .field input[type="text"][size] {
+  .field input[type="text"][size], .form-group input[type="text"][size] {
     width: auto; }
-  .field textarea {
+  .field textarea, .form-group textarea {
     height: 10em;
     line-height: 1.4em; }
-  .field .field-description {
+  .field .field-description, .form-group .field-description {
     display: block;
     margin-bottom: 0.7em;
     font-size: 0.9em; }
-    .field .field-description:empty {
+    .field .field-description:empty, .form-group .field-description:empty {
       display: none; }
-  .field .field-label {
+  .field .field-label, .form-group .field-label {
     padding-top: 0.7em;
     margin-bottom: 0.7em;
     font-weight: 400; }
-    .field .field-label label {
+    .field .field-label label, .form-group .field-label label {
       display: block;
       position: relative;
       padding-right: 45px;
       font-weight: bold; }
-    .field .field-label .lang-append {
+    .field .field-label .lang-append, .form-group .field-label .lang-append {
       display: inline-block;
       vertical-align: -2%;
       font-style: normal;
       text-transform: uppercase; }
-      .field .field-label .lang-append span {
+      .field .field-label .lang-append span, .form-group .field-label .lang-append span {
         color: #19aa8d; }
 
 .mce-tinymce {
@@ -1245,6 +1265,10 @@ iframe {
 .translation {
   border-bottom: 1px #bababb solid;
   padding: 0.3em; }
+  .translation .field .field-label label {
+    font-size: 0.8em;
+    text-align: right;
+    padding: 0; }
 
 .translation-label {
   font-weight: bold;
@@ -1254,6 +1278,9 @@ iframe {
     font-weight: normal;
     font-size: 0.8em;
     margin-left: 2em; }
+
+.translation-schema-form {
+  background: rgba(149, 197, 154, 0.5); }
 
 .single-record {
   position: relative;
