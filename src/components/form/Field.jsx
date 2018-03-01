@@ -128,7 +128,7 @@ export default class Field extends Component {
 			return (
 				<div className={`field ${classes.join(' ')}`}>
 					<div className="field-label">
-						<label>{this.props.field.label} {languageAppend}</label>
+						<label title={this.props.field.alias}>{this.props.field.label} {languageAppend}</label>
 					</div>
 					<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
 					<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.descriptionAppend }}></em>
