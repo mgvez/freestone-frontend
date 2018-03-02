@@ -15,13 +15,13 @@ export default class BoolSwitch extends Component {
 		saveSingleValue: PropTypes.func,
 	};
 
-	captureBool = (tableId, recordId, fieldId, boolVal) => {
-		// console.log(tableId, recordId, fieldId, boolVal);
-		const { tableName } = this.props.field;
-		this.props.saveSingleValue(tableName, recordId, fieldId, boolVal);
+	captureBool = (e) => {
+		const v = (e && e.target) ? e.target.value : e;
+		const { tableName, id } = this.props.field;
+		this.props.saveSingleValue(tableName, this.props.recordId, id, v);
 	}
 
 	render() {
-		return <BoolInput field={this.props.field} val={this.props.val} recordId={this.props.recordId} setFieldVal={this.captureBool} className="small" />;
+		return <BoolInput field={this.props.field} val={this.props.val} recordId={this.props.recordId} changeVal={this.captureBool} className="small" />;
 	}
 }
