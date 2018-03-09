@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TweenMax, Expo } from '../../utils/Greensock';
+import { TweenMax, Circ } from '../../utils/Greensock';
 
-const TOGGLE_ANIM_TIME = 0.5;
+const TOGGLE_ANIM_TIME = 0.3;
 
 export default class Collapsable extends Component {
 	static propTypes = {
@@ -28,11 +28,21 @@ export default class Collapsable extends Component {
 	}
 
 	animate(isOpening, t) {
-		// console.log(childrenContainer);
 		const dest = isOpening ? 'from' : 'to';
-		const ease = isOpening ? Expo.easeIn : Expo.easeOut;
+		const ease = isOpening ? Circ.easeIn : Circ.easeOut;
+		// console.log('animate', dest);
 		TweenMax.set(this.childrenContainer, { height: 'auto', overflow: 'hidden' });
-		TweenMax[dest](this.childrenContainer, t, { ease, height: 0, onComplete: this.props.onAnimFinish });
+
+		const onComplete = () => {
+			if (this.props.onAnimFinish) this.props.onAnimFinish();
+			if (isOpening) TweenMax.set(this.childrenContainer, { overflow: 'visible' });
+		};
+
+		TweenMax[dest](this.childrenContainer, t, { 
+			ease,
+			height: 0,
+			onComplete,
+		});
 	}
 
 	getContainer = (el) => {
