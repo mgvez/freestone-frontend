@@ -29,20 +29,12 @@ export default class Collapsable extends Component {
 
 	animate(isOpening, t) {
 		const dest = isOpening ? 'from' : 'to';
+
 		const ease = isOpening ? Circ.easeIn : Circ.easeOut;
 		// console.log('animate', dest);
-		TweenMax.set(this.childrenContainer, { height: 'auto', overflow: 'hidden' });
+		TweenMax.set(this.childrenContainer, { height: 'auto', overflow: 'visible' });
+		TweenMax[dest](this.childrenContainer, t, { ease, height: 0, overflow: 'hidden', onComplete: this.props.onAnimFinish });
 
-		const onComplete = () => {
-			if (this.props.onAnimFinish) this.props.onAnimFinish();
-			if (isOpening) TweenMax.set(this.childrenContainer, { overflow: 'visible' });
-		};
-
-		TweenMax[dest](this.childrenContainer, t, { 
-			ease,
-			height: 0,
-			onComplete,
-		});
 	}
 
 	getContainer = (el) => {
