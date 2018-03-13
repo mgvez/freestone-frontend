@@ -21,10 +21,22 @@ export const TINYMCE_CONFIG = {
 		'autolink',
 	],
 	style_formats: [
-		{title: 'Small', inline: 'small'},
-		{title: 'Article', block: 'article'},
-		{title: 'Section', block: 'section'},
-		{title: 'Aside', block: 'aside'},
+		{
+			title: 'Small',
+			inline: 'small',
+		},
+		{
+			title: 'Article',
+			block: 'article',
+		},
+		{
+			title: 'Section',
+			block: 'section',
+		},
+		{
+			title: 'Aside',
+			block: 'aside',
+		},
 	],
 	paste_as_text: false,
 	paste_merge_formats: true,
