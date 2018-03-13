@@ -3432,6 +3432,9 @@ iframe {
     max-width: 100%;
     pointer-events: none; }
 
+iframe.module .field-deps .field-deps-title {
+  color: red; }
+
 body {
   overflow-x: hidden;
   background: #e7eaec; }
