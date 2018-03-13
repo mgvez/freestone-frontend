@@ -1002,10 +1002,10 @@ body, ul, ol, li, .record-header .texts, .record-header .btns, .module-header .t
 .root-form .fixed-header > header .lang-toggler {
   font-size: 14px; }
 
-.field.field-medium, .form-group.field-medium {
+.field.field-medium, .form-group.field-medium, .search-inputs-ctn.field-medium {
   font-size: 11px; }
 
-.field.field-small, .form-group.field-small {
+.field.field-small, .form-group.field-small, .search-inputs-ctn.field-small {
   font-size: 9px; }
 
 body {
@@ -1153,7 +1153,7 @@ iframe {
     height: 30px;
     line-height: 30px; }
 
-.field, .form-group {
+.field, .form-group, .search-inputs-ctn {
   margin-bottom: 0.7em; }
   .field textarea,
   .field input[type="text"],
@@ -1165,7 +1165,12 @@ iframe {
   .form-group input[type="search"],
   .form-group input[type="password"],
   .form-group input[type="email"],
-  .form-group input[role="combobox"] {
+  .form-group input[role="combobox"], .search-inputs-ctn textarea,
+  .search-inputs-ctn input[type="text"],
+  .search-inputs-ctn input[type="search"],
+  .search-inputs-ctn input[type="password"],
+  .search-inputs-ctn input[type="email"],
+  .search-inputs-ctn input[role="combobox"] {
     display: inline-block;
     width: 100%;
     height: 2.2em;
@@ -1183,7 +1188,12 @@ iframe {
     .form-group input[type="search"]:focus,
     .form-group input[type="password"]:focus,
     .form-group input[type="email"]:focus,
-    .form-group input[role="combobox"]:focus {
+    .form-group input[role="combobox"]:focus, .search-inputs-ctn textarea:focus,
+    .search-inputs-ctn input[type="text"]:focus,
+    .search-inputs-ctn input[type="search"]:focus,
+    .search-inputs-ctn input[type="password"]:focus,
+    .search-inputs-ctn input[type="email"]:focus,
+    .search-inputs-ctn input[role="combobox"]:focus {
       border: 2px solid #19aa8d;
       outline: none; }
     .field textarea.search-input,
@@ -1196,7 +1206,12 @@ iframe {
     .form-group input[type="search"].search-input,
     .form-group input[type="password"].search-input,
     .form-group input[type="email"].search-input,
-    .form-group input[role="combobox"].search-input {
+    .form-group input[role="combobox"].search-input, .search-inputs-ctn textarea.search-input,
+    .search-inputs-ctn input[type="text"].search-input,
+    .search-inputs-ctn input[type="search"].search-input,
+    .search-inputs-ctn input[type="password"].search-input,
+    .search-inputs-ctn input[type="email"].search-input,
+    .search-inputs-ctn input[role="combobox"].search-input {
       width: 200px;
       vertical-align: middle; }
     .field textarea.bordered,
@@ -1209,34 +1224,39 @@ iframe {
     .form-group input[type="search"].bordered,
     .form-group input[type="password"].bordered,
     .form-group input[type="email"].bordered,
-    .form-group input[role="combobox"].bordered {
+    .form-group input[role="combobox"].bordered, .search-inputs-ctn textarea.bordered,
+    .search-inputs-ctn input[type="text"].bordered,
+    .search-inputs-ctn input[type="search"].bordered,
+    .search-inputs-ctn input[type="password"].bordered,
+    .search-inputs-ctn input[type="email"].bordered,
+    .search-inputs-ctn input[role="combobox"].bordered {
       border: 2px solid #293846; }
-  .field input[type="text"][size], .form-group input[type="text"][size] {
+  .field input[type="text"][size], .form-group input[type="text"][size], .search-inputs-ctn input[type="text"][size] {
     width: auto; }
-  .field textarea, .form-group textarea {
+  .field textarea, .form-group textarea, .search-inputs-ctn textarea {
     height: 10em;
     line-height: 1.4em; }
-  .field .field-description, .form-group .field-description {
+  .field .field-description, .form-group .field-description, .search-inputs-ctn .field-description {
     display: block;
     margin-bottom: 0.7em;
     font-size: 0.9em; }
-    .field .field-description:empty, .form-group .field-description:empty {
+    .field .field-description:empty, .form-group .field-description:empty, .search-inputs-ctn .field-description:empty {
       display: none; }
-  .field .field-label, .form-group .field-label {
+  .field .field-label, .form-group .field-label, .search-inputs-ctn .field-label {
     padding-top: 0.7em;
     margin-bottom: 0.7em;
     font-weight: 400; }
-    .field .field-label label, .form-group .field-label label {
+    .field .field-label label, .form-group .field-label label, .search-inputs-ctn .field-label label {
       display: block;
       position: relative;
       padding-right: 45px;
       font-weight: bold; }
-    .field .field-label .lang-append, .form-group .field-label .lang-append {
+    .field .field-label .lang-append, .form-group .field-label .lang-append, .search-inputs-ctn .field-label .lang-append {
       display: inline-block;
       vertical-align: -2%;
       font-style: normal;
       text-transform: uppercase; }
-      .field .field-label .lang-append span, .form-group .field-label .lang-append span {
+      .field .field-label .lang-append span, .form-group .field-label .lang-append span, .search-inputs-ctn .field-label .lang-append span {
         color: #19aa8d; }
 
 .mce-tinymce {
@@ -1551,10 +1571,10 @@ iframe {
       margin-left: auto;
       position: relative;
       transition: transform 0.3s; }
-    .navbar-default .table-group:hover, .navbar-default .table-group.active {
+    .navbar-default .table-group:hover {
       background: #425a70; }
-      .navbar-default .table-group:hover .nav-label + .fa, .navbar-default .table-group.active .nav-label + .fa {
-        transform: rotate(180deg); }
+    .navbar-default .table-group.active .nav-label + .fa {
+      transform: rotate(180deg); }
   .navbar-default .nav-item {
     padding: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1); }
@@ -1583,7 +1603,7 @@ iframe {
           transform: translate(0, -50%); }
           .navbar-default .nav-item a .nrecords span.success, .navbar-default .nav-item a .flag span.success {
             color: #19aa8d; }
-      .navbar-default .nav-item a:hover, .navbar-default .nav-item a.active {
+      .navbar-default .nav-item a:hover, .navbar-default .nav-item a:active {
         background: #ced9e3; }
   .navbar-default .nav-group {
     border-top: 1px solid #293846;
@@ -1594,7 +1614,7 @@ iframe {
       transition: background 0.3s; }
       .navbar-default .nav-group .sub-nav .table-group {
         padding: 10px 15px; }
-        .navbar-default .nav-group .sub-nav .table-group:hover, .navbar-default .nav-group .sub-nav .table-group.active {
+        .navbar-default .nav-group .sub-nav .table-group:hover {
           background: #7e9ab3; }
       .navbar-default .nav-group .sub-nav .sub-nav {
         border-left: 0; }

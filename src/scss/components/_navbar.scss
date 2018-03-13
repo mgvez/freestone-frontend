@@ -114,9 +114,10 @@
 			transition: transform 0.3s;
 		}
 
-		&:hover, &.active {
+		&:hover {
 			background: lighten($color-background-dark, 10%);
-
+		} 
+		&.active {
 			.nav-label + .fa {
 				transform: rotate(180deg);
 			}
@@ -168,7 +169,7 @@
 				}
 			}
 
-			&:hover, &.active {
+			&:hover, &:active {
 				background: lighten($color-background-dark, 60%);
 				//color: $white;
 			}
@@ -188,7 +189,7 @@
 			.table-group {
 				padding: 10px 15px;
 
-				&:hover, &.active {
+				&:hover {
 					background: lighten($color-background-dark, 35%);
 				}
 			}
