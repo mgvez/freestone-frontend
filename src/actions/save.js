@@ -51,7 +51,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 			}, {});
 			// console.log(tree, records);
 
-			const data = JSON.stringify({
+			const jsonData = JSON.stringify({
 				tree,
 				records,
 				deleted,
@@ -60,6 +60,14 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				fileNames,
 				isTemporary,
 			});
+
+			//some servers don't let pass certain characters directly in the post. Workaround is to uri encode, but if for some reason it triggers an error, we attempt to pass json encoded directly
+			let data;
+			try {
+				data = encodeURIComponent(jsonData);
+			} catch (e) {
+				data = jsonData;
+			}
 
 			const onSaved = dispatch({
 				[FREESTONE_API]: {
