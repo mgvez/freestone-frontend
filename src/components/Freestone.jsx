@@ -101,7 +101,7 @@ export default class Freestone extends Component {
 				<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				{
 					this.props.freestone.clientScripts.map((scriptInfos) => {
-						return <Script url={scriptInfos.url} onError={noop} onLoad={noop} />;
+						return <Script key={scriptInfos.url} url={scriptInfos.url} onError={noop} onLoad={noop} />;
 					})
 				}
 			</div>

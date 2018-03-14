@@ -21,6 +21,12 @@ function catchError(res) {
 
 }
 
+//Hook record before sending to db (for example to encrypt value)
+function parseRecordBeforeSave(data) {
+	const hook = window.freestone && window.freestone.hooks && window.freestone.hooks.parseRecordBeforeSave;
+	if (!hook) return data;
+	return window.freestone.hooks.parseRecordBeforeSave(data);
+}
 
 export function saveRecord(table, tree, records, deleted, permissions, isTemporary, gotoOnFinish, callback) {
 	return (dispatch) => {
@@ -51,7 +57,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 			}, {});
 			// console.log(tree, records);
 
-			const jsonData = JSON.stringify({
+			const data = parseRecordBeforeSave(JSON.stringify({
 				tree,
 				records,
 				deleted,
@@ -59,15 +65,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				tableName,
 				fileNames,
 				isTemporary,
-			});
-
-			//some servers don't let pass certain characters directly in the post. Workaround is to uri encode, but if for some reason it triggers an error, we attempt to pass json encoded directly
-			let data;
-			try {
-				data = encodeURIComponent(jsonData);
-			} catch (e) {
-				data = jsonData;
-			}
+			}));
 
 			const onSaved = dispatch({
 				[FREESTONE_API]: {

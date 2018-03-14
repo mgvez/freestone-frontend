@@ -56,6 +56,7 @@ function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfi
 	return branch;
 }
 
+
 //Hook record before sending to db (for example to encrypt value)
 function hookRecord(record) {
 	const hook = window.freestone && window.freestone.hooks && window.freestone.hooks.setFieldValue;

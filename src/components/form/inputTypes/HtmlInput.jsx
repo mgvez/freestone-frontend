@@ -61,7 +61,7 @@ export default class HtmlInput extends Component {
 	}
 
 	requireData(nextProps) {
-		if (undefined === nextProps.settings) {
+		if (undefined === nextProps.tinymceConfig) {
 			this.props.fetchVariable('settings');
 		}
 	}
@@ -92,7 +92,6 @@ export default class HtmlInput extends Component {
 		}
 
 		// console.log(`render input ${this.props.field.name}`);
-		console.log(this.props.tinymceConfig);
 		return (
 			<TinyMCEInput
 				value={this.props.val}

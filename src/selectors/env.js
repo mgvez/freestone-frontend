@@ -11,13 +11,13 @@ const requestedComponentsNameSelector = (state, props) => props.name;
 export const mceConfigSelector = createSelector(
 	[settingsSelector, cssPathSelector, clientPathSelector],
 	(settings, cssPath, clientPath) => {
+		if (!settings) return {};
+
 		const config = (settings && settings.tinymceConfig) || {};
 		const tinymceConfig = {
 			...TINYMCE_CONFIG,
 			...config,
 		};
-
-		// console.log(settings, tinymceConfig);
 
 		if (cssPath && cssPath.length) {
 			tinymceConfig.content_css = cssPath.map(p => `${clientPath}${p}`);
