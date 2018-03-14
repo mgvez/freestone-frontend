@@ -75,7 +75,7 @@ export default class HtmlInput extends Component {
 	};
 
 	render() {
-
+		if (!this.props.tinymceConfig) return null;
 		if (this.state.command) {
 			const { name, params } = this.state.command;
 			// console.log(command);

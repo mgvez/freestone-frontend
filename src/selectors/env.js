@@ -18,7 +18,7 @@ export const mceConfigSelector = createSelector(
 			...TINYMCE_CONFIG,
 			...config,
 		};
-
+		// console.log(tinymceConfig);
 		if (cssPath && cssPath.length) {
 			tinymceConfig.content_css = cssPath.map(p => `${clientPath}${p}`);
 		}
