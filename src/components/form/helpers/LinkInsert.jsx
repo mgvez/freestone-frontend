@@ -52,7 +52,7 @@ export default class LinkInsert extends Component {
 		lang: PropTypes.string,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		window.addEventListener('message', receiveUrl, false);
 	}
 

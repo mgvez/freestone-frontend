@@ -8,7 +8,8 @@ const PROD_FREESTONE_LOCATION = '';
 export const RECORD_LOADED_SAFE_LIFE = 3600;
 
 //how much time max can the app be idle between API calls (to make sure session is still open)
-export const MAX_TIME_BETWEEN_API_CALLS = 3600;
+// export const MAX_TIME_BETWEEN_API_CALLS = 3600;
+export const MAX_TIME_BETWEEN_API_CALLS = 5;
 
 let websiteUrl;
 export function getWebsiteUrl() {

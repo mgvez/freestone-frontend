@@ -43,14 +43,15 @@ export default class Freestone extends Component {
 		};
 
 		this.requireData(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
 
 		//at load of app, force an API call to revalidate the JWT if last validation is too old
 		const now = Date.now();
 		const diff = (now - this.props.lastRequestTime) / 1000;
 		if (diff > MAX_TIME_BETWEEN_API_CALLS) this.props.loginUser();
-	}
 
-	componentWillReceiveProps(nextProps) {
 		this.requireData(nextProps);
 	}
 

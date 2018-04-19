@@ -32,7 +32,7 @@ export default class Page extends Component {
 
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		window.addEventListener('message', this.receiveEditCommand, false);
 	}
 

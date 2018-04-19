@@ -30,7 +30,15 @@ function buildOptions(rawOptions) {
 				return parsedLabel.replace(`{${field}}`, (val && `${FLDSTART}${val}`) || EMPTY);
 			}, rawLabel) || '';
 			//enleve les separateurs entre les champs vides
-			label = label.replace(new RegExp(`${EMPTY}[\\s\\S]*?${FLDSTART}`, 'g'), '').replace(new RegExp(`${FLDSTART}|${EMPTY}`, 'g'), '');
+			label = label.replace(new RegExp(`${EMPTY}[\\s\\S]*?${FLDSTART}`, 'g'), '').replace(new RegExp(`${FLDSTART}|${EMPTY}`, 'g'), '').trim();
+			
+			//if field begins by numeric value, will order nmerically by it first
+			const labelNumMatch = label.match(/^[0-9.]+/);
+			let labelNum = 0;
+			if (labelNumMatch) {
+				labelNum = Number(labelNumMatch[0]);
+				// console.log(label, labelNum);
+			}
 
 			const image = imageField && row && row[imageField.alias] && {
 				dir: row[imageField.alias + '_path'],
@@ -42,12 +50,15 @@ function buildOptions(rawOptions) {
 				row,
 				value: rawOption.value,
 				label,
+				labelNum,
 				image,
 				imageBank,
 			};
 		}).sort((a, b) => {
-			return a.label < b.label ? -1 : 1;
+			const numSort = a.labelNum - b.labelNum;
+			return numSort !== 0 ? numSort : a.label < b.label ? -1 : 1;
 		});
+		// console.log(values);
 
 		carry[fieldId] = {
 			fieldId,

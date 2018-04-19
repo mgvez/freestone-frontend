@@ -33,19 +33,18 @@ export default class RootForm extends Component {
 	};
 
 	componentWillMount() {
-
-		if (!this.props.isModal) {
-			window.scrollTo(0, 0);
-		}
-
 		this.requireData(this.props);
-
 		this.setState({
 			saving: false,
 			afterSave: null,
 			language: null,
 		});
 
+	}
+	componentDidMount() {
+		if (!this.props.isModal) {
+			window.scrollTo(0, 0);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
