@@ -7,11 +7,11 @@ import { logout } from '../actions/auth';
 import { clearSchema } from '../actions/schema';
 
 import SiteHeader from '../components/header/SiteHeader';
-import { isGodSelector } from '../selectors/credentials';
+import { headerSelector } from '../selectors/header';
 
 const actionCreators = { clearErrors, clearData, startPerf, stopPerf, clearSchema, logout };
 
 export default connect(
-	isGodSelector,
+	headerSelector,
 	dispatch => bindActionCreators(actionCreators, dispatch)
 )(SiteHeader);

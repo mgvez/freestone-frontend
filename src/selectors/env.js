@@ -36,3 +36,4 @@ export const clientComponentInfosSelector = createSelector(
 		return (clientComponents && clientComponents.find(el => el.id === requestedComponentsName)) || {};
 	}
 );
+

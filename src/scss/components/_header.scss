@@ -8,27 +8,30 @@
 		right: 0;
 	width: calc(100% - #{$nav-width});
 	height: $header-height;
-
+	display: flex;
+	align-content: flex-start;
+	justify-content: space-between;
 	transition: width 0.3s;
 
-	.logout {
-		float:right;
-			margin: 15px 25px 0 30px;
-		line-height: 30px;
+	> div {
+		height: 30px;
+		display: flex;
+		align-self: center;
+	}
 
-		transform: translate(0, -50%);
+	.logout {
+		align-self: center;
+		margin: 0 25px 0 30px;
+		line-height: 30px;
 	}
 
 	.fcn {
-		float:left;
 		line-height: 30px;
 	}
 
 	.nav-toggler {
 		@extend %base_button;
 		@extend %round_button;
-
-		float: left;
 		border-radius: 4px;
 		padding: 0 15px;
 
@@ -37,8 +40,19 @@
 		}
 	}
 
+	.prod-warning {
+		background: rgb(172, 55, 55);
+		height: 100%;
+		line-height: 30px;
+		padding: 0 50px;
+		color: rgb(255, 241, 215);
+		text-shadow: #FC0 1px 0 10px;
+		font-weight: bold;
+		@extend %round_button;
+		border-radius: 4px;
+	}
+
 	.loaded-records-toggler {
-		float:right;
 		line-height: 30px;
 		padding: 0 10px;
 		position: relative;
