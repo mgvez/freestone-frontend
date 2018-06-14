@@ -17,7 +17,7 @@ const envInitialState = {
 	pathCss: [],
 	languages: [],
 	defaultLanguage: '',
-	isLiveEnv: false,
+	isProdEnv: false,
 };
 
 function freestone(state = envInitialState, action) {

@@ -2,12 +2,13 @@ import { createSelector } from 'reselect';
 
 import { recordSlugsMapStateToProps } from './recordSlugs';
 import { isGodSelector } from './credentials';
+const isProdEnvSelector = state => state.freestone.env.freestone.isProdEnv;
 
 
 export const formHeaderSelector = createSelector(
-	[recordSlugsMapStateToProps(), isGodSelector],
-	(recordSlugs, isGod) => {
-		// console.log(recordSlugs);
+	[recordSlugsMapStateToProps(), isGodSelector, isProdEnvSelector],
+	(recordSlugs, isGod, isProdEnv) => {
+		// console.log(isProdEnv);
 		const slugs = recordSlugs && Object.keys(recordSlugs).map(lang => {
 			return {
 				lang,
@@ -18,6 +19,7 @@ export const formHeaderSelector = createSelector(
 		return {
 			slugs,
 			...isGod,
+			isProdEnv,
 		};
 	}
 );

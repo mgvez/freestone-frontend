@@ -11,6 +11,7 @@ export default class FormHeader extends Component {
 		setLanguageState: PropTypes.func,
 		hasLanguageToggle: PropTypes.bool,
 		isModal: PropTypes.bool,
+		isProdEnv: PropTypes.bool,
 		buttons: PropTypes.array,
 		children: PropTypes.any,
 		language: PropTypes.string,

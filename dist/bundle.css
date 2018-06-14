@@ -995,7 +995,7 @@ h4 {
   margin: 10px 0 6px;
   font-weight: 700; }
 
-body, ul, ol, li, .record-header .texts, .record-header .btns, .module-header .texts, .module-header .btns, .page-header .texts, .page-header .btns, .root-form > header .texts, .root-form > header .btns,
+body, ul, ol, li, .record-header .texts, .record-header .btns, .module-header .texts, .module-header .btns, .page-header .texts, .page-header .btns, .prod-warning-label, .root-form > header .texts, .root-form > header .btns,
 .root-form .fixed-header > header .texts,
 .root-form .fixed-header > header .btns, .root-form > header .button-preview,
 .root-form .fixed-header > header .button-preview, .root-form > header .lang-toggler,
@@ -1057,9 +1057,9 @@ iframe {
       background: #19aa8d;
       color: #fff; }
 
-[class|=button][class*=-round], .main-content > header .nav-toggler, .main-content > header .prod-warning, .subform-list .add-record, .saving .back-btn {
+[class|=button][class*=-round], .main-content > header .nav-toggler, .prod-warning-label, .subform-list .add-record, .saving .back-btn {
   border-radius: 15px; }
-  [class*=small][class|=button][class*=-round], .main-content > header [class*=small].nav-toggler, .main-content > header [class*=small].prod-warning, .subform-list [class*=small].add-record, .saving [class*=small].back-btn {
+  [class*=small][class|=button][class*=-round], .main-content > header [class*=small].nav-toggler, [class*=small].prod-warning-label, .subform-list [class*=small].add-record, .saving [class*=small].back-btn {
     border-radius: 12px; }
 
 [class|=button][class*=fw] {
@@ -1654,15 +1654,6 @@ iframe {
     padding: 0 15px; }
     .main-content > header .nav-toggler i {
       margin: 0; }
-  .main-content > header .prod-warning {
-    background: #ac3737;
-    height: 100%;
-    line-height: 30px;
-    padding: 0 50px;
-    color: #fff1d7;
-    text-shadow: #FC0 1px 0 10px;
-    font-weight: bold;
-    border-radius: 4px; }
   .main-content > header .loaded-records-toggler {
     line-height: 30px;
     padding: 0 10px;
@@ -1708,6 +1699,17 @@ iframe {
     padding-left: 30px; }
     .record-header .btns [class^=button] + [class^=button], .module-header .btns [class^=button] + [class^=button], .page-header .btns [class^=button] + [class^=button] {
       margin-left: 10px; }
+
+.prod-warning-label {
+  background: #ac3737;
+  height: 100%;
+  line-height: 30px;
+  padding: 0 50px;
+  color: #fff1d7;
+  text-shadow: #FC0 1px 0 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  margin: 0 10px; }
 
 .loaded-records {
   position: absolute;
@@ -1773,6 +1775,9 @@ iframe {
     justify-content: space-between;
     align-items: center;
     font-size: 0; }
+    .root-form > header.prod-warning-enhance,
+    .root-form .fixed-header > header.prod-warning-enhance {
+      background: #fff5c9; }
     .root-form > header.light,
     .root-form .fixed-header > header.light {
       justify-content: flex-end;

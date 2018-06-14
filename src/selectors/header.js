@@ -1,15 +1,15 @@
 import { createSelector } from 'reselect';
 
-const isLiveEnvSelector = state => state.freestone.env.freestone.isLiveEnv;
+const isProdEnvSelector = state => state.freestone.env.freestone.isProdEnv;
 import { isGodSelector } from './credentials';
 
 
 export const headerSelector = createSelector(
-	[isGodSelector, isLiveEnvSelector],
-	(isGod, isLiveEnv) => {
+	[isGodSelector, isProdEnvSelector],
+	(isGod, isProdEnv) => {
 		return {
 			...isGod,
-			isLiveEnv,
+			isProdEnv,
 		};
 	}
 );

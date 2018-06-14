@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import ProdEnvWarning from '../widgets/ProdEnvWarning';
 import HomeButton from '../widgets/HomeButton';
 import NavToggler from '../../containers/widgets/NavToggler';
 import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
@@ -8,7 +9,7 @@ import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler'
 export default class SiteHeader extends Component {
 	static propTypes = {
 		isGod: PropTypes.bool,
-		isLiveEnv: PropTypes.bool,
+		isProdEnv: PropTypes.bool,
 
 		logout: PropTypes.func,
 		clearErrors: PropTypes.func,
@@ -40,9 +41,7 @@ export default class SiteHeader extends Component {
 		// Stop perf
 		// </button>
 
-		const liveWarning = this.props.isLiveEnv ? (<div className="prod-warning">
-			PRODUCTION ENVIRONMENT
-		</div>) : null;
+		const prodWarning = this.props.isProdEnv ? <ProdEnvWarning /> : null;
 
 		return (
 			<header id="main-header" ref="header">
@@ -52,7 +51,7 @@ export default class SiteHeader extends Component {
 					{debug}
 				</div>
 
-				{liveWarning}
+				{prodWarning}
 
 				<div>
 					<div className="logout">

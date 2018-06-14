@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import LanguageToggler from '../../containers/form/LanguageToggler';
 import PreviewRecord from '../../containers/form/buttons/PreviewRecord';
+import ProdEnvWarning from '../widgets/ProdEnvWarning';
 
 /**
  * FormHeaderVariation
@@ -28,6 +29,7 @@ export default class FormHeaderVariation extends Component {
 		hasLanguageToggle: PropTypes.bool,
 		lastmodifdate: PropTypes.string,
 		isLight: PropTypes.bool,
+		isProdEnv: PropTypes.bool,
 		buttons: PropTypes.any,
 		children: PropTypes.any,
 
@@ -97,11 +99,16 @@ export default class FormHeaderVariation extends Component {
 			</div>
 		);
 
-		const isLightClass = (this.props.isLight) ? 'light' : '';
+		const classList = [];
+		if (this.props.isLight) classList.push('light');
+		if (this.props.isProdEnv) classList.push('prod-warning-enhance');
 
+		const prodWarning = this.props.isLight && this.props.isProdEnv ? <ProdEnvWarning /> : null;
+		// console.log(this.props.isProdEnv);
 		return (
-			<header className={isLightClass} ref={el => this._header = el}>
+			<header className={classList.join(' ')} ref={el => this._header = el}>
 				{infos}
+				{prodWarning}
 				<div className="btns">
 					{this.props.buttons}
 				</div>

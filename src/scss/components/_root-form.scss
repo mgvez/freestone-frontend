@@ -27,7 +27,18 @@
 
 		font-size: 0;
 
+		&.prod-warning-enhance {
+			background: rgb(255, 245, 201);
+			// background: linear-gradient(180deg, rgba(255,255,255,1) 95%, rgb(255, 241, 179) 100%);
+			// border-bottom-color: rgb(255, 136, 0);
+		}
+
 		&.light {
+
+			// &.prod-warning-enhance {
+			// 	background: linear-gradient(180deg, rgba(255,255,255,1) 80%, rgb(255, 241, 179) 100%);
+			// }
+
 			justify-content: flex-end;
 			position:fixed;
 				top: 0;

@@ -40,17 +40,7 @@
 		}
 	}
 
-	.prod-warning {
-		background: rgb(172, 55, 55);
-		height: 100%;
-		line-height: 30px;
-		padding: 0 50px;
-		color: rgb(255, 241, 215);
-		text-shadow: #FC0 1px 0 10px;
-		font-weight: bold;
-		@extend %round_button;
-		border-radius: 4px;
-	}
+	
 
 	.loaded-records-toggler {
 		line-height: 30px;
@@ -81,6 +71,7 @@
 			margin: 0 5px;
 		}
 	}
+
 }
 
 .record-header, .module-header, .page-header {
@@ -117,4 +108,19 @@
 			margin-left: 10px;
 		}
 	}
+}
+
+
+.prod-warning-label {
+	background: rgb(172, 55, 55);
+	height: 100%;
+	line-height: 30px;
+	padding: 0 50px;
+	color: rgb(255, 241, 215);
+	text-shadow: #FC0 1px 0 10px;
+	font-weight: bold;
+	@extend %round_button;
+	@extend %text_default;
+	border-radius: 4px;
+	margin: 0 10px;
 }

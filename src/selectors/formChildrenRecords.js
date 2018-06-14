@@ -41,7 +41,7 @@ function filterLangRecords(records, languageField, currentLanguage) {
 	// console.log(records, languageField, currentLanguage);
 	if (!languageField) return records;
 	const langFieldId = languageField.id;
-	return records.filter(r => r[langFieldId] === currentLanguage);
+	return records && records.filter(r => r[langFieldId] === currentLanguage);
 }
 
 function getLabeledRecords(records, searchableFields, orderField, rawForeignOptions) {
