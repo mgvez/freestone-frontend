@@ -104,6 +104,7 @@
 		cursor: pointer;
 		transition: background 0.3s;
 
+
 		i + .nav-label {
 			margin-left: 10px;
 		}
@@ -115,7 +116,7 @@
 		}
 
 		&:hover {
-			background: lighten($color-background-dark, 10%);
+			background: lighten($color-background-dark, 5%);
 		} 
 		&.active {
 			.nav-label + .fa {
@@ -136,7 +137,10 @@
 			border-left: 2px solid $color-accent-primary;
 			font-size: 12px;
 			//color: rgba($white, 0.85);
-			background: lighten($color-background-dark, 70%);
+			background: lighten($color-background-dark, 60%);
+			&.active {
+				background: lighten($color-background-dark, 70%);
+			}
 			color: $color-background-dark;
 
 
@@ -170,7 +174,7 @@
 			}
 
 			&:hover, &:active {
-				background: lighten($color-background-dark, 60%);
+				background: lighten($color-background-dark, 70%);
 				//color: $white;
 			}
 		}
@@ -183,14 +187,14 @@
 		.sub-nav {
 			// height: 0;
 			border-left: 2px solid $color-accent-primary;
-			background: lighten($color-background-dark, 20%);
+			background: lighten($color-background-dark, 12%);
 			transition: background 0.3s;
 
 			.table-group {
 				padding: 10px 15px;
-
+				font-size: 0.9em;
 				&:hover {
-					background: lighten($color-background-dark, 35%);
+					background: lighten($color-background-dark, 20%);
 				}
 			}
 

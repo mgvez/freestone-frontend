@@ -1572,7 +1572,7 @@ iframe {
       position: relative;
       transition: transform 0.3s; }
     .navbar-default .table-group:hover {
-      background: #425a70; }
+      background: #384d60; }
     .navbar-default .table-group.active .nav-label + .fa {
       transform: rotate(180deg); }
   .navbar-default .nav-item {
@@ -1585,8 +1585,10 @@ iframe {
       transition: background 0.3s;
       border-left: 2px solid #19aa8d;
       font-size: 12px;
-      background: #eff2f5;
+      background: #ced9e3;
       color: #2f4050; }
+      .navbar-default .nav-item a.active {
+        background: #eff2f5; }
       .navbar-default .nav-item a .nrecords, .navbar-default .nav-item a .flag {
         display: block;
         text-align: center;
@@ -1604,18 +1606,19 @@ iframe {
           .navbar-default .nav-item a .nrecords span.success, .navbar-default .nav-item a .flag span.success {
             color: #19aa8d; }
       .navbar-default .nav-item a:hover, .navbar-default .nav-item a:active {
-        background: #ced9e3; }
+        background: #eff2f5; }
   .navbar-default .nav-group {
     border-top: 1px solid #293846;
     overflow: hidden; }
     .navbar-default .nav-group .sub-nav {
       border-left: 2px solid #19aa8d;
-      background: #557390;
+      background: #465f77;
       transition: background 0.3s; }
       .navbar-default .nav-group .sub-nav .table-group {
-        padding: 10px 15px; }
+        padding: 10px 15px;
+        font-size: 0.9em; }
         .navbar-default .nav-group .sub-nav .table-group:hover {
-          background: #7e9ab3; }
+          background: #557390; }
       .navbar-default .nav-group .sub-nav .sub-nav {
         border-left: 0; }
         .navbar-default .nav-group .sub-nav .sub-nav .nav-item a {
