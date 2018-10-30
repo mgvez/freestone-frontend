@@ -22,6 +22,8 @@ export default class Module extends Component {
 	};
 
 	shouldComponentRender(props) {
+		console.log(this.props.params, props.params, this.props.params.url, props.params.url);
+		console.log(this.props.params && props.params && this.props.params.url !== props.params.url);
 		return this.props.params && props.params && this.props.params.url !== props.params.url;
 	}
 	
