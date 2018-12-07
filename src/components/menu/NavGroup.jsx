@@ -10,6 +10,7 @@ import Collapsable from '../animation/Collapsable';
 export default class NavGroup extends Component {
 	static propTypes = {
 		toggleCollapse: PropTypes.func,
+		clearList: PropTypes.func,
 
 		childrenGroups: PropTypes.array,
 		data: PropTypes.object,
@@ -19,7 +20,7 @@ export default class NavGroup extends Component {
 
 	getChildrenGroups(level) {
 		return this.props.data.childrenGroups.map((item) => {
-			return <NavGroup key={item.id} data={item} level={level} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
+			return <NavGroup key={item.id} data={item} level={level} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} clearList={this.props.clearList} />;
 		});
 	}
 
@@ -38,7 +39,7 @@ export default class NavGroup extends Component {
 						if (item.isFrontendComponent) {
 							return <li className="nav-item" key={`mod-${item.id}`}><NativeModule {...item} /></li>;
 						}
-						return <li className="nav-item" key={`mod-${item.id}`}><Module {...item} /></li>;
+						return <li className="nav-item" key={`mod-${item.id}`}><Module {...item} clearList={this.props.clearList} /></li>;
 					})
 				}
 				{

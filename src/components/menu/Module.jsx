@@ -8,11 +8,13 @@ export default class Module extends Component {
 		url: PropTypes.string,
 		id: PropTypes.number,
 		className: PropTypes.string,
+		clearList: PropTypes.func,
 	};
 
 	render() {
+		// console.log(this.props.clearList);
 		return (
-			<Link to={`/module/${this.props.url}`} activeClassName="active" className={`${this.props.className} module`}>{this.props.label}</Link>
+			<Link to={`/module/${this.props.url}`} onClick={this.props.clearList} activeClassName="active" className={`${this.props.className} module`}>{this.props.label}</Link>
 		);
 	}
 }

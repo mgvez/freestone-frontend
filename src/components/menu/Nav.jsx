@@ -9,6 +9,7 @@ export default class Nav extends Component {
 	static propTypes = {
 		fetchNav: PropTypes.func,
 		toggleCollapse: PropTypes.func,
+		clearList: PropTypes.func,
 
 		tree: PropTypes.array,
 		toggleState: PropTypes.object,
@@ -29,6 +30,7 @@ export default class Nav extends Component {
 	}
 
 	render() {
+
 		const collapsedClass = this.props.visible ? '' : 'collapsed';
 		return (
 			<div className={`navbar-container ${collapsedClass}`}>
@@ -41,7 +43,7 @@ export default class Nav extends Component {
 						{
 							this.props.tree.map((item) => {
 								// console.log('item...');
-								return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} />;
+								return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} clearList={this.props.clearList} />;
 							})
 						}
 					</ul>

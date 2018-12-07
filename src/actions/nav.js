@@ -7,6 +7,7 @@ export const NAV_API = createRequestTypes('NAV_API');
 
 export const TOGGLE_NAV = 'TOGGLE_NAV';
 export const LOCK_SCROLL = 'LOCK_SCROLL';
+export const CLEAR_LIST = 'CLEAR_LIST';
 export const REMEMBER_LIST_PAGE = 'REMEMBER_LIST_PAGE';
 export const ADD_PAGE_HASH_PATH = 'ADD_PAGE_HASH_PATH';
 
@@ -31,6 +32,15 @@ export function lockScroll(path, scroll) {
 				path,
 				scroll,
 			},
+		});
+	};
+}
+
+export function clearList() {
+	return (dispatch) => {
+		return dispatch({
+			type: CLEAR_LIST,
+			data: null,
 		});
 	};
 }
