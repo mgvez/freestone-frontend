@@ -45,7 +45,7 @@ export default class NavGroup extends Component {
 				{
 					this.props.data.pages.map((item) => {
 						// console.log(item);
-						return <li className="nav-item" key={`pg-${item.id}`}><Page {...item} /></li>;
+						return <li className="nav-item" key={`pg-${item.id}`}><Page {...item} clearList={this.props.clearList} /></li>;
 					})
 				}
 				{this.getChildrenGroups(level)}

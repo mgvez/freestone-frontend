@@ -57,11 +57,11 @@ export default class TextTranslations extends Component {
 		onClosed.then(this.goHome);
 	}
 
-	save = () => {
-		this.props.saveTranslations(this.props.translations);
-	}
-
-	saveAndBack = () => {
+	save = (e) => {
+		if (e.altKey) {
+			this.props.saveTranslations(this.props.translations, this.props.schema);
+			return;
+		}
 		this.setState({ closing: true });
 		const onSaved = this.props.saveTranslations(this.props.translations, this.props.schema);
 		onSaved.then(this.goHome);
@@ -125,8 +125,7 @@ export default class TextTranslations extends Component {
 		//le record a été édité depuis son load à la db. On met les actions pour le save
 		if (this.props.isEdited) {
 			actionBtns = [
-				<a key="fcn_1" onClick={this.saveAndBack} className="button-round">Save and close</a>,
-				<a key="fcn_2" onClick={this.save} className="button-round-lighter">Save</a>,
+				<a key="fcn_1" onClick={this.save} className="button-round" title="Hold ALT key to leave form open after save">Save</a>,
 				<a key="fcn_3" onClick={this.close} className="button-round-danger">Discard changes</a>,
 			];
 		//record pas été édité: juste btn close

@@ -11,6 +11,7 @@ export default class Page extends Component {
 			PropTypes.number,
 		]),
 		flag_type: PropTypes.string,
+		clearList: PropTypes.func,
 		className: PropTypes.string,
 	};
 
@@ -24,7 +25,7 @@ export default class Page extends Component {
 		}
 
 		return (
-			<Link to={`/page/${this.props.id}`} activeClassName="active" className={`${this.props.className} module`}>{this.props.label} {flag}</Link>
+			<Link to={`/page/${this.props.id}`} onClick={this.props.clearList} activeClassName="active" className={`${this.props.className} module`}>{this.props.label} {flag}</Link>
 		);
 	}
 }
