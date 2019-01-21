@@ -172,11 +172,16 @@ export default class SingleRecord extends Component {
 
 			const subsiteField = null;//(this.props.isGod && this.props.table.isSubsiteDependent) ? <div>subsite</div> : null;
 
+			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
+
 			form = (
 				<article>
 					{subsiteField}
 					<div className="row">
-						<div className="col-md-12 close-row">
+						<div className="col-md-6">
+							{recIdDisplay}
+						</div>
+						<div className="col-md-6 close-row">
 							{deleteBtn}
 						</div>
 					</div>
