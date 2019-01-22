@@ -1,0 +1,8 @@
+npm WARN bootstrap-webpack@0.0.6 requires a peer of bootstrap@>=3.0.2 but none was installed.
+npm WARN eslint-config-airbnb@9.0.1 requires a peer of eslint@^2.9.0 but none was installed.
+npm WARN eslint-config-airbnb@9.0.1 requires a peer of eslint-plugin-jsx-a11y@^1.2.0 but none was installed.
+npm WARN eslint-config-airbnb-base@3.0.1 requires a peer of eslint@^2.9.0 but none was installed.
+npm WARN react-datepicker@1.2.1 requires a peer of moment@^2.20.0 but none was installed.
+npm WARN react-datepicker@1.2.1 requires a peer of react@^16.0.0 but none was installed.
+npm WARN react-datepicker@1.2.1 requires a peer of react-dom@^16.0.0 but none was installed.
+npm WARN sass-loader@6.0.6 requires a peer of node-sass@^4.0.0 but none was installed.

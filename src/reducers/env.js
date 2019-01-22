@@ -1,6 +1,6 @@
 
 import { LOGOUT_API } from '../actions/auth';
-import { ENV_API, SET_FIELD_VIEW_LANGUAGE, ENV_VAR_API, SET_ENV_VARIABLE } from '../actions/env';
+import { ENV_API, SET_LANGUAGE, TOGGLE_LANGUAGE, ENV_VAR_API, SET_ENV_VARIABLE } from '../actions/env';
 import { CLEAR_DATA } from '../actions/dev';
 import { combineReducers } from 'redux';
 
@@ -43,10 +43,32 @@ function freestone(state = envInitialState, action) {
 
 const userViewSettingsInitialState = {
 	language: null,
+	languages: [],
 };
 function userViewSettings(state = userViewSettingsInitialState, action) {
 	switch (action.type) {
-	case SET_FIELD_VIEW_LANGUAGE:
+	case ENV_API.SUCCESS: {
+		if (action.data.languages) {
+			return {
+				...state,
+				languages: action.data.languages.map(l => l.key),
+			};
+		}
+		return state;
+	}
+	case TOGGLE_LANGUAGE: {
+		if (state.languages.length) {
+			const currentIndex = state.languages.indexOf(state.language);
+			if (currentIndex === -1) return state;
+			const newLang = state.languages.length === currentIndex + 1 ? state.languages[0] : state.languages[currentIndex + 1];
+			return {
+				...state,
+				language: newLang,
+			};
+		}
+		return state;
+	}
+	case SET_LANGUAGE:
 		// console.log(action.data);
 		return {
 			...state,

@@ -8,7 +8,7 @@ export default class LanguageToggler extends Component {
 		localLanguage: PropTypes.string,
 
 		onChangeLang: PropTypes.func,
-		setFieldViewLanguage: PropTypes.func,
+		setLanguage: PropTypes.func,
 	};
 
 	changeLanguage = (e) => {
@@ -18,21 +18,23 @@ export default class LanguageToggler extends Component {
 		if (this.props.onChangeLang) {
 			this.props.onChangeLang(lang);
 		} else {
-			this.props.setFieldViewLanguage(lang);
+			this.props.setLanguage(lang);
 		}
 	};
 
 	render() {
 		const currentLanguage = this.props.localLanguage || this.props.language;
 		// console.log(`render input ${this.props.field.name}`);
-		return (<div className="lang-toggler">
+		return (
+			<div className="lang-toggler">
 			{
 				this.props.allLanguages.map((language, i) => {
 					const isActive = language === currentLanguage;
 					const activeClass = isActive ? 'active' : '';
-					return <div key={i} data-value={language} onClick={this.changeLanguage} className={`language-tab ${activeClass}`}>{language}</div>;
+					return <div key={i} data-value={language} onClick={this.changeLanguage} className={`language-tab ${activeClass}`} title="use alt-l to toggle between languages">{language}</div>;
 				})
 			}
-		</div>);
+			</div>
+		);
 	}
 }

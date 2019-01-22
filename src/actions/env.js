@@ -5,7 +5,8 @@ import { createRequestTypes } from './apiAction';
 export const ENV_API = createRequestTypes('ENV_API');
 export const ENV_VAR_API = createRequestTypes('ENV_VAR_API');
 
-export const SET_FIELD_VIEW_LANGUAGE = 'SET_FIELD_VIEW_LANGUAGE';
+export const SET_LANGUAGE = 'SET_LANGUAGE';
+export const TOGGLE_LANGUAGE = 'TOGGLE_LANGUAGE';
 export const SET_ENV_VARIABLE = 'SET_ENV_VARIABLE';
 
 export function fetchEnv() {
@@ -44,11 +45,19 @@ export function setVariable(name, value) {
 	};
 }
 
-export function setFieldViewLanguage(lang) {
+export function setLanguage(lang) {
 	return (dispatch) => {
 		return dispatch({
-			type: SET_FIELD_VIEW_LANGUAGE,
+			type: SET_LANGUAGE,
 			data: lang,
+		});
+	};
+}
+
+export function toggleLanguage() {
+	return (dispatch) => {
+		return dispatch({
+			type: TOGGLE_LANGUAGE,
 		});
 	};
 }

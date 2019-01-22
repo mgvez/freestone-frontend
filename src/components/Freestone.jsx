@@ -7,6 +7,7 @@ import Script from 'react-load-script';
 
 /* application components */
 import Footer from './footer/Footer';
+import Shortcuts from '../containers/utils/Shortcuts';
 import SiteHeader from '../containers/SiteHeader';
 import Errors from '../containers/Errors';
 import Nav from '../containers/menu/Nav';
@@ -90,7 +91,7 @@ export default class Freestone extends Component {
 		}
 
 		return (
-			<div id="main-wrapper">
+			<Shortcuts>
 				<Nav />
 				<div className="main-content">
 					<SiteHeader />
@@ -105,7 +106,7 @@ export default class Freestone extends Component {
 						return <Script key={scriptInfos.url} url={scriptInfos.url} onError={noop} onLoad={noop} />;
 					})
 				}
-			</div>
+			</Shortcuts>
 		);
 	}
 }
