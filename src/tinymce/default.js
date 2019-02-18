@@ -19,6 +19,7 @@ export const TINYMCE_CONFIG = {
 		'paste',
 		'visualchars',
 		'autolink',
+		'lists',
 	],
 	style_formats: [
 		{
