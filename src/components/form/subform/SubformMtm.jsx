@@ -38,10 +38,14 @@ export default class SubformMtm extends Component {
 		return this.props.mtmOptions.map((optionGroup, groupIndex) => {
 			// console.log(optionGroup);
 			const { categ, options } = optionGroup;
-			let categLabel;
-			if (categ) {
-				categLabel = <h3 className="mtm-category col-md-12">{categ}</h3>;
-			}
+
+			const nChecked = options.reduce((n, option) => {
+				const { id } = option;
+				const checked = this.props.records && !!this.props.records.find(r => r === id);
+				if (checked) return n + 1;
+				return n;
+			}, 0);
+			
 			const inputs = options.map((option) => {
 				const { display, id } = option;
 				const checked = this.props.records && !!this.props.records.find(r => r === id);
@@ -52,6 +56,13 @@ export default class SubformMtm extends Component {
 					</div>
 				);
 			});
+
+			const nOptions = inputs.length;
+
+			let categLabel;
+			if (categ) {
+				categLabel = <h3 className="mtm-category col-md-12">{categ} <span>({nChecked} / {nOptions})</span></h3>;
+			}
 
 			return (<div className="col-md-12 mtm-group" key={groupIndex}>
 				<div className="row">

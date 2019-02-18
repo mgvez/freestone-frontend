@@ -174,4 +174,8 @@
 	text-align: left;
 	margin: 0 0 10px;
 	padding-right: 30px + $grid-gutter-width / 2;
+	span {
+		font-size: 0.6em;
+		font-weight: normal;
+	}
 }

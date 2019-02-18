@@ -67,7 +67,7 @@ export default class Tab extends Component {
 	getMarkup(opacity = 1) {
 		let className = this.props.isActive ? 'active' : '';
 		className = `tab ${className}`;
-		const label = this.props.displayLabel || '-';
+		const label = this.props.displayLabel || '';
 		return (
 			<a className={className} onClick={this.setShownRecord} style={{ opacity }}>
 				{label}

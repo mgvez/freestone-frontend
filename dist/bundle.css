@@ -1232,7 +1232,8 @@ iframe {
     .search-inputs-ctn input[role="combobox"].bordered {
       border: 2px solid #293846; }
   .field input[type="text"][size], .form-group input[type="text"][size], .search-inputs-ctn input[type="text"][size] {
-    width: auto; }
+    width: auto;
+    max-width: 100%; }
   .field textarea, .form-group textarea, .search-inputs-ctn textarea {
     height: 10em;
     line-height: 1.4em; }
@@ -1883,6 +1884,9 @@ iframe {
   text-align: left;
   margin: 0 0 10px;
   padding-right: 45px; }
+  .mtm-category span {
+    font-size: 0.6em;
+    font-weight: normal; }
 
 .subform {
   margin-bottom: 30px;
