@@ -1,4 +1,12 @@
 
+
+.form-row {
+	border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
+	&:empty {
+		display: none;
+	}
+}
+
 .field, .form-group, .search-inputs-ctn {
 
 	margin-bottom: 0.7em;
@@ -57,7 +65,8 @@
 	.field-description {
 		display: block;
 		margin-bottom: 0.7em;
-		font-size: 0.9em;
+		margin-left: 0.5em;
+		font-size: 0.8em;
 
 		&:empty {
 			display:none;

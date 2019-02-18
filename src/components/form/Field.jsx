@@ -130,9 +130,9 @@ export default class Field extends Component {
 					<div className="field-label">
 						<label title={this.props.field.alias}>{this.props.field.label} {languageAppend}</label>
 					</div>
+					{input}
 					<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
 					<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.descriptionAppend }}></em>
-					{input}
 				</div>
 			);
 		}

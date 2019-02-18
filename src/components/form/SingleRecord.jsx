@@ -11,7 +11,8 @@ import Field from './Field';
 const GRID_COLUMNS = 12;
 
 function wrapCurrentRow(all) {
-	all.rows.push(<div className="row" key={all.currentKey}>{all.currentRow}</div>);
+
+	all.rows.push(<div className="row form-row" key={all.currentKey}>{all.currentRow}</div>);
 	return all;
 }
 
