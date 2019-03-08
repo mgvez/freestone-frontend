@@ -1,11 +1,13 @@
 import { push as pushPath } from 'react-router-redux';
 import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
+import { EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 
 
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
+export const ADD_RECORD = 'ADD_RECORD';
 export const SET_RECORD_DELETED = 'SET_RECORD_DELETED';
 export const TOGGLE_MTM_VALUE = 'TOGGLE_MTM_VALUE';
 export const CANCEL_EDIT_RECORD = 'CANCEL_EDIT_RECORD';
@@ -78,12 +80,18 @@ export function setShownRecord(tableId, parentRecordId, recordId, language) {
 }
 
 export function addRecord(tableId, newRecord) {
+	// console.log(newRecord);
+	const addingRecord = {
+		...newRecord,
+		[EDITED_PSEUDOFIELD_ALIAS]: true,
+		[PREVIEW_EDITED_PSEUDOFIELD_ALIAS]: true,
+	};
 	return (dispatch) => {
 		return dispatch({
 			type: RECORD_SINGLE_API.SUCCESS,
 			data: {
 				tables: [
-					{ tableId, records: [newRecord] },
+					{ tableId, records: [addingRecord] },
 				],
 			},
 		});

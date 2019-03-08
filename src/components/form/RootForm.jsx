@@ -6,6 +6,7 @@ import Save from '../../containers/process/Save';
 import Cancel from '../../containers/process/Cancel';
 import SingleRecord from '../../containers/form/SingleRecord';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
+import PreviewRecord from '../../containers/process/PreviewRecord';
 
 import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
@@ -19,6 +20,7 @@ export default class RootForm extends Component {
 
 		isModal: PropTypes.bool,
 		isEdited: PropTypes.bool,
+		isPreviewEdited: PropTypes.bool,
 		language: PropTypes.string,
 		hasLanguageToggle: PropTypes.bool,
 		table: PropTypes.object,
@@ -36,6 +38,7 @@ export default class RootForm extends Component {
 		this.requireData(this.props);
 		this.setState({
 			saving: false,
+			previewInited: false,
 			afterSave: null,
 			language: null,
 		});
@@ -74,6 +77,7 @@ export default class RootForm extends Component {
 
 	saveAndForm = () => {
 		this.setState({
+			...this.state,
 			saving: true,
 			afterSave: ({ recordId }) => {
 				// console.log(recordId, tableName);
@@ -104,6 +108,17 @@ export default class RootForm extends Component {
 		}
 	}
 
+	initPreview = () => {
+		if (this.state.previewInited) {
+			//force save or navigate to preview?
+		}
+
+		// console.log('INIT PREVIEW', this.props.table.id, this.props.params.recordId);
+		this.setState({
+			previewInited: true,
+		});
+	}
+
 	render() {
 
 		//langue peut être locale (si par ex. dans une modale) pour éviter les rerender des autres formulaires. Si présente en state, priorité sur store
@@ -129,6 +144,8 @@ export default class RootForm extends Component {
 				];
 			}
 
+			const preview = this.state.previewInited && this.props.table && this.props.table.hasTemplate ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isPreviewEdited={this.props.isPreviewEdited} /> : null;
+
 			let permsWidget = null;
 			if (this.props.table.hasSitePermission) {
 				permsWidget = <PermissionsForm table={this.props.table} recordId={this.props.params.recordId} />;
@@ -137,12 +154,13 @@ export default class RootForm extends Component {
 			return (<section className="root-form">
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
-				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
+				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns} initPreview={this.initPreview}>
 					<FormHeaderContent table={this.props.table} label={this.props.recordLabel} language={this.props.language} />
 				</FormHeader>
 
 				{permsWidget}
-
+				{preview}
+				
 				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
 
 			</section>);

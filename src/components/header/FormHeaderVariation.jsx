@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import LanguageToggler from '../../containers/form/LanguageToggler';
-import PreviewRecord from '../../containers/form/buttons/PreviewRecord';
+import PreviewButton from '../form/buttons/PreviewButton';
 import ProdEnvWarning from '../widgets/ProdEnvWarning';
 
 /**
@@ -35,6 +35,7 @@ export default class FormHeaderVariation extends Component {
 
 		setLanguageState: PropTypes.func,
 		fetchSlug: PropTypes.func,
+		initPreview: PropTypes.func,
 		editSchemaAction: PropTypes.func,
 	};
 
@@ -68,7 +69,7 @@ export default class FormHeaderVariation extends Component {
 
 		const languageToggler = this.props.hasLanguageToggle ? <LanguageToggler onChangeLang={this.props.isModal ? this.props.setLanguageState : null} localLanguage={language} /> : null;
 		
-		const preview = this.props.table && this.props.table.hasTemplate ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} /> : null;
+		
 		const lastModif = this.props.lastmodifdate ? <div className="last-modif-date">Last modification : {this.props.lastmodifdate}</div> : null;
 
 		let editSchema = null;
@@ -81,6 +82,7 @@ export default class FormHeaderVariation extends Component {
 			}
 		}
 		
+		const previewBtn = this.props.table && this.props.table.hasTemplate ? <PreviewButton initPreview={this.props.initPreview} /> : null;
 
 		const slugs = this.props.slugs && this.props.slugs.length ? (
 			<div>
@@ -114,7 +116,7 @@ export default class FormHeaderVariation extends Component {
 				</div>
 				<div className="popout">
 					{editSchema}
-					{preview}
+					{previewBtn}
 					{languageToggler}
 				</div>
 			</header>

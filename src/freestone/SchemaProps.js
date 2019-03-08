@@ -6,6 +6,8 @@ export const LOADED_TIME_ALIAS = '__loaded_time';
 export const DELETED_PSEUDOFIELD_ALIAS = '__deleted';
 export const LABEL_PSEUDOFIELD_ALIAS = '__label';
 export const EDITED_PSEUDOFIELD_ALIAS = '__isedited';
+export const PREVIEW_EDITED_PSEUDOFIELD_ALIAS = '__ispreviewedited';
+export const PREVIEWID_PSEUDOFIELD_ALIAS = '__previewid';
 export const SLUG_PSEUDOFIELD_ALIAS = '__slug';
 export const SUBSITE_FIELD = '___sub';
 

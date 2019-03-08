@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, EDITED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEWID_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { TOGGLE_SITE_PERMISSION } from '../actions/permissions';
 import { CLEAR_DATA } from '../actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECORD_SINGLE_API, SET_RECORD_DELETED, MTM_RECORD_API, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from '../actions/record';
-import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
+import { SAVE_RECORD_API, SAVE_PREVIEW_API, DELETE_RECORD_API } from '../actions/save';
 
 
 function removeRecords(state, recordsToRemove) {
@@ -34,11 +34,30 @@ function setFieldValue(state, data) {
 				...state[tableId][recordId],
 				[fieldId]: val,
 				[EDITED_PSEUDOFIELD_ALIAS]: true,
+				[PREVIEW_EDITED_PSEUDOFIELD_ALIAS]: true,
 			},
 		},
 	};
 }
 
+function receivePreviewIds(state, savedRecords) {
+
+	if (!savedRecords) return state;
+
+	return savedRecords.reduce((builtState, savedRecord) => {
+		const { tableId, recordId, recordDbId } = savedRecord;
+		// console.log(savedRecord);
+		const editedRecord = { ...builtState[tableId][recordId] };
+		editedRecord[PREVIEWID_PSEUDOFIELD_ALIAS] = recordDbId;
+		editedRecord[PREVIEW_EDITED_PSEUDOFIELD_ALIAS] = false;
+		builtState[tableId] = {
+			...builtState[tableId],
+			[recordId]: editedRecord,
+		};
+		return builtState;
+	}, { ...state });
+
+}
 /**
 Receive un record de la DB
 */
@@ -46,21 +65,22 @@ function receiveRecord(state, data) {
 	// console.log(data);
 	if (!data || !data.tables) return state;
 
-	const newState = data.tables.reduce((bldState, singleTable) => {
-		if (!singleTable.tableId || !singleTable.records) return bldState;
+	const newState = data.tables.reduce((builtState, singleTable) => {
+		if (!singleTable.tableId || !singleTable.records) return builtState;
 		const { tableId, tableType } = singleTable;
 		
 		//doit se faire uniquement pour les tables NON mtm. Normalement, les records mtm sont recus par une action spécifique, mais quand on duplicate les records, tous les recs sont dans le même call api
-		if (tableType === TYPE_MTM) return bldState;
+		if (tableType === TYPE_MTM) return builtState;
 
-		bldState[tableId] = singleTable.records.reduce((tableRecords, record) => {
+		builtState[tableId] = singleTable.records.reduce((tableRecords, record) => {
 			const key = record[PRIKEY_ALIAS];
 			record[LOADED_TIME_ALIAS] = new Date().getTime() / 1000;
-			record[EDITED_PSEUDOFIELD_ALIAS] = false;
+			record[EDITED_PSEUDOFIELD_ALIAS] = record[EDITED_PSEUDOFIELD_ALIAS] || false;
+			record[PREVIEW_EDITED_PSEUDOFIELD_ALIAS] = record[PREVIEW_EDITED_PSEUDOFIELD_ALIAS] || false;
 			tableRecords[key] = record;
 			return tableRecords;
-		}, bldState[tableId] || {});
-		return bldState;
+		}, builtState[tableId] || {});
+		return builtState;
 	}, {
 		...state,
 	});
@@ -69,6 +89,7 @@ function receiveRecord(state, data) {
 }
 
 function toggleMainEditedFromMtm(state, data) {
+	// console.log(data);
 	const { parentTableId, parentRecordId } = data;
 	return {
 		...state,
@@ -77,6 +98,7 @@ function toggleMainEditedFromMtm(state, data) {
 			[parentRecordId]: {
 				...state[parentTableId][parentRecordId],
 				[EDITED_PSEUDOFIELD_ALIAS]: true,
+				[PREVIEW_EDITED_PSEUDOFIELD_ALIAS]: true,
 			},
 		},
 	};
@@ -94,18 +116,18 @@ function childrenAreLoaded(state = {}, action) {
 	case RECORD_SINGLE_API.SUCCESS: {
 		if (!action.data || !action.data.tables) return state;
 
-		const newState = action.data.tables.reduce((bldState, tableRecords) => {
-			if (!tableRecords.parentTableId || !tableRecords.parentRecordId) return bldState;
+		const newState = action.data.tables.reduce((builtState, tableRecords) => {
+			if (!tableRecords.parentTableId || !tableRecords.parentRecordId) return builtState;
 			const { parentTableId, parentRecordId, tableId } = tableRecords;
-			bldState[parentTableId] = {
-				...bldState[parentTableId],
+			builtState[parentTableId] = {
+				...builtState[parentTableId],
 			};
 
-			bldState[parentTableId][parentRecordId] = {
-				...bldState[parentTableId][parentRecordId],
+			builtState[parentTableId][parentRecordId] = {
+				...builtState[parentTableId][parentRecordId],
 			};
-			bldState[parentTableId][parentRecordId][tableId] = !!tableRecords.records;
-			return bldState;
+			builtState[parentTableId][parentRecordId][tableId] = !!tableRecords.records;
+			return builtState;
 		}, {
 			...state,
 		});
@@ -163,8 +185,9 @@ function records(state = {}, action) {
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
-		// console.log(action.data);
 		return removeRecords(state, action.data.records);
+	case SAVE_PREVIEW_API.SUCCESS:
+		return receivePreviewIds(state, action.data.records);
 	case TOGGLE_SITE_PERMISSION:
 		return setRecordIsEdited(state, action.data);
 	default:
@@ -300,6 +323,22 @@ function recordsUnaltered(state = {}, action) {
 	}
 }
 
+function lastEdit(state = { time: 0 }, action) {
+	switch (action.type) {
+	case TOGGLE_MTM_VALUE:
+	case SET_RECORD_DELETED:
+	case SET_FIELD_VALUE:
+	case CLEAR_DATA: {
+		return {
+			...state,
+			time: new Date().getTime(),
+		};
+	}
+	default:
+		return state;
+	}
+}
+
 function shownRecords(state = {}, action) {
 	switch (action.type) {
 	case SET_SHOWN_RECORD: {
@@ -330,4 +369,5 @@ export default combineReducers({
 	recordsUnaltered,
 	childrenAreLoaded,
 	shownRecords,
+	lastEdit,
 });

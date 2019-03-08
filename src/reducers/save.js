@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { SAVE_SUCCESS, SAVE_ERROR, SAVE_PROCESSING, SAVE_IDLE } from '../freestone/codes';
 import { CLEAR_ERRORS, CLEAR_DATA } from '../actions/dev';
-import { SAVE_RECORD_API, INIT_SAVE } from '../actions/save';
+import { SAVE_RECORD_API, INIT_SAVE, SAVE_PREVIEW_API } from '../actions/save';
 import { FILE_API } from '../actions/sendFile';
 
 function files(state = {}, action) {
@@ -33,18 +33,21 @@ const statusDefault = {
 function status(state = statusDefault, action) {
 	switch (action.type) {
 	case SAVE_RECORD_API.REQUEST:
+	case SAVE_PREVIEW_API.REQUEST:
 		return {
 			code: SAVE_PROCESSING,
 			msg: 'saving record',
 			error: null,
 		};
 	case SAVE_RECORD_API.SUCCESS:
+	case SAVE_PREVIEW_API.SUCCESS:
 		return {
 			code: SAVE_SUCCESS,
 			msg: 'record saved',
 			error: null,
 		};
 	case SAVE_RECORD_API.FAILURE:
+	case SAVE_PREVIEW_API.FAILURE:
 		// console.log(action);
 		return {
 			code: SAVE_ERROR,

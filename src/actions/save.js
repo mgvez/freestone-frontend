@@ -6,6 +6,7 @@ import { createRequestTypes } from './apiAction';
 
 export const INIT_SAVE = 'INIT_SAVE';
 export const SAVE_RECORD_API = createRequestTypes('SAVE_RECORD_API');
+export const SAVE_PREVIEW_API = createRequestTypes('SAVE_PREVIEW_API');
 export const SWAP_ORDER_API = createRequestTypes('SWAP_ORDER_API');
 export const DELETE_RECORD_API = createRequestTypes('DELETE_RECORD_API');
 
@@ -67,9 +68,11 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				isTemporary,
 			}));
 
+			const actionTypes = !isTemporary ? SAVE_RECORD_API : SAVE_PREVIEW_API;
+
 			const onSaved = dispatch({
 				[FREESTONE_API]: {
-					types: SAVE_RECORD_API,
+					types: actionTypes,
 					route: `save/${tableName}`,
 					data: { data },
 				},

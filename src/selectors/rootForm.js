@@ -1,7 +1,7 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 
 import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
 
@@ -17,10 +17,11 @@ const childrenSelector = state => state.freestone.schema.children;
 const defaultLanguageSelector = state => state.freestone.env.freestone.defaultLanguage;
 
 //check si le record ou un de ses enfants a été edité
-function getIsEdited(allTables, allChildren, allRecords, tableId, recordId) {
+function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isForPreview = false) {
+	const fieldToCheck = isForPreview ? PREVIEW_EDITED_PSEUDOFIELD_ALIAS : EDITED_PSEUDOFIELD_ALIAS;
 	const record = recordId && allRecords[tableId] && allRecords[tableId][recordId];
 	if (!record) return false;
-	if (record[EDITED_PSEUDOFIELD_ALIAS]) return true;
+	if (record[fieldToCheck]) return true;
 
 	const children = [...allChildren[tableId]];
 	if (!children) return false;
@@ -37,7 +38,7 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId) {
 		// console.log(subformFieldId);
 		return childrenRecordIds.reduce((isChildEdited, childRecordId) => {
 			if (isChildEdited) return true;
-			return getIsEdited(allTables, allChildren, allRecords, childTableId, childRecordId);
+			return getIsEdited(allTables, allChildren, allRecords, childTableId, childRecordId, isForPreview);
 		}, false);
 	}, false);
 
@@ -77,6 +78,7 @@ function makeSelector() {
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
 				...userViewLanguage,
 				isEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId),
+				isPreviewEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId, true),
 			};
 		}
 	);

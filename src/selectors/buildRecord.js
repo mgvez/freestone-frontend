@@ -171,38 +171,3 @@ export const buildSaveRecordSelector = createSelector(
 	},
 );
 
-
-/*
-* 
-*/
-// function getRecordsAsNew(branch, allRecords, allTables, parentTableId, parentRecordId, newRecords = []) {
-// 	const { tableId, recordId, children } = branch;
-// 	const record = allRecords[tableId] && allRecords[tableId][recordId];
-// 	if (record && allTables[tableId]) {
-// 		const copy = createRecord(allTables[tableId], parentTableId, parentRecordId, null, record);
-// 		newRecords.push(copy.newRecord);
-// 		const newRecordId = copy.newRecordId;
-// 		return children.reduce((carry, childBranch) => {
-// 			return getRecordsAsNew(childBranch, allRecords, allTables, tableId, newRecordId, carry);
-// 		}, newRecords);
-// 	}
-
-// 	return newRecords;
-// }
-
-/**
- * Copy entire structure of record, but by removing non-copiable values (files) and changing IDs
- */
-export const buildCopyRecordSelector = createSelector(
-	// [tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector],
-	// (mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren) => {
-	// 	// const { table } = mainTableSchema;
-	// 	// const { tables } = allSchema;
-	// 	// const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
-	// 	// const records = getRecordsAsNew(tree, allRecords, tables);
-	// 	// console.log(records);
-	// 	return {
-	// 		// tree,
-	// 	};
-	// },
-);

@@ -174,7 +174,8 @@ export default class SingleRecord extends Component {
 			const subsiteField = null;//(this.props.isGod && this.props.table.isSubsiteDependent) ? <div>subsite</div> : null;
 
 			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
-
+			// const previewId = this.props.record[PREVIEWID_PSEUDOFIELD_ALIAS];
+			// const previewIdDisplay = previewId ? <small><em>Preview {previewId}</em></small> : null;
 			form = (
 				<article>
 					{subsiteField}
