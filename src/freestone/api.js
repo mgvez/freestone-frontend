@@ -62,7 +62,8 @@ export function callApi(route, data) {
 	const headers = { Accept: 'application/json' };
 	const jwt = getJWT();
 	if (jwt) {
-		headers.Authorization = `Bearer ${jwt}`;
+		headers.AuthorizationFreestone = `Bearer ${jwt}`;
+		// headers.Authorization = `Bearer ${jwt}`;
 	}
 	return new Promise((resolve, reject) => {
 		reqwest({
