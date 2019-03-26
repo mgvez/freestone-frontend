@@ -18,6 +18,23 @@ export function fetchSlug(tableNameId, recordId) {
 	};
 }
 
+const previewWindows = {};
+export function showPreview(tableNameId, recordId, currentLanguage, slugs) {
+	if (!slugs) return;
+	const hash = `win_${tableNameId}_${recordId}`;
+	const slug = slugs[currentLanguage] || (Object.values(slugs))[0];
+	// console.log(previewWindows[hash]);
+	if (previewWindows[hash]) {
+		if (previewWindows[hash].closed) {
+			previewWindows[hash] = null;
+		} else {
+			previewWindows[hash].location = slug;
+		}
+	} else {
+		previewWindows[hash] = window.open(slug);
+	}
+}
+
 export function navigateToSlug(tableNameId, recordId, currentLanguage) {
 	return (dispatch) => {
 		// console.log(tableNameId, recordId);
@@ -37,7 +54,8 @@ export function navigateToSlug(tableNameId, recordId, currentLanguage) {
 			const lang = currentLanguage || Object.keys(res.slugs).shift();
 			const slug = res.slugs[lang];
 			// console.log(slug);
-			window.open(slug);
+			const newWindow = window.open(slug);
+			// console.log(newWindow);
 		});
 	};
 }

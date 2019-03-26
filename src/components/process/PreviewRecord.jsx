@@ -13,7 +13,7 @@ export default class PreviewRecord extends Component {
 		isPreviewEdited: PropTypes.bool,
 		currentLanguage: PropTypes.string,
 
-		navigateToSlug: PropTypes.func,
+		showPreview: PropTypes.func,
 	};
 
 	componentWillMount() {
@@ -25,21 +25,24 @@ export default class PreviewRecord extends Component {
 		});
 	}
 
-	afterInitialSave = (savedRecord) => {
-		this.props.navigateToSlug(this.props.tableId, savedRecord.recordId, this.props.currentLanguage);
+	afterInitialSave = (savedRecord, slugs) => {
+
 		this.setState({
 			saved: true,
 		});
+		this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
 	}
 
-	afterUpdateSave = () => {
+	afterUpdateSave = (savedRecord, slugs) => {
+		// console.log(savedRecord, slugs);
 		this.setState({
 			sendingChanges: false,
 		});
+		this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
 	}
 
 	componentWillReceiveProps(props) {
-		// console.log('props received ' + this.props.lastEdit);
+		// console.log('props received ' + this.props.lastEdit, props.isPreviewEdited);
 		if (props.isPreviewEdited) {
 			if (this.timeoutId) {
 				// console.log('clear ' + this.timeoutId);
@@ -69,7 +72,7 @@ export default class PreviewRecord extends Component {
 	}
 
 	render() {
-		// console.log(this.props.isPreviewEdited);
+
 		//on load, save total record as draft
 		if (!this.state.saved) {
 			return <Save tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterInitialSave} cancelSave={this.cancelSave} isTemporary />;

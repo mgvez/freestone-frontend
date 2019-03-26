@@ -47,6 +47,10 @@ function receivePreviewIds(state, savedRecords) {
 	return savedRecords.reduce((builtState, savedRecord) => {
 		const { tableId, recordId, recordDbId } = savedRecord;
 		// console.log(savedRecord);
+
+		//if we are saving a preview over a preview, there won't be a record in state for recordId, since recordId IS a preview
+		if (!builtState[tableId][recordId]) return builtState;
+
 		const editedRecord = { ...builtState[tableId][recordId] };
 		editedRecord[PREVIEWID_PSEUDOFIELD_ALIAS] = recordDbId;
 		editedRecord[PREVIEW_EDITED_PSEUDOFIELD_ALIAS] = false;
