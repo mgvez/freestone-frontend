@@ -63,7 +63,7 @@ export default store => next => action => { // eslint-disable-line
 		next(actionWith({ data: { route: finalRoute }, type: FREESTONE_API_REQUEST }));
 	}
 
-	processing[hash] = callApi(finalRoute, data).then(
+	processing[hash] = callApi(finalRoute, data, route).then(
 		res => {
 			if (res.jwt) {
 				next(receiveToken(res.jwt));
@@ -87,7 +87,7 @@ export default store => next => action => { // eslint-disable-line
 			console.log(`%cERROR ${msg}`, 'color:red;font-weight:bold');// eslint-disable-line
 			console.log('for requests', requestType, successType);// eslint-disable-line
 			console.log(data);// eslint-disable-line
-			console.log(error);// eslint-disable-line
+			console.trace(error);// eslint-disable-line
 			// console.log(error.responseText);
 			if (error.status === 401) {
 				next(loginUserFailure(error));

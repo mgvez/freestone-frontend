@@ -55,7 +55,7 @@ export function getEndpoint(route) {
 }
 
 
-export function callApi(route, data) {
+export function callApi(route, data, label) {
 	// console.log(`post data ${route}`, data);
 	// console.log(`JWT: ${jwt}`);
 	const method = 'post';//data ? 'post' : 'get';
@@ -65,6 +65,7 @@ export function callApi(route, data) {
 		headers.AuthorizationFreestone = `Bearer ${jwt}`;
 		// headers.Authorization = `Bearer ${jwt}`;
 	}
+	const start = new Date();
 	return new Promise((resolve, reject) => {
 		reqwest({
 			url: route,
@@ -73,7 +74,28 @@ export function callApi(route, data) {
 			method,
 			data,
 			headers,
-		}).then(resolve).catch(res => {
+		}).then((r) => {
+			
+			// console.log(`${label}: %c ${dur}ms`, 'color: blue; font-weight: bold;');// eslint-disable-line
+			// console.log(r.profile);
+			if (r.profile) {
+				const end = new Date();
+				const dur = end - start;
+				console.group(`${label}: ${dur}ms`);// eslint-disable-line
+				// const total = r.profile.shift();
+				r.profile.reduce((prevTime, item) => {
+
+					const d = Math.ceil(item.dur * 1000);
+					const relTime = Math.ceil(item.rtime * 1000);
+					// const 
+					console.log(`${item.label}: @${relTime}ms => %c ${d}ms`, 'color: blue; font-weight: bold;');// eslint-disable-line
+					return relTime;
+				}, 0);
+				console.groupEnd();// eslint-disable-line
+				console.log(r);
+			}
+			resolve(r);
+		}).catch(res => {
 			console.log(res);// eslint-disable-line
 			const err = new Error('API Error');
 			err.status = res.status;
