@@ -36,7 +36,7 @@ function buildlink(contents, link, linkLabel, linkTarget) {
 let internalUrl;
 function receiveUrl(event) {
 	// console.log(event.data);
-	internalUrl = event.data;
+	internalUrl = (event.data && event.data.currentLink) || internalUrl;
 }
 
 export default class LinkInsert extends Component {

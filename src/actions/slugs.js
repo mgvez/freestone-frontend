@@ -1,6 +1,9 @@
 import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 
+import reqwest from 'reqwest';
+import Promise from 'bluebird';
+
 export const SLUG_API = createRequestTypes('SLUG_API');
 
 
@@ -24,15 +27,38 @@ export function showPreview(tableNameId, recordId, currentLanguage, slugs) {
 	const hash = `win_${tableNameId}_${recordId}`;
 	const slug = slugs[currentLanguage] || (Object.values(slugs))[0];
 	// console.log(previewWindows[hash]);
-	if (previewWindows[hash]) {
-		if (previewWindows[hash].closed) {
-			previewWindows[hash] = null;
-		} else {
-			previewWindows[hash].location = slug;
-		}
-	} else {
-		previewWindows[hash] = window.open(slug);
+	if (previewWindows[hash] && previewWindows[hash].closed) {
+		previewWindows[hash] = null;
+	} 
+	if (!previewWindows[hash]) {
+		previewWindows[hash] = window.open();
 	}
+	// previewWindows[hash] = window.open(slug);
+	const curScroll = previewWindows[hash].pageYOffset;
+
+	reqwest({
+		url: slug,
+		crossOrigin: true,
+		type: 'html',
+		method: 'get',
+	}).then((r) => {
+		// console.log(r);
+		// previewWindows[hash];
+		const doc = previewWindows[hash].document;
+
+		previewWindows[hash].document.onload = () => {
+			console.log(curScroll);
+			previewWindows[hash].scrollTo(0, curScroll);
+		};
+
+		doc.open();
+		doc.write(r);
+		doc.close();
+		// setTimeout(() => {
+		// 	previewWindows[hash].scrollTo(0, curScroll);
+		// }, 100);
+	});
+
 }
 
 export function navigateToSlug(tableNameId, recordId, currentLanguage) {

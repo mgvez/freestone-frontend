@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Save from '../../containers/process/Save';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
 
+
 export default class PreviewRecord extends Component {
 	static propTypes = {
 		slug: PropTypes.string,

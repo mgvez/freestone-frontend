@@ -5,6 +5,7 @@ import { getWebsiteUrl } from './settings';
 export const ADMIN_API = 'admin';
 export const FRONTEND_API = 'frontend';
 const API_PATH = 'fsapi';
+const IS_PROFILING = false;
 
 let store;
 export function setStore(s) {
@@ -78,7 +79,7 @@ export function callApi(route, data, label) {
 			
 			// console.log(`${label}: %c ${dur}ms`, 'color: blue; font-weight: bold;');// eslint-disable-line
 			// console.log(r.profile);
-			if (r.profile) {
+			if (r.profile && IS_PROFILING) {
 				const end = new Date();
 				const dur = end - start;
 				console.group(`${label}: ${dur}ms`);// eslint-disable-line
