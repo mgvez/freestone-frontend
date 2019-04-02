@@ -5,6 +5,12 @@ body {
 	background: $color-background-main;
 }
 
+.half-content {
+	width: 50%;
+	position:relative;
+	overflow: hidden;
+}
+
 .main-content {
 	padding-top: $header-height;
 	padding-left: $nav-width;

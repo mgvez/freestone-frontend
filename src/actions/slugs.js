@@ -2,10 +2,13 @@ import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 
 import reqwest from 'reqwest';
-import Promise from 'bluebird';
 
 export const SLUG_API = createRequestTypes('SLUG_API');
 
+
+export function receiveSlugs() {
+
+}
 
 export function fetchSlug(tableNameId, recordId) {
 	return (dispatch) => {
@@ -30,34 +33,42 @@ export function showPreview(tableNameId, recordId, currentLanguage, slugs) {
 	if (previewWindows[hash] && previewWindows[hash].closed) {
 		previewWindows[hash] = null;
 	} 
+	
 	if (!previewWindows[hash]) {
-		previewWindows[hash] = window.open();
+		previewWindows[hash] = window.open(slug);
+	} else {
+		previewWindows[hash].location = slug;
 	}
-	// previewWindows[hash] = window.open(slug);
-	const curScroll = previewWindows[hash].pageYOffset;
+	// if (!previewWindows[hash]) {
+	// 	previewWindows[hash] = window.open();
+	// }
 
-	reqwest({
-		url: slug,
-		crossOrigin: true,
-		type: 'html',
-		method: 'get',
-	}).then((r) => {
-		// console.log(r);
-		// previewWindows[hash];
-		const doc = previewWindows[hash].document;
 
-		previewWindows[hash].document.onload = () => {
-			console.log(curScroll);
-			previewWindows[hash].scrollTo(0, curScroll);
-		};
+	// const curScroll = previewWindows[hash].pageYOffset;
 
-		doc.open();
-		doc.write(r);
-		doc.close();
-		// setTimeout(() => {
-		// 	previewWindows[hash].scrollTo(0, curScroll);
-		// }, 100);
-	});
+	// reqwest({
+	// 	url: slug,
+	// 	crossOrigin: true,
+	// 	type: 'html',
+	// 	method: 'get',
+	// }).then((r) => {
+	// 	// console.log(r);
+	// 	// previewWindows[hash];
+	// 	const doc = previewWindows[hash].document;
+
+
+	// 	previewWindows[hash].document.onload = () => {
+	// 		console.log(curScroll);
+	// 		previewWindows[hash].scrollTo(0, curScroll);
+	// 	};
+
+	// 	doc.open();
+	// 	doc.write(r);
+	// 	doc.close();
+	// 	// setTimeout(() => {
+	// 	// 	previewWindows[hash].scrollTo(0, curScroll);
+	// 	// }, 100);
+	// });
 
 }
 

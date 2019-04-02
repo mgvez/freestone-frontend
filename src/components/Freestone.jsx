@@ -92,20 +92,22 @@ export default class Freestone extends Component {
 
 		return (
 			<Shortcuts>
-				<Nav />
-				<div className="main-content">
-					<SiteHeader />
-					<LoadedRecords />
-					{this.props.children}
-					<Footer />
-					<Errors {...this.props} />
+				<div className="half-content">
+					<Nav />
+					<div className="main-content">
+						<SiteHeader />
+						<LoadedRecords />
+						{this.props.children}
+						<Footer />
+						<Errors {...this.props} />
+					</div>
+					<GoogleAuthenticate onGapiReady={this.onGapiReady} />
+					{
+						this.props.freestone.clientScripts.map((scriptInfos) => {
+							return <Script key={scriptInfos.url} url={scriptInfos.url} onError={noop} onLoad={noop} />;
+						})
+					}
 				</div>
-				<GoogleAuthenticate onGapiReady={this.onGapiReady} />
-				{
-					this.props.freestone.clientScripts.map((scriptInfos) => {
-						return <Script key={scriptInfos.url} url={scriptInfos.url} onError={noop} onLoad={noop} />;
-					})
-				}
 			</Shortcuts>
 		);
 	}

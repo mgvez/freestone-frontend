@@ -15,6 +15,7 @@ export default class PreviewRecord extends Component {
 		currentLanguage: PropTypes.string,
 
 		showPreview: PropTypes.func,
+		setIsPreviewing: PropTypes.func,
 	};
 
 	componentWillMount() {
@@ -27,11 +28,11 @@ export default class PreviewRecord extends Component {
 	}
 
 	afterInitialSave = (savedRecord, slugs) => {
-
+		this.props.setIsPreviewing(this.props.tableId, savedRecord.recordId, true);
 		this.setState({
 			saved: true,
 		});
-		this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
+		// this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
 	}
 
 	afterUpdateSave = (savedRecord, slugs) => {
@@ -39,7 +40,7 @@ export default class PreviewRecord extends Component {
 		this.setState({
 			sendingChanges: false,
 		});
-		this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
+		// this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
 	}
 
 	componentWillReceiveProps(props) {

@@ -5,6 +5,7 @@ import { EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../f
 
 
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
+export const SET_RECORD_IS_PREVIEWING = 'SET_RECORD_IS_PREVIEWING';
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
 export const ADD_RECORD = 'ADD_RECORD';
@@ -19,6 +20,15 @@ export const RECORD_REVISION_LIST_API = createRequestTypes('RECORD_REVISION_LIST
 export const MTM_RECORD_API = createRequestTypes('MTM_RECORD_API');
 export const MTM_OPTIONS_API = createRequestTypes('MTM_OPTIONS_API');
 
+
+export function setIsPreviewing(tableId, recordId, val) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_RECORD_IS_PREVIEWING,
+			data: { tableId, recordId, val },
+		});
+	};
+}
 
 export function fetchList(tableName, search = '', page = 1) {
 	return (dispatch) => {

@@ -93,7 +93,7 @@ export function callApi(route, data, label) {
 					return relTime;
 				}, 0);
 				console.groupEnd();// eslint-disable-line
-				console.log(r);
+				// console.log(r);
 			}
 			resolve(r);
 		}).catch(res => {

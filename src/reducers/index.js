@@ -9,6 +9,7 @@ import errors from './errors';
 import foreign from './foreign';
 import recordList from './recordList';
 import recordRevision from './recordRevision';
+import recordPreview from './recordPreview';
 import recordForm from './recordForm';
 import subform from './subform';
 import fieldgroup from './fieldgroup';
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
 	errors,
 	recordList,
 	recordForm,
+	recordPreview,
 	foreign,
 	save,
 	subform,

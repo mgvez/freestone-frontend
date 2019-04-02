@@ -45,23 +45,24 @@ function receivePreviewIds(state, savedRecords) {
 	if (!savedRecords) return state;
 
 	return savedRecords.reduce((builtState, savedRecord) => {
-		const { tableId, recordId, recordDbId } = savedRecord;
+		const { tableId, recordOriginalId, recordId } = savedRecord;
 		// console.log(savedRecord);
 
 		//if we are saving a preview over a preview, there won't be a record in state for recordId, since recordId IS a preview
-		if (!builtState[tableId][recordId]) return builtState;
+		if (!builtState[tableId][recordOriginalId]) return builtState;
 
-		const editedRecord = { ...builtState[tableId][recordId] };
-		editedRecord[PREVIEWID_PSEUDOFIELD_ALIAS] = recordDbId;
+		const editedRecord = { ...builtState[tableId][recordOriginalId] };
+		editedRecord[PREVIEWID_PSEUDOFIELD_ALIAS] = recordId;
 		editedRecord[PREVIEW_EDITED_PSEUDOFIELD_ALIAS] = false;
 		builtState[tableId] = {
 			...builtState[tableId],
-			[recordId]: editedRecord,
+			[recordOriginalId]: editedRecord,
 		};
 		return builtState;
 	}, { ...state });
 
 }
+
 /**
 Receive un record de la DB
 */
@@ -174,6 +175,8 @@ function setRecordIsEdited(state, data) {
 function records(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
+	case CLEAR_DATA:
+	case LOGOUT_API.SUCCESS:
 		return {};
 	case RECORD_SINGLE_API.SUCCESS:
 		return receiveRecord(state, action.data);
@@ -181,9 +184,6 @@ function records(state = {}, action) {
 		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
 	case SET_FIELD_VALUE:
 		return setFieldValue(state, action.data);
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-		return {};
 	case TOGGLE_MTM_VALUE:
 		return toggleMainEditedFromMtm(state, action.data);
 	case CANCEL_EDIT_RECORD:
