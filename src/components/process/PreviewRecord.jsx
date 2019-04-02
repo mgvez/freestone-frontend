@@ -28,7 +28,7 @@ export default class PreviewRecord extends Component {
 	}
 
 	afterInitialSave = (savedRecord, slugs) => {
-		this.props.setIsPreviewing(this.props.tableId, savedRecord.recordId, true);
+		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, true);
 		this.setState({
 			saved: true,
 		});
@@ -56,6 +56,7 @@ export default class PreviewRecord extends Component {
 
 	componentWillUnmount() {
 		clearTimeout(this.timeoutId);
+		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, false);
 	}
 
 	sendChanges = () => {

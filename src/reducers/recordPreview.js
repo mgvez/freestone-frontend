@@ -103,13 +103,31 @@ function previewRecordState(state = {}, action) {
 		return {};
 	case SET_RECORD_IS_PREVIEWING: {
 		const { tableId, recordId, val } = action.data;
-		return {
+		const newState = {
 			...state,
 			[tableId]: {
 				...state[tableId],
 				[recordId]: val,
 			},
 		};
+		if (!newState[tableId][recordId]) {
+			delete(newState[tableId][recordId]);
+		}
+		return newState;
+	}
+	default:
+		return state;
+	}
+}
+
+function isPreviewing(state = false, action) {
+	switch (action.type) {
+	case UNAUTHORIZED:
+	case CLEAR_DATA:
+	case LOGOUT_API.SUCCESS:
+		return false;
+	case SET_RECORD_IS_PREVIEWING: {
+		return action.data.val;
 	}
 	default:
 		return state;
@@ -121,4 +139,5 @@ export default combineReducers({
 	slugs,
 	previewIds,
 	previewRecordState,
+	isPreviewing,
 });

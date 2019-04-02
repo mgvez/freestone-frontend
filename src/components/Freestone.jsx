@@ -27,6 +27,7 @@ function noop() {
 export default class Freestone extends Component {
 	static propTypes = {
 		isAuthenticated: PropTypes.bool,
+		isPreviewing: PropTypes.bool,
 		lastRequestTime: PropTypes.number,
 		freestone: PropTypes.object,
 		jwt: PropTypes.string,
@@ -90,9 +91,11 @@ export default class Freestone extends Component {
 			return null;
 		}
 
+		const className = this.props.isPreviewing ? 'half-content' : '';
+
 		return (
 			<Shortcuts>
-				<div className="half-content">
+				<div className={className}>
 					<Nav />
 					<div className="main-content">
 						<SiteHeader />
