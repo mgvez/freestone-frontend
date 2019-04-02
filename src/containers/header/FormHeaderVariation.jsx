@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import FormHeaderVariation from '../../components/header/FormHeaderVariation';
 
 import { fetchSlug } from '../../actions/slugs';
+import { setIsPreviewing } from '../../actions/record';
 import { formHeaderSelector } from '../../selectors/formHeader';
-const actionCreators = { fetchSlug };
+const actionCreators = { fetchSlug, setIsPreviewing };
 
 export default connect(
 	formHeaderSelector,

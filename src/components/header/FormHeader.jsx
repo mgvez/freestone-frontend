@@ -9,7 +9,7 @@ export default class FormHeader extends Component {
 	static propTypes = {
 		table: PropTypes.object,
 		setLanguageState: PropTypes.func,
-		initPreview: PropTypes.func,
+		isViewingPreview: PropTypes.bool,
 		hasLanguageToggle: PropTypes.bool,
 		isModal: PropTypes.bool,
 		isProdEnv: PropTypes.bool,

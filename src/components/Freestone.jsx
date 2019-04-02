@@ -10,6 +10,7 @@ import Footer from './footer/Footer';
 import Shortcuts from '../containers/utils/Shortcuts';
 import SiteHeader from '../containers/SiteHeader';
 import Errors from '../containers/Errors';
+import RecordPreview from '../containers/preview/RecordPreview';
 import Nav from '../containers/menu/Nav';
 import LoadedRecords from '../containers/dashboard/LoadedRecords';
 import Login from '../containers/auth/Login';
@@ -27,7 +28,6 @@ function noop() {
 export default class Freestone extends Component {
 	static propTypes = {
 		isAuthenticated: PropTypes.bool,
-		isPreviewing: PropTypes.bool,
 		lastRequestTime: PropTypes.number,
 		freestone: PropTypes.object,
 		jwt: PropTypes.string,
@@ -91,11 +91,9 @@ export default class Freestone extends Component {
 			return null;
 		}
 
-		const className = this.props.isPreviewing ? 'half-content' : '';
-
 		return (
 			<Shortcuts>
-				<div className={className}>
+				<RecordPreview>
 					<Nav />
 					<div className="main-content">
 						<SiteHeader />
@@ -110,7 +108,7 @@ export default class Freestone extends Component {
 							return <Script key={scriptInfos.url} url={scriptInfos.url} onError={noop} onLoad={noop} />;
 						})
 					}
-				</div>
+				</RecordPreview>
 			</Shortcuts>
 		);
 	}

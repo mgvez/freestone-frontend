@@ -14,6 +14,7 @@ const recordIdSelector = (state, props) => props.params && props.params.recordId
 const recordsSelector = state => state.freestone.recordForm.records;
 const isModalSelector = (state, props) => props.isModal;
 const childrenSelector = state => state.freestone.schema.children;
+const previewRecordStateSelector = state => state.freestone.recordPreview.previewRecordState;
 const defaultLanguageSelector = state => state.freestone.env.freestone.defaultLanguage;
 
 //check si le record ou un de ses enfants a été edité
@@ -46,8 +47,9 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 
 function makeSelector() {
 	return createSelector(
-		[tableSchemaMapStateToProps(), recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords],
-		(schema, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords) => {
+		[tableSchemaMapStateToProps(), recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, previewRecordStateSelector],
+		(schema, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, previewRecordState) => {
+
 			const { table } = schema;
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
 
@@ -63,6 +65,7 @@ function makeSelector() {
 			// console.log(allLoadedRecords);
 			// console.log(thisRecord);
 
+			const isViewingPreview = table && previewRecordState[table.id] && previewRecordState[table.id][recordId];
 
 			// console.log(allChildren);
 			// console.log(record);
@@ -75,6 +78,7 @@ function makeSelector() {
 				table,
 				hasLanguageToggle,
 				recordLabel,
+				isViewingPreview,
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
 				...userViewLanguage,
 				isEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId),

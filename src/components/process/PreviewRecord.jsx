@@ -12,14 +12,17 @@ export default class PreviewRecord extends Component {
 		lastEdit: PropTypes.number,
 		recordId: PropTypes.string,
 		isPreviewEdited: PropTypes.bool,
+		isPreviewInited: PropTypes.bool,
 		currentLanguage: PropTypes.string,
 
-		showPreview: PropTypes.func,
-		setIsPreviewing: PropTypes.func,
+		setCurrentPreview: PropTypes.func,
 	};
 
 	componentWillMount() {
 		// console.log('preview mounting');
+
+		this.props.setCurrentPreview(this.props.tableId, this.props.recordId);
+
 		this.setState({
 			saved: false,
 			sendingChanges: false,
@@ -28,19 +31,21 @@ export default class PreviewRecord extends Component {
 	}
 
 	afterInitialSave = (savedRecord, slugs) => {
-		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, true);
+		console.log('after init save');
+
 		this.setState({
 			saved: true,
 		});
-		// this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
+
 	}
 
 	afterUpdateSave = (savedRecord, slugs) => {
 		// console.log(savedRecord, slugs);
+		console.log('after update save');
 		this.setState({
 			sendingChanges: false,
 		});
-		// this.props.showPreview(this.props.tableId, savedRecord.recordId, this.props.currentLanguage, slugs);
+
 	}
 
 	componentWillReceiveProps(props) {
@@ -55,19 +60,24 @@ export default class PreviewRecord extends Component {
 	}
 
 	componentWillUnmount() {
+		console.log('unmounting');
 		clearTimeout(this.timeoutId);
-		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, false);
+		this.props.setCurrentPreview();
+
+
 	}
 
 	sendChanges = () => {
 		// console.log('sending preview ' + this.timeoutId);
+		console.log('sending preview');
+
 		this.setState({
 			sendingChanges: true,
 		});
 	}
 
 	cancelSave = () => {
-		// console.log('cancel');
+		console.log('cancel');
 		this.setState({
 			saved: false,
 			sendingChanges: false,
@@ -75,7 +85,7 @@ export default class PreviewRecord extends Component {
 	}
 
 	render() {
-
+		// console.log(this.props);
 		//on load, save total record as draft
 		if (!this.state.saved) {
 			return <Save tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterInitialSave} cancelSave={this.cancelSave} isTemporary />;

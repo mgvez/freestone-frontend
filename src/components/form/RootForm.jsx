@@ -21,6 +21,7 @@ export default class RootForm extends Component {
 		isModal: PropTypes.bool,
 		isEdited: PropTypes.bool,
 		isPreviewEdited: PropTypes.bool,
+		isViewingPreview: PropTypes.bool,
 		language: PropTypes.string,
 		hasLanguageToggle: PropTypes.bool,
 		table: PropTypes.object,
@@ -38,7 +39,7 @@ export default class RootForm extends Component {
 		this.requireData(this.props);
 		this.setState({
 			saving: false,
-			previewInited: false,
+			isPreviewInited: false,
 			afterSave: null,
 			language: null,
 		});
@@ -109,13 +110,13 @@ export default class RootForm extends Component {
 	}
 
 	initPreview = () => {
-		if (this.state.previewInited) {
+		if (this.state.isPreviewInited) {
 			//force save or navigate to preview?
 		}
 
 		// console.log('INIT PREVIEW', this.props.table.id, this.props.params.recordId);
 		this.setState({
-			previewInited: true,
+			isPreviewInited: true,
 		});
 	}
 
@@ -144,7 +145,7 @@ export default class RootForm extends Component {
 				];
 			}
 
-			const preview = this.state.previewInited && this.props.table && this.props.table.hasTemplate ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isPreviewEdited={this.props.isPreviewEdited} /> : null;
+			const preview = this.props.table && this.props.table.hasTemplate && this.props.isViewingPreview ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isPreviewEdited={this.props.isPreviewEdited} /> : null;
 
 			let permsWidget = null;
 			if (this.props.table.hasSitePermission) {
@@ -154,7 +155,7 @@ export default class RootForm extends Component {
 			return (<section className="root-form">
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
-				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns} initPreview={this.initPreview}>
+				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
 					<FormHeaderContent table={this.props.table} label={this.props.recordLabel} language={this.props.language} />
 				</FormHeader>
 

@@ -13,7 +13,6 @@ export default connect(
 		return {
 			isAuthenticated: state.freestone.auth.isAuthenticated,
 			lastRequestTime: state.freestone.auth.lastRequestTime,
-			isPreviewing: state.freestone.recordPreview.isPreviewing,
 			freestone: state.freestone.env.freestone,
 			jwt: state.freestone.auth.jwt,
 		};

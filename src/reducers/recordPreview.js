@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { CLEAR_DATA } from '../actions/dev';
-import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD, SET_RECORD_IS_PREVIEWING } from '../actions/record';
+import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD, SET_RECORD_IS_PREVIEWING, SET_CURRENT_PREVIEW } from '../actions/record';
 import { SAVE_RECORD_API, SAVE_PREVIEW_API, DELETE_RECORD_API } from '../actions/save';
 
 
@@ -16,6 +16,8 @@ function removeRecord(state, record) {
 }
 
 function removeRecords(state, recordsToRemove) {
+	console.log(state);
+	console.log(recordsToRemove);
 	if (!recordsToRemove) return state;
 	return recordsToRemove.reduce(removeRecord, { ...state });
 }
@@ -30,7 +32,7 @@ function slugs(state = {}, action) {
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
 	case CANCEL_EDIT_RECORD:
-		return removeRecords(action, state.records);
+		return removeRecords(state, action.records);
 	case RECORD_SINGLE_API.SUCCESS: {
 		const { tableId } = action.data;
 		const { records } = action.data.tables;
@@ -67,7 +69,7 @@ function previewIds(state = {}, action) {
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
 	case CANCEL_EDIT_RECORD:
-		return removeRecords(action, state.records);
+		return removeRecords(state, action.records);
 	case RECORD_SINGLE_API.SUCCESS: {
 		const { tableId } = action.data;
 		const { records } = action.data.tables;
@@ -120,14 +122,17 @@ function previewRecordState(state = {}, action) {
 	}
 }
 
-function isPreviewing(state = false, action) {
+
+function currentPreview(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
-		return false;
-	case SET_RECORD_IS_PREVIEWING: {
-		return action.data.val;
+		return {};
+	case SET_CURRENT_PREVIEW: {
+		return {
+			...action.data,
+		};
 	}
 	default:
 		return state;
@@ -139,5 +144,5 @@ export default combineReducers({
 	slugs,
 	previewIds,
 	previewRecordState,
-	isPreviewing,
+	currentPreview,
 });

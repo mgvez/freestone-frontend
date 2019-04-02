@@ -25,6 +25,7 @@ export default class FormHeaderVariation extends Component {
 		
 		table: PropTypes.object,
 		isModal: PropTypes.bool,
+		isViewingPreview: PropTypes.bool,
 		language: PropTypes.string,
 		hasLanguageToggle: PropTypes.bool,
 		lastmodifdate: PropTypes.string,
@@ -35,7 +36,7 @@ export default class FormHeaderVariation extends Component {
 
 		setLanguageState: PropTypes.func,
 		fetchSlug: PropTypes.func,
-		initPreview: PropTypes.func,
+		setIsPreviewing: PropTypes.func,
 		editSchemaAction: PropTypes.func,
 	};
 
@@ -82,7 +83,7 @@ export default class FormHeaderVariation extends Component {
 			}
 		}
 		
-		const previewBtn = this.props.table && this.props.table.hasTemplate ? <PreviewButton initPreview={this.props.initPreview} /> : null;
+		const previewBtn = this.props.table && this.props.table.hasTemplate && !this.props.isViewingPreview ? <PreviewButton tableId={this.props.table.id} recordId={this.props.params.recordId} setIsPreviewing={this.props.setIsPreviewing} /> : null;
 
 		const slugs = this.props.slugs && this.props.slugs.length ? (
 			<div>
@@ -105,10 +106,14 @@ export default class FormHeaderVariation extends Component {
 		if (this.props.isLight) classList.push('light');
 		if (this.props.isProdEnv) classList.push('prod-warning-enhance');
 
+		const style = {
+			width: this.props.isLight && this.props.isViewingPreview ? '50%' : '100%',
+		};
+
 		const prodWarning = this.props.isLight && this.props.isProdEnv ? <ProdEnvWarning /> : null;
 		// console.log(this.props.isProdEnv);
 		return (
-			<header className={classList.join(' ')} ref={el => this._header = el}>
+			<header className={classList.join(' ')} style={style} ref={el => this._header = el}>
 				{infos}
 				{prodWarning}
 				<div className="btns">

@@ -6,6 +6,7 @@ import { EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../f
 
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
 export const SET_RECORD_IS_PREVIEWING = 'SET_RECORD_IS_PREVIEWING';
+export const SET_CURRENT_PREVIEW = 'SET_CURRENT_PREVIEW';
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
 export const ADD_RECORD = 'ADD_RECORD';
@@ -26,6 +27,15 @@ export function setIsPreviewing(tableId, recordId, val) {
 		return dispatch({
 			type: SET_RECORD_IS_PREVIEWING,
 			data: { tableId, recordId, val },
+		});
+	};
+}
+
+export function setCurrentPreview(tableId, recordId) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_CURRENT_PREVIEW,
+			data: { tableId, recordId },
 		});
 	};
 }
