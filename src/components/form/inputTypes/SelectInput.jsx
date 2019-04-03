@@ -12,7 +12,7 @@ export default class SelectInput extends Component {
 
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

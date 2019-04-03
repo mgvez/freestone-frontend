@@ -52,7 +52,7 @@ export default class HtmlInput extends Component {
 
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

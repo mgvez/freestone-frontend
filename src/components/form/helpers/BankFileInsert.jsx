@@ -37,12 +37,13 @@ export default class BankFileInsert extends Component {
 		fetchTable: PropTypes.func,
 	};
 	
-
-	componentWillMount() {
+	constructor(props) {
+		super(props);
+		this.state = { editing: false };
+	}
+		
+	componentDidMount() {
 		this.requireData(this.props);
-		this.setState({
-			editing: false,
-		});
 	}
 
 	componentWillReceiveProps(nextProps) {

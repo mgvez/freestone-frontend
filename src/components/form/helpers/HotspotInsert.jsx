@@ -16,11 +16,12 @@ export default class HotspotInsert extends Component {
 		parsedVal: PropTypes.object,
 	};
 
-	componentWillMount() {
-		this.setState({
+	constructor(props) {
+		super(props);
+		this.state = {
 			x: this.props.parsedVal.x,
 			y: this.props.parsedVal.y,
-		});
+		};
 	}
 
 	onClickImage = (e) => {

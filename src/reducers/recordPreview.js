@@ -16,8 +16,8 @@ function removeRecord(state, record) {
 }
 
 function removeRecords(state, recordsToRemove) {
-	console.log(state);
-	console.log(recordsToRemove);
+	// console.log(state);
+	// console.log(recordsToRemove);
 	if (!recordsToRemove) return state;
 	return recordsToRemove.reduce(removeRecord, { ...state });
 }
@@ -32,7 +32,7 @@ function slugs(state = {}, action) {
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
 	case CANCEL_EDIT_RECORD:
-		return removeRecords(state, action.records);
+		return removeRecords(state, action.data.records);
 	case RECORD_SINGLE_API.SUCCESS: {
 		const { tableId } = action.data;
 		const { records } = action.data.tables;
@@ -69,7 +69,7 @@ function previewIds(state = {}, action) {
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
 	case CANCEL_EDIT_RECORD:
-		return removeRecords(state, action.records);
+		return removeRecords(state, action.data.records);
 	case RECORD_SINGLE_API.SUCCESS: {
 		const { tableId } = action.data;
 		const { records } = action.data.tables;
@@ -102,6 +102,9 @@ function previewRecordState(state = {}, action) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case CANCEL_EDIT_RECORD:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return {};
 	case SET_RECORD_IS_PREVIEWING: {
 		const { tableId, recordId, val } = action.data;
@@ -128,6 +131,9 @@ function currentPreview(state = {}, action) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case CANCEL_EDIT_RECORD:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return {};
 	case SET_CURRENT_PREVIEW: {
 		return {

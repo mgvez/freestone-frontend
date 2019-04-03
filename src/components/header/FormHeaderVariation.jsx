@@ -43,12 +43,9 @@ export default class FormHeaderVariation extends Component {
 	static contextTypes = {
 		setHeight: PropTypes.func,
 	};
-
-	componentWillMount() {
-		this.requireData(this.props);
-	}
-
+	
 	componentDidMount() {
+		this.requireData(this.props);
 		const h = this._header.getBoundingClientRect().height;
 		// console.log('didMount', this.props.isLight, h);
 		this.context.setHeight(this.props.isLight, h);

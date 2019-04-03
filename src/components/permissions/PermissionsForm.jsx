@@ -17,7 +17,7 @@ export default class PermissionsForm extends Component {
 		toggleRecordPermission: PropTypes.func,
 	};
 	
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

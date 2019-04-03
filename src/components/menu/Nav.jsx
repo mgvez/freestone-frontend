@@ -17,7 +17,7 @@ export default class Nav extends Component {
 		visible: PropTypes.bool,
 	};
 	
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

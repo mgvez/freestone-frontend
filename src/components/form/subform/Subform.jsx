@@ -22,7 +22,7 @@ export default class Subform extends Component {
 		setSubformCollapsed: PropTypes.func,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

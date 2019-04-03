@@ -29,7 +29,7 @@ export default class SubformStandard extends Component {
 		changeCollapsedState: PropTypes.func,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

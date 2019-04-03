@@ -12,7 +12,7 @@ export default class BankImgThumbnail extends Component {
 		fetchBankImage: PropTypes.func,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

@@ -35,17 +35,17 @@ export default class RootForm extends Component {
 		fetchRecordRevisionList: PropTypes.func,
 	};
 
-	componentWillMount() {
-		this.requireData(this.props);
-		this.setState({
+	constructor(props) {
+		super(props);
+		this.state = {
 			saving: false,
-			isPreviewInited: false,
 			afterSave: null,
 			language: null,
-		});
-
+		};
 	}
+
 	componentDidMount() {
+		this.requireData(this.props);
 		if (!this.props.isModal) {
 			window.scrollTo(0, 0);
 		}
@@ -53,6 +53,7 @@ export default class RootForm extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.params !== this.props.params) this.cancelSave();
+		// console.log(nextProps);
 		this.requireData(nextProps);
 	}
 
@@ -109,21 +110,11 @@ export default class RootForm extends Component {
 		}
 	}
 
-	initPreview = () => {
-		if (this.state.isPreviewInited) {
-			//force save or navigate to preview?
-		}
-
-		// console.log('INIT PREVIEW', this.props.table.id, this.props.params.recordId);
-		this.setState({
-			isPreviewInited: true,
-		});
-	}
-
 	render() {
 
 		//langue peut être locale (si par ex. dans une modale) pour éviter les rerender des autres formulaires. Si présente en state, priorité sur store
 		const language = this.state.language || this.props.language;
+		// console.log('rendering main form...', this.state);
 
 		if (this.props.table) {
 

@@ -9,8 +9,9 @@ export default class PreviewRecord extends Component {
 	static propTypes = {
 		slug: PropTypes.string,
 		tableId: PropTypes.number,
-		lastEdit: PropTypes.number,
 		recordId: PropTypes.string,
+		previewRecordId: PropTypes.number,
+		lastEdit: PropTypes.number,
 		isPreviewEdited: PropTypes.bool,
 		isPreviewInited: PropTypes.bool,
 		currentLanguage: PropTypes.string,
@@ -18,30 +19,26 @@ export default class PreviewRecord extends Component {
 		setCurrentPreview: PropTypes.func,
 	};
 
-	componentWillMount() {
-		// console.log('preview mounting');
+	constructor(props) {
+		super(props);
 
+		this.state = {
+			sendingChanges: false,
+		};
+	}
+
+	componentDidMount() {
 		this.props.setCurrentPreview(this.props.tableId, this.props.recordId);
 
-		this.setState({
-			saved: false,
-			sendingChanges: false,
-			savedRecordId: null,
-		});
 	}
 
-	afterInitialSave = (savedRecord, slugs) => {
-		console.log('after init save');
-
-		this.setState({
-			saved: true,
-		});
+	afterInitialSave = () => {
+		// console.log('after init save');
 
 	}
 
-	afterUpdateSave = (savedRecord, slugs) => {
-		// console.log(savedRecord, slugs);
-		console.log('after update save');
+	afterUpdateSave = () => {
+		// console.log('after update save');
 		this.setState({
 			sendingChanges: false,
 		});
@@ -60,7 +57,7 @@ export default class PreviewRecord extends Component {
 	}
 
 	componentWillUnmount() {
-		console.log('unmounting');
+		// console.log('unmounting');
 		clearTimeout(this.timeoutId);
 		this.props.setCurrentPreview();
 
@@ -68,18 +65,15 @@ export default class PreviewRecord extends Component {
 	}
 
 	sendChanges = () => {
-		// console.log('sending preview ' + this.timeoutId);
-		console.log('sending preview');
-
+		// console.log('sending preview');
 		this.setState({
 			sendingChanges: true,
 		});
 	}
 
 	cancelSave = () => {
-		console.log('cancel');
+		// console.log('cancel');
 		this.setState({
-			saved: false,
 			sendingChanges: false,
 		});
 	}
@@ -87,7 +81,7 @@ export default class PreviewRecord extends Component {
 	render() {
 		// console.log(this.props);
 		//on load, save total record as draft
-		if (!this.state.saved) {
+		if (!this.props.previewRecordId) {
 			return <Save tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterInitialSave} cancelSave={this.cancelSave} isTemporary />;
 		} 
 

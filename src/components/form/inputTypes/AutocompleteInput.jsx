@@ -60,7 +60,7 @@ export default class AutocompleteInput extends Component {
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

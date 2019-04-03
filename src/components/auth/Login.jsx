@@ -36,7 +36,7 @@ export default class Login extends Component {
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.setVariable('isInstalled', undefined);
 		this.requireData(this.props);
 		// console.log(this.props);

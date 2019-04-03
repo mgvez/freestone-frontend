@@ -41,12 +41,9 @@ export default class GoogleAnalytics extends Component {
 		this.state = {
 			gaInfos: undefined,
 		};
-	}
-
-	componentWillMount() {
 		this.requireData(this.props);
 	}
-
+	
 	componentDidMount() {
 		this.renderAnalytics();
 	}

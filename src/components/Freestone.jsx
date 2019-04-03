@@ -38,12 +38,14 @@ export default class Freestone extends Component {
 		children: PropTypes.any,
 	};
 
-	componentWillMount() {
-
+	constructor(props) {
+		super(props);
 		this.state = {
 			gapiready: false,
 		};
+	}
 
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 
@@ -68,6 +70,7 @@ export default class Freestone extends Component {
 		if (!props.freestone.clientPath) this.props.fetchEnv();
 
 	}
+	
 
 	render() {
 		// console.log('%cRender Freestone (auth)', 'font-weight: bold');

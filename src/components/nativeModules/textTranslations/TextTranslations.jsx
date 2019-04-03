@@ -27,7 +27,7 @@ export default class TextTranslations extends Component {
 		};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

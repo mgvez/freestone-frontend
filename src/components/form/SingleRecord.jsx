@@ -40,7 +40,7 @@ export default class SingleRecord extends Component {
 		setFieldVal: PropTypes.func,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

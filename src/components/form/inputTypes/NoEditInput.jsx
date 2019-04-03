@@ -13,7 +13,7 @@ export default class NoEditInput extends Component {
 		fetchForeignLabel: PropTypes.func,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

@@ -1,5 +1,5 @@
 import { TOGGLE_NAV_VISIBILITY, TOGGLE_LOADED_RECORDS } from '../actions/siteHeader';
-import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD, SET_RECORD_IS_PREVIEWING } from '../actions/record';
+import { SET_CURRENT_PREVIEW } from '../actions/record';
 
 const initialState = {
 	loaded_records_visibility: false,
@@ -26,8 +26,8 @@ export default function siteHeader(state = initialState, action) {
 			nav_visibility_user: requested,
 		};
 	}
-	case SET_RECORD_IS_PREVIEWING: {
-		const isPreviewing = action.data.val;
+	case SET_CURRENT_PREVIEW: {
+		const isPreviewing = !!action.data.tableId;
 		const newState = {
 			...state,
 			nav_visibility: isPreviewing ? false : state.nav_visibility_user,

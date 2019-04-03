@@ -19,11 +19,12 @@ export default class Cancel extends Component {
 		label: 'Cancel changes',
 	};
 
-	componentWillMount() {
 
-		this.setState({
+	constructor(props) {
+		super(props);
+		this.state = {
 			cancelling: false,
-		});
+		};
 	}
 
 	doCancel = () => {

@@ -28,12 +28,9 @@ export default class LoadedRecords extends Component {
 		this.origOffset = null;
 		this.state = { isSticky: false };
 	}
-
-	componentWillMount() {
-		this.requireData(this.props);
-	}
-
+		
 	componentDidMount() {
+		this.requireData(this.props);
 		window.addEventListener('scroll', this.stick);
 	}
 

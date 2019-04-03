@@ -20,7 +20,7 @@ export default class GoogleAuthenticate extends Component {
 		cookiePolicy: 'single_host_origin',
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		// console.log(this.props.apiGoogle);
 		this.requireData(this.props);
 		this.initGoogleApi(this.props);

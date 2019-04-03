@@ -36,12 +36,14 @@ export default class BankImgInsert extends Component {
 		fetchTable: PropTypes.func,
 	};
 
-	componentWillMount() {
+	constructor(props) {
+		super(props);
+		this.state = { editing: false };
+	}
+		
+	componentDidMount() {
 		// console.log(this.props);
 		this.requireData(this.props);
-		this.setState({
-			editing: false,
-		});
 	}
 
 	componentWillReceiveProps(nextProps) {

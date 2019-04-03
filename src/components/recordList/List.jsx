@@ -46,12 +46,9 @@ export default class List extends Component {
 		super(props);
 		this.state = { windowWidth: 0, isLarge: true, hoveringId: 0 };
 	}
-
-	componentWillMount() {
-		this.requireData(this.props);
-	}
-
+	
 	componentDidMount() {
+		this.requireData(this.props);
 		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
 	}

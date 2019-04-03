@@ -8,7 +8,7 @@ export default class Shortcuts extends Component {
 		children: PropTypes.any,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		document.addEventListener('keydown', this.handleKeyDown);
 	}
 

@@ -25,7 +25,7 @@ export default class SubformMtm extends Component {
 		changeCollapsedState: PropTypes.func,
 	};
 	
-	componentWillMount() {
+	componentDidMount() {
 		this.requireData(this.props);
 	}
 

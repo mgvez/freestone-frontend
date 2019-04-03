@@ -6,14 +6,20 @@ import { userViewLanguageSelector } from './userViewLanguage';
 
 const lastEditSelector = state => state.freestone.recordForm.lastEdit.time;
 const previewSlugsSelector = state => state.freestone.recordPreview.slugs;
+const previewIdsSelector = state => state.freestone.recordPreview.previewIds;
 const currentPreviewIdSelector = state => state.freestone.recordPreview.currentPreview;
+const previewProcessorTableIdSelector = (state, props) => props.tableId;
+const previewProcessorRecordIdSelector = (state, props) => props.recordId;
 
 
 function makeSelector(slugsSelector) {
 	return createSelector(
-		[slugsSelector, userViewLanguageSelector, lastEditSelector],
-		(recordSlugs, userViewLanguage, lastEdit) => {
+		[slugsSelector, userViewLanguageSelector, lastEditSelector, previewIdsSelector, previewProcessorTableIdSelector, previewProcessorRecordIdSelector],
+		(recordSlugs, userViewLanguage, lastEdit, previewIds, tableId, recordId) => {
 			// console.log(recordSlugs);
+
+			const previewRecordId = previewIds[tableId] && previewIds[tableId][recordId];
+
 			const currentLanguage = (userViewLanguage && userViewLanguage.language);
 			const slug = recordSlugs && recordSlugs[currentLanguage];
 
@@ -21,6 +27,7 @@ function makeSelector(slugsSelector) {
 				slug,
 				lastEdit,
 				currentLanguage,
+				previewRecordId,
 			};
 		}
 	);

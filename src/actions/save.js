@@ -39,6 +39,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 		const { isMeta } = table;
 
 		if (!table || !tree || !tree.tableId || !tree.recordId || !records || !records[tree.tableId] || !records[tree.tableId][tree.recordId]) {
+			// console.log('saving');
 			dispatch(pushPath(`list/${tableName}`));
 			return null;
 		}
