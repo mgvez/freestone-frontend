@@ -1,4 +1,4 @@
-import { push as pushPath } from 'react-router-redux';
+import { push as pushPath } from 'connected-react-router';
 import { FREESTONE_API } from '../middleware/api';
 
 import { createRequestTypes } from './apiAction';

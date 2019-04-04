@@ -43,6 +43,8 @@ export default class Save extends Component {
 			</div>);
 		}
 
+		if (this.props.isTemporary) return msgDisplay;
+
 		return (
 			<section className="saving">
 				<header className="page-header">

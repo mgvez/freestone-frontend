@@ -55,7 +55,7 @@ export default class ListSearch extends Component {
 		return (<form className="search-results-infos" onSubmit={this.handleSubmit}>
 			{this.getSearchResults()}
 			<div className="search-inputs-ctn">
-				<input className="search-input" type="search" placeholder="search" ref={el => this.searchInput = el} initialValue="" />
+				<input className="search-input" type="search" placeholder="search" ref={el => this.searchInput = el} />
 				<button className="button-search"><i className="fa fa-search"></i></button>
 				{this.getClearSearch()}
 			</div>

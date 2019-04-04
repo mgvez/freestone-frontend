@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
@@ -116,7 +116,7 @@ export default class LoadedRecords extends Component {
 														{record.label}
 														{outdatedWarning}
 														<div className="record-buttons">
-															<Link to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></Link>
+															<NavLink to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></NavLink>
 															<Cancel tableName={records.table.name} recordId={record.id} />
 														</div>
 													</div>

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import HeaderContainer from './HeaderContainer'; 
-import FormHeaderVariation from '../../containers/header/FormHeaderVariation'; 
 
+import FormHeaderCore from '../../containers/header/FormHeaderCore'; 
 
+/*
+	Will make the form header fixed / inline as needed
+*/
 export default class FormHeader extends Component {
 	static propTypes = {
 		table: PropTypes.object,
@@ -18,13 +20,86 @@ export default class FormHeader extends Component {
 		language: PropTypes.string,
 		lastmodifdate: PropTypes.string,
 	};
+	static propTypes = {
+		children: PropTypes.any,
+	};
+	
+	static childContextTypes = {
+		setHeight: PropTypes.func,
+	};
+
+	constructor(props) {
+		super(props);
+		this.state = { isSticky: false };
+	}
+
+	getChildContext() {
+		return {
+			setHeight: this.setHeight,
+		};
+	}
+
+	componentDidMount() {
+		window.addEventListener('scroll', this.onScroll);
+		this.onScroll();
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.onScroll);
+	}
+
+	onScroll = () => {
+		const st = window.pageYOffset;
+
+		const topHeaderHeight = 60;
+		this.setState({ isFixed: (st >= this.staticHeight + topHeaderHeight) });
+	}
+
+	setHeight = (isLight, h) => {
+		if (!isLight) {
+			this.staticHeight = h;
+			this.padStyle = this.padStyle || {
+
+			};
+			this.padStyle.height = `${h}px`;
+		}
+	}
+
+	getStatic() {
+		if (this.static) return this.static;
+		this.static = this.props.children.filter(c => !c.props.isLight);
+		if (this.static.length > 0) {
+			this.static = this.static[0];
+		} else {
+			this.static = null;
+		}
+		return this.static;
+	}
+
+	getFixed() {
+		if (this.fixed) return this.fixed;
+
+		this.fixed = this.props.children.filter(c => c.props.isLight);
+		if (this.fixed.length > 0) {
+			this.fixed = this.fixed[0];
+		} else {
+			this.fixed = null;
+		}
+		return this.fixed;
+	}
 
 	render() {
-		return (<HeaderContainer>
-			<FormHeaderVariation {...this.props}>
-				{this.props.children}
-			</FormHeaderVariation>
-			<FormHeaderVariation isLight {...this.props} />
-		</HeaderContainer>);
+		//add a padding to top when making header fixed, so as not to make content go up
+		const pad = this.state.isFixed ? (<div style={this.padStyle} />) : null;
+
+		return (
+			<div className="fixed-header" data-fixed={this.state.isFixed}>
+				{pad}
+				<FormHeaderCore {...this.props} isLight={this.state.isFixed}>
+					{this.props.children}
+				</FormHeaderCore>
+			</div>
+		);
 	}
+
 }

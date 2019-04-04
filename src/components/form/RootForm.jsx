@@ -6,7 +6,6 @@ import Save from '../../containers/process/Save';
 import Cancel from '../../containers/process/Cancel';
 import SingleRecord from '../../containers/form/SingleRecord';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
-import PreviewRecord from '../../containers/process/PreviewRecord';
 
 import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
@@ -136,7 +135,6 @@ export default class RootForm extends Component {
 				];
 			}
 
-			const preview = this.props.table && this.props.table.hasTemplate && this.props.isViewingPreview ? <PreviewRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isPreviewEdited={this.props.isPreviewEdited} /> : null;
 
 			let permsWidget = null;
 			if (this.props.table.hasSitePermission) {
@@ -151,7 +149,6 @@ export default class RootForm extends Component {
 				</FormHeader>
 
 				{permsWidget}
-				{preview}
 				
 				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
 

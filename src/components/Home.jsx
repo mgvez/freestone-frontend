@@ -16,7 +16,6 @@ const metaData = {
 export default class Home extends Component {
 
 	render() {
-		// console.log(this.props);
 		return (
 			<section>
 				<DocumentMeta {...metaData} />

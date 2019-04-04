@@ -6,6 +6,7 @@ export default class PreviewRecord extends Component {
 	static propTypes = {
 		tableId: PropTypes.number,
 		recordId: PropTypes.string,
+		isViewingPreview: PropTypes.bool,
 		setIsPreviewing: PropTypes.func,
 	};
 
@@ -14,6 +15,6 @@ export default class PreviewRecord extends Component {
 	}
 
 	render() {
-		return <button className="button-preview" onClick={this.onClickPreview}><i className="fa fa-eye"></i>Preview</button>;
+		return (<button className="button-preview" onClick={this.onClickPreview}><i className="fa fa-eye"></i>Preview</button>);
 	}
 }

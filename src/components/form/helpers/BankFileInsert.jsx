@@ -183,7 +183,7 @@ export default class BankFileInsert extends Component {
 					</div>
 					<div className="padded-content search-ctn">
 						<form onSubmit={this.handleSearch}>
-							<input className="search-input" type="text" placeholder="search" ref={(el) => this._searchInput = el} initialValue={this.props.search} />
+							<input className="search-input" type="text" placeholder="search" ref={(el) => this._searchInput = el} initialvalue={this.props.search} />
 							<button className="button-search"><i className="fa fa-search"></i></button>
 						</form>
 					</div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 export default class Page extends Component {
 	static propTypes = {
@@ -25,7 +25,7 @@ export default class Page extends Component {
 		}
 
 		return (
-			<Link to={`/page/${this.props.id}`} onClick={this.props.clearList} activeClassName="active" className={`${this.props.className} module`}>{this.props.label} {flag}</Link>
+			<NavLink to={`/page/${this.props.id}`} onClick={this.props.clearList} activeClassName="active" className={`${this.props.className} module`}>{this.props.label} {flag}</NavLink>
 		);
 	}
 }

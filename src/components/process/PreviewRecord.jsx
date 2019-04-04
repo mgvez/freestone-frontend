@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import Save from '../../containers/process/Save';
+import { accentPrimary, backgroundMain } from '../styles/variables';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
 
+const ContainerDiv = styled.div `
+	font-weight: 600;
+	text-transform: uppercase;
+	margin-left: 20px;
+`;
+
+const Tab = styled.div `
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	color: ${accentPrimary};
+	background: ${backgroundMain};
+	height: 30px;
+	line-height: 30px;
+	padding: 0 20px;
+	border: 1px solid ${accentPrimary};
+	transition: background 0.3s, color 0.3s;
+	font-size: 10px;
+`;
 
 export default class PreviewRecord extends Component {
 	static propTypes = {
@@ -13,9 +34,11 @@ export default class PreviewRecord extends Component {
 		previewRecordId: PropTypes.number,
 		lastEdit: PropTypes.number,
 		isPreviewEdited: PropTypes.bool,
+		isViewingPreview: PropTypes.bool,
 		isPreviewInited: PropTypes.bool,
 		currentLanguage: PropTypes.string,
 
+		setIsPreviewing: PropTypes.func,
 		setCurrentPreview: PropTypes.func,
 	};
 
@@ -25,11 +48,6 @@ export default class PreviewRecord extends Component {
 		this.state = {
 			sendingChanges: false,
 		};
-	}
-
-	componentDidMount() {
-		this.props.setCurrentPreview(this.props.tableId, this.props.recordId);
-
 	}
 
 	afterInitialSave = () => {
@@ -47,7 +65,7 @@ export default class PreviewRecord extends Component {
 
 	componentWillReceiveProps(props) {
 		// console.log('props received ' + this.props.lastEdit, props.isPreviewEdited);
-		if (props.isPreviewEdited) {
+		if (props.isPreviewEdited && this.props.isViewingPreview) {
 			if (this.timeoutId) {
 				// console.log('clear ' + this.timeoutId);
 				clearTimeout(this.timeoutId);
@@ -60,8 +78,6 @@ export default class PreviewRecord extends Component {
 		// console.log('unmounting');
 		clearTimeout(this.timeoutId);
 		this.props.setCurrentPreview();
-
-
 	}
 
 	sendChanges = () => {
@@ -78,25 +94,31 @@ export default class PreviewRecord extends Component {
 		});
 	}
 
+	onClickPreview = () => {
+		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, true);
+		this.props.setCurrentPreview(this.props.tableId, this.props.recordId);
+	}
+
 	render() {
+
+		if (!this.props.isViewingPreview) return (<button className="button-preview" onClick={this.onClickPreview}><i className="fa fa-eye"></i>Preview</button>);
+
 		// console.log(this.props);
 		//on load, save total record as draft
+		let msg = 'x';
 		if (!this.props.previewRecordId) {
-			return <Save tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterInitialSave} cancelSave={this.cancelSave} isTemporary />;
+			msg = <Save tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterInitialSave} cancelSave={this.cancelSave} isTemporary />;
 		} 
 
-		let msg = <h2>waiting</h2>;
 		//only send updated data
 		if (this.state.sendingChanges) {
 			msg = <SaveLivePreview tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterUpdateSave} />;
 		} 
-		return (<section className="saving">
-			<header className="page-header">
-				<div className="texts">
-					{msg}
-				</div>
-			</header>
-		</section>);
+		return (<ContainerDiv>
+			<Tab>{msg}</Tab>
+			<Tab>fs</Tab>
+			<Tab>if</Tab>
+		</ContainerDiv>);
 
 	}
 }

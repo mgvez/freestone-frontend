@@ -40,6 +40,7 @@ export default class Freestone extends Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			gapiready: false,
 		};

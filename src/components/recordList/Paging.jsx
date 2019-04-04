@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 export default class Paging extends Component {
 	static propTypes = {
@@ -33,9 +33,9 @@ export default class Paging extends Component {
 		//le link peut etre un Link ou encore un callback
 		let lnk;
 		if (this.props.onChangePage) {
-			lnk = <a data-page={num} onClick={this.onClickPage} activeClassName="active" className="">{display}</a>;
+			lnk = <a data-page={num} onClick={this.onClickPage} className="">{display}</a>;
 		} else {
-			lnk = <Link to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</Link>;
+			lnk = <NavLink to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</NavLink>;
 		}
 
 		return (

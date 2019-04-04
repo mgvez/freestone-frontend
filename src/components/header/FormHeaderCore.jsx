@@ -4,17 +4,9 @@ import PropTypes from 'prop-types';
 import LanguageToggler from '../../containers/form/LanguageToggler';
 import PreviewButton from '../form/buttons/PreviewButton';
 import ProdEnvWarning from '../widgets/ProdEnvWarning';
+import PreviewRecord from '../../containers/process/PreviewRecord';
 
-/**
- * FormHeaderVariation
- * 
- * Un header de formulaire qui peut prendre 2 formes, soit une
- * avec et l'autre sans informations à propos du record (titre, desc, etc)
- * Pour simplifier l'animation d'un header fixe, on se sert du light
- * pour ne pas avoir à recalculer la hauteur du header et l'ajouter au
- * padding-top du body.
- */
-export default class FormHeaderVariation extends Component {
+export default class FormHeaderCore extends Component {
 	static propTypes = {
 		isGod: PropTypes.bool,
 		slugs: PropTypes.array,
@@ -26,6 +18,7 @@ export default class FormHeaderVariation extends Component {
 		table: PropTypes.object,
 		isModal: PropTypes.bool,
 		isViewingPreview: PropTypes.bool,
+		isPreviewEdited: PropTypes.bool,
 		language: PropTypes.string,
 		hasLanguageToggle: PropTypes.bool,
 		lastmodifdate: PropTypes.string,
@@ -46,10 +39,19 @@ export default class FormHeaderVariation extends Component {
 	
 	componentDidMount() {
 		this.requireData(this.props);
+		
+		this.onResize();
+		window.addEventListener('resize', this.onResize);
+	}
+
+	componentWillUnMount() {
+		window.removeEventListener('resize', this.onResize);
+	}
+
+	onResize = () => {
 		const h = this._header.getBoundingClientRect().height;
 		// console.log('didMount', this.props.isLight, h);
 		this.context.setHeight(this.props.isLight, h);
-		this.requireData(this.props);
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -80,7 +82,15 @@ export default class FormHeaderVariation extends Component {
 			}
 		}
 		
-		const previewBtn = this.props.table && this.props.table.hasTemplate && !this.props.isViewingPreview ? <PreviewButton tableId={this.props.table.id} recordId={this.props.params.recordId} setIsPreviewing={this.props.setIsPreviewing} /> : null;
+		// const previewBtn = this.props.table && this.props.table.hasTemplate ? <PreviewButton tableId={this.props.table.id} recordId={this.props.params.recordId} setIsPreviewing={this.props.setIsPreviewing} isViewingPreview={this.props.isViewingPreview} /> : null;
+
+		const previewProcessor = this.props.table && this.props.table.hasTemplate ? <PreviewRecord 
+			tableId={this.props.table.id}
+			recordId={this.props.params.recordId}
+			isPreviewEdited={this.props.isPreviewEdited}
+			isViewingPreview={this.props.isViewingPreview}
+			setIsPreviewing={this.props.setIsPreviewing}
+		/> : null;
 
 		const slugs = this.props.slugs && this.props.slugs.length ? (
 			<div>
@@ -113,12 +123,13 @@ export default class FormHeaderVariation extends Component {
 			<header className={classList.join(' ')} style={style} ref={el => this._header = el}>
 				{infos}
 				{prodWarning}
+				
 				<div className="btns">
 					{this.props.buttons}
 				</div>
 				<div className="popout">
 					{editSchema}
-					{previewBtn}
+					{previewProcessor}
 					{languageToggler}
 				</div>
 			</header>

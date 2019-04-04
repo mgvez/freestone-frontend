@@ -17,14 +17,6 @@ const sourcePath = path.join(__dirname, './src');
 
 // Common plugins
 const plugins = [
-	// new webpack.optimize.CommonsChunkPlugin({
-	// 	name: 'vendor',
-	// 	filename: 'vendor.js',
-	// 	minChunks(module) {
-	// 		const context = module.context;
-	// 		return context && context.indexOf('node_modules') >= 0;
-	// 	},
-	// }),
 	new webpack.DefinePlugin({
 		'process.env': {
 			NODE_ENV: JSON.stringify(nodeEnv),
@@ -58,7 +50,7 @@ const rules = [
 		test: /\.(js|jsx)$/,
 		exclude: /node_modules/,
 		use: [
-			'react-hot-loader',
+			'react-hot-loader/webpack',
 			'babel-loader',
 			'eslint-loader',
 		],
@@ -201,6 +193,6 @@ module.exports = {
 		},
 		headers: {
 			"Access-Control-Allow-Origin": "*",
-		}
+		},
 	},
 };

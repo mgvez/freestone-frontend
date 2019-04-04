@@ -12,10 +12,7 @@ export default class SiteHeader extends Component {
 		isProdEnv: PropTypes.bool,
 
 		logout: PropTypes.func,
-		clearErrors: PropTypes.func,
 		clearData: PropTypes.func,
-		startPerf: PropTypes.func,
-		stopPerf: PropTypes.func,
 		clearSchema: PropTypes.func,
 	};
 
@@ -30,16 +27,6 @@ export default class SiteHeader extends Component {
 			</button>
 			
 		</div>) : null;
-
-		// <button className="button-debug-round-small" onClick={this.props.clearErrors}>
-		// Clear errors
-		// </button>
-		// <button className="button-debug-round-small" onClick={this.props.startPerf}>
-		// Start perf
-		// </button>
-		// <button className="button-debug-round-small" onClick={this.props.stopPerf}>
-		// Stop perf
-		// </button>
 
 		const prodWarning = this.props.isProdEnv ? <ProdEnvWarning /> : null;
 

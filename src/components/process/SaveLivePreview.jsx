@@ -30,7 +30,7 @@ export default class SaveLivePreview extends Component {
 	render() {
 		// console.log(this.props.saveState);
 		return (
-			<h2>saving...</h2>
+			<div>saving...</div>
 		);
 	}
 }

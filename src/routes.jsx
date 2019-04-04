@@ -1,5 +1,6 @@
-import React from 'react';
-import { Route } from 'react-router';
+import React, { Component } from 'react';
+import { Route, Switch } from 'react-router';
+import Freestone from './containers/Freestone';
 
 /* containers */
 import Home from './components/Home';
@@ -9,13 +10,26 @@ import Module from './containers/Module';
 import Page from './containers/Page';
 import NativeModule from './containers/nativeModules/NativeModule';
 
+class NoMatch extends Component {
+	render() {
+		return (
+			<div>
+				No match yo
+			</div>
+		);
+	}
+}
+
 export default (
-	<div>
-		<Route path="home" component={Home} />
-		<Route path="list/:tableName(/:page)(/:search)" component={List} />
-		<Route path="edit/:tableName/:recordId" component={RootForm} />
-		<Route path="module/:url" component={Module} />
-		<Route path="page/:id" component={Page} />
-		<Route path="n-module/:name" component={NativeModule} />
-	</div>
+	<Freestone>
+		<Switch>
+			<Route exact path="/" render={(props) => <Home params={props.match.params} />} />
+			<Route path="/list/:tableName/:page?/:search?" render={(props) => <List params={props.match.params} />} />
+			<Route path="/edit/:tableName/:recordId" render={(props) => <RootForm params={props.match.params} />} />
+			<Route path="/module/:url" render={(props) => <Module params={props.match.params} />} />
+			<Route path="/page/:id" render={(props) => <Page params={props.match.params} />} />
+			<Route path="/n-module/:name" render={(props) => <NativeModule params={props.match.params} />} />
+			<Route component={NoMatch} />
+		</Switch>
+	</Freestone>
 );

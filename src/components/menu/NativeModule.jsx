@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 export default class NativeModule extends Component {
 	static propTypes = {
@@ -12,7 +12,7 @@ export default class NativeModule extends Component {
 
 	render() {
 		return (
-			<Link to={`/n-module/${this.props.url}`} activeClassName="active" className={`${this.props.className} module`}>{this.props.label}</Link>
+			<NavLink to={`/n-module/${this.props.url}`} activeClassName="active" className={`${this.props.className} module`}>{this.props.label}</NavLink>
 		);
 	}
 }

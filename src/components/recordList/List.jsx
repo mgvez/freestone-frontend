@@ -16,11 +16,13 @@ const LARGE_MINW_BREAKPOINT = 1024;
 
 export default class List extends Component {
 	static propTypes = {
+
 		params: PropTypes.shape({
 			tableName: PropTypes.string,
 			page: PropTypes.string,
 			search: PropTypes.string,
 		}),
+
 
 		table: PropTypes.object,
 		searchableFields: PropTypes.array,
@@ -44,6 +46,7 @@ export default class List extends Component {
 
 	constructor(props) {
 		super(props);
+		// console.log(this.props);
 		this.state = { windowWidth: 0, isLarge: true, hoveringId: 0 };
 	}
 	
