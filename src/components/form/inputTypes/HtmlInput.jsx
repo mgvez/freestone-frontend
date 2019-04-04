@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import TinyMCEInput from 'react-tinymce-input';
+// import TinyMCEInput from 'react-tinymce-input';
+import { Editor as TinyMCEInput } from '@tinymce/tinymce-react';
 
 import LinkInsert from '../helpers/LinkInsert';
 import BankImgInsert from '../../../containers/form/helpers/BankImgInsert';
@@ -75,6 +76,8 @@ export default class HtmlInput extends Component {
 	};
 
 	render() {
+
+		
 		if (!this.props.tinymceConfig) return null;
 		if (this.state.command) {
 			const { name, params } = this.state.command;
@@ -90,14 +93,15 @@ export default class HtmlInput extends Component {
 				break;
 			}
 		}
+		// return <input type="text" size={this.props.field.size} value={this.props.val} className="form-control" onChange={this.props.changeVal} />;
 
-		// console.log(`render input ${this.props.field.name}`);
+		// // console.log(`render input ${this.props.field.name}`);
 		return (
 			<TinyMCEInput
-				value={this.props.val}
+				initialValue={this.props.val}
 				onChange={this.handleEditorChange}
-				tinymceConfig={this.props.tinymceConfig}
-				otherEventHandlers={this.handlers}
+				init={this.props.tinymceConfig}
+				onExecCommand={this.handlers.ExecCommand}
 			/>
 		);
 	}

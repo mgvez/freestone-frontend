@@ -48,7 +48,8 @@ export default class SubformMtm extends Component {
 			
 			const inputs = options.map((option) => {
 				const { display, id } = option;
-				const checked = this.props.records && !!this.props.records.find(r => r === id);
+				const checked = (this.props.records || false) && !!this.props.records.find(r => r === id);
+				// console.log(this.props.tableId, id, checked);
 				return (
 					<div className="checkbox-container col-md-3" key={`opt_${id}`}>
 						<input type="checkbox" id={`${this.props.table.id}_mtm_${id}`} value={id} checked={checked} onChange={this.toggleValue} />
