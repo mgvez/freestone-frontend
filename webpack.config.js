@@ -50,7 +50,7 @@ const rules = [
 		test: /\.(js|jsx)$/,
 		exclude: /node_modules/,
 		use: [
-			'react-hot-loader/webpack',
+			// 'react-hot-loader/webpack',
 			'babel-loader',
 			'eslint-loader',
 		],
@@ -113,7 +113,7 @@ if (isProduction) {
 } else {
 	// Development plugins
 	plugins.push(
-		new webpack.HotModuleReplacementPlugin(),
+		// new webpack.HotModuleReplacementPlugin(),
 		new DashboardPlugin()
 	);
 
@@ -173,7 +173,7 @@ module.exports = {
 		port: 3000,
 		compress: isProduction,
 		inline: !isProduction,
-		hot: !isProduction,
+		// hot: !isProduction,
 		host: '0.0.0.0',
 		//to make sure that any host will work (provided it points to 127.0.0.1 and has the correct port)
 		disableHostCheck: true,
