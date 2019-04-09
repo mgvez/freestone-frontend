@@ -37,6 +37,7 @@ export default class List extends Component {
 		fetchTable: PropTypes.func,
 		fetchList: PropTypes.func,
 		addRecord: PropTypes.func,
+		goTo: PropTypes.func,
 
 	};
 
@@ -96,7 +97,7 @@ export default class List extends Component {
 			this.props.addRecord(this.props.table.id, newRecord);
 
 			const path = `/edit/${this.props.params.tableName}/${newRecordId}`;
-			this.context.router.push(path);
+			this.props.goTo(path);
 		});
 	}
 
@@ -152,7 +153,7 @@ export default class List extends Component {
 					<TablePermissions table={this.props.table} />
 
 					<div className="padded-content search-ctn">
-						<ListSearch tableName={this.props.table.name} numRecords={this.getNumRecords()} search={this.props.params.search} curPage={this.props.curPage} router={this.context.router} />
+						<ListSearch tableName={this.props.table.name} numRecords={this.getNumRecords()} search={this.props.params.search} curPage={this.props.curPage} goTo={this.props.goTo} />
 					</div>
 
 					<div className="padded-content">

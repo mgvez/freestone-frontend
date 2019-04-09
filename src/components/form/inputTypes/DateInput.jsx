@@ -14,44 +14,46 @@ export default class DateInput extends Component {
 		val: PropTypes.any,
 	};
 
-	onSelectDate = (d) => {
-		// console.log(a);
-		let dateStr = '';
-		if (d) {
-			dateStr = d.format('YYYY-MM-DD');
+	onSelectDate = (dateNative) => {
+		console.log(dateNative);
 
-			if (this.props.field.type === TYPE_DATETIME) {
-				d.hour(Number(this._hour.value));
-				d.minute(Number(this._minute.value));
-				d.second(Number(this._second.value));
-				dateStr = d.format('YYYY-MM-DD HH:mm:ss');
-			}
-
-		}
+		const dateMoment = moment(dateNative);
+		const dateStr = dateMoment.format('YYYY-MM-DD HH:mm:ss');
 		this.props.changeVal(dateStr);
 	};
 
-	onChangeTime = () => {
-		this.onSelectDate(moment(this.props.val));
-	};
+	// onChangeTime = () => {
+	// 	this.onSelectDate(this.props.val);
+	// };
 
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
-		const d = (this.props.val && !~this.props.val.indexOf('0000-00-00')) ? moment(this.props.val) : null;
-		// console.log('moment', this.props.val, d);
+		
+		// console.log(val);
 
-		let timeInputs;
-		if (this.props.field.type === TYPE_DATETIME) {
-			timeInputs = (<div>
-				<input ref={el => this._hour = el} value={d && d.hour()} onChange={this.onChangeTime} placeholder="HH" size="2" /> h 
-				<input ref={el => this._minute = el} value={d && d.minute()} onChange={this.onChangeTime} placeholder="MM" size="2" /> m 
-				<input ref={el => this._second = el} value={d && d.second()} onChange={this.onChangeTime} placeholder="SS" size="2" /> s 
-			</div>);
+		// let timeInputs;
+		// if (this.props.field.type === TYPE_DATETIME) {
+		// 	timeInputs = (<div>
+		// 		<input ref={el => this._hour = el} value={d && d.hour()} onChange={this.onChangeTime} placeholder="HH" size="2" /> h 
+		// 		<input ref={el => this._minute = el} value={d && d.minute()} onChange={this.onChangeTime} placeholder="MM" size="2" /> m 
+		// 		<input ref={el => this._second = el} value={d && d.second()} onChange={this.onChangeTime} placeholder="SS" size="2" /> s 
+		// 	</div>);
+		// }
+		let dateNative = null;
+		if (this.props.val && !~this.props.val.indexOf('0000-00-00')) {
+			const dateMoment = moment(this.props.val);
+			dateNative = dateMoment.toDate();
+			// console.log(parts);
 		}
 
 		return (<div>
-			<DatePicker selected={d} locale="fr-CA" showYearDropdown onChange={this.onSelectDate} />
-			{timeInputs}
+			<DatePicker 
+				selected={dateNative}
+				showYearDropdown
+				dateFormat="yyyy-MM-dd HH:mm:ss"
+				onChange={this.onSelectDate}
+				showTimeSelect={this.props.field.type === TYPE_DATETIME}
+			/>
 		</div>);
 	}
 }

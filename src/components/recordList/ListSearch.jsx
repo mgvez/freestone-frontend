@@ -8,7 +8,7 @@ export default class ListSearch extends Component {
 		tableName: PropTypes.string,
 		search: PropTypes.string,
 		curPage: PropTypes.number,
-		router: PropTypes.object,
+		goTo: PropTypes.func,
 		numRecords: PropTypes.number,
 	};
 
@@ -48,7 +48,7 @@ export default class ListSearch extends Component {
 		let val = this.searchInput.value;
 		val = val ? `/${val}` : '';
 		const path = `list/${this.props.tableName}/1${val}`;
-		this.props.router.push(path);
+		this.props.goTo(path);
 	}
 
 	render() {
