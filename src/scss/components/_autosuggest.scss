@@ -28,6 +28,12 @@
 		overflow:auto;
 	}
 
+	.react-autosuggest__suggestion--highlighted {
+		background: $color-accent-primary;
+		color: #fff;
+
+	}
+
 }
 
 .react-autosuggest__suggestions-container {

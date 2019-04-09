@@ -121,9 +121,17 @@ export default class AutocompleteInput extends Component {
 		}
 	};
 
-	onBlur = () => {
-		const current = this.getCurrentOption();
-		this.setCurrentText(current && current.label);
+	onBlur = (e, { highlightedSuggestion }) => {
+		// console.log(a);
+		if (highlightedSuggestion) {
+			this.props.changeVal(highlightedSuggestion.value);
+			this.setCurrentText(highlightedSuggestion.label);
+		} else {
+			const current = this.getCurrentOption();
+			this.setCurrentText(current && current.label);
+		}
+		clearTimeout(this.fetchTimeout);
+		
 		this.setState({
 			suggestions: this.getSuggestions(),
 		});
