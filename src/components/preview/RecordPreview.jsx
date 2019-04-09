@@ -22,16 +22,14 @@ const fullStyle = {
 
 export default class RecordPreview extends Component {
 	static propTypes = {
-	
 		currentPreviewSlug: PropTypes.string,
-
 		children: PropTypes.any,
 	};
 
 	render() {
 
 		const mainWindowStyle = this.props.currentPreviewSlug ? halfStyle : fullStyle;
-		// console.log(this.props.currentPreviewSlug);
+
 		const preview = this.props.currentPreviewSlug ? (
 			<div style={halfStyle}>
 				<iframe src={this.props.currentPreviewSlug} style={{ width: '50vw', minHeight: '100vh', position: 'fixed' }} />

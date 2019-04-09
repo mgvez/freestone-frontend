@@ -67,7 +67,11 @@ export default class HtmlInput extends Component {
 		}
 	}
 
-	handleEditorChange = (v) => {
+	handleEditorChange = (evt) => {
+		this.props.changeVal(evt.target.getContent());
+	};
+
+	setContentFromPlugin = (v) => {
 		this.props.changeVal(v);
 	};
 
@@ -84,11 +88,11 @@ export default class HtmlInput extends Component {
 			// console.log(command);
 			switch (name) {
 			case 'insertLink':
-				return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} {...params} lang={this.props.lang} />;
+				return <LinkInsert onClose={this.closeModal} setVal={this.setContentFromPlugin} {...params} lang={this.props.lang} />;
 			case 'addImageFromBank':
-				return <BankImgInsert onClose={this.closeModal} setMarkup={this.handleEditorChange} lang={this.props.lang} {...params} />;
+				return <BankImgInsert onClose={this.closeModal} setMarkup={this.setContentFromPlugin} lang={this.props.lang} {...params} />;
 			case 'addDocFromBank':
-				return <BankFileInsert onClose={this.closeModal} setMarkup={this.handleEditorChange} lang={this.props.lang} {...params} />;
+				return <BankFileInsert onClose={this.closeModal} setMarkup={this.setContentFromPlugin} lang={this.props.lang} {...params} />;
 			default:
 				break;
 			}
