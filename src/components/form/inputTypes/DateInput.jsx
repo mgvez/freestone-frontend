@@ -15,8 +15,6 @@ export default class DateInput extends Component {
 	};
 
 	onSelectDate = (dateNative) => {
-		console.log(dateNative);
-
 		const dateMoment = moment(dateNative);
 		const dateStr = dateMoment.format('YYYY-MM-DD HH:mm:ss');
 		this.props.changeVal(dateStr);

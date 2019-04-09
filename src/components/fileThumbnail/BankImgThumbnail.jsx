@@ -27,6 +27,7 @@ export default class BankImgThumbnail extends Component {
 
 	render() {
 		if (!this.props.id) return null;
+
 		return (
 			<div className="bank-image-thumbnail" onClick={this.props.onClick} dangerouslySetInnerHTML={{ __html: this.props.markup }} />
 		);

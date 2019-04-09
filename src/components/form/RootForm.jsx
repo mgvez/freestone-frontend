@@ -86,7 +86,7 @@ export default class RootForm extends Component {
 				if (String(recordId) === this.props.params.recordId) {
 					this.cancelSave();
 				} else {
-					this.props.goTo(`edit/${this.props.table.name}/${recordId}`);
+					this.props.goTo(`/edit/${this.props.table.name}/${recordId}`);
 				}
 			},
 		});

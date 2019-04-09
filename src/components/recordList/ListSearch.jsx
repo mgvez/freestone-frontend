@@ -47,7 +47,7 @@ export default class ListSearch extends Component {
 	search() {
 		let val = this.searchInput.value;
 		val = val ? `/${val}` : '';
-		const path = `list/${this.props.tableName}/1${val}`;
+		const path = `/list/${this.props.tableName}/1${val}`;
 		this.props.goTo(path);
 	}
 

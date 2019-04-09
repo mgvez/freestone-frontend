@@ -37,7 +37,7 @@ export default class Cancel extends Component {
 		if (this.props.callback) {
 			this.props.callback();
 		} else {
-			this.props.goTo(this.props.afterCancelLocation ? this.props.afterCancelLocation : `list/${this.props.tableName}`);
+			this.props.goTo(this.props.afterCancelLocation ? this.props.afterCancelLocation : `/list/${this.props.tableName}`);
 		}
 	};
 
