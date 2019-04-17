@@ -45,7 +45,7 @@ export default class RecordPreview extends Component {
 		// console.log(nextProps && nextProps.type);
 		const isWindow = props.type === PREVIEW_WIN;
 		if (isWindow) {
-			if (!this.window) {
+			if (!this.window || this.window.closed) {
 				this.window = window.open();
 			}
 			this.window.location = props.currentPreviewSlug;

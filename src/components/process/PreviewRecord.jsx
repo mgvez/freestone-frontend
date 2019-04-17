@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Save from '../../containers/process/Save';
 import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
 import { accentPrimary, backgroundMain } from '../styles/variables';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
@@ -123,12 +122,9 @@ export default class PreviewRecord extends Component {
 		// console.log(this.props);
 		//on load, save total record as draft
 		let msg = 'x';
-		if (!this.props.previewRecordId) {
-			msg = <Save tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterInitialSave} cancelSave={this.cancelSave} isTemporary />;
-		} 
-
+		
 		//only send updated data
-		if (this.state.sendingChanges) {
+		if (this.state.sendingChanges || !this.props.previewRecordId) {
 			msg = <SaveLivePreview tableId={this.props.tableId} recordId={this.props.recordId} />;
 		} 
 		return (<ContainerDiv>

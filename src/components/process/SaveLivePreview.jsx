@@ -14,7 +14,6 @@ export default class SaveLivePreview extends Component {
 		fields: PropTypes.array,
 		saveState: PropTypes.object,
 
-		callback: PropTypes.func,
 		saveRecord: PropTypes.func,
 		cancelSave: PropTypes.func,
 	};
@@ -24,7 +23,7 @@ export default class SaveLivePreview extends Component {
 		// console.log(this.props.records);
 		// console.log('MOUNT', this.props.records, this.props.deleted);
 		//callback has priority over afterSaveLocation. If a callback is present, it will execute instead of redirecting to the location.
-		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, null, true, null, this.props.callback);
+		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, null, true, null, () => { });
 	}
 
 	render() {
