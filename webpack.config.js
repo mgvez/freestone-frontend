@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
@@ -74,26 +75,47 @@ const rules = [
 	},
 ];
 
+const optimization = {};
+
 if (isProduction) {
 	// Production plugins
-	plugins.push(
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
+
+	optimization.minimizer = [
+		new UglifyJsPlugin({
+			// sourceMap: false,
+			uglifyOptions: {
 				warnings: false,
-				screw_ie8: true,
-				conditionals: true,
-				unused: true,
-				comparisons: true,
-				sequences: true,
-				dead_code: true,
-				evaluate: true,
-				if_return: true,
-				join_vars: true,
-			},
-			output: {
-				comments: false,
+				ie8: false,
+				// conditionals: true,
+				// unused: true,
+				// comparisons: true,
+				// sequences: true,
+				// dead_code: true,
+				// evaluate: true,
+				// if_return: true,
+				// join_vars: true,
 			},
 		}),
+	];
+
+	plugins.push(
+		// new webpack.optimize.UglifyJsPlugin({
+		// 	compress: {
+		// 		warnings: false,
+		// 		screw_ie8: true,
+		// 		conditionals: true,
+		// 		unused: true,
+		// 		comparisons: true,
+		// 		sequences: true,
+		// 		dead_code: true,
+		// 		evaluate: true,
+		// 		if_return: true,
+		// 		join_vars: true,
+		// 	},
+		// 	output: {
+		// 		comments: false,
+		// 	},
+		// }),
 		new ExtractTextPlugin('bundle.css'),
 		new CopyWebpackPlugin([
 			{ from: assetsPath + '/**/*' }
