@@ -193,6 +193,7 @@ module.exports = {
 		contentBase: isProduction ? buildPath : sourcePath,
 		historyApiFallback: true,
 		port: 3000,
+		https: true,
 		compress: isProduction,
 		inline: !isProduction,
 		// hot: !isProduction,

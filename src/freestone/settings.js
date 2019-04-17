@@ -15,7 +15,7 @@ let websiteUrl;
 export function getWebsiteUrl() {
 	if (websiteUrl) return websiteUrl;
 	let { hostname, pathname } = window.location;
-	
+
 	pathname = pathname.substr(0, pathname.indexOf('admin/'));
 
 	if (hostname === 'localhost') {
@@ -23,7 +23,10 @@ export function getWebsiteUrl() {
 	} else {
 		hostname = `${hostname}${PROD_FREESTONE_LOCATION}`;
 	}
-	websiteUrl = `${window.location.protocol}//${hostname}${pathname}`;
+
+	const protocol = window.location.port === '3000' ? 'http:' : 'https:';
+
+	websiteUrl = `${protocol}//${hostname}${pathname}`;
 	// console.log(websiteUrl);
 	if (websiteUrl[websiteUrl.length - 1] !== '/') websiteUrl += '/';
 	return websiteUrl;
