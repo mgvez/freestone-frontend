@@ -37,12 +37,12 @@ export default class GoogleAuthenticate extends Component {
 
 	onReceiveUser = (user) => {
 		//si user pas loggé, l'envoie au backend pour l'authentifier
-		// console.log(user);
+		console.log(user);
 		if (!this.props.isAuthenticated) {
 			const response = user.getAuthResponse();
 			const token_id = response.id_token;
 			const token_access = response.access_token;
-			// console.log(token);
+			console.log(token_id);
 			this.props.loginGoogleAPI(token_id, token_access);
 		}
 	}
@@ -72,7 +72,7 @@ export default class GoogleAuthenticate extends Component {
 					GoogleAuth.then(() => {
 						if (this.props.onGapiReady) this.props.onGapiReady();
 						// console.log(scope);
-						// console.log('gapi inited callback');
+						console.log('gapi inited callback');
 						if (GoogleAuth.isSignedIn.get()) {
 							const user = GoogleAuth.currentUser.get();
 							this.onReceiveUser(user);

@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { CLEAR_DATA } from '../actions/dev';
-import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD, SET_RECORD_IS_PREVIEWING, SET_CURRENT_PREVIEW } from '../actions/record';
+import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD, SET_RECORD_IS_PREVIEWING, SET_CURRENT_PREVIEW, SET_PREVIEW_VIEW_TYPE, PREVIEW_IFRAME } from '../actions/record';
 import { SAVE_RECORD_API, SAVE_PREVIEW_API, DELETE_RECORD_API } from '../actions/save';
 
 
@@ -77,7 +77,7 @@ function previewIds(state = {}, action) {
 		return records.reduce((curState, record) => {
 			return removeRecord(curState, {
 				tableId,
-				recordId: record[PRIKEY_ALIAS],
+				recordId: Number(record[PRIKEY_ALIAS]),
 			});
 		}, { ...state });
 	}
@@ -126,7 +126,7 @@ function previewRecordState(state = {}, action) {
 }
 
 
-function currentPreview(state = {}, action) {
+function currentPreview(state = { type: PREVIEW_IFRAME }, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
@@ -135,8 +135,10 @@ function currentPreview(state = {}, action) {
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
 		return {};
+	case SET_PREVIEW_VIEW_TYPE:
 	case SET_CURRENT_PREVIEW: {
 		return {
+			...state,
 			...action.data,
 		};
 	}

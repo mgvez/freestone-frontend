@@ -14,8 +14,8 @@ const previewProcessorRecordIdSelector = (state, props) => props.recordId;
 
 function makeSelector(slugsSelector) {
 	return createSelector(
-		[slugsSelector, userViewLanguageSelector, lastEditSelector, previewIdsSelector, previewProcessorTableIdSelector, previewProcessorRecordIdSelector],
-		(recordSlugs, userViewLanguage, lastEdit, previewIds, tableId, recordId) => {
+		[slugsSelector, userViewLanguageSelector, lastEditSelector, previewIdsSelector, previewProcessorTableIdSelector, previewProcessorRecordIdSelector, currentPreviewIdSelector],
+		(recordSlugs, userViewLanguage, lastEdit, previewIds, tableId, recordId, currentPreview) => {
 			// console.log(recordSlugs);
 
 			const previewRecordId = previewIds[tableId] && previewIds[tableId][recordId];
@@ -28,6 +28,7 @@ function makeSelector(slugsSelector) {
 				lastEdit,
 				currentLanguage,
 				previewRecordId,
+				currentPreviewType: currentPreview.type,
 			};
 		}
 	);
@@ -46,7 +47,7 @@ export const currentPreviewSelector = createSelector(
 	(currentPreview, allSlugs, userViewLanguage) => {
 		// console.log(currentPreview);
 		// console.log(allSlugs);
-		const { tableId, recordId } = currentPreview;
+		const { tableId, recordId, type } = currentPreview;
 		const recordSlugs = tableId && recordId && allSlugs && allSlugs[tableId] && allSlugs[tableId][recordId];
 
 		const currentLanguage = (userViewLanguage && userViewLanguage.language);
@@ -54,6 +55,7 @@ export const currentPreviewSelector = createSelector(
 
 		return {
 			currentPreviewSlug,
+			type,
 		};
 	}
 );

@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 
 import PreviewRecord from '../../components/process/PreviewRecord';
 
-import { setCurrentPreview } from '../../actions/record';
+import { setCurrentPreview, setPreviewViewType } from '../../actions/record';
 import { previewRecordMapStateToProps } from '../../selectors/previewRecordSelector';
 
 export default connect(
 	previewRecordMapStateToProps,
-	dispatch => bindActionCreators({ setCurrentPreview }, dispatch)
+	dispatch => bindActionCreators({ setCurrentPreview, setPreviewViewType }, dispatch)
 )(PreviewRecord);

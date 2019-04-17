@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
 
 
 const containerStyle = {
@@ -19,20 +20,48 @@ const fullStyle = {
 	position: 'relative',
 	overflow: 'hidden',
 };
+const iframeStyle = {
+	width: '50vw',
+	minHeight: '100vh',
+	position: 'fixed',
+};
 
 export default class RecordPreview extends Component {
 	static propTypes = {
 		currentPreviewSlug: PropTypes.string,
+		type: PropTypes.string,
 		children: PropTypes.any,
 	};
 
+	componentDidMount() {
+		this.updatePopWindow(this.props);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.updatePopWindow(nextProps);
+	}
+
+	updatePopWindow(props) {
+		// console.log(nextProps && nextProps.type);
+		const isWindow = props.type === PREVIEW_WIN;
+		if (isWindow) {
+			if (!this.window) {
+				this.window = window.open();
+			}
+			this.window.location = props.currentPreviewSlug;
+		}
+		// console.log(this.window);
+	}
+
 	render() {
+		// console.log(this.props.type);
+		const hasIframe = this.props.currentPreviewSlug && this.props.type === PREVIEW_IFRAME;
 
-		const mainWindowStyle = this.props.currentPreviewSlug ? halfStyle : fullStyle;
-
-		const preview = this.props.currentPreviewSlug ? (
+		const mainWindowStyle = hasIframe ? halfStyle : fullStyle;
+		// console.log(this.props.currentPreviewSlug);
+		const preview = hasIframe ? (
 			<div style={halfStyle}>
-				<iframe src={this.props.currentPreviewSlug} style={{ width: '50vw', minHeight: '100vh', position: 'fixed' }} />
+				<iframe src={this.props.currentPreviewSlug} style={iframeStyle} />
 			</div>
 		) : null;
 

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Save from '../../containers/process/Save';
+import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
 import { accentPrimary, backgroundMain } from '../styles/variables';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
 
@@ -22,9 +23,24 @@ const Tab = styled.div `
 	line-height: 30px;
 	padding: 0 20px;
 	border: 1px solid ${accentPrimary};
+	border-left: 0;
 	transition: background 0.3s, color 0.3s;
 	font-size: 10px;
+	&:last-child {
+		border-radius: 0 0 10px 0;
+	}
+	&:first-child {
+		border-left: 1px solid ${accentPrimary};
+		border-radius: 0 0 0 10px;
+	}
+
+	&:hover, &.active {
+		background: ${accentPrimary};
+		color: white;
+	}
 `;
+
+// const TabActive =
 
 export default class PreviewRecord extends Component {
 	static propTypes = {
@@ -36,10 +52,12 @@ export default class PreviewRecord extends Component {
 		isPreviewEdited: PropTypes.bool,
 		isViewingPreview: PropTypes.bool,
 		isPreviewInited: PropTypes.bool,
+		currentPreviewType: PropTypes.string,
 		currentLanguage: PropTypes.string,
 
 		setIsPreviewing: PropTypes.func,
 		setCurrentPreview: PropTypes.func,
+		setPreviewViewType: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -48,19 +66,6 @@ export default class PreviewRecord extends Component {
 		this.state = {
 			sendingChanges: false,
 		};
-	}
-
-	afterInitialSave = () => {
-		// console.log('after init save');
-
-	}
-
-	afterUpdateSave = () => {
-		// console.log('after update save');
-		this.setState({
-			sendingChanges: false,
-		});
-
 	}
 
 	componentWillReceiveProps(props) {
@@ -99,6 +104,18 @@ export default class PreviewRecord extends Component {
 		this.props.setCurrentPreview(this.props.tableId, this.props.recordId);
 	}
 
+	onClickClose = () => {
+		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, false);
+		this.props.setCurrentPreview(null, null);
+	}
+
+	onClickIframe = () => {
+		this.props.setPreviewViewType(PREVIEW_IFRAME);
+	}
+	onClickWindow = () => {
+		this.props.setPreviewViewType(PREVIEW_WIN);
+	}
+
 	render() {
 
 		if (!this.props.isViewingPreview) return (<button className="button-preview" onClick={this.onClickPreview}><i className="fa fa-eye"></i>Preview</button>);
@@ -112,12 +129,12 @@ export default class PreviewRecord extends Component {
 
 		//only send updated data
 		if (this.state.sendingChanges) {
-			msg = <SaveLivePreview tableId={this.props.tableId} recordId={this.props.recordId} callback={this.afterUpdateSave} />;
+			msg = <SaveLivePreview tableId={this.props.tableId} recordId={this.props.recordId} />;
 		} 
 		return (<ContainerDiv>
-			<Tab>{msg}</Tab>
-			<Tab>fs</Tab>
-			<Tab>if</Tab>
+			<Tab onClick={this.onClickClose}>{msg}</Tab>
+			<Tab onClick={this.onClickIframe} className={this.props.currentPreviewType === PREVIEW_IFRAME ? 'active' : null}>ifr</Tab>
+			<Tab onClick={this.onClickWindow} className={this.props.currentPreviewType === PREVIEW_WIN ? 'active' : null}>win</Tab>
 		</ContainerDiv>);
 
 	}

@@ -109,8 +109,8 @@ export function loginUser(username = null, password = null, remember = null, pro
 
 export function loginGoogleAPI(token_id, token_access) {
 	return (dispatch) => {
-		// console.log(redirect);
-		// console.log(action);
+		console.log(token_id);
+		console.log(token_access);
 		return dispatch({
 			[FREESTONE_API]: {
 				types: LOGIN_API,

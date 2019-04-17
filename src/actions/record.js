@@ -3,10 +3,13 @@ import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 import { EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 
+export const PREVIEW_IFRAME = 'iframe';
+export const PREVIEW_WIN = 'window';
 
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
 export const SET_RECORD_IS_PREVIEWING = 'SET_RECORD_IS_PREVIEWING';
 export const SET_CURRENT_PREVIEW = 'SET_CURRENT_PREVIEW';
+export const SET_PREVIEW_VIEW_TYPE = 'SET_PREVIEW_VIEW_TYPE';
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
 export const ADD_RECORD = 'ADD_RECORD';
@@ -31,11 +34,20 @@ export function setIsPreviewing(tableId, recordId, val) {
 	};
 }
 
-export function setCurrentPreview(tableId, recordId) {
+export function setCurrentPreview(tableId, recordId, type = PREVIEW_IFRAME) {
 	return (dispatch) => {
 		return dispatch({
 			type: SET_CURRENT_PREVIEW,
-			data: { tableId, recordId },
+			data: { tableId, recordId, type },
+		});
+	};
+}
+
+export function setPreviewViewType(type) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_PREVIEW_VIEW_TYPE,
+			data: { type },
 		});
 	};
 }
