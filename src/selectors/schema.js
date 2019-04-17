@@ -46,6 +46,8 @@ export const schemaSelector = createSelector(
 		tables = Object.keys(fields).reduce((carry, fieldId) => {
 
 			const field = fields[fieldId];
+			// console.log(field);
+			
 			const { table_id } = field;
 			const table = carry[table_id];
 			if (field.isPermitted) table.fields.push(field);

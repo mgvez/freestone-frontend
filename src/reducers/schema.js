@@ -78,6 +78,13 @@ function fields(state = {}, action) {
 		return {
 			...state,
 			...action.data.fields.reduce((newState, field) => {
+
+				//replaces language specification in field label, if any, because this is now added in the frontend.
+				if (field.language) {
+					const reg = new RegExp('\\s*\\(' + field.language + '\\)\\s*$');
+					field.label = field.label.replace(reg, '');
+				}
+
 				newState[field.id] = field;
 				return newState;
 			}, {}),

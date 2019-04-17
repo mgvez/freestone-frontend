@@ -28,7 +28,7 @@ export default class NoEditInput extends Component {
 		const val = this.props.label || this.props.val;
 		
 		return (
-			<span>{val}</span>
+			<span dangerouslySetInnerHTML={{ __html: val }} />
 		);
 	}
 }
