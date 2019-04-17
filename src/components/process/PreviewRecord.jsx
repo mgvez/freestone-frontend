@@ -121,16 +121,21 @@ export default class PreviewRecord extends Component {
 
 		// console.log(this.props);
 		//on load, save total record as draft
-		let msg = 'x';
+		let msg = <span className="fa fa-times fa-fw"></span>;
 		
 		//only send updated data
+		// console.log(this.state.sendingChanges, !this.props.previewRecordId);
 		if (this.state.sendingChanges || !this.props.previewRecordId) {
-			msg = <SaveLivePreview tableId={this.props.tableId} recordId={this.props.recordId} />;
+			msg = <SaveLivePreview tableId={this.props.tableId} recordId={this.props.recordId} callback={this.cancelSave} />;
 		} 
 		return (<ContainerDiv>
 			<Tab onClick={this.onClickClose}>{msg}</Tab>
-			<Tab onClick={this.onClickIframe} className={this.props.currentPreviewType === PREVIEW_IFRAME ? 'active' : null}>ifr</Tab>
-			<Tab onClick={this.onClickWindow} className={this.props.currentPreviewType === PREVIEW_WIN ? 'active' : null}>win</Tab>
+			<Tab onClick={this.onClickIframe} className={this.props.currentPreviewType === PREVIEW_IFRAME ? 'active' : null}>
+				<span className="fa fa-columns fa-fw"></span>
+			</Tab>
+			<Tab onClick={this.onClickWindow} className={this.props.currentPreviewType === PREVIEW_WIN ? 'active' : null}>
+				<span className="fa fa-window-restore fa-fw"></span>
+			</Tab>
 		</ContainerDiv>);
 
 	}
