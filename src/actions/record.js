@@ -146,7 +146,7 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 			[FREESTONE_API]: {
 				types: RECORD_SINGLE_API,
 				route: `record/${tableName}/${parentTable}/${id}`,
-				redirectOnError: `list/${tableName}`,
+				redirectOnError: `/list/${tableName}`,
 			},
 		});
 	};
@@ -175,7 +175,7 @@ export function duplicateRecord(tableName, id) {
 		}).then((res) => {
 			// console.log(res);
 			const { rootRecordId } = res;
-			return dispatch(pushPath(`edit/${tableName}/${rootRecordId}`));
+			return dispatch(pushPath(`/edit/${tableName}/${rootRecordId}`));
 
 		});
 	};
@@ -187,7 +187,7 @@ export function fetchMtmRecords(tableName, id, parentTable = 0) {
 			[FREESTONE_API]: {
 				types: MTM_RECORD_API,
 				route: `record/${tableName}/${parentTable}/${id}`,
-				redirectOnError: `list/${parentTable}`,
+				redirectOnError: `/list/${parentTable}`,
 			},
 		});
 	};
