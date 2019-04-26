@@ -10,11 +10,12 @@ import { SAVE_RECORD_API, SAVE_PREVIEW_API, DELETE_RECORD_API } from '../actions
 
 function removeRecords(state, recordsToRemove) {
 	if (!recordsToRemove) return state;
-
 	return recordsToRemove.reduce((carry, record) => {
-		const { tableId, recordId } = record;
+		//when getting records from the database, the original record is either the db id OR the temp id if it was a new record. We need to remove that one, as the records on the front are referred to by their temp id until they are saved.
+		const { tableId, recordId, recordOriginalId } = record;
+		const finalRecordId = recordOriginalId || recordId;
 		const tableRecords = { ...carry[tableId] };
-		delete tableRecords[recordId];
+		delete tableRecords[finalRecordId];
 		carry[tableId] = tableRecords;
 		return carry;
 	}, { ...state });

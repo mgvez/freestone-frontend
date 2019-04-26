@@ -50,7 +50,7 @@ export default class TextInput extends Component {
 			return (
 				<textarea 
 					ref="area"
-					value={this.props.val} 
+					value={this.props.val || ''} 
 					style={{
 						overflow: this.state.overflow,
 						minHeight: `${MIN_HEIGHT}px`,
@@ -62,7 +62,7 @@ export default class TextInput extends Component {
 			);
 		}
 		return (
-			<input type="text" size={this.props.field.size} value={this.props.val} className="form-control" onChange={this.props.changeVal} />
+			<input type="text" size={this.props.field.size} value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
 		);
 	}
 }

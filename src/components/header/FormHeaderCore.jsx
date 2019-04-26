@@ -48,8 +48,7 @@ export default class FormHeaderCore extends Component {
 	}
 
 	onResize = () => {
-		const h = this._header.getBoundingClientRect().height;
-		// console.log('didMount', this.props.isLight, h);
+		const h = this.refs.header.getBoundingClientRect().height;
 		this.context.setHeight(this.props.isLight, h);
 	}
 
@@ -119,7 +118,7 @@ export default class FormHeaderCore extends Component {
 		const prodWarning = this.props.isLight && this.props.isProdEnv ? <ProdEnvWarning /> : null;
 		// console.log(this.props.isProdEnv);
 		return (
-			<header className={classList.join(' ')} style={style} ref={el => this._header = el}>
+			<header className={classList.join(' ')} style={style} ref="header">
 				{infos}
 				{prodWarning}
 				
