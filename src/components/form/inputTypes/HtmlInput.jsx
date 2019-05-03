@@ -68,6 +68,7 @@ export default class HtmlInput extends Component {
 	}
 
 	handleEditorChange = (evt) => {
+		// console.log(evt.target.getContent());
 		this.props.changeVal(evt.target.getContent());
 	};
 
@@ -81,7 +82,7 @@ export default class HtmlInput extends Component {
 
 	render() {
 
-		
+		// console.log(this.props.val);
 		if (!this.props.tinymceConfig) return null;
 		if (this.state.command) {
 			const { name, params } = this.state.command;
@@ -99,10 +100,10 @@ export default class HtmlInput extends Component {
 		}
 		// return <input type="text" size={this.props.field.size} value={this.props.val} className="form-control" onChange={this.props.changeVal} />;
 
-		// // console.log(`render input ${this.props.field.name}`);
+		// console.log(`render input ${this.props.field.name}`, this.props.val);
 		return (
 			<TinyMCEInput
-				initialValue={this.props.val}
+				value={this.props.val}
 				onChange={this.handleEditorChange}
 				init={this.props.tinymceConfig}
 				onExecCommand={this.handlers.ExecCommand}

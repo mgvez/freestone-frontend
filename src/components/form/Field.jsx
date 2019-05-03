@@ -57,6 +57,7 @@ export default class Field extends Component {
 				input = <TextInput {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'html':
+				// console.log(this.props.val);
 				input = <HtmlInput {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'url':
