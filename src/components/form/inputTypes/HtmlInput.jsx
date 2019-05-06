@@ -13,6 +13,7 @@ export default class HtmlInput extends Component {
 		changeVal: PropTypes.func,
 		fetchVariable: PropTypes.func,
 		lang: PropTypes.string,
+		recordId: PropTypes.string,
 
 		field: PropTypes.object,
 		tinymceConfig: PropTypes.object,
@@ -103,7 +104,8 @@ export default class HtmlInput extends Component {
 		// console.log(`render input ${this.props.field.name}`, this.props.val);
 		return (
 			<TinyMCEInput
-				value={this.props.val}
+				key={this.props.recordId}
+				initialValue={this.props.val}
 				onChange={this.handleEditorChange}
 				init={this.props.tinymceConfig}
 				onExecCommand={this.handlers.ExecCommand}
