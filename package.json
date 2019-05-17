@@ -5,6 +5,7 @@
   "scripts": {
     "start-wp1": "node server.js",
     "start": "webpack-dev-server --colors",
+    "start-http": "webpack-dev-server --colors --http",
     "build": "rm -rf ./dist; env NODE_ENV=production webpack",
     "lint": "eslint src"
   },
