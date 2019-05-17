@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
+const N_TO_SHOW = 10;
+
 export default class Paging extends Component {
 	static propTypes = {
 		tableName: PropTypes.string,
@@ -21,8 +23,12 @@ export default class Paging extends Component {
 
 		let display;
 		if (label === 'previous') {
+			display = <i className="fa fa-angle-left"></i>;
+		} else if (label === 'first') {
 			display = <i className="fa fa-angle-double-left"></i>;
 		} else if (label === 'next') {
+			display = <i className="fa fa-angle-right"></i>;
+		} else if (label === 'last') {
 			display = <i className="fa fa-angle-double-right"></i>;
 		} else {
 			display = label;
@@ -46,17 +52,26 @@ export default class Paging extends Component {
 	render() {
 
 		const pages = [];
+		let firstToShow = this.props.curPage - Math.floor(N_TO_SHOW / 2);
+		if (firstToShow < 1) firstToShow = 1;
+		let lastToShow = firstToShow + N_TO_SHOW;
+		if (lastToShow > this.props.nPages) lastToShow = this.props.nPages;
+		if (lastToShow - firstToShow < N_TO_SHOW) firstToShow = lastToShow - N_TO_SHOW;
 
-		if (this.props.curPage > 1) {
-			pages.push(this.getPage(this.props.curPage - 1, 'previous'));
+		if (firstToShow > 1) {
+			const prev = this.props.curPage - N_TO_SHOW;
+			pages.push(this.getPage(1, 'first'));
+			if (prev > 1) pages.push(this.getPage(prev, 'previous'));
 		}
 
-		for (let i = 1; i <= this.props.nPages; i++) {
+		for (let i = firstToShow; i <= lastToShow; i++) {
 			pages.push(this.getPage(i, i));
 		}
 
-		if (this.props.curPage < this.props.nPages) {
-			pages.push(this.getPage(this.props.curPage + 1, 'next'));
+		if (lastToShow < this.props.nPages) {
+			const nx = this.props.curPage + N_TO_SHOW;
+			if (nx < this.props.nPages) pages.push(this.getPage(nx, 'next'));
+			pages.push(this.getPage(this.props.nPages, 'last'));
 		}
 
 		return (
