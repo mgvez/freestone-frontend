@@ -19,10 +19,11 @@ export default class RecordInteractions extends Component {
 		fields: PropTypes.array,
 		path: PropTypes.string,
 		values: PropTypes.object,
+		hasPreview: PropTypes.bool,
 
 		rememberListPage: PropTypes.func,
 		lockScroll: PropTypes.func,
-		hasPreview: PropTypes.bool,
+		fetchRecordInfo: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -80,6 +81,11 @@ export default class RecordInteractions extends Component {
 		window.removeEventListener('click', this.onWindowClick);
 	}
 
+	onRequestInfo = () => {
+		if (!this.props.table) return;
+		this.props.fetchRecordInfo(this.props.table.name, this.props.values[PRIKEY_ALIAS]);
+	}
+
 	render() {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
@@ -110,6 +116,7 @@ export default class RecordInteractions extends Component {
 					lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
 					createddate={this.props.values[CREATED_DATE_ALIAS]}
 					label={this.props.values[LABEL_PSEUDOFIELD_ALIAS]}
+					onRequestInfo={this.onRequestInfo}
 				/>
 			</div>
 			{orderFcn}

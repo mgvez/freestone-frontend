@@ -9,6 +9,8 @@ export default class InfosFcn extends Component {
 		createddate: PropTypes.string,
 		lastmodifdate: PropTypes.string,
 		label: PropTypes.string,
+
+		onRequestInfo: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -20,6 +22,7 @@ export default class InfosFcn extends Component {
 	}
 
 	handleMouseOver = () => {
+		if (!this.props.createddate) this.props.onRequestInfo();
 		this.setState({
 			active: true,
 		});
