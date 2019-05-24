@@ -57,6 +57,7 @@ export default class Paging extends Component {
 		let lastToShow = firstToShow + N_TO_SHOW;
 		if (lastToShow > this.props.nPages) lastToShow = this.props.nPages;
 		if (lastToShow - firstToShow < N_TO_SHOW) firstToShow = lastToShow - N_TO_SHOW;
+		if (firstToShow < 1) firstToShow = 1;
 
 		if (firstToShow > 1) {
 			const prev = this.props.curPage - N_TO_SHOW;
