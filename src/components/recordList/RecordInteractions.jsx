@@ -107,7 +107,7 @@ export default class RecordInteractions extends Component {
 							<i className="fa fa-pencil"></i>{EDIT_LABEL}
 						</NavLink>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
-						<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
+						<DeleteBtn key={`${this.props.table.name}_${prikeyVal}`} tableName={this.props.table.name} prikey={prikeyVal} />
 						{preview}
 					</div>
 				</div>

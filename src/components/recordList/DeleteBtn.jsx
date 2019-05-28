@@ -15,14 +15,6 @@ export default class DeleteBtn extends Component {
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.prikey !== this.props.prikey) {
-			this.setState({
-				requested: false,
-			});
-		}
-	}
-
 	cancel = (e) => {
 		e.stopPropagation();
 
