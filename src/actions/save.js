@@ -84,9 +84,8 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
 
-				if (callback) {
-					callback(res.mainRecord, res.slugs);
-				} else {
+				const skipDefault = callback && callback(res.mainRecord, res.slugs);
+				if (!skipDefault) {
 					const backPath = (gotoOnFinish && gotoOnFinish.replace('{{recordId}}', res.mainRecord.recordId)) || `/list/${table.name}`;
 					//si table savée est meta (zva_...)
 					if (isMeta) {

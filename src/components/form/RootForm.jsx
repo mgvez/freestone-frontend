@@ -10,6 +10,8 @@ import PermissionsForm from '../../containers/permissions/PermissionsForm';
 import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
 
+const ACTION_STAY_FORM = 'stay_form';
+const ACTION_CALLBACK = 'callback';
 export default class RootForm extends Component {
 	static propTypes = {
 		params: PropTypes.shape({
@@ -38,7 +40,7 @@ export default class RootForm extends Component {
 		super(props);
 		this.state = {
 			saving: false,
-			afterSave: null,
+			afterSaveAction: ACTION_CALLBACK,
 			language: null,
 		};
 	}
@@ -48,12 +50,12 @@ export default class RootForm extends Component {
 		if (!this.props.isModal) {
 			window.scrollTo(0, 0);
 		}
+		console.log(this.props.finishCallback);
+
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.params !== this.props.params) this.cancelSave();
-		// console.log(nextProps);
-		this.requireData(nextProps);
+	componentDidUpdate() {
+		this.requireData(this.props);
 	}
 
 	/**
@@ -72,7 +74,7 @@ export default class RootForm extends Component {
 		}
 		this.setState({
 			saving: true,
-			afterSave: this.props.finishCallback,
+			afterSaveAction: ACTION_CALLBACK,
 		});
 	}
 
@@ -80,23 +82,38 @@ export default class RootForm extends Component {
 		this.setState({
 			...this.state,
 			saving: true,
-			afterSave: ({ recordId }) => {
-				// console.log(recordId, tableName);
-				//si record Id est meme, on ne fait que cancel le save, ca reload les vals
-				if (String(recordId) === this.props.params.recordId) {
-					this.cancelSave();
-				} else {
-					this.props.goTo(`/edit/${this.props.table.name}/${recordId}`);
-				}
-			},
+			afterSaveAction: ACTION_STAY_FORM,
 		});
+	}
+
+	afterSave = ({ recordId }) => {
+		const { afterSaveAction } = this.state;
+		if (afterSaveAction === ACTION_STAY_FORM) {
+			// console.log(recordId, tableName);
+			//if record id is same as before, cancel save to reload values
+			if (String(recordId) === this.props.params.recordId) {
+				this.cancelSave();
+			} else {
+				this.props.goTo(`/edit/${this.props.table.name}/${recordId}`);
+			}
+			return true;
+		} else if (this.props.finishCallback) {
+			this.props.finishCallback();
+			return true;
+		}
+		// console.log('cancel');
+		this.setState({
+			saving: false,
+			afterSaveAction: ACTION_CALLBACK,
+		});
+		return false;
 	}
 
 	cancelSave = () => {
 		// console.log('cancel');
 		this.setState({
 			saving: false,
-			afterSave: null,
+			afterSaveAction: ACTION_CALLBACK,
 		});
 	}
 
@@ -118,7 +135,7 @@ export default class RootForm extends Component {
 		if (this.props.table) {
 
 			if (this.state.saving) {
-				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.state.afterSave} cancelSave={this.cancelSave} />;
+				return <Save tableId={this.props.table.id} recordId={this.props.params.recordId} callback={this.afterSave} cancelSave={this.cancelSave} />;
 			}
 
 			let actionBtns;

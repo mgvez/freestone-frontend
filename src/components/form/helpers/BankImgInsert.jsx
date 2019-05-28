@@ -129,7 +129,7 @@ export default class BankImgInsert extends Component {
 		const { editing } = this.state;
 		if (editing) {
 			content = (
-				<RootForm params={{ recordId: editing, tableName: BANK_IMG_TABLE }} finishCallback={this.stopEditing} isModal />
+				<RootForm key={`${BANK_IMG_TABLE}_${editing}`} params={{ recordId: editing, tableName: BANK_IMG_TABLE }} finishCallback={this.stopEditing} isModal />
 			);
 		} else if (this.props.records) {
 			// console.log(this.props.records);

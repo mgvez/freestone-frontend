@@ -25,7 +25,7 @@ export default (
 		<Switch>
 			<Route exact path="/" render={(props) => <Home params={props.match.params} />} />
 			<Route path="/list/:tableName/:page?/:search?" render={(props) => <List params={props.match.params} />} />
-			<Route path="/edit/:tableName/:recordId" render={(props) => <RootForm params={props.match.params} />} />
+			<Route path="/edit/:tableName/:recordId" render={(props) => <RootForm key={`${props.match.params.tableName}_${props.match.params.recordId}`} params={props.match.params} />} />
 			<Route path="/module/:url" render={(props) => <Module params={props.match.params} />} />
 			<Route path="/page/:id" render={(props) => <Page params={props.match.params} />} />
 			<Route path="/n-module/:name" render={(props) => <NativeModule params={props.match.params} />} />

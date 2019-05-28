@@ -129,7 +129,7 @@ export default class BankFileInsert extends Component {
 		const { editing } = this.state;
 		if (editing) {
 			content = (
-				<RootForm params={{ recordId: editing, tableName: BANK_FILE_TABLE }} finishCallback={this.stopEditing} isModal />
+				<RootForm key={`${BANK_FILE_TABLE}_${editing}`} params={{ recordId: editing, tableName: BANK_FILE_TABLE }} finishCallback={this.stopEditing} isModal />
 			);
 		} else if (this.props.records) {
 			// console.log(this.props.records);
