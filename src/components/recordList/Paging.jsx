@@ -52,7 +52,8 @@ export default class Paging extends Component {
 	render() {
 
 		const pages = [];
-		let firstToShow = this.props.curPage - Math.floor(N_TO_SHOW / 2);
+		const halfToShow = Math.floor(N_TO_SHOW / 2);
+		let firstToShow = this.props.curPage - halfToShow;
 		if (firstToShow < 1) firstToShow = 1;
 		let lastToShow = firstToShow + N_TO_SHOW;
 		if (lastToShow > this.props.nPages) lastToShow = this.props.nPages;
@@ -60,7 +61,7 @@ export default class Paging extends Component {
 		if (firstToShow < 1) firstToShow = 1;
 
 		if (firstToShow > 1) {
-			const prev = this.props.curPage - N_TO_SHOW;
+			const prev = this.props.curPage - halfToShow;
 			pages.push(this.getPage(1, 'first'));
 			if (prev > 1) pages.push(this.getPage(prev, 'previous'));
 		}
@@ -70,7 +71,7 @@ export default class Paging extends Component {
 		}
 
 		if (lastToShow < this.props.nPages) {
-			const nx = this.props.curPage + N_TO_SHOW;
+			const nx = this.props.curPage + halfToShow;
 			if (nx < this.props.nPages) pages.push(this.getPage(nx, 'next'));
 			pages.push(this.getPage(this.props.nPages, 'last'));
 		}

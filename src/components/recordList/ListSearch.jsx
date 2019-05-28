@@ -16,8 +16,8 @@ export default class ListSearch extends Component {
 		this.searchInput.addEventListener('keydown', this.onUpdateSearchField);
 	}
 	
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.tableName !== this.props.tableName && this.searchInput) {
+	componentDidUpdate(prevProps) {
+		if (prevProps.tableName !== this.props.tableName && this.searchInput) {
 			// console.log('change table');
 			this.searchInput.value = '';
 		}

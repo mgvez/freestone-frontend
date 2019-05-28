@@ -55,15 +55,15 @@ export default class HtmlInput extends Component {
 	}
 
 	componentDidMount() {
-		this.requireData(this.props);
+		this.requireData();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
+	componentDidUpdate() {
+		this.requireData();
 	}
 
-	requireData(nextProps) {
-		if (undefined === nextProps.tinymceConfig) {
+	requireData() {
+		if (undefined === this.props.tinymceConfig) {
 			this.props.fetchVariable('settings');
 		}
 	}

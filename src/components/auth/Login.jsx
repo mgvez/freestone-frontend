@@ -42,16 +42,16 @@ export default class Login extends Component {
 		// console.log(this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
+	componentDidUpdate() {
+		this.requireData();
 	}
 
-	requireData(nextProps) {
+	requireData() {
 		// console.log(nextProps);
-		if (undefined === nextProps.isInstalled) {
+		if (undefined === this.props.isInstalled) {
 			this.props.fetchVariable('isInstalled');
 		}
-		if (typeof nextProps.apiGoogle === 'undefined') this.props.fetchVariable('api.google');
+		if (typeof this.props.apiGoogle === 'undefined') this.props.fetchVariable('api.google');
 	}
 
 	login = (e) => {

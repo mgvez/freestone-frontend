@@ -46,8 +46,8 @@ export default class BankFileInsert extends Component {
 		this.requireData(this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
+	componentDidUpdate() {
+		this.requireData(this.props);
 	}
 
 	onChangePage = (pageNum) => {

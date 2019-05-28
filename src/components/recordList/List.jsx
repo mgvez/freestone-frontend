@@ -57,10 +57,8 @@ export default class List extends Component {
 		this.handleResize();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		// console.log(nextProps);
-		// console.log(this.props);
-		this.requireData(nextProps);
+	componentDidUpdate() {
+		this.requireData(this.props);
 	}
 
 	shouldComponentUpdate(nextProps) {

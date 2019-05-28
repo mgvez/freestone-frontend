@@ -21,8 +21,8 @@ export default class PermissionsForm extends Component {
 		this.requireData(this.props);
 	}
 
-	componentWillReceiveProps(props) {
-		this.requireData(props);
+	componentDidUpdate() {
+		this.requireData(this.props);
 	}
 
 	getForm(prefix, permissions) {
