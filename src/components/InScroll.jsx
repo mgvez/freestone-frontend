@@ -22,14 +22,12 @@ export default class InScroll extends Component {
 		this.hasScrolled = false;
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		// console.log(nextProps.scroll);
-		if (nextProps.path !== this.props.path) {
+		if (prevProps.path !== this.props.path) {
 			this.hasScrolled = false;
 		}
-	}
 
-	componentDidUpdate() {
 		// console.log(this.props.isReady, this.hasScrolled);
 		if (this.props.isReady && !this.hasScrolled) {
 			window.scrollTo(0, this.props.scroll || 0);
@@ -40,6 +38,8 @@ export default class InScroll extends Component {
 
 		}
 	}
+
+
 	componentWillUnmount() {
 		if (this.props.autoLock) this.props.lockScroll(this.props.path, window.scrollY);
 	}
