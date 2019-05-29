@@ -50,7 +50,7 @@ export default class RootForm extends Component {
 		if (!this.props.isModal) {
 			window.scrollTo(0, 0);
 		}
-		console.log(this.props.finishCallback);
+		// console.log(this.props.finishCallback);
 
 	}
 
@@ -98,14 +98,11 @@ export default class RootForm extends Component {
 			}
 			return true;
 		} else if (this.props.finishCallback) {
+			// console.log(this.props.finishCallback);
 			this.props.finishCallback();
 			return true;
 		}
-		// console.log('cancel');
-		this.setState({
-			saving: false,
-			afterSaveAction: ACTION_CALLBACK,
-		});
+		
 		return false;
 	}
 
