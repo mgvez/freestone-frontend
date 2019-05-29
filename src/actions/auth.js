@@ -90,7 +90,6 @@ export function unauthorized(error = {}) {
 export function loginUser(username = null, password = null, remember = null, processInstall = false) {
 	return (dispatch) => {
 		// console.log(redirect);
-		// console.log(action);
 		const data = (username || password) ? {
 			freestoneuser: username,
 			freestonepass: password,
@@ -108,9 +107,10 @@ export function loginUser(username = null, password = null, remember = null, pro
 }
 
 export function loginGoogleAPI(token_id, token_access) {
+	if (!token_id || !token_access) return null;
 	return (dispatch) => {
-		console.log(token_id);
-		console.log(token_access);
+		// console.log(token_id);
+		// console.log(token_access);
 		return dispatch({
 			[FREESTONE_API]: {
 				types: LOGIN_API,

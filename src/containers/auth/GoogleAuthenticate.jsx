@@ -7,6 +7,7 @@ import { fetchVariable } from '../../actions/env';
 
 export default connect(
 	state => {
+		// console.log('selector', state.freestone.auth.isAuthenticated);
 		return {
 			...state.freestone.auth,
 			apiGoogle: state.freestone.env.clientVariables && state.freestone.env.clientVariables.api_google,
