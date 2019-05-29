@@ -41,10 +41,11 @@ export default class Field extends Component {
 		if (this.props.field.isHidden) {
 			return null;
 		}
+		const key = `${this.props.field.id}_${this.props.recordId}`;
 		// console.log(`render input ${this.props.field.name} ${this.props.field.language}`);
 		let input;
 		if (this.props.field.isUneditable) {
-			input = <NoEditInput {...this.props} />;
+			input = <NoEditInput key={key} {...this.props} />;
 		} else {
 			switch (this.props.field.type) {
 			case 'int':
@@ -54,21 +55,21 @@ export default class Field extends Component {
 			case 'note':
 			case 'password':
 			case 'md':
-				input = <TextInput {...this.props} changeVal={this.changeVal} />;
+				input = <TextInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'html':
 				// console.log(this.props.val);
-				input = <HtmlInput {...this.props} changeVal={this.changeVal} />;
+				input = <HtmlInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'url':
-				input = <UrlInput {...this.props} changeVal={this.changeVal} />;
+				input = <UrlInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'tags':
-				input = <TextInput {...this.props} changeVal={this.changeVal} />;
+				input = <TextInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'date':
 			case 'datetime':
-				input = <DateInput {...this.props} changeVal={this.changeVal} />;
+				input = <DateInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'enum':
 			case 'foreign':
@@ -77,37 +78,37 @@ export default class Field extends Component {
 			case 'language':
 				// input = <SelectInput {...this.props} />;
 				// break;
-				input = <AutocompleteInput {...this.props} changeVal={this.changeVal} />;
+				input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'img':
 			case 'file':
 				// console.log(this.props);
-				input = <FileInput {...this.props} changeVal={this.changeVal} />;
+				input = <FileInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'hotspot':
-				input = <HotspotInput {...this.props} changeVal={this.changeVal} />;
+				input = <HotspotInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'bool':
 			case 'ispublished':
-				input = <BoolInput {...this.props} changeVal={this.changeVal} />;
+				input = <BoolInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'permissions':
-				input = <TextInput {...this.props} changeVal={this.changeVal} />;
+				input = <TextInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'noedit'://on la voit mais on l'edit pas!
-				input = <NoEditInput {...this.props} changeVal={this.changeVal} />;
+				input = <NoEditInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'bankimg'://link vers image de la banque
-				input = <BankImgInput {...this.props} changeVal={this.changeVal} />;
+				input = <BankImgInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'bankfile'://link vers image de la banque
-				input = <BankFileInput {...this.props} changeVal={this.changeVal} />;
+				input = <BankFileInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'subform':
 			case 'rel':
 			case 'oto':
 				if (this.props.isRoot) {
-					input = <AutocompleteInput {...this.props} changeVal={this.changeVal} />;
+					input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
 				}
 				break;
 			case 'pri':
