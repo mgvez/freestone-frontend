@@ -24,6 +24,7 @@ export default class RecordInteractions extends Component {
 		rememberListPage: PropTypes.func,
 		lockScroll: PropTypes.func,
 		fetchRecordInfo: PropTypes.func,
+		fetchRecords: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -32,17 +33,6 @@ export default class RecordInteractions extends Component {
 		this.state = {
 			active: false,
 		};
-	}
-
-	componentWillReceiveProps(nextProps) {
-		const currentPrikeyVal = this.props.values[PRIKEY_ALIAS];
-		const nextPrikeyVal = nextProps.values[PRIKEY_ALIAS];
-
-		if (currentPrikeyVal !== nextPrikeyVal) {
-			this.setState({
-				active: false,
-			});
-		}
 	}
 
 	componentWillUnmount() {
@@ -90,7 +80,7 @@ export default class RecordInteractions extends Component {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
 		if (this.props.table.hasOrder) {
-			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} />;
+			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} fetchRecords={this.props.fetchRecords} />;
 		}
 
 		const recordLink = this.props.values[SLUG_PSEUDOFIELD_ALIAS];

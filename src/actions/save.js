@@ -105,7 +105,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 	};
 }
 
-export function swapOrder(tableName, recordId, direction) {
+export function swapOrder(tableName, recordId, direction, onComplete) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
@@ -117,6 +117,9 @@ export function swapOrder(tableName, recordId, direction) {
 					direction,
 				},
 			},
+		}).then(() => {
+			console.log('ok');
+			onComplete();
 		});
 	};
 }

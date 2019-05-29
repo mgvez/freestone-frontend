@@ -14,56 +14,43 @@ export default class Row extends Component {
 		values: PropTypes.object,
 		isLarge: PropTypes.bool,
 		isHovering: PropTypes.bool,
+		swappedRecords: PropTypes.object,
 
 		handleHover: PropTypes.func,
-		swappedRecords: PropTypes.array,
 		swapAnimated: PropTypes.func,
+		fetchRecords: PropTypes.func,
 	};
 
 	constructor(props) {
 		super(props);
-
+		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		this.state = {
-			isAnimating: false,
+			key: `${this.props.table}_${prikeyVal}`,
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate() {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
-		if (~nextProps.swappedRecords.indexOf(prikeyVal.toString()) && !this.state.isAnimating) {
-			this.setState({
-				isAnimating: true,
-			});
-
-			this.animate().then(this.props.swapAnimated);
-		}
-	}
-
-	shouldComponentUpdate(nextProps) {
-		return nextProps.isHovering !== this.props.isHovering
-			|| nextProps.isLarge !== this.props.isLarge
-			|| nextProps.values !== this.props.values;
-	}
-
-	getInteractions() {
-		return (<td colSpan="20" className="interactions">
-			<RecordInteractions table={this.props.table} fields={this.props.fields} values={this.props.values} />
-		</td>);
+		if (this.props.swappedRecords && this.props.swappedRecords.origin === prikeyVal.toString()) this.animate().then(this.props.swapAnimated);
 	}
 
 	animate = () => {
-		return new Promise((resolve) => {
-			TweenMax.to(this.recordRow.children, 0.3, { backgroundColor: 'rgba(25, 170, 141)', repeat: 1, yoyo: true, onComplete: () => {
-				this.setState({
-					isAnimating: false,
-				});
+
+		const animation = this.animation = this.animation || new Promise((resolve) => {
+			TweenMax.to(this.recordRow.children, 0.3, { backgroundColor: 'rgba(25, 170, 141)', onComplete: () => {
+				this.animation = null;
 				resolve();
 			}, clearProps: 'background-color' });
 		});
+		return animation;
 	}
 
 	handleHover = () => {
 		this.props.handleHover(this.props.values[PRIKEY_ALIAS]);
+	}
+
+	getInteractions() {
+		return <RecordInteractions key={this.state.key} table={this.props.table} fields={this.props.fields} values={this.props.values} fetchRecords={this.props.fetchRecords} />;
 	}
 
 	renderSelfTree() {
@@ -72,7 +59,7 @@ export default class Row extends Component {
 		const breadcrumb = values.breadcrumb ? values.breadcrumb : '0';
 		const level = values.level ? values.level : '0';
 		// console.log(values);
-
+		const interactions = this.getInteractions();
 		if (this.props.isLarge) {
 			const label = createCells(table, fields, values, 'span');
 
@@ -81,7 +68,7 @@ export default class Row extends Component {
 					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>
 					<td key="cellLabel" className="selfjoin-label">{label}</td>
 					<td className="interactions">
-						<RecordInteractions table={this.props.table} fields={fields} values={values} />
+						{interactions}
 					</td>
 				</tr>
 			);
@@ -94,7 +81,7 @@ export default class Row extends Component {
 					{content}
 				</td>
 				<td className="interactions">
-					<RecordInteractions table={this.props.table} fields={fields} values={values} />
+					{interactions}
 				</td>
 			</tr>
 		);
@@ -104,6 +91,8 @@ export default class Row extends Component {
 	renderRegular() {
 		const { fields, values, table } = this.props;
 		let content;
+		const interactions = this.getInteractions();
+
 		//ROW NORMAL, LARGE
 		if (this.props.isLarge) {
 			content = createCells(table, fields, values);
@@ -112,7 +101,7 @@ export default class Row extends Component {
 				<tr ref={(el) => { this.recordRow = el; }} onMouseOver={this.handleHover}>
 					{content}
 					<td className="interactions">
-						<RecordInteractions table={this.props.table} fields={fields} values={values} />
+						{interactions}
 					</td>
 				</tr>
 			);
@@ -126,7 +115,7 @@ export default class Row extends Component {
 					{content}
 				</td>
 				<td className="interactions">
-					<RecordInteractions table={this.props.table} fields={fields} values={values} />
+					{interactions}
 				</td>
 			</tr>
 		);

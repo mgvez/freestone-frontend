@@ -11,7 +11,7 @@ const initialState = {
 	nRecords: null,
 	error: null,
 	records: [],
-	swappedRecords: [],
+	swappedRecords: null,
 };
 
 export default function(state = initialState, action) {
@@ -22,7 +22,7 @@ export default function(state = initialState, action) {
 	case DELETE_RECORD_API.SUCCESS:
 		return initialState;
 	case SWAPPED_ANIMATED:
-		return { ...state, swappedRecords: [] };
+		return { ...state, swappedRecords: null };
 	case SWAP_ORDER_API.SUCCESS:
 		return { ...initialState, swappedRecords: action.data.result };
 	case RECORD_LIST_API.SUCCESS:

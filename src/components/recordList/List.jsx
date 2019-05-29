@@ -31,7 +31,7 @@ export default class List extends Component {
 		curPage: PropTypes.number,
 		nRecords: PropTypes.number,
 		search: PropTypes.string,
-		swappedRecords: PropTypes.array,
+		swappedRecords: PropTypes.object,
 		canAdd: PropTypes.bool,
 
 		fetchTable: PropTypes.func,
@@ -52,13 +52,13 @@ export default class List extends Component {
 	}
 	
 	componentDidMount() {
-		this.requireData(this.props);
+		this.requireData();
 		window.addEventListener('resize', this.handleResize);
 		this.handleResize();
 	}
 
 	componentDidUpdate() {
-		this.requireData(this.props);
+		this.requireData();
 	}
 
 	shouldComponentUpdate(nextProps) {
@@ -77,10 +77,14 @@ export default class List extends Component {
 		return this.props.groupedRecords.reduce((total, gr) => total + gr.records.reduce((subtotal) => subtotal + 1, 0), 0);
 	}
 
-	requireData(props) {
-		const { tableName, page, search } = props.params;
-		if (!props.table) this.props.fetchTable(tableName);
-		if (!props.groupedRecords) this.props.fetchList(tableName, search, page || 1);
+	requireData() {
+		if (!this.props.table) this.props.fetchTable(this.props.params.tableName);
+		if (!this.props.groupedRecords) this.fetchRecords();
+	}
+
+	fetchRecords = () => {
+		const { tableName, page, search } = this.props.params;
+		this.props.fetchList(tableName, search, page || 1);
 	}
 
 	handleResize = () => {
@@ -112,7 +116,7 @@ export default class List extends Component {
 	}
 
 	render() {
-		// console.log(this.props.table);
+		// console.log(this.props.swappedRecords);
 		// console.log('render list', this.props.table);
 		// console.log(this.props.searchableFields);
 		let output;
@@ -132,7 +136,7 @@ export default class List extends Component {
 
 			const addBtn = this.props.canAdd ? <button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button> : null;
 			
-			// console.profile('render');
+			// console.log('render list');
 			output = (
 				<section>
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
@@ -186,6 +190,7 @@ export default class List extends Component {
 														isHovering={isHovering}
 														handleHover={this.handleHover}
 														swappedRecords={this.props.swappedRecords}
+														fetchRecords={this.fetchRecords}
 													/>
 												);
 											})
