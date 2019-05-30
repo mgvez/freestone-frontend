@@ -14,6 +14,7 @@ export default class Row extends Component {
 		values: PropTypes.object,
 		isLarge: PropTypes.bool,
 		isHovering: PropTypes.bool,
+		hasCustomOrder: PropTypes.bool,
 		swappedRecords: PropTypes.object,
 
 		handleHover: PropTypes.func,
@@ -50,7 +51,7 @@ export default class Row extends Component {
 	}
 
 	getInteractions() {
-		return <RecordInteractions key={this.state.key} table={this.props.table} fields={this.props.fields} values={this.props.values} fetchRecords={this.props.fetchRecords} />;
+		return <RecordInteractions key={this.state.key} table={this.props.table} fields={this.props.fields} values={this.props.values} fetchRecords={this.props.fetchRecords} hasCustomOrder={this.props.hasCustomOrder} />;
 	}
 
 	renderSelfTree() {

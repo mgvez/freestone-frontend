@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { TYPE_FILE } from '../../freestone/schemaProps';
+import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
 
 const css = {
-	maxHeight: 200,
-	maxWidth: 200,
+	maxHeight: THUMBNAIL_SIZE,
+	maxWidth: THUMBNAIL_SIZE,
 };
 
 export default class FileThumbnail extends Component {
@@ -31,8 +32,10 @@ export default class FileThumbnail extends Component {
 			display = this.props.val;
 		} else {
 			//image
+			// console.log(this.props.absolutePath);
+			const absolutePath = this.props.absolutePath && (this.props.absolutePath.indexOf('http') === 0 ? this.props.absolutePath : getProtocol() + this.props.absolutePath);
 			//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
-			const thumbVal = (this.props.val && (this.props.absolutePath || `${this.props.env.thumbsDir}/${this.props.dir}/${this.props.val}`)) || this.props.localVal;
+			const thumbVal = (this.props.val && (absolutePath || `${this.props.env.thumbsDir}${this.props.dir}/${this.props.val}`)) || this.props.localVal;
 			display = <img src={thumbVal} style={css} />;
 		}
 		

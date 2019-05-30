@@ -53,12 +53,13 @@ export function setPreviewViewType(type) {
 	};
 }
 
-export function fetchList(tableName, search = '', page = 1) {
+export function fetchList(tableName, search = '', page = 1, order = null) {
 	return (dispatch) => {
+		// console.log(`list/${tableName}/${page}?search=${search}&order=${order}`);
 		return dispatch({
 			[FREESTONE_API]: {
 				types: RECORD_LIST_API,
-				route: `list/${tableName}/${page}?search=${search}`,
+				route: `list/${tableName}/${page}?search=${search}&order=${order}`,
 			},
 		});
 	};

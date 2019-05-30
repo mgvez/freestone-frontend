@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
 import Freestone from './containers/Freestone';
@@ -24,7 +25,25 @@ export default (
 	<Freestone>
 		<Switch>
 			<Route exact path="/" render={(props) => <Home params={props.match.params} />} />
-			<Route path="/list/:tableName/:page?/:search?" render={(props) => <List key={`${props.match.params.page}_${props.match.params.tableName}_${props.match.params.search}`} params={props.match.params} />} />
+			<Route 
+				path="/list/:tableName/:page?/:search?" 
+				render={
+					(props) => {
+						const qstr = props.location.search.substring(1);
+						const searchParams = qstr ? JSON.parse('{"' + decodeURI(qstr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
+						const params = {
+							...props.match.params,
+							order: searchParams.order,
+						};
+						return (
+							<List 
+								key={`${params.page}_${params.tableName}_${params.search}_{params.order}`} 
+								params={params}
+							/>
+						);
+					}
+				}
+			/>
 			<Route path="/edit/:tableName/:recordId" render={(props) => <RootForm key={`${props.match.params.tableName}_${props.match.params.recordId}`} params={props.match.params} />} />
 			<Route path="/module/:url" render={(props) => <Module params={props.match.params} />} />
 			<Route path="/page/:id" render={(props) => <Page params={props.match.params} />} />

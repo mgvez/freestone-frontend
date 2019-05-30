@@ -43,8 +43,8 @@ export const listRecordsSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, paramsSelector],
 	(schema, stateRecords, params) => {
 
-		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage, swappedRecords, canAdd } = stateRecords;
-		const { page: requestedPage, search: requestedSearch } = params;
+		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage, swappedRecords, canAdd, order: providedOrder } = stateRecords;
+		const { page: requestedPage, search: requestedSearch, order: requestedOrder } = params;
 
 		const nPages = Math.ceil(nRecords / pageSize);
 
@@ -53,7 +53,16 @@ export const listRecordsSelector = createSelector(
 		let groupedRecords;
 
 		// console.log(table + ' && ' + recordsTable + '===' + table.name + ' && ' + providedPage + '===' + requestedPage + ' && ' + providedSearch + '===' + requestedSearch);
-		if (table && recordsTable === table.name && Number(providedPage) === Number(requestedPage || 1) && providedSearch === (requestedSearch || '')) {
+		const isSameTable = table && recordsTable === table.name;
+		const isSameSearch = providedSearch === (requestedSearch || '');
+		const isSamePage = Number(providedPage) === Number(requestedPage || 1);
+		const isSameOrder = Number(providedOrder || 0) === Number(requestedOrder || 0);
+
+		const needsFetch = !(isSameTable && isSamePage && isSameSearch && isSameOrder);
+		// if (isSameTable && isSamePage && isSameSearch && isSameOrder) {
+			
+		// }
+		if (table && loadedRecords) {
 			let records = loadedRecords.map(rawrecord => {
 				const record = { ...rawrecord };
 				//creates a label field, if not set by the backend
@@ -100,6 +109,7 @@ export const listRecordsSelector = createSelector(
 			curPage: providedPage,
 			nPages,
 			nRecords,
+			needsFetch,
 			search: providedSearch,
 			qstr: stateRecords.qstr,
 			canAdd,

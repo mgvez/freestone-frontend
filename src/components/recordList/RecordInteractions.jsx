@@ -20,6 +20,7 @@ export default class RecordInteractions extends Component {
 		path: PropTypes.string,
 		values: PropTypes.object,
 		hasPreview: PropTypes.bool,
+		hasCustomOrder: PropTypes.bool,
 
 		rememberListPage: PropTypes.func,
 		lockScroll: PropTypes.func,
@@ -80,7 +81,7 @@ export default class RecordInteractions extends Component {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
 		if (this.props.table.hasOrder) {
-			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} fetchRecords={this.props.fetchRecords} />;
+			orderFcn = this.props.hasCustomOrder ? <div /> : <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} fetchRecords={this.props.fetchRecords} />;
 		}
 
 		const recordLink = this.props.values[SLUG_PSEUDOFIELD_ALIAS];

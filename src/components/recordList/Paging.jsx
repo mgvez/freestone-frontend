@@ -10,6 +10,7 @@ export default class Paging extends Component {
 		nPages: PropTypes.number,
 		curPage: PropTypes.number,
 		search: PropTypes.string,
+		order: PropTypes.string,
 		onChangePage: PropTypes.func,
 	};
 
@@ -41,7 +42,10 @@ export default class Paging extends Component {
 		if (this.props.onChangePage) {
 			lnk = <a data-page={num} onClick={this.onClickPage} className="">{display}</a>;
 		} else {
-			lnk = <NavLink to={`/list/${this.props.tableName}/${num}/${this.props.search}`} activeClassName="active" className="">{display}</NavLink>;
+			// console.log(typeof this.props.order);
+			const link = `/list/${this.props.tableName}/${num}/${this.props.search || ''}` + (this.props.order ? `?order=${this.props.order}` : '');
+			// console.log(link);
+			lnk = <NavLink to={link} activeClassName="active" className="">{display}</NavLink>;
 		}
 
 		return (
@@ -51,6 +55,7 @@ export default class Paging extends Component {
 
 	render() {
 
+		if (!this.props.nPages) return null;
 		const pages = [];
 		const halfToShow = Math.floor(N_TO_SHOW / 2);
 		let firstToShow = this.props.curPage - halfToShow;

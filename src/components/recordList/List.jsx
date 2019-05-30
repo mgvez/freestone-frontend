@@ -21,6 +21,7 @@ export default class List extends Component {
 			tableName: PropTypes.string,
 			page: PropTypes.string,
 			search: PropTypes.string,
+			order: PropTypes.string,
 		}),
 
 
@@ -30,9 +31,9 @@ export default class List extends Component {
 		nPages: PropTypes.number,
 		curPage: PropTypes.number,
 		nRecords: PropTypes.number,
-		search: PropTypes.string,
 		swappedRecords: PropTypes.object,
 		canAdd: PropTypes.bool,
+		needsFetch: PropTypes.bool,
 
 		fetchTable: PropTypes.func,
 		fetchList: PropTypes.func,
@@ -61,13 +62,13 @@ export default class List extends Component {
 		this.requireData();
 	}
 
-	shouldComponentUpdate(nextProps) {
-		// console.log(nextProps);
-		// console.log(this.props);
-		// console.log(this.props.groupedRecords === nextProps.groupedRecords);
-		//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
-		return !!(nextProps.groupedRecords) && this.props.groupedRecords !== nextProps.groupedRecords;
-	}
+	// shouldComponentUpdate(nextProps) {
+	// 	// console.log(nextProps);
+	// 	// console.log(this.props);
+	// 	console.log(!!(nextProps.groupedRecords), this.props.groupedRecords === nextProps.groupedRecords);
+	// 	//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
+	// 	return !!(nextProps.groupedRecords) && this.props.groupedRecords !== nextProps.groupedRecords;
+	// }
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleResize);
@@ -79,12 +80,12 @@ export default class List extends Component {
 
 	requireData() {
 		if (!this.props.table) this.props.fetchTable(this.props.params.tableName);
-		if (!this.props.groupedRecords) this.fetchRecords();
+		if (!this.props.groupedRecords || this.props.needsFetch) this.fetchRecords();
 	}
 
 	fetchRecords = () => {
-		const { tableName, page, search } = this.props.params;
-		this.props.fetchList(tableName, search, page || 1);
+		const { tableName, page, search, order } = this.props.params;
+		this.props.fetchList(tableName, search, page || 1, order);
 	}
 
 	handleResize = () => {
@@ -129,7 +130,9 @@ export default class List extends Component {
 				heading = (<thead>
 					<Heading
 						fields={this.props.searchableFields}
+						params={this.props.params}
 						isSelfTree={this.props.table.isSelfTree}
+						fetchList={this.fetchList}
 					/>
 				</thead>);
 			}
@@ -191,6 +194,7 @@ export default class List extends Component {
 														handleHover={this.handleHover}
 														swappedRecords={this.props.swappedRecords}
 														fetchRecords={this.fetchRecords}
+														hasCustomOrder={!!this.props.params.order}
 													/>
 												);
 											})
@@ -204,7 +208,8 @@ export default class List extends Component {
 						<Paging
 							nPages={this.props.nPages}
 							curPage={this.props.curPage}
-							search={this.props.search}
+							search={this.props.params.search}
+							order={this.props.params.order}
 							tableName={this.props.table.name}
 						/>
 					</div>

@@ -24,7 +24,7 @@ export default function(state = initialState, action) {
 	case SWAPPED_ANIMATED:
 		return { ...state, swappedRecords: null };
 	case SWAP_ORDER_API.SUCCESS:
-		return { ...initialState, swappedRecords: action.data.result };
+		return { ...state, swappedRecords: action.data.result };
 	case RECORD_LIST_API.SUCCESS:
 		// console.log(action.data.nRecords);
 		if (!action.data) return state;

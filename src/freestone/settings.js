@@ -12,6 +12,10 @@ export const MAX_TIME_BETWEEN_API_CALLS = 3600;
 // export const MAX_TIME_BETWEEN_API_CALLS = 5;
 
 let websiteUrl;
+export function getProtocol() {
+	return window.location.port === '3000' ? 'http:' : window.location.protocol;
+}
+
 export function getWebsiteUrl() {
 	if (websiteUrl) return websiteUrl;
 	let { hostname, pathname } = window.location;
@@ -24,7 +28,7 @@ export function getWebsiteUrl() {
 		hostname = `${hostname}${PROD_FREESTONE_LOCATION}`;
 	}
 
-	const protocol = window.location.port === '3000' ? 'http:' : window.location.protocol;
+	const protocol = getProtocol();
 
 	websiteUrl = `${protocol}//${hostname}${pathname}`;
 	// console.log(websiteUrl);

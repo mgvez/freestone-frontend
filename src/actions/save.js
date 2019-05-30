@@ -88,6 +88,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				if (!skipDefault) {
 					const backPath = (gotoOnFinish && gotoOnFinish.replace('{{recordId}}', res.mainRecord.recordId)) || `/list/${table.name}`;
 					//si table savée est meta (zva_...)
+					console.log(gotoOnFinish);
 					if (isMeta) {
 						dispatch({
 							type: CLEAR_SCHEMA,
@@ -118,7 +119,6 @@ export function swapOrder(tableName, recordId, direction, onComplete) {
 				},
 			},
 		}).then(() => {
-			console.log('ok');
 			onComplete();
 		});
 	};
