@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_FILE_PATH_ALIAS } from '../../../freestone/schemaProps';
-import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
-import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
-import BankNUses from '../../../containers/widgets/BankNUses';
-import BoolSwitch from '../../../containers/recordList/BoolSwitch';
+import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
+import FileThumbnail from '../../containers/fileThumbnail/FileThumbnail';
+import BankImgThumbnail from '../../containers/fileThumbnail/BankImgThumbnail';
+import BankNUses from '../../containers/widgets/BankNUses';
+import BoolSwitch from '../../containers/recordList/BoolSwitch';
 
 const MAX_THUMB_SIZE = 200;
 

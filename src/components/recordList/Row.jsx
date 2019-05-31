@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { TweenMax } from '../../utils/Greensock';
 
 import RecordInteractions from '../../containers/recordList/RecordInteractions';
-import { createCells } from './row/createCells';
+import { createCells } from './createCells';
 import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
 
 export default class Row extends Component {

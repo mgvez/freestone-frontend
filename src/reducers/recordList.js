@@ -24,11 +24,11 @@ export default function(state = initialState, action) {
 	case SWAPPED_ANIMATED:
 		return { ...state, swappedRecords: null };
 	case SWAP_ORDER_API.SUCCESS:
-		return { ...state, swappedRecords: action.data.result };
+		return { ...state, invalidated: true, swappedRecords: action.data.result };
 	case RECORD_LIST_API.SUCCESS:
 		// console.log(action.data.nRecords);
 		if (!action.data) return state;
-		return { ...action.data, swappedRecords: state.swappedRecords };
+		return { ...action.data, invalidated: false, swappedRecords: state.swappedRecords };
 	case RECORD_INFO_API.SUCCESS: {
 		if (!action.data || !action.data.info || action.data.tableName !== state.table) return state;
 		const { recordId } = action.data;

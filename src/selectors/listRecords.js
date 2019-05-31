@@ -43,7 +43,18 @@ export const listRecordsSelector = createSelector(
 	[tableSchemaSelector, recordsSelector, paramsSelector],
 	(schema, stateRecords, params) => {
 
-		const { records: loadedRecords, table: recordsTable, nRecords, search: providedSearch, pageSize, page: providedPage, swappedRecords, canAdd, order: providedOrder } = stateRecords;
+		const { 
+			records: loadedRecords,
+			table: recordsTable,
+			nRecords,
+			search: providedSearch,
+			pageSize,
+			page: providedPage,
+			swappedRecords,
+			canAdd,
+			order: providedOrder,
+			invalidated,
+		} = stateRecords;
 		const { page: requestedPage, search: requestedSearch, order: requestedOrder } = params;
 
 		const nPages = Math.ceil(nRecords / pageSize);
@@ -58,7 +69,7 @@ export const listRecordsSelector = createSelector(
 		const isSamePage = Number(providedPage) === Number(requestedPage || 1);
 		const isSameOrder = Number(providedOrder || 0) === Number(requestedOrder || 0);
 
-		const needsFetch = !(isSameTable && isSamePage && isSameSearch && isSameOrder);
+		const needsFetch = invalidated || !(isSameTable && isSamePage && isSameSearch && isSameOrder);
 		// if (isSameTable && isSamePage && isSameSearch && isSameOrder) {
 			
 		// }

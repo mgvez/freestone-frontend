@@ -13,6 +13,7 @@ export default class InScroll extends Component {
 		scroll: PropTypes.number,
 		isReady: PropTypes.bool,
 		autoLock: PropTypes.bool,
+		className: PropTypes.string,
 		
 		lockScroll: PropTypes.func,
 	};
@@ -20,6 +21,9 @@ export default class InScroll extends Component {
 	constructor(props) {
 		super(props);
 		this.hasScrolled = false;
+		this.state = {
+			minHeight: ((this.props.scroll || 0) + window.innerHeight) + 'px',
+		};
 	}
 
 	componentDidUpdate(prevProps) {
@@ -46,7 +50,7 @@ export default class InScroll extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className={this.props.className} style={{ minHeight: this.state.minHeight }}>
 				{this.props.children}
 			</div>
 		);

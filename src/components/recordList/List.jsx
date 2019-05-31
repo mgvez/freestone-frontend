@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 
-import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
-
-import Heading from './Heading';
 import Paging from './Paging';
-import Row from '../../containers/recordList/Row';
+import StandardList from './StandardList';
+import BankList from './BankList';
 import ListSearch from './ListSearch';
 import InScroll from '../../containers/InScroll';
 import TablePermissions from '../../containers/permissions/TablePermissions';
+import ListFetch from '../../containers/process/ListFetch';
 import createRecord from '../../freestone/createRecord';
 
 const LARGE_MINW_BREAKPOINT = 1024;
@@ -36,7 +35,6 @@ export default class List extends Component {
 		needsFetch: PropTypes.bool,
 
 		fetchTable: PropTypes.func,
-		fetchList: PropTypes.func,
 		addRecord: PropTypes.func,
 		goTo: PropTypes.func,
 
@@ -49,7 +47,7 @@ export default class List extends Component {
 	constructor(props) {
 		super(props);
 		// console.log(this.props);
-		this.state = { windowWidth: 0, isLarge: true, hoveringId: 0 };
+		this.state = { windowWidth: 0, isLarge: true };
 	}
 	
 	componentDidMount() {
@@ -75,17 +73,11 @@ export default class List extends Component {
 	}
 
 	getNumRecords = () => {
-		return this.props.groupedRecords.reduce((total, gr) => total + gr.records.reduce((subtotal) => subtotal + 1, 0), 0);
+		return this.props.groupedRecords && this.props.groupedRecords.reduce((total, gr) => total + gr.records.reduce((subtotal) => subtotal + 1, 0), 0);
 	}
 
 	requireData() {
 		if (!this.props.table) this.props.fetchTable(this.props.params.tableName);
-		if (!this.props.groupedRecords || this.props.needsFetch) this.fetchRecords();
-	}
-
-	fetchRecords = () => {
-		const { tableName, page, search, order } = this.props.params;
-		this.props.fetchList(tableName, search, page || 1, order);
 	}
 
 	handleResize = () => {
@@ -104,42 +96,36 @@ export default class List extends Component {
 		});
 	}
 
-	/**
-		Les rows appellent le hover ici
-	*/
-	handleHover = (recordId) => {
-		// console.log('hovering %s', recordId);
-		this.setState({ hoveringId: recordId });
-	}
-
-	hideAllHovers = () => {
-		this.handleHover(null);
-	}
-
 	render() {
 		// console.log(this.props.swappedRecords);
 		// console.log('render list', this.props.table);
 		// console.log(this.props.searchableFields);
 		let output;
 		let readyToScroll = false;
-		if (this.props.table && this.props.groupedRecords) {
-			readyToScroll = true;
-
-			let heading = null;
-			if (this.state.isLarge) {
-				heading = (<thead>
-					<Heading
-						fields={this.props.searchableFields}
-						params={this.props.params}
-						isSelfTree={this.props.table.isSelfTree}
-						fetchList={this.fetchList}
-					/>
-				</thead>);
-			}
+		if (this.props.table) {
 
 			const addBtn = this.props.canAdd ? <button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button> : null;
 			
+			let records = null;
+			// if record list is loaded, display records. Bank records are displayed differently than regular records.
+			if (this.props.groupedRecords) {
+				readyToScroll = true;
+
+				if (this.props.table.bankName) {
+					records = (<BankList
+						isLarge={this.state.isLarge}
+						{...this.props}
+					/>);
+				} else {
+					records = (<StandardList
+						isLarge={this.state.isLarge}
+						{...this.props}
+					/>);
+				}
+			}
+
 			// console.log('render list');
+			const needsFetch = !this.props.groupedRecords || this.props.needsFetch;
 			output = (
 				<section>
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
@@ -158,66 +144,37 @@ export default class List extends Component {
 					<TablePermissions table={this.props.table} />
 
 					<div className="padded-content search-ctn">
-						<ListSearch tableName={this.props.table.name} numRecords={this.getNumRecords()} search={this.props.params.search} curPage={this.props.curPage} goTo={this.props.goTo} />
-					</div>
-
-					<div className="padded-content">
-						<table className="table list-records" onMouseLeave={this.hideAllHovers} ref={el => this._list = el}>
-							{heading}
-							{
-								this.props.groupedRecords.map((group, groupIdx) => {
-									let groupHeading;
-									if (group.label) {
-										groupHeading = (
-											<tr className="group-heading">
-												<td colSpan="20">
-													<strong>{group.label}</strong>
-												</td>
-											</tr>
-										);
-									}
-
-									return (
-										<tbody key={groupIdx}>
-										{groupHeading}
-										{
-											group.records.map((record, idx) => {
-												const isHovering = this.state.hoveringId === record[PRIKEY_ALIAS];
-												return (
-													<Row
-														key={idx}
-														fields={this.props.searchableFields}
-														values={record}
-														table={this.props.table}
-														isLarge={this.state.isLarge}
-														isHovering={isHovering}
-														handleHover={this.handleHover}
-														swappedRecords={this.props.swappedRecords}
-														fetchRecords={this.fetchRecords}
-														hasCustomOrder={!!this.props.params.order}
-													/>
-												);
-											})
-										}
-										</tbody>
-									);
-
-								})
-							}
-						</table>
-						<Paging
-							nPages={this.props.nPages}
-							curPage={this.props.curPage}
-							search={this.props.params.search}
-							order={this.props.params.order}
+						
+						<ListSearch 
+							key={`search_${this.props.table.name}`}
 							tableName={this.props.table.name}
-						/>
+							numRecords={this.getNumRecords()}
+							search={this.props.params.search}
+							curPage={this.props.curPage}
+							goTo={this.props.goTo}
+							needsFetch={needsFetch}
+						>
+							<ListFetch needsFetch={needsFetch} params={this.props.params} />
+						</ListSearch>
 					</div>
+					<div className="padded-content">
+						{records}
+					</div>
+					<Paging
+						nPages={this.props.nPages}
+						curPage={this.props.curPage}
+						search={this.props.params.search}
+						order={this.props.params.order}
+						tableName={this.props.table.name}
+					/>
 				</section>
 			);
+			
+
 			// console.profileEnd('render');
 			
 		}
+
 		return (
 			<InScroll isReady={readyToScroll}>
 				{output}

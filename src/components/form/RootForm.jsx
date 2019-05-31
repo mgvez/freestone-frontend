@@ -9,6 +9,7 @@ import PermissionsForm from '../../containers/permissions/PermissionsForm';
 
 import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
+import InScroll from '../../containers/InScroll'; 
 
 const ACTION_STAY_FORM = 'stay_form';
 const ACTION_CALLBACK = 'callback';
@@ -51,7 +52,6 @@ export default class RootForm extends Component {
 			window.scrollTo(0, 0);
 		}
 		// console.log(this.props.finishCallback);
-
 	}
 
 	componentDidUpdate() {
@@ -155,7 +155,7 @@ export default class RootForm extends Component {
 				permsWidget = <PermissionsForm table={this.props.table} recordId={this.props.params.recordId} />;
 			}
 
-			return (<section className="root-form">
+			return (<InScroll className="root-form" isReady autoLock>
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
 				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
@@ -166,7 +166,7 @@ export default class RootForm extends Component {
 				
 				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
 
-			</section>);
+			</InScroll>);
 
 		}
 

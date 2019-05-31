@@ -37,7 +37,7 @@ export default (
 						};
 						return (
 							<List 
-								key={`${params.page}_${params.tableName}_${params.search}_{params.order}`} 
+								key={`list_${params.tableName}`} 
 								params={params}
 							/>
 						);
