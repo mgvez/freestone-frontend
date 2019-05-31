@@ -7,6 +7,7 @@ export default class BankImgThumbnail extends Component {
 	static propTypes = {
 		id: PropTypes.any,
 		markup: PropTypes.string,
+		thumbPath: PropTypes.string,
 		maxSize: PropTypes.number,
 		onClick: PropTypes.func,
 		fetchBankImage: PropTypes.func,

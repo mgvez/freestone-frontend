@@ -7,11 +7,10 @@ export default class ListSearch extends Component {
 	static propTypes = {
 		tableName: PropTypes.string,
 		search: PropTypes.string,
-		key: PropTypes.string,
 		curPage: PropTypes.number,
 		goTo: PropTypes.func,
 		numRecords: PropTypes.number,
-		needsFetch: PropTypes.bolean,
+		needsFetch: PropTypes.bool,
 		children: PropTypes.any,
 	};
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_LANGUAGE, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
+import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
@@ -95,7 +95,7 @@ export default class SingleRecord extends Component {
 			tableName={this.props.table.name}
 			recordId={this.props.recordId}
 			val={this.props.record[field.id]}
-			absolutePath={this.props.record[`${field.id}${BANK_FILE_PATH_ALIAS}`]}
+			absolutePath={this.props.record[`${field.id}${BANK_PATH_ALIAS}`]}
 			origVal={this.props.recordUnaltered[field.id]}
 			parentRecordId={this.props.parentRecordId}
 			setFieldVal={this.props.setFieldVal}

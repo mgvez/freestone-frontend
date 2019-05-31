@@ -31,19 +31,22 @@ export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM];
 export const SUBFORM_VIEW_TABBED = 'SUBFORM_VIEW_TABBED'; 
 export const SUBFORM_VIEW_LIST = 'SUBFORM_VIEW_LIST'; 
 
+export const BANK_IMG_NAME = 'img';
 export const BANK_IMG_TABLE = 'zva_bank_img';
-export const BANK_IMG_FILE_ALIAS = 'file';
 export const BANK_IMG_DIM_ALIAS = '_dim';
-export const BANK_IMG_TITLE_ALIAS = '_title_';
-export const BANK_IMG_COMMENTS_ALIAS = 'comments';
-export const BANK_IMG_CATEG_ALIAS = 'categ_id_label';
 
-export const BANK_FILE_TABLE = 'zva_bank_docs';
-export const BANK_FILE_FILE_ALIAS = 'file';
-export const BANK_FILE_TITLE_ALIAS = '_title_';
-export const BANK_FILE_COMMENTS_ALIAS = 'comments';
-export const BANK_FILE_PATH_ALIAS = 'file_path';
-export const BANK_FILE_CATEG_ALIAS = 'categ_id_label';
+export const BANK_DOCS_NAME = 'docs';
+export const BANK_DOCS_TABLE = 'zva_bank_docs';
+
+export const BANK_FILE_ALIAS = 'file';
+export const BANK_FOLDER_ALIAS = 'folder';
+export const BANK_TITLE_ALIAS = '_title_';
+export const BANK_COMMENTS_ALIAS = 'file';
+export const BANK_FILESIZE_ALIAS = '_kb';
+export const BANK_PATH_ALIAS = 'file_path';
+export const BANK_THUMB_ALIAS = 'thumb_path';
+export const BANK_CATEG_ALIAS = 'categ_id_label';
+export const BANK_NUSES_ALIAS = '_n_uses';
 
 export const ROLE_N_USES = 'ROLE_N_USES';
 

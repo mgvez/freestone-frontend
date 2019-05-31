@@ -6,11 +6,12 @@ import PropTypes from 'prop-types';
 export default class InfosFcn extends Component {
 	static propTypes = {
 		prikey: PropTypes.string,
+		tableName: PropTypes.string,
 		createddate: PropTypes.string,
 		lastmodifdate: PropTypes.string,
 		label: PropTypes.string,
 
-		onRequestInfo: PropTypes.func,
+		fetchRecordInfo: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -22,7 +23,7 @@ export default class InfosFcn extends Component {
 	}
 
 	handleMouseOver = () => {
-		if (!this.props.createddate) this.props.onRequestInfo();
+		if (!this.props.createddate) this.onRequestInfo();
 		this.setState({
 			active: true,
 		});
@@ -32,6 +33,11 @@ export default class InfosFcn extends Component {
 		this.setState({
 			active: false,
 		});
+	}
+
+	onRequestInfo = () => {
+		if (!this.props.tableName) return;
+		this.props.fetchRecordInfo(this.props.tableName, this.props.prikey);
 	}
 	
 	render() {

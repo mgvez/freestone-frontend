@@ -3,19 +3,52 @@ import PropTypes from 'prop-types';
 
 import { TYPE_FILE } from '../../freestone/schemaProps';
 import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
+import { white } from '../styles/variables';
 
-const css = {
+const imgCss = {
+	maxWidth: '100%',
 	maxHeight: THUMBNAIL_SIZE,
-	maxWidth: THUMBNAIL_SIZE,
+};
+
+const checkeredCss = {
+	maxWidth: '90%',
+	backgroundColor: '#fff',
+	// backgroundImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAJElEQVQoU2OcO3euFAMaSE5OfoYuxjgUFKI7GsTH5m7GIaAQAH+WHcBbjpirAAAAAElFTkSuQmCC)',
+	backgroundImage: 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2NkYGCQYsAEz9CFGIeIQix+wfQgyDODXSEANzEFjc0z43QAAAAASUVORK5CYII=)',
+};
+
+const fileLnkCss = {
+	height: THUMBNAIL_SIZE / 2,
+	width: '100%',
+	backgroundColor: '#fff',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	borderRadius: '3px',
+	fontSize: `${THUMBNAIL_SIZE / 8}px`,
+	fontWeight: '600',
+	color: 'black',
+	padding: '1em',
+};
+
+const imgLnkCss = {
+	height: THUMBNAIL_SIZE,
+	width: '100%',
+	backgroundColor: '#fff',
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'center',
+	borderRadius: '3px',
 };
 
 export default class FileThumbnail extends Component {
 	static propTypes = {
 		env: PropTypes.object,
 		dir: PropTypes.string,
-		val: PropTypes.string,
-		localVal: PropTypes.string,
+		val: PropTypes.string, //actual value in db of this file
+		localVal: PropTypes.string, //image not yet uploaded, as an input's file value
 		absolutePath: PropTypes.string,
+		thumbnailPath: PropTypes.string,
 		type: PropTypes.string,
 	};
 
@@ -23,25 +56,39 @@ export default class FileThumbnail extends Component {
 		return `${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`;
 	}
 
+	getAbsolutePath(absolutePath) {
+		return absolutePath && (absolutePath.indexOf('http') === 0 ? absolutePath : getProtocol() + absolutePath);
+	}
+
 	render() {
 
 		if (!this.props.val && !this.props.localVal && !this.props.absolutePath) return null;
 
 		let display;
+		let lnkCss;
+
 		if (this.props.type === TYPE_FILE) {
-			display = this.props.val;
+			const extMatch = this.props.val && this.props.val.match(/\.(.{2,5})$/);
+			const ext = (extMatch && extMatch[1].toUpperCase()) || 'file';
+			display = ext;
+			lnkCss = fileLnkCss;
 		} else {
 			//image
-			// console.log(this.props.absolutePath);
-			const absolutePath = this.props.absolutePath && (this.props.absolutePath.indexOf('http') === 0 ? this.props.absolutePath : getProtocol() + this.props.absolutePath);
 			//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
-			const thumbVal = (this.props.val && (absolutePath || `${this.props.env.thumbsDir}${this.props.dir}/${this.props.val}`)) || this.props.localVal;
-			display = <img src={thumbVal} style={css} />;
-		}
-		
-		const path = this.props.absolutePath || this.getLocalPath();
+			let thumbVal = this.props.localVal;
+			// console.log(this.props.absolutePath);
+			if (this.props.val) {
+				const absoluteThumbPath = this.getAbsolutePath(this.props.thumbnailPath);
+				thumbVal = absoluteThumbPath || `${this.props.env.thumbsDir}${this.props.dir}/${this.props.val}`;
+			}
+			display = <span style={checkeredCss}><img src={thumbVal} style={imgCss} /></span>;
+			lnkCss = imgLnkCss;
 
-		return <a href={path} target="_blank">{display}</a>;
+		}
+		const absolutePath = this.getAbsolutePath(this.props.absolutePath);		
+		const path = absolutePath || this.getLocalPath();
+
+		return <a href={path} target="_blank" style={lnkCss}>{display}</a>;
 
 	}
 }

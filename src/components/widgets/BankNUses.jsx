@@ -7,7 +7,7 @@ export default class BankNUses extends Component {
 		bankName: PropTypes.string,
 		//id de l'item de banque
 		id: PropTypes.string,
-		nUses: PropTypes.string,
+		nUses: PropTypes.number,
 		records: PropTypes.array,
 
 		fetchBankUses: PropTypes.func,

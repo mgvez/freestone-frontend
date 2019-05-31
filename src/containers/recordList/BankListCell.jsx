@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import BankImgListCell from '../../components/recordList/BankImgListCell';
+import BankListCell from '../../components/recordList/BankListCell';
 
 export default connect(
 	(state) => {
@@ -12,4 +12,4 @@ export default connect(
 	},
 	null
 	// dispatch => bindActionCreators({ swapAnimated }, dispatch)
-)(BankImgListCell);
+)(BankListCell);

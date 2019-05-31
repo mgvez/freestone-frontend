@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { BANK_FILE_FILE_ALIAS, BANK_FILE_TITLE_ALIAS, BANK_FILE_PATH_ALIAS } from '../../freestone/schemaProps';
+import { BANK_FILE_ALIAS, BANK_TITLE_ALIAS, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
 
 export default class BankFileThumbnail extends Component {
 	static propTypes = {
@@ -30,11 +30,11 @@ export default class BankFileThumbnail extends Component {
 		if (!this.props.id || !this.props.item) return null;
 		return (
 			<div className="bank-file-thumbnail">
-				<strong>{this.props.item[`${BANK_FILE_TITLE_ALIAS}${this.props.lang}`]}</strong>
+				<strong>{this.props.item[`${BANK_TITLE_ALIAS}${this.props.lang}`]}</strong>
 				<br />
-				<a href={this.props.item[BANK_FILE_PATH_ALIAS]} target="_blank">
+				<a href={this.props.item[BANK_PATH_ALIAS]} target="_blank">
 					<i className="fa fa-file" />&nbsp;
-					{this.props.item[BANK_FILE_FILE_ALIAS]}
+					{this.props.item[BANK_FILE_ALIAS]}
 				</a>
 			</div>
 		);

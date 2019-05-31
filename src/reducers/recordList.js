@@ -2,6 +2,7 @@ import { UNAUTHORIZED } from '../actions/auth';
 import { RECORD_LIST_API, SWAPPED_ANIMATED, RECORD_INFO_API } from '../actions/record';
 import { CLEAR_LIST } from '../actions/nav';
 import { SAVE_RECORD_API, SWAP_ORDER_API, DELETE_RECORD_API } from '../actions/save';
+import { CLEAR_DATA } from '../actions/dev';
 
 const initialState = {
 	table: null,
@@ -18,6 +19,7 @@ export default function(state = initialState, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case CLEAR_LIST:
+	case CLEAR_DATA:
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
 		return initialState;

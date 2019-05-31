@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import customStyle from '../../styles/modalStyles.js';
 
-import { PRIKEY_ALIAS, BANK_FILE_FILE_ALIAS, BANK_FILE_TABLE, BANK_FILE_TITLE_ALIAS, BANK_FILE_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_FILE_ALIAS, BANK_FILE_TABLE, BANK_TITLE_ALIAS, BANK_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
 import { callApi, getEndpoint } from '../../../freestone/api';
 
 import BankFileThumbnail from '../../../containers/fileThumbnail/BankFileThumbnail';
@@ -138,14 +138,14 @@ export default class BankFileInsert extends Component {
 					{
 						this.props.records.map((categ, idx) => {
 							const images = categ.images.map((record, imidx) => {
-								const comments = record[BANK_FILE_COMMENTS_ALIAS] ? (<div className="comments">
-									Comments : {record[BANK_FILE_COMMENTS_ALIAS]}
+								const comments = record[BANK_COMMENTS_ALIAS] ? (<div className="comments">
+									Comments : {record[BANK_COMMENTS_ALIAS]}
 								</div>) : null;
 								return (
 									<div key={`th${imidx}`} className="col-sm-3 col-md-2 bank-file-list-item">
 										<BankFileThumbnail id={record[PRIKEY_ALIAS]} />
-										<div className="label">{record[`${BANK_FILE_TITLE_ALIAS}${this.props.lang}`]}</div>
-										<div className="filename">{record[BANK_FILE_FILE_ALIAS]}</div>
+										<div className="label">{record[`${BANK_TITLE_ALIAS}${this.props.lang}`]}</div>
+										<div className="filename">{record[BANK_FILE_ALIAS]}</div>
 										{comments}
 										<button onClick={this.chooseFile} data-id={record[PRIKEY_ALIAS]} className="button-round-action">Choose</button>
 										<button onClick={this.editExistingRecord} data-id={record[PRIKEY_ALIAS]} className="button-round-warning">Edit</button>

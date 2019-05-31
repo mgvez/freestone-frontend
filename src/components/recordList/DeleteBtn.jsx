@@ -6,6 +6,7 @@ export default class DeleteBtn extends Component {
 		prikey: PropTypes.string,
 		tableName: PropTypes.string,
 		deleteRecord: PropTypes.func,
+		className: PropTypes.string,
 	};
 
 	constructor(props) {
@@ -46,7 +47,7 @@ export default class DeleteBtn extends Component {
 		}
 
 		return (
-			<div className="record-action red" onClick={this.process}><i className="fa fa-close"></i>Delete</div>
+			<div className={this.props.className || 'record-action red'} onClick={this.process}><i className="fa fa-close"></i>Delete</div>
 		);
 	}
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import InfosFcn from './InfosFcn';
+import InfosFcn from '../../containers/recordList/InfosFcn';
 import DuplicateBtn from '../../containers/recordList/DuplicateBtn';
 import OrderFcn from '../../containers/recordList/OrderFcn';
 import DeleteBtn from '../../containers/recordList/DeleteBtn';
@@ -24,7 +24,6 @@ export default class RecordInteractions extends Component {
 
 		rememberListPage: PropTypes.func,
 		lockScroll: PropTypes.func,
-		fetchRecordInfo: PropTypes.func,
 		fetchRecords: PropTypes.func,
 	};
 
@@ -72,11 +71,6 @@ export default class RecordInteractions extends Component {
 		window.removeEventListener('click', this.onWindowClick);
 	}
 
-	onRequestInfo = () => {
-		if (!this.props.table) return;
-		this.props.fetchRecordInfo(this.props.table.name, this.props.values[PRIKEY_ALIAS]);
-	}
-
 	render() {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
@@ -107,7 +101,7 @@ export default class RecordInteractions extends Component {
 					lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
 					createddate={this.props.values[CREATED_DATE_ALIAS]}
 					label={this.props.values[LABEL_PSEUDOFIELD_ALIAS]}
-					onRequestInfo={this.onRequestInfo}
+					tableName={this.props.table.name}
 				/>
 			</div>
 			{orderFcn}

@@ -107,7 +107,13 @@ export default class GenericFileInput extends Component {
 
 		const displayVal = this.props.type === TYPE_IMG ? val && (inputVal || origVal) : null;
 
-		const thumbnail = <FileThumbnail val={origVal === val ? val : null} absolutePath={this.props.absolutePath} localVal={this.state.localFile} dir={this.props.folder} type={this.props.type} />;
+		const thumbnail = (<FileThumbnail
+			val={origVal === val ? val : null}
+			absolutePath={this.props.absolutePath}
+			localVal={this.state.localFile}
+			dir={this.props.folder}
+			type={this.props.type}
+		/>);
 		const id = `${this.props.fieldId}__${this.props.recordId}`;
 
 		let fileInfos;

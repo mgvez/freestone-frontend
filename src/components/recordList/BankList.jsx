@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
 
-import Heading from './Heading';
-import BankImgListCell from '../../containers/recordList/BankImgListCell';
+import BankListCell from '../../containers/recordList/BankListCell';
 
 export default class BankList extends Component {
 	static propTypes = {
@@ -47,17 +46,6 @@ export default class BankList extends Component {
 
 	render() {
 
-		let heading = null;
-		if (this.props.isLarge) {
-			heading = (<thead>
-				<Heading
-					fields={this.props.searchableFields}
-					params={this.props.params}
-					isSelfTree={this.props.table.isSelfTree}
-					fetchList={this.fetchList}
-				/>
-			</thead>);
-		}
 		return (
 			<section>
 			{
@@ -78,7 +66,7 @@ export default class BankList extends Component {
 							{
 								group.records.map((record) => {
 									const pk = record[PRIKEY_ALIAS];
-									return <BankImgListCell key={`${this.props.table.name}_${pk}`} record={record} />;
+									return <BankListCell key={`${this.props.table.name}_${pk}`} record={record} table={this.props.table} />;
 								})
 							}
 							</div>

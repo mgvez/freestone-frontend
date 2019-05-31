@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { TweenMax } from '../../utils/Greensock';
 
 import RecordInteractions from '../../containers/recordList/RecordInteractions';
-import { createCells } from './createCells';
+import { getFieldElements } from './getFieldElements';
 import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
 
 export default class Row extends Component {
@@ -62,7 +62,7 @@ export default class Row extends Component {
 		// console.log(values);
 		const interactions = this.getInteractions();
 		if (this.props.isLarge) {
-			const label = createCells(table, fields, values, 'span');
+			const label = getFieldElements(table, fields, values, 'span');
 
 			return (
 				<tr className={`level-${level}`} onMouseOver={this.handleHover}>
@@ -75,7 +75,7 @@ export default class Row extends Component {
 			);
 		}
 
-		const content = createCells(table, fields, values, 'div', { className: 'mobile-cell' });
+		const content = getFieldElements(table, fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr className="selfjoin-row">
 				<td>
@@ -96,7 +96,7 @@ export default class Row extends Component {
 
 		//ROW NORMAL, LARGE
 		if (this.props.isLarge) {
-			content = createCells(table, fields, values);
+			content = getFieldElements(table, fields, values);
 
 			return (
 				<tr ref={(el) => { this.recordRow = el; }} onMouseOver={this.handleHover}>
@@ -109,7 +109,7 @@ export default class Row extends Component {
 		}
 
 		//ROW NORMAL, MOBILE
-		content = createCells(table, fields, values, 'div', { className: 'mobile-cell' });
+		content = getFieldElements(table, fields, values, 'div', { className: 'mobile-cell' });
 		return (
 			<tr>
 				<td>

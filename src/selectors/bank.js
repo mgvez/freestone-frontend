@@ -1,7 +1,7 @@
 
 import { createSelector } from 'reselect';
 import { schemaSelector } from './schema';
-import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_FILE_CATEG_ALIAS } from '../freestone/schemaProps';
+import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_CATEG_ALIAS } from '../freestone/schemaProps';
 import { THUMBNAIL_SIZE } from '../freestone/settings';
 
 
@@ -46,7 +46,7 @@ export function bankSelector(bankName) {
 		[schemaSelector, recordsSelector, languageSelector],
 		(schema, stateRecords, lang) => {
 			const bankTable = bankName === BANK_IMG_TABLE ? BANK_IMG_TABLE : BANK_FILE_TABLE;
-			const bankCategAlias = bankName + '_' + (bankName === BANK_IMG_TABLE ? BANK_IMG_CATEG_ALIAS : BANK_FILE_CATEG_ALIAS);
+			const bankCategAlias = bankName + '_' + (bankName === BANK_IMG_TABLE ? BANK_IMG_CATEG_ALIAS : BANK_CATEG_ALIAS);
 
 			const tableId = schema.byName[bankTable];
 			const table = schema.tables[tableId];

@@ -1,5 +1,5 @@
 
-export const THUMBNAIL_SIZE = 400;
+export const THUMBNAIL_SIZE = 300;
 
 export const MAX_TAB_LABEL_LENGTH = 30;
 const PROD_FREESTONE_LOCATION = '';

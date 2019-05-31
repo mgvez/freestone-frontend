@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 
 import customStyle from '../../styles/modalStyles.js';
 
-import { PRIKEY_ALIAS, BANK_IMG_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_IMG_TITLE_ALIAS, BANK_IMG_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_FILE_ALIAS, BANK_IMG_TABLE, BANK_IMG_DIM_ALIAS, BANK_TITLE_ALIAS, BANK_COMMENTS_ALIAS } from '../../../freestone/schemaProps';
 import { callApi, getEndpoint } from '../../../freestone/api';
 
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
@@ -138,14 +138,14 @@ export default class BankImgInsert extends Component {
 					{
 						this.props.records.map((categ, idx) => {
 							const images = categ.images.map((record, imidx) => {
-								const comments = record[`${BANK_IMG_TABLE}_${BANK_IMG_COMMENTS_ALIAS}`] ? (<div className="comments">
-									Comments : {record[`${BANK_IMG_TABLE}_${BANK_IMG_COMMENTS_ALIAS}`]}
+								const comments = record[`${BANK_IMG_TABLE}_${BANK_COMMENTS_ALIAS}`] ? (<div className="comments">
+									Comments : {record[`${BANK_IMG_TABLE}_${BANK_COMMENTS_ALIAS}`]}
 								</div>) : null;
 								return (
 									<div key={`th${imidx}`} className="col-sm-3 col-md-2 bank-image-list-item">
 										<BankImgThumbnail id={record[PRIKEY_ALIAS]} />
-										<div className="label">{record[`${BANK_IMG_TABLE}_${BANK_IMG_TITLE_ALIAS}${this.props.lang}`]}</div>
-										<div className="filename">{record[`${BANK_IMG_TABLE}_${BANK_IMG_FILE_ALIAS}`]}</div>
+										<div className="label">{record[`${BANK_IMG_TABLE}_${BANK_TITLE_ALIAS}${this.props.lang}`]}</div>
+										<div className="filename">{record[`${BANK_IMG_TABLE}_${BANK_FILE_ALIAS}`]}</div>
 										<div className="size">
 											Original size : {record[`${BANK_IMG_TABLE}_${BANK_IMG_DIM_ALIAS}`]}
 										</div>
