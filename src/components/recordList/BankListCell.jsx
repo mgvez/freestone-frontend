@@ -5,7 +5,9 @@ import { NavLink } from 'react-router-dom';
 
 import DeleteBtn from '../../containers/recordList/DeleteBtn';
 import InfosFcn from '../../containers/recordList/InfosFcn';
+import SelectBankItemBtn from '../../containers/recordList/SelectBankItemBtn';
 import BankNUses from '../../containers/widgets/BankNUses';
+import { NavLinkButton } from '../../styles/Button';
 
 import { 
 	PRIKEY_ALIAS,
@@ -76,7 +78,7 @@ export default class BankListCell extends Component {
 					val={record[`${tableName}_${BANK_FILE_ALIAS}`]}
 					absolutePath={filePath}
 					thumbnailPath={thumbPath}
-					dir={record[`${tableName}_${BANK_FOLDER_ALIAS}`]}
+					dir={record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_FOLDER_ALIAS}`]}
 					type={bankName === BANK_DOCS_NAME ? TYPE_FILE : TYPE_IMG}
 				/>
 				<div className="label">{record[`${tableName}_${BANK_TITLE_ALIAS}${this.props.lang}`]}</div>
@@ -95,11 +97,11 @@ export default class BankListCell extends Component {
 					tableName={tableName}
 				/>
 
-				<button onClick={this.chooseImage} data-id={prikeyVal} className="button-round-action">Choose</button>
+				<SelectBankItemBtn bankItemId={prikeyVal} />
 
-				<NavLink to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="button-round-warning">
+				<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" round warn >
 					<i className="fa fa-pencil"></i>Edit
-				</NavLink>
+				</NavLinkButton>
 				{!nUses ? <DeleteBtn key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} /> : null}
 			</div>
 		);

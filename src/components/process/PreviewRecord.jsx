@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
-import { accentPrimary, backgroundMain } from '../styles/variables';
+import { accentPrimary, backgroundMain } from '../../styles/Colors';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
 
 const ContainerDiv = styled.div `

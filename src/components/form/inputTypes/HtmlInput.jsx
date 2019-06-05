@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // import TinyMCEInput from 'react-tinymce-input';
+import { TYPE_IMG, BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../../../freestone/schemaProps';
 import { Editor as TinyMCEInput } from '@tinymce/tinymce-react';
 
 import LinkInsert from '../helpers/LinkInsert';
-import BankImgInsert from '../../../containers/form/helpers/BankImgInsert';
-import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
 
 export default class HtmlInput extends Component {
 	static propTypes = {
@@ -14,11 +13,13 @@ export default class HtmlInput extends Component {
 		fetchVariable: PropTypes.func,
 		lang: PropTypes.string,
 		recordId: PropTypes.string,
+		route: PropTypes.string,
 
 		field: PropTypes.object,
 		tinymceConfig: PropTypes.object,
 		val: PropTypes.any,
-
+		goTo: PropTypes.func,
+		setupBankSelect: PropTypes.func,
 	};
 	
 	constructor(props) {
@@ -30,14 +31,18 @@ export default class HtmlInput extends Component {
 			// console.log(command);
 			switch (command) {
 			case 'insertLink':
-			case 'addImageFromBank':
-			case 'addDocFromBank':
 				this.setState({
 					command: {
 						name: command,
 						params: e.value,
 					},
 				});
+				break;
+			case 'addImageFromBank':
+				this.gotoSelect(BANK_IMG_TABLE);
+				break;
+			case 'addDocFromBank':
+				this.gotoSelect(BANK_DOCS_TABLE);
 				break;
 			default:
 				break;
@@ -73,6 +78,17 @@ export default class HtmlInput extends Component {
 		this.props.changeVal(evt.target.getContent());
 	};
 
+	gotoSelect = (bankTable) => {
+		this.props.setupBankSelect(
+			this.props.field.table_id,
+			this.props.recordId,
+			this.props.field.id,
+			this.props.field.type,
+			this.props.route
+		);
+		this.props.goTo(`/list/${bankTable}/`);
+	}
+
 	setContentFromPlugin = (v) => {
 		this.props.changeVal(v);
 	};
@@ -91,10 +107,6 @@ export default class HtmlInput extends Component {
 			switch (name) {
 			case 'insertLink':
 				return <LinkInsert onClose={this.closeModal} setVal={this.setContentFromPlugin} {...params} lang={this.props.lang} />;
-			case 'addImageFromBank':
-				return <BankImgInsert onClose={this.closeModal} setMarkup={this.setContentFromPlugin} lang={this.props.lang} {...params} />;
-			case 'addDocFromBank':
-				return <BankFileInsert onClose={this.closeModal} setMarkup={this.setContentFromPlugin} lang={this.props.lang} {...params} />;
 			default:
 				break;
 			}

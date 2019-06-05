@@ -29,6 +29,7 @@ export default (
 				path="/list/:tableName/:page?/:search?" 
 				render={
 					(props) => {
+						// console.log(props.match);
 						const qstr = props.location.search.substring(1);
 						const searchParams = qstr ? JSON.parse('{"' + decodeURI(qstr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
 						const params = {

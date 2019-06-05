@@ -1,6 +1,7 @@
 
 import { createSelector } from 'reselect';
 import { TINYMCE_CONFIG } from '../tinymce/default';
+import { routeSelector } from './route';
 
 const settingsSelector = state => state.freestone.env.clientVariables.settings;
 const cssPathSelector = state => state.freestone.env.freestone.pathCss;
@@ -9,8 +10,8 @@ const clientComponentsSelector = state => state.freestone.env.freestone.clientCo
 const requestedComponentsNameSelector = (state, props) => props.name;
 
 export const mceConfigSelector = createSelector(
-	[settingsSelector, cssPathSelector, clientPathSelector],
-	(settings, cssPath, clientPath) => {
+	[settingsSelector, cssPathSelector, clientPathSelector, routeSelector],
+	(settings, cssPath, clientPath, route) => {
 		if (!settings) return {};
 
 		const config = (settings && settings.tinymceConfig) || {};
@@ -25,6 +26,7 @@ export const mceConfigSelector = createSelector(
 		
 		return {
 			tinymceConfig,
+			route: route.path,
 		};
 	}
 );

@@ -9,7 +9,7 @@ import PermissionsForm from '../../containers/permissions/PermissionsForm';
 
 import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
-import InScroll from '../../containers/InScroll'; 
+import InScroll from '../../containers/utils/InScroll'; 
 
 const ACTION_STAY_FORM = 'stay_form';
 const ACTION_CALLBACK = 'callback';

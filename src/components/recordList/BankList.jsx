@@ -66,7 +66,11 @@ export default class BankList extends Component {
 							{
 								group.records.map((record) => {
 									const pk = record[PRIKEY_ALIAS];
-									return <BankListCell key={`${this.props.table.name}_${pk}`} record={record} table={this.props.table} />;
+									return (<BankListCell 
+										key={`${this.props.table.name}_${pk}`}
+										record={record}
+										table={this.props.table}
+									/>);
 								})
 							}
 							</div>

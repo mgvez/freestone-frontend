@@ -1,36 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_IMG } from '../../../freestone/schemaProps';
+import { TYPE_IMG, BANK_IMG_TABLE } from '../../../freestone/schemaProps';
 
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
-import BankImgInsert from '../../../containers/form/helpers/BankImgInsert';
 import GenericFileInput from '../genericInputs/GenericFileInput';
 
 export default class BankImgInput extends Component {
 	static propTypes = {
 		changeVal: PropTypes.func,
+		bankDestination: PropTypes.object,
+		bankRecord: PropTypes.object,
 		lang: PropTypes.string,
 		field: PropTypes.object,
 		recordId: PropTypes.string,
+		route: PropTypes.string,
 		val: PropTypes.any,
+		goTo: PropTypes.func,
+		setupBankSelect: PropTypes.func,
 	};
 
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			isChoosing: false,
-		};
+	gotoSelect = () => {
+		this.props.setupBankSelect(
+			this.props.field.table_id,
+			this.props.recordId,
+			this.props.field.id,
+			this.props.field.type,
+			this.props.route
+		);
+		this.props.goTo(`/list/${BANK_IMG_TABLE}/`);
 	}
-
-	openModal = () => {
-		this.setState({ isChoosing: true });
-	}
-
-	closeModal = () => {
-		this.setState({ isChoosing: false });
-	};
 
 	handleEditorChange = (v) => {
 		// console.log('set val', v);
@@ -43,15 +42,11 @@ export default class BankImgInput extends Component {
 
 	render() {
 
-		if (this.state.isChoosing) {
-			return <BankImgInsert onClose={this.closeModal} setVal={this.handleEditorChange} lang={this.props.lang} />;
-		}
-
 		const bankImgId = Number(this.props.val);
 		const hasLocalFile = bankImgId !== 0 && !bankImgId;
 		const localFileId = hasLocalFile ? this.props.val : null;
 
-		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.openModal} /> : null;
+		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} /> : null;
 
 		const label = bankImgId ? 'Change' : 'Choose image from bank';
 		const deleteBtn = bankImgId ? <button className="button-round-danger-bordered" onClick={this.delete}>Remove value</button> : undefined;
@@ -71,7 +66,7 @@ export default class BankImgInput extends Component {
 		return (
 			<div className="bank-image-input-thumbnail">
 				{bankThumbnail}
-				<button className="button-round-action-bordered" onClick={this.openModal}>{label}</button>
+				<button className="button-round-action-bordered" onClick={this.gotoSelect}>{label}</button>
 				{deleteBtn}
 				{localFileInput}
 			</div>

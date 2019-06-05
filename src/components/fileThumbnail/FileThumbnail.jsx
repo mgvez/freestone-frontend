@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { TYPE_FILE } from '../../freestone/schemaProps';
 import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
-import { white } from '../styles/variables';
 
 const imgCss = {
 	maxWidth: '100%',
@@ -57,7 +56,11 @@ export default class FileThumbnail extends Component {
 	}
 
 	getAbsolutePath(absolutePath) {
-		return absolutePath && (absolutePath.indexOf('http') === 0 ? absolutePath : getProtocol() + absolutePath);
+		if (!absolutePath) return null;
+		if (absolutePath.indexOf('http') === 0) return absolutePath;
+		if (absolutePath.indexOf('//') === 0) return getProtocol() + absolutePath;
+		
+		return getProtocol() + `${this.props.env.domain}${absolutePath}`;
 	}
 
 	render() {
@@ -76,7 +79,7 @@ export default class FileThumbnail extends Component {
 			//image
 			//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
 			let thumbVal = this.props.localVal;
-			// console.log(this.props.absolutePath);
+			// console.log(this.props);
 			if (this.props.val) {
 				const absoluteThumbPath = this.getAbsolutePath(this.props.thumbnailPath);
 				thumbVal = absoluteThumbPath || `${this.props.env.thumbsDir}${this.props.dir}/${this.props.val}`;

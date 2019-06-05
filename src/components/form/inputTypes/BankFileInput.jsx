@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_IMG } from '../../../freestone/schemaProps';
+import { TYPE_IMG, BANK_DOCS_TABLE } from '../../../freestone/schemaProps';
 
 import BankFileThumbnail from '../../../containers/fileThumbnail/BankFileThumbnail';
-import BankFileInsert from '../../../containers/form/helpers/BankFileInsert';
 import GenericFileInput from '../genericInputs/GenericFileInput';
 
 export default class BankFileInput extends Component {
@@ -14,23 +13,10 @@ export default class BankFileInput extends Component {
 
 		field: PropTypes.object,
 		recordId: PropTypes.string,
+		route: PropTypes.string,
 		val: PropTypes.any,
-	};
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			isChoosing: false,
-		};
-	}
-
-	openModal = () => {
-		this.setState({ isChoosing: true });
-	}
-
-	closeModal = () => {
-		this.setState({ isChoosing: false });
+		goTo: PropTypes.func,
+		setupBankSelect: PropTypes.func,
 	};
 
 	handleEditorChange = (v) => {
@@ -42,11 +28,18 @@ export default class BankFileInput extends Component {
 		this.handleEditorChange(0);
 	};
 
-	render() {
+	gotoSelect = () => {
+		this.props.setupBankSelect(
+			this.props.field.table_id,
+			this.props.recordId,
+			this.props.field.id,
+			this.props.field.type,
+			this.props.route
+		);
+		this.props.goTo(`/list/${BANK_DOCS_TABLE}/`);
+	}
 
-		if (this.state.isChoosing) {
-			return <BankFileInsert onClose={this.closeModal} setVal={this.handleEditorChange} lang={this.props.lang} />;
-		}
+	render() {
 
 		const bankFileId = Number(this.props.val);
 		const hasLocalFile = bankFileId !== 0 && !bankFileId;
@@ -72,7 +65,7 @@ export default class BankFileInput extends Component {
 		return (
 			<div className="bank-file-input-thumbnail">
 				{bankThumbnail}
-				<button className="button-round-action-bordered" onClick={this.openModal}>{label}</button>
+				<button className="button-round-action-bordered" onClick={this.gotoSelect}>{label}</button>
 				{deleteBtn}
 				{localFileInput}
 			</div>

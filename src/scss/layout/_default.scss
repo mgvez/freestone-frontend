@@ -1,14 +1,6 @@
 
 
 body {
-	overflow-x: hidden;
-	background: $color-background-main;
+	
 }
 
-.main-content {
-	padding-top: $header-height;
-	padding-left: $nav-width;
-	background: $color-background-main;
-
-	transition: padding 0.3s;
-}

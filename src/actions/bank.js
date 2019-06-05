@@ -4,6 +4,8 @@ import { createRequestTypes } from './apiAction';
 export const BANK_IMAGE_API = createRequestTypes('BANK_IMAGE_API');
 export const BANK_FILE_API = createRequestTypes('BANK_FILE_API');
 export const BANK_USES_API = createRequestTypes('BANK_USES_API');
+export const BANK_SETUP_SELECT = 'BANK_SETUP_SELECT';
+export const BANK_CANCEL_SELECT = 'BANK_CANCEL_SELECT';
 
 
 export function fetchBankImage(id, size) {
@@ -36,6 +38,28 @@ export function fetchBankFile(id) {
 				types: BANK_FILE_API,
 				route: `bank/files/item/${id}`,
 			},
+		});
+	};
+}
+
+//indicates that we are in the process of choosing a bank item to put its value in a field of a record
+export function setupBankSelect(tableId, recordId, fieldId, fieldType, returnTo) {
+	return (dispatch) => {
+		return dispatch({
+			type: BANK_SETUP_SELECT,
+			tableId,
+			recordId,
+			fieldId,
+			fieldType,
+			returnTo,
+		});
+	};
+}
+
+export function cancelBankSelect() {
+	return (dispatch) => {
+		return dispatch({
+			type: BANK_CANCEL_SELECT,
 		});
 	};
 }

@@ -5,10 +5,10 @@ import TextInput from './inputTypes/TextInput';
 import BoolInput from './inputTypes/BoolInput';
 import FileInput from './inputTypes/FileInput';
 import DateInput from './inputTypes/DateInput';
-import BankImgInput from './inputTypes/BankImgInput';
-import BankFileInput from './inputTypes/BankFileInput';
 import UrlInput from './inputTypes/UrlInput';
 
+import BankImgInput from '../../containers/form/inputTypes/BankImgInput';
+import BankFileInput from '../../containers/form/inputTypes/BankFileInput';
 import HotspotInput from '../../containers/form/inputTypes/HotspotInput';
 import NoEditInput from '../../containers/form/inputTypes/NoEditInput';
 import HtmlInput from '../../containers/form/inputTypes/HtmlInput';

@@ -1,8 +1,9 @@
 
 import { createSelector } from 'reselect';
 import { schemaSelector } from './schema';
-import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_FILE_TABLE, BANK_CATEG_ALIAS } from '../freestone/schemaProps';
+import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_DOCS_TABLE, BANK_CATEG_ALIAS } from '../freestone/schemaProps';
 import { THUMBNAIL_SIZE } from '../freestone/settings';
+import { routeSelector } from './route';
 
 
 const recordsSelector = state => state.freestone.recordList;
@@ -10,11 +11,14 @@ const recordsSelector = state => state.freestone.recordList;
 const bankImgSelector = state => state.freestone.bank.images;
 const bankFileSelector = state => state.freestone.bank.files;
 const allUsesSelector = state => state.freestone.bank.uses;
+const selectionSelector = state => state.freestone.bank.selection;
 const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
+const recordsFormSelector = state => state.freestone.recordForm.records;
 
 const idSelector = (state, props) => props.id;
 const maxSizeSelector = (state, props) => props.maxSize || THUMBNAIL_SIZE;
 const bankNameSelector = (state, props) => props.bankName;
+
 
 function buildByCategory(records, categFieldAlias) {
 	const categs = records && records.reduce((all, record) => {
@@ -45,7 +49,7 @@ export function bankSelector(bankName) {
 	return createSelector(
 		[schemaSelector, recordsSelector, languageSelector],
 		(schema, stateRecords, lang) => {
-			const bankTable = bankName === BANK_IMG_TABLE ? BANK_IMG_TABLE : BANK_FILE_TABLE;
+			const bankTable = bankName === BANK_IMG_TABLE ? BANK_IMG_TABLE : BANK_DOCS_TABLE;
 			const bankCategAlias = bankName + '_' + (bankName === BANK_IMG_TABLE ? BANK_IMG_CATEG_ALIAS : BANK_CATEG_ALIAS);
 
 			const tableId = schema.byName[bankTable];
@@ -107,6 +111,31 @@ export const bankUsesSelector = createSelector(
 		const records = allUses[bankName] && allUses[bankName][id];
 		return {
 			records,
+		};
+	}
+);
+
+export const bankSelectionSelector = createSelector(
+	[selectionSelector, routeSelector, recordsFormSelector],
+	(selection, route, records) => {
+		// console.log(selection);
+		const { destination, bankRecord } = selection;
+		// console.log(table);
+
+		//find value of target field, where we want to put the value of the bank item
+		let targetFieldValue;
+		if (destination) {
+			const { tableId, fieldId, recordId } = destination;
+			targetFieldValue = records[tableId] && records[tableId][recordId] && records[tableId][recordId][fieldId];
+		}
+
+		return {
+			isChoosingBankItem: !!selection.destination,
+			gotoOnChoose: destination && destination.returnTo,
+			bankDestination: destination,
+			bankRecord,
+			targetFieldValue,
+			route: route.path,
 		};
 	}
 );

@@ -81,6 +81,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.9.0",
     "jwt-decode": "^1.5.0",
+    "left-pad": "^1.3.0",
     "md5": "^2.1.0",
     "memoize-one": "^5.0.4",
     "node-sass": "^4.11.0",

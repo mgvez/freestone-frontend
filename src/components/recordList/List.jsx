@@ -6,7 +6,7 @@ import Paging from './Paging';
 import StandardList from './StandardList';
 import BankList from './BankList';
 import ListSearch from './ListSearch';
-import InScroll from '../../containers/InScroll';
+import InScroll from '../../containers/utils/InScroll';
 import TablePermissions from '../../containers/permissions/TablePermissions';
 import ListFetch from '../../containers/process/ListFetch';
 import createRecord from '../../freestone/createRecord';

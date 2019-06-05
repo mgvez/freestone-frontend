@@ -85,7 +85,7 @@ export default class SingleRecord extends Component {
 		}
 
 		//if field is language-specific, display it only if the current language is the field's
-		// console.log(field.name, field.language, this.props.language);
+		// console.log(this.props);
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
 		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
 		// console.log(this.props.record);
@@ -96,7 +96,7 @@ export default class SingleRecord extends Component {
 			recordId={this.props.recordId}
 			val={this.props.record[field.id]}
 			absolutePath={this.props.record[`${field.id}${BANK_PATH_ALIAS}`]}
-			origVal={this.props.recordUnaltered[field.id]}
+			origVal={this.props.recordUnaltered && this.props.recordUnaltered[field.id]}
 			parentRecordId={this.props.parentRecordId}
 			setFieldVal={this.props.setFieldVal}
 			env={this.props.env}
@@ -148,7 +148,7 @@ export default class SingleRecord extends Component {
 		let sub;
 
 		// console.log('render', this.props.table.name);
-		// console.log('render', this.props.table);
+		// console.log('render', this.props.table, this.props.record);
 		if (this.props.table && this.props.record) {
 
 			let deleteBtn;

@@ -5,6 +5,11 @@ import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 import qstrParams from '../utils/qstrParams';
 import Script from 'react-load-script';
 
+import styled from 'styled-components';
+import GlobalStyles from '../styles/GlobalStyles';
+import cssVariables from '../styles/Variables';
+import colors from '../styles/Colors';
+
 /* application components */
 import Footer from './footer/Footer';
 import Shortcuts from '../containers/utils/Shortcuts';
@@ -24,6 +29,14 @@ import 'font-awesome/scss/font-awesome.scss';
 function noop() {
 
 }
+
+
+const MainContent = styled.div`
+	padding-top: ${cssVariables.headerHeight};
+	padding-left: ${cssVariables.navWidth};
+	background: ${colors.backgroundMain};
+	transition: padding 0.3s;
+`;
 
 export default class Freestone extends Component {
 	static propTypes = {
@@ -90,22 +103,24 @@ export default class Freestone extends Component {
 		if (onLogin) {
 			// console.log(this.props.env);
 			const loc = onLogin === 'home' ? '' : onLogin;
-			const root = `//${this.props.freestone.domain}/${loc}?jwt=${this.props.jwt}`;
+			const root = `//${this.props.freestone.domain}${loc}?jwt=${this.props.jwt}`;
 			window.location = root;
 			return null;
 		}
 
 		return (
 			<Shortcuts>
+				<GlobalStyles />
+
 				<RecordPreview>
 					<Nav />
-					<div className="main-content">
+					<MainContent>
 						<SiteHeader />
 						<LoadedRecords />
 						{this.props.children}
 						<Footer />
 						<Errors {...this.props} />
-					</div>
+					</MainContent>
 					<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 					{
 						this.props.freestone.clientScripts.map((scriptInfos) => {
