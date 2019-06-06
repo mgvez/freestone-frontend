@@ -1,13 +1,16 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+
 
 import DeleteBtn from '../../containers/recordList/DeleteBtn';
 import InfosFcn from '../../containers/recordList/InfosFcn';
 import SelectBankItemBtn from '../../containers/recordList/SelectBankItemBtn';
 import BankNUses from '../../containers/widgets/BankNUses';
 import { NavLinkButton } from '../../styles/Button';
+import colors from '../../styles/Colors';
+import { THUMBNAIL_SIZE } from '../../freestone/settings';
 
 import { 
 	PRIKEY_ALIAS,
@@ -31,6 +34,14 @@ import {
 
 
 import FileThumbnail from '../../containers/fileThumbnail/FileThumbnail';
+
+const StyledCell = styled.div`
+	background: ${colors.gray90};
+	border: 1px ${colors.gray76} solid;
+	margin: 12px;
+	width: ${THUMBNAIL_SIZE}px;
+
+`;
 
 export default class BankListCell extends Component {
 	static propTypes = {
@@ -73,7 +84,7 @@ export default class BankListCell extends Component {
 		);
 
 		return (
-			<div className="col-sm-4 col-md-3 bank-image-list-item">
+			<StyledCell className="">
 				<FileThumbnail
 					val={record[`${tableName}_${BANK_FILE_ALIAS}`]}
 					absolutePath={filePath}
@@ -103,7 +114,7 @@ export default class BankListCell extends Component {
 					<i className="fa fa-pencil"></i>Edit
 				</NavLinkButton>
 				{!nUses ? <DeleteBtn key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} /> : null}
-			</div>
+			</StyledCell>
 		);
 	}
 }

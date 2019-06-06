@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	html {
-		position: fixed;
+
 	}
 
 	body {

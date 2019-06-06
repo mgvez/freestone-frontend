@@ -1,15 +1,8 @@
 
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import colors from './Colors';
+import cssVars from './Variables';
 
-const fontFamilyBase = '"Open Sans", Helvetica, Arial, sans';
-
-const fontWeightLight = 300;
-const fontWeightNormal = 400;
-const fontWeightMedium = 500;
-const fontWeightSemibold = 600;
-const fontWeightBold = 700;
-const fontWeightExtrabold = 800;
 
 const Texts = css`
 
@@ -18,37 +11,40 @@ const Texts = css`
 	}
 
 	body {
-		font-family: ${fontFamilyBase};
-		font-size: 14px;
+		font-family: ${cssVars.fontFamilyBase};
+		font-size: ${cssVars.fontSizeText};
 	}
 
 `;
 
 const title = `line-height: 1;
 	margin: 0;
-	font-family: ${fontFamilyBase};
+	font-family: ${cssVars.fontFamilyBase};
 	text-transform: none;
-	font-weight: ${fontWeightLight};`;
+	font-weight: ${cssVars.fontWeightLight};`;
 
-export const Heading1 = css`
+export const Heading1 = styled.h1`
 	${title}
+	font-size: ${cssVars.fontSizeTitle1};
 	margin-bottom: 10px;
 `;
 
-export const Heading2 = css`
+export const Heading2 = styled.h2`
 	${title}
+	font-size: ${cssVars.fontSizeTitle2};
+	font-weight: ${cssVars.fontWeightNormal};
 	margin-bottom: 40px;
 `;
 
-export const Heading3 = css`
+export const Heading3 = styled.h3`
 	${title}
-	font-size: 18px;
-	font-weight: ${fontWeightExtrabold};
+	font-size: ${cssVars.fontSizeTitle3};
+	font-weight: ${cssVars.fontWeightExtrabold};
 `;
 
-export const Heading4 = css`
+export const Heading4 = styled.h4`
 	${title}
-	font-size: 16px;
+	font-size: ${cssVars.fontSizeTitle4};
 	margin: 10px 0 6px;
-	font-weight: ${fontWeightBold};
+	font-weight: ${cssVars.fontWeightBold};
 `;

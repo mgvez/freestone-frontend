@@ -1,6 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import styled from 'styled-components';
+
+import cssVariables from '../../styles/Variables';
+import { Button } from '../../styles/Button';
+import colors from '../../styles/Colors';
+
+
+const StyledDiv = styled.div`
+
+	line-height: 30px;
+	padding: 0 10px;
+	position: relative;
+	cursor: pointer;
+	font-size: 16px;
+
+	&:not([data-num="0"]):after {
+		position: absolute;
+			top: -7px;
+			right: -4px;
+		content: attr(data-num);
+		font-family: ${cssVariables.fontFamilyBase};
+		font-weight: ${cssVariables.fontWeightExtrabold};
+		color: ${colors.white};
+		font-size: 11px;
+		background: ${colors.accentPrimary};
+		padding: 4px 5px;
+		height: auto;
+		line-height: 11px;
+		border-radius: 4px;
+	}
+`;
+
 export default class LoadedRecordsToggler extends Component {
 	static propTypes = {
 		nLoadedRecords: PropTypes.number,
@@ -17,12 +49,13 @@ export default class LoadedRecordsToggler extends Component {
 	};
 
 	render() {
-		const className = this.props.isClose ? 'fa-close' : 'fa-pencil';
-		const buttonClassName = this.props.isClose ? 'button-circle-small' : '';
 
+		if (this.props.isClose) {
+			return <Button circle small onClick={this.loadedRecordsToggler}><i className="fa fa-close"></i></Button>;
+		}
 
-		return (<div className={`${buttonClassName} loaded-records-toggler `} onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
-			<i className={`fa ${className}`}></i>
-		</div>);
+		return (<StyledDiv onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
+			<i className="fa fa-pencil"></i>
+		</StyledDiv>);
 	}
 }

@@ -90,6 +90,7 @@ export const listRecordsSelector = createSelector(
 				const groupFieldLabelAlias = table.groupField.listAlias;
 				groupedRecords = records.reduce((carry, record) => {
 					const groupVal = record[groupFieldAlias];
+					// console.log(groupVal);
 					let group = carry.find(candidate => candidate.val === groupVal);
 					if (!group) {
 						let groupValue = record[groupFieldLabelAlias];

@@ -4,6 +4,13 @@ import PropTypes from 'prop-types';
 import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
 
 import BankListCell from '../../containers/recordList/BankListCell';
+import { Heading2 } from '../../styles/Texts';
+import styled, { css } from 'styled-components';
+
+const StyledContainer = styled.div`
+	display:flex;
+	flex-wrap: wrap;
+`;
 
 export default class BankList extends Component {
 	static propTypes = {
@@ -53,16 +60,14 @@ export default class BankList extends Component {
 					let groupHeading;
 					if (group.label) {
 						groupHeading = (
-							<div className="group-heading">
-								<strong>{group.label}</strong>
-							</div>
+							<Heading2>{group.label}</Heading2>
 						);
 					}
 
 					return (
 						<div key={groupIdx}>
 							{groupHeading}
-							<div className="row">
+							<StyledContainer>
 							{
 								group.records.map((record) => {
 									const pk = record[PRIKEY_ALIAS];
@@ -73,7 +78,7 @@ export default class BankList extends Component {
 									/>);
 								})
 							}
-							</div>
+							</StyledContainer>
 						</div>
 					);
 
