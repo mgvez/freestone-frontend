@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-
 import FormHeaderCore from '../../containers/header/FormHeaderCore'; 
+import { topHeaderHeight } from './SiteHeader'; 
 
 /*
 	Will make the form header fixed / inline as needed
@@ -50,18 +50,16 @@ export default class FormHeader extends Component {
 
 	onScroll = () => {
 		const st = window.pageYOffset;
-
-		const topHeaderHeight = 60;
-		this.setState({ isFixed: (st >= this.staticHeight + topHeaderHeight) });
+		this.setState({ isFixed: (st >= topHeaderHeight + (this.staticHeight / 2)) });
 	}
 
-	setHeight = (isLight, h) => {
+	setHeight = (isLight, h, m) => {
 		if (!isLight) {
 			this.staticHeight = h;
 			this.padStyle = this.padStyle || {
 
 			};
-			this.padStyle.height = `${h}px`;
+			this.padStyle.height = `${h + m}px`;
 		}
 	}
 
@@ -93,7 +91,7 @@ export default class FormHeader extends Component {
 		const pad = this.state.isFixed ? (<div style={this.padStyle} />) : null;
 
 		return (
-			<div className="fixed-header" data-fixed={this.state.isFixed}>
+			<div>
 				{pad}
 				<FormHeaderCore {...this.props} isLight={this.state.isFixed}>
 					{this.props.children}

@@ -10,8 +10,12 @@ import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler'
 import cssVariables from '../../styles/Variables';
 import colors from '../../styles/Colors';
 
+export const topHeaderHeight = 60;
+const verticalPadding = 15;
+const innerHeight = topHeaderHeight - (2 * verticalPadding);
+
 const StyledHeader = styled.header`
-	padding: 15px 25px;
+	padding: ${verticalPadding}px 25px;
 	background: ${colors.gray96};
 	position: absolute;
 		top: 0;
@@ -24,7 +28,7 @@ const StyledHeader = styled.header`
 	transition: width 0.3s;
 
 	> div {
-		height: 30px;
+		height: ${innerHeight}px;
 		display: flex;
 		align-self: center;
 	}
@@ -32,11 +36,14 @@ const StyledHeader = styled.header`
 	.logout {
 		align-self: center;
 		margin: 0 25px 0 30px;
-		line-height: 30px;
+		line-height: ${innerHeight}px;
+		a {
+			margin: 0 0 0 1.5em;
+		}
 	}
 
 	.fcn {
-		line-height: 30px;
+		line-height: ${innerHeight}px;
 	}
 
 	.debug-fcn {
