@@ -1,7 +1,7 @@
 
 import { createSelector } from 'reselect';
 import { schemaSelector } from './schema';
-import { PRIKEY_ALIAS, BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_DOCS_TABLE, BANK_CATEG_ALIAS, BANK_IMG_CATEGORIES_TABLE, BANK_IMG_NAME, BANK_DOCS_CATEGORIES_TABLE, BANK_DOCS_NAME } from '../freestone/SchemaProps';
+import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_DOCS_TABLE, BANK_CATEG_ALIAS } from '../freestone/SchemaProps';
 import { THUMBNAIL_SIZE } from '../freestone/settings';
 import { routeSelector } from './route';
 

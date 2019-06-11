@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { PRIKEY_ALIAS, BANK_CATEG_FOREIGN_FIELD } from '../../freestone/SchemaProps';
+import { PRIKEY_ALIAS, BANK_CATEG_FOREIGN_FIELD } from '../../../freestone/SchemaProps';
 
-import BankListCell from '../../containers/recordList/BankListCell';
-import ListNavLink from '../../containers/recordList/ListNavLink';
+import BankListCell from '../../../containers/recordList/bank/BankListCell';
+import ListNavLink from '../../../containers/recordList/ListNavLink';
 
-import { Heading2 } from '../../styles/Texts';
+import { Heading2 } from '../../../styles/Texts';
 import styled from 'styled-components';
-import colors from '../../styles/Colors';
-import { THUMBNAIL_SIZE } from '../../freestone/settings';
+import colors from '../../../styles/Colors';
+import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 
 const SectionsContainer = styled.div`
 	display:flex;
@@ -106,6 +106,9 @@ export default class BankList extends Component {
 				<FiltersContainer key="filters">
 					<Heading2>Show</Heading2>
 					{categories}
+
+					<input type="text" />
+
 				</FiltersContainer>
 				<section key="result">
 				{

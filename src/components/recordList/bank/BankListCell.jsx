@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 
-import DeleteBtn from '../../containers/recordList/DeleteBtn';
-import InfosFcn from '../../containers/recordList/InfosFcn';
-import SelectBankItemBtn from '../../containers/recordList/SelectBankItemBtn';
-import BankNUses from '../../containers/widgets/BankNUses';
-import { NavLinkButton } from '../../styles/Button';
-import colors from '../../styles/Colors';
-import { THUMBNAIL_SIZE } from '../../freestone/settings';
+import DeleteBtn from '../../../containers/recordList/DeleteBtn';
+import InfosFcn from '../../../containers/recordList/InfosFcn';
+import SelectBankItemBtn from '../../../containers/recordList/bank/SelectBankItemBtn';
+import BankNUses from '../../../containers/widgets/BankNUses';
+import { NavLinkButton } from '../../../styles/Button';
+import colors from '../../../styles/Colors';
+import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 
 import { 
 	PRIKEY_ALIAS,
@@ -30,10 +30,10 @@ import {
 	LABEL_PSEUDOFIELD_ALIAS,
 	TYPE_FILE,
 	TYPE_IMG,
- } from '../../freestone/SchemaProps';
+ } from '../../../freestone/SchemaProps';
 
 
-import FileThumbnail from '../../containers/fileThumbnail/FileThumbnail';
+import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 
 const StyledCell = styled.div`
 	background: ${colors.gray90};

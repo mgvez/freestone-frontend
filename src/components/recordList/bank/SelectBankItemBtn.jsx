@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_BANKIMG, TYPE_BANKFILE } from '../../freestone/SchemaProps';
-import { callApi, getEndpoint } from '../../freestone/api';
-import { Button } from '../../styles/Button';
+import { TYPE_BANKIMG, TYPE_BANKFILE } from '../../../freestone/SchemaProps';
+import { callApi, getEndpoint } from '../../../freestone/api';
+import { Button } from '../../../styles/Button';
 
 export default class SelectBankItemBtn extends Component {
 	static propTypes = {

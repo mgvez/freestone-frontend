@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import BankListCell from '../../components/recordList/BankListCell';
+import BankListCell from '../../../components/recordList/bank/BankListCell';
 
 export default connect(
 	(state) => {

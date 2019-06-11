@@ -4,7 +4,7 @@ import DocumentMeta from 'react-document-meta';
 
 import Paging from './Paging';
 import StandardList from './StandardList';
-import BankList from '../../containers/recordList/BankList';
+import BankList from '../../containers/recordList/bank/BankList';
 import ListSearch from './ListSearch';
 import InScroll from '../../containers/utils/InScroll';
 import TablePermissions from '../../containers/permissions/TablePermissions';
