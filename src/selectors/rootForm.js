@@ -10,7 +10,10 @@ import { tableSchemaMapStateToProps } from './tableSchema';
 import { schemaSelector } from './schema';
 import { loadedRecords } from './loadedRecords';
 
-const recordIdSelector = (state, props) => props.params && props.params.recordId;
+const paramsSelector = (state, props) => props.params || props.match.params || {};
+function recordIdSelector() {
+	return createSelector([paramsSelector], (params) => params.recordId);
+}
 const recordsSelector = state => state.freestone.recordForm.records;
 const isModalSelector = (state, props) => props.isModal;
 const childrenSelector = state => state.freestone.schema.children;
@@ -47,8 +50,8 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 
 function makeSelector() {
 	return createSelector(
-		[tableSchemaMapStateToProps(), recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, previewRecordStateSelector],
-		(schema, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, previewRecordState) => {
+		[tableSchemaMapStateToProps(), paramsSelector, recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, previewRecordStateSelector],
+		(schema, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, previewRecordState) => {
 
 			const { table } = schema;
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
@@ -76,6 +79,7 @@ function makeSelector() {
 
 			return {
 				table,
+				params,
 				hasLanguageToggle,
 				recordLabel,
 				isViewingPreview,

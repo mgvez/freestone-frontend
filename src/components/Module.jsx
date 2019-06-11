@@ -13,18 +13,14 @@ const metaData = {
 
 export default class Module extends Component {
 	static propTypes = {
-		params: PropTypes.shape({
-			url: PropTypes.string,
-		}),
+		url: PropTypes.string,
 		label: PropTypes.string,
 		description: PropTypes.string,
 		jwt: PropTypes.string,
 	};
 
 	shouldComponentUpdate(props) {
-		// console.log(this.props.params, props.params, this.props.params.url, props.params.url);
-		// console.log(this.props.params && props.params && this.props.params.url !== props.params.url);
-		return this.props.params && props.params && this.props.params.url !== props.params.url;
+		return this.props.url !== props.url;
 	}
 	
 	render() {
@@ -32,7 +28,7 @@ export default class Module extends Component {
 		//adds a time to get to prevent over-aggressive server cache (I'm looking at you Radio-Canada)
 		const time = (new Date()).getMilliseconds();
 		// console.log('module', time);
-		const url = `${host}module/${this.props.params.url}/?jwt=${this.props.jwt}&nocache=${time}`;
+		const url = `${host}module/${this.props.url}/?jwt=${this.props.jwt}&nocache=${time}`;
 		return (
 			<section>
 				<DocumentMeta {...metaData} />

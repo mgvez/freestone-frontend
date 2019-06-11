@@ -34,7 +34,6 @@ function noop() {
 const MainContent = styled.div`
 	padding-top: ${cssVariables.headerHeight};
 	padding-left: ${cssVariables.navWidth};
-	background: ${colors.backgroundMain};
 	transition: padding 0.3s;
 `;
 

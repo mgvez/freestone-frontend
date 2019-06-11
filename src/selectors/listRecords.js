@@ -1,11 +1,14 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from './tableSchema';
+import queryString from 'query-string';
+
 import { getRecordLabel } from './recordLabel';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
 
 const recordsSelector = state => state.freestone.recordList;
-const paramsSelector = (state, props) => props.params;
+const paramsSelector = (state, props) => props.params || props.match.params || {};
+const querystringSelector = (state, props) => props.location && props.location.search;
 
 function flatten(records, flat = [], breadcrumb = [], level = 0) {
 	if (!records) return flat;
@@ -40,8 +43,11 @@ function reorderSelfTree(records) {
 }
 
 export const listRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, paramsSelector],
-	(schema, stateRecords, params) => {
+	[tableSchemaSelector, recordsSelector, paramsSelector, querystringSelector],
+	(schema, stateRecords, params, qstr) => {
+
+		const parsedParams = queryString.parse(qstr) || {};
+		// console.log(parsedParams);
 
 		const { 
 			records: loadedRecords,
@@ -56,7 +62,7 @@ export const listRecordsSelector = createSelector(
 			canAdd,
 			invalidated,
 		} = stateRecords;
-		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = params;
+		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = parsedParams;
 
 		const nPages = Math.ceil(nRecords / pageSize);
 
@@ -127,53 +133,11 @@ export const listRecordsSelector = createSelector(
 			search: providedSearch,
 			qstr: stateRecords.qstr,
 			canAdd,
+			params: {
+				...params,
+				...parsedParams,
+			},
 			swappedRecords,
 		};
 	}
-);
-
-
-export function getListLink(params, page, search, filter, order) {
-	// console.log(filter);
-
-	const nextParams = [];
-
-	if (page && Number(page) !== 1) nextParams.push(`page=${page}`);
-
-	//if we explicitely filter, we clear search. Filters come before search.
-	if (filter) {
-		const qstrFilters = Object.keys(filter).map((filterKey) => {
-			const val = filter[filterKey];
-			if (val === null) return null;
-			return `${filterKey}=${val}`;
-		}).filter(a => a).join(',');
-		if (qstrFilters) nextParams.push(`filter=${qstrFilters}`);
-	} else if (search) {
-		nextParams.push(`search=${search}`);
-	} else {
-		if (params.filter) nextParams.push(`filter=${params.filter}`);
-		if (params.search && search === null) nextParams.push(`search=${params.search}`);
-	}
-
-	const currentOrder = Number(params.order || 0);
-	let nextOrder = order;
-	if (Math.abs(currentOrder) === Math.abs(order)) {
-		nextOrder = currentOrder > 0 ? -currentOrder : 0;
-	}
-	// console.log(field.type);
-
-	if (nextOrder) nextParams.push(`order=${nextOrder}`);
-
-	return {
-		to: `/list/${params.tableName}?${nextParams.join('&')}`,
-	};
-}
-
-const pageSelector = (state, props) => props.page;
-const searchSelector = (state, props) => props.search;
-const filterSelector = (state, props) => props.filter;
-const orderSelector = (state, props) => props.order;
-export const getListLinkSelector = createSelector(
-	[paramsSelector, pageSelector, searchSelector, filterSelector, orderSelector],
-	getListLink,
 );

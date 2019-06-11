@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const pageIdSelector = (state, props) => props.params && props.params.id;
+const pageIdSelector = (state, props) => props.match && props.match.params.id;
 const pagesSelector = state => state.freestone.nav.structure.pages;
 const pagesHashesSelector = state => state.freestone.nav.pageHashes;
 const jwtSelector = state => state.freestone.auth.jwt;

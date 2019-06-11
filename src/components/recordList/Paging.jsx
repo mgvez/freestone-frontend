@@ -1,9 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import colors from '../../styles/Colors';
+
 import ListNavLink from '../../containers/recordList/ListNavLink';
 
 const N_TO_SHOW = 10;
+
+const Pagination = styled.ul`
+	list-style-type: none;
+	padding-left: 0;
+	text-align: right;
+	margin: 12px 0;
+`;
+
+const Page = styled.li`
+	display: inline-block;
+	padding: 7px 0;
+	background: #fff;
+	border: 1px solid ${colors.accentPrimary};
+	border-radius: 5px;
+	width: 35px;
+	text-align: center;
+
+	a {
+		color: ${colors.accentPrimary};
+		text-decoration: none;
+	}
+
+	&.active {
+		background: ${colors.accentPrimary};
+		a {
+			color: #fff;
+		}
+	}
+
+	& + li {
+		margin-left: 10px;
+	}
+`;
 
 export default class Paging extends Component {
 	static propTypes = {
@@ -56,7 +91,7 @@ export default class Paging extends Component {
 		}
 
 		return (
-			<li key={`${num}_${label}`} className={activeClass}>{lnk}</li>
+			<Page key={`${num}_${label}`} className={activeClass}>{lnk}</Page>
 		);
 	}
 
@@ -89,9 +124,9 @@ export default class Paging extends Component {
 		}
 
 		return (
-			<ul className="pagination">
+			<Pagination>
 				{pages}
-			</ul>
+			</Pagination>
 		);
 
 	}

@@ -85,10 +85,9 @@ export function toggleCollapse(itemId) {
 	};
 }
 
-export function goTo(pathname) {
+export function goTo(loc) {
+	const params = typeof pathname === 'string' ? { patname: loc } : loc;
 	return (dispatch) => {
-		return dispatch(pushPath({
-			pathname,
-		}));
+		return dispatch(pushPath(params));
 	};
 }

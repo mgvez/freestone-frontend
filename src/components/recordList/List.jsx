@@ -47,7 +47,6 @@ export default class List extends Component {
 
 	constructor(props) {
 		super(props);
-		// console.log(this.props);
 		this.state = { windowWidth: 0, isLarge: true };
 	}
 	
@@ -60,14 +59,6 @@ export default class List extends Component {
 	componentDidUpdate() {
 		this.requireData();
 	}
-
-	// shouldComponentUpdate(nextProps) {
-	// 	// console.log(nextProps);
-	// 	// console.log(this.props);
-	// 	console.log(!!(nextProps.groupedRecords), this.props.groupedRecords === nextProps.groupedRecords);
-	// 	//si aucun record, on est en train d'updater l'ordre... attend d'avoir les records avant de render, pour pas flasher de blanc
-	// 	return !!(nextProps.groupedRecords) && this.props.groupedRecords !== nextProps.groupedRecords;
-	// }
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleResize);
@@ -146,7 +137,6 @@ export default class List extends Component {
 					<TablePermissions table={this.props.table} />
 
 					<div className="padded-content search-ctn">
-						
 						<ListSearch 
 							key={`search_${this.props.table.name}`}
 							tableName={this.props.table.name}
@@ -160,21 +150,18 @@ export default class List extends Component {
 					</div>
 					<div className="padded-content">
 						{records}
+						<Paging
+							params={this.props.params}
+							nPages={this.props.nPages}
+							curPage={this.props.curPage}
+							search={this.props.params.search}
+							order={this.props.params.order}
+							tableName={this.props.table.name}
+						/>
 					</div>
-					<Paging
-						params={this.props.params}
-						nPages={this.props.nPages}
-						curPage={this.props.curPage}
-						search={this.props.params.search}
-						order={this.props.params.order}
-						tableName={this.props.table.name}
-					/>
+					
 				</section>
 			);
-			
-
-			// console.profileEnd('render');
-			
 		}
 
 		return (

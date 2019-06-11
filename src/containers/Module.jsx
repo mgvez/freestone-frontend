@@ -4,7 +4,7 @@ import Module from '../components/Module';
 
 export default connect(
 	(state, props) => {
-		const { url } = props.params;
+		const { url } = props.match.params;
 		const modules = state.freestone.nav.structure.modules;
 		let module = {};
 		if (modules) {
@@ -12,6 +12,7 @@ export default connect(
 		}
 		return { 
 			jwt: state.freestone.auth.jwt,
+			url,
 			...module,
 		};
 	}

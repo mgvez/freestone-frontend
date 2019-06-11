@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { getListLink } from '../../selectors/listRecords';
+import { getListLink } from '../../selectors/listNavig';
 import debounce from '../../utils/Debounce.js';
 
 export default class ListSearch extends Component {
@@ -60,7 +60,7 @@ export default class ListSearch extends Component {
 	}
 
 	search() {
-		const { to: path } = getListLink(this.props.params, 1, this.searchInput.current.value); 
+		const path = getListLink(this.props.params, 1, this.searchInput.current.value); 
 		this.props.goTo(path);
 	}
 

@@ -16,9 +16,6 @@ const metaData = {
 
 export default class Page extends Component {
 	static propTypes = {
-		params: PropTypes.shape({
-			id: PropTypes.string,
-		}),
 		resolvedUrl: PropTypes.string,
 		title: PropTypes.string,
 		jwt: PropTypes.string,
@@ -66,7 +63,7 @@ export default class Page extends Component {
 	render() {
 		// console.log(this.props.resolvedUrl);
 		const host = getWebsiteUrl();
-		const url = this.props.resolvedUrl || `${host}/adminpage/?t=zva_admin_page&i=${this.props.params.id}&jwt=${this.props.jwt}`;
+		const url = this.props.resolvedUrl || `${host}/adminpage/?t=zva_admin_page&i=${this.props.id}&jwt=${this.props.jwt}`;
 		metaData.title = this.props.title;
 		return (
 			<section>

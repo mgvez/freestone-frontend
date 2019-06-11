@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 
 import { PRIKEY_ALIAS, BANK_CATEG_FOREIGN_FIELD } from '../../freestone/schemaProps';
 
@@ -33,6 +32,9 @@ const CellsContainer = styled.div`
 const CategLink = styled(ListNavLink)`
 	display:block;
 	color:red;
+	&.active{
+		color: green;
+	}
 `;
 
 export default class BankList extends Component {
@@ -87,7 +89,16 @@ export default class BankList extends Component {
 		// console.log(this.props.categories);
 
 		const categories = this.props.categories && this.props.categories.map((category) => {
-			return <CategLink key={category.prikey} params={this.props.params} filter={{ [BANK_CATEG_FOREIGN_FIELD]: category.prikey }}>{category.name} ({category.n_items})</CategLink>;
+			return (
+				<CategLink 
+					key={category.prikey} 
+					params={this.props.params} 
+					filter={{ [BANK_CATEG_FOREIGN_FIELD]: category.prikey }}
+					activeClassName="active"
+				>
+					{category.name} ({category.n_items})
+				</CategLink>
+			);
 		});
 
 		return (

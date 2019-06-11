@@ -18,7 +18,7 @@ const halfStyle = {
 const fullStyle = {
 	flexBasis: '100%',
 	position: 'relative',
-	overflow: 'hidden',
+
 };
 const iframeStyle = {
 	width: '50vw',

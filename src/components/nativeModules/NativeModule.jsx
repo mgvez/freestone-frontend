@@ -5,14 +5,12 @@ import TextTranslations from '../../containers/nativeModules/textTranslations/Te
 
 export default class NativeModule extends Component {
 	static propTypes = {
-		params: PropTypes.shape({
-			name: PropTypes.string,
-		}),
+		name: PropTypes.string,
 	};
 
 	render() {
 		// console.log(this.props);
-		switch (this.props.params.name) {
+		switch (this.props.name) {
 		case 'TextTranslations':
 			return <TextTranslations />;
 		default:
