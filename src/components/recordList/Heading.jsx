@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+
+import ListNavLink from '../../containers/recordList/ListNavLink';
+
 import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../freestone/SchemaProps';
 
 const nonOrderable = [TYPE_IMG, TYPE_BANKIMG, TYPE_FILE];
@@ -15,6 +17,7 @@ export default class Heading extends Component {
 			tableName: PropTypes.string,
 			page: PropTypes.string,
 			search: PropTypes.string,
+			filter: PropTypes.array,
 			order: PropTypes.string,
 		}),
 	};
@@ -31,20 +34,11 @@ export default class Heading extends Component {
 		let iconClass = null;
 
 		const current = Number(this.props.params.order || 0);
-		let nextOrder = field.id;
 		if (Math.abs(current) === Math.abs(field.id)) {
-			nextOrder = current > 0 ? -current : 0;
 			if (current) iconClass = current < 1 ? 'angle-down' : 'angle-up';
 		}
-		// console.log(field.type);
-
-		const orderPart = nextOrder ? `?order=${nextOrder}` : '';
-		const link = `/list/${this.props.params.tableName}/1/${this.props.params.search || ''}${orderPart}`;
-		// console.log(link);
-		// console.log(this.props.params);
-		
 		const icon = iconClass && <span className={`fa fa-${iconClass}`} />;
-		return <NavLink to={link} activeClassName="active" className="">{field.label} {icon}</NavLink>;
+		return <ListNavLink params={this.props.params} order={field.id} activeClassName="active" className="">{field.label} {icon}</ListNavLink>;
 
 	}
 

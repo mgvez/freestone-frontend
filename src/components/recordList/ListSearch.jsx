@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { getListLink } from '../../selectors/listRecords';
 import debounce from '../../utils/Debounce.js';
 
 export default class ListSearch extends Component {
 	static propTypes = {
 		tableName: PropTypes.string,
-		search: PropTypes.string,
-		curPage: PropTypes.number,
+		to: PropTypes.string,
+		params: PropTypes.shape({
+			tableName: PropTypes.string,
+			page: PropTypes.string,
+			search: PropTypes.string,
+			filter: PropTypes.array,
+			order: PropTypes.string,
+		}),
 		goTo: PropTypes.func,
 		numRecords: PropTypes.number,
 		needsFetch: PropTypes.bool,
@@ -35,16 +42,16 @@ export default class ListSearch extends Component {
 
 	onUpdateSearchField = debounce(() => {
 		this.search();
-	}, 200);
+	}, 300);
 
 	getSearchResults() {
 
 		if (this.props.needsFetch) return <div className="search-results-num">{this.props.children}</div>;
-		return this.props.search ? <div className="search-results-num">Showing {this.props.numRecords} result{(this.props.numRecords > 1) ? 's' : ''} for '{this.props.search}' in {this.props.tableName}</div> : <div> </div>;
+		return this.props.params.search ? <div className="search-results-num">Showing {this.props.numRecords} result{(this.props.numRecords > 1) ? 's' : ''} for '{this.props.params.search}' in {this.props.tableName}</div> : <div> </div>;
 	}
 
 	getClearSearch() {
-		return this.props.search ? <button className="button-search clear" type="reset" onClick={this.onUpdateSearchField}><i className="fa fa-times"></i></button> : null;
+		return this.props.params.search ? <button className="button-search clear" type="reset" onClick={this.onUpdateSearchField}><i className="fa fa-times"></i></button> : null;
 	}
 
 	handleSubmit = (e) => {
@@ -53,9 +60,7 @@ export default class ListSearch extends Component {
 	}
 
 	search() {
-		let val = this.searchInput.current.value;
-		val = val ? `/${val}` : '';
-		const path = `/list/${this.props.tableName}/1${val}`;
+		const { to: path } = getListLink(this.props.params, 1, this.searchInput.current.value); 
 		this.props.goTo(path);
 	}
 

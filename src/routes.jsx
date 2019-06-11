@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
+import queryString from 'query-string';
+
 import Freestone from './containers/Freestone';
 
 /* containers */
@@ -26,16 +28,21 @@ export default (
 		<Switch>
 			<Route exact path="/" render={(props) => <Home params={props.match.params} />} />
 			<Route 
-				path="/list/:tableName/:page?/:search?" 
+				path="/list/:tableName" 
+				exact
 				render={
 					(props) => {
-						// console.log(props.match);
-						const qstr = props.location.search.substring(1);
-						const searchParams = qstr ? JSON.parse('{"' + decodeURI(qstr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') : {};
+						console.log(props.match.params);
+						const parsed = queryString.parse(props.location.search, {arrayFormat: 'index'});
 						const params = {
 							...props.match.params,
-							order: searchParams.order,
+							order: parsed.order,
+							filter: parsed.filter,
+							page: parsed.page,
+							search: parsed.search,
 						};
+						// console.log(params);
+
 						return (
 							<List 
 								key={`list_${params.tableName}`} 

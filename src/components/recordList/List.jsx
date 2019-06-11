@@ -4,7 +4,7 @@ import DocumentMeta from 'react-document-meta';
 
 import Paging from './Paging';
 import StandardList from './StandardList';
-import BankList from './BankList';
+import BankList from '../../containers/recordList/BankList';
 import ListSearch from './ListSearch';
 import InScroll from '../../containers/utils/InScroll';
 import TablePermissions from '../../containers/permissions/TablePermissions';
@@ -18,6 +18,7 @@ export default class List extends Component {
 
 		params: PropTypes.shape({
 			tableName: PropTypes.string,
+			filter: PropTypes.array,
 			page: PropTypes.string,
 			search: PropTypes.string,
 			order: PropTypes.string,
@@ -114,6 +115,7 @@ export default class List extends Component {
 				if (this.props.table.bankName) {
 					records = (<BankList
 						isLarge={this.state.isLarge}
+						bankName={this.props.table.bankName}
 						{...this.props}
 					/>);
 				} else {
@@ -149,8 +151,7 @@ export default class List extends Component {
 							key={`search_${this.props.table.name}`}
 							tableName={this.props.table.name}
 							numRecords={this.getNumRecords()}
-							search={this.props.params.search}
-							curPage={this.props.curPage}
+							params={this.props.params}
 							goTo={this.props.goTo}
 							needsFetch={needsFetch}
 						>
@@ -161,6 +162,7 @@ export default class List extends Component {
 						{records}
 					</div>
 					<Paging
+						params={this.props.params}
 						nPages={this.props.nPages}
 						curPage={this.props.curPage}
 						search={this.props.params.search}

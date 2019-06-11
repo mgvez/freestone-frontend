@@ -14,6 +14,7 @@ export default class StandardList extends Component {
 		params: PropTypes.shape({
 			tableName: PropTypes.string,
 			page: PropTypes.string,
+			filter: PropTypes.array,
 			search: PropTypes.string,
 			order: PropTypes.string,
 		}),

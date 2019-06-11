@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
-import customStyle from '../../styles/modalStyles.js';
+import customStyle from '../../../styles/Modal';
 
 export default class HotspotInsert extends Component {
 	static propTypes = {

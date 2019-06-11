@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import ListNavLink from '../../containers/recordList/ListNavLink';
 
 const N_TO_SHOW = 10;
 
@@ -11,6 +12,15 @@ export default class Paging extends Component {
 		curPage: PropTypes.number,
 		search: PropTypes.string,
 		order: PropTypes.string,
+		
+		params: PropTypes.shape({
+			tableName: PropTypes.string,
+			filter: PropTypes.array,
+			page: PropTypes.string,
+			search: PropTypes.string,
+			order: PropTypes.string,
+		}),
+
 		onChangePage: PropTypes.func,
 	};
 
@@ -42,10 +52,7 @@ export default class Paging extends Component {
 		if (this.props.onChangePage) {
 			lnk = <a data-page={num} onClick={this.onClickPage} className="">{display}</a>;
 		} else {
-			// console.log(typeof this.props.order);
-			const link = `/list/${this.props.tableName}/${num}/${this.props.search || ''}` + (this.props.order ? `?order=${this.props.order}` : '');
-			// console.log(link);
-			lnk = <NavLink to={link} activeClassName="active" className="">{display}</NavLink>;
+			lnk = <ListNavLink params={this.props.params} page={num} activeClassName="active" className="">{display}</ListNavLink>;
 		}
 
 		return (

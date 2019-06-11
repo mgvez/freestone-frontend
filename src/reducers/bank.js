@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
-import { BANK_IMAGE_API, BANK_USES_API, BANK_FILE_API, BANK_SETUP_SELECT, BANK_CANCEL_SELECT } from '../actions/bank';
+import { BANK_IMAGE_API, BANK_USES_API, BANK_FILE_API, BANK_SETUP_SELECT, BANK_CANCEL_SELECT, BANK_CATEGORIES_API } from '../actions/bank';
 import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
-import { BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../freestone/schemaProps';
+import { BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../freestone/SchemaProps';
 import { CLEAR_DATA } from '../actions/dev';
 
 const initialState = {};
@@ -70,6 +70,30 @@ function files(state = initialState, action) {
 	}
 }
 
+function categories(state = {}, action) {
+	switch (action.type) {
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case CLEAR_DATA:
+		return initialState;
+	case SAVE_RECORD_API.SUCCESS:
+		return {};
+	case BANK_CATEGORIES_API.SUCCESS: {
+		if (!action.data) return state;
+		// const { id, item } = action.data;
+		// console.log(action.data);
+		const { bank, records } = action.data;
+		return {
+			...state,
+			[bank]: records,
+		};
+	}
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
 function uses(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
@@ -120,4 +144,5 @@ export default combineReducers({
 	files,
 	uses,
 	selection,
+	categories,
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import { getWebsiteUrl } from '../../../freestone/settings';
-import customStyle from '../../styles/modalStyles.js';
+import customStyle from '../../../styles/Modal.js';
 
 function buildlink(contents, link, linkLabel, linkTarget) {
 	let val = link.trim();

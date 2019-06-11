@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
 
-import customStyle from './styles/modalStyles.js';
+import customStyle from '../styles/Modal.js';
 
 export default class Errors extends Component {
 	static propTypes = {

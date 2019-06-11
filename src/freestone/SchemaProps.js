@@ -34,10 +34,14 @@ export const SUBFORM_VIEW_LIST = 'SUBFORM_VIEW_LIST';
 
 export const BANK_IMG_NAME = 'img';
 export const BANK_IMG_TABLE = 'zva_bank_img';
+export const BANK_IMG_CATEGORIES_TABLE = 'zva_bank_img_categ';
 export const BANK_IMG_DIM_ALIAS = '_dim';
 
 export const BANK_DOCS_NAME = 'docs';
 export const BANK_DOCS_TABLE = 'zva_bank_docs';
+export const BANK_DOCS_CATEGORIES_TABLE = 'zva_bank_docs_categ';
+
+export const BANK_CATEG_FOREIGN_FIELD = 'categ_id';
 
 export const BANK_FILE_ALIAS = 'file';
 export const BANK_FOLDER_ALIAS = 'folder';

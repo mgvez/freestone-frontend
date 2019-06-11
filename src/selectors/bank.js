@@ -1,7 +1,7 @@
 
 import { createSelector } from 'reselect';
 import { schemaSelector } from './schema';
-import { BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_DOCS_TABLE, BANK_CATEG_ALIAS } from '../freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_IMG_TABLE, BANK_IMG_CATEG_ALIAS, BANK_DOCS_TABLE, BANK_CATEG_ALIAS, BANK_IMG_CATEGORIES_TABLE, BANK_IMG_NAME, BANK_DOCS_CATEGORIES_TABLE, BANK_DOCS_NAME } from '../freestone/SchemaProps';
 import { THUMBNAIL_SIZE } from '../freestone/settings';
 import { routeSelector } from './route';
 
@@ -12,6 +12,7 @@ const bankImgSelector = state => state.freestone.bank.images;
 const bankFileSelector = state => state.freestone.bank.files;
 const allUsesSelector = state => state.freestone.bank.uses;
 const selectionSelector = state => state.freestone.bank.selection;
+const allBankCategoriesSelector = state => state.freestone.bank.categories;
 const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
 const recordsFormSelector = state => state.freestone.recordForm.records;
 
@@ -19,6 +20,17 @@ const idSelector = (state, props) => props.id;
 const maxSizeSelector = (state, props) => props.maxSize || THUMBNAIL_SIZE;
 const bankNameSelector = (state, props) => props.bankName;
 
+
+export const bankCategoriesSelector = createSelector(
+	[bankNameSelector, allBankCategoriesSelector],
+	(bankName, allCategories) => {
+		// console.log(allImages);
+		const categories = allCategories && allCategories[bankName];
+		return {
+			categories,
+		};
+	}
+);
 
 function buildByCategory(records, categFieldAlias) {
 	const categs = records && records.reduce((all, record) => {

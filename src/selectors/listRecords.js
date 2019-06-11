@@ -46,16 +46,17 @@ export const listRecordsSelector = createSelector(
 		const { 
 			records: loadedRecords,
 			table: recordsTable,
-			nRecords,
 			search: providedSearch,
-			pageSize,
+			filter: providedFilter,
 			page: providedPage,
+			order: providedOrder,
+			pageSize,
+			nRecords,
 			swappedRecords,
 			canAdd,
-			order: providedOrder,
 			invalidated,
 		} = stateRecords;
-		const { page: requestedPage, search: requestedSearch, order: requestedOrder } = params;
+		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = params;
 
 		const nPages = Math.ceil(nRecords / pageSize);
 
@@ -66,13 +67,14 @@ export const listRecordsSelector = createSelector(
 		// console.log(table + ' && ' + recordsTable + '===' + table.name + ' && ' + providedPage + '===' + requestedPage + ' && ' + providedSearch + '===' + requestedSearch);
 		const isSameTable = table && recordsTable === table.name;
 		const isSameSearch = providedSearch === (requestedSearch || '');
+		const isSameFilter = (providedFilter || '') === (requestedFilter || '');
 		const isSamePage = Number(providedPage) === Number(requestedPage || 1);
 		const isSameOrder = Number(providedOrder || 0) === Number(requestedOrder || 0);
 
-		const needsFetch = invalidated || !(isSameTable && isSamePage && isSameSearch && isSameOrder);
-		// if (isSameTable && isSamePage && isSameSearch && isSameOrder) {
-			
-		// }
+		const needsFetch = invalidated || !(isSameTable && isSamePage && isSameSearch && isSameOrder && isSameFilter);
+		// console.log(isSameTable, isSamePage, isSameSearch, isSameOrder, isSameFilter);
+		// console.log(needsFetch, table, loadedRecords);
+
 		if (table && loadedRecords) {
 			let records = loadedRecords.map(rawrecord => {
 				const record = { ...rawrecord };
@@ -128,4 +130,50 @@ export const listRecordsSelector = createSelector(
 			swappedRecords,
 		};
 	}
+);
+
+
+export function getListLink(params, page, search, filter, order) {
+	// console.log(filter);
+
+	const nextParams = [];
+
+	if (page && Number(page) !== 1) nextParams.push(`page=${page}`);
+
+	//if we explicitely filter, we clear search. Filters come before search.
+	if (filter) {
+		const qstrFilters = Object.keys(filter).map((filterKey) => {
+			const val = filter[filterKey];
+			if (val === null) return null;
+			return `${filterKey}=${val}`;
+		}).filter(a => a).join(',');
+		if (qstrFilters) nextParams.push(`filter=${qstrFilters}`);
+	} else if (search) {
+		nextParams.push(`search=${search}`);
+	} else {
+		if (params.filter) nextParams.push(`filter=${params.filter}`);
+		if (params.search && search === null) nextParams.push(`search=${params.search}`);
+	}
+
+	const currentOrder = Number(params.order || 0);
+	let nextOrder = order;
+	if (Math.abs(currentOrder) === Math.abs(order)) {
+		nextOrder = currentOrder > 0 ? -currentOrder : 0;
+	}
+	// console.log(field.type);
+
+	if (nextOrder) nextParams.push(`order=${nextOrder}`);
+
+	return {
+		to: `/list/${params.tableName}?${nextParams.join('&')}`,
+	};
+}
+
+const pageSelector = (state, props) => props.page;
+const searchSelector = (state, props) => props.search;
+const filterSelector = (state, props) => props.filter;
+const orderSelector = (state, props) => props.order;
+export const getListLinkSelector = createSelector(
+	[paramsSelector, pageSelector, searchSelector, filterSelector, orderSelector],
+	getListLink,
 );

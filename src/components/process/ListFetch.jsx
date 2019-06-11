@@ -7,6 +7,7 @@ export default class ListFetch extends Component {
 			tableName: PropTypes.string,
 			page: PropTypes.string,
 			search: PropTypes.string,
+			filter: PropTypes.array,
 			order: PropTypes.string,
 		}),
 
@@ -29,8 +30,8 @@ export default class ListFetch extends Component {
 	}
 
 	fetchRecords() {
-		const { tableName, page, search, order } = this.props.params;
-		this.props.fetchList(tableName, search, page || 1, order);
+		const { tableName, page, search, order, filter } = this.props.params;
+		this.props.fetchList(tableName, search, filter, page || 1, order);
 	}
 
 	render() {
