@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_MTM } from '../../../freestone/schemaProps';
+import { TYPE_MTM } from '../../../freestone/SchemaProps';
 
 import SubformMtm from '../../../containers/form/subform/SubformMtm';
 import SubformStandard from '../../../containers/form/subform/SubformStandard';

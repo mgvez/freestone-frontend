@@ -7,7 +7,7 @@ import DuplicateBtn from '../../containers/recordList/DuplicateBtn';
 import OrderFcn from '../../containers/recordList/OrderFcn';
 import DeleteBtn from '../../containers/recordList/DeleteBtn';
 
-import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/SchemaProps';
 
 const DEFAULT_LABEL = 'Actions';
 const EDIT_LABEL = 'Edit';

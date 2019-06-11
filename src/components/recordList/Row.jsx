@@ -5,7 +5,7 @@ import { TweenMax } from '../../utils/Greensock';
 
 import RecordInteractions from '../../containers/recordList/RecordInteractions';
 import { getFieldElements } from './getFieldElements';
-import { PRIKEY_ALIAS } from '../../freestone/schemaProps';
+import { PRIKEY_ALIAS } from '../../freestone/SchemaProps';
 
 export default class Row extends Component {
 	static propTypes = {

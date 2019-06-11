@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
-import { TYPE_IMG } from '../../../freestone/schemaProps';
+import { TYPE_IMG } from '../../../freestone/SchemaProps';
 
 export default class GenericFileInput extends Component {
 

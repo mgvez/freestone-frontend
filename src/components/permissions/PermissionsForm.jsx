@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { ALL_RECORDS_ID } from '../../freestone/schemaProps';
+import { ALL_RECORDS_ID } from '../../freestone/SchemaProps';
 
 export default class PermissionsForm extends Component {
 	static propTypes = {

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { GOD_USER_GROUP } from '../freestone/schemaProps';
+import { GOD_USER_GROUP } from '../freestone/SchemaProps';
 
 const userGroupSelector = state => state.freestone.auth.usergroup;
 

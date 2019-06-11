@@ -5,7 +5,7 @@ import SubformTabbed from './SubformTabbed';
 import SubformList from './SubformList';
 import SubformSingle from './SubformSingle';
 
-import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/SchemaProps';
 
 export default class SubformStandard extends Component {
 	static propTypes = {

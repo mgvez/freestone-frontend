@@ -1,7 +1,7 @@
 
 import uniqueId from '../utils/UniqueId';
 import { callApi, getEndpoint } from './api';
-import { PRIKEY_ALIAS, TYPE_ORDER } from './schemaProps';
+import { PRIKEY_ALIAS, TYPE_ORDER } from './SchemaProps';
 
 export default (table, parentTableId, parentRecordId, orderVal, model) => {
 

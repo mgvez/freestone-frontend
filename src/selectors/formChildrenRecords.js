@@ -9,7 +9,7 @@ import { isNew } from '../utils/UniqueId';
 import { getForeignFieldId } from '../freestone/schemaHelpers';
 import { userViewLanguageSelector } from './userViewLanguage';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from '../freestone/SchemaProps';
 import { MAX_TAB_LABEL_LENGTH } from '../freestone/settings';
 
 const childrenAreLoadedSelector = state => state.freestone.recordForm.childrenAreLoaded;

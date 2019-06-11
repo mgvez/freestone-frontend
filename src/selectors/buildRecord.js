@@ -5,7 +5,7 @@ import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelp
 import { isNew } from '../utils/UniqueId';
 // import createRecord from 'freestone/createRecord';
 
-import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
+import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/SchemaProps';
 
 const recordsSelector = state => state.freestone.recordForm.records;
 const mtmRecordsSelector = state => state.freestone.recordForm.mtmRecords;

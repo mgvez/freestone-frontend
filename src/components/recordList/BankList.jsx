@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { PRIKEY_ALIAS, BANK_CATEG_FOREIGN_FIELD } from '../../freestone/schemaProps';
+import { PRIKEY_ALIAS, BANK_CATEG_FOREIGN_FIELD } from '../../freestone/SchemaProps';
 
 import BankListCell from '../../containers/recordList/BankListCell';
 import ListNavLink from '../../containers/recordList/ListNavLink';
 
 import { Heading2 } from '../../styles/Texts';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from '../../styles/Colors';
 import { THUMBNAIL_SIZE } from '../../freestone/settings';
 

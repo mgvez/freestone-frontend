@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_PATH_ALIAS, BANK_THUMB_ALIAS } from '../../freestone/schemaProps';
+import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_PATH_ALIAS, BANK_THUMB_ALIAS } from '../../freestone/SchemaProps';
 import FileThumbnail from '../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../containers/fileThumbnail/BankImgThumbnail';
 import BankNUses from '../../containers/widgets/BankNUses';

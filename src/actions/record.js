@@ -1,7 +1,7 @@
 import { push as pushPath } from 'connected-react-router';
 import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
-import { EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
+import { EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/SchemaProps';
 
 export const PREVIEW_IFRAME = 'iframe';
 export const PREVIEW_WIN = 'window';

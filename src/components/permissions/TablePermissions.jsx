@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { ALL_RECORDS_ID } from '../../freestone/schemaProps';
+import { ALL_RECORDS_ID } from '../../freestone/SchemaProps';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
 
 export default class TablePermissions extends Component {

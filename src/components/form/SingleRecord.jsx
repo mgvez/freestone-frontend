@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
+import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/SchemaProps';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';

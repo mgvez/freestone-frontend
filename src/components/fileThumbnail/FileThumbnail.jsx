@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_FILE } from '../../freestone/schemaProps';
+import { TYPE_FILE } from '../../freestone/SchemaProps';
 import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
 
 const imgCss = {

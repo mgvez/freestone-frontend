@@ -4,7 +4,7 @@ import queryString from 'query-string';
 
 import { getRecordLabel } from './recordLabel';
 
-import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
+import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/SchemaProps';
 
 const recordsSelector = state => state.freestone.recordList;
 const paramsSelector = (state, props) => props.params || props.match.params || {};

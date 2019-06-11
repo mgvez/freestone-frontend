@@ -3,7 +3,7 @@ import { schemaSelector } from './schema';
 import { allForeignOptionsSelector, allForeignLabelsSelector } from './foreignOptions';
 import { getUnloadedLabels, getRecordLabel } from './recordLabel';
 
-import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from '../freestone/schemaProps';
+import { TYPE_MAIN, PRIKEY_ALIAS, LOADED_TIME_ALIAS } from '../freestone/SchemaProps';
 import { RECORD_LOADED_SAFE_LIFE } from '../freestone/settings';
 
 const recordsSelector = state => state.freestone.recordForm.records;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from '../../../freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from '../../../freestone/SchemaProps';
 
 export default class ChangeSubformView extends Component {
 	static propTypes = {

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { TYPE_BANKIMG, TYPE_IMG, TYPE_LANGUAGE } from '../freestone/schemaProps';
+import { TYPE_BANKIMG, TYPE_IMG, TYPE_LANGUAGE } from '../freestone/SchemaProps';
 import { getForeignLabel } from './recordLabel';
 
 const rawForeignOptionsSelector = state => state.freestone.foreign.options;
