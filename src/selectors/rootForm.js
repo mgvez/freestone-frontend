@@ -11,9 +11,7 @@ import { schemaSelector } from './schema';
 import { loadedRecords } from './loadedRecords';
 
 const paramsSelector = (state, props) => props.params || props.match.params || {};
-function recordIdSelector() {
-	return createSelector([paramsSelector], (params) => params.recordId);
-}
+const recordIdSelector = (state, props) => (props.params || props.match.params || {}).recordId;
 const recordsSelector = state => state.freestone.recordForm.records;
 const isModalSelector = (state, props) => props.isModal;
 const childrenSelector = state => state.freestone.schema.children;
@@ -29,7 +27,6 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 
 	const children = [...allChildren[tableId]];
 	if (!children) return false;
-
 	return children.reduce((carry, childTableId) => {
 		if (carry) return true;
 

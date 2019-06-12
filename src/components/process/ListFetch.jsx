@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 export default class ListFetch extends Component {
 	static propTypes = {
+		tableName: PropTypes.string,
 		params: PropTypes.shape({
-			tableName: PropTypes.string,
 			page: PropTypes.string,
 			search: PropTypes.string,
-			filter: PropTypes.array,
+			filter: PropTypes.string,
 			order: PropTypes.string,
 		}),
 
@@ -30,8 +30,8 @@ export default class ListFetch extends Component {
 	}
 
 	fetchRecords() {
-		const { tableName, page, search, order, filter } = this.props.params;
-		this.props.fetchList(tableName, search, filter, page || 1, order);
+		const { page, search, order, filter } = this.props.params;
+		this.props.fetchList(this.props.tableName, search, filter, page || 1, order);
 	}
 
 	render() {

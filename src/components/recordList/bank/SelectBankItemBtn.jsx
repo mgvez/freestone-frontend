@@ -13,9 +13,9 @@ export default class SelectBankItemBtn extends Component {
 		targetFieldValue: PropTypes.any,
 		bankDestination: PropTypes.object,
 		isChoosingBankItem: PropTypes.bool, //indicate whether we are in the process of choosing an item to put in a record, or merely browsing the list
-		selectBankItem: PropTypes.func,
 		setFieldVal: PropTypes.func,
 		goTo: PropTypes.func,
+		cancelBankSelect: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -31,7 +31,7 @@ export default class SelectBankItemBtn extends Component {
 		const { tableId, recordId, fieldId, fieldType } = this.props.bankDestination;
 
 		// console.log(tableId, recordId, fieldId, fieldType);
-
+		this.props.cancelBankSelect();
 		//depending on type of target field, we might put bank ID directly, or markup of a placed image
 		if (~[TYPE_BANKIMG, TYPE_BANKFILE].indexOf(fieldType)) {
 			// console.log('direct value', prikeyVal);

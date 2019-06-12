@@ -1,14 +1,12 @@
 import { createSelector } from 'reselect';
-import { tableSchemaSelector } from './tableSchema';
-import queryString from 'query-string';
+import { tableSchemaSelector, tableNameSelector } from './tableSchema';
 
 import { getRecordLabel } from './recordLabel';
+import { searchParamsSelector } from './route';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/SchemaProps';
 
 const recordsSelector = state => state.freestone.recordList;
-const paramsSelector = (state, props) => props.params || props.match.params || {};
-const querystringSelector = (state, props) => props.location && props.location.search;
 
 function flatten(records, flat = [], breadcrumb = [], level = 0) {
 	if (!records) return flat;
@@ -43,11 +41,8 @@ function reorderSelfTree(records) {
 }
 
 export const listRecordsSelector = createSelector(
-	[tableSchemaSelector, recordsSelector, paramsSelector, querystringSelector],
-	(schema, stateRecords, params, qstr) => {
-
-		const parsedParams = queryString.parse(qstr) || {};
-		// console.log(parsedParams);
+	[tableNameSelector, tableSchemaSelector, recordsSelector, searchParamsSelector],
+	(tableName, schema, stateRecords, searchParams) => {
 
 		const { 
 			records: loadedRecords,
@@ -62,7 +57,7 @@ export const listRecordsSelector = createSelector(
 			canAdd,
 			invalidated,
 		} = stateRecords;
-		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = parsedParams;
+		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = searchParams;
 
 		const nPages = Math.ceil(nRecords / pageSize);
 
@@ -71,7 +66,7 @@ export const listRecordsSelector = createSelector(
 		let groupedRecords;
 
 		// console.log(table + ' && ' + recordsTable + '===' + table.name + ' && ' + providedPage + '===' + requestedPage + ' && ' + providedSearch + '===' + requestedSearch);
-		const isSameTable = table && recordsTable === table.name;
+		const isSameTable = recordsTable === tableName;
 		const isSameSearch = providedSearch === (requestedSearch || '');
 		const isSameFilter = (providedFilter || '') === (requestedFilter || '');
 		const isSamePage = Number(providedPage) === Number(requestedPage || 1);
@@ -81,7 +76,7 @@ export const listRecordsSelector = createSelector(
 		// console.log(isSameTable, isSamePage, isSameSearch, isSameOrder, isSameFilter);
 		// console.log(needsFetch, table, loadedRecords);
 
-		if (table && loadedRecords) {
+		if (table && loadedRecords && isSameTable) {
 			let records = loadedRecords.map(rawrecord => {
 				const record = { ...rawrecord };
 				//creates a label field, if not set by the backend
@@ -123,6 +118,7 @@ export const listRecordsSelector = createSelector(
 		}
 
 		return {
+			tableName,
 			table,
 			searchableFields: table && table.searchableFields,
 			groupedRecords,
@@ -134,8 +130,7 @@ export const listRecordsSelector = createSelector(
 			qstr: stateRecords.qstr,
 			canAdd,
 			params: {
-				...params,
-				...parsedParams,
+				...searchParams,
 			},
 			swappedRecords,
 		};

@@ -1,6 +1,5 @@
 
 import styled, { css } from 'styled-components';
-import colors from './Colors';
 import cssVars from './Variables';
 
 

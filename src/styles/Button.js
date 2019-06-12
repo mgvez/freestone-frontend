@@ -38,6 +38,7 @@ function getCss(props) {
 		cursor: pointer;
 		display: inline-block;
 		vertical-align: middle;
+		border-radius: 5px;
 
 		background: ${colors.accentPrimary};
 		color: ${colors.textSecondary};

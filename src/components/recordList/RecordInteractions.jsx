@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import InfosFcn from '../../containers/recordList/InfosFcn';
 import DuplicateBtn from '../../containers/recordList/DuplicateBtn';
-import OrderFcn from '../../containers/recordList/OrderFcn';
+import OrderFcn from '../../containers/recordList/standard/OrderFcn';
 import DeleteBtn from '../../containers/recordList/DeleteBtn';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/SchemaProps';

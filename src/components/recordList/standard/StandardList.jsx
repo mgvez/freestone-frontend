@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { PRIKEY_ALIAS } from '../../freestone/SchemaProps';
+import { PRIKEY_ALIAS } from '../../../freestone/SchemaProps';
 
 import Heading from './Heading';
-import Row from '../../containers/recordList/Row';
+import Row from '../../../containers/recordList/standard/Row';
 
 export default class StandardList extends Component {
 	static propTypes = {
 		isLarge: PropTypes.bool,
 		hoveringId: PropTypes.string,
+		tableName: PropTypes.string,
 
 		params: PropTypes.shape({
-			tableName: PropTypes.string,
 			page: PropTypes.string,
-			filter: PropTypes.array,
+			filter: PropTypes.string,
 			search: PropTypes.string,
 			order: PropTypes.string,
 		}),
@@ -53,6 +53,7 @@ export default class StandardList extends Component {
 			heading = (<thead>
 				<Heading
 					fields={this.props.searchableFields}
+					tableName={this.props.tableName}
 					params={this.props.params}
 					isSelfTree={this.props.table.isSelfTree}
 					fetchList={this.fetchList}

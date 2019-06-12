@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import OrderFcn from '../../components/recordList/OrderFcn';
+import OrderFcn from '../../../components/recordList/standard/OrderFcn';
 
-import { swapOrder } from '../../actions/save';
+import { swapOrder } from '../../../actions/save';
 
 export default connect(
 	null,

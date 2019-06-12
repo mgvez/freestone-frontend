@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ListNavLink from '../../containers/recordList/ListNavLink';
+import ListNavLink from '../../../containers/recordList/ListNavLink';
 
-import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../freestone/SchemaProps';
+import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../../freestone/SchemaProps';
 
 const nonOrderable = [TYPE_IMG, TYPE_BANKIMG, TYPE_FILE];
 
@@ -13,11 +13,11 @@ export default class Heading extends Component {
 		fields: PropTypes.array,
 		isSelfTree: PropTypes.bool,
 		fetchList: PropTypes.func,
+		tableName: PropTypes.string,
 		params: PropTypes.shape({
-			tableName: PropTypes.string,
 			page: PropTypes.string,
 			search: PropTypes.string,
-			filter: PropTypes.array,
+			filter: PropTypes.string,
 			order: PropTypes.string,
 		}),
 	};
@@ -38,7 +38,7 @@ export default class Heading extends Component {
 			if (current) iconClass = current < 1 ? 'angle-down' : 'angle-up';
 		}
 		const icon = iconClass && <span className={`fa fa-${iconClass}`} />;
-		return <ListNavLink params={this.props.params} order={field.id} activeClassName="active" className="">{field.label} {icon}</ListNavLink>;
+		return <ListNavLink tableName={this.props.tableName} order={field.id} activeClassName="active" className="">{field.label} {icon}</ListNavLink>;
 
 	}
 

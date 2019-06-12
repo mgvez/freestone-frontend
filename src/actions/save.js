@@ -88,7 +88,6 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				if (!skipDefault) {
 					const backPath = (gotoOnFinish && gotoOnFinish.replace('{{recordId}}', res.mainRecord.recordId)) || `/list/${table.name}`;
 					//si table savée est meta (zva_...)
-					console.log(gotoOnFinish);
 					if (isMeta) {
 						dispatch({
 							type: CLEAR_SCHEMA,
@@ -135,6 +134,23 @@ export function saveSingleValue(tableIdOrName, recordId, fieldId, value) {
 				route: `saveValue/${tableIdOrName}/${recordId}/${fieldId}`,
 				data: {
 					value,
+				},
+			},
+		});
+	};
+}
+
+/**
+ Updates the value for a single record, without children nor files. Only values
+*/
+export function saveSingleRecord(tableIdOrName, recordId, record) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: SAVE_RECORD_API,
+				route: `saveRecord/${tableIdOrName}/${recordId}`,
+				data: {
+					record,
 				},
 			},
 		});

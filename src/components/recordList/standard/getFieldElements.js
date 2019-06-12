@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, ROLE_N_USES, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_PATH_ALIAS, BANK_THUMB_ALIAS } from '../../freestone/SchemaProps';
-import FileThumbnail from '../../containers/fileThumbnail/FileThumbnail';
-import BankImgThumbnail from '../../containers/fileThumbnail/BankImgThumbnail';
-import BankNUses from '../../containers/widgets/BankNUses';
-import BoolSwitch from '../../containers/recordList/BoolSwitch';
+import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, TYPE_ISPUBLISHED, LABEL_PSEUDOFIELD_ALIAS, BANK_PATH_ALIAS, BANK_THUMB_ALIAS } from '../../../freestone/SchemaProps';
+import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
+import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
+import BoolSwitch from '../../../containers/recordList/BoolSwitch';
 
 const MAX_THUMB_SIZE = 200;
 
@@ -61,19 +60,6 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 					field,
 					val: values[field.listAlias],
 					recordId: values[PRIKEY_ALIAS],
-				}
-			);
-		}
-
-		if (field.role === ROLE_N_USES) {
-			// console.log(field);
-			// console.log(values);
-			val = React.createElement(
-				BankNUses,
-				{
-					bankName: table.bankName,
-					id: values[PRIKEY_ALIAS],
-					nUses: val,
 				}
 			);
 		}

@@ -18,8 +18,8 @@ const saveStateSelector = state => state.freestone.save;
 const listPageAfterSaveSelector = state => state.freestone.nav.listPageAfterSave;
 
 //get un tree de IDs de records et de ses children
-function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
-	const childrenTables = unfilteredChildren[tableId] || [];
+export function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
+	const childrenTables = unfilteredChildren && unfilteredChildren[tableId] || [];
 	// children =
 	// console.log(childrenTables, tableId);
 	const children = childrenTables.reduce((allChildrenRecords, childTableId) => {

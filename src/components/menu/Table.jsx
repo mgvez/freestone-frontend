@@ -10,13 +10,15 @@ export default class Table extends Component {
 		nrecords: PropTypes.any,
 		id: PropTypes.number,
 		className: PropTypes.string,
+		clearList: PropTypes.func,
+
 	};
 
 	render() {
 		// console.log('table rendered', this.oldtable, this.oldtable === this.props);
 		// this.oldtable = this.props;
 		return (
-			<NavLink to={`/list/${this.props.name}`} activeClassName="active" className={this.props.className}>
+			<NavLink to={`/list/${this.props.name}`} onClick={this.props.clearList} activeClassName="active" className={this.props.className}>
 				{this.props.displayLabel}
 				<span className="nrecords">
 					<span className="n">{this.props.nrecords}</span>

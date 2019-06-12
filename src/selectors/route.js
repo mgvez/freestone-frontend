@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import queryString from 'query-string';
 
 /**
 	Alias; normalize avec un seul selector, au cas ou la struct de react-router-redux reducer changerait
@@ -17,4 +18,13 @@ export const routeSelector = createSelector(
 			scroll: scrollLock[path],
 		};
 	},
+);
+
+
+const querystringSelector = (state) => state.router.location && state.router.location.search;
+export const searchParamsSelector = createSelector(
+	[querystringSelector],
+	(qstr) => {
+		return queryString.parse(qstr) || {};
+	}
 );

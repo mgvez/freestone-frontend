@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 
 import Paging from './Paging';
-import StandardList from './StandardList';
-import BankList from '../../containers/recordList/bank/BankList';
+import StandardList from './standard/StandardList';
+import BankList from './bank/BankList';
 import ListSearch from './ListSearch';
 import InScroll from '../../containers/utils/InScroll';
 import TablePermissions from '../../containers/permissions/TablePermissions';
@@ -17,14 +17,13 @@ export default class List extends Component {
 	static propTypes = {
 
 		params: PropTypes.shape({
-			tableName: PropTypes.string,
-			filter: PropTypes.array,
+			filter: PropTypes.string,
 			page: PropTypes.string,
 			search: PropTypes.string,
 			order: PropTypes.string,
 		}),
 
-
+		tableName: PropTypes.string,
 		table: PropTypes.object,
 		searchableFields: PropTypes.array,
 		groupedRecords: PropTypes.array,
@@ -69,7 +68,7 @@ export default class List extends Component {
 	}
 
 	requireData() {
-		if (!this.props.table) this.props.fetchTable(this.props.params.tableName);
+		if (!this.props.table) this.props.fetchTable(this.props.tableName);
 	}
 
 	handleResize = () => {
@@ -83,7 +82,7 @@ export default class List extends Component {
 			const { newRecord, newRecordId } = res;
 			this.props.addRecord(this.props.table.id, newRecord);
 
-			const path = `/edit/${this.props.params.tableName}/${newRecordId}`;
+			const path = `/edit/${this.props.tableName}/${newRecordId}`;
 			this.props.goTo(path);
 		});
 	}
@@ -138,25 +137,22 @@ export default class List extends Component {
 
 					<div className="padded-content search-ctn">
 						<ListSearch 
-							key={`search_${this.props.table.name}`}
-							tableName={this.props.table.name}
+							key={`search_${this.props.tableName}`}
+							tableName={this.props.tableName}
 							numRecords={this.getNumRecords()}
-							params={this.props.params}
+							search={this.props.params.search}
 							goTo={this.props.goTo}
 							needsFetch={needsFetch}
 						>
-							<ListFetch needsFetch={needsFetch} params={this.props.params} />
+							<ListFetch needsFetch={needsFetch} tableName={this.props.tableName} params={this.props.params} />
 						</ListSearch>
 					</div>
 					<div className="padded-content">
 						{records}
 						<Paging
-							params={this.props.params}
 							nPages={this.props.nPages}
 							curPage={this.props.curPage}
-							search={this.props.params.search}
-							order={this.props.params.order}
-							tableName={this.props.table.name}
+							tableName={this.props.tableName}
 						/>
 					</div>
 					

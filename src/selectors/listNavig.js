@@ -1,8 +1,9 @@
 
 import { createSelector } from 'reselect';
 
-const paramsSelector = (state, props) => props.params || props.match.params || {};
+import { searchParamsSelector } from './route';
 
+const tableNameSelector = (state, props) => props.tableName;
 const pageSelector = (state, props) => props.page;
 const searchSelector = (state, props) => props.search;
 const filterSelector = (state, props) => props.filter;
@@ -28,7 +29,7 @@ function isListLinkActive(params, page, search, filter, order) {
 	return () => status;
 }
 
-export function getListLink(params, page, search, filter, order) {
+export function getListLink(tableName, params, page, search, filter, order) {
 	// console.log(filter);
 
 	const nextParams = [];
@@ -43,11 +44,11 @@ export function getListLink(params, page, search, filter, order) {
 	} else if (search) {
 		nextParams.push(`search=${search}`);
 	} else {
-		if (params.filter) nextParams.push(`filter=${params.filter}`);
-		if (params.search && search === null) nextParams.push(`search=${params.search}`);
+		if (params && params.filter) nextParams.push(`filter=${params.filter}`);
+		if (params && params.search && search === null) nextParams.push(`search=${params.search}`);
 	}
 
-	const currentOrder = Number(params.order || 0);
+	const currentOrder = Number(params && params.order || 0);
 	let nextOrder = order;
 	if (Math.abs(currentOrder) === Math.abs(order)) {
 		nextOrder = currentOrder > 0 ? -currentOrder : 0;
@@ -56,16 +57,15 @@ export function getListLink(params, page, search, filter, order) {
 
 	if (nextOrder) nextParams.push(`order=${nextOrder}`);
 
-	return { pathname: `/list/${params.tableName}`, search: `?${nextParams.join('&')}` };
+	return { pathname: `/list/${tableName}`, search: `?${nextParams.join('&')}` };
 }
 
 export const getListLinkSelector = createSelector(
-	[paramsSelector, pageSelector, searchSelector, filterSelector, orderSelector],
-	(params, page, search, filter, order) => {
-		
+	[tableNameSelector, searchParamsSelector, pageSelector, searchSelector, filterSelector, orderSelector],
+	(tableName, searchParams, page, search, filter, order) => {
 		return {
-			to: getListLink(params, page, search, filter, order),
-			isActive: isListLinkActive(params, page, search, filter, order),
+			to: getListLink(tableName, searchParams, page, search, filter, order),
+			isActive: isListLinkActive(searchParams, page, search, filter, order),
 		};
 	}
 );

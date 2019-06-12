@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { PRIKEY_ALIAS, BANK_CATEG_FOREIGN_FIELD } from '../../../freestone/SchemaProps';
+import { PRIKEY_ALIAS } from '../../../freestone/SchemaProps';
 
 import BankListCell from '../../../containers/recordList/bank/BankListCell';
-import ListNavLink from '../../../containers/recordList/ListNavLink';
+import BankCategoriesSidebar from '../../../containers/recordList/bank/BankCategoriesSidebar';
 
 import { Heading2 } from '../../../styles/Texts';
 import styled from 'styled-components';
-import colors from '../../../styles/Colors';
-import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 
 const SectionsContainer = styled.div`
 	display:flex;
@@ -17,47 +15,20 @@ const SectionsContainer = styled.div`
 	flex-wrap: nowrap;
 `;
 
-const FiltersContainer = styled.section`
-	background: ${colors.gray90};
-	border: 1px ${colors.gray76} solid;
-	margin: 0 12px;
-	flex: 0 0 ${THUMBNAIL_SIZE}px;
-`;
-
 const CellsContainer = styled.div`
 	display:flex;
 	flex-wrap: wrap;
 `;
 
-const CategLink = styled(ListNavLink)`
-	display:block;
-	color:red;
-	&.active{
-		color: green;
-	}
-`;
 
 export default class BankList extends Component {
 	static propTypes = {
 		isLarge: PropTypes.bool,
 		hoveringId: PropTypes.string,
+		tableName: PropTypes.string,
 		bankName: PropTypes.string,
-		categories: PropTypes.array,
-
-		params: PropTypes.shape({
-			tableName: PropTypes.string,
-			page: PropTypes.string,
-			search: PropTypes.string,
-			filter: PropTypes.array,
-			order: PropTypes.string,
-		}),
-
-
 		table: PropTypes.object,
 		groupedRecords: PropTypes.array,
-
-		fetchBankCategories: PropTypes.func,
-
 	};
 
 	constructor(props) {
@@ -77,39 +48,11 @@ export default class BankList extends Component {
 		this.handleHover(null);
 	}
 
-	componentDidUpdate() {
-		this.requireData();
-	}
-
-	requireData() {
-		if (!this.props.categories) this.props.fetchBankCategories(this.props.bankName);
-	}
-
 	render() {
-		// console.log(this.props.categories);
-
-		const categories = this.props.categories && this.props.categories.map((category) => {
-			return (
-				<CategLink 
-					key={category.prikey} 
-					params={this.props.params} 
-					filter={{ [BANK_CATEG_FOREIGN_FIELD]: category.prikey }}
-					activeClassName="active"
-				>
-					{category.name} ({category.n_items})
-				</CategLink>
-			);
-		});
-
 		return (
 			<SectionsContainer>
-				<FiltersContainer key="filters">
-					<Heading2>Show</Heading2>
-					{categories}
+				<BankCategoriesSidebar bankName={this.props.bankName} tableName={this.props.tableName} />
 
-					<input type="text" />
-
-				</FiltersContainer>
 				<section key="result">
 				{
 					this.props.groupedRecords.map((group, groupIdx) => {

@@ -21,16 +21,43 @@ const maxSizeSelector = (state, props) => props.maxSize || THUMBNAIL_SIZE;
 const bankNameSelector = (state, props) => props.bankName;
 
 
-export const bankCategoriesSelector = createSelector(
-	[bankNameSelector, allBankCategoriesSelector],
-	(bankName, allCategories) => {
+export const bankSidebarSelector = createSelector(
+	[bankNameSelector, allBankCategoriesSelector, selectionSelector],
+	(bankName, allCategories, selection) => {
 		// console.log(allImages);
 		const categories = allCategories && allCategories[bankName];
 		return {
+			isChoosingBankItem: !!selection,
+			gotoOnChoose: selection && selection.returnTo,
 			categories,
 		};
 	}
 );
+
+
+export const bankSelectionSelector = createSelector(
+	[selectionSelector, routeSelector, recordsFormSelector],
+	(selection, route, records) => {
+		// console.log(selection);
+		// console.log(table);
+
+		//find value of target field, where we want to put the value of the bank item
+		let targetFieldValue;
+		if (selection) {
+			const { tableId, fieldId, recordId } = selection;
+			targetFieldValue = records[tableId] && records[tableId][recordId] && records[tableId][recordId][fieldId];
+		}
+
+		return {
+			isChoosingBankItem: !!selection,
+			gotoOnChoose: selection && selection.returnTo,
+			bankDestination: selection,
+			targetFieldValue,
+			route: route.path,
+		};
+	}
+);
+
 
 function buildByCategory(records, categFieldAlias) {
 	const categs = records && records.reduce((all, record) => {
@@ -123,31 +150,6 @@ export const bankUsesSelector = createSelector(
 		const records = allUses[bankName] && allUses[bankName][id];
 		return {
 			records,
-		};
-	}
-);
-
-export const bankSelectionSelector = createSelector(
-	[selectionSelector, routeSelector, recordsFormSelector],
-	(selection, route, records) => {
-		// console.log(selection);
-		const { destination, bankRecord } = selection;
-		// console.log(table);
-
-		//find value of target field, where we want to put the value of the bank item
-		let targetFieldValue;
-		if (destination) {
-			const { tableId, fieldId, recordId } = destination;
-			targetFieldValue = records[tableId] && records[tableId][recordId] && records[tableId][recordId][fieldId];
-		}
-
-		return {
-			isChoosingBankItem: !!selection.destination,
-			gotoOnChoose: destination && destination.returnTo,
-			bankDestination: destination,
-			bankRecord,
-			targetFieldValue,
-			route: route.path,
 		};
 	}
 );

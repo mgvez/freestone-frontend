@@ -10,7 +10,6 @@ export default class BankImgInput extends Component {
 	static propTypes = {
 		changeVal: PropTypes.func,
 		bankDestination: PropTypes.object,
-		bankRecord: PropTypes.object,
 		lang: PropTypes.string,
 		field: PropTypes.object,
 		recordId: PropTypes.string,

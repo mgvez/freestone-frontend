@@ -5,6 +5,7 @@ import { BANK_IMAGE_API, BANK_USES_API, BANK_FILE_API, BANK_SETUP_SELECT, BANK_C
 import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
 import { BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../freestone/SchemaProps';
 import { CLEAR_DATA } from '../actions/dev';
+import { CLEAR_LIST } from '../actions/nav';
 
 const initialState = {};
 
@@ -75,8 +76,8 @@ function categories(state = {}, action) {
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
-		return initialState;
 	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
 		return {};
 	case BANK_CATEGORIES_API.SUCCESS: {
 		if (!action.data) return state;
@@ -125,13 +126,11 @@ function selection(state = {}, action) {
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
+	case CLEAR_LIST:
 	case BANK_CANCEL_SELECT:
-		return {};
+		return null;
 	case BANK_SETUP_SELECT: {
-		return {
-			bankRecord: null,
-			destination: action,
-		};
+		return action;
 	}
 	default:
 		// console.log('no change');

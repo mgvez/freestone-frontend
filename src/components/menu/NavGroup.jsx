@@ -30,7 +30,7 @@ export default class NavGroup extends Component {
 			<ul className="sub-nav">
 				{
 					this.props.data.tables.map((item) => {
-						return 	<li className="nav-item" key={item.id}><Table name={item.name} id={item.id} displayLabel={item.displayLabel} nrecords={item.nrecords} /></li>;
+						return 	<li className="nav-item" key={item.id}><Table name={item.name} id={item.id} displayLabel={item.displayLabel} nrecords={item.nrecords} clearList={this.props.clearList} /></li>;
 					})
 				}
 				{

@@ -110,7 +110,7 @@ export default class BankListCell extends Component {
 
 				<SelectBankItemBtn bankItemId={prikeyVal} />
 
-				<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" round warn >
+				<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" round="true" warn="true" >
 					<i className="fa fa-pencil"></i>Edit
 				</NavLinkButton>
 				{!nUses ? <DeleteBtn key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} /> : null}

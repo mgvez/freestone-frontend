@@ -45,17 +45,6 @@ export default class Paging extends Component {
 		tableName: PropTypes.string,
 		nPages: PropTypes.number,
 		curPage: PropTypes.number,
-		search: PropTypes.string,
-		order: PropTypes.string,
-		
-		params: PropTypes.shape({
-			tableName: PropTypes.string,
-			filter: PropTypes.array,
-			page: PropTypes.string,
-			search: PropTypes.string,
-			order: PropTypes.string,
-		}),
-
 		onChangePage: PropTypes.func,
 	};
 
@@ -87,7 +76,7 @@ export default class Paging extends Component {
 		if (this.props.onChangePage) {
 			lnk = <a data-page={num} onClick={this.onClickPage} className="">{display}</a>;
 		} else {
-			lnk = <ListNavLink params={this.props.params} page={num} activeClassName="active" className="">{display}</ListNavLink>;
+			lnk = <ListNavLink tableName={this.props.tableName} page={num} activeClassName="active" className="">{display}</ListNavLink>;
 		}
 
 		return (
