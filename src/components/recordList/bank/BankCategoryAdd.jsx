@@ -9,6 +9,19 @@ import { Button } from '../../../styles/Button';
 import styled from 'styled-components';
 import colors from '../../../styles/Colors';
 
+const AddContainer = styled.section`
+
+`;
+
+const FormContainer = styled.section`
+	padding: 12px 0;
+	display:flex;
+	input {
+		flex-basis: 75%;
+		margin-right: 5px;
+	}
+`;
+
 export default class BankCategoryAdd extends Component {
 	static propTypes = {
 		bankName: PropTypes.string,
@@ -38,11 +51,13 @@ export default class BankCategoryAdd extends Component {
 
 	render() {
 		return (
-			<div>
+			<AddContainer>
 				<Heading3>Add a category</Heading3>
-				<input value={this.state.value} onChange={this.handleChange} />
-				<Button info="true" onClick={this.onSaveNewCateg} >Add</Button>
-			</div>
+				<FormContainer>
+					<input value={this.state.value} onChange={this.handleChange} />
+					<Button info="true" onClick={this.onSaveNewCateg} >Add</Button>
+				</FormContainer>
+			</AddContainer>
 		);
 	}
 }

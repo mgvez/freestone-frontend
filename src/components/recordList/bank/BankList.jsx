@@ -8,11 +8,17 @@ import BankCategoriesSidebar from '../../../containers/recordList/bank/BankCateg
 
 import { Heading2 } from '../../../styles/Texts';
 import styled from 'styled-components';
+import colors from '../../../styles/Colors';
 
 const SectionsContainer = styled.div`
 	display:flex;
 	align-items: flex-start;
 	flex-wrap: nowrap;
+`;
+
+const GroupContainer = styled.div`
+	margin-bottom: 40px;
+	border-bottom: 1px ${colors.borderMedium} solid;
 `;
 
 const CellsContainer = styled.div`
@@ -64,7 +70,7 @@ export default class BankList extends Component {
 						}
 
 						return (
-							<div key={groupIdx}>
+							<GroupContainer key={groupIdx}>
 								{groupHeading}
 								<CellsContainer>
 								{
@@ -78,7 +84,7 @@ export default class BankList extends Component {
 									})
 								}
 								</CellsContainer>
-							</div>
+							</GroupContainer>
 						);
 
 					})

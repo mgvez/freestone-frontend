@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Button } from '../../../styles/Button';
+import { PromptWidget, PromptContainer } from '../../../styles/Prompts';
+
 
 export default class BankNUses extends Component {
 	static propTypes = {
@@ -55,24 +58,25 @@ export default class BankNUses extends Component {
 	}
 
 	render() {
-		if (this.props.nUses === '0') return <div>not used</div>;
-		const activeClass = this.state.active ? 'active' : '';
+		if (Number(this.props.nUses) === 0) return <div>not used</div>;
 
 		const listRecords = this.props.records && this.props.records.map((rec, i) => {
-			return <Link to={`/edit/${rec.tableId}/${rec.recordId}`} key={i} onClick={this.toggleActions} className="record-action">{rec.tableLabel} - {rec.label}</Link>;
+			return (<li key={`${rec.tableId}_${rec.recordId}`}>
+				<Link to={`/edit/${rec.tableId}/${rec.recordId}`} onClick={this.toggleActions} className="record-action">{rec.tableLabel} - {rec.label}</Link>
+			</li>);
 		});
 
 		return (
-			<div>
-				<div className="actions">
-					<div className={`record-actions ${activeClass}`}>
-						<button className="button-round-bordered-info record-action-control" onClick={this.toggleActions}>{this.props.nUses} use(s) <i className="fa fa-angle-down"></i></button>
-						<div className="record-actions-group record-actions-group-large">
-							{listRecords}
-						</div>
-					</div>
-				</div>
-			</div>
+			<PromptContainer className={this.state.active && 'active'}>
+				<Button small="true" info="true" bordered="true" round="true" faded="true" onClick={this.toggleActions}>
+					{this.props.nUses} use(s) <i className="fa fa-angle-down"></i>
+				</Button>
+				{this.state.active && (<PromptWidget light large>
+					<ul>
+						{listRecords}
+					</ul>
+				</PromptWidget>)}
+			</PromptContainer>
 		);
 	}
 }

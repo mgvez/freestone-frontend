@@ -7,9 +7,10 @@ import styled from 'styled-components';
 import DeleteBtn from '../../../containers/recordList/DeleteBtn';
 import InfosFcn from '../../../containers/recordList/InfosFcn';
 import SelectBankItemBtn from '../../../containers/recordList/bank/SelectBankItemBtn';
-import BankNUses from '../../../containers/widgets/BankNUses';
+import BankNUses from '../../../containers/recordList/bank/BankNUses';
 import { NavLinkButton } from '../../../styles/Button';
 import colors from '../../../styles/Colors';
+import cssVars from '../../../styles/Variables';
 import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 
 import { 
@@ -38,9 +39,30 @@ import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 const StyledCell = styled.div`
 	background: ${colors.gray90};
 	border: 1px ${colors.gray76} solid;
-	margin: 12px;
+	margin: 0 12px 12px 0;
 	width: ${THUMBNAIL_SIZE}px;
+`;
 
+const InfosContainer = styled.div`
+	margin: 8px 0;
+	display:flex;
+	align-content: space-around;
+	flex-direction: column;
+	font-size: 0.9em;
+	font-weight: ${cssVars.fontWeightSemibold};
+	&.top {
+		margin: 12px;
+	}
+`;
+
+const Row = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;
+
+const Label = styled.div`
+	display: inline-block;
+	font-weight: ${cssVars.fontWeightBold};
 `;
 
 export default class BankListCell extends Component {
@@ -68,23 +90,22 @@ export default class BankListCell extends Component {
 		// console.log(record);
 		// console.log(`${BANK_IMG_TABLE} ${BANK_FILE_ALIAS} ${BANK_THUMB_ALIAS}`);
 		// console.log(thumbPath);
-		const comments = record[`${tableName}_${BANK_COMMENTS_ALIAS}`] ? (<div className="comments">
-			Comments : {record[`${tableName}_${BANK_COMMENTS_ALIAS}`]}
+		const comments = record[`${tableName}_${BANK_COMMENTS_ALIAS}`] ? (<div key="comments">
+			<Label>Comments</Label> : {record[`${tableName}_${BANK_COMMENTS_ALIAS}`]}
 		</div>) : null;
 
 		const sizeDisplay = bankName === BANK_IMG_NAME ? (
-			<div className="size">
-				Original size : {record[`${tableName}_${BANK_IMG_DIM_ALIAS}`]}<br />
-				KB : {record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}<br />
+			<div key="size">
+				{record[`${tableName}_${BANK_IMG_DIM_ALIAS}`]}, {record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}kb
 			</div>
 		) : (
-			<div className="size">
-				KB : {record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}<br />
+			<div key="size">
+				{record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}kb
 			</div>
 		);
 
 		return (
-			<StyledCell className="">
+			<StyledCell key={`item-${prikeyVal}`}>
 				<FileThumbnail
 					val={record[`${tableName}_${BANK_FILE_ALIAS}`]}
 					absolutePath={filePath}
@@ -92,28 +113,37 @@ export default class BankListCell extends Component {
 					dir={record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_FOLDER_ALIAS}`]}
 					type={bankName === BANK_DOCS_NAME ? TYPE_FILE : TYPE_IMG}
 				/>
-				<div className="label">{record[`${tableName}_${BANK_TITLE_ALIAS}${this.props.lang}`]}</div>
-				<div className="filename">{record[`${tableName}_${BANK_FILE_ALIAS}`]}</div>
-				{sizeDisplay}
-				<div className="size">
-					<BankNUses bankName={bankName} id={prikeyVal} nUses={nUses} />
-				</div>
-				{comments}
+				<InfosContainer className="top">
+					<Row key="infos">
+						<InfosFcn
+							prikey={prikeyVal}
+							lastmodifdate={record[LASTMODIF_DATE_ALIAS]}
+							createddate={record[CREATED_DATE_ALIAS]}
+							label={record[LABEL_PSEUDOFIELD_ALIAS]}
+							tableName={tableName}
+						/>
+						<BankNUses bankName={bankName} id={prikeyVal} nUses={nUses} />
+					</Row>
+					
+					<InfosContainer>
+						<div key="title">{record[`${tableName}_${BANK_TITLE_ALIAS}${this.props.lang}`]}</div>
+						<div key="file">{record[`${tableName}_${BANK_FILE_ALIAS}`]}</div>
+						{sizeDisplay}
+						{comments}
+					</InfosContainer>
 
-				<InfosFcn
-					prikey={prikeyVal}
-					lastmodifdate={record[LASTMODIF_DATE_ALIAS]}
-					createddate={record[CREATED_DATE_ALIAS]}
-					label={record[LABEL_PSEUDOFIELD_ALIAS]}
-					tableName={tableName}
-				/>
+					<Row key="select">
+						<SelectBankItemBtn bankItemId={prikeyVal} />
+					</Row>
 
-				<SelectBankItemBtn bankItemId={prikeyVal} />
+					<Row key="fcn" className="btns">
+						{!nUses && <DeleteBtn isButton key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} />}
+						<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" small="true" round="true" warn="true" >
+							<i className="fa fa-pencil"></i>Edit
+						</NavLinkButton>
+					</Row>
 
-				<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" round="true" warn="true" >
-					<i className="fa fa-pencil"></i>Edit
-				</NavLinkButton>
-				{!nUses ? <DeleteBtn key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} /> : null}
+				</InfosContainer>
 			</StyledCell>
 		);
 	}

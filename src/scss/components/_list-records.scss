@@ -82,183 +82,85 @@
 	}
 
 	.record-actions {
-		position: relative;
-		margin-bottom: 5px;
+		// position: relative;
+		// margin-bottom: 5px;
 
-		.record-action-control {
-			cursor: pointer;
-			// padding: 5px 0px;
-			padding: 0 10px;
-			white-space: nowrap;
+		// .record-action-control {
+		// 	cursor: pointer;
+		// 	// padding: 5px 0px;
+		// 	padding: 0 10px;
+		// 	white-space: nowrap;
 
-			i {
-				margin: 0;
-			}
-		}
+		// 	i {
+		// 		margin: 0;
+		// 	}
+		// }
 
-		.record-actions-group {
-			display: none;
-			background: $color-background-main;
-			padding: 5px 0;
+		// .record-actions-group {
+		// 	display: none;
+		// 	background: $color-background-main;
+		// 	padding: 5px 0;
 
-			position: absolute;
-				top: 40px;
-				left: 0;
+		// 	position: absolute;
+		// 		top: 40px;
+		// 		left: 0;
 
-			width: 130px;
+		// 	width: 130px;
 
 			&.record-actions-group-large{
 				width: auto;
 				white-space: nowrap;
 			}
 
-			&:before {
-				content: ' ';
+		// 	&:before {
+		// 		content: ' ';
 				
-				position: absolute;
-					top: 0;
-					left: 15%;
+		// 		position: absolute;
+		// 			top: 0;
+		// 			left: 15%;
 
-				transform: translate(-50%, -100%);
-				@include triangle((
-					width: 10px,
-					color: $color-background-main,
-					side: 'top'
-				));
-			}
-		}
+		// 		transform: translate(-50%, -100%);
+		// 		@include triangle((
+		// 			width: 10px,
+		// 			color: $color-background-main,
+		// 			side: 'top'
+		// 		));
+		// 	}
+		// }
 
-		.record-action {
-			display: block;
-			padding: 5px 10px;
 
-			text-decoration: none;
-			color: $color-text-primary;
-			cursor: pointer;
+		// &.active {
+		// 	z-index: 2;
 
-			&:hover {
-				background: rgba(0,0,0,0.05);
-			}
-
-			i {
-				margin-right: 10px;
-				width: 20px;
-				text-align: center;
-			}
-
-			&.prompt {
-				background: darken($color-background-main, 10%);
-				margin: 10px -10px;
-				padding: 10px;
-
-				div + div {
-					margin-top: 10px;
-				}
-			}
-
-			&.red {
-				i {
-					color: $red58;
-				}
-			}
-
-			&.accent {
-				i {
-					color: $color-accent-primary;
-				}
-			}
-
-			&.yellow {
-				i {
-					color: $yellow76;
-				}
-			}
-		}
-
-		&.active {
-			z-index: 2;
-
-			.record-actions-group {
-				display: block;
-			}
-		}
+		// 	.record-actions-group {
+		// 		display: block;
+		// 	}
+		// }
 	}
 
-	.orders, .actions {
-		display: inline-block;
-		vertical-align: middle;
-	}
+	// .orders, .actions {
+	// 	display: inline-block;
+	// 	vertical-align: middle;
+	// }
 
-	.orders {
-		margin-left: 62px;
+	// .orders {
+	// 	margin-left: 62px;
 
-		a {
-			color: $color-accent-primary;
-			display: block;
-			text-align: center;
-			cursor: pointer;
+	// 	a {
+	// 		color: $color-accent-primary;
+	// 		display: block;
+	// 		text-align: center;
+	// 		cursor: pointer;
 
-			& + a {
-				margin-top: 20px
-			}
+	// 		& + a {
+	// 			margin-top: 20px
+	// 		}
 
-			&:hover {
-				text-decoration: none;
-			}
-		}
-	}
-
-	[data-info-tooltip] {
-		position: relative;
-		display: inline-block;
-
-		a {
-			cursor: pointer;
-			text-decoration: underline;
-			color: $color-text-primary;
-			font-size: 12px;
-		}
-	}
-
-	.tooltip {
-		$bgColor: rgba(darken($color-background-dark, 10%), 0.9);
-		
-		display: none;
-		background: $bgColor;
-		font-size: 12px;
-		color: $white;
-		padding: 10px;
-		border-radius: 5px;
-
-		width: 260px;
-
-		position: absolute;
-			top: -10px;
-			left: 50%;
-
-		transform: translate(-50%, -100%);
-
-		&:after {
-			display: block;
-			content: ' ';
-
-			position: absolute;
-				bottom: 0;
-				left: 50%;
-
-			transform: translate(-50%, 100%);
-				
-			@include triangle((
-				width: 10px,
-				color: $bgColor,
-				side: 'bottom'
-			));
-		}
-
-		&.shown {
-			display: block;
-		}
-	}
+	// 		&:hover {
+	// 			text-decoration: none;
+	// 		}
+	// 	}
+	// }
 
 	@for $i from 1 through 5 {
 		tr.level-#{$i} {

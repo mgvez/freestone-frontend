@@ -99,7 +99,7 @@ export const listRecordsSelector = createSelector(
 						let groupValue = record[groupFieldLabelAlias];
 						if (table.groupField.type === TYPE_BOOL) groupValue = Number(groupValue) ? 'true' : 'false';
 						group = {
-							label: `${table.groupField.label} - ${groupValue}`,
+							label: groupValue ? `${table.groupField.label} - ${groupValue}` : null,
 							val: groupVal,
 							records: [],
 						};

@@ -25,3 +25,38 @@ export function blendColors(c0, c1, p) {
 
 export const darken = (color, prc) => shadeColor2(color, -prc);
 export const lighten = (color, prc) => shadeColor2(color, prc);
+
+export function triangle(width, color, side) {
+	return `
+		content: ' ';
+		display: block;
+		width:0;
+		height:0;
+
+		${(side === 'left' || side === 'right') && `
+			border-top: ${width} solid transparent;
+			border-bottom: ${width} solid transparent;
+		`};
+
+		${(side === 'top' || side === 'bottom') && `
+			border-left: ${width} solid transparent;
+			border-right: ${width} solid transparent;
+		`};
+		
+		${side === 'left' && `
+			border-right: ${width} solid ${color};
+		`};
+
+		${side === 'right' && `
+			border-left: ${width} solid ${color};
+		`};
+
+		${side === 'top' && `
+			border-bottom: ${width} solid ${color};
+		`};
+
+		${side === 'bottom' && `
+			border-top: ${width} solid ${color};
+		`};
+	`;
+}

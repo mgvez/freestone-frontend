@@ -42,10 +42,13 @@ const backgroundDark = blue26;
 const backgroundDarkHover = blue23;
 
 const borderDark = blue23;
+const borderMedium = gray76;
 const borderLight = gray93;
 
 const textPrimary = gray45;
 const textSecondary = white;
+
+const linksPrimary = blue26;
 
 const colors = {
 	gray31,
@@ -77,9 +80,11 @@ const colors = {
 	backgroundDark,
 	backgroundDarkHover,
 	borderDark,
+	borderMedium,
 	borderLight,
 	textPrimary,
 	textSecondary,
+	linksPrimary,
 };
 
 export default colors;

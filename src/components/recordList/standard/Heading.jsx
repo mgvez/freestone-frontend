@@ -59,7 +59,7 @@ export default class Heading extends Component {
 		let cells;
 		if (this.props.fields.length) {
 			cells = this.props.fields.map((field) => {
-				if (field.isGroup) return null;
+				if (field.isGroup || field.type === 'order') return null;
 				const link = this.getLink(field);
 				return <th key={`fld_${field.id}`}>{link}</th>;
 			});

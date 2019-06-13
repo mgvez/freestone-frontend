@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '../../styles/Button';
+import { RecordAction } from '../../styles/RecordActions';
 
 export default class DuplicateBtn extends Component {
 	static propTypes = {
+		isButton: PropTypes.bool,
 		prikey: PropTypes.string,
 		tableName: PropTypes.string,
 		duplicateRecord: PropTypes.func,
@@ -13,8 +16,10 @@ export default class DuplicateBtn extends Component {
 	};
 
 	render() {		
-		return (
-			<div className="record-action yellow" onClick={this.process}><i className="fa fa-clone"></i>Duplicate</div>
+		return this.props.isButton ? (
+			<Button warn="true" onClick={this.process}><i className="fa fa-clone"></i>Duplicate</Button>
+		) : (
+			<RecordAction warn="true" onClick={this.process}><i className="fa fa-clone"></i>Duplicate</RecordAction>
 		);
 	}
 }

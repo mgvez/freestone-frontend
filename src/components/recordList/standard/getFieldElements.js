@@ -23,7 +23,7 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 	// console.log(values);
 
 	return fields.map((field) => {
-		if (field.isGroup) return null;
+		if (field.isGroup || field.type === 'order') return null;
 
 		let val = values[field.listAlias];
 		// if (!val) {

@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import colors from '../../styles/Colors';
+import { Button } from '../../styles/Button';
+import { Tooltip } from '../../styles/Prompts';
+
+const Container = styled.div`
+	position: relative;
+`;
 
 
 export default class InfosFcn extends Component {
@@ -43,17 +51,18 @@ export default class InfosFcn extends Component {
 	render() {
 		const created = this.props.createddate || 'unknown';
 		const modified = this.props.lastmodifdate || 'unknown';
-		const activeClass = this.state.active ? 'shown' : '';
+		const tt = this.state.active ? (
+			<Tooltip>
+				id. {this.props.prikey}<br />
+				c. {created}<br />
+				m. {modified}<br />
+			</Tooltip>
+		) : '';
 		return (
-			<div data-info-tooltip>
-				<div className={`tooltip ${activeClass}`}>
-					id. {this.props.prikey}<br />
-					c. {created}<br />
-					m. {modified}<br />
-				</div>
-
-				<a onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>Record infos</a>
-			</div>
+			<Container>
+				{tt}
+				<Button onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} tiny="true" faded="true" info="true" circle="true"><i className="fa fa-question"></i></Button>
+			</Container>
 		);
 	}
 }

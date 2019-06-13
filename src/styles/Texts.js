@@ -31,14 +31,13 @@ export const Heading1 = styled.h1`
 export const Heading2 = styled.h2`
 	${title}
 	font-size: ${cssVars.fontSizeTitle2};
-	font-weight: ${cssVars.fontWeightNormal};
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 `;
 
 export const Heading3 = styled.h3`
 	${title}
 	font-size: ${cssVars.fontSizeTitle3};
-	font-weight: ${cssVars.fontWeightExtrabold};
+
 `;
 
 export const Heading4 = styled.h4`

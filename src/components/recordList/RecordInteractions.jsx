@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
 import InfosFcn from '../../containers/recordList/InfosFcn';
 import DuplicateBtn from '../../containers/recordList/DuplicateBtn';
 import OrderFcn from '../../containers/recordList/standard/OrderFcn';
 import DeleteBtn from '../../containers/recordList/DeleteBtn';
+import { Button } from '../../styles/Button';
+import { getActionCss } from '../../styles/RecordActions';
+import { PromptContainer, PromptWidget } from '../../styles/Prompts';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/SchemaProps';
 
@@ -13,6 +17,20 @@ const DEFAULT_LABEL = 'Actions';
 const EDIT_LABEL = 'Edit';
 const PREVIEW_LABEL = 'Preview';
 
+const Container = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.actions {
+		margin-bottom: 5px;
+		flex-basis: 75%;
+	}
+`;
+
+
+const ActionLink = styled.a`${props => getActionCss(props)}`;
+const ActionNavLink = styled(NavLink)`${props => getActionCss(props)}`;
 export default class RecordInteractions extends Component {
 	static propTypes = {
 		table: PropTypes.object,
@@ -73,29 +91,21 @@ export default class RecordInteractions extends Component {
 
 	render() {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
-		let orderFcn;
-		if (this.props.table.hasOrder) {
-			orderFcn = this.props.hasCustomOrder ? <div /> : <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} fetchRecords={this.props.fetchRecords} />;
-		}
-
 		const recordLink = this.props.values[SLUG_PSEUDOFIELD_ALIAS];
-		const activeClass = this.state.active ? 'active' : '';
 
-		const preview = recordLink ? (<a href={recordLink} target="_blank" className="record-action accent"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</a>) : null;
-
-		return (<div>
-			<div className="actions">
-				<div className={`record-actions ${activeClass}`}>
-					<div className="button-round-bordered-info record-action-control" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></div>
-					<div className="record-actions-group">
-						<NavLink to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" className="record-action accent">
+		return (
+			<Container>
+				<PromptContainer className={`actions ${this.state.active && 'active'}`}>
+					<Button round="true" bordered="true" info="true" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></Button>
+					{this.state.active && (<PromptWidget>
+						<ActionNavLink to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} accent="true">
 							<i className="fa fa-pencil"></i>{EDIT_LABEL}
-						</NavLink>
+						</ActionNavLink>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn key={`${this.props.table.name}_${prikeyVal}`} tableName={this.props.table.name} prikey={prikeyVal} />
-						{preview}
-					</div>
-				</div>
+						{recordLink && <ActionLink href={recordLink} target="_blank" accent="true"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</ActionLink>}
+					</PromptWidget>)}
+				</PromptContainer>
 				<InfosFcn
 					prikey={prikeyVal}
 					lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
@@ -103,8 +113,8 @@ export default class RecordInteractions extends Component {
 					label={this.props.values[LABEL_PSEUDOFIELD_ALIAS]}
 					tableName={this.props.table.name}
 				/>
-			</div>
-			{orderFcn}
-		</div>);
+				{this.props.table.hasOrder && !this.props.hasCustomOrder && <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} fetchRecords={this.props.fetchRecords} />}
+			</Container>
+		);
 	}
 }
