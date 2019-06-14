@@ -57,9 +57,9 @@ const StyledHeader = styled.header`
 		font-weight: ${cssVars.fontWeightMedium};
 	}
 
-	.table-help {
+	/* .table-help {
 		margin-top: 10px;
-	}
+	} */
 
 	.btns {
 		padding-left: 30px;

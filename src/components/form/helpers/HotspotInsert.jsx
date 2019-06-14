@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import customStyle from '../../../styles/Modal';
+import { Button } from '../../../styles/Button';
 
 export default class HotspotInsert extends Component {
 	static propTypes = {
@@ -42,7 +43,7 @@ export default class HotspotInsert extends Component {
 	}
 
 	render() {
-		const saveBtn = this.state.x !== -1 ? (<button onClick={this.save} className="button-round">Save</button>) : '';
+		const saveBtn = this.state.x !== -1 ? (<Button onClick={this.save} round>Save</Button>) : '';
 		return (
 			<Modal
 				isOpen
@@ -54,7 +55,7 @@ export default class HotspotInsert extends Component {
 					<h2 className="hotspot-title">Click on the image to place a hotspot</h2>
 					<div className="buttons hotspot-buttons">
 						{saveBtn} 
-						<button onClick={this.cancelChange} className="button-round-danger">Cancel</button> 
+						<Button onClick={this.cancelChange} round danger>Cancel</Button> 
 					</div>
 				</div>
 				<div className="hotspot-image-container" ref={(div) => { this.container = div; }} onClick={this.onClickImage}>

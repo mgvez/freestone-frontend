@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import LinkInsert from '../helpers/LinkInsert';
+import { Button } from '../../../styles/Button';
 
 export default class UrlInput extends Component {
 	static propTypes = {
@@ -35,7 +36,7 @@ export default class UrlInput extends Component {
 		}
 		return (<div className="link-field">
 			<input type="text" value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
-			<button className="button-round-action-bordered" onClick={this.openModal}>Url select helper</button>
+			<Button round bordered onClick={this.openModal}>Url select helper</Button>
 		</div>);
 	}
 }

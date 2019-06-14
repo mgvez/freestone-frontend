@@ -34,12 +34,16 @@ function noop() {
 const MainContent = styled.div`
 	padding-top: ${cssVariables.headerHeight};
 	padding-left: ${cssVariables.navWidth};
+	&.fullwidth {
+		padding-left: 0;
+	}
 	transition: padding 0.3s;
 `;
 
 export default class Freestone extends Component {
 	static propTypes = {
 		isAuthenticated: PropTypes.bool,
+		isNavVisible: PropTypes.bool,
 		lastRequestTime: PropTypes.number,
 		freestone: PropTypes.object,
 		jwt: PropTypes.string,
@@ -113,7 +117,7 @@ export default class Freestone extends Component {
 
 				<RecordPreview>
 					<Nav />
-					<MainContent>
+					<MainContent className={!this.props.isNavVisible ? 'fullwidth' : null}>
 						<SiteHeader />
 						<LoadedRecords />
 						{this.props.children}

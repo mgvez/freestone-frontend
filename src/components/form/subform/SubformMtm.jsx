@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FormHeaderContent from '../../header/FormHeaderContent';
 import Collapsable from '../../animation/Collapsable';
 import ToggleCollapse from '../buttons/ToggleCollapse';
+import { Subform, SubformHeader } from '../../../styles/Form';
 
 export default class SubformMtm extends Component {
 	static propTypes = {
@@ -101,19 +102,19 @@ export default class SubformMtm extends Component {
 			// console.log(this.props.mtmOptions);
 			const options = this.getOptions();
 			return (
-				<section className="subform">
-					<header className="row">
+				<Subform>
+					<SubformHeader className="row">
 						<div className="col-md-8">
 							<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 						</div>
 						<div className="col-md-3 col-md-offset-1 fcn">
 							<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 						</div>
-					</header>
+					</SubformHeader>
 					<div className="row">
 						<Collapsable isCollapsed={this.props.isCollapsed}>{options}</Collapsable>
 					</div>
-				</section>
+				</Subform>
 			);
 		}
 

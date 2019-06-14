@@ -5,6 +5,7 @@ import { TYPE_IMG, BANK_IMG_TABLE } from '../../../freestone/SchemaProps';
 
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import GenericFileInput from '../genericInputs/GenericFileInput';
+import { Button } from '../../../styles/Button';
 
 export default class BankImgInput extends Component {
 	static propTypes = {
@@ -47,8 +48,8 @@ export default class BankImgInput extends Component {
 
 		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} /> : null;
 
-		const label = bankImgId ? 'Change' : 'Choose image from bank';
-		const deleteBtn = bankImgId ? <button className="button-round-danger-bordered" onClick={this.delete}>Remove value</button> : undefined;
+		const label = bankImgId ? 'Change' : 'Choose image';
+		const deleteBtn = bankImgId ? <Button round danger bordered onClick={this.delete}>Remove value</Button> : null;
 
 		//si une image de banque deja placée, on peut pas mettre un fichier direct. O peut juste changer l'image de la banque, parce que sinon ça donne l'impression que le fichier direct edit le record de banque.
 		let localFileInput = null;
@@ -65,7 +66,7 @@ export default class BankImgInput extends Component {
 		return (
 			<div className="bank-image-input-thumbnail">
 				{bankThumbnail}
-				<button className="button-round-action-bordered" onClick={this.gotoSelect}>{label}</button>
+				<Button round bordered info onClick={this.gotoSelect}><i className="fa fa-check"></i>{label}</Button>
 				{deleteBtn}
 				{localFileInput}
 			</div>

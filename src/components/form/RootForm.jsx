@@ -10,6 +10,7 @@ import PermissionsForm from '../../containers/permissions/PermissionsForm';
 import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
 import InScroll from '../../containers/utils/InScroll'; 
+import { Button } from '../../styles/Button';
 
 const ACTION_STAY_FORM = 'stay_form';
 const ACTION_CALLBACK = 'callback';
@@ -139,13 +140,13 @@ export default class RootForm extends Component {
 			//le record a été édité depuis son load à la db. On met les actions pour le save
 			if (this.props.isEdited) {
 				actionBtns = [
-					<a key="fcn_1" onClick={this.save} className="button-round" title="Hold ALT key to leave form open after save">Save</a>,
-					<Cancel key="fcn_3" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Discard changes" />,
+					<Button key="save" onClick={this.save} round title="Hold ALT key to leave form open after save">Save</Button>,
+					<Cancel key="cancel" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Discard changes" />,
 				];
 			//record pas été édité: juste btn close
 			} else {
 				actionBtns = [
-					<Cancel key="fcn_3" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Close" />,
+					<Cancel key="cancel" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Close" />,
 				];
 			}
 

@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import styled from 'styled-components';
+
+const Help = styled.div`
+	margin-top: 10px;
+`;
+
 export default class FormHeaderContent extends Component {
 	static propTypes = {
 		table: PropTypes.object,
@@ -34,7 +40,7 @@ export default class FormHeaderContent extends Component {
 			return (
 				<div>
 					{titles}
-					<div className="table-help" dangerouslySetInnerHTML={{ __html: `${this.props.table.help} ${descriptionAppend}` }}></div>
+					<Help dangerouslySetInnerHTML={{ __html: `${this.props.table.help} ${descriptionAppend}` }} />
 				</div>
 			);
 		}

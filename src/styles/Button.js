@@ -131,7 +131,12 @@ function getCss(props) {
 			`};
 		`};
 
-		${props.round && 'border-radius: 15px;'}
+
+
+		${props.icon && `i {
+			margin: 0;
+		}`};
+		${props.round && 'border-radius: 15px;'};
 		
 		${buttonColorModifier(mainColor, props.bordered)}
 

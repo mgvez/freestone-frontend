@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/SchemaProps';
+import { StyledSingleRecord } from '../../styles/Form';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
@@ -207,10 +208,10 @@ export default class SingleRecord extends Component {
 			}
 		}
 		return (
-			<section className="single-record">
+			<StyledSingleRecord className={this.props.isRoot && 'root'}>
 				{form}
 				{sub}
-			</section>
+			</StyledSingleRecord>
 		);
 	}
 }

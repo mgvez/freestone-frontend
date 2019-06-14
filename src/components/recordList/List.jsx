@@ -10,6 +10,7 @@ import InScroll from '../../containers/utils/InScroll';
 import TablePermissions from '../../containers/permissions/TablePermissions';
 import ListFetch from '../../containers/process/ListFetch';
 import createRecord from '../../freestone/createRecord';
+import { Button } from '../../styles/Button';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
@@ -95,7 +96,7 @@ export default class List extends Component {
 		let readyToScroll = false;
 		if (this.props.table) {
 
-			const addBtn = this.props.canAdd ? <button onClick={this.addRecord} className="button-round"><i className="fa fa-plus-circle"></i> New record</button> : null;
+			const addBtn = this.props.canAdd ? <Button onClick={this.addRecord} round><i className="fa fa-plus-circle"></i> New record</Button> : null;
 			
 			let records = null;
 			// if record list is loaded, display records. Bank records are displayed differently than regular records.

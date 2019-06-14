@@ -62,12 +62,13 @@ export default class RecordInteractions extends Component {
 		this.props.rememberListPage(this.props.table.name, this.props.values[PRIKEY_ALIAS], this.props.path);
 	}
 
-	onWindowClick = () => {
-		this.toggleActions();
+	onWindowClick = (e) => {
+		if (!this.clicked) this.toggleActions();
+		this.clicked = false;
 	}
 
 	toggleActions = (e) => {
-		if (e) e.stopPropagation();
+		this.clicked = true;
 		const isActiveNewState = !this.state.active;
 
 		this.setState({

@@ -15,6 +15,7 @@ export default connect(
 			lastRequestTime: state.freestone.auth.lastRequestTime,
 			freestone: state.freestone.env.freestone,
 			jwt: state.freestone.auth.jwt,
+			isNavVisible: state.freestone.siteHeader.nav_visibility,
 		};
 	},
 	dispatch => bindActionCreators(actionCreators, dispatch)

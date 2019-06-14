@@ -3,6 +3,26 @@ import PropTypes from 'prop-types';
 
 import { getListLink } from '../../selectors/listNavig';
 import debounce from '../../utils/Debounce.js';
+import { Button } from '../../styles/Button';
+import { Input } from '../../styles/Input';
+import { Heading3 } from '../../styles/Texts';
+import styled from 'styled-components';
+
+
+const Container = styled.div`
+	display: flex;
+	align-items: center;
+
+	input {
+		margin-bottom: 0;
+	}
+`;
+
+const Form = styled.form`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
 
 export default class ListSearch extends Component {
 	static propTypes = {
@@ -40,12 +60,12 @@ export default class ListSearch extends Component {
 
 	getSearchResults() {
 
-		if (this.props.needsFetch) return <div className="search-results-num">{this.props.children}</div>;
-		return this.props.search ? <div className="search-results-num">Showing {this.props.numRecords} result{(this.props.numRecords > 1) ? 's' : ''} for '{this.props.search}' in {this.props.tableName}</div> : <div> </div>;
+		if (this.props.needsFetch) return <Heading3>{this.props.children}</Heading3>;
+		return this.props.search ? <Heading3>Showing {this.props.numRecords} result{(this.props.numRecords > 1) ? 's' : ''} for '{this.props.search}' in {this.props.tableName}</Heading3> : <div> </div>;
 	}
 
 	getClearSearch() {
-		return this.props.search ? <button className="button-search clear" type="reset" onClick={this.onUpdateSearchField}><i className="fa fa-times"></i></button> : null;
+		return this.props.search ? <Button danger icon type="reset" onClick={this.onUpdateSearchField}><i className="fa fa-times"></i></Button> : null;
 	}
 
 	handleSubmit = (e) => {
@@ -59,13 +79,13 @@ export default class ListSearch extends Component {
 	}
 
 	render() {
-		return (<form className="search-results-infos" onSubmit={this.handleSubmit}>
+		return (<Form onSubmit={this.handleSubmit}>
 			{this.getSearchResults()}
-			<div className="search-inputs-ctn">
-				<input className="search-input" type="search" placeholder="search" ref={this.searchInput} />
-				<button className="button-search"><i className="fa fa-search"></i></button>
+			<Container>
+				<Input search type="search" placeholder="search" ref={this.searchInput} />
+				<Button icon><i className="fa fa-search"></i></Button>
 				{this.getClearSearch()}
-			</div>
-		</form>);
+			</Container>
+		</Form>);
 	}
 }

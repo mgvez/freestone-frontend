@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import HotspotInsert from '../helpers/HotspotInsert';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
+import { Button } from '../../../styles/Button';
 
 export default class HotspotInput extends Component {
 	static propTypes = {
@@ -53,7 +54,7 @@ export default class HotspotInput extends Component {
 		return (
 			<div>
 				<input type="hidden" value={this.props.val} />
-				<button onClick={this.openModal} className="button-round-bordered-action">{label}</button>
+				<Button onClick={this.openModal} round bordered>{label}</Button>
 				<br />
 				{preview}
 			</div>

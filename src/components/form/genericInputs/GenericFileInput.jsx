@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import { TYPE_IMG } from '../../../freestone/SchemaProps';
+import { Button } from '../../../styles/Button';
 
 export default class GenericFileInput extends Component {
 
@@ -97,12 +98,12 @@ export default class GenericFileInput extends Component {
 		let deleteBtn;
 		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		if (origVal && val !== origVal) {
-			revertBtn = <button className="button-round-bordered-warning" onClick={this.clearSavedInput}>Revert to db {typeLabel}</button>;
+			revertBtn = <Button round bordered warn onClick={this.clearSavedInput}>Revert to db {typeLabel}</Button>;
 		}
 
 		// s'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
 		if (val && origVal === val) {
-			deleteBtn = <button className="button-round-bordered-danger" onClick={this.setForDelete}><i className="fa fa-times"></i>Delete {typeLabel}</button>;
+			deleteBtn = <Button round bordered danger onClick={this.setForDelete}><i className="fa fa-times"></i>Delete {typeLabel}</Button>;
 		}
 
 		const displayVal = this.props.type === TYPE_IMG ? val && (inputVal || origVal) : null;
@@ -129,7 +130,7 @@ export default class GenericFileInput extends Component {
 				<div className="file-input-section">
 					<div className="file-input-input">
 						<input id={id} type="file" value="" className="file-control form-control" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
-						<button className="button-round-action-bordered" onClick={this.triggerSelectFile}><i className="fa fa-pencil"></i>Select file on your computer</button>
+						<Button round bordered info onClick={this.triggerSelectFile}><i className="fa fa-pencil"></i>Upload file</Button>
 					</div>
 					{revertBtn}
 					{deleteBtn}

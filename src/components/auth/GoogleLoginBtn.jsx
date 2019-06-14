@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //anthonyjgrove/react-google-login
+import { Button } from '../../styles/Button';
 
 export default class GoogleLoginBtn extends Component {
 	static propTypes = {
 		buttonText: PropTypes.string,
-		cssClass: PropTypes.string,
 		children: PropTypes.node,
 	};
 
@@ -20,28 +20,16 @@ export default class GoogleLoginBtn extends Component {
 
 	render() {
 		if (!window.gapi || !window.gapi.auth2) return null;
-		const style = {
-			display: 'inline-block',
-			background: '#d14836',
-			color: '#fff',
-			width: 190,
-			paddingTop: 10,
-			paddingBottom: 10,
-			borderRadius: 2,
-			border: '1px solid transparent',
-			fontSize: 16,
-			fontWeight: 'bold',
-			fontFamily: 'Roboto',
-		};
-		const { cssClass, buttonText, children } = this.props;
+		
+		const { buttonText, children } = this.props;
 		return (
-			<button
-				className={cssClass}
+			<Button
+				round
+				danger
 				onClick={this.onSignIn}
-				style={cssClass ? {} : style}
 			>
 				{children || buttonText}
-			</button>
+			</Button>
 		);
 	}
 }

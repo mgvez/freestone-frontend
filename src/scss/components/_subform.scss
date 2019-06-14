@@ -1,111 +1,111 @@
 
 .subform {
-	margin-bottom: 30px;
-	margin-top: 30px;
-	padding-left: 30px;
-	padding-right: 10px;
-	border-top: 1px solid $gray86;
-	border-bottom: 1px solid $gray86;
-	border-left: 10px solid $gray86;
-	position: relative;
-	border-radius: 5px;
-	background: rgba(255, 255, 255, 0.4);
+	// margin-bottom: 30px;
+	// margin-top: 30px;
+	// padding-left: 30px;
+	// padding-right: 10px;
+	// border-top: 1px solid $gray86;
+	// border-bottom: 1px solid $gray86;
+	// border-left: 10px solid $gray86;
+	// position: relative;
+	// border-radius: 5px;
+	// background: rgba(255, 255, 255, 0.4);
 	
-	header {
-		margin-top: 20px;
-		padding-top: 10px;
-		// border-top: 1px solid $gray86;
+	// header {
+	// 	margin-top: 20px;
+	// 	padding-top: 10px;
+	// 	// border-top: 1px solid $gray86;
 
-		h1 {
-			margin-bottom: 10px;
-		}
-	}
+	// 	h1 {
+	// 		margin-bottom: 10px;
+	// 	}
+	// }
 
-	.fcn {
-		text-align: right;
+	// .fcn {
+	// 	text-align: right;
 
-		[class^=button] {
-			margin-bottom: 15px;
-		}
+	// 	[class^=button] {
+	// 		margin-bottom: 15px;
+	// 	}
 
-		[class^=button] + [class^=button] {
-			margin-left: 15px;
-		}
-	}
+	// 	[class^=button] + [class^=button] {
+	// 		margin-left: 15px;
+	// 	}
+	// }
 
-	.tabs {
-		border-bottom: 1px solid $color-accent-primary;
-		margin-top: 40px;
+	// .tabs {
+	// 	border-bottom: 1px solid $color-accent-primary;
+	// 	margin-top: 40px;
 
-		.tab, .add-record {
-			background: transparent;
-			display: inline-block;
-			vertical-align: middle;
+	// 	.tab, .add-record {
+	// 		background: transparent;
+	// 		display: inline-block;
+	// 		vertical-align: middle;
 
-			height: 25px;
-			line-height: 25px;
-			padding: 0 25px;
+	// 		height: 25px;
+	// 		line-height: 25px;
+	// 		padding: 0 25px;
 
-			border: 1px solid $color-accent-primary;
-			border-bottom: none;
+	// 		border: 1px solid $color-accent-primary;
+	// 		border-bottom: none;
 
-			color: $color-accent-primary;
-			cursor: pointer;
+	// 		color: $color-accent-primary;
+	// 		cursor: pointer;
 
-			border-radius: 5px 5px 0 0;
+	// 		border-radius: 5px 5px 0 0;
 
-			transition: background 0.3s, color 0.3s;
+	// 		transition: background 0.3s, color 0.3s;
 
-			& + .tab, & + .add-record {
-				margin-left: 10px;
-			}
+	// 		& + .tab, & + .add-record {
+	// 			margin-left: 10px;
+	// 		}
 
-			&:hover, &.active {
-				color: $white;
-				background-color: $color-accent-primary;
-				text-decoration: none;
-			}
-		}
-	}
+	// 		&:hover, &.active {
+	// 			color: $white;
+	// 			background-color: $color-accent-primary;
+	// 			text-decoration: none;
+	// 		}
+	// 	}
+	// }
 
 }
 
 
 .subform-list {
-	.single-record {
-		position: relative;
+	// .single-record {
+	// 	position: relative;
 
-		&:nth-of-type(2n) {
-			background: $gray86;
-			//overflow: hidden;
+	// 	&:nth-of-type(2n) {
+	// 		background: $gray86;
+	// 		//overflow: hidden;
 
-			&:before {
-				content: ' ';
-				position: absolute;
-					top: 0;
-					left: 50%;
+	// 		&:before {
+	// 			content: ' ';
+	// 			position: absolute;
+	// 				top: 0;
+	// 				left: 50%;
 
-				background: $gray86;
-				transform: translate(-50%, 0);
-				width: 10000px;
-				height: 100%;
-			}
+	// 			background: $gray86;
+	// 			transform: translate(-50%, 0);
+	// 			width: 10000px;
+	// 			height: 100%;
+	// 		}
 
-			.subform {
-				border-color: $white;
+	// 		.subform {
+	// 			border-color: $white;
 
-				&:before {
-					background: $white;
-				}
-			}
-		}
-	}
+	// 			&:before {
+	// 				background: $white;
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	.add-record {
 		float: right;
 
-		@extend %base_button;
-		@extend %round_button;
+		// @extend %base_button;
+		// @extend %round_button;
 
 		i {
 			margin: 0;

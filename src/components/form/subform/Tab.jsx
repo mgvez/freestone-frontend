@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { StyledTab } from '../../../styles/Nav';
 import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 
 function getTabGroup(props) {
@@ -65,13 +66,12 @@ export default class Tab extends Component {
 	};
 
 	getMarkup(opacity = 1) {
-		let className = this.props.isActive ? 'active' : '';
-		className = `tab ${className}`;
+		const className = this.props.isActive ? 'active' : '';
 		const label = this.props.displayLabel || '';
 		return (
-			<a className={className} onClick={this.setShownRecord} style={{ opacity }}>
+			<div className={className} onClick={this.setShownRecord} style={{ opacity }}>
 				{label}
-			</a>
+			</div>
 		);
 	}
 

@@ -1,18 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import styled from 'styled-components';
-
 import { Button } from '../../styles/Button';
-
-const StyledToggler = styled(Button)`
-	border-radius: 4px;
-	padding: 0 15px;
-
-	i {
-		margin:0;
-	}
-`;
 
 export default class NavToggler extends Component {
 	static propTypes = {
@@ -22,11 +11,10 @@ export default class NavToggler extends Component {
 	};
 
 	navToggler = () => {
-		const visibility = !this.props.nav_visibility;
-		this.props.toggleNavVisibility(visibility);
+		this.props.toggleNavVisibility(!this.props.nav_visibility);
 	}
 
 	render() {
-		return <StyledToggler round onClick={this.navToggler}><i className="fa fa-bars"></i></StyledToggler>;
+		return <Button onClick={this.navToggler} icon><i className="fa fa-bars"></i></Button>;
 	}
 }

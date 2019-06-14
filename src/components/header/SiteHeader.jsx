@@ -9,6 +9,7 @@ import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler'
 
 import cssVariables from '../../styles/Variables';
 import colors from '../../styles/Colors';
+import { Button } from '../../styles/Button';
 
 export const topHeaderHeight = 60;
 const verticalPadding = 15;
@@ -21,6 +22,11 @@ const StyledHeader = styled.header`
 		top: 0;
 		right: 0;
 	width: calc(100% - ${cssVariables.navWidth});
+
+	&.fullwidth {
+		width: 100%;
+	}
+
 	height: ${cssVariables.headerHeight};
 	display: flex;
 	align-content: flex-start;
@@ -57,6 +63,7 @@ export default class SiteHeader extends Component {
 	static propTypes = {
 		isGod: PropTypes.bool,
 		isProdEnv: PropTypes.bool,
+		isNavVisible: PropTypes.bool,
 
 		logout: PropTypes.func,
 		clearData: PropTypes.func,
@@ -66,19 +73,19 @@ export default class SiteHeader extends Component {
 	render() {
 		// console.log(this.props);
 		const debug = this.props.isGod || window.IS_DEV ? (<div className="debug-fcn">
-			<button className="button-debug-round-small" onClick={this.props.clearSchema}>
+			<Button info faded round small onClick={this.props.clearSchema}>
 				Clear schema
-			</button>
-			<button className="button-debug-round-small" onClick={this.props.clearData}>
+			</Button>
+			<Button info faded round small onClick={this.props.clearData}>
 				Clear all data
-			</button>
+			</Button>
 			
 		</div>) : null;
 
 		const prodWarning = this.props.isProdEnv ? <ProdEnvWarning /> : null;
 
 		return (
-			<StyledHeader ref="header">
+			<StyledHeader ref="header" className={!this.props.isNavVisible ? 'fullwidth' : null}>
 
 				<div>
 					<NavToggler />

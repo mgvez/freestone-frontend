@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '../../../styles/Button';
 
 export default class ToggleCollapse extends Component {
 	static propTypes = {
@@ -9,7 +10,6 @@ export default class ToggleCollapse extends Component {
 
 	render() {
 		const toggleLabel = this.props.isCollapsed ? <span><i className="fa fa-eye"></i> Show</span> : <span><i className="fa fa-eye-slash"></i> Hide</span>;
-		return <a className="button-round-action-bordered button-hide-show" onClick={this.props.toggle}>{toggleLabel}</a>;
-		// return <button onClick={this.deleteRecord} className="button-circle-danger-small"><i className="fa fa-remove"></i></button>;
+		return <Button round bordered small onClick={this.props.toggle}>{toggleLabel}</Button>;
 	}
 }

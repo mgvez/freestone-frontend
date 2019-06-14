@@ -28,6 +28,14 @@ const GlobalStyle = createGlobalStyle`
 	img {
 		max-width: 100%;
 	}
+
+	iframe.module {
+		.field-deps {
+			.field-deps-title {
+				color: red;
+			}
+		}
+	}
 `;
 
 export default GlobalStyle;

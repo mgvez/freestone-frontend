@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { ALL_RECORDS_ID } from '../../freestone/SchemaProps';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
+import { Button } from '../../styles/Button';
 
 export default class TablePermissions extends Component {
 	static propTypes = {
@@ -21,7 +22,7 @@ export default class TablePermissions extends Component {
 	render() {
 		if (!this.props.table.hasSitePermission) return null;
 
-		const btn = this.props.isModified ? <button className="button" onClick={this.savePermissions}>Save permissions</button> : null;
+		const btn = this.props.isModified ? <Button onClick={this.savePermissions}>Save permissions</Button> : null;
 
 		return (
 			<div>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import DocumentMeta from 'react-document-meta';
 import GoogleLoginBtn from './GoogleLoginBtn';
+import { Button } from '../../styles/Button';
 
 const metaData = {
 	title: 'Freestone',
@@ -78,7 +79,7 @@ export default class Login extends Component {
 
 		let googleLoginBtn = null;
 		if (this.props.apiGoogle && this.props.apiGoogle.clientId && this.props.gapiready) {
-			googleLoginBtn = <GoogleLoginBtn cssClass="button-round-danger-fw" />;
+			googleLoginBtn = <GoogleLoginBtn />;
 		}
 
 		// <iframe src="dummy.html" name="dummy" style={{ display: 'none' }}></iframe>
@@ -120,7 +121,7 @@ export default class Login extends Component {
 											</div>
 										</div>
 										<div className="form-group">
-											<button type="submit" className="button-round-fw" disabled={this.props.isAuthenticating}>{msgs.action}</button>
+											<Button type="submit" round fullwidth disabled={this.props.isAuthenticating}>{msgs.action}</Button>
 										</div>
 									</form>
 									{googleLoginBtn}

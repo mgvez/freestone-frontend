@@ -5,6 +5,7 @@ import AddRecord from '../../../containers/form/buttons/AddRecord';
 import FormHeaderContent from '../../header/FormHeaderContent';
 import SingleRecord from '../../../containers/form/SingleRecord';
 
+import { Subform, SubformHeader } from '../../../styles/Form';
 
 export default class SubformSingle extends Component {
 	static propTypes = {
@@ -35,13 +36,13 @@ export default class SubformSingle extends Component {
 		}
 
 		return (
-			<section className="subform">
-				<header>
+			<Subform>
+				<SubformHeader>
 					<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
 					<nav className="tabs">
 						{addBtn}
 					</nav>
-				</header>
+				</SubformHeader>
 				<SingleRecord
 					tableId={this.props.table.id}
 					recordId={activeRecordId}
@@ -50,7 +51,7 @@ export default class SubformSingle extends Component {
 					language={this.props.language}
 					isSubform
 				/>
-			</section>
+			</Subform>
 		);
 
 	}

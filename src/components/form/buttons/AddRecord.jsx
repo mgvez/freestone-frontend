@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import createRecord from '../../../freestone/createRecord';
+import { Button } from '../../../styles/Button';
 
 export default class AddRecord extends Component {
 	static propTypes = {
@@ -9,6 +10,7 @@ export default class AddRecord extends Component {
 		parentTableId: PropTypes.number,
 		parentRecordId: PropTypes.string,
 		language: PropTypes.string,
+		isTab: PropTypes.bool,
 
 		addRecord: PropTypes.func,
 		setShownRecord: PropTypes.func,
@@ -29,6 +31,6 @@ export default class AddRecord extends Component {
 	};
 
 	render() {
-		return <button onClick={this.addRecord} className="add-record"><i className="fa fa-plus"></i></button>;
+		return this.props.isTab ? <div onClick={this.addRecord}><i className="fa fa-plus"></i></div> : <Button onClick={this.addRecord} round><i className="fa fa-plus"></i></Button>;
 	}
 }

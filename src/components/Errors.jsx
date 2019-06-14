@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import customStyle from '../styles/Modal.js';
+import { Button } from '../styles/Button';
 
 export default class Errors extends Component {
 	static propTypes = {
@@ -46,7 +47,7 @@ export default class Errors extends Component {
 					})
 				}
 
-				<button onClick={this.closeModal}>Close</button>
+				<Button onClick={this.closeModal}>Close</Button>
 
 			</Modal>
 		);

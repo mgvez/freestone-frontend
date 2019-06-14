@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from '../../../styles/Button';
 
 export default class DeleteRecord extends Component {
 	static propTypes = {
@@ -20,6 +21,6 @@ export default class DeleteRecord extends Component {
 	};
 
 	render() {
-		return <button onClick={this.deleteRecord} className="button-rounded-danger">Delete record</button>;
+		return <Button onClick={this.deleteRecord} round danger>Delete record</Button>;
 	}
 }

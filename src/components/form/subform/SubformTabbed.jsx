@@ -7,6 +7,7 @@ import SingleRecord from '../../../containers/form/SingleRecord';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import ToggleCollapse from '../buttons/ToggleCollapse';
 import FormHeaderContent from '../../header/FormHeaderContent';
+import { Subform, SubformHeader } from '../../../styles/Form';
 
 export default class SubformTabbed extends Component {
 	static propTypes = {
@@ -45,8 +46,8 @@ export default class SubformTabbed extends Component {
 		const changeViewBtn = (!this.props.table.hasChildren && !this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
 		const content = this.getContent();
 		return (
-			<section className="subform">
-				<header className="row">
+			<Subform>
+				<SubformHeader className="row">
 					<div className="col-md-8">
 						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
 					</div>
@@ -54,9 +55,9 @@ export default class SubformTabbed extends Component {
 						{changeViewBtn}
 						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 					</div>
-				</header>
+				</SubformHeader>
 				{content}
-			</section>
+			</Subform>
 		);
 
 	}
