@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import { Textarea, Input } from '../../../styles/Input';
+
 const MAX_HEIGHT = 600;
 const MIN_HEIGHT = 300;
 
@@ -48,7 +50,7 @@ export default class TextInput extends Component {
 		// console.log(this.props.val);
 		if (this.props.field.size > 100 || this.props.field.type === 'md') {
 			return (
-				<textarea 
+				<Textarea 
 					ref="area"
 					value={this.props.val || ''} 
 					style={{
@@ -62,7 +64,7 @@ export default class TextInput extends Component {
 			);
 		}
 		return (
-			<input type="text" size={this.props.field.size} value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
+			<Input type="text" size={this.props.field.size} value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
 		);
 	}
 }

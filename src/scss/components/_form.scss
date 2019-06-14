@@ -62,42 +62,42 @@
 	}
 
 
-	.field-description {
-		display: block;
-		margin-bottom: 0.7em;
-		margin-left: 0.5em;
-		font-size: 0.8em;
+	// .field-description {
+	// 	display: block;
+	// 	margin-bottom: 0.7em;
+	// 	margin-left: 0.5em;
+	// 	font-size: 0.8em;
 
-		&:empty {
-			display:none;
-		}
+	// 	&:empty {
+	// 		display:none;
+	// 	}
 
-	}
+	// }
 
 	.field-label {
-		padding-top: 0.7em;
-		margin-bottom: 0.7em;
-		font-weight: $font-weight-normal;
-		//text-align: right;
+		// padding-top: 0.7em;
+		// margin-bottom: 0.7em;
+		// font-weight: $font-weight-normal;
+		// //text-align: right;
 
-		label {
-			display: block;
-			position: relative;
-			padding-right: 45px;
-			font-weight: bold;
-		}
+		// label {
+		// 	display: block;
+		// 	position: relative;
+		// 	padding-right: 45px;
+		// 	font-weight: bold;
+		// }
 
-		.lang-append {
-			display: inline-block;
-			vertical-align: -2%;
+		// .lang-append {
+		// 	display: inline-block;
+		// 	vertical-align: -2%;
 
-			font-style: normal;
-			text-transform: uppercase;
+		// 	font-style: normal;
+		// 	text-transform: uppercase;
 
-			span {
-				color: $color-accent-primary;
-			}
-		}
+		// 	span {
+		// 		color: $color-accent-primary;
+		// 	}
+		// }
 	}
 }
 

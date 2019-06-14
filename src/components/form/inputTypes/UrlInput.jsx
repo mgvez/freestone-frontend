@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import LinkInsert from '../helpers/LinkInsert';
 import { Button } from '../../../styles/Button';
+import { Input } from '../../../styles/Input';
 
 export default class UrlInput extends Component {
 	static propTypes = {
@@ -35,7 +36,7 @@ export default class UrlInput extends Component {
 			return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} isUrlOnly />;
 		}
 		return (<div className="link-field">
-			<input type="text" value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
+			<Input type="text" value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
 			<Button round bordered onClick={this.openModal}>Url select helper</Button>
 		</div>);
 	}

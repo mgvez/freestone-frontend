@@ -14,6 +14,9 @@ import NoEditInput from '../../containers/form/inputTypes/NoEditInput';
 import HtmlInput from '../../containers/form/inputTypes/HtmlInput';
 import AutocompleteInput from '../../containers/form/inputTypes/AutocompleteInput';
 
+import { StyledField, FieldLabel, FieldDescription } from '../../styles/Input';
+import { GridItem } from '../../styles/Grid';
+
 export default class Field extends Component {
 	static propTypes = {
 		field: PropTypes.object,
@@ -122,21 +125,21 @@ export default class Field extends Component {
 		}
 
 		if (input) {
-			const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
-			const classes = ['col-md-' + (this.props.field.columns || 12)];
-			
-			classes.push(`field-${this.props.field.displaySize}`);
 
-			return (
-				<div className={`field ${classes.join(' ')}`}>
-					<div className="field-label">
-						<label title={this.props.field.alias}>{this.props.field.label} {languageAppend}</label>
-					</div>
+			
+			return (<GridItem key={key} columns={this.props.field.columns}>
+				<StyledField displaySize={this.props.field.displaySize}>
+					<FieldLabel>
+						<label title={this.props.field.alias}>
+							{this.props.field.label}
+							{this.props.lang && <em>(<span>{this.props.lang}</span>)</em>}
+						</label>
+					</FieldLabel>
 					{input}
-					<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.description }}></em>
-					<em className="field-description" dangerouslySetInnerHTML={{ __html: this.props.field.descriptionAppend }}></em>
-				</div>
-			);
+					{this.props.field.description && <FieldDescription dangerouslySetInnerHTML={{ __html: this.props.field.description }} />}
+					{this.props.field.descriptionAppend && <FieldDescription dangerouslySetInnerHTML={{ __html: this.props.field.descriptionAppend }} />}
+				</StyledField>
+			</GridItem>);
 		}
 
 		return null;

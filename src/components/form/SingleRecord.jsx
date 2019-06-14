@@ -8,14 +8,8 @@ import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import Field from './Field';
+import { GridItem } from '../../styles/Grid';
 
-const GRID_COLUMNS = 12;
-
-function wrapCurrentRow(all) {
-
-	all.rows.push(<div className="row form-row" key={all.currentKey}>{all.currentRow}</div>);
-	return all;
-}
 
 export default class SingleRecord extends Component {
 	static propTypes = {
@@ -63,15 +57,16 @@ export default class SingleRecord extends Component {
 
 	renderChild = (child) => {
 		return child && child.isDisplay ? (
-			<Subform
-				key={child.tableId}
-				tableId={child.tableId}
-				titleOverride={child.titleOverride}
-				descriptionAppend={child.descriptionAppend}
-				parentTableId={this.props.table.id}
-				parentRecordId={this.props.recordId}
-				language={this.props.language}
-			/>
+			<GridItem key={child.tableId} columns="12">
+				<Subform
+					tableId={child.tableId}
+					titleOverride={child.titleOverride}
+					descriptionAppend={child.descriptionAppend}
+					parentTableId={this.props.table.id}
+					parentRecordId={this.props.recordId}
+					language={this.props.language}
+				/>
+			</GridItem>
 		) : null;
 	}
 
@@ -106,47 +101,50 @@ export default class SingleRecord extends Component {
 		/>) : null;
 	}
 
-	//Wrap fields in rows, depending on number of columns they fill. Row will be 12 cols max
-	renderRows = (all, field) => {
+	// //Wrap fields in rows, depending on number of columns they fill. Row will be 12 cols max
+	// renderRows = (all, field) => {
 		
-		const renderedField = this.renderField(field, all.isAside);
-		if (!renderedField) return all;
+	// 	const renderedField = this.renderField(field, all.isAside);
+	// 	if (!renderedField) return all;
 
-		const cols = Number(field.columns || GRID_COLUMNS);
-		all.currentColumns += cols;
-		//make new row
-		if (all.currentColumns > GRID_COLUMNS) {
-			wrapCurrentRow(all);
-			all.currentColumns = cols;
-			all.currentRow = [];
-			all.currentKey = '';
-		}
-		all.currentKey += field.name;
-		all.currentRow.push(renderedField);
-		return all;
-	}
+	// 	const cols = Number(field.columns || GRID_COLUMNS);
+	// 	all.currentColumns += cols;
+	// 	//make new row
+	// 	if (all.currentColumns > GRID_COLUMNS) {
+	// 		wrapCurrentRow(all);
+	// 		all.currentColumns = cols;
+	// 		all.currentRow = [];
+	// 		all.currentKey = '';
+	// 	}
+	// 	all.currentKey += field.name;
+	// 	all.currentRow.push(renderedField);
+	// 	return all;
+	// }
 
 	renderGroups(fields, isAside) {
-		const fieldGroups = fields.map((group) => {
+		return fields.map((group) => {
 			
-			const groupFieldRows = wrapCurrentRow(group.fields.reduce(this.renderRows, {
-				rows: [],
-				currentRow: [],
-				currentColumns: 0,
-				currentKey: '',
-				isAside,
-			})).rows;
+			// const groupFieldRows = wrapCurrentRow(group.fields.reduce(this.renderRows, {
+			// 	rows: [],
+			// 	currentRow: [],
+			// 	currentColumns: 0,
+			// 	currentKey: '',
+			// 	isAside,
+			// })).rows;
+
+			const groupFieldRows = group.fields.map((field) => this.renderField(field, isAside)).filter(a => a);
+
 			// console.log(groupFieldRows);
 			// return this.createGroup(groupFieldRows, group.key, group.isPlaceholder, group.label);
 			return <FieldGroup key={group.key} id={group.key} isPlaceholder={group.isPlaceholder} label={group.label}>{groupFieldRows}</FieldGroup>;
 		}, []);
 		// console.log(fieldGroups);
-		return <div>{fieldGroups}</div>;
+		// return <div>{fieldGroups}</div>;
 	}
 
 	render() {
 		let form;
-		let sub;
+		let subforms;
 
 		// console.log('render', this.props.table.name);
 		// console.log('render', this.props.table, this.props.record);
@@ -199,7 +197,7 @@ export default class SingleRecord extends Component {
 
 			//shows child forms that are not previously placed through a placeholder
 			if (this.props.children) {
-				sub = (
+				subforms = (
 					<div>
 						{this.props.children.map(child => (!child.hasPlaceholder || null) && this.renderChild(child))}
 					</div>
@@ -210,7 +208,7 @@ export default class SingleRecord extends Component {
 		return (
 			<StyledSingleRecord className={this.props.isRoot && 'root'}>
 				{form}
-				{sub}
+				{subforms}
 			</StyledSingleRecord>
 		);
 	}

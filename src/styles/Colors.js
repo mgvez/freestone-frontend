@@ -31,7 +31,7 @@ const black = '#000';
 // COLOR USAGE
 //==============================================================================
 const accentPrimary = teal62;
-const accentSecondary = teal62;
+const accentSecondary = blue26;
 
 const warnPrimary = yellow76;
 const dangerPrimary = red58;

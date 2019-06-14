@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import DocumentMeta from 'react-document-meta';
 import GoogleLoginBtn from './GoogleLoginBtn';
 import { Button } from '../../styles/Button';
+import colors from '../../styles/Colors';
 
 const metaData = {
 	title: 'Freestone',
@@ -13,6 +15,19 @@ const metaData = {
 	},
 };
 
+
+const Logo = styled.div`
+	width: 100%;
+	height: 400px;
+	max-height: 66vh;
+	background: ${colors.blue26} url(../assets/img/freestone-logo.png) center center no-repeat;
+	background-size: auto 295px;
+`;
+
+const LoginZone = styled.div`
+	background: ${colors.backgroundMain};
+	padding: 60px;
+`;
 export default class Login extends Component {
 	static propTypes = {
 		location: PropTypes.object,
@@ -86,8 +101,8 @@ export default class Login extends Component {
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
-				<div className="freestone-logo"></div>
-				<div className="login-zone">
+				<Logo />
+				<LoginZone>
 					<div className="container">
 						<div className="row">
 							<div className="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
@@ -115,7 +130,7 @@ export default class Login extends Component {
 											/>
 										</div>
 										<div className="form-group">
-											<div className="checkbox-container">
+											<div>
 												<input type="checkbox" id="remember" ref={el => this._remember = el} />
 												<label htmlFor="remember">Remember me?</label>
 											</div>
@@ -129,7 +144,7 @@ export default class Login extends Component {
 							</div>
 						</div>
 					</div>
-				</div>
+				</LoginZone>
 			</section>
 		);
 	}

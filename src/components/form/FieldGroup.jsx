@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Collapsable from '../animation/Collapsable';
 import ToggleCollapse from './buttons/ToggleCollapse';
+import { StyledFieldGroup } from '../../styles/Input';
+import { GridContainer } from '../../styles/Grid';
 
 export default class FieldGroup extends Component {
 	static propTypes = {
@@ -36,7 +38,7 @@ export default class FieldGroup extends Component {
 				classNames.push('field-group-collapsed');
 			}
 
-			return (<div className={classNames.join(' ')}>
+			return (<StyledFieldGroup className={classNames.join(' ')}>
 				<div className="row">
 					<div className="col-md-8">
 						<h2 className="field-group-title">{this.props.label}</h2>
@@ -46,16 +48,16 @@ export default class FieldGroup extends Component {
 					</div>
 				</div>
 				<Collapsable isCollapsed={this.props.isCollapsed}>
-					{this.props.children}
+					<GridContainer>{this.props.children}</GridContainer>
 				</Collapsable>
-			</div>);
+			</StyledFieldGroup>);
 
 		}
 		
 		return (
-			<div className={classNames.join(' ')}>
-				{this.props.children}
-			</div>
+			<StyledFieldGroup className={classNames.join(' ')}>
+				<GridContainer>{this.props.children}</GridContainer>
+			</StyledFieldGroup>
 		);
 	}
 }

@@ -16,6 +16,9 @@ const Texts = css`
 
 `;
 
+export const textMedium = 'font-size: 11px;';
+export const textSmall = 'font-size: 9px;';
+
 const title = `line-height: 1;
 	margin: 0;
 	font-family: ${cssVars.fontFamilyBase};

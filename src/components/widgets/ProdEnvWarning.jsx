@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import { Button } from '../../styles/Button';
 
 export default class ProdEnvWarning extends Component {
 
 	render() {
 
 		return (
-			<div className="prod-warning-label">
+			<Button danger>
 				PRODUCTION ENVIRONMENT
-			</div>
+			</Button>
 		);
 	}
 }
