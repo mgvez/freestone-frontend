@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cssVariables from '../../styles/Variables';
 
 export default class HeaderContainer extends Component {
 	static propTypes = {
@@ -33,8 +34,7 @@ export default class HeaderContainer extends Component {
 	onScroll = () => {
 		const st = window.pageYOffset;
 
-		const topHeaderHeight = 60;
-		this.setState({ isFixed: (st >= this.staticHeight + topHeaderHeight) });
+		this.setState({ isFixed: (st >= this.staticHeight + cssVariables.topHeaderHeight) });
 	}
 
 	setHeight = (isLight, h) => {

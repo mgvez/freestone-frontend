@@ -17,74 +17,52 @@ const yellow76 = '#f8ac59';
 
 const red58 = '#ed5565';
 
+const blue95 = '#eff2f5';
+const blue86 = '#ced9e3';
 const blue66 = '#00aeef';
 const blue54 = '#028cc0';
 const blue37 = '#4b5863';
 const blue26 = '#2f4050';
 const blue23 = '#293846';
 
-const white = '#fff';
-const black = '#000';
+const white = '#ffffff';
+const black = '#000000';
 
 
 //==============================================================================
 // COLOR USAGE
 //==============================================================================
-const accentPrimary = teal62;
-const accentSecondary = blue26;
 
-const warnPrimary = yellow76;
-const dangerPrimary = red58;
-
-const backgroundLight = white;
-const backgroundMain = gray93;
-const backgroundDark = blue26;
-const backgroundDarkHover = blue23;
-
-const borderDark = blue23;
-const borderMedium = gray76;
-const borderLight = gray93;
-
-const textPrimary = gray45;
-const textSecondary = white;
-
-const linksPrimary = blue26;
 
 const colors = {
-	gray31,
-	gray43,
-	gray45,
-	gray51,
-	gray76,
-	gray86,
-	gray90,
-	gray93,
-	gray96,
-	gray97,
-	teal62,
-	yellow76,
-	red58,
-	blue66,
-	blue54,
-	blue37,
-	blue26,
-	blue23,
+	
 	white,
 	black,
-	accentPrimary,
-	accentSecondary,
-	warnPrimary,
-	dangerPrimary,
-	backgroundLight,
-	backgroundMain,
-	backgroundDark,
-	backgroundDarkHover,
-	borderDark,
-	borderMedium,
-	borderLight,
-	textPrimary,
-	textSecondary,
-	linksPrimary,
+
+	accentPrimary: teal62,
+	accentSecondary: blue26,
+	warnPrimary: yellow76,
+	dangerPrimary: red58,
+
+	backgroundLightest: white,
+	backgroundLight: gray97,
+	backgroundMain: gray93,
+	backgroundMainAccent: gray86,
+	backgroundDark: blue26,
+	backgroundDarkHover: blue23,
+
+	borderDark: blue23,
+	borderMedium: gray76,
+	borderLight: gray93,
+
+	textPrimary: gray45,
+	textSecondary: white,
+	linksPrimary: blue26,
+	linksPrimaryHover: blue54,
+
+	navLinkBackground: blue86,
+	navLinkHoverBackground: blue95,
+
 };
 
 export default colors;

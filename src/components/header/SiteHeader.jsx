@@ -11,23 +11,22 @@ import cssVariables from '../../styles/Variables';
 import colors from '../../styles/Colors';
 import { Button } from '../../styles/Button';
 
-export const topHeaderHeight = 60;
 const verticalPadding = 15;
-const innerHeight = topHeaderHeight - (2 * verticalPadding);
+const innerHeight = cssVariables.topHeaderHeight - (2 * verticalPadding);
 
 const StyledHeader = styled.header`
 	padding: ${verticalPadding}px 25px;
-	background: ${colors.gray96};
+	background: ${colors.backgroundMain};
 	position: absolute;
 		top: 0;
 		right: 0;
-	width: calc(100% - ${cssVariables.navWidth});
+	width: calc(100% - ${cssVariables.navWidth}px);
 
 	&.fullwidth {
 		width: 100%;
 	}
 
-	height: ${cssVariables.headerHeight};
+	height: ${cssVariables.topHeaderHeight}px;
 	display: flex;
 	align-content: flex-start;
 	justify-content: space-between;

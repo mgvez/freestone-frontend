@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/SchemaProps';
 import { StyledSingleRecord } from '../../styles/Form';
+import colors from '../../styles/Colors';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import Field from './Field';
-import { GridItem } from '../../styles/Grid';
+import { GridContainer, GridItem } from '../../styles/Grid';
 
+const SideBar = styled.div`
+	padding: 30px;
+	background: ${colors.backgroundDark};
+	color: ${colors.white};
+	
+	label {
+		color: ${colors.white};
+	}
+
+`;
 
 export default class SingleRecord extends Component {
 	static propTypes = {
@@ -101,45 +113,15 @@ export default class SingleRecord extends Component {
 		/>) : null;
 	}
 
-	// //Wrap fields in rows, depending on number of columns they fill. Row will be 12 cols max
-	// renderRows = (all, field) => {
-		
-	// 	const renderedField = this.renderField(field, all.isAside);
-	// 	if (!renderedField) return all;
-
-	// 	const cols = Number(field.columns || GRID_COLUMNS);
-	// 	all.currentColumns += cols;
-	// 	//make new row
-	// 	if (all.currentColumns > GRID_COLUMNS) {
-	// 		wrapCurrentRow(all);
-	// 		all.currentColumns = cols;
-	// 		all.currentRow = [];
-	// 		all.currentKey = '';
-	// 	}
-	// 	all.currentKey += field.name;
-	// 	all.currentRow.push(renderedField);
-	// 	return all;
-	// }
-
 	renderGroups(fields, isAside) {
 		return fields.map((group) => {
-			
-			// const groupFieldRows = wrapCurrentRow(group.fields.reduce(this.renderRows, {
-			// 	rows: [],
-			// 	currentRow: [],
-			// 	currentColumns: 0,
-			// 	currentKey: '',
-			// 	isAside,
-			// })).rows;
-
+			//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
 			const groupFieldRows = group.fields.map((field) => this.renderField(field, isAside)).filter(a => a);
-
-			// console.log(groupFieldRows);
-			// return this.createGroup(groupFieldRows, group.key, group.isPlaceholder, group.label);
-			return <FieldGroup key={group.key} id={group.key} isPlaceholder={group.isPlaceholder} label={group.label}>{groupFieldRows}</FieldGroup>;
+			if (group.isPlaceholder) {
+				return groupFieldRows;
+			}
+			return <FieldGroup key={group.key} id={group.key} label={group.label}>{groupFieldRows}</FieldGroup>;
 		}, []);
-		// console.log(fieldGroups);
-		// return <div>{fieldGroups}</div>;
 	}
 
 	render() {
@@ -162,11 +144,11 @@ export default class SingleRecord extends Component {
 			let sidebar;
 			if (this.props.asideFields.length > 0) {
 				sidebar = (
-					<div className="col-md-4">
-						<div className="sidebar">
+					<GridItem columns="4">
+						<SideBar>
 							{this.renderGroups(this.props.asideFields, true)}
-						</div>
-					</div>
+						</SideBar>
+					</GridItem>
 				);
 			}
 
@@ -178,20 +160,20 @@ export default class SingleRecord extends Component {
 			form = (
 				<article>
 					{subsiteField}
-					<div className="row">
-						<div className="col-md-6">
+					<GridContainer>
+						<GridItem columns="6">
 							{recIdDisplay}
-						</div>
-						<div className="col-md-6 close-row">
+						</GridItem>
+						<GridItem columns="6" justify="right">
 							{deleteBtn}
-						</div>
-					</div>
-					<div className="row">
-						<div className={`${sidebar ? 'col-md-8' : 'col-md-12'}`}>
+						</GridItem>
+					</GridContainer>
+					<GridContainer>
+						<GridItem columns={`${sidebar ? 8 : 12}`}>
 							{this.renderGroups(this.props.mainFields)}
-						</div>
+						</GridItem>
 						{sidebar}
-					</div>
+					</GridContainer>
 				</article>
 			);
 
@@ -206,7 +188,7 @@ export default class SingleRecord extends Component {
 			}
 		}
 		return (
-			<StyledSingleRecord className={this.props.isRoot && 'root'}>
+			<StyledSingleRecord>
 				{form}
 				{subforms}
 			</StyledSingleRecord>

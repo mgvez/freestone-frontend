@@ -1,10 +1,85 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { PRIKEY_ALIAS } from '../../../freestone/SchemaProps';
 
 import Heading from './Heading';
 import Row from '../../../containers/recordList/standard/Row';
+
+import colors from '../../../styles/Colors';
+import cssVariables from '../../../styles/Variables';
+import { darken } from '../../../styles/Utils';
+
+let levelStyles = '';
+for (let i = 2; i < 11; i++) {
+	levelStyles += `
+	tr.level-${i} {
+		td {
+			background: ${darken(colors.white, i * 0.02)};
+		}
+	}
+	`;
+}
+
+const ListTable = styled.table`
+	width: 100%;
+	margin-top: 20px;
+
+	.group-heading {
+		td {
+			background: ${colors.backgroundLight};
+		}
+	}
+
+	tr:hover {
+		td {
+			background: ${colors.backgroundLight};
+		}
+	}
+
+	tr.level-1 {
+		td:not(:last-child) {
+			font-weight: bold;
+		}
+	}
+
+	${levelStyles};
+
+	th, td {
+		text-align: left;
+		border-bottom: 1px solid ${colors.borderLight};
+		border-top: 1px solid ${colors.borderLight};
+
+		&:first-child {
+			border-left: 1px solid ${colors.borderLight};
+		}
+
+		&:last-child {
+			border-right: 1px solid ${colors.borderLight};
+		}
+	}
+
+	th {
+		padding: 20px 20px;
+		background: ${colors.backgroundMainAccent};
+		font-weight: ${cssVariables.fontWeightBold}
+	}
+
+	td {
+		padding: 12px 20px;
+		vertical-align: middle;
+		background: ${colors.white};
+
+		&.selfjoin-label{
+			span {
+				margin-right: 0.35em;
+			}
+		}
+	}
+
+
+`;
 
 export default class StandardList extends Component {
 	static propTypes = {
@@ -61,7 +136,7 @@ export default class StandardList extends Component {
 			</thead>);
 		}
 		return (
-			<table className="table list-records" onMouseLeave={this.hideAllHovers} ref={el => this._list = el}>
+			<ListTable onMouseLeave={this.hideAllHovers} ref={el => this._list = el}>
 				{heading}
 				{
 					this.props.groupedRecords.map((group, groupIdx) => {
@@ -102,7 +177,7 @@ export default class StandardList extends Component {
 						);
 					})
 				}
-			</table>
+			</ListTable>
 		);
 	}
 }

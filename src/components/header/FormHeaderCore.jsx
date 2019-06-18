@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import colors from '../../styles/Colors';
 import cssVars from '../../styles/Variables';
+import { Header, HeaderTexts, HeaderFcn } from '../../styles/Header';
 
 import LanguageToggler from '../../containers/form/LanguageToggler';
 import ProdEnvWarning from '../widgets/ProdEnvWarning';
 import PreviewRecord from '../../containers/process/PreviewRecord';
 
 const marginBottom = 60;
-const StyledHeader = styled.header`
-	padding: 25px 40px;
-	background: ${colors.backgroundLight};
-	border-top: 1px solid ${colors.gray86};
-	border-bottom: 1px solid ${colors.gray86};
+const StyledHeader = styled(Header)`
+	
 	margin-bottom: ${marginBottom}px;
-	position: relative;
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	font-size: 0.9em;
 
 	&.prod-warning-enhance {
 		background: rgb(255, 245, 201);
@@ -34,16 +25,6 @@ const StyledHeader = styled.header`
 		transition: transform 0.3s ease;
 		z-index: 5;
 	}
-
-	.texts, .btns {
-		display: inline-block;
-		vertical-align: middle;
-	}
-
-	.texts {
-		padding-right: 30px;
-		flex-basis: 60%;
-	}
 	
 	.permalinks {
 		span {
@@ -55,22 +36,6 @@ const StyledHeader = styled.header`
 	.last-modif-date {
 		margin-top: 20px;
 		font-weight: ${cssVars.fontWeightMedium};
-	}
-
-	/* .table-help {
-		margin-top: 10px;
-	} */
-
-	.btns {
-		padding-left: 30px;
-
-		display: flex;
-		justify-content: flex-end;
-		flex-basis: 40%;
-
-		[class^=button] + [class^=button] {
-			margin-left: 10px;
-		}
 	}
 
 	.popout {
@@ -189,12 +154,14 @@ export default class FormHeaderCore extends Component {
 			</div>
 		) : null;
 
+
 		const infos = (this.props.isLight) ? '' : (
-			<div className="texts">
+			<HeaderTexts>
 				{this.props.children}
 				{lastModif}
 				{slugs}
-			</div>
+				{this.props.isProdEnv && <ProdEnvWarning />}
+			</HeaderTexts>
 		);
 
 		const classList = [];
@@ -205,16 +172,14 @@ export default class FormHeaderCore extends Component {
 			width: this.props.isLight && this.props.isViewingPreview ? '50%' : '100%',
 		};
 
-		const prodWarning = this.props.isLight && this.props.isProdEnv ? <ProdEnvWarning /> : null;
 		// console.log(this.props.isProdEnv);
 		return (
 			<StyledHeader className={classList.join(' ')} style={style} ref="header">
 				{infos}
-				{prodWarning}
 				
-				<div className="btns">
+				<HeaderFcn>
 					{this.props.buttons}
-				</div>
+				</HeaderFcn>
 				<div className="popout">
 					{editSchema}
 					{previewProcessor}

@@ -20,7 +20,7 @@ const Logo = styled.div`
 	width: 100%;
 	height: 400px;
 	max-height: 66vh;
-	background: ${colors.blue26} url(../assets/img/freestone-logo.png) center center no-repeat;
+	background: ${colors.accentSecondary} url(../assets/img/freestone-logo.png) center center no-repeat;
 	background-size: auto 295px;
 `;
 
@@ -112,7 +112,7 @@ export default class Login extends Component {
 										<div className="form-group">
 											<input
 												type="text"
-												className="form-control input-lg"
+												className=" input-lg"
 												placeholder="Username"
 												name="freestoneuser"
 												ref={el => this._username = el}
@@ -122,7 +122,7 @@ export default class Login extends Component {
 										<div className="form-group">
 											<input
 												type="password"
-												className="form-control input-lg"
+												className=" input-lg"
 												placeholder="Password"
 												name="freestonepass"
 												ref={el => this._password = el}

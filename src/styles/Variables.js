@@ -1,8 +1,14 @@
 
 const vars = {
-	headerHeight: '60px',
-	navWidth: '250px',
-	recordsWidth: '350px',
+	navWidth: 250, //px
+	recordsWidth: 350, //px
+	topHeaderHeight: 60, //px
+	gridColumns: 12,
+	fontSizeText: '14px',
+	fontSizeTitle1: '2em',
+	fontSizeTitle2: '1.8em',
+	fontSizeTitle3: '1.5em',
+	fontSizeTitle4: '1em',
 	fontFamilyBase: '"Open Sans", Helvetica, Arial, sans',
 	fontWeightLight: 300,
 	fontWeightNormal: 400,
@@ -10,12 +16,6 @@ const vars = {
 	fontWeightSemibold: 600,
 	fontWeightBold: 700,
 	fontWeightExtrabold: 800,
-
-	fontSizeText: '16px',
-	fontSizeTitle1: '2em',
-	fontSizeTitle2: '1.8em',
-	fontSizeTitle3: '1.5em',
-	fontSizeTitle4: '1em',
 };
 
 export default vars;

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Header, HeaderTexts } from '../../styles/Header';
+import { Button } from '../../styles/Button';
+import { Heading2, ErrorTitle, ErrorMessage } from '../../styles/Texts';
 
 export default class Save extends Component {
 	static propTypes = {
@@ -33,12 +36,12 @@ export default class Save extends Component {
 		let msgDisplay = null;
 		if (isError) {
 			msgDisplay = (<div>
-				<h3 className="error-title">{this.props.saveState.status.msg}</h3>
-				<div className="error-message">{this.props.saveState.status.error}</div>
-				<div onClick={this.props.cancelSave} className="back-btn"><i className="fa fa-pencil"></i><span>Go back to form</span></div>
+				<ErrorTitle>{this.props.saveState.status.msg}</ErrorTitle>
+				<ErrorMessage>{this.props.saveState.status.error}</ErrorMessage>
+				<Button onClick={this.props.cancelSave} danger><i className="fa fa-pencil"></i><span>Go back to form</span></Button>
 			</div>);
 		} else {
-			msgDisplay = (<div className="save-msg">
+			msgDisplay = (<div>
 				{this.props.saveState.status.msg}
 			</div>);
 		}
@@ -47,18 +50,18 @@ export default class Save extends Component {
 
 		return (
 			<section className="saving">
-				<header className="page-header">
-					<div className="texts">
-						<h2>Saving...</h2>
+				<Header>
+					<HeaderTexts>
+						<Heading2>Saving...</Heading2>
 						{
 							Object.keys(this.props.saveState.files).map(tmpName => {
 								const curPrc = this.props.saveState.files[tmpName];
-								return <div key={tmpName} className="save-msg">Saving {tmpName} : {curPrc}%</div>;
+								return <div key={tmpName}>Saving {tmpName} : {curPrc}%</div>;
 							})
 						}
 						{msgDisplay}
-					</div>
-				</header>
+					</HeaderTexts>	
+				</Header>
 			</section>
 		);
 	}

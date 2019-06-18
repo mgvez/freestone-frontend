@@ -40,7 +40,6 @@ function getCss(props) {
 	if (props.tiny) height = 16;
 
 	return css`
-		margin: 0;
 		${props.margin && `margin: ${props.margin};`}
 		padding: 0 15px;
 

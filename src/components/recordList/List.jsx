@@ -11,6 +11,9 @@ import TablePermissions from '../../containers/permissions/TablePermissions';
 import ListFetch from '../../containers/process/ListFetch';
 import createRecord from '../../freestone/createRecord';
 import { Button } from '../../styles/Button';
+import { Header, HeaderTexts, HeaderFcn } from '../../styles/Header';
+import { Heading1 } from '../../styles/Texts';
+import { MainZone } from '../../styles/Grid';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
@@ -123,20 +126,18 @@ export default class List extends Component {
 				<section>
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
 
-					<header className="record-header">
-						<div className="texts">
-							<h1>{this.props.table.displayLabel}</h1>
-							<div className="text-description" dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
-						</div>
-
-						<div className="btns">
+					<Header>
+						<HeaderTexts>
+							<Heading1>{this.props.table.displayLabel}</Heading1>
+							<p dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
+						</HeaderTexts>
+						<HeaderFcn>
 							{addBtn}
-						</div>
-					</header>
+						</HeaderFcn>
+					</Header>
 					
 					<TablePermissions table={this.props.table} />
-
-					<div className="padded-content search-ctn">
+					<MainZone>
 						<ListSearch 
 							key={`search_${this.props.tableName}`}
 							tableName={this.props.tableName}
@@ -147,15 +148,14 @@ export default class List extends Component {
 						>
 							<ListFetch needsFetch={needsFetch} tableName={this.props.tableName} params={this.props.params} />
 						</ListSearch>
-					</div>
-					<div className="padded-content">
+					
 						{records}
 						<Paging
 							nPages={this.props.nPages}
 							curPage={this.props.curPage}
 							tableName={this.props.tableName}
 						/>
-					</div>
+					</MainZone>
 					
 				</section>
 			);

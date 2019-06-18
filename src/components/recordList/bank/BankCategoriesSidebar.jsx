@@ -14,7 +14,7 @@ import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 import { Button } from '../../../styles/Button';
 
 const FiltersContainer = styled.section`
-	background: ${colors.backgroundLight};
+	background: ${colors.backgroundLightest};
 	border: 1px ${colors.borderMedium} solid;
 	margin: 0 12px;
 	padding: 12px;

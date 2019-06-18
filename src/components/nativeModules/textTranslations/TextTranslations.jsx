@@ -137,7 +137,7 @@ export default class TextTranslations extends Component {
 		const title = 'Text translations' + (this.state.isSchema ? ' SCHEMA' : '');
 		const rootClass = this.state.isSchema ? 'translation-schema-form' : '';
 		return (
-			<section className={`root-form ${rootClass}`}>
+			<section className={rootClass}>
 				<FormHeader hasLanguageToggle={false} buttons={actionBtns} editSchemaAction={this.onEditSchema}>
 					<h1>{title}</h1>
 				</FormHeader>

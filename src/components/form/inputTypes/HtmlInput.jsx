@@ -111,7 +111,6 @@ export default class HtmlInput extends Component {
 				break;
 			}
 		}
-		// return <input type="text" size={this.props.field.size} value={this.props.val} className="form-control" onChange={this.props.changeVal} />;
 
 		// console.log(`render input ${this.props.field.name}`, this.props.val);
 		return (

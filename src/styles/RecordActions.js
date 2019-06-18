@@ -25,7 +25,7 @@ export function getActionCss(props) {
 
 		${props.danger && `
 			i {
-				color: ${colors.red58};
+				color: ${colors.dangerPrimary};
 			}
 		`}
 		
@@ -37,7 +37,7 @@ export function getActionCss(props) {
 
 		${props.warn && `
 			i {
-				color: ${colors.yellow76};
+				color: ${colors.warnPrimary};
 			}
 		`}
 	`;

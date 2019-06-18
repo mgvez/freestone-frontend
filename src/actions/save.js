@@ -6,6 +6,7 @@ import { createRequestTypes } from './apiAction';
 
 export const INIT_SAVE = 'INIT_SAVE';
 export const SAVE_RECORD_API = createRequestTypes('SAVE_RECORD_API');
+export const SAVE_SINGLE_VALUE_RECORD_API = createRequestTypes('SAVE_SINGLE_VALUE_RECORD_API');
 export const SAVE_PREVIEW_API = createRequestTypes('SAVE_PREVIEW_API');
 export const SWAP_ORDER_API = createRequestTypes('SWAP_ORDER_API');
 export const DELETE_RECORD_API = createRequestTypes('DELETE_RECORD_API');
@@ -130,7 +131,7 @@ export function saveSingleValue(tableIdOrName, recordId, fieldId, value) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
-				types: SAVE_RECORD_API,
+				types: SAVE_SINGLE_VALUE_RECORD_API,
 				route: `saveValue/${tableIdOrName}/${recordId}/${fieldId}`,
 				data: {
 					value,

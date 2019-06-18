@@ -2,16 +2,16 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 // Google Fonts
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+// @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
 @import "base/_variables";
 
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/_variables";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/_mixins";
 //@import "~bootstrap-sass/assets/stylesheets/bootstrap/_tooltip";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_grid";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_normalize";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap/_scaffolding";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_grid";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_normalize";
+// @import "~bootstrap-sass/assets/stylesheets/bootstrap/_scaffolding";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap/_responsive-utilities";
 
 @import "utils/_utils";
@@ -20,35 +20,36 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 // @import "components/buttons";
 // @import "components/form";
-@import "components/navbar";
-@import "components/header";
-@import "components/loaded-records";
-@import "components/root-form";
+// @import "components/navbar";
+// @import "components/header";
+// @import "components/loaded-records";
+// @import "components/root-form";
 // @import "components/subform";
 // @import "components/home-button";
-@import "components/list-records";
+// @import "components/list-records";
 // @import "components/bank";
-@import "components/url-modal";
-@import "components/_react-datepicker";
+// @import "components/url-modal";
+// @import "components/_react-datepicker";
 // @import "components/_login";
 // @import "components/_autosuggest";
-@import "components/_process-record";
-@import "components/_dashboard";
+// @import "components/_process-record";
 // @import "components/_list-search";
-@import "components/_hotspot";
 // @import "components/_field-deps";
 
-@import "layout/_default";
+@import "components/_dashboard";
+@import "components/_hotspot";
+
+// @import "layout/_default";
 
 
-//STYLES TEMPORAIRE MART pour la dev; Peuvent être deletés lorsque remplacés
+// //STYLES TEMPORAIRE MART pour la dev; Peuvent être deletés lorsque remplacés
 
-.clearfix {
-	@include clearfix();
-}
+// .clearfix {
+// 	@include clearfix();
+// }
 
-//warning quand le record est trop vieux dans LoadedRecords
-.warn {
-	color:$color-warn-primary;
-}
+// //warning quand le record est trop vieux dans LoadedRecords
+// .warn {
+// 	color:$color-warn-primary;
+// }
 

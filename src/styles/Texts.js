@@ -2,28 +2,21 @@
 import styled, { css } from 'styled-components';
 import cssVars from './Variables';
 
-
-const Texts = css`
-
-	* {
-		-webkit-font-smooting: antialiased;
-	}
-
-	body {
-		font-family: ${cssVars.fontFamilyBase};
-		font-size: ${cssVars.fontSizeText};
-	}
-
-`;
-
 export const textMedium = 'font-size: 11px;';
 export const textSmall = 'font-size: 9px;';
 
-const title = `line-height: 1;
+const title = `
+	line-height: 1;
 	margin: 0;
 	font-family: ${cssVars.fontFamilyBase};
 	text-transform: none;
-	font-weight: ${cssVars.fontWeightLight};`;
+	font-weight: ${cssVars.fontWeightLight};
+	span {
+		font-size: 0.7em;
+		font-weight: normal;
+	}
+
+`;
 
 export const Heading1 = styled.h1`
 	${title}
@@ -40,7 +33,6 @@ export const Heading2 = styled.h2`
 export const Heading3 = styled.h3`
 	${title}
 	font-size: ${cssVars.fontSizeTitle3};
-
 `;
 
 export const Heading4 = styled.h4`
@@ -48,4 +40,19 @@ export const Heading4 = styled.h4`
 	font-size: ${cssVars.fontSizeTitle4};
 	margin: 10px 0 6px;
 	font-weight: ${cssVars.fontWeightBold};
+`;
+
+
+export const ErrorTitle = styled(Heading3)`
+	color:red;
+	text-transform:uppercase;
+	margin:0 0 20px 0;
+`;
+
+export const ErrorMessage = styled.div`
+	background: #ffdddd;
+	color:red;
+	border-radius: 5px;
+	padding: 10px;
+	margin: 20px 0;
 `;

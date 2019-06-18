@@ -37,8 +37,8 @@ import {
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 
 const StyledCell = styled.div`
-	background: ${colors.gray90};
-	border: 1px ${colors.gray76} solid;
+	background: ${colors.backgroundMainAccent};
+	border: 1px ${colors.borderMedium} solid;
 	margin: 0 12px 12px 0;
 	width: ${THUMBNAIL_SIZE}px;
 `;

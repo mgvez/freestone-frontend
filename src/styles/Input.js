@@ -6,21 +6,26 @@ import { textMedium, textSmall } from './Texts';
 import { darken, lighten } from './Utils';
 
 
-function getFieldCss(props) {
-
+function getFieldCss(displaySize) {
 	return css`
-
-		${props.displaySize === 'small' && textSmall};
-		${props.displaySize === 'medium' && textMedium};
-
+		${displaySize === 'small' && textSmall};
+		${displaySize === 'medium' && textMedium};
+		height: 100%;
+		border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
 	`;
 }
 
-function getFieldGroupCss(props) {
+function getFieldGroupCss(isCollapsable) {
 
 	return css`
 		display: block;
+		padding: 10px 20px;
+		margin-bottom: 30px;
 
+		${isCollapsable && `
+			border-top: 4px solid ${colors.backgroundMainAccent};
+			background: rgba(255, 255, 255, 0.25);
+		`};
 	`;
 }
 
@@ -32,6 +37,7 @@ export function getInputCss(props) {
 		height: 2.2em;
 		line-height:2.2em;
 		border: 2px solid transparent;
+		color: ${colors.textPrimary};
 
 		padding: 0 10px;
 		margin: 0 0 0.7em;
@@ -50,6 +56,11 @@ export function getInputCss(props) {
 		${props.bordered && `
 			border: 2px solid ${colors.borderDark};
 		`};
+
+		&[size]{
+			width: auto;
+			max-width: 100%;
+		}
 
 	`;
 }
@@ -87,5 +98,171 @@ export const FieldDescription = styled.div`
 export const Input = styled.input`${props => getInputCss(props)}`;
 export const Textarea = styled.textarea`${props => getInputCss(props)}`;
 
-export const StyledField = styled.div`${props => getFieldCss(props)}`;
-export const StyledFieldGroup = styled.div`${props => getFieldGroupCss(props)}`;
+export const StyledField = styled.div`${props => getFieldCss(props.displaySize)}`;
+export const StyledFieldGroup = styled.div`${props => getFieldGroupCss(props.isCollapsable)}`;
+
+
+export const CheckboxContainer = styled.div`
+	text-align: left;
+
+	input {
+		display: none;
+
+		&:checked + label:after {
+			display: block;
+		}
+	}
+
+	label {
+		display: inline-block;
+		position: relative;
+		padding-left: 30px;
+		font-weight: ${cssVars.fontWeightNormal};
+		cursor: pointer;
+		line-height: 1.4;
+		height: auto;
+		text-align: left;
+
+		margin: 10px 0;
+
+		&:before {
+			content: ' ';
+			display: block;
+
+			position: absolute;
+				top: 2px;
+				left: 0;
+
+			width: 15px;
+			height: 15px;
+			background: $white;
+			border: 1px solid ${colors.backgroundMainAccent};
+		}
+
+		&:after {
+			font-family: 'FontAwesome';
+			content: '\f00c';
+			display: none;
+			line-height: 1;
+			font-size: 10px;
+			color: ${colors.accentPrimary};
+
+			position: absolute;
+				top: 9px;
+				left: 2.5px;
+
+			transform: translate(0, -50%);
+		}
+	}
+`;
+
+function getToggleCss(props) {
+	return css`
+		input[type="checkbox"] {
+			display: none;
+
+			&:checked + label {
+				background: ${colors.accentPrimary};
+
+				&:after {
+					left: calc(100% - 25px);
+				}
+
+				&:before {
+					content: attr(data-on-label);
+					left: 7.5px;
+				}
+			}
+
+			&:disabled + label {
+				opacity: 0.4;
+				cursor: default;
+			}
+
+			${props.small && `
+				&:checked + label {
+					&:after {
+						left: calc(100% - 16px);
+					}
+
+					&:before {
+						content: attr(data-on-label);
+						left: 6px;
+					}
+				}
+			`};
+		}
+
+		label {
+
+			cursor: pointer;
+
+			position: relative;
+			display: block;
+			width: 0;
+			height: 34px;
+			padding: 0 35px;
+
+			margin: 10px 0;
+
+			border-radius: 22px;
+			background: ${colors.dangerPrimary};
+			border: 2px solid transparent;
+
+			transition: background 0.2s;
+
+			&:after {
+				position: absolute;
+					top: 5px;
+					left: 5px;
+
+				height: 20px;
+				width: 20px;
+				content: ' ';
+				background: #fff;
+				border-radius: 100%;
+
+				transition: left 0.2s;
+			}
+
+			&:before {
+				content: attr(data-off-label);
+				color: ${colors.white};
+
+				position: absolute;
+					top: 0;
+					right: 7.5px;
+
+				line-height: 30px;
+			}
+
+			${props.small && `
+				height: 22px;
+				padding: 0 23px;
+				border-radius: 11px;
+				font-size: 0.9em;
+
+				&:after {
+					top: 1px;
+					left: 1px;
+
+					height: 16px;
+					width: 16px;
+				}
+
+				&:before {
+					content: attr(data-off-label);
+					color: ${colors.white};
+
+					position: absolute;
+						top: 0;
+						right: 5px;
+
+					line-height: 19px;
+				}
+
+			`};
+		}
+	`;
+}
+export const ToggleContainer = styled.div`${props => getToggleCss(props)}`;

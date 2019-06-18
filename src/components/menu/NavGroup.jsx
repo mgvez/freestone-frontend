@@ -7,6 +7,9 @@ import Page from './Page';
 import NativeModule from './NativeModule';
 import Collapsable from '../animation/Collapsable';
 
+import { NavGroup as StyledNavGroup, Subnav, GroupHeading, NavItem } from '../../styles/Nav';
+
+
 export default class NavGroup extends Component {
 	static propTypes = {
 		toggleCollapse: PropTypes.func,
@@ -27,29 +30,29 @@ export default class NavGroup extends Component {
 	getContents(isOpen) {
 		const level = this.props.level + 1;
 		return (<Collapsable isCollapsed={isOpen}>
-			<ul className="sub-nav">
+			<Subnav>
 				{
 					this.props.data.tables.map((item) => {
-						return 	<li className="nav-item" key={item.id}><Table name={item.name} id={item.id} displayLabel={item.displayLabel} nrecords={item.nrecords} clearList={this.props.clearList} /></li>;
+						return 	<NavItem key={item.id}><Table name={item.name} id={item.id} displayLabel={item.displayLabel} nrecords={item.nrecords} clearList={this.props.clearList} /></NavItem>;
 					})
 				}
 				{
 					this.props.data.modules.map((item) => {
 						// console.log(item.isFrontendComponent, item);
 						if (item.isFrontendComponent) {
-							return <li className="nav-item" key={`mod-${item.id}`}><NativeModule {...item} /></li>;
+							return <NavItem key={`mod-${item.id}`}><NativeModule {...item} /></NavItem>;
 						}
-						return <li className="nav-item" key={`mod-${item.id}`}><Module {...item} clearList={this.props.clearList} /></li>;
+						return <NavItem key={`mod-${item.id}`}><Module {...item} clearList={this.props.clearList} /></NavItem>;
 					})
 				}
 				{
 					this.props.data.pages.map((item) => {
 						// console.log(item);
-						return <li className="nav-item" key={`pg-${item.id}`}><Page {...item} clearList={this.props.clearList} /></li>;
+						return <NavItem key={`pg-${item.id}`}><Page {...item} clearList={this.props.clearList} /></NavItem>;
 					})
 				}
 				{this.getChildrenGroups(level)}
-			</ul>
+			</Subnav>
 		</Collapsable>);
 	}
 
@@ -59,20 +62,20 @@ export default class NavGroup extends Component {
 
 	render() {
 		if (!this.props.data) return null;
-		const isOpen = !this.props.toggleState[this.props.data.id];
+		const isOpen = this.props.toggleState[this.props.data.id];
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';
 
 		const contents = this.getContents(isOpen);
 
 		return (
-			<li className={`${activeClass} nav-group`} >
-				<a onClick={this.onToggle} className={`table-group ${activeClass}`}>
+			<StyledNavGroup className={`${activeClass}`} >
+				<GroupHeading onClick={this.onToggle} className={`${activeClass}`}>
 					<i className={`fa fa-${icon} fa-fw`}></i>
 					<span className="nav-label">{this.props.data.name}</span> <span className="fa fa-angle-down"></span>
-				</a>
+				</GroupHeading>
 				{contents}
-			</li>
+			</StyledNavGroup>
 		);
 	}
 }

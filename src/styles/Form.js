@@ -6,15 +6,9 @@ import { darken, lighten } from './Utils';
 
 export const StyledSingleRecord = styled.section`
 	position: relative;
-	
-	&.root {
-		width: 90%;
-		margin-left: auto;
-		margin-right: auto;
-	}
 
 	&:nth-of-type(2n) {
-		background: ${colors.gray86};
+		background: ${colors.backgroundMainAccent};
 
 		&:before {
 			content: ' ';
@@ -22,7 +16,7 @@ export const StyledSingleRecord = styled.section`
 				top: 0;
 				left: 50%;
 
-			background: ${colors.gray86};
+			background: ${colors.backgroundMainAccent};
 			transform: translate(-50%, 0);
 			width: 10000px;
 			height: 100%;
@@ -36,9 +30,9 @@ export const Subform = styled.section`
 	margin-top: 30px;
 	padding-left: 30px;
 	padding-right: 10px;
-	border-top: 1px solid ${colors.gray86};
-	border-bottom: 1px solid ${colors.gray86};
-	border-left: 10px solid ${colors.gray86};
+	border-top: 1px solid ${colors.backgroundMainAccent};
+	border-bottom: 1px solid ${colors.backgroundMainAccent};
+	border-left: 10px solid ${colors.backgroundMainAccent};
 	position: relative;
 	border-radius: 5px;
 	background: rgba(255, 255, 255, 0.4);

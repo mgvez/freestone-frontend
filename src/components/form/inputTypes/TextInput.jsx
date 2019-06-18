@@ -58,13 +58,12 @@ export default class TextInput extends Component {
 						minHeight: `${MIN_HEIGHT}px`,
 						height: `${this.state.height}px`,
 					}} 
-					className="form-control" 
 					onChange={this.props.changeVal}
 				/>
 			);
 		}
 		return (
-			<Input type="text" size={this.props.field.size} value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
+			<Input type="text" size={this.props.field.size} value={this.props.val || ''} onChange={this.props.changeVal} />
 		);
 	}
 }

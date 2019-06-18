@@ -1,10 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import { TYPE_IMG } from '../../../freestone/SchemaProps';
 import { Button } from '../../../styles/Button';
+import { THUMBNAIL_SIZE } from '../../../freestone/settings';
+
+
+const Container = styled.div`
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 10px;
+`;
+
+const FileInfos = styled.div`
+	font-style: italic;
+	display: block;
+	margin-right: 10px;
+	max-width: ${THUMBNAIL_SIZE}px;
+
+	a {
+		display: block;
+		margin-bottom: 5px;
+	}
+`;
+
+const FileInputContainer = styled.div`
+	display: inline-block;
+	vertical-align: bottom;
+
+	input {
+		display:none;
+	}
+
+	button {
+		margin-right: 10px
+	}
+`;
 
 export default class GenericFileInput extends Component {
 
@@ -117,25 +151,21 @@ export default class GenericFileInput extends Component {
 		/>);
 		const id = `${this.props.fieldId}__${this.props.recordId}`;
 
-		let fileInfos;
-		if (val) {
-			fileInfos = (<div className="file-infos">
-				{thumbnail}
-				{displayVal}
-			</div>);
-		}
 		return (
-			<div className="file-input-generic">
-				{fileInfos}
-				<div className="file-input-section">
-					<div className="file-input-input">
-						<input id={id} type="file" value="" className="file-control form-control" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
-						<Button round bordered info onClick={this.triggerSelectFile}><i className="fa fa-pencil"></i>Upload file</Button>
-					</div>
-					{revertBtn}
-					{deleteBtn}
-				</div>
-			</div>
+			<Container>
+				{val && (<FileInfos>
+					{thumbnail}
+					{displayVal}
+				</FileInfos>)}
+
+				<FileInputContainer>
+					<input id={id} type="file" value="" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
+					<Button round bordered info onClick={this.triggerSelectFile}><i className="fa fa-pencil"></i>{val ? 'Change file' : 'Upload file'}</Button>
+				</FileInputContainer>
+				{revertBtn}
+				{deleteBtn}
+
+			</Container>
 		);
 	}
 }

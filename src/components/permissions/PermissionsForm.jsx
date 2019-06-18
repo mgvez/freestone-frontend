@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { ALL_RECORDS_ID } from '../../freestone/SchemaProps';
+import { ToggleContainer } from '../../styles/Input';
 
 export default class PermissionsForm extends Component {
 	static propTypes = {
@@ -32,7 +33,7 @@ export default class PermissionsForm extends Component {
 
 			return (<div key={`${prefix}-${group.id}`}>
 				{group.name}
-				<div className="toggle-container">
+				<ToggleContainer small>
 					<input
 						id={`perm-${prefix}-${group.id}`} 
 						data-groupid={group.id} 
@@ -43,7 +44,7 @@ export default class PermissionsForm extends Component {
 						checked={group.isPermitted === true}
 					/>
 					<label className="toggle" htmlFor={`perm-${prefix}-${group.id}`} data-on-label="1" data-off-label="0"></label>
-				</div>
+				</ToggleContainer>
 				{disabledMessage}
 			</div>);
 		});

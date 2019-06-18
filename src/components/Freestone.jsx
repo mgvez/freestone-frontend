@@ -21,10 +21,8 @@ import LoadedRecords from '../containers/dashboard/LoadedRecords';
 import Login from '../containers/auth/Login';
 import GoogleAuthenticate from '../containers/auth/GoogleAuthenticate';
 
-import 'style-loader!../scss/style.scss';
+// import 'style-loader!../scss/style.scss';
 import 'font-awesome/scss/font-awesome.scss';
-// import 'style-loader!font-awesome/scss/font-awesome.scss';
-// require('font-awesome-webpack-2');
 
 function noop() {
 
@@ -32,8 +30,8 @@ function noop() {
 
 
 const MainContent = styled.div`
-	padding-top: ${cssVariables.headerHeight};
-	padding-left: ${cssVariables.navWidth};
+	padding-top: ${cssVariables.topHeaderHeight}px;
+	padding-left: ${cssVariables.navWidth}px;
 	&.fullwidth {
 		padding-left: 0;
 	}

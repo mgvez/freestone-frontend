@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 import { getAdminUrl } from '../freestone/api';
+import { Header, HeaderTexts } from '../styles/Header';
+import { Heading1 } from '../styles/Texts';
 
 const metaData = {
 	title: 'Module',
@@ -32,12 +34,12 @@ export default class Module extends Component {
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
-				<header className="module-header">
-					<div className="texts">
-						<h1>{this.props.label}</h1>
+				<Header>
+					<HeaderTexts>
+						<Heading1>{this.props.label}</Heading1>
 						<p>{this.props.description}</p>
-					</div>
-				</header>
+					</HeaderTexts>
+				</Header>
 				<iframe className="module" src={url} style={{ width: '100%', minHeight: '100vh' }} />
 			</section>
 		);

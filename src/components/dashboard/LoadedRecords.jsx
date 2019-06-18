@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import { NavLink } from 'react-router-dom';
+import cssVariables from '../../styles/Variables';
+import colors from '../../styles/Colors';
+import { Heading2, Heading4 } from '../../styles/Texts';
+import { NavLinkButton } from '../../styles/Button';
+
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
@@ -10,6 +15,52 @@ import Cancel from '../../containers/process/Cancel';
 function leftPad(n) {
 	return n < 10 ? `0${n}` : n;
 }
+
+const StyledLoadedRecords = styled.nav`
+
+	position: absolute;
+		top: ${cssVariables.topHeaderHeight}px;
+		right: 0;
+
+	height: calc(100vh - 60px);
+	width: ${cssVariables.recordsWidth}px;
+	overflow: auto;
+	padding: 40px 15px;
+	background: ${colors.backgroundDark};
+	color: ${colors.textSecondary};
+	z-index: 2;
+
+	transition: transform 0.3s;
+
+	&.sticky {
+		position: fixed;
+			top: 0;
+			right: 0;
+		height: 100vh;
+	}
+
+	.container {
+		width: ${cssVariables.recordsWidth - 20}px;
+		padding: 0 20px;
+	}
+
+	.record-group {
+		margin-bottom: 40px;
+	}
+
+	.warning {
+		color: ${colors.warnPrimary};
+	}
+
+
+
+	
+
+	&.collapsed {
+		transform: translate(100%, 0);
+	}
+`;
+
 
 export default class LoadedRecords extends Component {
 	static propTypes = {
@@ -90,21 +141,21 @@ export default class LoadedRecords extends Component {
 		const collapsedClass = this.props.visible ? '' : 'collapsed';
 
 		return (
-			<nav className={`loaded-records ${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
+			<StyledLoadedRecords className={`${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
 				<Scrollbars>
 					<div className="container">
 						<LoadedRecordsToggler isClose />
-						<h2>Loaded records</h2>
+						<Heading2>Loaded records</Heading2>
 						{
 							this.props.records.map((records) => {
 								if (!records.records || !records.table || !records.records.length) return null;
 								return (
 									<div className="record-group" key={records.tableId}>
-										<h3 className="record-label">{records.table.displayLabel}</h3>
+										<Heading4>{records.table.displayLabel}</Heading4>
 										{
 											records.records.map(record => {
 
-												const warnClass = record.isOutdated ? 'warn' : '';
+												const warnClass = record.isOutdated ? 'warning' : '';
 												const outdatedWarning = (
 													<div className={warnClass}>
 														This record has been open for {this.getTimeElapsed(record)}.
@@ -116,7 +167,7 @@ export default class LoadedRecords extends Component {
 														{record.label}
 														{outdatedWarning}
 														<div className="record-buttons">
-															<NavLink to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} activeClassName="active" className="button-round-warn"><i className="fa fa-pencil"></i><span> Edit</span></NavLink>
+															<NavLinkButton to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} round warn><i className="fa fa-pencil"></i><span> Edit</span></NavLinkButton>
 															<Cancel tableName={records.table.name} recordId={record.id} />
 														</div>
 													</div>
@@ -129,7 +180,7 @@ export default class LoadedRecords extends Component {
 						}
 					</div>
 				</Scrollbars>
-			</nav>
+			</StyledLoadedRecords>
 		);
 	}
 }

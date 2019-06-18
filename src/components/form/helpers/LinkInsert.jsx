@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { getWebsiteUrl } from '../../../freestone/settings';
 import customStyle from '../../../styles/Modal.js';
 import { Button } from '../../../styles/Button';
+import { GridContainer, GridItem } from '../../../styles/Grid';
 
 function buildlink(contents, link, linkLabel, linkTarget) {
 	let val = link.trim();
@@ -116,29 +117,25 @@ export default class LinkInsert extends Component {
 				closeTimeoutMS={n}
 				style={customStyle}
 			>
-				<section className="container url-modal">
-					<div className="row">
-						<div className="col-md-6">
-							{labelInput}
-						</div>
-						<div className="col-md-6 url-modal-cancel">
-							<Button round danger onClick={this.cancelChange}>cancel</Button>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-md-6">
-							<h4>Internal Link</h4>
-							<p>If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the following button.</p>
-							<Button round bordered onClick={this.selectInternal}>use page below</Button>
-						</div>
-						<div className="col-md-6">
-							<h4>External Link</h4>
-							<p>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
-							<p><input type="text" ref="linkExternal" className="bordered" defaultValue={this.props.link} /></p>
-							<Button round bordered onClick={this.selectExternal}>use this url</Button>
-						</div>
-					</div>
-				</section>
+				<GridContainer>
+					<GridItem columns="6">
+						{labelInput}
+					</GridItem>
+					<GridItem columns="6">
+						<Button round danger onClick={this.cancelChange}>cancel</Button>
+					</GridItem>
+					<GridItem columns="6">
+						<h4>Internal Link</h4>
+						<p>If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the following button.</p>
+						<Button round bordered onClick={this.selectInternal}>use page below</Button>
+					</GridItem>
+					<GridItem columns="6">
+						<h4>External Link</h4>
+						<p>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
+						<p><input type="text" ref="linkExternal" className="bordered" defaultValue={this.props.link} /></p>
+						<Button round bordered onClick={this.selectExternal}>use this url</Button>
+					</GridItem>
+				</GridContainer>
 				<iframe src={getWebsiteUrl() + lang} style={{ width: '100%', height: '500px' }} ref="ifr" />
 			</Modal>
 		);

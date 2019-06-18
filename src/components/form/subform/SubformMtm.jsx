@@ -1,11 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 
 import FormHeaderContent from '../../header/FormHeaderContent';
 import Collapsable from '../../animation/Collapsable';
 import ToggleCollapse from '../buttons/ToggleCollapse';
 import { Subform, SubformHeader } from '../../../styles/Form';
+import { CheckboxContainer } from '../../../styles/Input';
+import { GridItem, GridContainer } from '../../../styles/Grid';
+import { Heading3 } from '../../../styles/Texts';
 
+
+const MtmGroup = styled.div`
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-top: 1px solid rgba(0,0,0,0.05);
+
+	&:first-child {
+		border-top: none;
+	}
+`;
 export default class SubformMtm extends Component {
 	static propTypes = {
 		tableId: PropTypes.number,
@@ -52,10 +66,12 @@ export default class SubformMtm extends Component {
 				const checked = (this.props.records || false) && !!this.props.records.find(r => r === id);
 				// console.log(this.props.tableId, id, checked);
 				return (
-					<div className="checkbox-container col-md-3" key={`opt_${id}`}>
-						<input type="checkbox" id={`${this.props.table.id}_mtm_${id}`} value={id} checked={checked} onChange={this.toggleValue} />
-						<label htmlFor={`${this.props.table.id}_mtm_${id}`}>{display}</label>
-					</div>
+					<GridItem columns="3" key={`opt_${id}`}>
+						<CheckboxContainer>
+							<input type="checkbox" id={`${this.props.table.id}_mtm_${id}`} value={id} checked={checked} onChange={this.toggleValue} />
+							<label htmlFor={`${this.props.table.id}_mtm_${id}`}>{display}</label>
+						</CheckboxContainer>
+					</GridItem>
 				);
 			});
 
@@ -63,17 +79,15 @@ export default class SubformMtm extends Component {
 
 			let categLabel;
 			if (categ) {
-				categLabel = <h3 className="mtm-category col-md-12">{categ} <span>({nChecked} / {nOptions})</span></h3>;
+				categLabel = <Heading3>{categ} <span>({nChecked} / {nOptions})</span></Heading3>;
 			}
 
-			return (<div className="col-md-12 mtm-group" key={groupIndex}>
-				<div className="row">
-					{categLabel}
-				</div>
-				<div className="row">
+			return (<MtmGroup key={groupIndex}>
+				{categLabel}
+				<GridContainer>
 					{inputs}
-				</div>
-			</div>);
+				</GridContainer>
+			</MtmGroup>);
 
 		});
 	}
@@ -111,9 +125,9 @@ export default class SubformMtm extends Component {
 							<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 						</div>
 					</SubformHeader>
-					<div className="row">
-						<Collapsable isCollapsed={this.props.isCollapsed}>{options}</Collapsable>
-					</div>
+
+					<Collapsable isCollapsed={this.props.isCollapsed}>{options}</Collapsable>
+
 				</Subform>
 			);
 		}

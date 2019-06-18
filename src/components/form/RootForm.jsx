@@ -11,6 +11,7 @@ import FormHeaderContent from '../header/FormHeaderContent';
 import FormHeader from '../header/FormHeader'; 
 import InScroll from '../../containers/utils/InScroll'; 
 import { Button } from '../../styles/Button';
+import { MainZone } from '../../styles/Grid';
 
 const ACTION_STAY_FORM = 'stay_form';
 const ACTION_CALLBACK = 'callback';
@@ -156,7 +157,7 @@ export default class RootForm extends Component {
 				permsWidget = <PermissionsForm table={this.props.table} recordId={this.props.params.recordId} />;
 			}
 
-			return (<InScroll className="root-form" isReady autoLock>
+			return (<InScroll isReady autoLock>
 				<DocumentMeta title={`${this.props.table.displayLabel} : /${this.props.params.recordId}`} />
 
 				<FormHeader {...this.props} hasLanguageToggle table={this.props.table} setLanguageState={this.setLanguageState} buttons={actionBtns}>
@@ -165,8 +166,9 @@ export default class RootForm extends Component {
 
 				{permsWidget}
 				
-				<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
-
+				<MainZone>
+					<SingleRecord tableId={this.props.table.id} recordId={this.props.params.recordId} isRoot language={language} />
+				</MainZone>
 			</InScroll>);
 
 		}
