@@ -100,7 +100,7 @@ export default class RecordInteractions extends Component {
 					<Button round="true" bordered="true" info="true" onClick={this.toggleActions}>{DEFAULT_LABEL} <Icon icon="angle-down" /></Button>
 					{this.state.active && (<PromptWidget>
 						<ActionNavLink to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} accent="true">
-							<Icon icon="pencil" />{EDIT_LABEL}
+							<Icon icon="pencil-alt" />{EDIT_LABEL}
 						</ActionNavLink>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn key={`${this.props.table.name}_${prikeyVal}`} tableName={this.props.table.name} prikey={prikeyVal} />

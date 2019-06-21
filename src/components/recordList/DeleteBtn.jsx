@@ -57,16 +57,16 @@ export default class DeleteBtn extends Component {
 		if (this.state.requested) {
 			return (
 				<Prompt>
-					<RecordAction onClick={this.process}><Icon icon="close" />Confirm</RecordAction>
+					<RecordAction onClick={this.process}><Icon icon="trash-alt" />Confirm</RecordAction>
 					<RecordAction onClick={this.cancel}><Icon icon="undo" />Cancel</RecordAction>
 				</Prompt>
 			);
 		}
 
 		return this.props.isButton ? (
-			<Button onClick={this.process} round="true" small="true" danger="true"><Icon icon="close" />Delete</Button>
+			<Button onClick={this.process} round="true" small="true" danger="true"><Icon icon="trash-alt" />Delete</Button>
 		) : (
-			<RecordAction onClick={this.process} danger="true"><Icon icon="close" />Delete</RecordAction>
+			<RecordAction onClick={this.process} danger="true"><Icon icon="trash-alt" />Delete</RecordAction>
 		);
 	}
 }

@@ -168,7 +168,7 @@ export default class LoadedRecords extends Component {
 														{record.label}
 														{outdatedWarning}
 														<div className="record-buttons">
-															<NavLinkButton to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} round warn><Icon icon="pencil" /><span> Edit</span></NavLinkButton>
+															<NavLinkButton to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} round warn><Icon icon="pencil-alt" /><span> Edit</span></NavLinkButton>
 															<Cancel tableName={records.table.name} recordId={record.id} />
 														</div>
 													</div>
