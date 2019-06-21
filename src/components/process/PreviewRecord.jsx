@@ -122,7 +122,7 @@ export default class PreviewRecord extends Component {
 	render() {
 
 		if (!this.props.isViewingPreview) {
-			return <Button className="button-preview" onClick={this.onClickPreview}><Icon icon="eye" />Preview</Button>; 
+			return <Button className="button-preview" flat="true" onClick={this.onClickPreview}><Icon icon="eye" />Preview</Button>; 
 		}
 
 		// console.log(this.props);

@@ -49,17 +49,6 @@ const StyledHeader = styled(Header)`
 		display: flex;
 		transform: translate(0, 100%);
 	}
-
-	.button-preview {
-		border-bottom-left-radius: 10px;
-		border-bottom-right-radius: 10px;
-		font-weight: ${cssVars.fontWeightSemibold};
-		text-transform: uppercase;
-
-		&.schema + .button-preview {
-			margin-left: 20px;
-		}
-	}
 `;
 
 

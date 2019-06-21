@@ -94,15 +94,13 @@ export const FieldDescription = styled.div`
 	line-height: 1.3;
 `;
 
-export const Input = styled.input`${props => getInputCss(props)}`;
-export const Textarea = styled.textarea`${props => getInputCss(props)}`;
-
-export const StyledField = styled.div`${props => getFieldCss(props.displaySize)}`;
-export const StyledFieldGroup = styled.div`${props => getFieldGroupCss(props.isCollapsable)}`;
-
-
-export const CheckboxContainer = styled.div`
+function getCheckboxContainer(props) {
+	return css`
 	text-align: left;
+
+	${props.startAlign && `
+		align-self: flex-start;
+	`};
 
 	input {
 		display: none;
@@ -134,7 +132,7 @@ export const CheckboxContainer = styled.div`
 
 			width: 15px;
 			height: 15px;
-			background: $white;
+			background: ${colors.backgroundLightest};
 			border: 1px solid ${colors.backgroundMainAccent};
 		}
 
@@ -153,7 +151,16 @@ export const CheckboxContainer = styled.div`
 			transform: translate(0, -50%);
 		}
 	}
-`;
+	`;
+}
+
+export const Input = styled.input`${props => getInputCss(props)}`;
+export const Textarea = styled.textarea`${props => getInputCss(props)}`;
+
+export const StyledField = styled.div`${props => getFieldCss(props.displaySize)}`;
+export const StyledFieldGroup = styled.div`${props => getFieldGroupCss(props.isCollapsable)}`;
+export const CheckboxContainer = styled.div`${props => getCheckboxContainer(props)}`;
+
 
 function getToggleCss(props) {
 	return css`

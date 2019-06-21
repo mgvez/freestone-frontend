@@ -3,9 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import DocumentMeta from 'react-document-meta';
+import GlobalStyles from '../../styles/GlobalStyles';
 import GoogleLoginBtn from './GoogleLoginBtn';
 import { Button } from '../../styles/Button';
+import { Input, CheckboxContainer } from '../../styles/Input';
 import colors from '../../styles/Colors';
+import { GridContainer, GridItem } from '../../styles/Grid';
 
 const metaData = {
 	title: 'Freestone',
@@ -14,7 +17,6 @@ const metaData = {
 		charset: 'utf-8',
 	},
 };
-
 
 const Logo = styled.div`
 	width: 100%;
@@ -27,6 +29,24 @@ const Logo = styled.div`
 const LoginZone = styled.div`
 	background: ${colors.backgroundMain};
 	padding: 60px;
+
+	form {
+		margin-top: 20px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
+		.btns {
+			margin-top: 20px;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.checkbox-container {
+			align-self: flex-start;
+		}
+	}
 `;
 export default class Login extends Component {
 	static propTypes = {
@@ -101,49 +121,41 @@ export default class Login extends Component {
 		return (
 			<section>
 				<DocumentMeta {...metaData} />
+				<GlobalStyles />
 				<Logo />
 				<LoginZone>
-					<div className="container">
-						<div className="row">
-							<div className="col-md-6 col-lg-6 col-md-offset-3 col-lg-offset-3">
-								<div className="col-md-6 col-md-offset-3">
-									{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : msgs.text}
-									<form role="form" onSubmit={this.login}>
-										<div className="form-group">
-											<input
-												type="text"
-												className=" input-lg"
-												placeholder="Username"
-												name="freestoneuser"
-												ref={el => this._username = el}
-												defaultValue={this.state.username}
-											/>
-										</div>
-										<div className="form-group">
-											<input
-												type="password"
-												className=" input-lg"
-												placeholder="Password"
-												name="freestonepass"
-												ref={el => this._password = el}
-												defaultValue={this.state.password}
-											/>
-										</div>
-										<div className="form-group">
-											<div>
-												<input type="checkbox" id="remember" ref={el => this._remember = el} />
-												<label htmlFor="remember">Remember me?</label>
-											</div>
-										</div>
-										<div className="form-group">
-											<Button type="submit" round fullwidth disabled={this.props.isAuthenticating}>{msgs.action}</Button>
-										</div>
-									</form>
+					<GridContainer>
+						<GridItem columns="4" offset="5">
+							{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : msgs.text}
+							<form role="form" onSubmit={this.login}>
+								<Input
+									type="text"
+									className=" input-lg"
+									placeholder="Username"
+									name="freestoneuser"
+									ref={el => this._username = el}
+									defaultValue={this.state.username}
+								/>
+								<Input
+									type="password"
+									className=" input-lg"
+									placeholder="Password"
+									name="freestonepass"
+									ref={el => this._password = el}
+									defaultValue={this.state.password}
+								/>
+								<CheckboxContainer startAlign>
+									<input type="checkbox" id="remember" ref={el => this._remember = el} />
+									<label htmlFor="remember">Remember me?</label>
+									<div className="checkmark"></div>
+								</CheckboxContainer>
+								<div className="btns">
+									<Button type="submit" round mediumwidth disabled={this.props.isAuthenticating}>{msgs.action}</Button>
 									{googleLoginBtn}
 								</div>
-							</div>
-						</div>
-					</div>
+							</form>
+						</GridItem>
+					</GridContainer>
 				</LoginZone>
 			</section>
 		);
