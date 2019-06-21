@@ -61,8 +61,8 @@ function getCss(props) {
 
 		white-space: nowrap;
 
-		& + & {
-			margin-left: 8px;
+		& + &, a + &, & + a {
+			margin-left: 10px;
 		}
 
 		i {
@@ -80,6 +80,10 @@ function getCss(props) {
 			margin: 0.8em 0 1.5em 0;
 		`};
 
+		${props.mediumwidth && `
+			width: 150px;
+		`};
+
 		${props.small && `
 			padding: 0 10px;
 			font-size: 0.8em;
@@ -88,6 +92,10 @@ function getCss(props) {
 		${props.tiny && `
 			padding: 0 4px;
 			font-size: 0.6em;
+		`};
+
+		${props.lighter && `
+			color: ${colors.textPrimary}
 		`};
 
 		${props.bordered && `
@@ -121,10 +129,11 @@ function getCss(props) {
 			}
 
 			${props.small && `
-				width: 30px;
-				height: 30px;
-				line-height: 30px;
+				width: ${height}px;
+				height: ${height}px;
+				line-height: ${height}px;
 			`};
+			
 			${props.tiny && `
 				width: 18px;
 				height: 18px;
@@ -134,7 +143,10 @@ function getCss(props) {
 			`};
 		`};
 
-
+		${props.underline && `
+			text-decoration: underline;
+			text-underline-position: under;
+		`};
 
 		${props.icon && `i {
 			margin: 0;

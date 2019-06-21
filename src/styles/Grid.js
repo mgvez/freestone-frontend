@@ -14,14 +14,14 @@ export const GridContainer = styled.div`
 	${GridContainerStyle};
 `;
 
-function getItemCss(columns, justify) {
+function getItemCss(columns, offset, justify) {
 	return css`
-		grid-column: auto / span ${columns};
+		grid-column: ${offset} / span ${columns};
 		${justify && `justify-self: ${justify};`};
 	`;
 }
 
-export const GridItem = styled.div`${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.justify)}`;
+export const GridItem = styled.div`${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.offset || 'auto', props.justify)}`;
 
 export const MainZone = styled.section`
 	width: calc(100% - 80px);

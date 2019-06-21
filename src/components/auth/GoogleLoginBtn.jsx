@@ -25,9 +25,10 @@ export default class GoogleLoginBtn extends Component {
 		return (
 			<Button
 				round
-				danger
+				lighter
 				onClick={this.onSignIn}
 			>
+				<i className="fa fa-google"></i>
 				{children || buttonText}
 			</Button>
 		);

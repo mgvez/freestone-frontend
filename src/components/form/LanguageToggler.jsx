@@ -8,7 +8,7 @@ import cssVars from '../../styles/Variables';
 const StyledToggler = styled.div`
 	font-weight: ${cssVars.fontWeightSemibold};
 	text-transform: uppercase;
-	margin-left: 20px;
+	margin-left: 10px;
 `;
 
 const StyledTab = styled.div`

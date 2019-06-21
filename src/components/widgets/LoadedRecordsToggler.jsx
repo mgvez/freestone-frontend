@@ -51,7 +51,7 @@ export default class LoadedRecordsToggler extends Component {
 	render() {
 
 		if (this.props.isClose) {
-			return <Button circle small onClick={this.loadedRecordsToggler}><i className="fa fa-close"></i></Button>;
+			return <Button circle onClick={this.loadedRecordsToggler}><i className="fa fa-close"></i></Button>;
 		}
 
 		return (<StyledDiv onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
