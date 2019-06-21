@@ -12,6 +12,7 @@ function getFieldCss(displaySize) {
 		${displaySize === 'medium' && textMedium};
 		height: 100%;
 		border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
+		padding-bottom: 10px;
 	`;
 }
 

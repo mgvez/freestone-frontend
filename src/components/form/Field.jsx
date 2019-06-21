@@ -125,8 +125,6 @@ export default class Field extends Component {
 		}
 
 		if (input) {
-
-			
 			return (<GridItem key={key} columns={this.props.field.columns}>
 				<StyledField displaySize={this.props.field.displaySize}>
 					<FieldLabel>

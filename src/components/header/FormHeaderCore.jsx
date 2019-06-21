@@ -29,6 +29,8 @@ const StyledHeader = styled(Header)`
 	}
 	
 	.permalinks {
+		line-height: 1.3em;
+		
 		span {
 			font-weight: bold;
 			text-transform: uppercase;
@@ -36,7 +38,7 @@ const StyledHeader = styled(Header)`
 	}
 
 	.last-modif-date {
-		margin-top: 20px;
+		margin: 20px 0 10px 0;
 		font-weight: ${cssVars.fontWeightMedium};
 	}
 
