@@ -6,6 +6,7 @@ import { TYPE_IMG, BANK_IMG_TABLE } from '../../../freestone/SchemaProps';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import GenericFileInput from '../genericInputs/GenericFileInput';
 import { Button } from '../../../styles/Button';
+import { Icon } from '../../../styles/Icon';
 
 export default class BankImgInput extends Component {
 	static propTypes = {
@@ -48,10 +49,10 @@ export default class BankImgInput extends Component {
 
 		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} /> : null;
 
-		const chooseBtn = <Button round bordered info onClick={this.gotoSelect}><i className="fa fa-check"></i> Choose image</Button>;
-		const changeBtn = <Button round bordered info onClick={this.gotoSelect}><i className="fa fa-exchange"></i> Change</Button>;
+		const chooseBtn = <Button round bordered info onClick={this.gotoSelect}><Icon icon="check" /> Choose image</Button>;
+		const changeBtn = <Button round bordered info onClick={this.gotoSelect}><Icon icon="exchange" /> Change</Button>;
 		const chooseChangeBtn = bankImgId ? changeBtn : chooseBtn;
-		const deleteBtn = bankImgId ? <Button round danger bordered onClick={this.delete}><i className="fa fa-times"></i> Remove value</Button> : null;
+		const deleteBtn = bankImgId ? <Button round danger bordered onClick={this.delete}><Icon icon="times" /> Remove value</Button> : null;
 
 		//si une image de banque deja placée, on peut pas mettre un fichier direct. O peut juste changer l'image de la banque, parce que sinon ça donne l'impression que le fichier direct edit le record de banque.
 		let localFileInput = null;

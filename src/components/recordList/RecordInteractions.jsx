@@ -11,6 +11,7 @@ import { Button } from '../../styles/Button';
 import { getActionCss } from '../../styles/RecordActions';
 import { PromptContainer, PromptWidget } from '../../styles/Prompts';
 import colors from '../../styles/Colors';
+import { Icon } from '../../styles/Icon';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/SchemaProps';
 
@@ -96,14 +97,14 @@ export default class RecordInteractions extends Component {
 		return (
 			<Container>
 				<PromptContainer className={`actions ${this.state.active && 'active'}`}>
-					<Button round="true" bordered="true" info="true" onClick={this.toggleActions}>{DEFAULT_LABEL} <i className="fa fa-angle-down"></i></Button>
+					<Button round="true" bordered="true" info="true" onClick={this.toggleActions}>{DEFAULT_LABEL} <Icon icon="angle-down" /></Button>
 					{this.state.active && (<PromptWidget>
 						<ActionNavLink to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} accent="true">
-							<i className="fa fa-pencil"></i>{EDIT_LABEL}
+							<Icon icon="pencil-alt" />{EDIT_LABEL}
 						</ActionNavLink>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
 						<DeleteBtn key={`${this.props.table.name}_${prikeyVal}`} tableName={this.props.table.name} prikey={prikeyVal} />
-						{recordLink && <ActionLink href={recordLink} target="_blank" accent="true"><i className="fa fa-eye"></i>{PREVIEW_LABEL}</ActionLink>}
+						{recordLink && <ActionLink href={recordLink} target="_blank" accent="true"><Icon icon="eye" />{PREVIEW_LABEL}</ActionLink>}
 					</PromptWidget>)}
 				</PromptContainer>
 				<InfosFcn

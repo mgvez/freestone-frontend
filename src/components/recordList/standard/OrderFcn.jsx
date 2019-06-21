@@ -3,18 +3,19 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import colors from '../../../styles/Colors';
+import { Icon } from '../../../styles/Icon';
 
 const OrderContainer = styled.div`
 	display: inline-block;
 	vertical-align: middle;
 
-	a {
+	.icon {
 		color: ${colors.accentPrimary};
 		display: block;
 		text-align: center;
 		cursor: pointer;
 
-		& + a {
+		& + .icon {
 			margin-top: 20px
 		}
 
@@ -48,8 +49,8 @@ export default class OrderFcn extends Component {
 				
 		return (
 			<OrderContainer>
-				<a className="fa fa-arrow-up" onClick={this.swapOrderUp}></a>
-				<a className="fa fa-arrow-down" onClick={this.swapOrderDown}></a>
+				<Icon icon="arrow-up" onClick={this.swapOrderUp} cta />
+				<Icon icon="arrow-down" onClick={this.swapOrderDown} cta />
 			</OrderContainer>
 		);
 	}

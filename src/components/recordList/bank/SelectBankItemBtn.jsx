@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { TYPE_BANKIMG, TYPE_BANKFILE } from '../../../freestone/SchemaProps';
 import { callApi, getEndpoint } from '../../../freestone/api';
 import { Button } from '../../../styles/Button';
+import { Icon } from '../../../styles/Icon';
 
 export default class SelectBankItemBtn extends Component {
 	static propTypes = {
@@ -57,6 +58,6 @@ export default class SelectBankItemBtn extends Component {
 	render() {
 		if (!this.props.isChoosingBankItem) return <div />;
 		
-		return <Button onClick={this.chooseItem} cta fullwidth><i className="fa fa-check"></i>Choose</Button>;
+		return <Button onClick={this.chooseItem} cta fullwidth><Icon icon="check" />Choose</Button>;
 	}
 }

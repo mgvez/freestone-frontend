@@ -39,6 +39,7 @@ const colors = {
 	white,
 	black,
 
+	ctaPrimary: teal62,
 	accentPrimary: teal62,
 	accentSecondary: blue26,
 	warnPrimary: yellow76,

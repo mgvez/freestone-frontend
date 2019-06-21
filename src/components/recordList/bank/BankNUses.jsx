@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../styles/Button';
 import { PromptWidget, PromptContainer } from '../../../styles/Prompts';
+import { Icon } from '../../../styles/Icon';
 
 
 export default class BankNUses extends Component {
@@ -69,7 +70,7 @@ export default class BankNUses extends Component {
 		return (
 			<PromptContainer className={this.state.active && 'active'}>
 				<Button small="true" info="true" bordered="true" round="true" faded="true" onClick={this.toggleActions}>
-					{this.props.nUses} use(s) <i className="fa fa-angle-down"></i>
+					{this.props.nUses} use(s) <Icon icon="angle-down" />
 				</Button>
 				{this.state.active && (<PromptWidget light large>
 					<ul>

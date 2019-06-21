@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import cssVariables from '../../styles/Variables';
 import { Button } from '../../styles/Button';
 import colors from '../../styles/Colors';
+import { Icon } from '../../styles/Icon';
 
 
 const StyledDiv = styled.div`
@@ -51,11 +52,11 @@ export default class LoadedRecordsToggler extends Component {
 	render() {
 
 		if (this.props.isClose) {
-			return <Button circle onClick={this.loadedRecordsToggler}><i className="fa fa-close"></i></Button>;
+			return <Button circle onClick={this.loadedRecordsToggler}><Icon icon="trash-alt" /></Button>;
 		}
 
 		return (<StyledDiv onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
-			<i className="fa fa-pencil"></i>
+			<Icon icon="pencil-alt" />
 		</StyledDiv>);
 	}
 }

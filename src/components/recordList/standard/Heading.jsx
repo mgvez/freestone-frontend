@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ListNavLink from '../../../containers/recordList/ListNavLink';
+import { Icon } from '../../../styles/Icon';
 
 import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../../freestone/SchemaProps';
 
@@ -37,7 +38,7 @@ export default class Heading extends Component {
 		if (Math.abs(current) === Math.abs(field.id)) {
 			if (current) iconClass = current < 1 ? 'angle-down' : 'angle-up';
 		}
-		const icon = iconClass && <span className={`fa fa-${iconClass}`} />;
+		const icon = iconClass && <Icon icon={iconClass} />;
 		return <ListNavLink tableName={this.props.tableName} order={field.id} activeClassName="active" className="">{field.label} {icon}</ListNavLink>;
 
 	}

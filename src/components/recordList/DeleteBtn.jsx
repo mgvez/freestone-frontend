@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import colors from '../../styles/Colors';
 import { darken } from '../../styles/Utils';
+import { Icon } from '../../styles/Icon';
 
 const Prompt = styled.div`
 	background: ${darken(colors.backgroundMain, 10)};
@@ -56,16 +57,16 @@ export default class DeleteBtn extends Component {
 		if (this.state.requested) {
 			return (
 				<Prompt>
-					<RecordAction onClick={this.process}><i className="fa fa-close"></i>Confirm</RecordAction>
-					<RecordAction onClick={this.cancel}><i className="fa fa-undo"></i>Cancel</RecordAction>
+					<RecordAction onClick={this.process}><Icon icon="trash-alt" />Confirm</RecordAction>
+					<RecordAction onClick={this.cancel}><Icon icon="undo" />Cancel</RecordAction>
 				</Prompt>
 			);
 		}
 
 		return this.props.isButton ? (
-			<Button onClick={this.process} round="true" small="true" danger="true"><i className="fa fa-close"></i>Delete</Button>
+			<Button onClick={this.process} round="true" small="true" danger="true"><Icon icon="trash-alt" />Delete</Button>
 		) : (
-			<RecordAction onClick={this.process} danger="true"><i className="fa fa-close"></i>Delete</RecordAction>
+			<RecordAction onClick={this.process} danger="true"><Icon icon="trash-alt" />Delete</RecordAction>
 		);
 	}
 }

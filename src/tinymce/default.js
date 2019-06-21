@@ -7,7 +7,7 @@ export const TINYMCE_CONFIG = {
 	resize: true,
 	forced_root_block: 'p',
 	height: 200,
-	toolbar1: 'bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect',
+	toolbar1: 'bold italic underline strikethrough | alignleft aligncenter alignright | styleselect formatselect',
 	toolbar2: 'bullist numlist | outdent indent | hr removeformat | subscript superscript | freestoneImageFromBank freestoneDocFromBank freestoneLink | code',
 	plugins: [
 		'link',

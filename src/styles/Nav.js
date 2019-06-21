@@ -66,7 +66,7 @@ export const GroupHeading = styled.a `
 	transition: background 0.3s;
 
 
-	i + .nav-label {
+	.fa + .nav-label {
 		margin-left: 10px;
 	}
 

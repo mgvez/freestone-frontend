@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../../styles/Button';
+import { Icon } from '../../../styles/Icon';
 
 import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from '../../../freestone/SchemaProps';
 
@@ -20,8 +21,8 @@ export default class ChangeSubformView extends Component {
 	render() {
 		// console.log(this.props.currentViewType, this.props.tableId);
 		const label = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'View tabbed' : 'View as list';
-		const className = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'file-text' : 'list';
-		return <Button onClick={this.setType} small round bordered><i className={`fa fa-${className}`}></i>{label}</Button>;
+		const icon = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'file-text' : 'list';
+		return <Button onClick={this.setType} small round bordered><Icon icon={icon} />{label}</Button>;
 
 	}
 }

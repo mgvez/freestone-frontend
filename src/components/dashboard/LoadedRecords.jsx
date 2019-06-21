@@ -6,6 +6,7 @@ import cssVariables from '../../styles/Variables';
 import colors from '../../styles/Colors';
 import { Heading2, Heading4 } from '../../styles/Texts';
 import { NavLinkButton } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -167,7 +168,7 @@ export default class LoadedRecords extends Component {
 														{record.label}
 														{outdatedWarning}
 														<div className="record-buttons">
-															<NavLinkButton to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} round warn><i className="fa fa-pencil"></i><span> Edit</span></NavLinkButton>
+															<NavLinkButton to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} round warn><Icon icon="pencil-alt" /><span> Edit</span></NavLinkButton>
 															<Cancel tableName={records.table.name} recordId={record.id} />
 														</div>
 													</div>

@@ -7,6 +7,7 @@ import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import { TYPE_IMG } from '../../../freestone/SchemaProps';
 import { Button } from '../../../styles/Button';
 import { THUMBNAIL_SIZE } from '../../../freestone/settings';
+import { Icon } from '../../../styles/Icon';
 
 
 const Container = styled.div`
@@ -137,7 +138,7 @@ export default class GenericFileInput extends Component {
 
 		// s'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
 		if (val && origVal === val) {
-			deleteBtn = <Button round bordered danger onClick={this.setForDelete}><i className="fa fa-times"></i>Delete {typeLabel}</Button>;
+			deleteBtn = <Button round bordered danger onClick={this.setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
 		}
 
 		const displayVal = this.props.type === TYPE_IMG ? val && (inputVal || origVal) : null;
@@ -160,7 +161,7 @@ export default class GenericFileInput extends Component {
 
 				<FileInputContainer>
 					<input id={id} type="file" value="" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
-					<Button round bordered info onClick={this.triggerSelectFile}><i className="fa fa-upload"></i>{val ? 'Change file' : 'Upload file'}</Button>
+					<Button round bordered info onClick={this.triggerSelectFile}><Icon icon="upload" />{val ? 'Change file' : 'Upload file'}</Button>
 				</FileInputContainer>
 				{revertBtn}
 				{deleteBtn}

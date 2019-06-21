@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Icon } from '../../styles/Icon';
 
 export default class HomeButton extends Component {
 	static propTypes = {
@@ -9,7 +10,7 @@ export default class HomeButton extends Component {
 	};
 
 	render() {
-		const icon = this.props.showIcon ? <i className="fa fa-home fa-fw"></i> : null;
+		const icon = this.props.showIcon ? <Icon icon="home" fw /> : null;
 		return (
 			<Link to={'/'} className={`home-button ${this.props.customClass}`}>{icon}<span className="nav-label">Dashboard</span></Link>
 		);
