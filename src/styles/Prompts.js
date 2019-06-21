@@ -13,7 +13,7 @@ export const Tooltip = styled.div`
 	color: ${colors.white};
 	padding: 10px;
 	border-radius: 5px;
-
+	line-height: 1.3;
 	width: 260px;
 
 	position: absolute;

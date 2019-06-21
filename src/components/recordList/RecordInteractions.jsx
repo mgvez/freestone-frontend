@@ -10,6 +10,7 @@ import DeleteBtn from '../../containers/recordList/DeleteBtn';
 import { Button } from '../../styles/Button';
 import { getActionCss } from '../../styles/RecordActions';
 import { PromptContainer, PromptWidget } from '../../styles/Prompts';
+import colors from '../../styles/Colors';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/SchemaProps';
 
@@ -24,10 +25,8 @@ const Container = styled.div`
 
 	.actions {
 		margin-bottom: 5px;
-		flex-basis: 75%;
 	}
 `;
-
 
 const ActionLink = styled.a`${props => getActionCss(props)}`;
 const ActionNavLink = styled(NavLink)`${props => getActionCss(props)}`;

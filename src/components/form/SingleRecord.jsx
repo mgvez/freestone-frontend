@@ -12,8 +12,11 @@ import FieldGroup from '../../containers/form/FieldGroup';
 import Field from './Field';
 import { GridContainer, GridItem } from '../../styles/Grid';
 
+let isWaitingForFrame = false;
+
 const SideBar = styled.div`
-	padding: 30px;
+	padding: 10px 0;
+	margin-top: 20px;
 	background: ${colors.backgroundDark};
 	color: ${colors.white};
 	
@@ -21,9 +24,18 @@ const SideBar = styled.div`
 		color: ${colors.white};
 	}
 
+	.sticky & {
+		position: fixed;
+			top: 110px;
+	}
 `;
 
 export default class SingleRecord extends Component {
+	state = {
+		stickyState: 'relative',
+		stickyWidth: '0',
+	}
+
 	static propTypes = {
 		tableId: PropTypes.number,
 		recordId: PropTypes.string,
@@ -49,6 +61,11 @@ export default class SingleRecord extends Component {
 
 	componentDidMount() {
 		this.requireData(this.props);
+		if (this.sidebar) window.addEventListener('scroll', this.stickySidebar);
+	}
+
+	componentWillUnmount() {
+		if (this.sidebar) window.removeEventListener('scroll', this.stickySidebar);
 	}
 
 	componentDidUpdate() {
@@ -113,6 +130,33 @@ export default class SingleRecord extends Component {
 		/>) : null;
 	}
 
+	stickySidebar = () => {
+		if (!isWaitingForFrame) {
+			isWaitingForFrame = true;
+			requestAnimationFrame(this.doScrollHandler);
+		}
+	}
+
+
+	doScrollHandler = () => {
+		isWaitingForFrame = false;
+		const parent = this.sidebar.parentNode;
+		const pos = parent.getBoundingClientRect();
+
+		// console.log(pos.top);
+		if (pos.top <= 110 - pos.height) {
+			this.setState({ stickyState: 'absolute' });
+			this.sidebar.style.width = pos.width + 'px';
+		} else if (pos.top <= 110) {
+			this.setState({ stickyState: 'sticky' });
+			this.sidebar.style.width = pos.width + 'px';
+		} else {
+			this.setState({ stickyState: 'relative' });
+			this.sidebar.style.width = 'auto';
+		}
+
+	}
+
 	renderGroups(fields, isAside) {
 		return fields.map((group) => {
 			//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
@@ -144,8 +188,8 @@ export default class SingleRecord extends Component {
 			let sidebar;
 			if (this.props.asideFields.length > 0) {
 				sidebar = (
-					<GridItem columns="4">
-						<SideBar>
+					<GridItem columns="4" className={this.state.stickyState}>
+						<SideBar ref={ref => this.sidebar = ref}>
 							{this.renderGroups(this.props.asideFields, true)}
 						</SideBar>
 					</GridItem>

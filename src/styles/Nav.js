@@ -6,7 +6,7 @@ import cssVariables from './Variables';
 
 export const TabsContainer = styled.nav`
 	border-bottom: 1px solid ${colors.accentPrimary};
-	margin-top: 40px;
+	margin: 40px 0;
 	& > div {
 		background: transparent;
 		display: inline-block;

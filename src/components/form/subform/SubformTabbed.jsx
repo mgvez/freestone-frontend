@@ -8,6 +8,7 @@ import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformVie
 import ToggleCollapse from '../buttons/ToggleCollapse';
 import FormHeaderContent from '../../header/FormHeaderContent';
 import { Subform, SubformHeader } from '../../../styles/Form';
+import { GridItem } from '../../../styles/Grid';
 
 export default class SubformTabbed extends Component {
 	static propTypes = {
@@ -47,14 +48,14 @@ export default class SubformTabbed extends Component {
 		const content = this.getContent();
 		return (
 			<Subform>
-				<SubformHeader className="row">
-					<div className="col-md-8">
+				<SubformHeader>
+					<GridItem columns="8">
 						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
-					</div>
-					<div className="col-md-3 col-md-offset-1 fcn">
+					</GridItem>
+					<GridItem columns="4" className="fcn">
 						{changeViewBtn}
 						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
-					</div>
+					</GridItem>
 				</SubformHeader>
 				{content}
 			</Subform>

@@ -2,6 +2,7 @@
 import styled, { css } from 'styled-components';
 import colors from './Colors';
 import { darken, lighten } from './Utils';
+import { GridContainerStyle } from './Grid';
 
 
 export const StyledSingleRecord = styled.section`
@@ -26,10 +27,8 @@ export const StyledSingleRecord = styled.section`
 `;
 
 export const Subform = styled.section`
-	margin-bottom: 30px;
-	margin-top: 30px;
-	padding-left: 30px;
-	padding-right: 10px;
+	margin: 30px 0;
+	padding: 0 20px;
 	border-top: 1px solid ${colors.backgroundMainAccent};
 	border-bottom: 1px solid ${colors.backgroundMainAccent};
 	border-left: 10px solid ${colors.backgroundMainAccent};
@@ -40,10 +39,6 @@ export const Subform = styled.section`
 	.fcn {
 		text-align: right;
 
-		button {
-			margin-bottom: 15px;
-		}
-
 		button + button {
 			margin-left: 15px;
 		}
@@ -51,6 +46,6 @@ export const Subform = styled.section`
 `;
 
 export const SubformHeader = styled.header`
-	margin-top: 20px;
-	padding-top: 10px;
+	${GridContainerStyle}
+	align-items: center;
 `;

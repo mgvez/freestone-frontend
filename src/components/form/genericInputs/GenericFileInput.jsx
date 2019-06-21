@@ -160,7 +160,7 @@ export default class GenericFileInput extends Component {
 
 				<FileInputContainer>
 					<input id={id} type="file" value="" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
-					<Button round bordered info onClick={this.triggerSelectFile}><i className="fa fa-pencil"></i>{val ? 'Change file' : 'Upload file'}</Button>
+					<Button round bordered info onClick={this.triggerSelectFile}><i className="fa fa-upload"></i>{val ? 'Change file' : 'Upload file'}</Button>
 				</FileInputContainer>
 				{revertBtn}
 				{deleteBtn}

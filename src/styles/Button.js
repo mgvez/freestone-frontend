@@ -61,6 +61,10 @@ function getCss(props) {
 
 		white-space: nowrap;
 
+		& + & {
+			margin-left: 8px;
+		}
+
 		i {
 			margin-right: 10px;
 		}
@@ -136,6 +140,10 @@ function getCss(props) {
 			margin: 0;
 		}`};
 		${props.round && 'border-radius: 15px;'};
+		${props.flat && `
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		`};
 		
 		${buttonColorModifier(mainColor, props.bordered)}
 
@@ -145,3 +153,4 @@ function getCss(props) {
 
 export const Button = styled.button`${props => getCss(props)}`;
 export const NavLinkButton = styled(NavLink)`${props => getCss(props)}`;
+export const FlatTopButton = styled.a`${props => getCss(props)}`;

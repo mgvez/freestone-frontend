@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { THUMBNAIL_SIZE } from '../../freestone/settings';
+import styled from 'styled-components';
 
+const ChoosenImage = styled.div`
+	margin-bottom: 10px;
+`;
 
 export default class BankImgThumbnail extends Component {
 	static propTypes = {
@@ -30,7 +34,7 @@ export default class BankImgThumbnail extends Component {
 		if (!this.props.id) return null;
 
 		return (
-			<div className="bank-image-thumbnail" onClick={this.props.onClick} dangerouslySetInnerHTML={{ __html: this.props.markup }} />
+			<ChoosenImage onClick={this.props.onClick} dangerouslySetInnerHTML={{ __html: this.props.markup }} />
 		);
 	}
 }
