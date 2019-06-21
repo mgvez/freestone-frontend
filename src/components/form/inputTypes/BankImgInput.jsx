@@ -48,8 +48,10 @@ export default class BankImgInput extends Component {
 
 		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} /> : null;
 
-		const label = bankImgId ? 'Change' : 'Choose image';
-		const deleteBtn = bankImgId ? <Button round danger bordered onClick={this.delete}>Remove value</Button> : null;
+		const chooseBtn = <Button round bordered info onClick={this.gotoSelect}><i className="fa fa-check"></i> Choose image</Button>;
+		const changeBtn = <Button round bordered info onClick={this.gotoSelect}><i className="fa fa-exchange"></i> Change</Button>;
+		const chooseChangeBtn = bankImgId ? changeBtn : chooseBtn;
+		const deleteBtn = bankImgId ? <Button round danger bordered onClick={this.delete}><i className="fa fa-times"></i> Remove value</Button> : null;
 
 		//si une image de banque deja placée, on peut pas mettre un fichier direct. O peut juste changer l'image de la banque, parce que sinon ça donne l'impression que le fichier direct edit le record de banque.
 		let localFileInput = null;
@@ -64,9 +66,9 @@ export default class BankImgInput extends Component {
 		}
 
 		return (
-			<div className="bank-image-input-thumbnail">
+			<div>
 				{bankThumbnail}
-				<Button round bordered info onClick={this.gotoSelect}><i className="fa fa-check"></i>{label}</Button>
+				{chooseChangeBtn}
 				{deleteBtn}
 				{localFileInput}
 			</div>

@@ -7,6 +7,7 @@ import { Header, HeaderTexts, HeaderFcn } from '../../styles/Header';
 import LanguageToggler from '../../containers/form/LanguageToggler';
 import ProdEnvWarning from '../widgets/ProdEnvWarning';
 import PreviewRecord from '../../containers/process/PreviewRecord';
+import { NavLinkButton, Button } from '../../styles/Button';
 
 const marginBottom = 60;
 const StyledHeader = styled(Header)`
@@ -18,12 +19,13 @@ const StyledHeader = styled(Header)`
 	}
 
 	&.light {
-		justify-content: flex-end;
-		position:fixed;
+		justify-content: space-between;
+		position: fixed;
 			top: 0;
 			left: 0;
 		transition: transform 0.3s ease;
 		z-index: 5;
+		padding-left: calc(250px + 40px);
 	}
 	
 	.permalinks {
@@ -127,11 +129,11 @@ export default class FormHeaderCore extends Component {
 
 		let editSchema = null;
 		if (this.props.isGod) {
-			const editSchemaLink = this.props.table ? `#/edit/zva_table/${this.props.table.id}` : '';
+			const editSchemaLink = this.props.table ? `/edit/zva_table/${this.props.table.id}` : '';
 			if (editSchemaLink) {
-				editSchema = <a href={editSchemaLink} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>;
+				editSchema = <NavLinkButton to={editSchemaLink} flat="true"><i className="fa fa-edit"></i>Edit Schema</NavLinkButton>;
 			} else if (this.props.editSchemaAction) {
-				editSchema = <a onClick={this.props.editSchemaAction} className="button-preview schema"><i className="fa fa-edit"></i>Edit Schema</a>;
+				editSchema = <Button onClick={this.props.editSchemaAction} flat="true"><i className="fa fa-edit"></i>Edit Schema</Button>;
 			}
 		}
 		
@@ -155,7 +157,11 @@ export default class FormHeaderCore extends Component {
 		) : null;
 
 
-		const infos = (this.props.isLight) ? '' : (
+		const infos = (this.props.isLight) ? 
+			<HeaderTexts>
+				{/* todo: ce serait le fun de mettre au moins le page title dans le header sticky */}
+				{slugs}
+			</HeaderTexts> : (
 			<HeaderTexts>
 				{this.props.children}
 				{lastModif}

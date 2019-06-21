@@ -59,7 +59,8 @@ export default class FormHeader extends Component {
 			this.padStyle = this.padStyle || {
 
 			};
-			this.padStyle.height = `${h + m}px`;
+			this.padStyle.height = `${h}px`;
+			this.padStyle.marginBottom = `${m}px`;
 		}
 	}
 

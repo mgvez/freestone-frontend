@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
 import { accentPrimary, backgroundMain } from '../../styles/Colors';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
+import { Button } from '../../styles/Button';
 
 const ContainerDiv = styled.div `
 	font-weight: 600;
@@ -38,8 +39,6 @@ const Tab = styled.div `
 		color: white;
 	}
 `;
-
-// const TabActive =
 
 export default class PreviewRecord extends Component {
 	static propTypes = {
@@ -121,7 +120,9 @@ export default class PreviewRecord extends Component {
 
 	render() {
 
-		if (!this.props.isViewingPreview) return (<button className="button-preview" onClick={this.onClickPreview}><i className="fa fa-eye"></i>Preview</button>);
+		if (!this.props.isViewingPreview) {
+			return <Button className="button-preview" onClick={this.onClickPreview}><i className="fa fa-eye"></i>Preview</Button>; 
+		}
 
 		// console.log(this.props);
 		//on load, save total record as draft

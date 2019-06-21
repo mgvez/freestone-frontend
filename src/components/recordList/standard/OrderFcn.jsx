@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import colors from '../../../styles/Colors';
 
 const OrderContainer = styled.div`
-	margin-left: 20px;
 	display: inline-block;
 	vertical-align: middle;
+
 	a {
 		color: ${colors.accentPrimary};
 		display: block;

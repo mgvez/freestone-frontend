@@ -20,7 +20,6 @@ function getFieldGroupCss(isCollapsable) {
 	return css`
 		display: block;
 		padding: 10px 20px;
-		margin-bottom: 30px;
 
 		${isCollapsable && `
 			border-top: 4px solid ${colors.backgroundMainAccent};
@@ -90,9 +89,9 @@ export const FieldLabel = styled.div`
 
 export const FieldDescription = styled.div`
 	display: block;
-	margin-bottom: 0.7em;
-	margin-left: 0.5em;
+	margin: 0.7em 0.5em;
 	font-size: 0.8em;
+	line-height: 1.3;
 `;
 
 export const Input = styled.input`${props => getInputCss(props)}`;

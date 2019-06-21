@@ -109,7 +109,6 @@
     "redux-logger": "^3.0.6",
     "redux-simple-localstorage": "^1.0.2",
     "redux-thunk": "^2.3.0",
-    "reselect": "^2.5.4",
     "sha1": "^1.1.1",
     "styled-components": "^4.2.0"
   },

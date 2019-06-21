@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { TweenMax } from '../../../utils/Greensock';
 
 import RecordInteractions from '../../../containers/recordList/RecordInteractions';
 import { getFieldElements } from './getFieldElements';
 import { PRIKEY_ALIAS } from '../../../freestone/SchemaProps';
+
+const Interaction = styled.td`
+	width: 250px;
+`;
 
 export default class Row extends Component {
 	static propTypes = {
@@ -81,9 +86,9 @@ export default class Row extends Component {
 				<td>
 					{content}
 				</td>
-				<td className="interactions">
+				<Interaction>
 					{interactions}
-				</td>
+				</Interaction>
 			</tr>
 		);
 
@@ -101,9 +106,9 @@ export default class Row extends Component {
 			return (
 				<tr ref={(el) => { this.recordRow = el; }} onMouseOver={this.handleHover}>
 					{content}
-					<td className="interactions">
+					<Interaction>
 						{interactions}
-					</td>
+					</Interaction>
 				</tr>
 			);
 		}
@@ -115,9 +120,9 @@ export default class Row extends Component {
 				<td>
 					{content}
 				</td>
-				<td className="interactions">
+				<Interaction>
 					{interactions}
-				</td>
+				</Interaction>
 			</tr>
 		);
 
