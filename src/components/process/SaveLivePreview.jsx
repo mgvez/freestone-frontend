@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Icon } from '../../styles/Icon';
 
 export default class SaveLivePreview extends Component {
 	static propTypes = {
@@ -29,7 +30,7 @@ export default class SaveLivePreview extends Component {
 	render() {
 		// console.log(this.props.saveState);
 		return (
-			<span className="fa fa-save fa-fw"></span>
+			<Icon icon="save" fw />
 		);
 	}
 }

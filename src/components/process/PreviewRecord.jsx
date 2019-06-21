@@ -6,6 +6,7 @@ import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
 import { accentPrimary, backgroundMain } from '../../styles/Colors';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
 import { Button } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
 
 const ContainerDiv = styled.div `
 	font-weight: 600;
@@ -121,12 +122,12 @@ export default class PreviewRecord extends Component {
 	render() {
 
 		if (!this.props.isViewingPreview) {
-			return <Button className="button-preview" onClick={this.onClickPreview}><i className="fa fa-eye"></i>Preview</Button>; 
+			return <Button className="button-preview" onClick={this.onClickPreview}><Icon icon="eye" />Preview</Button>; 
 		}
 
 		// console.log(this.props);
 		//on load, save total record as draft
-		let msg = <span className="fa fa-times fa-fw"></span>;
+		let msg = <Icon icon="times" fw />;
 		
 		//only send updated data
 		// console.log(this.state.sendingChanges, !this.props.previewRecordId);
@@ -136,10 +137,10 @@ export default class PreviewRecord extends Component {
 		return (<ContainerDiv>
 			<Tab onClick={this.onClickClose}>{msg}</Tab>
 			<Tab onClick={this.onClickIframe} className={this.props.currentPreviewType === PREVIEW_IFRAME ? 'active' : null}>
-				<span className="fa fa-columns fa-fw"></span>
+				<Icon icon="columns" fw />
 			</Tab>
 			<Tab onClick={this.onClickWindow} className={this.props.currentPreviewType === PREVIEW_WIN ? 'active' : null}>
-				<span className="fa fa-window-restore fa-fw"></span>
+				<Icon icon="window-restore" fw />
 			</Tab>
 		</ContainerDiv>);
 

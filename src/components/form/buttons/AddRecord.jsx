@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import createRecord from '../../../freestone/createRecord';
 import { Button } from '../../../styles/Button';
+import { Icon } from '../../../styles/Icon';
 
 export default class AddRecord extends Component {
 	static propTypes = {
@@ -31,6 +32,6 @@ export default class AddRecord extends Component {
 	};
 
 	render() {
-		return this.props.isTab ? <div onClick={this.addRecord}><i className="fa fa-plus"></i></div> : <Button onClick={this.addRecord} round><i className="fa fa-plus"></i></Button>;
+		return this.props.isTab ? <div onClick={this.addRecord}><Icon icon="plus" /></div> : <Button onClick={this.addRecord} round><Icon icon="plus" /></Button>;
 	}
 }

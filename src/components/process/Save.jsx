@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Header, HeaderTexts } from '../../styles/Header';
 import { Button } from '../../styles/Button';
 import { Heading2, ErrorTitle, ErrorMessage } from '../../styles/Texts';
+import { Icon } from '../../styles/Icon';
 
 export default class Save extends Component {
 	static propTypes = {
@@ -38,7 +39,7 @@ export default class Save extends Component {
 			msgDisplay = (<div>
 				<ErrorTitle>{this.props.saveState.status.msg}</ErrorTitle>
 				<ErrorMessage>{this.props.saveState.status.error}</ErrorMessage>
-				<Button onClick={this.props.cancelSave} danger><i className="fa fa-pencil"></i><span>Go back to form</span></Button>
+				<Button onClick={this.props.cancelSave} danger><Icon icon="pencil" /><span>Go back to form</span></Button>
 			</div>);
 		} else {
 			msgDisplay = (<div>

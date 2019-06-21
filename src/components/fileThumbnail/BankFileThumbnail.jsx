@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { BANK_FILE_ALIAS, BANK_TITLE_ALIAS, BANK_PATH_ALIAS } from '../../freestone/SchemaProps';
+import { Icon } from '../../styles/Icon';
 
 export default class BankFileThumbnail extends Component {
 	static propTypes = {
@@ -33,7 +34,7 @@ export default class BankFileThumbnail extends Component {
 				<strong>{this.props.item[`${BANK_TITLE_ALIAS}${this.props.lang}`]}</strong>
 				<br />
 				<a href={this.props.item[BANK_PATH_ALIAS]} target="_blank">
-					<i className="fa fa-file" />&nbsp;
+					<Icon icon="file" />&nbsp;
 					{this.props.item[BANK_FILE_ALIAS]}
 				</a>
 			</div>

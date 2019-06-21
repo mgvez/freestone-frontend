@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from '../../styles/Colors';
 
 import ListNavLink from '../../containers/recordList/ListNavLink';
+import { Icon } from '../../styles/Icon';
 
 const N_TO_SHOW = 10;
 
@@ -58,13 +59,13 @@ export default class Paging extends Component {
 
 		let display;
 		if (label === 'previous') {
-			display = <i className="fa fa-angle-left"></i>;
+			display = <Icon icon="angle-left" />;
 		} else if (label === 'first') {
-			display = <i className="fa fa-angle-double-left"></i>;
+			display = <Icon icon="angle-double-left" />;
 		} else if (label === 'next') {
-			display = <i className="fa fa-angle-right"></i>;
+			display = <Icon icon="angle-right" />;
 		} else if (label === 'last') {
-			display = <i className="fa fa-angle-double-right"></i>;
+			display = <Icon icon="-angle-double-right" />;
 		} else {
 			display = label;
 		}

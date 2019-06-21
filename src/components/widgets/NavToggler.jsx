@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Button } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
 
 export default class NavToggler extends Component {
 	static propTypes = {
@@ -15,6 +16,6 @@ export default class NavToggler extends Component {
 	}
 
 	render() {
-		return <Button onClick={this.navToggler} icon><i className="fa fa-bars"></i></Button>;
+		return <Button onClick={this.navToggler} icon><Icon icon="bars" /></Button>;
 	}
 }

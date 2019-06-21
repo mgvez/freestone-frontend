@@ -8,6 +8,7 @@ import LanguageToggler from '../../containers/form/LanguageToggler';
 import ProdEnvWarning from '../widgets/ProdEnvWarning';
 import PreviewRecord from '../../containers/process/PreviewRecord';
 import { NavLinkButton, Button } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
 
 const marginBottom = 60;
 const StyledHeader = styled(Header)`
@@ -131,9 +132,9 @@ export default class FormHeaderCore extends Component {
 		if (this.props.isGod) {
 			const editSchemaLink = this.props.table ? `/edit/zva_table/${this.props.table.id}` : '';
 			if (editSchemaLink) {
-				editSchema = <NavLinkButton to={editSchemaLink} flat="true"><i className="fa fa-edit"></i>Edit Schema</NavLinkButton>;
+				editSchema = <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" />Edit Schema</NavLinkButton>;
 			} else if (this.props.editSchemaAction) {
-				editSchema = <Button onClick={this.props.editSchemaAction} flat="true"><i className="fa fa-edit"></i>Edit Schema</Button>;
+				editSchema = <Button onClick={this.props.editSchemaAction} flat="true"><Icon icon="edit" />Edit Schema</Button>;
 			}
 		}
 		

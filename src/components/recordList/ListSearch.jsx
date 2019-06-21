@@ -7,6 +7,7 @@ import { Button } from '../../styles/Button';
 import { Input } from '../../styles/Input';
 import { Heading3 } from '../../styles/Texts';
 import styled from 'styled-components';
+import { Icon } from '../../styles/Icon';
 
 
 const Container = styled.div`
@@ -65,7 +66,7 @@ export default class ListSearch extends Component {
 	}
 
 	getClearSearch() {
-		return this.props.search ? <Button danger icon type="reset" onClick={this.onUpdateSearchField}><i className="fa fa-times"></i></Button> : null;
+		return this.props.search ? <Button danger icon type="reset" onClick={this.onUpdateSearchField}><Icon icon="times" /></Button> : null;
 	}
 
 	handleSubmit = (e) => {
@@ -83,7 +84,7 @@ export default class ListSearch extends Component {
 			{this.getSearchResults()}
 			<Container>
 				<Input search type="search" placeholder="search" ref={this.searchInput} />
-				<Button icon><i className="fa fa-search"></i></Button>
+				<Button icon><Icon icon="search" /></Button>
 				{this.getClearSearch()}
 			</Container>
 		</Form>);

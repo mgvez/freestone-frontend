@@ -10,6 +10,7 @@ import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler'
 import cssVariables from '../../styles/Variables';
 import colors from '../../styles/Colors';
 import { Button } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
 
 const verticalPadding = 15;
 const innerHeight = cssVariables.topHeaderHeight - (2 * verticalPadding);
@@ -97,7 +98,7 @@ export default class SiteHeader extends Component {
 					<div className="logout">
 						<HomeButton />
 						<a onClick={this.props.logout}>
-							<i className="fa fa-sign-out"></i> Logout
+							<Icon icon="sign-out" /> Logout
 						</a>
 					</div>
 

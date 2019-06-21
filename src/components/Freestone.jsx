@@ -8,7 +8,13 @@ import Script from 'react-load-script';
 import styled from 'styled-components';
 import GlobalStyles from '../styles/GlobalStyles';
 import cssVariables from '../styles/Variables';
-import colors from '../styles/Colors';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import * as icons from '@fortawesome/free-solid-svg-icons';
+const iconList = Object.keys(icons).filter(key => key !== 'fas' && key !== 'prefix').map(icon => icons[icon]);
+library.add(...iconList);
+// import 'font-awesome/scss/font-awesome.scss';
+
 
 /* application components */
 import Footer from './footer/Footer';
@@ -20,9 +26,6 @@ import Nav from '../containers/menu/Nav';
 import LoadedRecords from '../containers/dashboard/LoadedRecords';
 import Login from '../containers/auth/Login';
 import GoogleAuthenticate from '../containers/auth/GoogleAuthenticate';
-
-// import 'style-loader!../scss/style.scss';
-import 'font-awesome/scss/font-awesome.scss';
 
 function noop() {
 

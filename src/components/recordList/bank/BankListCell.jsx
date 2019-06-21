@@ -12,6 +12,7 @@ import { NavLinkButton } from '../../../styles/Button';
 import colors from '../../../styles/Colors';
 import cssVars from '../../../styles/Variables';
 import { THUMBNAIL_SIZE } from '../../../freestone/settings';
+import { Icon } from '../../../styles/Icon';
 
 import { 
 	PRIKEY_ALIAS,
@@ -139,7 +140,7 @@ export default class BankListCell extends Component {
 					<Row key="fcn" className="btns">
 						{!nUses && <DeleteBtn isButton key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} />}
 						<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" small="true" round="true" warn="true" >
-							<i className="fa fa-pencil"></i>Edit
+							<Icon icon="pencil" />Edit
 						</NavLinkButton>
 					</Row>
 

@@ -8,6 +8,7 @@ import NativeModule from './NativeModule';
 import Collapsable from '../animation/Collapsable';
 
 import { NavGroup as StyledNavGroup, Subnav, GroupHeading, NavItem } from '../../styles/Nav';
+import { Icon } from '../../styles/Icon';
 
 
 export default class NavGroup extends Component {
@@ -71,8 +72,8 @@ export default class NavGroup extends Component {
 		return (
 			<StyledNavGroup className={`${activeClass}`} >
 				<GroupHeading onClick={this.onToggle} className={`${activeClass}`}>
-					<i className={`fa fa-${icon} fa-fw`}></i>
-					<span className="nav-label">{this.props.data.name}</span> <span className="fa fa-angle-down"></span>
+					<Icon icon={icon} />
+					<span className="nav-label">{this.props.data.name}</span> <Icon icon="angle-down" />
 				</GroupHeading>
 				{contents}
 			</StyledNavGroup>

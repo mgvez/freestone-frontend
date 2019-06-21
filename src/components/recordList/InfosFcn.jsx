@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import colors from '../../styles/Colors';
 import { Button } from '../../styles/Button';
 import { Tooltip } from '../../styles/Prompts';
+import { Icon } from '../../styles/Icon';
 
 const Container = styled.div`
 	position: relative;
@@ -61,7 +62,7 @@ export default class InfosFcn extends Component {
 		return (
 			<Container>
 				{tt}
-				<Button onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} tiny="true" faded="true" info="true" circle="true"><i className="fa fa-question"></i></Button>
+				<Button onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} tiny="true" faded="true" info="true" circle="true"><Icon icon="question" /></Button>
 			</Container>
 		);
 	}
