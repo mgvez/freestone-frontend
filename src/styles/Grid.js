@@ -10,18 +10,22 @@ export const GridContainerStyle = css`
 	grid-auto-flow: row;
 	width: 100%;
 `;
+
 export const GridContainer = styled.div`
 	${GridContainerStyle};
 `;
 
-function getItemCss(columns, offset, justify) {
+export function getItemCss(columns, offset, justify, align) {
 	return css`
 		grid-column: ${offset} / span ${columns};
 		${justify && `justify-self: ${justify};`};
+		${align && `align-self: ${align};`};
 	`;
 }
 
-export const GridItem = styled.div`${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.offset || 'auto', props.justify)}`;
+export const GridItem = styled.div`
+	${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.offset || 'auto', props.justify, props.align)};
+`;
 
 export const MainZone = styled.section`
 	width: calc(100% - 80px);

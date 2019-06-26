@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import ProdEnvWarning from '../widgets/ProdEnvWarning';
-import HomeButton from '../widgets/HomeButton';
 import NavToggler from '../../containers/widgets/NavToggler';
 import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
 
 import cssVariables from '../../styles/Variables';
 import colors from '../../styles/Colors';
-import { Button } from '../../styles/Button';
+import { Button, NavLinkButton } from '../../styles/Button';
 import { Icon } from '../../styles/Icon';
 
 const verticalPadding = 15;
@@ -53,6 +52,9 @@ const StyledHeader = styled.header`
 	}
 
 	.debug-fcn {
+		display: flex;
+		align-items: center;
+		
 		button {
 			margin: 0 5px;
 		}
@@ -86,7 +88,6 @@ export default class SiteHeader extends Component {
 
 		return (
 			<StyledHeader ref="header" className={!this.props.isNavVisible ? 'fullwidth' : null}>
-
 				<div>
 					<NavToggler />
 					{debug}
@@ -96,10 +97,10 @@ export default class SiteHeader extends Component {
 
 				<div>
 					<div className="logout">
-						<HomeButton />
-						<a onClick={this.props.logout}>
-							<Icon icon="sign-out" /> Logout
-						</a>
+						<NavLinkButton to={'/'} inline="true"><Icon icon="home" /><span> Dashboard</span></NavLinkButton>
+						<NavLinkButton inline="true" onClick={this.props.logout}>
+							<Icon icon="sign-out-alt" />Logout
+						</NavLinkButton>
 					</div>
 
 					<LoadedRecordsToggler />

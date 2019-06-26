@@ -6,7 +6,7 @@ export function getActionCss(props) {
 	return css`
 
 		display: block;
-		padding: 5px 10px;
+		padding: 10px 10px;
 
 		text-decoration: none;
 		color: ${colors.textPrimary};

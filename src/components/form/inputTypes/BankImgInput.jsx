@@ -50,7 +50,7 @@ export default class BankImgInput extends Component {
 		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} /> : null;
 
 		const chooseBtn = <Button round bordered info onClick={this.gotoSelect}><Icon icon="check" /> Choose image</Button>;
-		const changeBtn = <Button round bordered info onClick={this.gotoSelect}><Icon icon="exchange" /> Change</Button>;
+		const changeBtn = <Button round bordered info onClick={this.gotoSelect}><Icon icon="exchange-alt" /> Change</Button>;
 		const chooseChangeBtn = bankImgId ? changeBtn : chooseBtn;
 		const deleteBtn = bankImgId ? <Button round danger bordered onClick={this.delete}><Icon icon="times" /> Remove value</Button> : null;
 

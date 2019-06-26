@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import cssVariables from '../../styles/Variables';
+import colors from '../../styles/Colors';
 
 import Gravatar from './Gravatar';
 
@@ -18,6 +19,10 @@ const Container = styled.div`
 
 	p {
 		margin-bottom: 0;
+
+		a {
+			color: ${colors.textSecondary};
+		}
 	}
 `;
 

@@ -1,5 +1,6 @@
 
 import styled, { css } from 'styled-components';
+import vars from './Variables';
 import colors from './Colors';
 import { darken, lighten } from './Utils';
 import { NavLink } from 'react-router-dom';
@@ -34,12 +35,16 @@ function getCss(props) {
 	if (props.lighter) mainColor = colors.white;
 
 	if (props.faded) mainColor = lighten(mainColor, 0.5);
+	if (props.inline) mainColor = 'transparent';
 
 	let height = 30;
 	if (props.small) height = 24;
 	if (props.tiny) height = 16;
 
 	return css`
+
+		
+
 		${props.margin && `margin: ${props.margin};`}
 		padding: 0 15px;
 
@@ -56,6 +61,7 @@ function getCss(props) {
 
 		height: ${height}px;
 		line-height: ${height}px;
+		font-weight: ${vars.fontWeightSemibold};
 
 		transition: color 0.3s, background 0.3s;
 
@@ -66,7 +72,7 @@ function getCss(props) {
 		}
 
 		i {
-			margin-right: 10px;
+			margin-right: 5px;
 		}
 
 		&:hover {
@@ -156,10 +162,20 @@ function getCss(props) {
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
 		`};
-		
-		${buttonColorModifier(mainColor, props.bordered)}
 
+		${buttonColorModifier(mainColor, props.bordered)};
 
+		${props.inline && `
+			color: ${colors.linksPrimary};
+			border-radius: 0px;
+			border: none;
+
+			&:hover {
+				background: transparent;
+				color: ${colors.accentPrimary};
+
+			}
+		`};
 	`;
 }
 

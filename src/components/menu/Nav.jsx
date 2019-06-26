@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import NavGroup from './NavGroup';
 import UserInfos from '../../containers/widgets/UserInfos';
-import HomeButton from '../widgets/HomeButton';
-
-import cssVariables from '../../styles/Variables';
-import colors from '../../styles/Colors';
 import { NavbarContainer, NavGroup as StyledNavGroup, NavItem } from '../../styles/Nav';
+import { NavLinkButton } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
+import styled from 'styled-components';
 
 export default class Nav extends Component {
 	static propTypes = {
@@ -40,7 +38,9 @@ export default class Nav extends Component {
 			<NavbarContainer className={this.props.visible ? '' : 'collapsed'} role="navigation">
 				<UserInfos />
 				<ul>
-					<NavItem><HomeButton showIcon customClass="table-group" /></NavItem>
+					<NavItem>
+						<NavLinkButton to={'/'} inline="true" className="dashboard"><Icon icon="home" /><span>Dashboard</span></NavLinkButton>
+					</NavItem>
 					{
 						this.props.tree.map((item) => {
 							// console.log('item...');

@@ -51,7 +51,6 @@ function getWidgetCss(props) {
 
 	return `
 		background: ${bgColor};
-		padding: 10px 0;
 
 		position: absolute;
 			top: 40px;

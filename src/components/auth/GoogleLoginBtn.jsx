@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //anthonyjgrove/react-google-login
 import { Button } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
 
 export default class GoogleLoginBtn extends Component {
 	static propTypes = {
@@ -28,7 +29,7 @@ export default class GoogleLoginBtn extends Component {
 				lighter
 				onClick={this.onSignIn}
 			>
-				<i className="fa fa-google"></i>
+				<Icon type="fab" icon="google" />
 				{children || buttonText}
 			</Button>
 		);

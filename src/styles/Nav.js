@@ -103,6 +103,14 @@ export const NavbarContainer = styled.nav`
 	&.collapsed {
 		transform: translate(-100%, 0);
 	}
+
+	ul {
+		padding: 0;
+		
+		li {
+			list-style-type: none;
+		}
+	}
 `;
 
 export const NavItem = styled.li`
@@ -120,6 +128,21 @@ export const NavItem = styled.li`
 
 		color: ${colors.backgroundDark};
 		text-decoration: none;
+
+		&.dashboard {
+			padding: 0px 50px 0px 15px;
+			font-size: 14px;
+			font-weight: ${cssVariables.fontWeightNormal};
+			
+			i {
+				font-size: 14px;
+				margin-right: 0px;
+			}
+
+			span {
+				margin-left: 8px;
+			}
+		}
 
 		.nrecords, .flag {
 			display: block;

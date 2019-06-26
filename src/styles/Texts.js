@@ -1,5 +1,5 @@
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import cssVars from './Variables';
 
 export const textMedium = 'font-size: 11px;';
@@ -10,7 +10,7 @@ const title = `
 	margin: 0;
 	font-family: ${cssVars.fontFamilyBase};
 	text-transform: none;
-	font-weight: ${cssVars.fontWeightLight};
+	font-weight: ${cssVars.fontWeightNormal};
 	span {
 		font-size: 0.7em;
 		font-weight: normal;
@@ -55,4 +55,12 @@ export const ErrorMessage = styled.div`
 	border-radius: 5px;
 	padding: 10px;
 	margin: 20px 0;
+`;
+
+export const unorderedLists = `
+	padding-left: 40px;
+
+	li {
+		list-style-type: disc;
+	}
 `;

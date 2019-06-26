@@ -73,9 +73,9 @@ export default class Row extends Component {
 				<tr className={`level-${level}`} onMouseOver={this.handleHover}>
 					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>
 					<td key="cellLabel" className="selfjoin-label">{label}</td>
-					<td className="interactions">
+					<Interaction>
 						{interactions}
-					</td>
+					</Interaction>
 				</tr>
 			);
 		}

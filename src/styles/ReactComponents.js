@@ -11,7 +11,7 @@ export default css`
 			top: calc(50% - 5px);
 			right: 20px;
 
-		content: '\f107';
+		content: '\f078';
 		font-family: 'FontAwesome';
 		font-size: 20px;
 		color: ${colors.textPrimary};

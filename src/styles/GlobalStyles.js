@@ -3,10 +3,11 @@ import ReactComponents from './ReactComponents';
 import Reset from './Reset';
 import colors from './Colors';
 import cssVars from './Variables';
+import { unorderedLists } from './Texts';
 
 const GlobalStyle = createGlobalStyle`
-	
-	@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+	@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+	@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css");
 	
 	${Reset}
 
@@ -16,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
 		font-family: ${cssVars.fontFamilyBase};
 		font-size: ${cssVars.fontSizeText};
 		color: ${colors.textPrimary};
+		font-weight: ${cssVars.fontWeightNormal};
 	}
 
 	img {
@@ -48,6 +50,10 @@ const GlobalStyle = createGlobalStyle`
 		&:focus {
 			border: 2px solid ${colors.accentPrimary} !important;
 		}
+	}
+
+	ul {
+		${unorderedLists};
 	}
 
 `;

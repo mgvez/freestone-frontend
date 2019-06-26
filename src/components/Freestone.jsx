@@ -9,11 +9,12 @@ import styled from 'styled-components';
 import GlobalStyles from '../styles/GlobalStyles';
 import cssVariables from '../styles/Variables';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import * as icons from '@fortawesome/free-solid-svg-icons';
-const iconList = Object.keys(icons).filter(key => key !== 'fas' && key !== 'prefix').map(icon => icons[icon]);
-library.add(...iconList);
-// import 'font-awesome/scss/font-awesome.scss';
+// import { library } from '@fortawesome/fontawesome-svg-core';
+// import * as icons from '@fortawesome/free-solid-svg-icons';
+// const iconList = Object.keys(icons).filter(key => key !== 'fas' && key !== 'prefix').map(icon => icons[icon]);
+// library.add(...iconList);
+// todo: Si tu veux l'importer via node-module c'est ici...
+// import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 
 
 /* application components */

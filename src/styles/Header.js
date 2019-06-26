@@ -2,6 +2,7 @@
 import styled, { css } from 'styled-components';
 import cssVars from './Variables';
 import colors from './Colors';
+import { GridContainerStyle, getItemCss } from './Grid';
 
 
 export const Header = styled.header`
@@ -12,20 +13,18 @@ export const Header = styled.header`
 	margin-bottom: 60px;
 	position: relative;
 	width: 100%;
-	display:flex;
-	justify-content: space-between;
-	align-items: center;
+	${GridContainerStyle};
 `;
 
 export const HeaderTexts = styled.div`
-	flex-basis: 60%;
+	${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.offset || 'auto', props.justify, props.align)};
+	
+	p, ul li {
+		margin-bottom: 3px;
+		line-height: 1.5em;
+	}
 `;
 
 export const HeaderFcn = styled.div`
-	align-self: flex-end;
-	justify-content: flex-end;
-
-	button, a {
-		margin-left: 10px;
-	}
+	${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.offset || 'auto', props.justify, props.align)};
 `;

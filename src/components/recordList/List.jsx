@@ -128,11 +128,11 @@ export default class List extends Component {
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
 
 					<Header>
-						<HeaderTexts>
+						<HeaderTexts columns="8">
 							<Heading1>{this.props.table.displayLabel}</Heading1>
 							<p dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
 						</HeaderTexts>
-						<HeaderFcn>
+						<HeaderFcn columns="3" offset="10" justify="end" align="end">
 							{addBtn}
 						</HeaderFcn>
 					</Header>

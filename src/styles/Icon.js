@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import colors from './Colors';
 
-const StyledEm = styled.em`
+const StyledEm = styled.i`
 	width: ${18 / 14}em;
 	text-align: center;
 	font-size: inherit;
@@ -16,5 +16,8 @@ const StyledEm = styled.em`
 `;
 
 //cta
-
-export const Icon = props => <StyledEm className={`fa icon ${props.cta && 'cta'}`}><FontAwesomeIcon icon={props.icon} /></StyledEm>; // eslint-disable-line
+export const Icon = props => {
+	const { icon } = props;// eslint-disable-line
+	const { type } = props;// eslint-disable-line
+	return <StyledEm className={`${type || 'fa'} fa-${icon} icon ${props.cta && 'cta'}`} />; // eslint-disable-line
+};
