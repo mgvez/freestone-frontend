@@ -2,6 +2,8 @@
 
 (function(){
 	
+	const PLACEHOLDER = '{{placeholder}}';
+
 	function pepareContent(placeholder, ed) {
 		const contentBefore = ed.getContent();
 		const selectedNode = ed.selection.getNode();
@@ -41,7 +43,7 @@
 				icon: "image",
 				tooltip:"Insert image from bank",
 				onclick: function() {
-					ed.execCommand('addImageFromBank', false, pepareContent('{{placeholder}}', ed));
+					ed.execCommand('addImageFromBank', false, pepareContent(PLACEHOLDER, ed));
 				}
 			});
 
@@ -49,7 +51,7 @@
 				tooltip:"Insert document from bank",
 				icon:"browse",
 				onclick: function() {
-					ed.execCommand('addDocFromBank', false, pepareContent('{{placeholder}}', ed));
+					ed.execCommand('addDocFromBank', false, pepareContent(PLACEHOLDER, ed));
 				}
 			});
 
@@ -57,7 +59,7 @@
 				tooltip:"Insert link",
 				icon:"link",
 				onclick: function() {
-					ed.execCommand('insertLink', false, pepareContent('{{placeholder}}', ed));
+					ed.execCommand('insertLink', false, pepareContent(PLACEHOLDER, ed));
 				}
 			});
 

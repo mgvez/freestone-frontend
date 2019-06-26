@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-import { getWebsiteUrl } from '../../../freestone/settings';
+import { getWebsiteUrl, PLACEHOLDER } from '../../../freestone/settings';
 import customStyle from '../../../styles/Modal.js';
 import { Button } from '../../../styles/Button';
 import { GridContainer, GridItem } from '../../../styles/Grid';
@@ -28,8 +28,8 @@ function buildlink(contents, link, linkLabel, linkTarget) {
 		}
 	}
 
-	if (contents && ~contents.indexOf('{{placeholder}}')) {
-		val = contents.replace('{{placeholder}}', val);
+	if (contents && ~contents.indexOf(PLACEHOLDER)) {
+		val = contents.replace(PLACEHOLDER, val);
 	}
 	// console.log(val);
 	return val;

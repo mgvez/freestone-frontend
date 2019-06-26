@@ -54,6 +54,7 @@ export const bankSelectionSelector = createSelector(
 			bankDestination: selection,
 			targetFieldValue,
 			route: route.path,
+			lang: selection && selection.lang,
 		};
 	}
 );

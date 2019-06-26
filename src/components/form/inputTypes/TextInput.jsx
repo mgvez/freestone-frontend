@@ -48,7 +48,7 @@ export default class TextInput extends Component {
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
 		// console.log(this.props.val);
-		if (this.props.field.size > 100 || this.props.field.type === 'md') {
+		if (this.props.field.size > 100) {
 			return (
 				<Textarea 
 					ref="area"

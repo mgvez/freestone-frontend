@@ -17,6 +17,7 @@ export const TYPE_MTM = 'mtm';
 export const TYPE_OTO = 'oto';
 export const TYPE_SUBFORM = 'subform';
 export const TYPE_PRIMARY = 'pri';
+export const TYPE_MARKDOWN = 'md';
 export const TYPE_ORDER = 'order';
 export const TYPE_IMG = 'img';
 export const TYPE_BANKIMG = 'bankimg';

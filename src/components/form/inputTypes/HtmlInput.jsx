@@ -84,6 +84,7 @@ export default class HtmlInput extends Component {
 			this.props.recordId,
 			this.props.field.id,
 			this.props.field.type,
+			this.props.field.lang,
 			this.props.route
 		);
 		this.props.goTo(`/list/${bankTable}/`);

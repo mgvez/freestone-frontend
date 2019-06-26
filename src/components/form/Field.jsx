@@ -8,6 +8,7 @@ import DateInput from './inputTypes/DateInput';
 import UrlInput from './inputTypes/UrlInput';
 
 import BankImgInput from '../../containers/form/inputTypes/BankImgInput';
+import MarkdownInput from '../../containers/form/inputTypes/MarkdownInput';
 import BankFileInput from '../../containers/form/inputTypes/BankFileInput';
 import HotspotInput from '../../containers/form/inputTypes/HotspotInput';
 import NoEditInput from '../../containers/form/inputTypes/NoEditInput';
@@ -57,8 +58,10 @@ export default class Field extends Component {
 			case 'char':
 			case 'note':
 			case 'password':
-			case 'md':
 				input = <TextInput key={key} {...this.props} changeVal={this.changeVal} />;
+				break;
+			case 'md':
+				input = <MarkdownInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'html':
 				// console.log(this.props.val);
