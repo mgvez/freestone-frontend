@@ -6,9 +6,9 @@ import MarkdownInput from '../../../components/form/inputTypes/MarkdownInput';
 import { fetchVariable } from '../../../actions/env';
 import { setupBankSelect } from '../../../actions/bank';
 import { goTo } from '../../../actions/nav';
-import { mceConfigSelector } from '../../../selectors/env';
+import { routeSelector } from '../../../selectors/route';
 
 export default connect(
-	mceConfigSelector,
+	routeSelector,
 	dispatch => bindActionCreators({ fetchVariable, setupBankSelect, goTo }, dispatch)
 )(MarkdownInput);

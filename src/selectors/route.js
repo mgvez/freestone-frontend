@@ -15,11 +15,11 @@ export const routeSelector = createSelector(
 		// console.log(location.pathname);
 		return {
 			path,
+			route: path, //alias
 			scroll: scrollLock[path],
 		};
 	},
 );
-
 
 const querystringSelector = (state) => state.router.location && state.router.location.search;
 export const searchParamsSelector = createSelector(
