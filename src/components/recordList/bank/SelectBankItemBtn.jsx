@@ -52,10 +52,11 @@ export default class SelectBankItemBtn extends Component {
 			callApi(getEndpoint(`bank/images/${action}/${bankItemId}/${lang}`)).then(res => {
 				let replacement = res.data.markup;
 				if (fieldType === TYPE_MARKDOWN && res.data.item) {
-					// console.log(res.data);
-					const alt = res.data.item[`_alt_${lang}`] || 'Image';
-					const title = res.data.item[`_title_${lang}`] || 'Image';
-					replacement = `![${alt}](${res.data.item.file_path} "${title}")`;
+					// // console.log(res.data);
+					// const alt = res.data.item[`_alt_${lang}`] || 'Image';
+					// const title = res.data.item[`_title_${lang}`] || 'Image';
+					// replacement = `![${alt}](${res.data.item.file_path} "${title}")`;
+					replacement = `fs_img(${res.data.item.id})`;
 				}
 				const newValue = targetFieldValue && targetFieldValue.replace(PLACEHOLDER, replacement);
 				this.props.setFieldVal(tableId, recordId, fieldId, newValue);
