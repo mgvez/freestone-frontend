@@ -46,11 +46,10 @@ export default class OrderFcn extends Component {
 	};
 
 	render() {
-				
 		return (
 			<OrderContainer>
-				<Icon icon="arrow-up" onClick={this.swapOrderUp} cta />
-				<Icon icon="arrow-down" onClick={this.swapOrderDown} cta />
+				<div onClick={this.swapOrderUp} key="ctaup"><Icon icon="arrow-up" cta /></div>
+				<div onClick={this.swapOrderDown} key="ctadown"><Icon icon="arrow-down" onClick={this.swapOrderDown} cta /></div>
 			</OrderContainer>
 		);
 	}
