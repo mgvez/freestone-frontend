@@ -67,6 +67,7 @@ export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			installing: false,
 			username: '',
 			password: '',
 		};
@@ -83,7 +84,7 @@ export default class Login extends Component {
 	}
 
 	requireData() {
-		// console.log(nextProps);
+
 		if (undefined === this.props.isInstalled) {
 			this.props.fetchVariable('isInstalled');
 		}
@@ -96,6 +97,11 @@ export default class Login extends Component {
 		const password = this._password.value;
 		const remember = this._remember.checked;
 		// console.log(username, password, remember);
+		if (!this.props.isInstalled) {
+			this.setState({
+				installing: true,
+			});
+		}
 		this.props.loginUser(username, password, remember, this.props.isInstalled === false);
 	};
 
@@ -111,10 +117,40 @@ export default class Login extends Component {
 			msgs.text = 'Welcome to Freestone! Please choose a username and password in order to install Freestone.';
 			msgs.action = 'Install';
 		}
-
-		let googleLoginBtn = null;
-		if (this.props.apiGoogle && this.props.apiGoogle.clientId && this.props.gapiready) {
-			googleLoginBtn = <GoogleLoginBtn />;
+		
+		let loginForm = null;
+		if (!this.state.installing) {
+			let googleLoginBtn = null;
+			if (this.props.apiGoogle && this.props.apiGoogle.clientId && this.props.gapiready) {
+				googleLoginBtn = <GoogleLoginBtn />;
+			}
+			loginForm = (<form role="form" onSubmit={this.login}>
+				<Input
+					type="text"
+					className=" input-lg"
+					placeholder="Username"
+					name="freestoneuser"
+					ref={el => this._username = el}
+					defaultValue={this.state.username}
+				/>
+				<Input
+					type="password"
+					className=" input-lg"
+					placeholder="Password"
+					name="freestonepass"
+					ref={el => this._password = el}
+					defaultValue={this.state.password}
+				/>
+				<CheckboxContainer startAlign>
+					<input type="checkbox" id="remember" ref={el => this._remember = el} />
+					<label htmlFor="remember">Remember me?</label>
+					<div className="checkmark"></div>
+				</CheckboxContainer>
+				<div className="btns">
+					<Button type="submit" round mediumwidth disabled={this.props.isAuthenticating}>{msgs.action}</Button>
+					{googleLoginBtn}
+				</div>
+			</form>);
 		}
 
 		// <iframe src="dummy.html" name="dummy" style={{ display: 'none' }}></iframe>
@@ -127,33 +163,7 @@ export default class Login extends Component {
 					<GridContainer>
 						<GridItem columns="4" offset="5">
 							{this.props.statusText ? <div className="alert alert-info">{this.props.statusText}</div> : msgs.text}
-							<form role="form" onSubmit={this.login}>
-								<Input
-									type="text"
-									className=" input-lg"
-									placeholder="Username"
-									name="freestoneuser"
-									ref={el => this._username = el}
-									defaultValue={this.state.username}
-								/>
-								<Input
-									type="password"
-									className=" input-lg"
-									placeholder="Password"
-									name="freestonepass"
-									ref={el => this._password = el}
-									defaultValue={this.state.password}
-								/>
-								<CheckboxContainer startAlign>
-									<input type="checkbox" id="remember" ref={el => this._remember = el} />
-									<label htmlFor="remember">Remember me?</label>
-									<div className="checkmark"></div>
-								</CheckboxContainer>
-								<div className="btns">
-									<Button type="submit" round mediumwidth disabled={this.props.isAuthenticating}>{msgs.action}</Button>
-									{googleLoginBtn}
-								</div>
-							</form>
+							{loginForm}
 						</GridItem>
 					</GridContainer>
 				</LoginZone>

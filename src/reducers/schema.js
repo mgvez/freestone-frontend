@@ -9,8 +9,8 @@ function tables(state = {}, action) {
 	case UNAUTHORIZED:
 		return {};
 	case SCHEMA_API.SUCCESS:
-		// console.log(action.data);
-		if (!action.data.tables) return state;
+		// console.log(action);
+		if (!action.data || !action.data.tables) return state;
 		return {
 			...state,
 			...action.data.tables.reduce((newState, table) => {
@@ -42,7 +42,7 @@ function children(state = {}, action) {
 		return {};
 	case SCHEMA_API.SUCCESS:
 		// console.log(action);
-		if (!action.data.children) return state;
+		if (!action.data || !action.data.children) return state;
 		return {
 			...state,
 			...action.data.children.reduce((newState, childrenDef) => {
@@ -74,7 +74,7 @@ function fields(state = {}, action) {
 		return {};
 	case SCHEMA_API.SUCCESS:
 		// console.log(action.data.fields);
-		if (!action.data.fields) return state;
+		if (!action.data || !action.data.fields) return state;
 		return {
 			...state,
 			...action.data.fields.reduce((newState, field) => {
@@ -113,7 +113,7 @@ function fieldDependencies(state = {}, action) {
 		return {};
 	case SCHEMA_API.SUCCESS:
 		// console.log(action.data.fields);
-		if (!action.data.fieldDependencies) return state;
+		if (!action.data || !action.data.fieldDependencies) return state;
 		return {
 			...state,
 			...action.data.fieldDependencies,

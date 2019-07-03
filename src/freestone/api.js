@@ -78,7 +78,7 @@ export function callApi(route, data, label) {
 		}).then((r) => {
 			
 			// console.log(`${label}: %c ${dur}ms`, 'color: blue; font-weight: bold;');// eslint-disable-line
-			// console.log(r.profile);
+			// console.log(r);
 			if (r.profile && IS_PROFILING) {
 				const end = new Date();
 				const dur = end - start;

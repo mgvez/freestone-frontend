@@ -48,7 +48,7 @@ const userViewSettingsInitialState = {
 function userViewSettings(state = userViewSettingsInitialState, action) {
 	switch (action.type) {
 	case ENV_API.SUCCESS: {
-		if (action.data.languages) {
+		if (action.data && action.data.languages) {
 			return {
 				...state,
 				languages: action.data.languages.map(l => l.key),
@@ -90,6 +90,7 @@ function clientVariables(state = {}, action) {
 		return {};
 	case ENV_VAR_API.SUCCESS:
 	case SET_ENV_VARIABLE: {
+		if (!action.data) return state;
 		// console.log(action.data);
 		const { name, value } = action.data;
 		return {

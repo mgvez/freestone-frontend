@@ -109,7 +109,6 @@ export default class Freestone extends Component {
 			window.location = root;
 			return null;
 		}
-		console.log('render root');
 		return (
 			<Shortcuts>
 				<GlobalStyles />

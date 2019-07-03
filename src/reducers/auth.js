@@ -1,5 +1,5 @@
 
-import { UNAUTHORIZED, LOGIN_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API } from '../actions/auth';
+import { UNAUTHORIZED, LOGIN_API, INSTALL_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API } from '../actions/auth';
 import { FREESTONE_API_REQUEST, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 
@@ -57,6 +57,12 @@ export default function(state = initialState, action) {
 			email: null,
 			needsRelogin: false,
 			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
+		};
+	case INSTALL_API.REQUEST:
+		return {
+			...state,
+			isAuthenticating: true,
+			statusText: 'Installing, please wait...',
 		};
 	case LOGIN_API.REQUEST:
 		// console.log(action.data);

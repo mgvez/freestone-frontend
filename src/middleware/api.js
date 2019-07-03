@@ -65,6 +65,7 @@ export default store => next => action => { // eslint-disable-line
 
 	processing[hash] = callApi(finalRoute, data, route).then(
 		res => {
+			// console.log(res);
 			if (res.jwt) {
 				next(receiveToken(res.jwt));
 			}
