@@ -16,7 +16,6 @@ import { GridContainer, GridItem } from '../../styles/Grid';
 let isWaitingForFrame = false;
 const SideBar = styled.div`
 	padding: 10px 0;
-	margin-top: 20px;
 	background: ${colors.backgroundDark};
 	color: ${colors.white};
 	
@@ -26,7 +25,7 @@ const SideBar = styled.div`
 
 	.sticky & {
 		position: fixed;
-			top: 160px;
+			top: 170px;
 	}
 
 	.absolute & {
@@ -146,7 +145,7 @@ export default class SingleRecord extends Component {
 		const pos = parent.getBoundingClientRect();
 		const inner = this.sidebar.getBoundingClientRect();
 
-		if (pos.top <= 160 - pos.height + inner.height) {
+		if (pos.top <= 160 - pos.height + (inner.height + 20)) {
 			this.setState({ stickyState: 'absolute' });
 			this.sidebar.style.width = pos.width + 'px';
 		} else if (pos.top <= 160) {

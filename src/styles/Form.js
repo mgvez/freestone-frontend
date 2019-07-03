@@ -27,7 +27,7 @@ export const StyledSingleRecord = styled.section`
 `;
 
 export const Subform = styled.section`
-	margin: 0 0 30px 0;
+	margin: 30px 0;
 	padding: 0 20px;
 	border-top: 1px solid ${colors.backgroundMainAccent};
 	border-bottom: 1px solid ${colors.backgroundMainAccent};
@@ -47,5 +47,10 @@ export const Subform = styled.section`
 
 export const SubformHeader = styled.header`
 	${GridContainerStyle}
+	margin-top: 20px;
 	align-items: center;
+
+	h2 {
+		margin-bottom: 0;
+	}
 `;

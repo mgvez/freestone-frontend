@@ -154,7 +154,6 @@ export default class FormHeaderCore extends Component {
 
 		const infos = (this.props.isLight) ? 
 			<HeaderTexts>
-				{/* todo: ce serait le fun de mettre au moins le page title dans le header sticky */}
 				{slugs}
 			</HeaderTexts> : (
 			<HeaderTexts>
