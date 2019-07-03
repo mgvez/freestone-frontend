@@ -1,6 +1,7 @@
 
 import { UNAUTHORIZED, LOGIN_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API } from '../actions/auth';
 import { FREESTONE_API_REQUEST, FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
+import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 
 const initialState = {
 	jwt: null,
@@ -9,7 +10,7 @@ const initialState = {
 	isAuthenticating: false,
 	statusText: null,
 	realName: null,
-	lastRequestTime: 0,
+	needsRelogin: 0,
 	email: '',
 	userId: null,
 	picture: '',
@@ -18,14 +19,23 @@ const initialState = {
 	gapi_token_access: null,
 };
 
+let lastRequestTime = Date.now();
 export default function(state = initialState, action) {
 
 	switch (action.type) {
-	case FREESTONE_API_REQUEST:
-		return {
-			...state,
-			lastRequestTime: Date.now(),
-		};
+	case FREESTONE_API_REQUEST: {
+
+		const now = Date.now();
+		const diff = (now - lastRequestTime) / 1000;
+		lastRequestTime = Date.now();
+		if (diff > MAX_TIME_BETWEEN_API_CALLS) {
+			return {
+				...state,
+				needsRelogin: true,
+			};
+		}
+		return state;
+	}
 	case FREESTONE_API_FAILURE:
 	case FREESTONE_API_FATAL_FAILURE:
 		//si failure, reset pour éviter que le btn login soit désactivé
@@ -33,6 +43,7 @@ export default function(state = initialState, action) {
 			...state,
 			statusText: '',
 			isAuthenticating: false,
+			needsRelogin: false,
 		};
 	case UNAUTHORIZED:
 		// const err = action.payload.response;
@@ -44,6 +55,7 @@ export default function(state = initialState, action) {
 			userName: null,
 			userId: null,
 			email: null,
+			needsRelogin: false,
 			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
 		};
 	case LOGIN_API.REQUEST:
@@ -68,6 +80,7 @@ export default function(state = initialState, action) {
 			realName: action.payload.token.data.realname,
 			picture: action.payload.token.data.picture,
 			usergroup: Number(action.payload.token.data.usergroup),
+			needsRelogin: false,
 			statusText: 'You have been successfully logged in.',
 		};
 	case LOGIN_USER_FAILURE: {
@@ -80,6 +93,7 @@ export default function(state = initialState, action) {
 			userName: null,
 			userId: null,
 			email: null,
+			needsRelogin: false,
 			statusText: `Authentication Error: ${err}`,
 		};
 	}
@@ -91,6 +105,7 @@ export default function(state = initialState, action) {
 			userName: null,
 			userId: null,
 			email: null,
+			needsRelogin: false,
 			statusText: 'You have been successfully logged out.',
 		};
 	default:

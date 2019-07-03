@@ -33,7 +33,6 @@ export default class Nav extends Component {
 	}
 
 	render() {
-
 		return (
 			<NavbarContainer className={this.props.visible ? '' : 'collapsed'} role="navigation">
 				<UserInfos />

@@ -98,9 +98,9 @@ export default class SiteHeader extends Component {
 				<div>
 					<div className="logout">
 						<NavLinkButton to={'/'} inline="true"><Icon icon="home" /><span> Dashboard</span></NavLinkButton>
-						<NavLinkButton inline="true" onClick={this.props.logout}>
+						<Button inline="true" onClick={this.props.logout}>
 							<Icon icon="sign-out-alt" />Logout
-						</NavLinkButton>
+						</Button>
 					</div>
 
 					<LoadedRecordsToggler />

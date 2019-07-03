@@ -39,3 +39,24 @@ export const clientComponentInfosSelector = createSelector(
 	}
 );
 
+
+const isAuthenticatedSelector = state => state.freestone.auth.isAuthenticated;
+const needsReloginSelector = state => state.freestone.auth.needsRelogin;
+const jwtSelector = state => state.freestone.auth.jwt;
+const domainSelector = state => state.freestone.env.freestone.domain;
+const clientScriptsSelector = state => state.freestone.env.freestone.clientScripts;
+const isNavVisibleSelector = state => state.freestone.siteHeader.nav_visibility;
+
+export const appRootSelector = createSelector(
+	[isAuthenticatedSelector, needsReloginSelector, jwtSelector, domainSelector, clientScriptsSelector, isNavVisibleSelector],
+	(isAuthenticated, needsRelogin, jwt, domain, clientScripts, isNavVisible) => {
+		return {
+			needsRelogin,
+			jwt,
+			isAuthenticated,
+			domain,
+			clientScripts,
+			isNavVisible,
+		};
+	}
+);

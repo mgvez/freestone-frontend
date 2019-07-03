@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 import qstrParams from '../utils/qstrParams';
 import Script from 'react-load-script';
 
@@ -46,8 +45,9 @@ export default class Freestone extends Component {
 	static propTypes = {
 		isAuthenticated: PropTypes.bool,
 		isNavVisible: PropTypes.bool,
-		lastRequestTime: PropTypes.number,
-		freestone: PropTypes.object,
+		needsRelogin: PropTypes.bool,
+		domain: PropTypes.string,
+		clientScripts: PropTypes.array,
 		jwt: PropTypes.string,
 
 		loginUser: PropTypes.func,
@@ -71,10 +71,7 @@ export default class Freestone extends Component {
 	componentDidUpdate() {
 
 		//at load of app, force an API call to revalidate the JWT if last validation is too old
-		const now = Date.now();
-		const diff = (now - this.props.lastRequestTime) / 1000;
-		if (diff > MAX_TIME_BETWEEN_API_CALLS) this.props.loginUser();
-
+		if (this.props.needsRelogin) this.props.loginUser();
 		this.requireData(this.props);
 	}
 
@@ -86,7 +83,7 @@ export default class Freestone extends Component {
 	requireData(props) {
 		// console.log(props.env);
 		//s'assure que l'env est loadé
-		if (!props.freestone.clientPath) this.props.fetchEnv();
+		if (!props.domain) this.props.fetchEnv();
 
 	}
 	
@@ -96,7 +93,7 @@ export default class Freestone extends Component {
 		if (!this.props.isAuthenticated) {
 			return (
 				<div>
-					<Errors {...this.props} />
+					<Errors />
 					<Login gapiready={this.state.gapiready} />
 					<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 				</div>
@@ -108,11 +105,11 @@ export default class Freestone extends Component {
 		if (onLogin) {
 			// console.log(this.props.env);
 			const loc = onLogin === 'home' ? '' : onLogin;
-			const root = `//${this.props.freestone.domain}${loc}?jwt=${this.props.jwt}`;
+			const root = `//${this.props.domain}${loc}?jwt=${this.props.jwt}`;
 			window.location = root;
 			return null;
 		}
-
+		console.log('render root');
 		return (
 			<Shortcuts>
 				<GlobalStyles />
@@ -124,11 +121,11 @@ export default class Freestone extends Component {
 						<LoadedRecords />
 						{this.props.children}
 						<Footer />
-						<Errors {...this.props} />
+						<Errors />
 					</MainContent>
 					<GoogleAuthenticate onGapiReady={this.onGapiReady} />
 					{
-						this.props.freestone.clientScripts.map((scriptInfos) => {
+						this.props.clientScripts && this.props.clientScripts.map((scriptInfos) => {
 							return <Script key={scriptInfos.url} url={scriptInfos.url} onError={noop} onLoad={noop} />;
 						})
 					}
