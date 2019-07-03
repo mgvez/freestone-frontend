@@ -18,6 +18,7 @@ export const TOGGLE_MTM_VALUE = 'TOGGLE_MTM_VALUE';
 export const CANCEL_EDIT_RECORD = 'CANCEL_EDIT_RECORD';
 export const SWAPPED_ANIMATED = 'SWAPPED_ANIMATED';
 
+export const RECORD_INFO_API = createRequestTypes('RECORD_INFO_API');
 export const RECORD_LIST_API = createRequestTypes('RECORD_LIST_API');
 export const RECORD_SINGLE_API = createRequestTypes('RECORD_SINGLE_API');
 export const RECORD_REVISION_LIST_API = createRequestTypes('RECORD_REVISION_LIST_API');
@@ -58,6 +59,17 @@ export function fetchList(tableName, search = '', page = 1) {
 			[FREESTONE_API]: {
 				types: RECORD_LIST_API,
 				route: `list/${tableName}/${page}?search=${search}`,
+			},
+		});
+	};
+}
+
+export function fetchRecordInfo(tableName, recordId) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: RECORD_INFO_API,
+				route: `recordInfo/${tableName}/${recordId}`,
 			},
 		});
 	};

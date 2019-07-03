@@ -22,13 +22,14 @@ export default class GoogleAuthenticate extends Component {
 
 	componentDidMount() {
 		// console.log(this.props.apiGoogle);
-		this.requireData(this.props);
+		this.requireData();
 		this.initGoogleApi(this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
-		this.initGoogleApi(nextProps);
+	componentDidUpdate() {
+		// console.log(this.props.isAuthenticated);
+		this.requireData();
+		this.initGoogleApi();
 	}
 
 	onIsLogged = () => {
@@ -37,25 +38,26 @@ export default class GoogleAuthenticate extends Component {
 
 	onReceiveUser = (user) => {
 		//si user pas loggé, l'envoie au backend pour l'authentifier
-		console.log(user);
-		if (!this.props.isAuthenticated) {
-			const response = user.getAuthResponse();
-			const token_id = response.id_token;
-			const token_access = response.access_token;
-			console.log(token_id);
-			this.props.loginGoogleAPI(token_id, token_access);
-		}
+		// console.log(user);
+		// console.log(this.props.isAuthenticated);
+		// if (!this.props.isAuthenticated) {
+		const response = user.getAuthResponse();
+		const token_id = response.id_token;
+		const token_access = response.access_token;
+		// console.log(token_id);
+		this.props.loginGoogleAPI(token_id, token_access);
+		// }
 	}
 
-	initGoogleApi(props) {
+	initGoogleApi() {
 
 		if (this.gapi) return this.gapi;
 
-		if (props.apiGoogle && props.apiGoogle.clientId) {
+		if (this.props.apiGoogle && this.props.apiGoogle.clientId) {
 
-			const { clientId } = props.apiGoogle;
+			const { clientId } = this.props.apiGoogle;
 			// console.log(clientId);
-			const { scope, cookiePolicy } = props;
+			const { scope, cookiePolicy } = this.props;
 			const params = {
 				client_id: clientId,
 				cookiepolicy: cookiePolicy,
@@ -72,7 +74,7 @@ export default class GoogleAuthenticate extends Component {
 					GoogleAuth.then(() => {
 						if (this.props.onGapiReady) this.props.onGapiReady();
 						// console.log(scope);
-						console.log('gapi inited callback');
+						// console.log('gapi inited callback');
 						if (GoogleAuth.isSignedIn.get()) {
 							const user = GoogleAuth.currentUser.get();
 							this.onReceiveUser(user);
@@ -89,9 +91,9 @@ export default class GoogleAuthenticate extends Component {
 		return false;
 	}
 
-	requireData(nextProps) {
+	requireData() {
 		// console.log(nextProps.apiGoogle);
-		if (typeof nextProps.apiGoogle === 'undefined') this.props.fetchVariable('api.google');
+		if (typeof this.props.apiGoogle === 'undefined') this.props.fetchVariable('api.google');
 	}
 
 	render() {

@@ -16,6 +16,9 @@ const buildPath = path.join(__dirname, './dist');
 const assetsPath = path.join(__dirname, './src/assets');
 const sourcePath = path.join(__dirname, './src');
 
+//https OR http
+const isHttps = process.argv.length === 0 || !~process.argv.indexOf('--http');
+
 // Common plugins
 const plugins = [
 	new webpack.DefinePlugin({
@@ -192,8 +195,8 @@ module.exports = {
 	devServer: {
 		contentBase: isProduction ? buildPath : sourcePath,
 		historyApiFallback: true,
-		port: 3000,
-		https: true,
+		port: isHttps ? 3000 : 2999,
+		https: isHttps,
 		compress: isProduction,
 		inline: !isProduction,
 		// hot: !isProduction,

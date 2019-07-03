@@ -21,6 +21,8 @@ export function createCells(table, fields, values, elementType = 'td', options =
 			values[LABEL_PSEUDOFIELD_ALIAS]
 		);
 	}
+	// console.log(values);
+
 	return fields.map((field) => {
 		if (field.isGroup) return null;
 

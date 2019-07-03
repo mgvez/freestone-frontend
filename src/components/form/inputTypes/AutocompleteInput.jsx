@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Autosuggest from 'react-autosuggest';
+import memoize from 'memoize-one';
 
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 
 function getItemValue(item) {
-	return item.label;
+	return item && item.label;
 }
 
 function parseLabel(string) {
@@ -55,33 +56,23 @@ export default class AutocompleteInput extends Component {
 		this.fetchTimeout = null;
 
 		this.state = {
-			currentText: '',
-			suggestions: this.getSuggestions(),
+			currentText: '', //text currently in input
+			currentUserText: '', // text of currently typed text
 		};
 	}
 
 	componentDidMount() {
-		this.requireData(this.props);
+		this.requireData();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
-		//quand on change de record, empty le texte entré, pour mettre la valeur réelle du champ
-		if (nextProps.recordId !== this.props.recordId) {
-			this.setCurrentText(null);
-		}
-
-		if (nextProps.foreignOptions !== this.props.foreignOptions) {
-			this.setState({
-				suggestions: this.getSuggestions(null, nextProps.foreignOptions),
-			});
-		}
+	componentDidUpdate() {
+		this.requireData();
 	}
 
-	requireData(props) {
-		if (!props.foreignOptions) {
+	requireData() {
+		if (!this.props.foreignOptions) {
 			// console.log('fetch original %s', props.field.name);
-			this.props.fetchForeignOptions(props.field.id, null, props.val);
+			this.props.fetchForeignOptions(this.props.field.id, null, this.props.val);
 		}
 	}
 
@@ -97,7 +88,6 @@ export default class AutocompleteInput extends Component {
 		this.props.changeVal(suggestion.value);
 		this.setCurrentText(suggestionValue);
 		clearTimeout(this.fetchTimeout);
-		// this.props.fetchForeignOptions(this.props.field.id, suggestion.value);
 	};
 
 	//when we type in the field
@@ -113,8 +103,8 @@ export default class AutocompleteInput extends Component {
 		}
 
 		this.setCurrentText(newValue);
-		if (newValue.length > 8) {
-			const regexpVal = newValue.replace(/[[\]{}]/g, '\\$&');
+		if (newValue.length > 4) {
+			const regexpVal = newValue.replace('.', '\\.').replace(/[[\]{}]/g, '\\$&');
 			this.regexMatchOption = new RegExp(regexpVal);
 		} else {
 			this.regexMatchOption = new RegExp(newValue.replace(/[^a-z\s]/ig, '').split('').join('\\w*').replace(/\W/, ''), 'i');
@@ -126,35 +116,38 @@ export default class AutocompleteInput extends Component {
 		if (highlightedSuggestion) {
 			this.props.changeVal(highlightedSuggestion.value);
 			this.setCurrentText(highlightedSuggestion.label);
+			this.setState({
+				selectedOptionText: highlightedSuggestion.label,
+			});
 		} else {
 			const current = this.getCurrentOption();
 			this.setCurrentText(current && current.label);
 		}
 		clearTimeout(this.fetchTimeout);
-		
 		this.setState({
-			suggestions: this.getSuggestions(),
+			currentUserText: '',
 		});
 	};
 
+	//when typing in field, or activating it, 
 	onSuggestionsFetchRequested = ({ value }) => {
 		// console.log('fetch requested %s', value);
 		if (!value) this.props.changeVal(0);
+
 		this.setState({
-			suggestions: this.getSuggestions(value),
+			currentUserText: value,
 		});
 	};
 
-	getSuggestions = (value, foreignOptions) => {
-		// console.log(`${this.props.field.name} getSuggestions ${value}`);
-
-		const options = (foreignOptions && foreignOptions.values) || (this.props.foreignOptions && this.props.foreignOptions.values);
+	getSuggestionsMemoized = memoize((value, options) => {
+		
 		if (!options) {
 			return [];
 		}
 		if (!value) {
 			return options;
 		}
+		// console.log(`${this.props.field.name} getSuggestions ${value} ` + options.length);
 		// console.log(options);
 
 		const inputValue = value.trim().toLowerCase();
@@ -164,7 +157,7 @@ export default class AutocompleteInput extends Component {
 		});
 		// console.log(res);
 		return res;
-	}
+	})
 
 	getCurrentOption() {
 		const options = this.props.foreignOptions && this.props.foreignOptions.values;
@@ -184,7 +177,9 @@ export default class AutocompleteInput extends Component {
 		const current = this.getCurrentOption();
 		// console.log(current);
 		const value = (this.state.currentText !== null && this.state.currentText) || current.label || '';
-		const { suggestions } = this.state;
+
+		// console.log('render');
+		const suggestions = this.getSuggestionsMemoized(this.state.currentUserText, this.props.foreignOptions && this.props.foreignOptions.values);
 		// console.log('render with "%s" tx, %s options', value, suggestions.length);
 		const inputProps = {
 			placeholder: 'Click or type to see suggestions...',

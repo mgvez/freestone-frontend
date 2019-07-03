@@ -34,8 +34,8 @@ export default class LoadedRecords extends Component {
 		window.addEventListener('scroll', this.stick);
 	}
 
-	componentWillReceiveProps(props) {
-		this.requireData(props);
+	componentDidUpdate() {
+		this.requireData(this.props);
 	}
 
 	componentWillUnmount() {

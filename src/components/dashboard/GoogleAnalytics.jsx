@@ -48,12 +48,8 @@ export default class GoogleAnalytics extends Component {
 		this.renderAnalytics();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
-	}
-
 	componentDidUpdate() {
-		//this.renderAnalytics();
+		this.requireData(this.props);
 	}
 
 	requireData(props) {

@@ -19,10 +19,12 @@ export default class RecordInteractions extends Component {
 		fields: PropTypes.array,
 		path: PropTypes.string,
 		values: PropTypes.object,
+		hasPreview: PropTypes.bool,
 
 		rememberListPage: PropTypes.func,
 		lockScroll: PropTypes.func,
-		hasPreview: PropTypes.bool,
+		fetchRecordInfo: PropTypes.func,
+		fetchRecords: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -31,17 +33,6 @@ export default class RecordInteractions extends Component {
 		this.state = {
 			active: false,
 		};
-	}
-
-	componentWillReceiveProps(nextProps) {
-		const currentPrikeyVal = this.props.values[PRIKEY_ALIAS];
-		const nextPrikeyVal = nextProps.values[PRIKEY_ALIAS];
-
-		if (currentPrikeyVal !== nextPrikeyVal) {
-			this.setState({
-				active: false,
-			});
-		}
 	}
 
 	componentWillUnmount() {
@@ -80,11 +71,16 @@ export default class RecordInteractions extends Component {
 		window.removeEventListener('click', this.onWindowClick);
 	}
 
+	onRequestInfo = () => {
+		if (!this.props.table) return;
+		this.props.fetchRecordInfo(this.props.table.name, this.props.values[PRIKEY_ALIAS]);
+	}
+
 	render() {
 		const prikeyVal = this.props.values[PRIKEY_ALIAS];
 		let orderFcn;
 		if (this.props.table.hasOrder) {
-			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} />;
+			orderFcn = <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} fetchRecords={this.props.fetchRecords} />;
 		}
 
 		const recordLink = this.props.values[SLUG_PSEUDOFIELD_ALIAS];
@@ -101,7 +97,7 @@ export default class RecordInteractions extends Component {
 							<i className="fa fa-pencil"></i>{EDIT_LABEL}
 						</NavLink>
 						<DuplicateBtn tableName={this.props.table.name} prikey={prikeyVal} />
-						<DeleteBtn tableName={this.props.table.name} prikey={prikeyVal} />
+						<DeleteBtn key={`${this.props.table.name}_${prikeyVal}`} tableName={this.props.table.name} prikey={prikeyVal} />
 						{preview}
 					</div>
 				</div>
@@ -110,6 +106,7 @@ export default class RecordInteractions extends Component {
 					lastmodifdate={this.props.values[LASTMODIF_DATE_ALIAS]}
 					createddate={this.props.values[CREATED_DATE_ALIAS]}
 					label={this.props.values[LABEL_PSEUDOFIELD_ALIAS]}
+					onRequestInfo={this.onRequestInfo}
 				/>
 			</div>
 			{orderFcn}

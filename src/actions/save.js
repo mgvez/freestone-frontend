@@ -84,9 +84,8 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
 
-				if (callback) {
-					callback(res.mainRecord, res.slugs);
-				} else {
+				const skipDefault = callback && callback(res.mainRecord, res.slugs);
+				if (!skipDefault) {
 					const backPath = (gotoOnFinish && gotoOnFinish.replace('{{recordId}}', res.mainRecord.recordId)) || `/list/${table.name}`;
 					//si table savée est meta (zva_...)
 					if (isMeta) {
@@ -106,7 +105,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 	};
 }
 
-export function swapOrder(tableName, recordId, direction) {
+export function swapOrder(tableName, recordId, direction, onComplete) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
@@ -118,6 +117,9 @@ export function swapOrder(tableName, recordId, direction) {
 					direction,
 				},
 			},
+		}).then(() => {
+			console.log('ok');
+			onComplete();
 		});
 	};
 }

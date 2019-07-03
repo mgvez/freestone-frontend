@@ -33,8 +33,8 @@ export default class SubformStandard extends Component {
 		this.requireData(this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
+	componentDidUpdate() {
+		this.requireData(this.props);
 	}
 
 	requireData(props) {

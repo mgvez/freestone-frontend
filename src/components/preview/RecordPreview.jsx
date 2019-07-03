@@ -37,8 +37,8 @@ export default class RecordPreview extends Component {
 		this.updatePopWindow(this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.updatePopWindow(nextProps);
+	componentDidUpdate() {
+		this.updatePopWindow(this.props);
 	}
 
 	updatePopWindow(props) {

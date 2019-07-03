@@ -34,7 +34,7 @@ export default class UrlInput extends Component {
 			return <LinkInsert onClose={this.closeModal} setVal={this.handleEditorChange} isUrlOnly />;
 		}
 		return (<div className="link-field">
-			<input type="text" value={this.props.val} className="form-control" onChange={this.props.changeVal} />
+			<input type="text" value={this.props.val || ''} className="form-control" onChange={this.props.changeVal} />
 			<button className="button-round-action-bordered" onClick={this.openModal}>Url select helper</button>
 		</div>);
 	}

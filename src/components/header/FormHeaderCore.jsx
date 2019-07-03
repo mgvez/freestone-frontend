@@ -52,8 +52,8 @@ export default class FormHeaderCore extends Component {
 		this.context.setHeight(this.props.isLight, h);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		this.requireData(nextProps);
+	componentDidUpdate() {
+		this.requireData(this.props);
 	}
 
 	requireData(props) {

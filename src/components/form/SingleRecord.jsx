@@ -44,9 +44,9 @@ export default class SingleRecord extends Component {
 		this.requireData(this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate() {
 		// console.log('receive', nextProps.table.id, nextProps.table === this.props.table);
-		this.requireData(nextProps);
+		this.requireData(this.props);
 	}
 
 	requireData(props) {

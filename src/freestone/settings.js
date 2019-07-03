@@ -24,7 +24,7 @@ export function getWebsiteUrl() {
 		hostname = `${hostname}${PROD_FREESTONE_LOCATION}`;
 	}
 
-	const protocol = window.location.port === '3000' ? 'http:' : 'https:';
+	const protocol = window.location.port === '3000' ? 'http:' : window.location.protocol;
 
 	websiteUrl = `${protocol}//${hostname}${pathname}`;
 	// console.log(websiteUrl);

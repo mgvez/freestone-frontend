@@ -46,7 +46,10 @@ export default class PreviewRecord extends Component {
 		slug: PropTypes.string,
 		tableId: PropTypes.number,
 		recordId: PropTypes.string,
-		previewRecordId: PropTypes.number,
+		previewRecordId: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number,
+		]),
 		lastEdit: PropTypes.number,
 		isPreviewEdited: PropTypes.bool,
 		isViewingPreview: PropTypes.bool,
@@ -67,9 +70,9 @@ export default class PreviewRecord extends Component {
 		};
 	}
 
-	componentWillReceiveProps(props) {
+	componentDidUpdate() {
 		// console.log('props received ' + this.props.lastEdit, props.isPreviewEdited);
-		if (props.isPreviewEdited && this.props.isViewingPreview) {
+		if (this.props.isPreviewEdited && this.props.isViewingPreview) {
 			if (this.timeoutId) {
 				// console.log('clear ' + this.timeoutId);
 				clearTimeout(this.timeoutId);
@@ -96,6 +99,7 @@ export default class PreviewRecord extends Component {
 		this.setState({
 			sendingChanges: false,
 		});
+		return true;
 	}
 
 	onClickPreview = () => {

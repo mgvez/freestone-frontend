@@ -6,11 +6,12 @@ export default class OrderFcn extends Component {
 		prikey: PropTypes.string,
 		tableName: PropTypes.string,
 		swapOrder: PropTypes.func,
+		fetchRecords: PropTypes.func,
 	};
 
 	swapOrder(direction) {
 		// console.log('swap', this.props.tableName, this.props.prikey, direction);
-		this.props.swapOrder(this.props.tableName, this.props.prikey, direction);
+		this.props.swapOrder(this.props.tableName, this.props.prikey, direction, this.props.fetchRecords);
 	}
 
 	swapOrderUp = () => {
