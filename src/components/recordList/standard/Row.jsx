@@ -70,7 +70,7 @@ export default class Row extends Component {
 			const label = getFieldElements(table, fields, values, 'span');
 
 			return (
-				<tr className={`level-${level}`} onMouseOver={this.handleHover}>
+				<tr className={`level-${level}`} onMouseOver={this.handleHover} ref={(el) => { this.recordRow = el; }}>
 					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>
 					<td key="cellLabel" className="selfjoin-label">{label}</td>
 					<Interaction>
@@ -82,7 +82,7 @@ export default class Row extends Component {
 
 		const content = getFieldElements(table, fields, values, 'div', { className: 'mobile-cell' });
 		return (
-			<tr className="selfjoin-row">
+			<tr className="selfjoin-row" ref={(el) => { this.recordRow = el; }}>
 				<td>
 					{content}
 				</td>
@@ -116,7 +116,7 @@ export default class Row extends Component {
 		//ROW NORMAL, MOBILE
 		content = getFieldElements(table, fields, values, 'div', { className: 'mobile-cell' });
 		return (
-			<tr>
+			<tr ref={(el) => { this.recordRow = el; }}>
 				<td>
 					{content}
 				</td>
