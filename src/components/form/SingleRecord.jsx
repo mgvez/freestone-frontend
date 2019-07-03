@@ -67,31 +67,22 @@ export default class SingleRecord extends Component {
 
 	componentDidMount() {
 		this.requireData(this.props);
-		console.log(this.sidebar);
-		if (this.sidebar) {
-			// this.scrollingElement = getScrollParent(this.sidebar);
-			window.addEventListener('scroll', this.stickySidebar);
-		}
+		window.addEventListener('scroll', this.stickySidebar);
 	}
 
 	componentWillUnmount() {
-		if (this.sidebar) {
-			window.removeEventListener('scroll', this.stickySidebar);
-		}
+		window.removeEventListener('scroll', this.stickySidebar);
 	}
 
 	componentDidUpdate() {
-		// console.log('receive', nextProps.table.id, nextProps.table === this.props.table);
 		this.requireData(this.props);
 	}	
 
 	requireData(props) {
 		const { tableId, recordId } = props;
-		// console.log(props.recordId);
 		if (!props.table) this.props.fetchTable(tableId);
 
 		if (recordId && !props.record) {
-			// console.log(`fetch record ${tableId}.${recordId}`);
 			this.props.fetchRecord(tableId, recordId);
 		}
 	}
@@ -115,7 +106,6 @@ export default class SingleRecord extends Component {
 		if (field.subformPlaceholder) {
 			if (!isAside) {
 				const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
-				// console.log(child);
 				return this.renderChild(child);
 			}
 			return null;
@@ -125,7 +115,6 @@ export default class SingleRecord extends Component {
 		// console.log(this.props);
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
 		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
-		// console.log(this.props.record);
 		return isShowField ? (<Field
 			key={field.id} 
 			field={field}
@@ -143,12 +132,11 @@ export default class SingleRecord extends Component {
 	}
 
 	stickySidebar = () => {
-		console.log('scroll');
+		if (!this.sidebar) return;
 		if (!isWaitingForFrame) {
 			isWaitingForFrame = true;
 			requestAnimationFrame(this.doScrollHandler);
 		}
-		// this.doScrollHandler();
 	}
 
 
@@ -157,8 +145,6 @@ export default class SingleRecord extends Component {
 		const parent = this.sidebar.parentNode;
 		const pos = parent.getBoundingClientRect();
 		const inner = this.sidebar.getBoundingClientRect();
-
-		console.log(pos.top, pos.height, inner.height);
 
 		if (pos.top <= 160 - pos.height + inner.height) {
 			this.setState({ stickyState: 'absolute' });
