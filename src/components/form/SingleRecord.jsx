@@ -12,8 +12,8 @@ import FieldGroup from '../../containers/form/FieldGroup';
 import Field from './Field';
 import { GridContainer, GridItem } from '../../styles/Grid';
 
-let isWaitingForFrame = false;
 
+let isWaitingForFrame = false;
 const SideBar = styled.div`
 	padding: 10px 0;
 	margin-top: 20px;
@@ -26,7 +26,13 @@ const SideBar = styled.div`
 
 	.sticky & {
 		position: fixed;
-			top: 110px;
+			top: 160px;
+	}
+
+	.absolute & {
+		position: absolute;
+			top: auto;
+			bottom: 0;
 	}
 `;
 
@@ -61,17 +67,22 @@ export default class SingleRecord extends Component {
 
 	componentDidMount() {
 		this.requireData(this.props);
-		if (this.sidebar) window.addEventListener('scroll', this.stickySidebar);
+		if (this.sidebar) {
+			// this.scrollingElement = getScrollParent(this.sidebar);
+			window.addEventListener('scroll', this.stickySidebar);
+		}
 	}
 
 	componentWillUnmount() {
-		if (this.sidebar) window.removeEventListener('scroll', this.stickySidebar);
+		if (this.sidebar) {
+			window.removeEventListener('scroll', this.stickySidebar);
+		}
 	}
 
 	componentDidUpdate() {
 		// console.log('receive', nextProps.table.id, nextProps.table === this.props.table);
 		this.requireData(this.props);
-	}
+	}	
 
 	requireData(props) {
 		const { tableId, recordId } = props;
@@ -131,10 +142,12 @@ export default class SingleRecord extends Component {
 	}
 
 	stickySidebar = () => {
+		console.log('scroll');
 		if (!isWaitingForFrame) {
 			isWaitingForFrame = true;
 			requestAnimationFrame(this.doScrollHandler);
 		}
+		// this.doScrollHandler();
 	}
 
 
@@ -142,19 +155,20 @@ export default class SingleRecord extends Component {
 		isWaitingForFrame = false;
 		const parent = this.sidebar.parentNode;
 		const pos = parent.getBoundingClientRect();
+		const inner = this.sidebar.getBoundingClientRect();
 
-		// console.log(pos.top);
-		if (pos.top <= 110 - pos.height) {
+		console.log(pos.top, pos.height, inner.height);
+
+		if (pos.top <= 160 - pos.height + inner.height) {
 			this.setState({ stickyState: 'absolute' });
 			this.sidebar.style.width = pos.width + 'px';
-		} else if (pos.top <= 110) {
+		} else if (pos.top <= 160) {
 			this.setState({ stickyState: 'sticky' });
 			this.sidebar.style.width = pos.width + 'px';
 		} else {
 			this.setState({ stickyState: 'relative' });
 			this.sidebar.style.width = 'auto';
 		}
-
 	}
 
 	renderGroups(fields, isAside) {
@@ -189,7 +203,7 @@ export default class SingleRecord extends Component {
 			if (this.props.asideFields.length > 0) {
 				sidebar = (
 					<GridItem columns="4" className={this.state.stickyState}>
-						<SideBar ref={ref => this.sidebar = ref}>
+						<SideBar ref={ref => this.sidebar = ref} data-sidebar-inner>
 							{this.renderGroups(this.props.asideFields, true)}
 						</SideBar>
 					</GridItem>

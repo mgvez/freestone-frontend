@@ -9,6 +9,7 @@ const StyledEm = styled.i`
 	text-align: center;
 	font-size: inherit;
 	display:inline-block;
+	
 	&.cta {
 		cursor:pointer;
 		color: ${colors.ctaPrimary};

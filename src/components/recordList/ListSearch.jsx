@@ -12,10 +12,17 @@ import { Icon } from '../../styles/Icon';
 
 const Container = styled.div`
 	display: flex;
-	align-items: center;
+	align-items: stretch;
+
+	button {
+		border-radius: 0px;
+		line-height: normal;
+		height: auto;
+	}
 
 	input {
 		margin-bottom: 0;
+		margin-right: 0;
 	}
 `;
 

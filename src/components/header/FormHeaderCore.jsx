@@ -27,6 +27,9 @@ const StyledHeader = styled(Header)`
 		transition: transform 0.3s ease;
 		z-index: 5;
 		padding-left: calc(250px + 40px);
+
+		padding-top: 15px;
+		padding-bottom: 15px;
 	}
 	
 	.permalinks {

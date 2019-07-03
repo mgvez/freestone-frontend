@@ -17,6 +17,7 @@ export const GridContainer = styled.div`
 
 export function getItemCss(columns, offset, justify, align) {
 	return css`
+		position: relative;
 		grid-column: ${offset} / span ${columns};
 		${justify && `justify-self: ${justify};`};
 		${align && `align-self: ${align};`};

@@ -138,7 +138,8 @@ function getCheckboxContainer(props) {
 		}
 
 		&:after {
-			font-family: 'FontAwesome';
+			font-family: 'Font Awesome\ 5 Free';
+			font-weight: 900;
 			content: '\f00c';
 			display: none;
 			line-height: 1;
