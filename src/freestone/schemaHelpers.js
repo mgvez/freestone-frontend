@@ -1,5 +1,5 @@
 
-import { PRIKEY_ALIAS } from './SchemaProps';
+import { PRIKEY_ALIAS } from './schemaProps';
 
 
 export function getForeignFieldId(tableFromId, tableToId, allTables) {

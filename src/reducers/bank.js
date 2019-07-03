@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { BANK_IMAGE_API, BANK_USES_API, BANK_FILE_API, BANK_SETUP_SELECT, BANK_CANCEL_SELECT, BANK_CATEGORIES_API } from '../actions/bank';
 import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
-import { BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../freestone/SchemaProps';
+import { BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../freestone/schemaProps';
 import { CLEAR_DATA } from '../actions/dev';
 import { CLEAR_LIST } from '../actions/nav';
 

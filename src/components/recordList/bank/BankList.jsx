@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { PRIKEY_ALIAS } from '../../../freestone/SchemaProps';
+import { PRIKEY_ALIAS } from '../../../freestone/schemaProps';
 
 import BankListCell from '../../../containers/recordList/bank/BankListCell';
 import BankCategoriesSidebar from '../../../containers/recordList/bank/BankCategoriesSidebar';

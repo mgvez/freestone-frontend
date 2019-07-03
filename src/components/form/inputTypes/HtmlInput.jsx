@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // import TinyMCEInput from 'react-tinymce-input';
-import { BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../../../freestone/SchemaProps';
+import { BANK_IMG_TABLE, BANK_DOCS_TABLE } from '../../../freestone/schemaProps';
 import { Editor as TinyMCEInput } from '@tinymce/tinymce-react';
 
 import LinkInsert from '../helpers/LinkInsert';

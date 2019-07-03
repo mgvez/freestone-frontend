@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { TYPE_FILE } from '../../freestone/SchemaProps';
+import { TYPE_FILE } from '../../freestone/schemaProps';
 import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
 
 const Img = styled.img`

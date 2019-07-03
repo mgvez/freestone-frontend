@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { PRIKEY_ALIAS } from '../../../freestone/SchemaProps';
+import { PRIKEY_ALIAS } from '../../../freestone/schemaProps';
 
 import Heading from './Heading';
 import Row from '../../../containers/recordList/standard/Row';

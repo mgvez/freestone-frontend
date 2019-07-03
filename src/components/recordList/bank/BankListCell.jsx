@@ -32,7 +32,7 @@ import {
 	LABEL_PSEUDOFIELD_ALIAS,
 	TYPE_FILE,
 	TYPE_IMG,
- } from '../../../freestone/SchemaProps';
+ } from '../../../freestone/schemaProps';
 
 
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';

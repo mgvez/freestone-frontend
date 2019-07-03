@@ -13,7 +13,7 @@ import { PromptContainer, PromptWidget } from '../../styles/Prompts';
 import colors from '../../styles/Colors';
 import { Icon } from '../../styles/Icon';
 
-import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/SchemaProps';
+import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/schemaProps';
 
 const DEFAULT_LABEL = 'Actions';
 const EDIT_LABEL = 'Edit';

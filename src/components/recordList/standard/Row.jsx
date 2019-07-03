@@ -6,7 +6,7 @@ import { TweenMax } from '../../../utils/Greensock';
 
 import RecordInteractions from '../../../containers/recordList/RecordInteractions';
 import { getFieldElements } from './getFieldElements';
-import { PRIKEY_ALIAS } from '../../../freestone/SchemaProps';
+import { PRIKEY_ALIAS } from '../../../freestone/schemaProps';
 
 const Interaction = styled.td`
 	width: 250px;

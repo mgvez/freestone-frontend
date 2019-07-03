@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { BANK_CATEG_FOREIGN_FIELD } from '../../../freestone/SchemaProps';
+import { BANK_CATEG_FOREIGN_FIELD } from '../../../freestone/schemaProps';
 
 import ListNavLink from '../../../containers/recordList/ListNavLink';
 import BankCategoryAdd from '../../../containers/recordList/bank/BankCategoryAdd';

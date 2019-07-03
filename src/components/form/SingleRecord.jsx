@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/SchemaProps';
+import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
 import { StyledSingleRecord } from '../../styles/Form';
 import colors from '../../styles/Colors';
 

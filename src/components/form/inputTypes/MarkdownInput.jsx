@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Textarea } from '../../../styles/Input';
-import { BANK_IMG_TABLE } from '../../../freestone/SchemaProps';
+import { BANK_IMG_TABLE } from '../../../freestone/schemaProps';
 import { Button } from '../../../styles/Button';
 import { PLACEHOLDER } from '../../../freestone/settings';
 

@@ -1,7 +1,7 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/SchemaProps';
+import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 
 import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
 

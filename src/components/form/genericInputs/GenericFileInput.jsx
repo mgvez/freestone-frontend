@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
-import { TYPE_IMG } from '../../../freestone/SchemaProps';
+import { TYPE_IMG } from '../../../freestone/schemaProps';
 import { Button } from '../../../styles/Button';
 import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 import { Icon } from '../../../styles/Icon';

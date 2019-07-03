@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { schemaSelector } from './schema';
 
-import { TYPE_MAIN } from '../freestone/SchemaProps';
+import { TYPE_MAIN } from '../freestone/schemaProps';
 
 const recordsSelector = state => state.freestone.recordForm.records;
 const toggleLoadedRecordsSelector = state => state.freestone.siteHeader.loaded_records_visibility;

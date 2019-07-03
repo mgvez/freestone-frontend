@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ListNavLink from '../../../containers/recordList/ListNavLink';
 import { Icon } from '../../../styles/Icon';
 
-import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../../freestone/SchemaProps';
+import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../../freestone/schemaProps';
 
 const nonOrderable = [TYPE_IMG, TYPE_BANKIMG, TYPE_FILE];
 

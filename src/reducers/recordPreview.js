@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { PRIKEY_ALIAS } from '../freestone/SchemaProps';
+import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { CLEAR_DATA } from '../actions/dev';
 import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD, SET_RECORD_IS_PREVIEWING, SET_CURRENT_PREVIEW, SET_PREVIEW_VIEW_TYPE, PREVIEW_IFRAME } from '../actions/record';

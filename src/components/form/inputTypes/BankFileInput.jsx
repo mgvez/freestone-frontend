@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_IMG, BANK_DOCS_TABLE } from '../../../freestone/SchemaProps';
+import { TYPE_IMG, BANK_DOCS_TABLE } from '../../../freestone/schemaProps';
 
 import BankFileThumbnail from '../../../containers/fileThumbnail/BankFileThumbnail';
 import GenericFileInput from '../genericInputs/GenericFileInput';

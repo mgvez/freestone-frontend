@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
-import { TYPE_DATETIME } from '../../../freestone/SchemaProps';
+import { TYPE_DATETIME } from '../../../freestone/schemaProps';
 
 export default class DateInput extends Component {
 	static propTypes = {

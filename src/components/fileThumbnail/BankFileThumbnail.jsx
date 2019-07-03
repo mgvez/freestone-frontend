@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { BANK_FILE_ALIAS, BANK_TITLE_ALIAS, BANK_PATH_ALIAS } from '../../freestone/SchemaProps';
+import { BANK_FILE_ALIAS, BANK_TITLE_ALIAS, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
 import { Icon } from '../../styles/Icon';
 
 export default class BankFileThumbnail extends Component {

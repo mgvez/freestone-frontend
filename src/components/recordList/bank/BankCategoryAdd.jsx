@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import uniqueId from '../../../utils/UniqueId';
 
-import { BANK_IMG_NAME, BANK_IMG_CATEGORIES_TABLE, BANK_DOCS_CATEGORIES_TABLE } from '../../../freestone/SchemaProps';
+import { BANK_IMG_NAME, BANK_IMG_CATEGORIES_TABLE, BANK_DOCS_CATEGORIES_TABLE } from '../../../freestone/schemaProps';
 
 import { Heading3 } from '../../../styles/Texts';
 import { Button } from '../../../styles/Button';

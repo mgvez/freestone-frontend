@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ALL_RECORDS_ID, EVERYBODY_GROUP_ID } from '../freestone/SchemaProps';
+import { ALL_RECORDS_ID, EVERYBODY_GROUP_ID } from '../freestone/schemaProps';
 
 const allPermsSelector = state => state.freestone.permissions.sitePermissions;
 const allGroupsSelector = state => state.freestone.permissions.groups;

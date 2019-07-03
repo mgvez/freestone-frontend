@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_BANKIMG, TYPE_BANKFILE, TYPE_MARKDOWN } from '../../../freestone/SchemaProps';
+import { TYPE_BANKIMG, TYPE_BANKFILE, TYPE_MARKDOWN } from '../../../freestone/schemaProps';
 import { PLACEHOLDER } from '../../../freestone/settings';
 import { callApi, getEndpoint } from '../../../freestone/api';
 import { Button } from '../../../styles/Button';
