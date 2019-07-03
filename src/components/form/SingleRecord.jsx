@@ -67,6 +67,7 @@ export default class SingleRecord extends Component {
 
 	componentDidMount() {
 		this.requireData(this.props);
+		console.log(this.sidebar);
 		if (this.sidebar) {
 			// this.scrollingElement = getScrollParent(this.sidebar);
 			window.addEventListener('scroll', this.stickySidebar);
@@ -182,6 +183,10 @@ export default class SingleRecord extends Component {
 		}, []);
 	}
 
+	getSidebarRef = (ref) => {
+		this.sidebar = ref;
+	}
+
 	render() {
 		let form;
 		let subforms;
@@ -203,7 +208,7 @@ export default class SingleRecord extends Component {
 			if (this.props.asideFields.length > 0) {
 				sidebar = (
 					<GridItem columns="4" className={this.state.stickyState}>
-						<SideBar ref={ref => this.sidebar = ref} data-sidebar-inner>
+						<SideBar ref={this.getSidebarRef} data-sidebar-inner>
 							{this.renderGroups(this.props.asideFields, true)}
 						</SideBar>
 					</GridItem>
