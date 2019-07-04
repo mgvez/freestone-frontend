@@ -6,7 +6,7 @@ import { BANK_CATEG_FOREIGN_FIELD } from '../../../freestone/SchemaProps';
 import ListNavLink from '../../../containers/recordList/ListNavLink';
 import BankCategoryAdd from '../../../containers/recordList/bank/BankCategoryAdd';
 
-import { Heading2, Heading3 } from '../../../styles/Texts';
+import { Heading2 } from '../../../styles/Texts';
 import styled from 'styled-components';
 import colors from '../../../styles/Colors';
 import cssVars from '../../../styles/Variables';
@@ -16,32 +16,36 @@ import { Button } from '../../../styles/Button';
 const FiltersContainer = styled.section`
 	background: ${colors.backgroundLightest};
 	border: 1px ${colors.borderMedium} solid;
-	margin: 0 12px;
 	padding: 12px;
 	flex: 0 0 ${THUMBNAIL_SIZE}px;
 `;
 
 const CategList = styled.ul`
 	margin: 20px 0;
-`;
+	padding: 0;
+	`;
 
 const CategLink = styled.li`
 	border-bottom: 1px ${colors.borderLight} solid;
-	padding: 4px 0;
+	list-style: none;
 
 	a {
-		display: inline-block;
+		display: block;
 		color: ${colors.linksPrimary};
-		cursor: pointer;
+		font-weight: ${cssVars.fontWeightSemibold};
+		padding: 10px 15px;
 		text-decoration: none;
+		cursor: pointer;
+		transition: background 0.3s;
 
 		&:hover {
-			color: ${colors.accentSecondary};
+			color: ${colors.accentPrimary};
+			background: ${colors.backgroundLight};
 		}
 
 		&.active {
-			font-weight: ${cssVars.fontWeightBold};
 			color: ${colors.accentPrimary};
+			background: ${colors.backgroundMain};
 		}
 	}
 `;
@@ -89,8 +93,8 @@ export default class BankCategoriesSidebar extends Component {
 						filter={{ [BANK_CATEG_FOREIGN_FIELD]: category.prikey }}
 						activeClassName="active"
 					>
-						{category.name}
-					</ListNavLink> ({category.n_items})
+						{category.name} ({category.n_items})
+					</ListNavLink>
 				</CategLink>
 			);
 		});
@@ -103,7 +107,7 @@ export default class BankCategoriesSidebar extends Component {
 		return (
 			<FiltersContainer>
 				{cancelBtn}
-				<Heading3>Show</Heading3>
+				<Heading2>Filters</Heading2>
 				<CategList>{categories}</CategList>
 				
 				<BankCategoryAdd bankName={this.props.bankName} />

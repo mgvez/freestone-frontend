@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../../styles/Button';
+import { Icon } from '../../../styles/Icon';
 
 export default class DeleteRecord extends Component {
 	static propTypes = {
@@ -21,6 +22,6 @@ export default class DeleteRecord extends Component {
 	};
 
 	render() {
-		return <Button onClick={this.deleteRecord} round danger>Delete record</Button>;
+		return <Button onClick={this.deleteRecord} round danger><Icon icon="trash-alt" /> Delete record</Button>;
 	}
 }

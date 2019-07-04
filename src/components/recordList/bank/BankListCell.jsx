@@ -36,12 +36,13 @@ import {
 
 
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
+import { getItemCss } from '../../../styles/Grid';
 
 const StyledCell = styled.div`
-	background: ${colors.backgroundMainAccent};
+	background: ${colors.backgroundLight};
 	border: 1px ${colors.borderMedium} solid;
-	margin: 0 12px 12px 0;
-	width: ${THUMBNAIL_SIZE}px;
+	margin-bottom: 15px;
+	${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.offset || 'auto', props.justify, props.align)};
 `;
 
 const InfosContainer = styled.div`
@@ -49,8 +50,17 @@ const InfosContainer = styled.div`
 	display:flex;
 	align-content: space-around;
 	flex-direction: column;
-	font-size: 0.9em;
-	font-weight: ${cssVars.fontWeightSemibold};
+	font-size: 1em;
+	font-weight: ${cssVars.fontWeightNormal};
+
+	.infos {
+		margin-bottom: 10px;
+
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+
 	&.top {
 		margin: 12px;
 	}
@@ -59,6 +69,7 @@ const InfosContainer = styled.div`
 const Row = styled.div`
 	display: flex;
 	justify-content: space-between;
+	margin: 10px 0;
 `;
 
 const Label = styled.div`
@@ -91,22 +102,22 @@ export default class BankListCell extends Component {
 		// console.log(record);
 		// console.log(`${BANK_IMG_TABLE} ${BANK_FILE_ALIAS} ${BANK_THUMB_ALIAS}`);
 		// console.log(thumbPath);
-		const comments = record[`${tableName}_${BANK_COMMENTS_ALIAS}`] ? (<div key="comments">
-			<Label>Comments</Label> : {record[`${tableName}_${BANK_COMMENTS_ALIAS}`]}
+		const comments = record[`${tableName}_${BANK_COMMENTS_ALIAS}`] ? (<div key="comments" className="infos">
+			<strong>Comments</strong> : {record[`${tableName}_${BANK_COMMENTS_ALIAS}`]}
 		</div>) : null;
 
 		const sizeDisplay = bankName === BANK_IMG_NAME ? (
-			<div key="size">
-				{record[`${tableName}_${BANK_IMG_DIM_ALIAS}`]}, {record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}kb
+			<div key="size" className="infos">
+				<strong>Size: </strong>{record[`${tableName}_${BANK_IMG_DIM_ALIAS}`]}, {record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}kb
 			</div>
 		) : (
-			<div key="size">
-				{record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}kb
+			<div key="size" className="infos">
+				<strong>Size: </strong>{record[`${tableName}_${BANK_FILESIZE_ALIAS}`]}kb
 			</div>
 		);
 
 		return (
-			<StyledCell key={`item-${prikeyVal}`}>
+			<StyledCell columns="4" justify="center" key={`item-${prikeyVal}`}>
 				<FileThumbnail
 					val={record[`${tableName}_${BANK_FILE_ALIAS}`]}
 					absolutePath={filePath}
@@ -127,8 +138,8 @@ export default class BankListCell extends Component {
 					</Row>
 					
 					<InfosContainer>
-						<div key="title">{record[`${tableName}_${BANK_TITLE_ALIAS}${this.props.lang}`]}</div>
-						<div key="file">{record[`${tableName}_${BANK_FILE_ALIAS}`]}</div>
+						<div key="title" className="infos">{record[`${tableName}_${BANK_TITLE_ALIAS}${this.props.lang}`]}</div>
+						<div key="file" className="infos"><strong>File name :</strong> {record[`${tableName}_${BANK_FILE_ALIAS}`]}</div>
 						{sizeDisplay}
 						{comments}
 					</InfosContainer>
@@ -140,7 +151,7 @@ export default class BankListCell extends Component {
 					<Row key="fcn" className="btns">
 						{!nUses && <DeleteBtn isButton key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} />}
 						<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" small="true" round="true" warn="true" >
-							<Icon icon="pencil-alt" />Edit
+							<Icon icon="pencil-alt" side="left" />Edit
 						</NavLinkButton>
 					</Row>
 

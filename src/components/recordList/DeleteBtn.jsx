@@ -64,7 +64,7 @@ export default class DeleteBtn extends Component {
 		}
 
 		return this.props.isButton ? (
-			<Button onClick={this.process} round="true" small="true" danger="true"><Icon icon="trash-alt" />Delete</Button>
+			<Button onClick={this.process} round="true" small="true" danger="true"><Icon icon="trash-alt" side="left" />Delete</Button>
 		) : (
 			<RecordAction onClick={this.process} danger="true"><Icon icon="trash-alt" />Delete</RecordAction>
 		);
