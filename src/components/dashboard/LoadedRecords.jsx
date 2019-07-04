@@ -12,6 +12,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 import LoadedRecordsToggler from '../../containers/widgets/LoadedRecordsToggler';
 import Cancel from '../../containers/process/Cancel';
+import { GridContainer, GridItem } from '../../styles/Grid';
 
 function leftPad(n) {
 	return n < 10 ? `0${n}` : n;
@@ -53,6 +54,18 @@ const StyledLoadedRecords = styled.nav`
 		color: ${colors.warnPrimary};
 	}
 
+	.loaded-record {
+		line-height: 1.3;
+
+		.info-record {
+			margin-top: 5px;
+			line-height: 1.3;
+		} 
+
+		.record-buttons {
+			margin-top: 10px;
+		}
+	}
 
 
 	
@@ -125,7 +138,8 @@ export default class LoadedRecords extends Component {
 
 	stick = () => {
 		this.origOffset = this.origOffset || (this.nav && this.nav.offsetTop);
-		this.setState({ isSticky: window.scrollY >= this.origOffset });
+		const isSticky = window.scrollY >= this.origOffset;
+		if (isSticky !== this.state.isSticky) this.setState({ isSticky });
 	}
 
 	linkClick = () => {
@@ -145,8 +159,14 @@ export default class LoadedRecords extends Component {
 			<StyledLoadedRecords className={`${stickClass} ${collapsedClass}`} ref={ref => this.nav = ref}>
 				<Scrollbars>
 					<div className="container">
-						<LoadedRecordsToggler isClose />
-						<Heading2>Loaded records</Heading2>
+						<GridContainer>
+							<GridItem columns="10">
+								<Heading2>Loaded records</Heading2>
+							</GridItem>
+							<GridItem columns="2">
+								<LoadedRecordsToggler isClose />
+							</GridItem>
+						</GridContainer>
 						{
 							this.props.records.map((records) => {
 								if (!records.records || !records.table || !records.records.length) return null;
@@ -158,7 +178,7 @@ export default class LoadedRecords extends Component {
 
 												const warnClass = record.isOutdated ? 'warning' : '';
 												const outdatedWarning = (
-													<div className={warnClass}>
+													<div className={`${warnClass} info-record`}>
 														This record has been open for {this.getTimeElapsed(record)}.
 													</div>
 												);
@@ -169,6 +189,7 @@ export default class LoadedRecords extends Component {
 														{outdatedWarning}
 														<div className="record-buttons">
 															<NavLinkButton to={`/edit/${records.table.name}/${record.id}`} onClick={this.linkClick} round warn><Icon icon="pencil-alt" /><span> Edit</span></NavLinkButton>
+															
 															<Cancel tableName={records.table.name} recordId={record.id} />
 														</div>
 													</div>

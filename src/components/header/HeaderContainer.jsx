@@ -33,8 +33,8 @@ export default class HeaderContainer extends Component {
 
 	onScroll = () => {
 		const st = window.pageYOffset;
-
-		this.setState({ isFixed: (st >= this.staticHeight + cssVariables.topHeaderHeight) });
+		const isFixed = (st >= this.staticHeight + cssVariables.topHeaderHeight);
+		if (isFixed !== this.state.isFixed) this.setState({ isFixed });
 	}
 
 	setHeight = (isLight, h) => {

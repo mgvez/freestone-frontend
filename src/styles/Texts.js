@@ -16,6 +16,10 @@ const title = `
 		font-weight: normal;
 	}
 
+	&:last-child {
+		margin-bottom: 0;
+	}
+
 `;
 
 export const Heading1 = styled.h1`

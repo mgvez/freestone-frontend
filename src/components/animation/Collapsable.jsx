@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { TweenMax, Circ } from '../../utils/Greensock';
+import styled from 'styled-components';
 
 const TOGGLE_ANIM_TIME = 0.3;
+
+const StyledCollapsable = styled.div`
+	> div {
+		padding-top: 20px;
+	}
+`;
 
 export default class Collapsable extends Component {
 	static propTypes = {
@@ -42,6 +49,6 @@ export default class Collapsable extends Component {
 	}
 
 	render() {
-		return <div ref={this.getContainer}>{this.props.children}</div>;
+		return <StyledCollapsable ref={this.getContainer}>{this.props.children}</StyledCollapsable>;
 	}
 }

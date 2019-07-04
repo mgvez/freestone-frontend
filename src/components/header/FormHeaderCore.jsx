@@ -153,10 +153,10 @@ export default class FormHeaderCore extends Component {
 
 
 		const infos = (this.props.isLight) ? 
-			<HeaderTexts>
+			<HeaderTexts columns="9">
 				{slugs}
 			</HeaderTexts> : (
-			<HeaderTexts>
+			<HeaderTexts columns="9">
 				{this.props.children}
 				{lastModif}
 				{slugs}
@@ -176,10 +176,11 @@ export default class FormHeaderCore extends Component {
 		return (
 			<StyledHeader className={classList.join(' ')} style={style} ref="header">
 				{infos}
-				
-				<HeaderFcn>
+
+				<HeaderFcn columns="3" offset="10" justify="end" align="end">
 					{this.props.buttons}
 				</HeaderFcn>
+
 				<div className="popout">
 					{editSchema}
 					{previewProcessor}

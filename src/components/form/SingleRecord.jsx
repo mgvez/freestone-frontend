@@ -11,6 +11,7 @@ import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import Field from './Field';
 import { GridContainer, GridItem } from '../../styles/Grid';
+import { StyledFieldGroup } from '../../styles/Input';
 
 
 let isWaitingForFrame = false;
@@ -38,7 +39,7 @@ const SideBar = styled.div`
 export default class SingleRecord extends Component {
 	state = {
 		stickyState: 'relative',
-		stickyWidth: '0',
+		stickyWidth: 'auto',
 	}
 
 	static propTypes = {
@@ -68,7 +69,7 @@ export default class SingleRecord extends Component {
 		this.requireData(this.props);
 		window.addEventListener('scroll', this.stickySidebar);
 	}
-
+	
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.stickySidebar);
 	}
@@ -146,12 +147,12 @@ export default class SingleRecord extends Component {
 		const inner = this.sidebar.getBoundingClientRect();
 
 		if (pos.top <= 160 - pos.height + (inner.height + 20)) {
-			this.setState({ stickyState: 'absolute' });
+			if (this.state.stickyState !== 'absolute') this.setState({ stickyState: 'absolute' });
 			this.sidebar.style.width = pos.width + 'px';
 		} else if (pos.top <= 160) {
-			this.setState({ stickyState: 'sticky' });
+			if (this.state.stickyState !== 'sticky') this.setState({ stickyState: 'sticky' });
 			this.sidebar.style.width = pos.width + 'px';
-		} else {
+		} else if (this.state.stickyState !== 'relative') {
 			this.setState({ stickyState: 'relative' });
 			this.sidebar.style.width = 'auto';
 		}
@@ -210,7 +211,7 @@ export default class SingleRecord extends Component {
 					{subsiteField}
 					<GridContainer>
 						<GridItem columns="6">
-							{recIdDisplay}
+							<StyledFieldGroup>{recIdDisplay}</StyledFieldGroup>
 						</GridItem>
 						<GridItem columns="6" justify="right">
 							{deleteBtn}

@@ -9,20 +9,8 @@ export const StyledSingleRecord = styled.section`
 	position: relative;
 
 	&:nth-of-type(2n) {
-		background: ${colors.backgroundMainAccent};
-
-		&:before {
-			content: ' ';
-			position: absolute;
-				top: 0;
-				left: 50%;
-
-			background: ${colors.backgroundMainAccent};
-			transform: translate(-50%, 0);
-			width: 10000px;
-			height: 100%;
-		}
-
+		background: ${colors.backgroundMain};
+		padding: 20px 20px 20px 0;
 	}
 `;
 
@@ -41,6 +29,20 @@ export const Subform = styled.section`
 
 		button + button {
 			margin-left: 15px;
+		}
+	}
+
+	&.subform-list section {
+		border-left: 10px solid ${colors.accentPrimaryLighter};
+		border-radius: 5px;
+		margin: 20px 0;
+
+		&:first-of-type {
+			margin-top: 40px;
+		}
+
+		&:nth-of-type(2n) {
+			border-color: ${colors.accentPrimaryLight};
 		}
 	}
 `;

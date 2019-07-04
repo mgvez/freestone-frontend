@@ -8,6 +8,9 @@ import AddRecord from '../../../containers/form/buttons/AddRecord';
 import Collapsable from '../../animation/Collapsable';
 import ToggleCollapse from '../buttons/ToggleCollapse';
 
+import { Subform, SubformHeader } from '../../../styles/Form';
+import { GridItem } from '../../../styles/Grid';
+
 export default class SubformList extends Component {
 	static propTypes = {
 		table: PropTypes.object,
@@ -59,18 +62,19 @@ export default class SubformList extends Component {
 		const changeViewBtn = (!this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
 		const content = this.getContent();
 		return (
-			<section className="subform subform-list">
-				<header className="row">
-					<div className="col-md-8">
+			<Subform className="subform-list">
+				<SubformHeader className="row">
+					<GridItem columns="8">
 						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
-					</div>
-					<div className="col-md-3 col-md-offset-1 fcn">
+					</GridItem>
+					<GridItem columns="3" offset="10" className="fcn">
 						{changeViewBtn}
 						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
-					</div>
-				</header>
+					</GridItem>
+				</SubformHeader>
+
 				{content}
-			</section>
+			</Subform>
 		);
 
 	}

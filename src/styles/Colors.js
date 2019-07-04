@@ -1,5 +1,6 @@
 import { hexToRgb } from './Utils';
 
+
 const gray31 = '#4a4a4a';
 const gray43 = '#62666c';
 const gray45 = '#686b6c';
@@ -12,6 +13,9 @@ const gray96 = '#f3f3f3';
 const gray97 = '#f6f6f6';
 
 const teal62 = '#19aa8d';
+const rgbTeal = hexToRgb(teal62);
+const tealLight = `rgba(${rgbTeal}, 0.8)`;
+const tealLighter = `rgba(${rgbTeal}, 0.5)`;
 
 const yellow76 = '#f8ac59';
 
@@ -41,6 +45,8 @@ const colors = {
 
 	ctaPrimary: teal62,
 	accentPrimary: teal62,
+	accentPrimaryLight: tealLight,
+	accentPrimaryLighter: tealLighter,
 	accentSecondary: blue26,
 	warnPrimary: yellow76,
 	dangerPrimary: red58,
