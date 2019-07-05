@@ -5,7 +5,7 @@ const initialState = {
 	loaded_records_visibility: false,
 	nav_visibility: true,
 	nav_visibility_user: true,
-	loaded_records_visibility_user: true,
+	loaded_records_visibility_user: false,
 };
 
 export default function siteHeader(state = initialState, action) {
