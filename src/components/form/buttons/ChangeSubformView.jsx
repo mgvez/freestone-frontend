@@ -22,7 +22,7 @@ export default class ChangeSubformView extends Component {
 		// console.log(this.props.currentViewType, this.props.tableId);
 		const label = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'View tabbed' : 'View as list';
 		const icon = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'columns' : 'list';
-		return <Button onClick={this.setType} small round bordered><Icon icon={icon} />{label}</Button>;
+		return <Button onClick={this.setType} small round bordered><Icon icon={icon} side="left" />{label}</Button>;
 
 	}
 }

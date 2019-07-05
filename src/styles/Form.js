@@ -33,7 +33,7 @@ export const Subform = styled.section`
 	}
 
 	&.subform-list section {
-		border-left: 10px solid ${colors.accentPrimaryLighter};
+		border-left: 10px solid ${colors.accentPrimary};
 		border-radius: 5px;
 		margin: 20px 0;
 

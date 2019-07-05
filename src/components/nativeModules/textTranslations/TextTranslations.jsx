@@ -4,7 +4,38 @@ import PropTypes from 'prop-types';
 import SingleTranslation from '../../../containers/nativeModules/textTranslations/SingleTranslation';
 import Field from './Field';
 import FormHeader from '../../header/FormHeader'; 
+import styled from 'styled-components';
+import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
+import colors from '../../../styles/Colors';
 
+const Container = styled.div`
+	${GridContainerStyle};
+	margin-bottom: 30px;
+
+	&:nth-of-type(2n) {
+		.translation {
+			border-color: ${colors.accentPrimaryLight};
+			background: ${colors.backgroundLight};
+		}
+	}
+
+	.translation-label {
+		margin-bottom: 15px;
+	}
+
+	.translation {
+		padding: 25px;
+
+		border-left: 10px solid ${colors.accentPrimary};
+		background: rgba(255, 255, 255, 0.4);
+
+		border-radius: 5px;
+
+		label {
+			background-color: ${colors.backgroundMain};
+		}
+	}
+`;
 export default class TextTranslations extends Component {
 	static propTypes = {
 		translations: PropTypes.object,
@@ -80,40 +111,48 @@ export default class TextTranslations extends Component {
 			if (this.state.isSchema) {
 				keys = this.props.translationKeys.map((translationKey, tIdx) => {
 					const labelNode = <div>{translationKey}</div>;
-					return (<div key={tIdx} className="translation">
-						<div className="row">
-							<div className="col-md-12 translation-label">
-								{labelNode}
-							</div>
-						</div>
-						<div>
+					return (<GridContainer key={tIdx} className="translation">
+						<GridItem columns="6" className="translation-label">
+							{labelNode}
+						</GridItem>
+						<GridItem columns="6">
 							<Field label="label">
 								<SingleTranslation translationKey={translationKey} />
 							</Field>
-						</div>
-					</div>);
+						</GridItem>
+					</GridContainer>);
 				});
 			} else {
 				
 				keys = this.props.translationKeys.map((translationKey, tIdx) => {
 					const label = this.props.schema[translationKey];
-					const labelNode = label ? <div>{label} <span className="key">{translationKey}</span></div> : <div>{translationKey}</div>;
-					return (<div key={tIdx} className="translation">
-						<div className="row">
-							<div className="col-md-12 translation-label">
-								{labelNode}
-							</div>
-						</div>
-						<div>
-						{this.props.languages.map((language, idx) => {
-							return (<div key={idx}>
-								<Field label={language}>
-									<SingleTranslation translationKey={translationKey} language={language} />
-								</Field>
-							</div>);
-						})}
-						</div>
-					</div>);
+					const labelNode = label ? <strong>{label} <span className="key">{translationKey}</span></strong> : <strong>{translationKey}</strong>;
+					return (
+						<Container key={tIdx}>
+							<GridItem columns="10" offset="2" className="translation">
+								<GridContainer>
+									<GridItem columns="12" align="center">
+										<div className="translation-label">
+											{labelNode}
+										</div>
+									</GridItem>
+
+									<GridItem columns="12">
+										<GridContainer>
+											{this.props.languages.map((language, idx) => {
+												return (<GridItem columns="6" key={idx}>
+													<Field label={language}>
+														<SingleTranslation translationKey={translationKey} language={language} />
+													</Field>
+												</GridItem>);
+											})}
+										</GridContainer>
+									</GridItem>
+									
+								</GridContainer>
+							</GridItem>
+						</Container>
+					);
 				});
 			}
 
@@ -141,7 +180,9 @@ export default class TextTranslations extends Component {
 				<FormHeader hasLanguageToggle={false} buttons={actionBtns} editSchemaAction={this.onEditSchema}>
 					<h1>{title}</h1>
 				</FormHeader>
-				{keys}
+				<MainZone>
+					{keys}
+				</MainZone>
 			</section>
 		);
 	}
