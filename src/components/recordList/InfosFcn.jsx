@@ -62,7 +62,7 @@ export default class InfosFcn extends Component {
 		return (
 			<Container>
 				{tt}
-				<Button onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} tiny="true" faded="true" info="true" circle="true"><Icon icon="info" /></Button>
+				<Button onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} tiny="true" faded="true" info="true" circle="true"><Icon icon="info" side="center" /></Button>
 			</Container>
 		);
 	}

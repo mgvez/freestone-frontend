@@ -1,6 +1,46 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { GridContainerStyle, GridItem } from '../../../styles/Grid';
+import colors from '../../../styles/Colors';
+import cssVars from '../../../styles/Variables';
 
+const Container = styled.div`
+	${GridContainerStyle}
+	
+	.inputs-container {
+		display: flex;
+		align-items: center;
+	}
+
+	.input-wrapper {
+		width: 100%;
+
+		input {
+			position: relative;
+			left: 50px;
+			width: calc(100% - 50px);
+			height: 40px;
+			margin-bottom: 0;
+			/* padding-left: 60px; */
+		}
+	}
+
+	label {
+		position: absolute;
+			top: 50%;
+		transform: translate(0, -50%);
+		width: 50px;
+		height: 40px;
+		line-height: 40px;
+		
+		text-align: center;
+		margin-right: 15px;
+		text-transform: uppercase;
+		color: ${colors.accentPrimary};
+		font-weight: ${cssVars.fontWeightBold};
+	}
+`;
 export default class Field extends Component {
 	static propTypes = {
 		children: PropTypes.any,
@@ -17,15 +57,15 @@ export default class Field extends Component {
 		const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
 		const desc = this.props.description ? <em className="field-description">{this.props.description}</em> : null;
 		return (
-			<div className="field row">
-				<div className="col-sm-2 field-label">
+			<Container className="field">
+				<GridItem className="inputs-container" columns="12" align="center">
 					<label>{this.props.label} {languageAppend}</label>
-				</div>
-				<div className="col-sm-8">
-					{this.props.children}
-					{desc}
-				</div>
-			</div>
+					<div className="input-wrapper">
+						{this.props.children}
+						{desc}
+					</div>
+				</GridItem>
+			</Container>
 		);
 
 	}

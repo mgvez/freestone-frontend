@@ -9,15 +9,13 @@ const OrderContainer = styled.div`
 	display: inline-block;
 	vertical-align: middle;
 
-	.icon {
-		color: ${colors.accentPrimary};
+	.ctaup {
+		margin-bottom: 10px;
+	}
+
+	i {
 		display: block;
 		text-align: center;
-		cursor: pointer;
-
-		& + .icon {
-			margin-top: 20px
-		}
 
 		&:hover {
 			text-decoration: none;
@@ -48,7 +46,7 @@ export default class OrderFcn extends Component {
 	render() {
 		return (
 			<OrderContainer>
-				<div onClick={this.swapOrderUp} key="ctaup"><Icon icon="arrow-up" cta /></div>
+				<div className="ctaup" onClick={this.swapOrderUp} key="ctaup"><Icon icon="arrow-up" cta /></div>
 				<div onClick={this.swapOrderDown} key="ctadown"><Icon icon="arrow-down" onClick={this.swapOrderDown} cta /></div>
 			</OrderContainer>
 		);

@@ -41,6 +41,10 @@ const GlobalStyle = createGlobalStyle`
 		}
 	}
 
+	td {
+		line-height: 1.3;
+	}
+
 	${ReactComponents}
 
 	.mce-tinymce {

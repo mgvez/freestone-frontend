@@ -69,8 +69,8 @@ export default class BankNUses extends Component {
 
 		return (
 			<PromptContainer className={this.state.active && 'active'}>
-				<Button small="true" info="true" bordered="true" round="true" faded="true" onClick={this.toggleActions}>
-					{this.props.nUses} use(s) <Icon icon="angle-down" />
+				<Button small="true" info="true" bordered="true" round="true" onClick={this.toggleActions}>
+					{this.props.nUses} use(s) <Icon icon="angle-down" side="right" />
 				</Button>
 				{this.state.active && (<PromptWidget light large>
 					<ul>

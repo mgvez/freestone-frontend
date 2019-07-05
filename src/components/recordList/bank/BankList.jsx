@@ -9,23 +9,17 @@ import BankCategoriesSidebar from '../../../containers/recordList/bank/BankCateg
 import { Heading2 } from '../../../styles/Texts';
 import styled from 'styled-components';
 import colors from '../../../styles/Colors';
+import { GridContainer, GridItem, GridContainerStyle } from '../../../styles/Grid';
 
 const SectionsContainer = styled.div`
-	display:flex;
-	align-items: flex-start;
-	flex-wrap: nowrap;
+	margin-top: 40px;
+	${GridContainerStyle};
 `;
 
 const GroupContainer = styled.div`
 	margin-bottom: 40px;
 	border-bottom: 1px ${colors.borderMedium} solid;
 `;
-
-const CellsContainer = styled.div`
-	display:flex;
-	flex-wrap: wrap;
-`;
-
 
 export default class BankList extends Component {
 	static propTypes = {
@@ -57,9 +51,11 @@ export default class BankList extends Component {
 	render() {
 		return (
 			<SectionsContainer>
-				<BankCategoriesSidebar bankName={this.props.bankName} tableName={this.props.tableName} />
+				<GridItem columns="3">
+					<BankCategoriesSidebar bankName={this.props.bankName} tableName={this.props.tableName} />
+				</GridItem>
 
-				<section key="result">
+				<GridItem columns="9" key="result">
 				{
 					this.props.groupedRecords.map((group, groupIdx) => {
 						let groupHeading;
@@ -72,7 +68,7 @@ export default class BankList extends Component {
 						return (
 							<GroupContainer key={groupIdx}>
 								{groupHeading}
-								<CellsContainer>
+								<GridContainer>
 								{
 									group.records.map((record) => {
 										const pk = record[PRIKEY_ALIAS];
@@ -83,13 +79,13 @@ export default class BankList extends Component {
 										/>);
 									})
 								}
-								</CellsContainer>
+								</GridContainer>
 							</GroupContainer>
 						);
 
 					})
 				}
-				</section>
+				</GridItem>
 			</SectionsContainer>
 		);
 	}

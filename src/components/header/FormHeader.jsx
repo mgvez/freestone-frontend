@@ -50,7 +50,8 @@ export default class FormHeader extends Component {
 
 	onScroll = () => {
 		const st = window.pageYOffset;
-		this.setState({ isFixed: (st >= cssVariables.topHeaderHeight + (this.staticHeight / 2)) });
+		const isFixed = (st >= cssVariables.topHeaderHeight + (this.staticHeight / 2));
+		if (isFixed !== this.state.isFixed) this.setState({ isFixed });
 	}
 
 	setHeight = (isLight, h, m) => {

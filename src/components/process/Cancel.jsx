@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../styles/Button';
+import { Icon } from '../../styles/Icon';
 
 export default class Cancel extends Component {
 	static propTypes = {
@@ -48,7 +49,7 @@ export default class Cancel extends Component {
 		}
 
 		return (
-			<Button onClick={this.doCancel} round danger>{this.props.label}</Button>
+			<Button onClick={this.doCancel} round danger><Icon icon="times" />{this.props.label}</Button>
 		);
 	}
 }

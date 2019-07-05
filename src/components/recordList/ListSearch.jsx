@@ -8,14 +8,32 @@ import { Input } from '../../styles/Input';
 import { Heading3 } from '../../styles/Texts';
 import styled from 'styled-components';
 import { Icon } from '../../styles/Icon';
+import colors from '../../styles/Colors';
 
 
 const Container = styled.div`
+	position: relative;
 	display: flex;
-	align-items: center;
+	align-items: stretch;
 
-	input {
-		margin-bottom: 0;
+	.cancel-search {
+		position: absolute;
+		left: 250px;
+		padding: 0 10px;
+		background: none;
+		color: ${colors.textPrimary};
+		font-size: 18px;
+		height: 100%;
+	}
+	
+	&.input-wrapper {
+		position: relative;
+		
+		input {
+			width: 250px;
+			margin-bottom: 0;
+			margin-right: 0;
+		}
 	}
 `;
 
@@ -66,7 +84,7 @@ export default class ListSearch extends Component {
 	}
 
 	getClearSearch() {
-		return this.props.search ? <Button danger icon type="reset" onClick={this.onUpdateSearchField}><Icon icon="times" /></Button> : null;
+		return this.props.search ? <Button danger icon type="reset" onClick={this.onUpdateSearchField} className="cancel-search" >&times;</Button> : null;
 	}
 
 	handleSubmit = (e) => {
@@ -83,8 +101,11 @@ export default class ListSearch extends Component {
 		return (<Form onSubmit={this.handleSubmit}>
 			{this.getSearchResults()}
 			<Container>
-				<Input search type="search" placeholder="search" ref={this.searchInput} />
-				<Button icon><Icon icon="search" /></Button>
+				<Container className="input-wrapper">
+					<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
+					<Button icon inputCta ><Icon icon="search" side="center" /></Button>
+				</Container>
+				
 				{this.getClearSearch()}
 			</Container>
 		</Form>);

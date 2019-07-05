@@ -11,12 +11,12 @@ import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import Field from './Field';
 import { GridContainer, GridItem } from '../../styles/Grid';
+import { StyledFieldGroup } from '../../styles/Input';
+
 
 let isWaitingForFrame = false;
-
 const SideBar = styled.div`
 	padding: 10px 0;
-	margin-top: 20px;
 	background: ${colors.backgroundDark};
 	color: ${colors.white};
 	
@@ -26,14 +26,20 @@ const SideBar = styled.div`
 
 	.sticky & {
 		position: fixed;
-			top: 110px;
+			top: 170px;
+	}
+
+	.absolute & {
+		position: absolute;
+			top: auto;
+			bottom: 0;
 	}
 `;
 
 export default class SingleRecord extends Component {
 	state = {
 		stickyState: 'relative',
-		stickyWidth: '0',
+		stickyWidth: 'auto',
 	}
 
 	static propTypes = {
@@ -61,25 +67,22 @@ export default class SingleRecord extends Component {
 
 	componentDidMount() {
 		this.requireData(this.props);
-		if (this.sidebar) window.addEventListener('scroll', this.stickySidebar);
+		window.addEventListener('scroll', this.stickySidebar);
 	}
-
+	
 	componentWillUnmount() {
-		if (this.sidebar) window.removeEventListener('scroll', this.stickySidebar);
+		window.removeEventListener('scroll', this.stickySidebar);
 	}
 
 	componentDidUpdate() {
-		// console.log('receive', nextProps.table.id, nextProps.table === this.props.table);
 		this.requireData(this.props);
-	}
+	}	
 
 	requireData(props) {
 		const { tableId, recordId } = props;
-		// console.log(props.recordId);
 		if (!props.table) this.props.fetchTable(tableId);
 
 		if (recordId && !props.record) {
-			// console.log(`fetch record ${tableId}.${recordId}`);
 			this.props.fetchRecord(tableId, recordId);
 		}
 	}
@@ -103,7 +106,6 @@ export default class SingleRecord extends Component {
 		if (field.subformPlaceholder) {
 			if (!isAside) {
 				const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
-				// console.log(child);
 				return this.renderChild(child);
 			}
 			return null;
@@ -113,7 +115,6 @@ export default class SingleRecord extends Component {
 		// console.log(this.props);
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
 		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
-		// console.log(this.props.record);
 		return isShowField ? (<Field
 			key={field.id} 
 			field={field}
@@ -131,6 +132,7 @@ export default class SingleRecord extends Component {
 	}
 
 	stickySidebar = () => {
+		if (!this.sidebar) return;
 		if (!isWaitingForFrame) {
 			isWaitingForFrame = true;
 			requestAnimationFrame(this.doScrollHandler);
@@ -142,19 +144,18 @@ export default class SingleRecord extends Component {
 		isWaitingForFrame = false;
 		const parent = this.sidebar.parentNode;
 		const pos = parent.getBoundingClientRect();
+		const inner = this.sidebar.getBoundingClientRect();
 
-		// console.log(pos.top);
-		if (pos.top <= 110 - pos.height) {
-			this.setState({ stickyState: 'absolute' });
+		if (pos.top <= 160 - pos.height + (inner.height + 20)) {
+			if (this.state.stickyState !== 'absolute') this.setState({ stickyState: 'absolute' });
 			this.sidebar.style.width = pos.width + 'px';
-		} else if (pos.top <= 110) {
-			this.setState({ stickyState: 'sticky' });
+		} else if (pos.top <= 160) {
+			if (this.state.stickyState !== 'sticky') this.setState({ stickyState: 'sticky' });
 			this.sidebar.style.width = pos.width + 'px';
-		} else {
+		} else if (this.state.stickyState !== 'relative') {
 			this.setState({ stickyState: 'relative' });
 			this.sidebar.style.width = 'auto';
 		}
-
 	}
 
 	renderGroups(fields, isAside) {
@@ -166,6 +167,10 @@ export default class SingleRecord extends Component {
 			}
 			return <FieldGroup key={group.key} id={group.key} label={group.label}>{groupFieldRows}</FieldGroup>;
 		}, []);
+	}
+
+	getSidebarRef = (ref) => {
+		this.sidebar = ref;
 	}
 
 	render() {
@@ -189,7 +194,7 @@ export default class SingleRecord extends Component {
 			if (this.props.asideFields.length > 0) {
 				sidebar = (
 					<GridItem columns="4" className={this.state.stickyState}>
-						<SideBar ref={ref => this.sidebar = ref}>
+						<SideBar ref={this.getSidebarRef} data-sidebar-inner>
 							{this.renderGroups(this.props.asideFields, true)}
 						</SideBar>
 					</GridItem>
@@ -206,7 +211,7 @@ export default class SingleRecord extends Component {
 					{subsiteField}
 					<GridContainer>
 						<GridItem columns="6">
-							{recIdDisplay}
+							<StyledFieldGroup>{recIdDisplay}</StyledFieldGroup>
 						</GridItem>
 						<GridItem columns="6" justify="right">
 							{deleteBtn}

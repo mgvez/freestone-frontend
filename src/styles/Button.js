@@ -42,9 +42,6 @@ function getCss(props) {
 	if (props.tiny) height = 16;
 
 	return css`
-
-		
-
 		${props.margin && `margin: ${props.margin};`}
 		padding: 0 15px;
 
@@ -69,10 +66,6 @@ function getCss(props) {
 
 		& + &, a + &, & + a {
 			margin-left: 10px;
-		}
-
-		i {
-			margin-right: 5px;
 		}
 
 		&:hover {
@@ -157,10 +150,22 @@ function getCss(props) {
 		${props.icon && `i {
 			margin: 0;
 		}`};
+
 		${props.round && 'border-radius: 15px;'};
 		${props.flat && `
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
+		`};
+		
+		${props.inputCta && `
+			position: absolute;
+				top: 0;
+				right: 0;
+			height: 100%;
+			border-top-left-radius: 0px;
+			border-bottom-left-radius: 0px;
+			border-top-right-radius: 15px;
+			border-bottom-right-radius: 15px;
 		`};
 
 		${buttonColorModifier(mainColor, props.bordered)};

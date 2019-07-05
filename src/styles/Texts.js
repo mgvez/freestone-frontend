@@ -6,7 +6,7 @@ export const textMedium = 'font-size: 11px;';
 export const textSmall = 'font-size: 9px;';
 
 const title = `
-	line-height: 1;
+	line-height: 1.3;
 	margin: 0;
 	font-family: ${cssVars.fontFamilyBase};
 	text-transform: none;
@@ -14,6 +14,10 @@ const title = `
 	span {
 		font-size: 0.7em;
 		font-weight: normal;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
 	}
 
 `;

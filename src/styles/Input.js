@@ -17,7 +17,6 @@ function getFieldCss(displaySize) {
 }
 
 function getFieldGroupCss(isCollapsable) {
-
 	return css`
 		display: block;
 		padding: 10px 20px;
@@ -30,7 +29,6 @@ function getFieldGroupCss(isCollapsable) {
 }
 
 export function getInputCss(props) {
-	
 	return css`
 		display: inline-block;
 		width: 100%;
@@ -57,6 +55,11 @@ export function getInputCss(props) {
 			border: 2px solid ${colors.borderDark};
 		`};
 
+		${props.rounded && `
+			padding-right: 65px;
+			border-radius: 50px;
+		`};
+
 		&[size]{
 			width: auto;
 			max-width: 100%;
@@ -64,7 +67,6 @@ export function getInputCss(props) {
 
 	`;
 }
-
 
 export const FieldLabel = styled.div`
 	padding-top: 0.7em;
@@ -138,7 +140,8 @@ function getCheckboxContainer(props) {
 		}
 
 		&:after {
-			font-family: 'FontAwesome';
+			font-family: 'Font Awesome\ 5 Free';
+			font-weight: 900;
 			content: '\f00c';
 			display: none;
 			line-height: 1;

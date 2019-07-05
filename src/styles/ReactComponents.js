@@ -12,8 +12,9 @@ export default css`
 			right: 20px;
 
 		content: '\f078';
-		font-family: 'FontAwesome';
-		font-size: 20px;
+		font-family: 'Font Awesome\ 5 Free';
+		font-weight: 900;
+		font-size: 14px;
 		color: ${colors.textPrimary};
 		transform: translate(0, -50%);
 	}

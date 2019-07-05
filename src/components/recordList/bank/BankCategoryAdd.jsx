@@ -8,17 +8,19 @@ import { Heading3 } from '../../../styles/Texts';
 import { Button } from '../../../styles/Button';
 import styled from 'styled-components';
 import colors from '../../../styles/Colors';
+import { getInputCss, Input } from '../../../styles/Input';
 
 const AddContainer = styled.section`
-
+	margin-top: 40px;
 `;
 
 const FormContainer = styled.section`
-	padding: 12px 0;
-	display:flex;
+	position: relative;
+	margin: 12px 0;
+	
 	input {
-		flex-basis: 75%;
-		margin-right: 5px;
+		margin-bottom: 0;
+		border: 1px solid ${colors.borderLight};
 	}
 `;
 
@@ -54,8 +56,8 @@ export default class BankCategoryAdd extends Component {
 			<AddContainer>
 				<Heading3>Add a category</Heading3>
 				<FormContainer>
-					<input value={this.state.value} onChange={this.handleChange} />
-					<Button info="true" onClick={this.onSaveNewCateg} >Add</Button>
+					<Input value={this.state.value} rounded onChange={this.handleChange} />
+					<Button info="true" inputCta onClick={this.onSaveNewCateg} >Add</Button>
 				</FormContainer>
 			</AddContainer>
 		);

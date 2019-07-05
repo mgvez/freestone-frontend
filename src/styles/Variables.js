@@ -6,7 +6,7 @@ const vars = {
 	gridColumns: 12,
 	fontSizeText: '14px',
 	fontSizeTitle1: '2em',
-	fontSizeTitle2: '1.8em',
+	fontSizeTitle2: '1.6em',
 	fontSizeTitle3: '1.5em',
 	fontSizeTitle4: '1em',
 	fontFamilyBase: '"Open Sans", Helvetica, Arial, sans',

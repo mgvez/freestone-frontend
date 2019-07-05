@@ -10,7 +10,7 @@ export const Header = styled.header`
 	background: ${colors.backgroundLightest};
 	border-top: 1px solid ${colors.backgroundMainAccent};
 	border-bottom: 1px solid ${colors.backgroundMainAccent};
-	margin-bottom: 60px;
+	margin-bottom: 40px;
 	position: relative;
 	width: 100%;
 	${GridContainerStyle};

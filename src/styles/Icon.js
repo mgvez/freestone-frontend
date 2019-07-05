@@ -9,15 +9,29 @@ const StyledEm = styled.i`
 	text-align: center;
 	font-size: inherit;
 	display:inline-block;
+
+	button &, a & {
+		&.right {
+			margin-left: 5px;
+		}
+		&.left {
+			margin-right: 5px;
+		}
+		&.center {
+			margin: 0;
+		}
+	}
+	
 	&.cta {
 		cursor:pointer;
 		color: ${colors.ctaPrimary};
 	}
+
 `;
 
 //cta
 export const Icon = props => {
 	const { icon } = props;// eslint-disable-line
 	const { type } = props;// eslint-disable-line
-	return <StyledEm className={`${type || 'fa'} fa-${icon} icon ${props.cta && 'cta'}`} />; // eslint-disable-line
+	return <StyledEm className={`${type || 'fa'} fa-${icon} icon ${props.cta && 'cta'} ${props.side || 'center'}`} />; // eslint-disable-line
 };
