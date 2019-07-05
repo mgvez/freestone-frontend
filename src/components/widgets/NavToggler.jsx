@@ -16,6 +16,6 @@ export default class NavToggler extends Component {
 	}
 
 	render() {
-		return <Button onClick={this.navToggler} icon><Icon icon="bars" /></Button>;
+		return <Button onClick={this.navToggler} icon><Icon icon="bars" side="center" /></Button>;
 	}
 }
