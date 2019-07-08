@@ -31,20 +31,39 @@ export default class FieldGroup extends Component {
 
 		//named group: collapsable
 		if (this.props.label) {
-			return (<StyledFieldGroup isCollapsable className={classNames.join(' ')}>
-				<GridContainer>
-					<GridItem columns="6">
-						<Heading2>{this.props.label}</Heading2>
-					</GridItem>
-					<GridItem columns="6" justify="end">
-						<ToggleCollapse isCollapsed={!this.props.isActive} toggle={this.clickCollapse} />
-					</GridItem>
-				</GridContainer>
-				<Collapsable isCollapsed={!this.props.isActive}>
-					<GridContainer>{this.props.children}</GridContainer>
-				</Collapsable>
-			</StyledFieldGroup>);
+			// return (<StyledFieldGroup isCollapsable className={classNames.join(' ')}>
+			// 	<GridContainer>
+			// 		<GridItem columns="6" justify="end">
+			// 			<ToggleCollapse isActive={!this.props.isActive} onClick={this.clickCollapse} key={this.props.label} label={this.props.label} />
+			// 		</GridItem>
+			// 	</GridContainer>
+			// 	<Collapsable isCollapsed={!this.props.isActive}>
+			// 		<GridContainer>{this.props.children}</GridContainer>
+			// 	</Collapsable>
+			// </StyledFieldGroup>);
 
+			return (
+				<div className="tabs">
+					<div className="tab-list">
+						{this.props.children.map((child) => {
+							const { label } = child.props;
+
+							return (
+								<ToggleCollapse isActive={!child.props.isActive} onClick={this.clickCollapse} key={label} label={label} />
+							);
+						})}
+					</div>
+					<div className="tab-content">
+						{this.props.children.map((child) => {
+							console.log(this.props.children);
+							if (child.props.label !== child.props.isActive) {
+								return null;
+							}
+							return child.props.children;
+						})}
+					</div>
+				</div>
+			);
 		}
 		
 		//unnamed group... list of fields flowing in the main form's grid

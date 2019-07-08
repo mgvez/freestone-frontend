@@ -5,12 +5,30 @@ import { Icon } from '../../../styles/Icon';
 
 export default class ToggleCollapse extends Component {
 	static propTypes = {
-		isCollapsed: PropTypes.bool,
-		toggle: PropTypes.func,
+		isActive: PropTypes.bool,
+		label: PropTypes.string.isRequired,
+		onClick: PropTypes.func.isRequired,
 	};
 
+	onClick = () => {
+		const { label, onClick } = this.props;
+		onClick(label);
+	}
+
 	render() {
-		const toggleLabel = this.props.isCollapsed ? <span><Icon icon="eye" /> Show</span> : <span><Icon icon="eye-slash" /> Hide</span>;
-		return <Button round bordered small onClick={this.props.toggle}>{toggleLabel}</Button>;
+		let className = 'tab-list-item';
+
+		if (this.props.isActive === this.props.label) {
+			className += ' tab-list-active';
+		}
+
+		return (
+			<li
+				className={className}
+				onClick={this.onClick}
+			>
+				{this.props.label}
+			</li>
+		);
 	}
 }
