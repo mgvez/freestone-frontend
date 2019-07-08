@@ -38,7 +38,7 @@ export default class Heading extends Component {
 		if (Math.abs(current) === Math.abs(field.id)) {
 			if (current) iconClass = current < 1 ? 'angle-down' : 'angle-up';
 		}
-		const icon = iconClass && <Icon icon={iconClass} />;
+		const icon = iconClass && <Icon icon={iconClass} side="right" />;
 		return <ListNavLink tableName={this.props.tableName} order={field.id} activeClassName="active" className="">{field.label} {icon}</ListNavLink>;
 
 	}

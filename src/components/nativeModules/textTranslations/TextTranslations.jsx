@@ -7,6 +7,8 @@ import FormHeader from '../../header/FormHeader';
 import styled from 'styled-components';
 import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 import colors from '../../../styles/Colors';
+import { Button } from '../../../styles/Button';
+import { Icon } from '../../../styles/Icon';
 
 const Container = styled.div`
 	${GridContainerStyle};
@@ -129,7 +131,7 @@ export default class TextTranslations extends Component {
 					const labelNode = label ? <strong>{label} <span className="key">{translationKey}</span></strong> : <strong>{translationKey}</strong>;
 					return (
 						<Container key={tIdx}>
-							<GridItem columns="10" offset="2" className="translation">
+							<GridItem columns="12" className="translation">
 								<GridContainer>
 									<GridItem columns="12" align="center">
 										<div className="translation-label">
@@ -164,8 +166,8 @@ export default class TextTranslations extends Component {
 		//le record a été édité depuis son load à la db. On met les actions pour le save
 		if (this.props.isEdited) {
 			actionBtns = [
-				<a key="fcn_1" onClick={this.save} className="button-round" title="Hold ALT key to leave form open after save">Save</a>,
-				<a key="fcn_3" onClick={this.close} className="button-round-danger">Discard changes</a>,
+				<Button key="fcn_1" onClick={this.save} round title="Hold ALT key to leave form open after save">Save</Button>,
+				<Button key="fcn_3" onClick={this.close} round danger ><Icon icon="times" /> Discard changes</Button>,
 			];
 		//record pas été édité: juste btn close
 		} else {

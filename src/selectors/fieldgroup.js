@@ -3,14 +3,16 @@ import { createSelector } from 'reselect';
 
 const collapsedStateSelector = state => state.freestone.fieldgroup.collapsedState;
 const groupIdSelector = (state, props) => props.id;
+const tableIdSelector = (state, props) => props.tableId;
 
 function makeSelector() {
 	return createSelector(
-		[groupIdSelector, collapsedStateSelector],
-		(groupId, collapsedState) => {
-			// console.log('process... %s', tableId);
+		[groupIdSelector, tableIdSelector, collapsedStateSelector],
+		(groupId, tableId, collapsedState) => {
+			// console.log(groupId, tableId);
+			
 			return {
-				isCollapsed: collapsedState[groupId],
+				isCollapsed: collapsedState[tableId] !== groupId,
 			};
 		}
 	);

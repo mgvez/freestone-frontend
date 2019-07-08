@@ -7,11 +7,6 @@ import { GridContainerStyle } from './Grid';
 
 export const StyledSingleRecord = styled.section`
 	position: relative;
-
-	&:nth-of-type(2n) {
-		background: ${colors.backgroundMain};
-		padding: 20px 20px 20px 0;
-	}
 `;
 
 export const Subform = styled.section`
@@ -22,7 +17,6 @@ export const Subform = styled.section`
 	border-left: 10px solid ${colors.backgroundMainAccent};
 	position: relative;
 	border-radius: 5px;
-	background: rgba(255, 255, 255, 0.4);
 
 	.fcn {
 		text-align: right;
@@ -36,6 +30,7 @@ export const Subform = styled.section`
 		border-left: 10px solid ${colors.accentPrimary};
 		border-radius: 5px;
 		margin: 20px 0;
+		background: rgba(255, 255, 255, 0.4);
 
 		&:first-of-type {
 			margin-top: 40px;
@@ -43,6 +38,7 @@ export const Subform = styled.section`
 
 		&:nth-of-type(2n) {
 			border-color: ${colors.accentPrimaryLight};
+			background: ${colors.backgroundLight};
 		}
 	}
 `;

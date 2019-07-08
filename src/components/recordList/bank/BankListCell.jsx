@@ -151,7 +151,7 @@ export default class BankListCell extends Component {
 					<Row key="fcn" className="btns">
 						{!nUses && <DeleteBtn isButton key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} />}
 						<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" small="true" round="true" warn="true" >
-							<Icon icon="pencil-alt" side="left" />Edit
+							<Icon icon="pencil-alt" /> Edit
 						</NavLinkButton>
 					</Row>
 

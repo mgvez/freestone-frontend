@@ -32,6 +32,6 @@ export default class AddRecord extends Component {
 	};
 
 	render() {
-		return this.props.isTab ? <div onClick={this.addRecord}><Icon icon="plus" /></div> : <Button onClick={this.addRecord} round><Icon icon="plus" /></Button>;
+		return this.props.isTab ? <div onClick={this.addRecord}><Icon icon="plus" side="center" /></div> : <Button onClick={this.addRecord} round><Icon icon="plus" side="center" /></Button>;
 	}
 }

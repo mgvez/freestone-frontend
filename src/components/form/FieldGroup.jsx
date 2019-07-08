@@ -15,12 +15,14 @@ export default class FieldGroup extends Component {
 		isPlaceholder: PropTypes.bool,
 		children: PropTypes.node,
 		isCollapsed: PropTypes.bool,
+		isActive: PropTypes.bool,
 
 		toggleFieldGroup: PropTypes.func,
+		tableId: PropTypes.number,
 	}
 
 	clickCollapse = () => {
-		this.props.toggleFieldGroup(this.props.id);
+		this.props.toggleFieldGroup(this.props.id, this.props.tableId);
 	}
 
 	render() {
@@ -35,10 +37,10 @@ export default class FieldGroup extends Component {
 						<Heading2>{this.props.label}</Heading2>
 					</GridItem>
 					<GridItem columns="6" justify="end">
-						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.clickCollapse} />
+						<ToggleCollapse isCollapsed={!this.props.isActive} toggle={this.clickCollapse} />
 					</GridItem>
 				</GridContainer>
-				<Collapsable isCollapsed={this.props.isCollapsed}>
+				<Collapsable isCollapsed={!this.props.isActive}>
 					<GridContainer>{this.props.children}</GridContainer>
 				</Collapsable>
 			</StyledFieldGroup>);

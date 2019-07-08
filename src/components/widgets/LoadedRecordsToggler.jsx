@@ -56,7 +56,7 @@ export default class LoadedRecordsToggler extends Component {
 		}
 
 		return (<StyledDiv onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
-			<Icon icon="pencil-alt" />
+			<Icon icon="pencil-alt" side="center" />
 		</StyledDiv>);
 	}
 }

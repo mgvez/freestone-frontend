@@ -18,9 +18,9 @@ export default class DuplicateBtn extends Component {
 
 	render() {		
 		return this.props.isButton ? (
-			<Button warn="true" onClick={this.process}><Icon icon="clone" />Duplicate</Button>
+			<Button warn="true" onClick={this.process}><Icon icon="clone" /> Duplicate</Button>
 		) : (
-			<RecordAction warn="true" onClick={this.process}><Icon icon="clone" />Duplicate</RecordAction>
+			<RecordAction warn="true" onClick={this.process}><Icon icon="clone" /> Duplicate</RecordAction>
 		);
 	}
 }

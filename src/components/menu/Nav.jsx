@@ -6,8 +6,30 @@ import UserInfos from '../../containers/widgets/UserInfos';
 import { NavbarContainer, NavGroup as StyledNavGroup, NavItem } from '../../styles/Nav';
 import { NavLinkButton } from '../../styles/Button';
 import { Icon } from '../../styles/Icon';
+import cssVars from '../../styles/Variables';
 import styled from 'styled-components';
 
+const NavWrapper = styled.ul`
+	.menu-dashboard {
+		display: flex;
+		align-items: center;
+		padding: 10px 15px;
+		position: relative;
+		height: 34px;
+		font-weight: ${cssVars.fontWeightNormal};
+		line-height: normal;
+		padding: 10px 15px;
+
+		i {
+			font-size: 14px;
+			margin-right: 0px;
+		}
+
+		span {
+			margin-left: 8px;
+		}
+	}
+`;
 export default class Nav extends Component {
 	static propTypes = {
 		fetchNav: PropTypes.func,
@@ -36,9 +58,9 @@ export default class Nav extends Component {
 		return (
 			<NavbarContainer className={this.props.visible ? '' : 'collapsed'} role="navigation">
 				<UserInfos />
-				<ul>
+				<NavWrapper>
 					<NavItem>
-						<NavLinkButton to={'/'} inline="true" className="dashboard"><Icon icon="home" /><span>Dashboard</span></NavLinkButton>
+						<NavLinkButton to={'/'} inline="true" className="menu-dashboard dashboard"><Icon icon="home" /> <span>Dashboard</span></NavLinkButton>
 					</NavItem>
 					{
 						this.props.tree.map((item) => {
@@ -46,7 +68,7 @@ export default class Nav extends Component {
 							return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} clearList={this.props.clearList} />;
 						})
 					}
-				</ul>
+				</NavWrapper>
 			</NavbarContainer>
 		);
 	}

@@ -99,7 +99,7 @@ export default class SiteHeader extends Component {
 					<div className="logout">
 						<NavLinkButton to={'/'} inline="true"><Icon icon="home" /><span> Dashboard</span></NavLinkButton>
 						<Button inline="true" onClick={this.props.logout}>
-							<Icon icon="sign-out-alt" />Logout
+							<Icon icon="sign-out-alt" /> Logout
 						</Button>
 					</div>
 

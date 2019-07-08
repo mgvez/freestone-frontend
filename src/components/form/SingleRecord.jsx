@@ -46,6 +46,7 @@ export default class SingleRecord extends Component {
 		tableId: PropTypes.number,
 		recordId: PropTypes.string,
 		parentRecordId: PropTypes.string,
+		activeGroup: PropTypes.string,
 		parentTableId: PropTypes.number,
 		isSubform: PropTypes.bool,
 		isGod: PropTypes.bool,
@@ -159,13 +160,19 @@ export default class SingleRecord extends Component {
 	}
 
 	renderGroups(fields, isAside) {
+		const activeGroup = this.props.activeGroup || fields.reduce((found, group) => {
+			if (found) return found;
+			if (group.label) return group.key;
+			return null;
+		}, null);
 		return fields.map((group) => {
 			//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
 			const groupFieldRows = group.fields.map((field) => this.renderField(field, isAside)).filter(a => a);
 			if (group.isPlaceholder) {
 				return groupFieldRows;
 			}
-			return <FieldGroup key={group.key} id={group.key} label={group.label}>{groupFieldRows}</FieldGroup>;
+			const isActive = group.key === activeGroup || !group.label;
+			return <FieldGroup key={group.key} id={group.key} isActive={isActive} label={group.label} tableId={this.props.tableId}>{groupFieldRows}</FieldGroup>;
 		}, []);
 	}
 
