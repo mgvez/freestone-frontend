@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
-import { accentPrimary, backgroundMain } from '../../styles/Colors';
+import colors from '../../styles/Colors';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
 import { Button } from '../../styles/Button';
 import { Icon } from '../../styles/Icon';
+import { darken } from '../../styles/Utils';
 
 const ContainerDiv = styled.div `
 	font-weight: 600;
@@ -18,26 +19,31 @@ const Tab = styled.div `
 	cursor: pointer;
 	display: inline-block;
 	vertical-align: middle;
-	color: ${accentPrimary};
-	background: ${backgroundMain};
+	color: ${colors.accentPrimary};
+	background: ${colors.backgroundMain};
 	height: 30px;
 	line-height: 30px;
 	padding: 0 20px;
-	border: 1px solid ${accentPrimary};
+	border: 1px solid ${colors.accentPrimary};
 	border-left: 0;
 	transition: background 0.3s, color 0.3s;
 	font-size: 10px;
+
 	&:last-child {
 		border-radius: 0 0 10px 0;
 	}
 	&:first-child {
-		border-left: 1px solid ${accentPrimary};
+		border-left: 1px solid ${colors.accentPrimary};
 		border-radius: 0 0 0 10px;
 	}
 
 	&:hover, &.active {
-		background: ${accentPrimary};
+		background: ${colors.accentPrimary};
 		color: white;
+	}
+
+	&:hover {
+		background: ${darken(colors.accentPrimary, 0.2)};
 	}
 `;
 
@@ -127,7 +133,7 @@ export default class PreviewRecord extends Component {
 
 		// console.log(this.props);
 		//on load, save total record as draft
-		let msg = <Icon icon="times" fw />;
+		let msg = <Icon icon="times" fw side="center" />;
 		
 		//only send updated data
 		// console.log(this.state.sendingChanges, !this.props.previewRecordId);
@@ -137,10 +143,10 @@ export default class PreviewRecord extends Component {
 		return (<ContainerDiv>
 			<Tab onClick={this.onClickClose}>{msg}</Tab>
 			<Tab onClick={this.onClickIframe} className={this.props.currentPreviewType === PREVIEW_IFRAME ? 'active' : null}>
-				<Icon icon="columns" fw />
+				<Icon icon="columns" fw side="center" />
 			</Tab>
 			<Tab onClick={this.onClickWindow} className={this.props.currentPreviewType === PREVIEW_WIN ? 'active' : null}>
-				<Icon icon="window-restore" fw />
+				<Icon icon="window-restore" fw side="center" />
 			</Tab>
 		</ContainerDiv>);
 

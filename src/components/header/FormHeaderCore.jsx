@@ -126,9 +126,9 @@ export default class FormHeaderCore extends Component {
 		if (this.props.isGod) {
 			const editSchemaLink = this.props.table ? `/edit/zva_table/${this.props.table.id}` : '';
 			if (editSchemaLink) {
-				editSchema = <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" />Edit Schema</NavLinkButton>;
+				editSchema = <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" /> Edit Schema</NavLinkButton>;
 			} else if (this.props.editSchemaAction) {
-				editSchema = <Button onClick={this.props.editSchemaAction} flat="true"><Icon icon="edit" />Edit Schema</Button>;
+				editSchema = <Button onClick={this.props.editSchemaAction} flat="true"><Icon icon="edit" /> Edit Schema</Button>;
 			}
 		}
 		
@@ -153,10 +153,10 @@ export default class FormHeaderCore extends Component {
 
 
 		const infos = (this.props.isLight) ? 
-			<HeaderTexts columns="9">
+			<HeaderTexts columns="8">
 				{slugs}
 			</HeaderTexts> : (
-			<HeaderTexts columns="9">
+			<HeaderTexts columns="8">
 				{this.props.children}
 				{lastModif}
 				{slugs}
@@ -177,7 +177,7 @@ export default class FormHeaderCore extends Component {
 			<StyledHeader className={classList.join(' ')} style={style} ref="header">
 				{infos}
 
-				<HeaderFcn columns="3" offset="10" justify="end" align="end">
+				<HeaderFcn columns="4" offset="9" justify="end" align="end">
 					{this.props.buttons}
 				</HeaderFcn>
 
