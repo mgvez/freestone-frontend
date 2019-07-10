@@ -6,6 +6,7 @@ import { Heading2 } from '../../styles/Texts';
 
 const Help = styled.div`
 	margin-top: 10px;
+	line-height: 1.3em;
 `;
 
 export default class FormHeaderContent extends Component {

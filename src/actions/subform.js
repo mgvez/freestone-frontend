@@ -1,6 +1,6 @@
 
 export const SET_SUBFORM_VIEW_TYPE = 'SET_SUBFORM_VIEW_TYPE';
-export const SET_SUBFORM_COLLAPSED = 'SET_SUBFORM_COLLAPSED';
+export const SET_SUBFORM_VISIBLE = 'SET_SUBFORM_VISIBLE';
 
 
 export function setSubformViewType(tableId, type) {
@@ -15,13 +15,13 @@ export function setSubformViewType(tableId, type) {
 	};
 }
 
-export function setSubformCollapsed(tableId, isCollapsed) {
+export function setSubformVisible(tableId, isVisible) {
 	return (dispatch) => {
 		return dispatch({
-			type: SET_SUBFORM_COLLAPSED,
+			type: SET_SUBFORM_VISIBLE,
 			data: {
 				tableId,
-				isCollapsed,
+				isVisible,
 			},
 		});
 	};

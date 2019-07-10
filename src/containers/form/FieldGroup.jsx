@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import FieldGroup from '../../components/form/FieldGroup';
 
 import { toggleFieldGroup } from '../../actions/fieldgroup';
-import { fieldGroupCollapsedMapStateToProps } from '../../selectors/fieldgroup';
+import { fieldGroupVisibleMapStateToProps } from '../../selectors/fieldgroup';
 
 export default connect(
-	fieldGroupCollapsedMapStateToProps(),
+	fieldGroupVisibleMapStateToProps(),
 	dispatch => bindActionCreators({ toggleFieldGroup }, dispatch)
 )(FieldGroup);

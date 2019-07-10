@@ -6,7 +6,7 @@ const recordIdSelector = (state, props) => props.recordId;
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 const tableIdSelector = (state, props) => props.tableId;
-const collapsedStateSelector = state => state.freestone.fieldgroup.collapsedState;
+const visibleStateSelector = state => state.freestone.fieldgroup.visibleState;
 
 const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
 const recordsSelector = state => state.freestone.recordForm.records;
@@ -54,10 +54,10 @@ function makeRecordUnalteredSelector(tableSchemaSelector) {
 
 function makeActiveGroupSelector() {
 	return createSelector(
-		[tableIdSelector, collapsedStateSelector],
-		(tableId, collapsedState) => {
+		[tableIdSelector, visibleStateSelector],
+		(tableId, visibleState) => {
 			// console.log(collapsedState, tableId);
-			return collapsedState && collapsedState[tableId];
+			return visibleState && visibleState[tableId];
 		}
 	);
 }

@@ -3,7 +3,7 @@ import { TOGGLE_FIELD_GROUP } from '../actions/fieldgroup';
 import { CLEAR_DATA } from '../actions/dev';
 
 
-function collapsedState(state = {}, action) {
+function visibleState(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA: return {};
 	case TOGGLE_FIELD_GROUP: {
@@ -19,5 +19,5 @@ function collapsedState(state = {}, action) {
 }
 
 export default combineReducers({
-	collapsedState,
+	visibleState,
 });

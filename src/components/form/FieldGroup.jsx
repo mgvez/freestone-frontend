@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ToggleCollapse from './buttons/ToggleCollapse';
-import { StyledFieldGroup } from '../../styles/Input';
-import { GridContainer, GridItem, GridContainerStyle } from '../../styles/Grid';
-import { FieldGroupTabs, TabsContainer } from '../../styles/Nav';
-import styled from 'styled-components';
-import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
+import SetVisibleTab from './buttons/SetVisibleTab';
 import Field from './Field';
 import Subform from '../../containers/form/subform/Subform';
+import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
+
+import { GridContainer, GridItem } from '../../styles/Grid';
+import { FieldGroupTabs, TabsContainer } from '../../styles/Nav';
 
 export default class FieldGroup extends Component {
 	static propTypes = {
@@ -18,7 +17,6 @@ export default class FieldGroup extends Component {
 		parentRecordId: PropTypes.string,
 		groups: PropTypes.array,
 		activeGroup: PropTypes.string,
-		isActive: PropTypes.bool,
 		toggleFieldGroup: PropTypes.func,
 
 		env: PropTypes.object,
@@ -32,7 +30,7 @@ export default class FieldGroup extends Component {
 		setFieldVal: PropTypes.func,
 	}
 
-	clickCollapse = (idx) => {
+	clickTab = (idx) => {
 		const clicked = this.props.groups[idx];
 		this.props.toggleFieldGroup(clicked.key, this.props.tableId);
 	}
@@ -88,8 +86,9 @@ export default class FieldGroup extends Component {
 				<GridItem column="12">
 					<TabsContainer className="tab-list">
 						{this.props.groups.map((group, idx) => {
+							const isActive = this.props.activeGroup === group.key;
 							return group && group.label ? ( 
-								<ToggleCollapse isActive={!group.isActive} onClick={() => this.clickCollapse(idx)} key={group.label} label={group.label} />
+								<SetVisibleTab isActive={isActive} onClick={() => this.clickTab(idx)} key={group.label} label={group.label} />
 							) : null;
 						})}
 					</TabsContainer>

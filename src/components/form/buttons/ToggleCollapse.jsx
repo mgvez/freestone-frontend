@@ -3,30 +3,13 @@ import PropTypes from 'prop-types';
 
 export default class ToggleCollapse extends Component {
 	static propTypes = {
-		isActive: PropTypes.bool,
-		label: PropTypes.string.isRequired,
-		onClick: PropTypes.func.isRequired,
+		isCollapsed: PropTypes.bool,
+		toggle: PropTypes.func,
 	};
 
-	onClick = () => {
-		const { label, onClick } = this.props;
-		onClick(label);
-	}
-
 	render() {
-		let className = 'tab-list-item';
-
-		if (this.props.isActive === this.props.label) {
-			className += ' tab-list-active';
-		}
-
-		return (
-			<div
-				className={className}
-				onClick={this.onClick}
-			>
-				{this.props.label}
-			</div>
-		);
+		const toggleLabel = this.props.isCollapsed ? <span><i className="fa fa-eye"></i> Show</span> : <span><i className="fa fa-eye-slash"></i> Hide</span>;
+		return <a className="button-round-action-bordered button-hide-show" onClick={this.props.toggle}>{toggleLabel}</a>;
+		// return <button onClick={this.deleteRecord} className="button-circle-danger-small"><i className="fa fa-remove"></i></button>;
 	}
 }
