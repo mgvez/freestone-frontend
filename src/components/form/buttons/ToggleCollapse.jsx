@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '../../../styles/Button';
-import { Icon } from '../../../styles/Icon';
 
 export default class ToggleCollapse extends Component {
 	static propTypes = {
@@ -23,12 +21,12 @@ export default class ToggleCollapse extends Component {
 		}
 
 		return (
-			<li
+			<div
 				className={className}
 				onClick={this.onClick}
 			>
 				{this.props.label}
-			</li>
+			</div>
 		);
 	}
 }

@@ -12,6 +12,7 @@ const Prompt = styled.div`
 	background: ${darken(colors.backgroundMain, 10)};
 	margin: 0 -10px;
 	padding: 10px;
+	
 	div + div {
 		margin-top: 10px;
 	}

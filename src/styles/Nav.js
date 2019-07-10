@@ -7,6 +7,7 @@ import cssVariables from './Variables';
 export const TabsContainer = styled.nav`
 	border-bottom: 1px solid ${colors.accentPrimary};
 	margin: 40px 0;
+
 	& > div {
 		background: transparent;
 		display: inline-block;
@@ -160,4 +161,14 @@ export const NavItem = styled.li`
 			background: ${colors.navLinkHoverBackground};
 		}
 	}
+`;
+
+export const FieldGroupTabs = styled.div`
+	/* background: rgba(255,255,255,0.4); */
+	/* background: blue; */
+
+	.tab-list {
+		/* background: red; */
+	}
+	/* backgroundMainAccent */
 `;

@@ -15,6 +15,7 @@ import { StyledFieldGroup } from '../../styles/Input';
 
 
 let isWaitingForFrame = false;
+
 const SideBar = styled.div`
 	padding: 10px 0;
 	background: ${colors.backgroundDark};
@@ -103,35 +104,6 @@ export default class SingleRecord extends Component {
 		) : null;
 	}
 
-	renderField = (field, isAside = false) => {
-		if (field.subformPlaceholder) {
-			if (!isAside) {
-				const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
-				return this.renderChild(child);
-			}
-			return null;
-		}
-
-		//if field is language-specific, display it only if the current language is the field's
-		// console.log(this.props);
-		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
-		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
-		return isShowField ? (<Field
-			key={field.id} 
-			field={field}
-			tableName={this.props.table.name}
-			recordId={this.props.recordId}
-			val={this.props.record[field.id]}
-			absolutePath={this.props.record[`${field.id}${BANK_PATH_ALIAS}`]}
-			origVal={this.props.recordUnaltered && this.props.recordUnaltered[field.id]}
-			parentRecordId={this.props.parentRecordId}
-			setFieldVal={this.props.setFieldVal}
-			env={this.props.env}
-			lang={field.language}
-			isRoot={this.props.isRoot}
-		/>) : null;
-	}
-
 	stickySidebar = () => {
 		if (!this.sidebar) return;
 		if (!isWaitingForFrame) {
@@ -159,21 +131,14 @@ export default class SingleRecord extends Component {
 		}
 	}
 
-	renderGroups(fields, isAside) {
+	renderGroups(fields) {
 		const activeGroup = this.props.activeGroup || fields.reduce((found, group) => {
 			if (found) return found;
 			if (group.label) return group.key;
 			return null;
 		}, null);
-		return fields.map((group) => {
-			//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
-			const groupFieldRows = group.fields.map((field) => this.renderField(field, isAside)).filter(a => a);
-			if (group.isPlaceholder) {
-				return groupFieldRows;
-			}
-			const isActive = group.key === activeGroup || !group.label;
-			return <FieldGroup key={group.key} id={group.key} isActive={isActive} label={group.label} tableId={this.props.tableId}>{groupFieldRows}</FieldGroup>;
-		}, []);
+
+		return <FieldGroup {...this.props} groups={fields} activeGroup={activeGroup} tableId={this.props.tableId} />;
 	}
 
 	getSidebarRef = (ref) => {
@@ -234,19 +199,19 @@ export default class SingleRecord extends Component {
 			);
 
 			//shows child forms that are not previously placed through a placeholder
-			if (this.props.children) {
-				subforms = (
-					<div>
-						{this.props.children.map(child => (!child.hasPlaceholder || null) && this.renderChild(child))}
-					</div>
-				);
+			// if (this.props.children) {
+			// 	subforms = (
+			// 		<div>
+			// 			{this.props.children.map(child => (!child.hasPlaceholder || null) && this.renderChild(child))}
+			// 		</div>
+			// 	);
 
-			}
+			// }
 		}
 		return (
 			<StyledSingleRecord>
 				{form}
-				{subforms}
+				{/* {subforms} */}
 			</StyledSingleRecord>
 		);
 	}
