@@ -36,6 +36,7 @@ export default class BankFileInput extends Component {
 			this.props.recordId,
 			this.props.field.id,
 			this.props.field.type,
+			this.props.lang,
 			this.props.route
 		);
 		this.props.goTo(`/list/${BANK_DOCS_TABLE}/`);

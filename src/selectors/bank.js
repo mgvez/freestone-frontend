@@ -24,7 +24,6 @@ const bankNameSelector = (state, props) => props.bankName;
 export const bankSidebarSelector = createSelector(
 	[bankNameSelector, allBankCategoriesSelector, selectionSelector],
 	(bankName, allCategories, selection) => {
-		// console.log(allImages);
 		const categories = allCategories && allCategories[bankName];
 		return {
 			isChoosingBankItem: !!selection,

@@ -42,7 +42,7 @@ export default class MarkdownInput extends Component {
 
 		const el = this.refs.area;
 		if (!el) return;
-		console.log(this.props.route);
+		// console.log(this.props.route);
 		const currentVal = el.value || '';
 		const startPosition = el.selectionStart || 0;
 		// const endPosition = myElement.selectionEnd;

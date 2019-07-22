@@ -80,6 +80,7 @@ export default class BankCategoriesSidebar extends Component {
 
 	onCancel = () => {
 		this.props.cancelBankSelect();
+		console.log(this.props.gotoOnChoose);
 		this.props.goTo(this.props.gotoOnChoose);
 	}
 
