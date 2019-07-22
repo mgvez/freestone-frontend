@@ -155,6 +155,8 @@ function getCss(props) {
 		${props.flat && `
 			border-top-left-radius: 0;
 			border-top-right-radius: 0;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
 		`};
 		
 		${props.inputCta && `
