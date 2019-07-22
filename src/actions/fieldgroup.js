@@ -14,7 +14,7 @@ export function tabbedFieldGroups(groupId, tableId) {
 	};
 }
 
-export function toggleFieldGroup(groupId, tableId) {
+export function toggleFieldGroups(groupId, tableId) {
 	return (dispatch) => {
 		return dispatch({
 			type: TOGGLE_FIELD_GROUP,

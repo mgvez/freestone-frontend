@@ -1,39 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import { StyledSingleRecord } from '../../styles/Form';
-import colors from '../../styles/Colors';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import { GridContainer, GridItem } from '../../styles/Grid';
-import { StyledFieldGroup } from '../../styles/Input';
-
 
 let isWaitingForFrame = false;
 
-const SideBar = styled.div`
-	padding: 10px 0;
-	background: ${colors.backgroundDark};
-	color: ${colors.white};
-	
-	label {
-		color: ${colors.white};
-	}
-
-	.sticky & {
-		position: fixed;
-			top: 170px;
-	}
-
-	.absolute & {
-		position: absolute;
-			top: auto;
-			bottom: 0;
-	}
-`;
 
 export default class SingleRecord extends Component {
 	state = {

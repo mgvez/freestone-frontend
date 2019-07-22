@@ -46,6 +46,7 @@ export const Subform = styled.section`
 export const SubformHeader = styled.header`
 	${GridContainerStyle}
 	margin-top: 20px;
+	padding-bottom: 20px;
 	align-items: center;
 
 	h2 {

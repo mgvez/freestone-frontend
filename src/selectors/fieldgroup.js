@@ -33,16 +33,11 @@ function makeCollapseSelector() {
 	);
 }
 
-export function fieldGroupCollapsedMapStateToProps() {
-	const selectorInst = makeCollapseSelector();
-	return (state, props) => {
-		return selectorInst(state, props);
-	};
-}
+export function fieldGroupsMapStateToProps() {
+	const visibleSelector = makeVisbleSelector();
+	const collapseSelector = makeCollapseSelector();
 
-export function fieldGroupVisibleMapStateToProps() {
-	const selectorInst = makeVisbleSelector();
 	return (state, props) => {
-		return selectorInst(state, props);
+		return { ...visibleSelector, ...collapseSelector };
 	};
 }

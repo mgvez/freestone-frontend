@@ -17,7 +17,8 @@ export default class FieldGroup extends Component {
 		parentRecordId: PropTypes.string,
 		groups: PropTypes.array,
 		activeGroup: PropTypes.string,
-		tabbedFieldGroup: PropTypes.func,
+		tabbedFieldGroups: PropTypes.func,
+		toggleFieldGroups: PropTypes.func,
 
 		env: PropTypes.object,
 		language: PropTypes.string,
@@ -32,7 +33,11 @@ export default class FieldGroup extends Component {
 
 	clickTab = (idx) => {
 		const clicked = this.props.groups[idx];
-		this.props.tabbedFieldGroup(clicked.key, this.props.tableId);
+		this.props.tabbedFieldGroups(clicked.key, this.props.tableId);
+	}
+
+	clickCollapse = () => {
+		this.props.toggleFieldGroups(this.props.id);
 	}
 
 	renderChild = (child) => {
@@ -99,7 +104,13 @@ export default class FieldGroup extends Component {
 	}
 
 	render() {
+		const classNames = [];
 		const tabs = this.renderTabs();
+		
+		classNames.push('field-group-collapsable');
+		if (this.props.isSubform) {
+			classNames.push('field-group-collapsed');
+		}
 		
 		const fields = (
 			<div className="tab-content">
@@ -121,6 +132,7 @@ export default class FieldGroup extends Component {
 					}).filter(a => a);
 
 					if (group.isPlaceholder) {
+						classNames.push('field-group');
 						return groupFieldRows;
 					}
 
@@ -146,7 +158,7 @@ export default class FieldGroup extends Component {
 		//shows child forms that are not previously placed through a placeholder
 		if (this.props.children) {
 			subforms = (
-				<div>
+				<div className={classNames.join(' ')}>
 					{this.props.children.map(child => (!child.hasPlaceholder || null) && this.renderChild(child))}
 				</div>
 			);
