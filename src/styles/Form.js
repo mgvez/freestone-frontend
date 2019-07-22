@@ -11,7 +11,7 @@ export const StyledSingleRecord = styled.section`
 
 export const Subform = styled.section`
 	margin: 30px 0;
-	padding: 0 20px;
+	padding: 0 30px;
 	border-top: 1px solid ${colors.backgroundMainAccent};
 	border-bottom: 1px solid ${colors.backgroundMainAccent};
 	border-left: 10px solid ${colors.backgroundMainAccent};

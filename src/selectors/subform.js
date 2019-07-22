@@ -7,6 +7,7 @@ const tableIdSelector = (state, props) => {
 	return props.tableId || (props.table && props.table.id);
 };
 const visibleStateSelector = state => state.freestone.subform.visibleState;
+const collapsedStateSelector = state => state.freestone.subform.collapsedState;
 const viewStateSelector = state => state.freestone.subform.viewState;
 
 export const subformViewSelector = createSelector(
@@ -18,6 +19,17 @@ export const subformViewSelector = createSelector(
 	}
 );
 
+function makeIsCollapsedSelector() {
+	return createSelector(
+		[tableIdSelector, collapsedStateSelector],
+		(tableId, collapsedState) => {
+			// console.log('process... %s', tableId);
+			return {
+				isCollapsed: collapsedState[tableId],
+			};
+		}
+	);
+}
 
 function makeIsVisibleSelector() {
 	return createSelector(
@@ -29,6 +41,13 @@ function makeIsVisibleSelector() {
 			};
 		}
 	);
+}
+
+function formCollapsedMapStateToProps() {
+	const selectorInst = makeIsCollapsedSelector();
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
 }
 
 function formVisibleMapStateToProps() {
@@ -52,7 +71,7 @@ function makeSubformSelector(tableSchemaSelector, formVisibleSelector) {
 }
 
 export function subformMapStateToProps() {
-	const selectorInst = makeSubformSelector(tableSchemaMapStateToProps(), formVisibleMapStateToProps());
+	const selectorInst = makeSubformSelector(tableSchemaMapStateToProps(), formVisibleMapStateToProps(), formCollapsedMapStateToProps());
 	return (state, props) => {
 		return selectorInst(state, props);
 	};

@@ -7,7 +7,7 @@ import Subform from '../../containers/form/subform/Subform';
 import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
 
 import { GridContainer, GridItem } from '../../styles/Grid';
-import { FieldGroupTabs, TabsContainer } from '../../styles/Nav';
+import { TabsContainer, Sidebar } from '../../styles/Nav';
 
 export default class FieldGroup extends Component {
 	static propTypes = {
@@ -17,7 +17,7 @@ export default class FieldGroup extends Component {
 		parentRecordId: PropTypes.string,
 		groups: PropTypes.array,
 		activeGroup: PropTypes.string,
-		toggleFieldGroup: PropTypes.func,
+		tabbedFieldGroup: PropTypes.func,
 
 		env: PropTypes.object,
 		language: PropTypes.string,
@@ -32,7 +32,7 @@ export default class FieldGroup extends Component {
 
 	clickTab = (idx) => {
 		const clicked = this.props.groups[idx];
-		this.props.toggleFieldGroup(clicked.key, this.props.tableId);
+		this.props.tabbedFieldGroup(clicked.key, this.props.tableId);
 	}
 
 	renderChild = (child) => {
@@ -80,9 +80,9 @@ export default class FieldGroup extends Component {
 		/>) : null;
 	}
 
-	render() {
-		const tabs = (
-			<GridContainer>
+	renderTabs = () => {
+		if (this.props.groups.length > 1) {
+			return (<GridContainer>
 				<GridItem column="12">
 					<TabsContainer className="tab-list">
 						{this.props.groups.map((group, idx) => {
@@ -93,19 +93,51 @@ export default class FieldGroup extends Component {
 						})}
 					</TabsContainer>
 				</GridItem>
-			</GridContainer>
-		);
+			</GridContainer>);
+		}
+		return null;
+	}
+
+	render() {
+		const tabs = this.renderTabs();
 		
 		const fields = (
 			<div className="tab-content">
 				{this.props.groups.map((group) => {
 					const isTabActive = group.key === this.props.activeGroup || !group.label;
-					const groupFieldRows = group.fields.map((field) => this.renderField(field, isTabActive)).filter(a => a);
+
+					const groupFieldRows = group.fields.map((field) => {
+						if (!field.isSecondary) {
+							return this.renderField(field, isTabActive);
+						}
+						return null;
+					}).filter(a => a);
+					
+					const asideGroupFieldRows = group.fields.map((field) => {
+						if (field.isSecondary) {
+							return this.renderField(field, isTabActive);
+						}
+						return null;
+					}).filter(a => a);
+
 					if (group.isPlaceholder) {
 						return groupFieldRows;
 					}
 
-					return <GridContainer>{groupFieldRows}</GridContainer>;
+					return (
+						<GridContainer>
+							<GridItem columns={`${asideGroupFieldRows.length > 0 ? '8' : '12'}`}>
+								{groupFieldRows}
+							</GridItem>
+							{asideGroupFieldRows.length > 0 &&
+								<GridItem columns="4">
+									<Sidebar>
+										{asideGroupFieldRows}
+									</Sidebar>
+								</GridItem>
+							}
+						</GridContainer>
+					);
 				})}
 			</div>
 		);
@@ -121,11 +153,11 @@ export default class FieldGroup extends Component {
 		}
 
 		return (
-			<FieldGroupTabs className="tabs">
+			<div className="tabs">
 				{tabs}
 				{fields}
 				{subforms}
-			</FieldGroupTabs>
+			</div>
 		);
 	}
 }

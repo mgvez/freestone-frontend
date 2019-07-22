@@ -55,7 +55,6 @@ export default class SingleRecord extends Component {
 		record: PropTypes.object,
 		recordUnaltered: PropTypes.object,
 		mainFields: PropTypes.array,
-		asideFields: PropTypes.array,
 		env: PropTypes.object,
 		language: PropTypes.string,
 		isRoot: PropTypes.bool,
@@ -145,8 +144,6 @@ export default class SingleRecord extends Component {
 
 	render() {
 		let form;
-		let subforms;
-
 		// console.log('render', this.props.table.name);
 		// console.log('render', this.props.table, this.props.record);
 		if (this.props.table && this.props.record) {
@@ -160,17 +157,6 @@ export default class SingleRecord extends Component {
 				/>);
 			}
 
-			let sidebar;
-			if (this.props.asideFields.length > 0) {
-				sidebar = (
-					<GridItem columns="4" className={this.state.stickyState}>
-						<SideBar ref={this.getSidebarRef} data-sidebar-inner>
-							{this.renderGroups(this.props.asideFields, true)}
-						</SideBar>
-					</GridItem>
-				);
-			}
-
 			const subsiteField = null;//(this.props.isGod && this.props.table.isSubsiteDependent) ? <div>subsite</div> : null;
 
 			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
@@ -181,17 +167,17 @@ export default class SingleRecord extends Component {
 					{subsiteField}
 					<GridContainer>
 						<GridItem columns="6">
-							<StyledFieldGroup>{recIdDisplay}</StyledFieldGroup>
+							{recIdDisplay}
 						</GridItem>
 						<GridItem columns="6" justify="right">
 							{deleteBtn}
 						</GridItem>
 					</GridContainer>
 					<GridContainer>
-						<GridItem columns={`${sidebar ? 8 : 12}`}>
+						{/* <GridItem columns={`${sidebar ? 8 : 12}`}> */}
+						<GridItem columns="12">
 							{this.renderGroups(this.props.mainFields)}
 						</GridItem>
-						{sidebar}
 					</GridContainer>
 				</article>
 			);

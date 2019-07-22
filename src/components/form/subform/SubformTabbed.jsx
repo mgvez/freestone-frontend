@@ -52,7 +52,7 @@ export default class SubformTabbed extends Component {
 					<GridItem columns="8">
 						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
 					</GridItem>
-					<GridItem columns="4" className="fcn">
+					<GridItem columns="4" align="end" className="fcn">
 						{changeViewBtn}
 						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 					</GridItem>

@@ -1,7 +1,7 @@
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './Colors';
-import { darken, lighten } from './Utils';
+import { lighten } from './Utils';
 import cssVariables from './Variables';
 
 export const TabsContainer = styled.nav`
@@ -163,12 +163,29 @@ export const NavItem = styled.li`
 	}
 `;
 
-export const FieldGroupTabs = styled.div`
-	/* background: rgba(255,255,255,0.4); */
-	/* background: blue; */
+export const Sidebar = styled.div`
+	padding: 30px;
+	background: ${colors.backgroundDark};
+	color: ${colors.textSecondary};
 
-	.tab-list {
-		/* background: red; */
+	textarea,
+	input[type="text"],
+	input[type="search"],
+	input[type="password"],
+	input[type="email"],
+	input[role="combobox"] {
+		color: ${colors.textPrimary};
 	}
-	/* backgroundMainAccent */
+
+	label {
+		color: ${colors.textSecondary};
+	}
+
+	ul li {
+		color: ${colors.textPrimary};
+
+		&:hover, &:focus {
+			color: ${colors.textSecondary};
+		}
+	}
 `;

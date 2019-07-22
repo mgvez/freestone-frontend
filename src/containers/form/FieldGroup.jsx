@@ -3,10 +3,11 @@ import { bindActionCreators } from 'redux';
 
 import FieldGroup from '../../components/form/FieldGroup';
 
-import { toggleFieldGroup } from '../../actions/fieldgroup';
-import { fieldGroupVisibleMapStateToProps } from '../../selectors/fieldgroup';
+import { toggleFieldGroup, tabbedFieldGroup } from '../../actions/fieldgroup';
+import { fieldGroupVisibleMapStateToProps, fieldGroupCollapsedMapStateToProps } from '../../selectors/fieldgroup';
 
 export default connect(
+	fieldGroupCollapsedMapStateToProps(),
 	fieldGroupVisibleMapStateToProps(),
-	dispatch => bindActionCreators({ toggleFieldGroup }, dispatch)
+	dispatch => bindActionCreators({ tabbedFieldGroup, toggleFieldGroup }, dispatch)
 )(FieldGroup);

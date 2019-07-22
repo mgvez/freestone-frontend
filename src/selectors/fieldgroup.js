@@ -1,11 +1,14 @@
 
 import { createSelector } from 'reselect';
 
-const visibleStateSelector = state => state.freestone.fieldgroup.visibleState;
+
+const visibleStateSelector = state => state.freestone && state.freestone.fieldgroup.visibleState;
+const collapsedStateSelector = state => state.freestone && state.freestone.fieldgroup.collapsedState;
+
 const groupIdSelector = (state, props) => props.id;
 const tableIdSelector = (state, props) => props.tableId;
 
-function makeSelector() {
+function makeVisbleSelector() {
 	return createSelector(
 		[groupIdSelector, tableIdSelector, visibleStateSelector],
 		(groupId, tableId, visibleState) => {
@@ -18,8 +21,27 @@ function makeSelector() {
 	);
 }
 
+function makeCollapseSelector() {
+	return createSelector(
+		[groupIdSelector, collapsedStateSelector],
+		(groupId, collapsedState) => {
+			// console.log('process... %s', tableId);
+			return {
+				isCollapsed: collapsedState[groupId],
+			};
+		}
+	);
+}
+
+export function fieldGroupCollapsedMapStateToProps() {
+	const selectorInst = makeCollapseSelector();
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
+
 export function fieldGroupVisibleMapStateToProps() {
-	const selectorInst = makeSelector();
+	const selectorInst = makeVisbleSelector();
 	return (state, props) => {
 		return selectorInst(state, props);
 	};

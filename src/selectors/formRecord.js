@@ -195,9 +195,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				});
 
 
-				mainFields = createFieldGroups(table.fields.filter(f => !f.isSecondary));
-				asideFields = createFieldGroups(table.fields.filter(f => f.isSecondary));
-
+				mainFields = createFieldGroups(table.fields);
 			}
 
 			// console.log(tableSchema, records, recordId);
@@ -208,7 +206,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				table,
 				env,
 				mainFields,
-				asideFields,
 				activeGroup,
 				...isGod,
 			};

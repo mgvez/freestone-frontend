@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
 import { Heading2 } from '../../styles/Texts';
+import { GridItem } from '../../styles/Grid';
 
 const Help = styled.div`
 	margin-top: 10px;
@@ -50,10 +51,10 @@ export default class FormHeaderContent extends Component {
 
 		if (this.props.table) {
 			return (
-				<div>
+				<GridItem column="12">
 					{titles}
 					{help}
-				</div>
+				</GridItem>
 			);
 		}
 

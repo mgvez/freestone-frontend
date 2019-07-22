@@ -41,7 +41,6 @@ export default class Subform extends Component {
 	}
 
 	render() {
-		console.log('subform render');
 		if (!this.props.table) return null;
 		if (this.props.table.type === TYPE_MTM) {
 			return (<SubformMtm
