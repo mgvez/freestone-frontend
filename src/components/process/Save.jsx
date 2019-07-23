@@ -33,7 +33,7 @@ export default class Save extends Component {
 
 	render() {
 		// console.log(this.props.saveState);
-		const isError = !!this.props.saveState.status.error;
+		const isError = this.props.saveState && !!this.props.saveState.status.error;
 		let msgDisplay = null;
 		if (isError) {
 			msgDisplay = (<div>
@@ -43,7 +43,7 @@ export default class Save extends Component {
 			</div>);
 		} else {
 			msgDisplay = (<div>
-				{this.props.saveState.status.msg}
+				{this.props.saveState && this.props.saveState.status.msg}
 			</div>);
 		}
 

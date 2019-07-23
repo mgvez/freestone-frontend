@@ -26,6 +26,7 @@ import Nav from '../containers/menu/Nav';
 import LoadedRecords from '../containers/dashboard/LoadedRecords';
 import Login from '../containers/auth/Login';
 import GoogleAuthenticate from '../containers/auth/GoogleAuthenticate';
+import UpdateFreestone from '../containers/process/UpdateFreestone';
 
 function noop() {
 
@@ -46,6 +47,11 @@ export default class Freestone extends Component {
 		isAuthenticated: PropTypes.bool,
 		isNavVisible: PropTypes.bool,
 		needsRelogin: PropTypes.bool,
+		
+		needsUpdate: PropTypes.bool,
+		latestVersion: PropTypes.string,
+		clientVersion: PropTypes.string,
+
 		domain: PropTypes.string,
 		clientScripts: PropTypes.array,
 		jwt: PropTypes.string,
@@ -99,6 +105,8 @@ export default class Freestone extends Component {
 				</div>
 			);
 		}
+
+		if (this.props.needsUpdate) return <UpdateFreestone latestVersion={this.props.latestVersion} clientVersion={this.props.clientVersion} />;
 
 		//on login, if we want to redirect to public site (i.e. we may use the admin's login for public website access)
 		const onLogin = qstrParams('onlogin');

@@ -10,7 +10,7 @@ const initialState = {
 	isAuthenticating: false,
 	statusText: null,
 	realName: null,
-	needsRelogin: 0,
+	needsRelogin: false,
 	email: '',
 	userId: null,
 	picture: '',

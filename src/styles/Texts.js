@@ -1,6 +1,7 @@
 
 import styled from 'styled-components';
 import cssVars from './Variables';
+import colors from './Colors';
 
 export const textMedium = 'font-size: 11px;';
 export const textSmall = 'font-size: 9px;';
@@ -59,6 +60,28 @@ export const ErrorMessage = styled.div`
 	border-radius: 5px;
 	padding: 10px;
 	margin: 20px 0;
+`;
+
+export const Paragraph = styled.div`
+	margin: 1em 0;
+`;
+
+export const Label = styled.div`
+	padding: 4px;
+	margin: 0 4px;
+
+	border: none;
+	outline: none;
+	text-decoration: none;
+
+	display: inline-block;
+	vertical-align: middle;
+	border-radius: 5px;
+	color: ${colors.textSecondary};
+	font-weight: ${cssVars.fontWeightSemibold};
+	white-space: nowrap;
+	background: ${colors.accentSecondary};
+
 `;
 
 export const unorderedLists = `

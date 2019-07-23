@@ -18,6 +18,11 @@ const envInitialState = {
 	languages: [],
 	defaultLanguage: '',
 	isProdEnv: false,
+	version: {
+		needsUpdate: false,
+		latestVersion: null,
+		clientVersion: null,
+	},
 };
 
 function freestone(state = envInitialState, action) {
@@ -36,7 +41,15 @@ function freestone(state = envInitialState, action) {
 	case LOGOUT_API.SUCCESS:
 		return envInitialState;
 	default:
-		// console.log('no change');
+		if (action.data && action.data.version) {
+			return {
+				...state,
+				version: {
+					...state.version,
+					...action.data.version,
+				},
+			};
+		}
 		return state;
 	}
 }

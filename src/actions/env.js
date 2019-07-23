@@ -3,6 +3,7 @@ import { createRequestTypes } from './apiAction';
 
 
 export const ENV_API = createRequestTypes('ENV_API');
+export const UPDATE_API = createRequestTypes('UPDATE_API');
 export const ENV_VAR_API = createRequestTypes('ENV_VAR_API');
 
 export const SET_LANGUAGE = 'SET_LANGUAGE';
@@ -58,6 +59,18 @@ export function toggleLanguage() {
 	return (dispatch) => {
 		return dispatch({
 			type: TOGGLE_LANGUAGE,
+		});
+	};
+}
+
+export function updateFreestone() {
+	return (dispatch) => {
+		// console.log('fetch env');
+		return dispatch({
+			[FREESTONE_API]: {
+				types: UPDATE_API,
+				route: 'updateFreestone',
+			},
 		});
 	};
 }
