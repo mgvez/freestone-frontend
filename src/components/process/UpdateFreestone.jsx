@@ -22,7 +22,7 @@ const Logo = styled.div`
 	width: 100%;
 	height: 400px;
 	max-height: 66vh;
-	background: ${colors.accentSecondary} url(../assets/img/freestone-logo.png) center center no-repeat;
+	background: ${colors.accentSecondary} url(./assets/img/freestone-logo.png) center center no-repeat;
 	background-size: auto 295px;
 `;
 
