@@ -13,8 +13,6 @@ export default class ListFetch extends Component {
 
 		needsFetch: PropTypes.bool,
 		fetchList: PropTypes.func,
-
-
 	};
 
 	componentDidMount() {

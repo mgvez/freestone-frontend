@@ -37,7 +37,7 @@ export const bankSidebarSelector = createSelector(
 export const bankSelectionSelector = createSelector(
 	[selectionSelector, routeSelector, recordsFormSelector],
 	(selection, route, records) => {
-		// console.log(selection);
+		console.log(selection);
 		// console.log(table);
 
 		//find value of target field, where we want to put the value of the bank item

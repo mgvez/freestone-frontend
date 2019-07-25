@@ -56,7 +56,7 @@ export default class MarkdownInput extends Component {
 			this.props.recordId,
 			this.props.field.id,
 			this.props.field.type,
-			this.props.field.lang,
+			this.props.lang,
 			this.props.route
 		);
 		this.props.goTo(`/list/${BANK_IMG_TABLE}/`);
