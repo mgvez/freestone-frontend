@@ -1,4 +1,7 @@
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { pingAuth } from '../actions/auth';
 
 import Module from '../components/Module';
 
@@ -15,5 +18,7 @@ export default connect(
 			url,
 			...module,
 		};
-	}
+	},
+	dispatch => bindActionCreators({ pingAuth }, dispatch)
 )(Module);
+

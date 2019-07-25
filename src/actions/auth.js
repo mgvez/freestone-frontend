@@ -10,6 +10,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGOUT_API = createRequestTypes('LOGOUT_API');
 export const LOGIN_API = createRequestTypes('LOGIN_API');
 export const INSTALL_API = createRequestTypes('INSTALL_API');
+export const PING_API = createRequestTypes('PING_API');
 
 
 //login api actions don't return their values directly through a api succes, but are rather caught by the middleware. Login can be included in any API response, not only login requests.
@@ -121,6 +122,19 @@ export function loginGoogleAPI(token_id, token_access) {
 					googletoken_id: token_id,
 					googletoken_access: token_access,
 				},
+			},
+		});
+	};
+}
+
+export function pingAuth() {
+	return (dispatch) => {
+		// console.log(token_id);
+		// console.log(token_access);
+		return dispatch({
+			[FREESTONE_API]: {
+				types: PING_API,
+				route: 'login',
 			},
 		});
 	};
