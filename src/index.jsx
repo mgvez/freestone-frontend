@@ -27,10 +27,3 @@ function render() {
 }
 
 render();
-
-// if (module.hot) {
-// 	// Reload components
-// 	module.hot.accept('./App', () => {
-// 		render();
-// 	});
-// }
