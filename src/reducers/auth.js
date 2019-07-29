@@ -23,19 +23,6 @@ let lastRequestTime = Date.now();
 export default function(state = initialState, action) {
 
 	switch (action.type) {
-	case FREESTONE_API_REQUEST: {
-
-		const now = Date.now();
-		const diff = (now - lastRequestTime) / 1000;
-		lastRequestTime = Date.now();
-		if (diff > MAX_TIME_BETWEEN_API_CALLS) {
-			return {
-				...state,
-				needsRelogin: true,
-			};
-		}
-		return state;
-	}
 	case FREESTONE_API_FAILURE:
 	case FREESTONE_API_FATAL_FAILURE:
 		//si failure, reset pour éviter que le btn login soit désactivé
@@ -114,7 +101,17 @@ export default function(state = initialState, action) {
 			needsRelogin: false,
 			statusText: 'You have been successfully logged out.',
 		};
-	default:
+	default: {
+		const now = Date.now();
+		const diff = (now - lastRequestTime) / 1000;
+		lastRequestTime = Date.now();
+		if (diff > MAX_TIME_BETWEEN_API_CALLS) {
+			return {
+				...state,
+				needsRelogin: true,
+			};
+		}
 		return state;
+	}
 	}
 }
