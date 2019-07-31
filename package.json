@@ -1,6 +1,6 @@
 {
   "name": "freestone-admin",
-  "version": "2.02.00",
+  "version": "3.0.4",
   "description": "",
   "scripts": {
     "start-wp1": "node server.js",
@@ -76,7 +76,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "@tinymce/tinymce-react": "^3.0.1",
-	"bluebird": "^3.3.1",
+    "bluebird": "^3.3.1",
     "connected-react-router": "^6.3.2",
     "create-react-class": "^15.6.3",
     "gsap": "1.20.3",

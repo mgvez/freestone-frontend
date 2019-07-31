@@ -68,6 +68,7 @@ export default class Login extends Component {
 		super(props);
 		this.state = {
 			installing: false,
+			disableAuth: false,
 			username: '',
 			password: '',
 		};
@@ -79,8 +80,14 @@ export default class Login extends Component {
 		// console.log(this.props);
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps) {
 		this.requireData();
+
+		if (prevProps.isAuthenticating && !this.props.isAuthenticating) {
+			this.setState({
+				disableAuth: false,
+			});
+		}
 	}
 
 	requireData() {
@@ -102,6 +109,11 @@ export default class Login extends Component {
 				installing: true,
 			});
 		}
+
+		this.setState({
+			disableAuth: true,
+		});
+
 		this.props.loginUser(username, password, remember, this.props.isInstalled === false);
 	};
 
@@ -147,7 +159,7 @@ export default class Login extends Component {
 					<div className="checkmark"></div>
 				</CheckboxContainer>
 				<div className="btns">
-					<Button type="submit" round mediumwidth disabled={this.props.isAuthenticating}>{msgs.action}</Button>
+					<Button type="submit" round mediumwidth disabled={this.state.disableAuth}>{msgs.action}</Button>
 					{googleLoginBtn}
 				</div>
 			</form>);

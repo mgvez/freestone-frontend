@@ -6,6 +6,7 @@
 		"space-before-function-paren": [2, "never"],
 		"indent": [2, "tab"],
 		"spaced-comment": 0,
+		"react/no-did-update-set-state": 0, // Pu vrai https://fr.reactjs.org/docs/react-component.html#componentdidupdate
 		"react/jsx-indent-props": [2, "tab"],
 		"react/jsx-indent": [2, "tab"],
 		"react/sort-comp": 0,
