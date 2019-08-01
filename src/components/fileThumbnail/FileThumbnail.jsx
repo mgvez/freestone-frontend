@@ -80,7 +80,7 @@ export default class FileThumbnail extends Component {
 		if (this.props.val) {
 			const absoluteThumbPath = this.getAbsolutePath(this.props.thumbnailPath);
 			// 2019-06-17: plus de thumbnails générés par l'admin pour les fichiers.
-			thumbVal = absoluteThumbPath || path;//`${this.props.env.thumbsDir}${this.props.dir}/${this.props.val}`;
+			thumbVal = absoluteThumbPath || path;
 		}
 		return <ImgLink href={path} target="_blank"><CheckeredBg><Img src={thumbVal} /></CheckeredBg></ImgLink>;
 

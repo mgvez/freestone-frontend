@@ -45,7 +45,7 @@ export function getListLink(tableName, params, page, search, filter, order) {
 		nextParams.push(`search=${search}`);
 	} else {
 		if (params && params.filter) nextParams.push(`filter=${params.filter}`);
-		if (params && params.search && search === null) nextParams.push(`search=${params.search}`);
+		if (params && params.search) nextParams.push(`search=${params.search}`);
 	}
 
 	const currentOrder = Number(params && params.order || 0);
@@ -63,6 +63,7 @@ export function getListLink(tableName, params, page, search, filter, order) {
 export const getListLinkSelector = createSelector(
 	[tableNameSelector, searchParamsSelector, pageSelector, searchSelector, filterSelector, orderSelector],
 	(tableName, searchParams, page, search, filter, order) => {
+		// console.log(tableName, searchParams, page, search, filter, order);
 		return {
 			to: getListLink(tableName, searchParams, page, search, filter, order),
 			isActive: isListLinkActive(searchParams, page, search, filter, order),

@@ -72,7 +72,6 @@ export default class Paging extends Component {
 
 		const activeClass = num === this.props.curPage ? 'active' : '';
 
-		//le link peut etre un Link ou encore un callback
 		let lnk;
 		if (this.props.onChangePage) {
 			lnk = <a data-page={num} onClick={this.onClickPage} className="">{display}</a>;

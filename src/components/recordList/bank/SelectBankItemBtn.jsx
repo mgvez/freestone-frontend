@@ -56,7 +56,7 @@ export default class SelectBankItemBtn extends Component {
 					// const alt = res.data.item[`_alt_${lang}`] || 'Image';
 					// const title = res.data.item[`_title_${lang}`] || 'Image';
 					// replacement = `![${alt}](${res.data.item.file_path} "${title}")`;
-					replacement = `fs_img(${res.data.item.id})`;
+					replacement = res.data.item.snippet;
 				}
 				const newValue = targetFieldValue && targetFieldValue.replace(PLACEHOLDER, replacement);
 				this.props.setFieldVal(tableId, recordId, fieldId, newValue);

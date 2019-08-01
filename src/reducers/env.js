@@ -9,7 +9,6 @@ const envInitialState = {
 	clientScripts: [],
 	clientComponents: [],
 	filesDir: '',
-	thumbsDir: '',
 	siteName: '',
 	adminPath: '',
 	domain: '',

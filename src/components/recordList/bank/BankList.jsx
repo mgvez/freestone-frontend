@@ -54,7 +54,6 @@ export default class BankList extends Component {
 				<GridItem columns="3">
 					<BankCategoriesSidebar bankName={this.props.bankName} tableName={this.props.tableName} />
 				</GridItem>
-
 				<GridItem columns="9" key="result">
 				{
 					this.props.groupedRecords.map((group, groupIdx) => {
@@ -64,7 +63,7 @@ export default class BankList extends Component {
 								<Heading2>{group.label}</Heading2>
 							);
 						}
-
+						// console.log(group.records.length + ' records');
 						return (
 							<GroupContainer key={groupIdx}>
 								{groupHeading}
