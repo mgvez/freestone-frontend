@@ -2,9 +2,69 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
+import styled from 'styled-components';
+
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import customStyle from '../../../styles/Modal';
 import { Button } from '../../../styles/Button';
+
+const Header = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0 0 20px;
+`;
+
+const Buttons = styled.div`
+	[class^=button] {
+		margin-left: 10px;
+	}
+`;
+
+const Title = styled.div`
+	margin: 0;
+`;
+
+export const ImageContainer = styled.div`
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+
+	&.preview {
+		margin-top: 20px;
+	}
+
+	img {
+		max-width: 100%;
+		pointer-events: none;
+	}
+`;
+
+export const HotspotElem = styled.div`
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	border: 1px solid #fff;
+	transform: translate(-50%, -50%);
+	cursor: pointer;
+	pointer-events: none;
+
+	&:before, &:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 6px;
+		height: 2px;
+		background: #fff;
+		transform: translate(-50%, -50%);
+	}
+
+	&:before {
+		transform: translate(-50%, -50%) rotate(90deg);
+	}
+`;
 
 export default class HotspotInsert extends Component {
 	static propTypes = {
@@ -51,17 +111,17 @@ export default class HotspotInsert extends Component {
 				closeTimeoutMS={300}
 				style={customStyle}
 			>
-				<div className="hotspot-header">
-					<h2 className="hotspot-title">Click on the image to place a hotspot</h2>
-					<div className="buttons hotspot-buttons">
+				<Header>
+					<Title>Click on the image to place a hotspot</Title>
+					<Buttons className="buttons hotspot-buttons">
 						{saveBtn} 
 						<Button onClick={this.cancelChange} round danger>Cancel</Button> 
-					</div>
-				</div>
-				<div className="hotspot-image-container" ref={(div) => { this.container = div; }} onClick={this.onClickImage}>
-					<div className="hotspot" style={{ left: `${this.state.x * 100}%`, top: `${this.state.y * 100}%` }}></div>
+					</Buttons>
+				</Header>
+				<ImageContainer ref={(div) => { this.container = div; }} onClick={this.onClickImage}>
+					<HotspotElem style={{ left: `${this.state.x * 100}%`, top: `${this.state.y * 100}%` }} />
 					<BankImgThumbnail id={this.props.imageId} maxSize={1920} />
-				</div>
+				</ImageContainer>
 			</Modal>
 		);
 	}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import HotspotInsert from '../helpers/HotspotInsert';
+import HotspotInsert, { HotspotElem, ImageContainer } from '../helpers/HotspotInsert';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import { Button } from '../../../styles/Button';
 
@@ -46,10 +46,10 @@ export default class HotspotInput extends Component {
 
 		const label = (!this.props.val) ? 'Add a hotspot' : 'Modify hotspot';
 
-		const preview = this.props.parsedVal.x !== -1 ? (<div className="hotspot-image-container preview" onClick={this.openModal}>
-			<div className="hotspot" style={{ left: `${this.props.parsedVal.x * 100}%`, top: `${this.props.parsedVal.y * 100}%` }}></div>
+		const preview = this.props.parsedVal.x !== -1 ? (<ImageContainer className="preview" onClick={this.openModal}>
+			<HotspotElem style={{ left: `${this.props.parsedVal.x * 100}%`, top: `${this.props.parsedVal.y * 100}%` }} />
 			<BankImgThumbnail id={this.props.imageId} maxSize={400} />
-		</div>) : '';
+		</ImageContainer>) : '';
 
 		return (
 			<div>
