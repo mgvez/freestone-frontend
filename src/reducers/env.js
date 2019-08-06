@@ -28,7 +28,7 @@ function freestone(state = envInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
 	case ENV_API.SUCCESS: {
-		// console.log(action.data);
+		console.log(action.data);
 		const data = action.data;
 		const defaults = envInitialState;
 		return Object.keys(defaults).reduce((vals, key) => {
