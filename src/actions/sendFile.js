@@ -6,7 +6,7 @@ import { createRequestTypes } from './apiAction';
 
 export const FILE_API = createRequestTypes('FILE_API');
 
-const CHUNK_SIZE = 500 * 1024;
+const CHUNK_SIZE = 1024 * 1024;
 
 function sendChunk(dispatch, fileDef, rangeStart = 0) {
 	const { file, tmpName, fieldId } = fileDef;
