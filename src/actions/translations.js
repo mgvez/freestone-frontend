@@ -33,7 +33,7 @@ export function editTranslation(language, key, value) {
 }
 
 
-export function saveTranslations(translations, schema) {
+export function saveTranslations(translations) {
 	// console.log(translations);
 	return (dispatch) => {
 		return dispatch({
@@ -42,7 +42,6 @@ export function saveTranslations(translations, schema) {
 				route: 'translations/save',
 				data: {
 					translations,
-					schema,
 				},
 			},
 		});

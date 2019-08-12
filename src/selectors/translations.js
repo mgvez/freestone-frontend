@@ -2,8 +2,11 @@
 import { createSelector } from 'reselect';
 
 const allTranslationsSelector = state => state.freestone.translations && state.freestone.translations.translations;
+const isEditedSelector = state => state.freestone.translations && state.freestone.translations.translations && state.freestone.translations.translations.isEdited;
+const isLoadedSelector = state => state.freestone.translations && !!state.freestone.translations.translations;
 const translationsSchemaSelector = state => state.freestone.translations.schema && state.freestone.translations.schema;
 const allLanguagesSelector = state => state.freestone.env.freestone.languages;
+
 const keySelector = (state, props) => props.translationKey;
 const langSelector = (state, props) => props.language;
 
@@ -18,16 +21,19 @@ export const languageKeysSelector = createSelector(
 
 function makeSingleTranslationSelector() {
 	return createSelector(
-		[allTranslationsSelector, keySelector, langSelector, translationsSchemaSelector],
-		(allTranslations, key, lang, translationsSchema) => {
-			// console.log(allTranslations);
-			let translationValue;
-			if (lang) {
-				translationValue = allTranslations && allTranslations[lang] && allTranslations[lang][key];
-			} else {
-				translationValue = translationsSchema && translationsSchema.labels && translationsSchema.labels[key];
-			}
+		[allTranslationsSelector, keySelector, langSelector],
+		(allTranslations, key, lang) => {
+			// console.log(key, lang);
+			return allTranslations && allTranslations[lang] && allTranslations[lang][key];
+		}
+	);
+}
 
+export function singleTranslationMapStateToProps() {
+	return createSelector(
+		makeSingleTranslationSelector(),
+		(translationValue) => {
+			// console.log(translationValue);
 			return {
 				translationValue,
 			};
@@ -35,37 +41,24 @@ function makeSingleTranslationSelector() {
 	);
 }
 
-export function singleTranslationMapStateToProps() {
-	const selectorInst = makeSingleTranslationSelector();
-	return (state, props) => {
-		return selectorInst(state, props);
-	};
-}
-
-function onlyUnique(value, index, self) {
-	return self.indexOf(value) === index;
-}
-
 export const coreTranslations = createSelector(
-	[allTranslationsSelector, languageKeysSelector, translationsSchemaSelector],
-	(translations, languages, schema) => {
-		// console.log(translations);
-		// console.log(schema);
-		const translationKeys = languages.reduce((allKeys, lang) => {
-			const langTranslations = translations[lang];
-			if (langTranslations) {
-				const keys = Object.keys(langTranslations);
-				return allKeys.concat(keys);
-			}
-			return allKeys;
-		}, []).filter(onlyUnique).sort((a, b) => { return a > b ? 1 : -1; });
+	[isEditedSelector, isLoadedSelector, languageKeysSelector, translationsSchemaSelector],
+	(isEdited, isLoaded, languages, schemaRaw) => {
+		// console.log(schemaRaw);
+		// console.log('edited...', isEdited);
 
+		const schema = Object.keys(schemaRaw).map((key) => {
+			return {
+				key,
+				label: schemaRaw[key].label,
+				description: schemaRaw[key].description,
+			};
+		});
 		return {
-			translationKeys,
-			translations,
-			isEdited: translations.isEdited || schema.isEdited,
+			isLoaded,
+			isEdited,
 			languages,
-			schema: schema.labels,
+			schema,
 		};
 	}
 );

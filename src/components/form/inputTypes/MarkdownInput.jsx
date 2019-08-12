@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Textarea } from '../../../styles/Input';
+import AutoAdjustText from './AutoAdjustText';
 import { BANK_IMG_TABLE } from '../../../freestone/schemaProps';
 import { Button } from '../../../styles/Button';
 import { PLACEHOLDER } from '../../../freestone/settings';
 
-const MAX_HEIGHT = 600;
-const MIN_HEIGHT = 300;
 
 export default class MarkdownInput extends Component {
 	static propTypes = {
@@ -22,29 +20,15 @@ export default class MarkdownInput extends Component {
 		val: PropTypes.any,
 	};
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			height: MIN_HEIGHT,
-			overflow: 'hidden',
-		};
-	}
-
-	componentDidUpdate() {
-		this.setAreaHeight();
-	}
-
-	componentDidMount() {
-		this.setAreaHeight();
-	}
 
 	gotoSelectBankImg = () => {
 
-		const el = this.refs.area;
+		const el = this.refs.inp;
 		if (!el) return;
+		
 		// console.log(this.props.route);
-		const currentVal = el.value || '';
-		const startPosition = el.selectionStart || 0;
+		const currentVal = this.props.val || '';
+		const startPosition = el.getSelectionStartPosition();
 		// const endPosition = myElement.selectionEnd;
 
 		const newVal = currentVal.substring(0, startPosition) + PLACEHOLDER + currentVal.substring(startPosition);
@@ -62,22 +46,6 @@ export default class MarkdownInput extends Component {
 		this.props.goTo(`/list/${BANK_IMG_TABLE}/`);
 	}
 
-	setAreaHeight() {
-
-		const el = this.refs.area;
-		if (!el) return;
-
-		if (el.scrollHeight > el.clientHeight) {
-			let height = (el.scrollHeight + 20);
-			if (height > MAX_HEIGHT) height = MAX_HEIGHT;
-			if (height === this.state.height) return;
-			this.setState({
-				height,
-				overflow: height === MAX_HEIGHT ? 'scroll' : 'hidden',
-			});
-		}
-	}
-
 	render() {
 		// console.log(`render input ${this.props.field.name}`);
 		// console.log(this.props.val);
@@ -85,14 +53,9 @@ export default class MarkdownInput extends Component {
 		return (
 			<div>
 				<Button small onClick={this.gotoSelectBankImg}>Add image</Button>
-				<Textarea 
-					ref="area"
+				<AutoAdjustText 
+					ref="inp"
 					value={this.props.val || ''} 
-					style={{
-						overflow: this.state.overflow,
-						minHeight: `${MIN_HEIGHT}px`,
-						height: `${this.state.height}px`,
-					}} 
 					onChange={this.props.changeVal}
 				/>
 			</div>

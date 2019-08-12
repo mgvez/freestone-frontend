@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Input } from '../../../styles/Input';
+import AutoAdjustText from '../../form/inputTypes/AutoAdjustText';
 
 export default class SingleTranslation extends Component {
 	static propTypes = {
@@ -18,6 +18,6 @@ export default class SingleTranslation extends Component {
 	}
 
 	render() {
-		return (<Input type="text" value={this.props.translationValue || ''} onChange={this.changeVal} />);
+		return (<AutoAdjustText value={this.props.translationValue} onChange={this.changeVal} />);
 	}
 }

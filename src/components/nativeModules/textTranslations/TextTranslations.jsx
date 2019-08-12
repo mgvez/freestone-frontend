@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SingleTranslation from '../../../containers/nativeModules/textTranslations/SingleTranslation';
+import SaveTranslations from '../../../containers/process/SaveTranslations';
 import Field from './Field';
 import FormHeader from '../../header/FormHeader'; 
 import styled from 'styled-components';
 import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 import colors from '../../../styles/Colors';
+import { Button } from '../../../styles/Button';
 
 const Container = styled.div`
 	${GridContainerStyle};
@@ -21,6 +23,17 @@ const Container = styled.div`
 
 	.translation-label {
 		margin-bottom: 15px;
+
+		.key {
+			margin-left: 10px;
+			font-style: italic;
+		}
+
+		.help {
+			margin-top: 10px;
+			font-size: 0.8em;
+		}
+
 	}
 
 	.translation {
@@ -38,13 +51,12 @@ const Container = styled.div`
 `;
 export default class TextTranslations extends Component {
 	static propTypes = {
-		translations: PropTypes.object,
-		translationKeys: PropTypes.array,
+		// translationKeys: PropTypes.array,
 		languages: PropTypes.array,
-		schema: PropTypes.object,
+		schema: PropTypes.array,
 		isEdited: PropTypes.bool,
+		isLoaded: PropTypes.bool,
 
-		saveTranslations: PropTypes.func,
 		fetchTranslations: PropTypes.func,
 		closeTranslations: PropTypes.func,
 		goTo: PropTypes.func,
@@ -53,8 +65,8 @@ export default class TextTranslations extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			closing: false,
-			isSchema: false,
+			saving: false,
+			stayOnSaved: false,
 		};
 	}
 
@@ -67,13 +79,13 @@ export default class TextTranslations extends Component {
 	}
 
 	requireData(props) {
-		// console.log(this.state);
-		if (!this.state.closing) {
-			props.languages.forEach(lang => {
-				if (!props.translations || !props.translations[lang]) {
+		// console.log(props);
+		if (!this.state.saving) {
+			if (!props.isLoaded) {
+				props.languages.forEach(lang => {
 					this.props.fetchTranslations(lang);
-				}
-			});
+				});
+			}
 		}
 	}
 
@@ -82,79 +94,83 @@ export default class TextTranslations extends Component {
 		this.props.goTo('/');
 	}
 
+	finishSave = () => {
+		if (!this.state.stayOnSaved) {
+			this.goHome();
+		} else {
+			this.setState({
+				saving: false,
+			});
+		}
+	}
+
 	close = () => {
-		this.setState({ closing: true });
+		this.setState({ saving: true });
 		const onClosed = this.props.closeTranslations();
 		onClosed.then(this.goHome);
 	}
 
 	save = (e) => {
-		if (e.altKey) {
-			this.props.saveTranslations(this.props.translations, this.props.schema);
-			return;
-		}
-		this.setState({ closing: true });
-		const onSaved = this.props.saveTranslations(this.props.translations, this.props.schema);
-		onSaved.then(this.goHome);
-	}
 
-	onEditSchema = () => {
+		// if (e.altKey) {
+		// 	this.props.saveTranslations(this.props.translations);
+		// 	return;
+		// }
 		this.setState({
-			isSchema: !this.state.isSchema,
+			saving: true,
+			stayOnSaved: e.altKey,
 		});
+		// const onSaved = this.props.saveTranslations(this.props.translations);
+		// onSaved.then(this.goHome);
 	}
 
 	render() {
-		// console.log(this.props);
 		let keys;
-		if (this.props.translationKeys) {
-			if (this.state.isSchema) {
-				keys = this.props.translationKeys.map((translationKey, tIdx) => {
-					const labelNode = <div>{translationKey}</div>;
-					return (<GridContainer key={tIdx} className="translation">
-						<GridItem columns="6" className="translation-label">
-							{labelNode}
-						</GridItem>
-						<GridItem columns="6">
-							<Field label="label">
-								<SingleTranslation translationKey={translationKey} />
-							</Field>
-						</GridItem>
-					</GridContainer>);
-				});
-			} else {
-				
-				keys = this.props.translationKeys.map((translationKey, tIdx) => {
-					const label = this.props.schema[translationKey];
-					const labelNode = label ? <strong>{label} <span className="key">{translationKey}</span></strong> : <strong>{translationKey}</strong>;
-					return (
-						<Container key={tIdx}>
-							<GridItem columns="10" offset="2" className="translation">
-								<GridContainer>
-									<GridItem columns="12" align="center">
-										<div className="translation-label">
-											{labelNode}
-										</div>
-									</GridItem>
+		// console.log(this.props.schema);
 
-									<GridItem columns="12">
-										<GridContainer>
-											{this.props.languages.map((language, idx) => {
-												return (<GridItem columns="6" key={idx}>
-													<Field label={language}>
-														<SingleTranslation translationKey={translationKey} language={language} />
-													</Field>
-												</GridItem>);
-											})}
-										</GridContainer>
-									</GridItem>
-									
-								</GridContainer>
-							</GridItem>
-						</Container>
-					);
-				});
-			}
+		if (this.state.saving) {
+			return <SaveTranslations key="save-trans" callback={this.finishSave} />;
+		}
+
+		if (this.props.schema) {
+				
+			keys = this.props.schema.map((translationProp, tIdx) => {
+
+				let labelNode = <strong>{translationProp.key}</strong>;
+				if (translationProp.label) {
+					const help = translationProp.description ? <div className="help">{translationProp.description}</div> : '';
+					labelNode = (<div>
+						<strong>{translationProp.label}</strong> <span className="key">{translationProp.key}</span>
+						{help}
+					</div>);
+				}
+
+				return (
+					<Container key={tIdx}>
+						<GridItem columns="10" offset="2" className="translation">
+							<GridContainer>
+								<GridItem columns="12" align="center" className="translation-label">
+									{labelNode}
+								</GridItem>
+
+								<GridItem columns="12">
+									<GridContainer>
+										{this.props.languages.map((language, idx) => {
+											return (<GridItem columns="6" key={idx}>
+												<Field label={language}>
+													<SingleTranslation translationKey={translationProp.key} language={language} />
+												</Field>
+											</GridItem>);
+										})}
+									</GridContainer>
+								</GridItem>
+								
+							</GridContainer>
+						</GridItem>
+					</Container>
+				);
+			});
+		
 
 			keys = (<div className="container">{keys}</div>);
 
@@ -163,22 +179,22 @@ export default class TextTranslations extends Component {
 		let actionBtns;
 		//le record a été édité depuis son load à la db. On met les actions pour le save
 		if (this.props.isEdited) {
+			
 			actionBtns = [
-				<a key="fcn_1" onClick={this.save} className="button-round" title="Hold ALT key to leave form open after save">Save</a>,
-				<a key="fcn_3" onClick={this.close} className="button-round-danger">Discard changes</a>,
+				<Button key="save" onClick={this.save} round title="Hold ALT key to leave form open after save">Save</Button>,
+				<Button key="cancel" onClick={this.close} round danger>Discard changes</Button>,
 			];
 		//record pas été édité: juste btn close
 		} else {
 			actionBtns = [
-				<a key="fcn_3" onClick={this.close} className="button-round-danger">Close</a>,
+				<Button key="close" onClick={this.close} round danger>Close</Button>,
 			];
 		}
-		const title = 'Text translations' + (this.state.isSchema ? ' SCHEMA' : '');
-		const rootClass = this.state.isSchema ? 'translation-schema-form' : '';
+
 		return (
-			<section className={rootClass}>
-				<FormHeader hasLanguageToggle={false} buttons={actionBtns} editSchemaAction={this.onEditSchema}>
-					<h1>{title}</h1>
+			<section>
+				<FormHeader hasLanguageToggle={false} buttons={actionBtns}>
+					<h1>Text translations</h1>
 				</FormHeader>
 				<MainZone>
 					{keys}

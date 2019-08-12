@@ -16,7 +16,7 @@ const Container = styled.div`
 	.input-wrapper {
 		width: 100%;
 
-		input {
+		input, textarea {
 			position: relative;
 			left: 50px;
 			width: calc(100% - 50px);
@@ -28,8 +28,8 @@ const Container = styled.div`
 
 	label {
 		position: absolute;
-			top: 50%;
-		transform: translate(0, -50%);
+			top: 0;
+		/* transform: translate(0, -50%); */
 		width: 50px;
 		height: 40px;
 		line-height: 40px;
