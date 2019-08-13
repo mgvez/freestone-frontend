@@ -26,11 +26,11 @@ export const MTM_RECORD_API = createRequestTypes('MTM_RECORD_API');
 export const MTM_OPTIONS_API = createRequestTypes('MTM_OPTIONS_API');
 
 
-export function setIsPreviewing(tableId, recordId, val) {
+export function setIsPreviewing(status) {
 	return (dispatch) => {
 		return dispatch({
 			type: SET_RECORD_IS_PREVIEWING,
-			data: { tableId, recordId, val },
+			data: status,
 		});
 	};
 }

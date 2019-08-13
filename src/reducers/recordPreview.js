@@ -97,7 +97,7 @@ function previewIds(state = {}, action) {
 	}
 }
 
-function previewRecordState(state = {}, action) {
+function previewState(state = false, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
@@ -105,21 +105,9 @@ function previewRecordState(state = {}, action) {
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
-		return {};
-	case SET_RECORD_IS_PREVIEWING: {
-		const { tableId, recordId, val } = action.data;
-		const newState = {
-			...state,
-			[tableId]: {
-				...state[tableId],
-				[recordId]: val,
-			},
-		};
-		if (!newState[tableId][recordId]) {
-			delete(newState[tableId][recordId]);
-		}
-		return newState;
-	}
+		return false;
+	case SET_RECORD_IS_PREVIEWING: 
+		return action.data;
 	default:
 		return state;
 	}
@@ -151,6 +139,6 @@ function currentPreview(state = { type: PREVIEW_IFRAME }, action) {
 export default combineReducers({
 	slugs,
 	previewIds,
-	previewRecordState,
+	previewState,
 	currentPreview,
 });

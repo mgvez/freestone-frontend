@@ -15,7 +15,7 @@ const recordIdSelector = (state, props) => (props.params || props.match.params |
 const recordsSelector = state => state.freestone.recordForm.records;
 const isModalSelector = (state, props) => props.isModal;
 const childrenSelector = state => state.freestone.schema.children;
-const previewRecordStateSelector = state => state.freestone.recordPreview.previewRecordState;
+const currentPreviewSelector = state => state.freestone.recordPreview.currentPreview;
 const defaultLanguageSelector = state => state.freestone.env.freestone.defaultLanguage;
 
 //check si le record ou un de ses enfants a été edité
@@ -47,8 +47,8 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 
 function makeSelector() {
 	return createSelector(
-		[tableSchemaMapStateToProps(), paramsSelector, recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, previewRecordStateSelector],
-		(schema, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, previewRecordState) => {
+		[tableSchemaMapStateToProps(), paramsSelector, recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, currentPreviewSelector],
+		(schema, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, currentPreview) => {
 
 			const { table } = schema;
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
@@ -65,9 +65,10 @@ function makeSelector() {
 			// console.log(allLoadedRecords);
 			// console.log(thisRecord);
 
-			const isViewingPreview = table && previewRecordState[table.id] && previewRecordState[table.id][recordId];
+			//if the current preview is for the current record, we are viewing preview
+			const isViewingPreview = table && currentPreview && currentPreview.tableId === table.id && currentPreview.recordId === recordId;
 
-			// console.log(allChildren);
+			// console.log(isViewingPreview);
 			// console.log(record);
 			// console.log(userViewLanguage);
 			const hasLanguageToggle = table && table.fields.some((f) => {

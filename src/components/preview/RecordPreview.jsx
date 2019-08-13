@@ -29,6 +29,7 @@ const iframeStyle = {
 export default class RecordPreview extends Component {
 	static propTypes = {
 		currentPreviewSlug: PropTypes.string,
+		isPreviewing: PropTypes.bool,
 		type: PropTypes.string,
 		children: PropTypes.any,
 	};
@@ -55,11 +56,13 @@ export default class RecordPreview extends Component {
 
 	render() {
 		// console.log(this.props.type);
-		const hasIframe = this.props.currentPreviewSlug && this.props.type === PREVIEW_IFRAME;
 
+
+		const hasIframe = this.props.isPreviewing && this.props.currentPreviewSlug && this.props.type === PREVIEW_IFRAME;
 		const mainWindowStyle = hasIframe ? halfStyle : fullStyle;
+
 		// console.log(this.props.currentPreviewSlug);
-		const preview = hasIframe ? (
+		const previewIframe = this.props.isPreviewing && hasIframe ? (
 			<div style={halfStyle}>
 				<iframe src={this.props.currentPreviewSlug} style={iframeStyle} />
 			</div>
@@ -70,7 +73,7 @@ export default class RecordPreview extends Component {
 				<div style={mainWindowStyle}>
 					{this.props.children}
 				</div>
-				{preview}
+				{previewIframe}
 			</div>
 		);
 	}

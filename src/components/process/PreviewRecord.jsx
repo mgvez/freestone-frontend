@@ -87,10 +87,17 @@ export default class PreviewRecord extends Component {
 		}
 	}
 
+	//when mounting, we verify if this record was previewing (which might be the case if we went to a bank choose and come back to form)
+	componentDidMount() {
+		if (this.props.isViewingPreview) {
+			this.props.setIsPreviewing(true);
+		}
+	}
+
 	componentWillUnmount() {
 		// console.log('unmounting');
 		clearTimeout(this.timeoutId);
-		this.props.setCurrentPreview();
+		this.props.setIsPreviewing(false);
 	}
 
 	sendChanges = () => {
@@ -109,12 +116,12 @@ export default class PreviewRecord extends Component {
 	}
 
 	onClickPreview = () => {
-		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, true);
+		this.props.setIsPreviewing(true);
 		this.props.setCurrentPreview(this.props.tableId, this.props.recordId);
 	}
 
 	onClickClose = () => {
-		this.props.setIsPreviewing(this.props.tableId, this.props.recordId, false);
+		this.props.setIsPreviewing(false);
 		this.props.setCurrentPreview(null, null);
 	}
 
