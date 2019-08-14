@@ -77,12 +77,9 @@ export default class PreviewRecord extends Component {
 	}
 
 	componentDidUpdate() {
-		// console.log('props received ' + this.props.lastEdit, props.isPreviewEdited);
-		if (this.props.isPreviewEdited && this.props.isViewingPreview) {
-			if (this.timeoutId) {
-				// console.log('clear ' + this.timeoutId);
-				clearTimeout(this.timeoutId);
-			}
+		// console.log(this.props.isPreviewEdited, this.props.isViewingPreview, !this.state.sendingChanges);
+		if (this.props.isPreviewEdited && this.props.isViewingPreview && !this.state.sendingChanges) {
+			clearTimeout(this.timeoutId);
 			this.timeoutId = setTimeout(this.sendChanges, 1200);
 		}
 	}
@@ -101,7 +98,6 @@ export default class PreviewRecord extends Component {
 	}
 
 	sendChanges = () => {
-		// console.log('sending preview');
 		this.setState({
 			sendingChanges: true,
 		});
@@ -138,14 +134,14 @@ export default class PreviewRecord extends Component {
 			return <Button className="button-preview" flat="true" onClick={this.onClickPreview}><Icon icon="eye" />Preview</Button>; 
 		}
 
-		// console.log(this.props);
+		// console.log(this.props.previewRecordId, this.state.sendingChanges);
 		//on load, save total record as draft
 		let msg = <Icon icon="times" fw side="center" />;
 		
 		//only send updated data
 		// console.log(this.state.sendingChanges, !this.props.previewRecordId);
 		if (this.state.sendingChanges || !this.props.previewRecordId) {
-			msg = <SaveLivePreview tableId={this.props.tableId} recordId={this.props.recordId} callback={this.cancelSave} />;
+			msg = <SaveLivePreview key="previewsaver" tableId={this.props.tableId} recordId={this.props.recordId} callback={this.cancelSave} />;
 		} 
 		return (<ContainerDiv>
 			<Tab onClick={this.onClickClose}>{msg}</Tab>
