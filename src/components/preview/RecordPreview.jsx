@@ -20,10 +20,14 @@ const fullStyle = {
 	position: 'relative',
 
 };
+
+const scale = 0.5;
 const iframeStyle = {
-	width: '50vw',
-	minHeight: '100vh',
+	width: '100vw',
+	minHeight: '200vh',
 	position: 'fixed',
+	transformOrigin: '0 0',
+	transform: `translate(0px, 0px) scale(${scale})`,
 };
 
 export default class RecordPreview extends Component {

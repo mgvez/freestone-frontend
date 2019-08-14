@@ -68,7 +68,7 @@ function makeSelector() {
 			//if the current preview is for the current record, we are viewing preview
 			const isViewingPreview = table && currentPreview && currentPreview.tableId === table.id && currentPreview.recordId === recordId;
 
-			// console.log(isViewingPreview);
+			// console.log(isViewingPreview, currentPreview.type);
 			// console.log(record);
 			// console.log(userViewLanguage);
 			const hasLanguageToggle = table && table.fields.some((f) => {
@@ -81,6 +81,7 @@ function makeSelector() {
 				hasLanguageToggle,
 				recordLabel,
 				isViewingPreview,
+				previewType: (isViewingPreview && currentPreview.type) || null,
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
 				...userViewLanguage,
 				isEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId),

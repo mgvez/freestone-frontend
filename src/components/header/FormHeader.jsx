@@ -12,6 +12,7 @@ export default class FormHeader extends Component {
 		table: PropTypes.object,
 		setLanguageState: PropTypes.func,
 		isViewingPreview: PropTypes.bool,
+		previewType: PropTypes.string,
 		hasLanguageToggle: PropTypes.bool,
 		isModal: PropTypes.bool,
 		isProdEnv: PropTypes.bool,

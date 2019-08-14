@@ -69,6 +69,7 @@ export default class FormHeaderCore extends Component {
 		table: PropTypes.object,
 		isModal: PropTypes.bool,
 		isViewingPreview: PropTypes.bool,
+		previewType: PropTypes.string,
 		isPreviewEdited: PropTypes.bool,
 		language: PropTypes.string,
 		hasLanguageToggle: PropTypes.bool,
@@ -169,7 +170,7 @@ export default class FormHeaderCore extends Component {
 		if (this.props.isProdEnv) classList.push('prod-warning-enhance');
 
 		const style = {
-			width: this.props.isLight && this.props.isViewingPreview ? '50%' : '100%',
+			width: this.props.isLight && this.props.isViewingPreview && this.props.previewType === 'iframe' ? '50%' : '100%',
 		};
 
 		// console.log(this.props.isProdEnv);

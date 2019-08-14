@@ -26,6 +26,7 @@ export default class RootForm extends Component {
 		isEdited: PropTypes.bool,
 		isPreviewEdited: PropTypes.bool,
 		isViewingPreview: PropTypes.bool,
+		previewType: PropTypes.string,
 		language: PropTypes.string,
 		hasLanguageToggle: PropTypes.bool,
 		table: PropTypes.object,
