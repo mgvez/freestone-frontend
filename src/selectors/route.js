@@ -12,10 +12,10 @@ export const routeSelector = createSelector(
 	[stateLocationSelector, scrollLockSelector],
 	(location, scrollLock) => {
 		const path = location.pathname;
+
 		// console.log(location.pathname);
 		return {
-			path,
-			route: path, //alias
+			route: { ...location },
 			scroll: scrollLock[path],
 		};
 	},

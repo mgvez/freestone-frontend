@@ -87,15 +87,24 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 
 				const skipDefault = callback && callback(res.mainRecord, res.slugs);
 				if (!skipDefault) {
-					const backPath = (gotoOnFinish && gotoOnFinish.replace('{{recordId}}', res.mainRecord.recordId)) || `/list/${table.name}`;
+					let pathname = '';
+					let search = '';
+					if (gotoOnFinish && gotoOnFinish.pathname) {
+						pathname = gotoOnFinish.pathname;
+						search = gotoOnFinish.search;
+					} else {
+						pathname = gotoOnFinish || `/list/${table.name}`;
+					}
+					pathname = pathname.replace('{{recordId}}', res.mainRecord.recordId);
+					
 					//si table savée est meta (zva_...)
 					if (isMeta) {
 						dispatch({
 							type: CLEAR_SCHEMA,
 						});
 					}
-					// console.log(backPath);
-					dispatch(pushPath({ pathname: backPath }));
+
+					dispatch(pushPath({ pathname, search }));
 
 				}
 				return null;

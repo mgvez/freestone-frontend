@@ -45,7 +45,7 @@ export function clearList() {
 	};
 }
 
-export function rememberListPage(tableName, recId, path) {
+export function rememberListPage(tableName, recId, location) {
 	return (dispatch) => {
 		// console.log(tableName);
 		return dispatch({
@@ -53,7 +53,7 @@ export function rememberListPage(tableName, recId, path) {
 			data: {
 				tableName,
 				recId,
-				path,
+				location,
 			},
 		});
 	};

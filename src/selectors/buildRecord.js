@@ -114,7 +114,7 @@ const buildRecordSelector = createSelector(
 
 		// console.log(unfilteredChildren);
 		const afterSaveLocation = table && allListPageAfterSave[table.name] && allListPageAfterSave[table.name][recordId];
-		// console.log(afterSaveLocation);
+		// console.log(allListPageAfterSave);
 		return {
 			tree,
 			table,

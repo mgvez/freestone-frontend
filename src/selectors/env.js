@@ -26,7 +26,7 @@ export const mceConfigSelector = createSelector(
 		
 		return {
 			tinymceConfig,
-			route: route.path,
+			route: route.route.pathname,
 		};
 	}
 );

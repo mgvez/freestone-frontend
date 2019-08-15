@@ -84,7 +84,7 @@ function listPageAfterSave(state = {}, action) {
 			...state,
 			[action.data.tableName]: {
 				...state[action.data.tableName],
-				[action.data.recId]: action.data.path,
+				[action.data.recId]: action.data.location,
 			},
 		};
 	default:

@@ -32,9 +32,6 @@ export default class RootForm extends Component {
 		table: PropTypes.object,
 		lastmodifdate: PropTypes.string,
 		recordLabel: PropTypes.string,
-
-		//once saved/cancelled, we can override the defualt action (which is to go to table's list). For example, when bank items are edited, they do not redirect, they only set a state on the insert component
-		finishCallback: PropTypes.func,
 		fetchTable: PropTypes.func,
 		goTo: PropTypes.func,
 		fetchRecordRevisionList: PropTypes.func,
@@ -54,7 +51,6 @@ export default class RootForm extends Component {
 		if (!this.props.isModal) {
 			window.scrollTo(0, 0);
 		}
-		// console.log(this.props.finishCallback);
 	}
 
 	componentDidUpdate() {
@@ -100,12 +96,7 @@ export default class RootForm extends Component {
 				this.props.goTo(`/edit/${this.props.table.name}/${recordId}`);
 			}
 			return true;
-		} else if (this.props.finishCallback) {
-			// console.log(this.props.finishCallback);
-			this.props.finishCallback();
-			return true;
 		}
-		
 		return false;
 	}
 
@@ -143,12 +134,12 @@ export default class RootForm extends Component {
 			if (this.props.isEdited) {
 				actionBtns = [
 					<Button key="save" onClick={this.save} round title="Hold ALT key to leave form open after save">Save</Button>,
-					<Cancel key="cancel" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Discard changes" />,
+					<Cancel key="cancel" tableName={this.props.table.name} recordId={this.props.params.recordId} label="Discard changes" />,
 				];
 			//record pas été édité: juste btn close
 			} else {
 				actionBtns = [
-					<Cancel key="cancel" tableName={this.props.table.name} recordId={this.props.params.recordId} callback={this.props.finishCallback} label="Close" />,
+					<Cancel key="cancel" tableName={this.props.table.name} recordId={this.props.params.recordId} label="Close" />,
 				];
 			}
 

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 export default class InScroll extends Component {
 	static propTypes = {
 		children: PropTypes.any,
-		path: PropTypes.string,
+		route: PropTypes.object,
 		scroll: PropTypes.number,
 		isReady: PropTypes.bool,
 		autoLock: PropTypes.bool,
@@ -32,7 +32,7 @@ export default class InScroll extends Component {
 	
 	componentDidUpdate(prevProps) {
 		// console.log(nextProps.scroll);
-		if (prevProps.path !== this.props.path) {
+		if (prevProps.route.pathname !== this.props.route.pathname) {
 			this.hasScrolled = false;
 		}
 		this.performScroll();
@@ -47,14 +47,14 @@ export default class InScroll extends Component {
 				// console.log(`scroll to ${this.props.scroll}`, window.scrollY, window.document.height);
 				this.hasScrolled = true;
 				//reset
-				this.props.lockScroll(this.props.path, 0);
+				this.props.lockScroll(this.props.route.pathname, 0);
 			}, 100);
 		}
 	}
 
 
 	componentWillUnmount() {
-		if (this.props.autoLock) this.props.lockScroll(this.props.path, window.scrollY);
+		if (this.props.autoLock) this.props.lockScroll(this.props.route.pathname, window.scrollY);
 	}
 
 	render() {

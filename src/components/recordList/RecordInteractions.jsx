@@ -35,7 +35,7 @@ export default class RecordInteractions extends Component {
 	static propTypes = {
 		table: PropTypes.object,
 		fields: PropTypes.array,
-		path: PropTypes.string,
+		route: PropTypes.object,
 		values: PropTypes.object,
 		hasPreview: PropTypes.bool,
 		hasCustomOrder: PropTypes.bool,
@@ -58,8 +58,8 @@ export default class RecordInteractions extends Component {
 	}
 	
 	onEditClick = () => {
-		this.props.lockScroll(this.props.path, window.scrollY);
-		this.props.rememberListPage(this.props.table.name, this.props.values[PRIKEY_ALIAS], this.props.path);
+		this.props.lockScroll(this.props.route.pathname, window.scrollY);
+		this.props.rememberListPage(this.props.table.name, this.props.values[PRIKEY_ALIAS], this.props.route);
 	}
 
 	onWindowClick = (e) => {

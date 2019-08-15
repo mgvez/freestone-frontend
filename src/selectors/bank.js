@@ -52,7 +52,7 @@ export const bankSelectionSelector = createSelector(
 			gotoOnChoose: selection && selection.returnTo,
 			bankDestination: selection,
 			targetFieldValue,
-			route: route.path,
+			route: route.route.pathname,
 			lang: selection && selection.lang,
 		};
 	}

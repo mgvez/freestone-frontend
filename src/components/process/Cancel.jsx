@@ -9,10 +9,7 @@ export default class Cancel extends Component {
 		recordId: PropTypes.string,
 		label: PropTypes.string,
 		afterCancelLocation: PropTypes.string,
-
 		records: PropTypes.array,
-
-		callback: PropTypes.func,
 		cancelEdit: PropTypes.func,
 		goTo: PropTypes.func,
 	};
@@ -35,12 +32,7 @@ export default class Cancel extends Component {
 		});
 
 		this.props.cancelEdit(this.props.records);
-
-		if (this.props.callback) {
-			this.props.callback();
-		} else {
-			this.props.goTo(this.props.afterCancelLocation ? this.props.afterCancelLocation : `/list/${this.props.tableName}`);
-		}
+		this.props.goTo(this.props.afterCancelLocation ? this.props.afterCancelLocation : `/list/${this.props.tableName}`);
 	};
 
 	render() {

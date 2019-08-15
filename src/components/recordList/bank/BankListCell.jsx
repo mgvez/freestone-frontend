@@ -80,13 +80,21 @@ const Label = styled.div`
 export default class BankListCell extends Component {
 	static propTypes = {
 		lang: PropTypes.string,
+		route: PropTypes.object,
 		table: PropTypes.object,
 		record: PropTypes.object,
+		lockScroll: PropTypes.func,
+		rememberListPage: PropTypes.func,
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = { editing: false };
+	}
+
+	onEditClick = () => {
+		this.props.lockScroll(this.props.route.pathname, window.scrollY);
+		this.props.rememberListPage(this.props.table.name, this.props.record[PRIKEY_ALIAS], this.props.route);
 	}
 
 	render() {

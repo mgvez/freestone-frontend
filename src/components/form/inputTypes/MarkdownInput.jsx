@@ -13,7 +13,7 @@ export default class MarkdownInput extends Component {
 		setFieldVal: PropTypes.func,
 		setupBankSelect: PropTypes.func,
 		goTo: PropTypes.func,
-		route: PropTypes.string,
+		route: PropTypes.object,
 		field: PropTypes.object,
 		recordId: PropTypes.string,
 		lang: PropTypes.string,
@@ -41,7 +41,7 @@ export default class MarkdownInput extends Component {
 			this.props.field.id,
 			this.props.field.type,
 			this.props.lang,
-			this.props.route
+			this.props.route.pathname
 		);
 		this.props.goTo(`/list/${BANK_IMG_TABLE}/`);
 	}
