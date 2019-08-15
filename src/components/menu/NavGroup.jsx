@@ -30,7 +30,7 @@ export default class NavGroup extends Component {
 
 	getContents(isOpen) {
 		const level = this.props.level + 1;
-		return (<Collapsable isCollapsed={isOpen}>
+		return (<Collapsable isCollapsed={!isOpen}>
 			<Subnav>
 				{
 					this.props.data.tables.map((item) => {
@@ -63,7 +63,7 @@ export default class NavGroup extends Component {
 
 	render() {
 		if (!this.props.data) return null;
-		const isOpen = this.props.toggleState[this.props.data.id];
+		const isOpen = !this.props.toggleState[this.props.data.id];
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';
 
@@ -71,9 +71,9 @@ export default class NavGroup extends Component {
 
 		return (
 			<StyledNavGroup className={`${activeClass}`} >
-				<GroupHeading onClick={this.onToggle} className={`${activeClass}`}>
+				<GroupHeading onClick={this.onToggle} className={`${activeClass} level${this.props.level}`}>
 					<Icon icon={icon} />
-					<span className="nav-label">{this.props.data.name}</span> <Icon icon="angle-down" />
+					<span className="nav-label">{this.props.data.name}</span> <Icon icon={this.props.level === 0 ? 'angle-down' : (!isOpen ? 'plus' : 'minus')} />
 				</GroupHeading>
 				{contents}
 			</StyledNavGroup>

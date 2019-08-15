@@ -13,6 +13,8 @@ const gray96 = '#f3f3f3';
 const gray97 = '#f6f6f6';
 
 const teal62 = '#19aa8d';
+const teal72 = '#23c6c8';
+
 const rgbTeal = hexToRgb(teal62);
 const tealLight = `rgba(${rgbTeal}, 0.7)`;
 
@@ -22,10 +24,10 @@ const red58 = '#ed5565';
 
 const blue95 = '#eff2f5';
 const blue86 = '#ced9e3';
-const blue66 = '#00aeef';
+const blue82 = '#bacedf';
 const blue54 = '#028cc0';
-const blue37 = '#4b5863';
-const blue26 = '#2f4050';
+const blue30 = '#404c55';
+const blue26 = '#263b4e';
 const blue23 = '#293846';
 
 const white = '#ffffff';
@@ -46,6 +48,7 @@ const colors = {
 	accentPrimary: teal62,
 	accentPrimaryLight: tealLight,
 	accentSecondary: blue26,
+	accentTertiary: teal72,
 	warnPrimary: yellow76,
 	dangerPrimary: red58,
 
@@ -56,7 +59,7 @@ const colors = {
 	backgroundDark: blue26,
 	backgroundDarkHover: blue23,
 
-	borderDark: blue23,
+	borderDark: blue30,
 	borderMedium: gray76,
 	borderLight: gray93,
 
@@ -66,6 +69,7 @@ const colors = {
 	linksPrimaryHover: blue54,
 
 	navLinkBackground: blue86,
+	navFirstLevelBackground: blue82,
 	navLinkHoverBackground: blue95,
 
 };

@@ -1,7 +1,7 @@
 
 import styled, { css } from 'styled-components';
 import colors from './Colors';
-import { darken, lighten } from './Utils';
+import { hexToRgb, darken, lighten } from './Utils';
 import cssVariables from './Variables';
 
 export const TabsContainer = styled.nav`
@@ -40,20 +40,16 @@ export const TabsContainer = styled.nav`
 
 
 export const NavGroup = styled.li `
-	border-top: 1px solid ${colors.borderDark};
+	/* border-top: 1px solid ${colors.borderDark}; */
 	overflow: hidden;
-	a {
-		color: ${colors.white};
-		&:hover, &:active {
-
-		}
-	}
+	
 `;
 
 export const Subnav = styled.ul `
-	border-left: 2px solid ${colors.accentPrimary};
-	background: ${lighten(colors.backgroundDark, 0.12)};
+	border-left: 3px solid ${colors.accentPrimary};
 	transition: background 0.3s;
+	/* border-top: 1px ${colors.borderDark} solid; */
+
 `;
 
 export const GroupHeading = styled.a `
@@ -64,10 +60,31 @@ export const GroupHeading = styled.a `
 
 	cursor: pointer;
 	transition: background 0.3s;
+	
+	text-transform: uppercase;
+	font-size: 0.8em;
 
+	&.level0 {
+		font-weight:bold;
+		background: ${colors.backgroundDark};
+		color: rgba(255, 255, 255, 0.7);
+		padding: 15px;
+
+		.icon:first-child {
+			color: ${colors.white}
+		}
+	}
+
+	&.level1 {
+		background: ${colors.navFirstLevelBackground};
+		color: ${colors.backgroundDark};
+	}
+
+	
 
 	.fa + .nav-label {
 		margin-left: 10px;
+
 	}
 
 	.nav-label + .fa {
@@ -77,7 +94,11 @@ export const GroupHeading = styled.a `
 	}
 
 	&:hover {
-		background: ${lighten(colors.backgroundDark, 0.05)};
+		background: ${lighten(colors.backgroundDark, 0.25)};
+		color: white;
+		/* &.level0 {
+			background: ${lighten(colors.backgroundDark, 0.15)};
+		} */
 	} 
 	&.active {
 		.nav-label + .fa {
@@ -97,7 +118,10 @@ export const NavbarContainer = styled.nav`
 	width: ${cssVariables.navWidth}px;
 	height: 100vh;
 	overflow-y: scroll;
-
+	::-webkit-scrollbar { 
+		display: none; 
+	}
+	padding-bottom: 50px;
 	transition: transform 0.3s;
 
 	&.collapsed {
@@ -113,16 +137,20 @@ export const NavbarContainer = styled.nav`
 	}
 `;
 
+const itemBorderCol = lighten(colors.backgroundDark, 0.6);
+
+ 
 export const NavItem = styled.li`
 	padding: 0;
-	border-top: 1px solid rgba(0,0,0,.1);
+
+	/* border-top: 1px solid ${itemBorderCol}; */
 
 	a {
 		display: block;
 		position: relative;
-		padding: 10px 50px 10px 15px;
+		padding: 10px 50px 10px 25px;
 		transition: background 0.3s;
-		border-left: 2px solid ${colors.accentPrimary};
+		/* border-left: 3px solid ${colors.accentPrimary}; */
 		font-size: 12px;
 		background: ${colors.navLinkBackground};
 
@@ -153,6 +181,9 @@ export const NavItem = styled.li`
 
 			width: 40px;
 			height: 100%;
+			opacity: 0.5;
+
+			font-size: 0.8em;
 
 			span {
 				position: absolute;
