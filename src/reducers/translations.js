@@ -37,13 +37,13 @@ function translations(state = null, action) {
 	}
 }
 
-function schema(state = { labels: {} }, action) {
+function schema(state = [], action) {
 	switch (action.type) {
 	case TRANSLATIONS_API.SUCCESS: {
 		return action.data.schema;
 	}
 	case CLEAR_DATA:
-		return { };
+		return [];
 	default:
 		return state;
 	}

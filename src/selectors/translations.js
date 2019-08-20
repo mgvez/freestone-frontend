@@ -43,17 +43,10 @@ export function singleTranslationMapStateToProps() {
 
 export const coreTranslations = createSelector(
 	[isEditedSelector, isLoadedSelector, languageKeysSelector, translationsSchemaSelector],
-	(isEdited, isLoaded, languages, schemaRaw) => {
-		// console.log(schemaRaw);
+	(isEdited, isLoaded, languages, schema) => {
+		// console.log(schema);
 		// console.log('edited...', isEdited);
 
-		const schema = Object.keys(schemaRaw).map((key) => {
-			return {
-				key,
-				label: schemaRaw[key].label,
-				description: schemaRaw[key].description,
-			};
-		});
 		return {
 			isLoaded,
 			isEdited,

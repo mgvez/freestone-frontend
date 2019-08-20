@@ -8,6 +8,7 @@ import FormHeader from '../../header/FormHeader';
 import styled from 'styled-components';
 import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 import colors from '../../../styles/Colors';
+import { Heading2 } from '../../../styles/texts';
 import { Button } from '../../../styles/Button';
 
 const Container = styled.div`
@@ -125,7 +126,7 @@ export default class TextTranslations extends Component {
 	}
 
 	render() {
-		let keys;
+		let groups;
 		// console.log(this.props.schema);
 
 		if (this.state.saving) {
@@ -134,45 +135,55 @@ export default class TextTranslations extends Component {
 
 		if (this.props.schema) {
 				
-			keys = this.props.schema.map((translationProp, tIdx) => {
+			groups = this.props.schema.map((group, gIdx) => {
+				console.log(group);
+				const keys = group.items.map((translationProp, tIdx) => {
 
-				let labelNode = <strong>{translationProp.key}</strong>;
-				if (translationProp.label) {
-					const help = translationProp.description ? <div className="help">{translationProp.description}</div> : '';
-					labelNode = (<div>
-						<strong>{translationProp.label}</strong> <span className="key">{translationProp.key}</span>
-						{help}
-					</div>);
-				}
+					let labelNode = <strong>{translationProp.key}</strong>;
+					if (translationProp.label) {
+						const help = translationProp.description ? <div className="help">{translationProp.description}</div> : '';
+						labelNode = (<div>
+							<strong>{translationProp.label}</strong> <span className="key">{translationProp.key}</span>
+							{help}
+						</div>);
+					}
 
-				return (
-					<Container key={tIdx}>
-						<GridItem columns="10" offset="2" className="translation">
-							<GridContainer>
-								<GridItem columns="12" align="center" className="translation-label">
-									{labelNode}
-								</GridItem>
+					return (
+						<Container key={tIdx}>
+							<GridItem columns="10" offset="1" className="translation">
+								<GridContainer>
+									<GridItem columns="12" align="center" className="translation-label">
+										{labelNode}
+									</GridItem>
 
-								<GridItem columns="12">
-									<GridContainer>
-										{this.props.languages.map((language, idx) => {
-											return (<GridItem columns="6" key={idx}>
-												<Field label={language}>
-													<SingleTranslation translationKey={translationProp.key} language={language} />
-												</Field>
-											</GridItem>);
-										})}
-									</GridContainer>
-								</GridItem>
-								
-							</GridContainer>
-						</GridItem>
-					</Container>
-				);
+									<GridItem columns="12">
+										<GridContainer>
+											{this.props.languages.map((language, idx) => {
+												return (<GridItem columns="6" key={idx}>
+													<Field label={language}>
+														<SingleTranslation translationKey={translationProp.key} language={language} />
+													</Field>
+												</GridItem>);
+											})}
+										</GridContainer>
+									</GridItem>
+									
+								</GridContainer>
+							</GridItem>
+						</Container>
+					);
+				});
+
+				return (<Container key={`group${gIdx}`}>
+					<GridItem columns="12">
+						<Heading2>{group.groupname}</Heading2>
+						{keys}
+					</GridItem>
+				</Container>);
+
 			});
-		
 
-			keys = (<div className="container">{keys}</div>);
+			groups = (<div>{groups}</div>);
 
 		}
 
@@ -197,7 +208,7 @@ export default class TextTranslations extends Component {
 					<h1>Text translations</h1>
 				</FormHeader>
 				<MainZone>
-					{keys}
+					{groups}
 				</MainZone>
 			</section>
 		);
