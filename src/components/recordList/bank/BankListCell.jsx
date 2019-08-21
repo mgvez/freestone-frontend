@@ -26,6 +26,7 @@ import {
 	BANK_PATH_ALIAS,
 	BANK_THUMB_ALIAS,
 	BANK_NUSES_ALIAS,
+	BANK_ISLOCKED_ALIAS,
 	BANK_FOLDER_ALIAS,
 	LASTMODIF_DATE_ALIAS,
 	CREATED_DATE_ALIAS,
@@ -106,10 +107,10 @@ export default class BankListCell extends Component {
 		const filePath = record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_PATH_ALIAS}`];
 		const thumbPath = record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_THUMB_ALIAS}`];
 		const nUses = Number(record[`${tableName}_${BANK_NUSES_ALIAS}`]);
+		const isLocked = !!Number(record[`${tableName}_${BANK_ISLOCKED_ALIAS}`]);
 
 		// console.log(record);
-		// console.log(`${BANK_IMG_TABLE} ${BANK_FILE_ALIAS} ${BANK_THUMB_ALIAS}`);
-		// console.log(thumbPath);
+
 		const comments = record[`${tableName}_${BANK_COMMENTS_ALIAS}`] ? (<div key="comments" className="infos">
 			<strong>Comments</strong> : {record[`${tableName}_${BANK_COMMENTS_ALIAS}`]}
 		</div>) : null;
@@ -142,7 +143,7 @@ export default class BankListCell extends Component {
 							label={record[LABEL_PSEUDOFIELD_ALIAS]}
 							tableName={tableName}
 						/>
-						<BankNUses bankName={bankName} id={prikeyVal} nUses={nUses} />
+						<BankNUses bankName={bankName} id={prikeyVal} nUses={nUses} isLocked={isLocked} />
 					</Row>
 					
 					<InfosContainer>
@@ -157,7 +158,7 @@ export default class BankListCell extends Component {
 					</Row>
 
 					<Row key="fcn" className="btns">
-						{!nUses && <DeleteBtn isButton key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} />}
+						{!nUses && !isLocked && <DeleteBtn isButton key={`${tableName}_${prikeyVal}`} className="button-round-danger" tableName={tableName} prikey={prikeyVal} />}
 						<NavLinkButton to={`/edit/${tableName}/${prikeyVal}`} onClick={this.onEditClick} activeClassName="active" small="true" round="true" warn="true" >
 							<Icon icon="pencil-alt" side="left" />Edit
 						</NavLinkButton>

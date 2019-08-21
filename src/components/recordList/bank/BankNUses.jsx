@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../styles/Button';
+import colors from '../../../styles/Colors';
 import { PromptWidget, PromptContainer } from '../../../styles/Prompts';
 import { Icon } from '../../../styles/Icon';
+
+import styled from 'styled-components';
+
+const UnusedContainer = styled.div`
+	font-size: 0.7em;
+	font-weight: bold;
+	&.locked {
+		color: ${colors.dangerPrimary}
+	}
+`;
 
 
 export default class BankNUses extends Component {
@@ -12,6 +23,7 @@ export default class BankNUses extends Component {
 		//id de l'item de banque
 		id: PropTypes.string,
 		nUses: PropTypes.number,
+		isLocked: PropTypes.bool,
 		records: PropTypes.array,
 
 		fetchBankUses: PropTypes.func,
@@ -59,9 +71,14 @@ export default class BankNUses extends Component {
 	}
 
 	render() {
-		if (Number(this.props.nUses) === 0) return <div>not used</div>;
+		if (Number(this.props.nUses) === 0) {
+			if (this.props.isLocked) {
+				return <UnusedContainer className="locked">locked</UnusedContainer>;
+			}
+			return <UnusedContainer>not used</UnusedContainer>;
+		}
 
-		const listRecords = this.props.records && this.props.records.map((rec, i) => {
+		const listRecords = this.props.records && this.props.records.map((rec) => {
 			return (<li key={`${rec.tableId}_${rec.recordId}`}>
 				<Link to={`/edit/${rec.tableId}/${rec.recordId}`} onClick={this.toggleActions} className="record-action">{rec.tableLabel} - {rec.label}</Link>
 			</li>);

@@ -53,6 +53,7 @@ export const BANK_PATH_ALIAS = 'file_path';
 export const BANK_THUMB_ALIAS = 'thumb_path';
 export const BANK_CATEG_ALIAS = 'categ_id_label';
 export const BANK_NUSES_ALIAS = '_n_uses';
+export const BANK_ISLOCKED_ALIAS = 'isLocked';
 
 export const ROLE_N_USES = 'ROLE_N_USES';
 
