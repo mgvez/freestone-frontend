@@ -103,7 +103,7 @@ export default class HotspotInsert extends Component {
 	}
 
 	render() {
-		const saveBtn = this.state.x !== -1 ? (<Button onClick={this.save} round>Save</Button>) : '';
+		const saveBtn = this.state.x !== -1 ? (<Button onClick={this.save} round="true">Save</Button>) : '';
 		return (
 			<Modal
 				isOpen
@@ -115,7 +115,7 @@ export default class HotspotInsert extends Component {
 					<Title>Click on the image to place a hotspot</Title>
 					<Buttons className="buttons hotspot-buttons">
 						{saveBtn} 
-						<Button onClick={this.cancelChange} round danger>Cancel</Button> 
+						<Button onClick={this.cancelChange} round="true" danger="true">Cancel</Button> 
 					</Buttons>
 				</Header>
 				<ImageContainer ref={(div) => { this.container = div; }} onClick={this.onClickImage}>

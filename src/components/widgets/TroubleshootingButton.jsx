@@ -12,7 +12,7 @@ export default class TroubleshootingButton extends Component {
 	render() {
 		const icon = this.props.showIcon ? <Icon icon="gear" fw /> : null;
 		return (
-			<Link to={'/troubleshooting'} className={`troubleshooting-button ${this.props.customClass}`}>{icon}<span className="nav-label">Troubleshooting</span></Link>
+			<Link to={'/troubleshooting'} className={`troubleshooting-button ${this.props.customClass}`}>{icon} <span className="nav-label">Troubleshooting</span></Link>
 		);
 	}
 }

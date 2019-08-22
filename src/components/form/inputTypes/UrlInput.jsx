@@ -38,7 +38,7 @@ export default class UrlInput extends Component {
 		}
 		return (<div className="link-field">
 			<Input type="text" value={this.props.val || ''} onChange={this.props.changeVal} />
-			<Button round bordered onClick={this.openModal}><Icon icon="link" /> Url select helper</Button>
+			<Button round="true" bordered="true" onClick={this.openModal}><Icon icon="link" /> Url select helper</Button>
 		</div>);
 	}
 }

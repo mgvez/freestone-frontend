@@ -54,7 +54,7 @@ export default class HotspotInput extends Component {
 		return (
 			<div>
 				<input type="hidden" value={this.props.val} />
-				<Button onClick={this.openModal} round bordered>{label}</Button>
+				<Button onClick={this.openModal} round="true" bordered="true">{label}</Button>
 				<br />
 				{preview}
 			</div>

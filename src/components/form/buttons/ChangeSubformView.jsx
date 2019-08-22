@@ -44,6 +44,6 @@ export default class ChangeSubformView extends Component {
 
 	render() {
 		const toggled = cycle(this.props.currentViewType);
-		return <Button onClick={this.setType} small round bordered><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>;
+		return <Button onClick={this.setType} small="true" round="true" bordered="true"><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>;
 	}
 }

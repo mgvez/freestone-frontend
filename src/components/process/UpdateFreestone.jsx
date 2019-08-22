@@ -93,7 +93,7 @@ export default class UpdateFreestone extends Component {
 		// <iframe src="dummy.html" name="dummy" style={{ display: 'none' }}></iframe>
 		const url = getAdminUrl() + `updateFreestone?jwt=${this.props.jwt}`;
 
-		const finishButton = this.state.finished ? <Button primary onClick={this.props.clearData}>Update finished, click to refresh</Button> : null;
+		const finishButton = this.state.finished ? <Button primary="true" onClick={this.props.clearData}>Update finished, click to refresh</Button> : null;
 
 		const contents = !this.state.updating ? (
 			<GridContainer>
@@ -107,7 +107,7 @@ export default class UpdateFreestone extends Component {
 					</Paragraph>
 				</GridItem>
 				<GridItem columns="12">
-					<Button danger onClick={this.startUpdate}>Start update</Button>
+					<Button danger="true" onClick={this.startUpdate}>Start update</Button>
 				</GridItem>
 			</GridContainer>
 		) : (

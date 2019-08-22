@@ -159,7 +159,7 @@ export default class Login extends Component {
 					<div className="checkmark"></div>
 				</CheckboxContainer>
 				<div className="btns">
-					<Button type="submit" round mediumwidth disabled={this.state.disableAuth}>{msgs.action}</Button>
+					<Button type="submit" round="true" mediumwidth="true" disabled={this.state.disableAuth}>{msgs.action}</Button>
 					{googleLoginBtn}
 				</div>
 			</form>);

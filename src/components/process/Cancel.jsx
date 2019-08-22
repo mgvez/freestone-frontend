@@ -8,7 +8,7 @@ export default class Cancel extends Component {
 		tableName: PropTypes.string,
 		recordId: PropTypes.string,
 		label: PropTypes.string,
-		afterCancelLocation: PropTypes.string,
+		afterCancelLocation: PropTypes.object,
 		records: PropTypes.array,
 		cancelEdit: PropTypes.func,
 		goTo: PropTypes.func,
@@ -41,7 +41,7 @@ export default class Cancel extends Component {
 		}
 
 		return (
-			<Button onClick={this.doCancel} round danger><Icon icon="times" />{this.props.label}</Button>
+			<Button onClick={this.doCancel} round="true" danger="true"><Icon icon="times" />{this.props.label}</Button>
 		);
 	}
 }

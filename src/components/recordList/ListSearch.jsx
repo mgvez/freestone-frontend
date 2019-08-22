@@ -84,7 +84,7 @@ export default class ListSearch extends Component {
 	}
 
 	getClearSearch() {
-		return this.props.search ? <Button danger icon type="reset" onClick={this.onUpdateSearchField} className="cancel-search" >&times;</Button> : null;
+		return this.props.search ? <Button danger="true" icon="true" type="reset" onClick={this.onUpdateSearchField} className="cancel-search" >&times;</Button> : null;
 	}
 
 	handleSubmit = (e) => {
@@ -103,7 +103,7 @@ export default class ListSearch extends Component {
 			<Container>
 				<Container className="input-wrapper">
 					<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
-					<Button icon inputCta ><Icon icon="search" side="center" /></Button>
+					<Button icon="true" inputCta="true" ><Icon icon="search" side="center" /></Button>
 				</Container>
 				
 				{this.getClearSearch()}

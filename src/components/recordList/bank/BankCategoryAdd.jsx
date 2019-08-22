@@ -57,7 +57,7 @@ export default class BankCategoryAdd extends Component {
 				<Heading3>Add a category</Heading3>
 				<FormContainer>
 					<Input value={this.state.value} rounded onChange={this.handleChange} />
-					<Button info="true" inputCta onClick={this.onSaveNewCateg} >Add</Button>
+					<Button info="true" inputCta="true" onClick={this.onSaveNewCateg} >Add</Button>
 				</FormContainer>
 			</AddContainer>
 		);

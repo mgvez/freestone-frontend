@@ -10,6 +10,7 @@ import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../
 import colors from '../../../styles/Colors';
 import { Heading2 } from '../../../styles/texts';
 import { Button } from '../../../styles/Button';
+import { Icon } from '../../../styles/Icon';
 
 const Container = styled.div`
 	${GridContainerStyle};
@@ -192,13 +193,13 @@ export default class TextTranslations extends Component {
 		if (this.props.isEdited) {
 			
 			actionBtns = [
-				<Button key="save" onClick={this.save} round title="Hold ALT key to leave form open after save">Save</Button>,
-				<Button key="cancel" onClick={this.close} round danger>Discard changes</Button>,
+				<Button key="save" onClick={this.save} round="true" title="Hold ALT key to leave form open after save">Save</Button>,
+				<Button key="cancel" onClick={this.close} round="true" danger="true"><Icon icon="times" /> Discard changes</Button>,
 			];
 		//record pas été édité: juste btn close
 		} else {
 			actionBtns = [
-				<Button key="close" onClick={this.close} round danger>Close</Button>,
+				<Button key="close" onClick={this.close} round="true" danger="true">Close</Button>,
 			];
 		}
 

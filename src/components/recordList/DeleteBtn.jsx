@@ -12,6 +12,7 @@ const Prompt = styled.div`
 	background: ${darken(colors.backgroundMain, 10)};
 	margin: 0 -10px;
 	padding: 10px;
+	
 	div + div {
 		margin-top: 10px;
 	}
@@ -57,16 +58,16 @@ export default class DeleteBtn extends Component {
 		if (this.state.requested) {
 			return (
 				<Prompt>
-					<RecordAction onClick={this.process}><Icon icon="trash-alt" />Confirm</RecordAction>
-					<RecordAction onClick={this.cancel}><Icon icon="undo" />Cancel</RecordAction>
+					<RecordAction onClick={this.process}><Icon icon="trash-alt" /> Confirm</RecordAction>
+					<RecordAction onClick={this.cancel}><Icon icon="undo" /> Cancel</RecordAction>
 				</Prompt>
 			);
 		}
 
 		return this.props.isButton ? (
-			<Button onClick={this.process} round="true" small="true" danger="true"><Icon icon="trash-alt" side="left" />Delete</Button>
+			<Button onClick={this.process} round="true" small="true" danger="true"><Icon icon="trash-alt" side="left" /> Delete</Button>
 		) : (
-			<RecordAction onClick={this.process} danger="true"><Icon icon="trash-alt" />Delete</RecordAction>
+			<RecordAction onClick={this.process} danger="true"><Icon icon="trash-alt" /> Delete</RecordAction>
 		);
 	}
 }

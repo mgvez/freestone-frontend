@@ -72,6 +72,6 @@ export default class SelectBankItemBtn extends Component {
 	render() {
 		if (!this.props.isChoosingBankItem) return <div />;
 		
-		return <Button onClick={this.chooseItem} cta fullwidth><Icon icon="check" />Choose</Button>;
+		return <Button onClick={this.chooseItem} cta="true" fullwidth="true"><Icon icon="check" /> Choose</Button>;
 	}
 }

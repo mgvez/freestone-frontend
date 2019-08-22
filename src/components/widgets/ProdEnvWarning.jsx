@@ -6,7 +6,7 @@ export default class ProdEnvWarning extends Component {
 	render() {
 
 		return (
-			<Button danger>
+			<Button danger="true">
 				PRODUCTION ENVIRONMENT
 			</Button>
 		);

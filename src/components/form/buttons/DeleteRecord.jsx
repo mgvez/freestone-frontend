@@ -22,6 +22,6 @@ export default class DeleteRecord extends Component {
 	};
 
 	render() {
-		return <Button onClick={this.deleteRecord} round danger small margin="5px 5px 0 0 "><Icon icon="trash-alt" /> Delete record</Button>;
+		return <Button onClick={this.deleteRecord} round="true" danger="true" small="true" margin="5px 5px 0 0 "><Icon icon="trash-alt" /> Delete record</Button>;
 	}
 }

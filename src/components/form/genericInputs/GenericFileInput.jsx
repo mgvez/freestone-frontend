@@ -133,12 +133,12 @@ export default class GenericFileInput extends Component {
 		let deleteBtn;
 		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		if (origVal && val !== origVal) {
-			revertBtn = <Button round bordered warn onClick={this.clearSavedInput}>Revert to db {typeLabel}</Button>;
+			revertBtn = <Button round="true" bordered="true" warn="true" onClick={this.clearSavedInput}>Revert to db {typeLabel}</Button>;
 		}
 
 		// s'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
 		if (val && origVal === val) {
-			deleteBtn = <Button round bordered danger onClick={this.setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
+			deleteBtn = <Button round="true" bordered="true" danger="true" onClick={this.setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
 		}
 
 		const displayVal = this.props.type === TYPE_IMG ? val && (inputVal || origVal) : null;
@@ -161,7 +161,7 @@ export default class GenericFileInput extends Component {
 
 				<FileInputContainer>
 					<input id={id} type="file" value="" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
-					<Button round bordered info onClick={this.triggerSelectFile}><Icon icon="upload" />{val ? 'Change file' : 'Upload file'}</Button>
+					<Button round="true" bordered="true" info="true" onClick={this.triggerSelectFile}><Icon icon="upload" />{val ? 'Change file' : 'Upload file'}</Button>
 				</FileInputContainer>
 				{revertBtn}
 				{deleteBtn}

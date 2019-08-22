@@ -59,13 +59,13 @@ export default class Paging extends Component {
 
 		let display;
 		if (label === 'previous') {
-			display = <Icon icon="angle-left" />;
+			display = <Icon icon="angle-left" side="center" />;
 		} else if (label === 'first') {
-			display = <Icon icon="angle-double-left" />;
+			display = <Icon icon="angle-double-left" side="center" />;
 		} else if (label === 'next') {
-			display = <Icon icon="angle-right" />;
+			display = <Icon icon="angle-right" side="center" />;
 		} else if (label === 'last') {
-			display = <Icon icon="-angle-double-right" />;
+			display = <Icon icon="-angle-double-right" side="center" />;
 		} else {
 			display = label;
 		}

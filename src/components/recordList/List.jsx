@@ -100,7 +100,7 @@ export default class List extends Component {
 		let readyToScroll = false;
 		if (this.props.table) {
 
-			const addBtn = this.props.canAdd ? <Button onClick={this.addRecord} round><Icon icon="plus-circle" /> New record</Button> : null;
+			const addBtn = this.props.canAdd ? <Button onClick={this.addRecord} round="true"><Icon icon="plus-circle" /> New record</Button> : null;
 			
 			let records = null;
 			// if record list is loaded, display records. Bank records are displayed differently than regular records.

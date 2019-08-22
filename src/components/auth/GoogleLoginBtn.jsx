@@ -25,8 +25,8 @@ export default class GoogleLoginBtn extends Component {
 		const { buttonText, children } = this.props;
 		return (
 			<Button
-				round
-				lighter
+				round="true"
+				lighter="true"
 				onClick={this.onSignIn}
 			>
 				<Icon type="fab" icon="google" />

@@ -52,7 +52,7 @@ export default class MarkdownInput extends Component {
 
 		return (
 			<div>
-				<Button small onClick={this.gotoSelectBankImg}>Add image</Button>
+				<Button small="true" onClick={this.gotoSelectBankImg}>Add image</Button>
 				<AutoAdjustText 
 					ref="inp"
 					value={this.props.val || ''} 

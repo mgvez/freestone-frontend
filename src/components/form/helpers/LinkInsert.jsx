@@ -122,18 +122,18 @@ export default class LinkInsert extends Component {
 						{labelInput}
 					</GridItem>
 					<GridItem columns="6">
-						<Button round danger onClick={this.cancelChange}>cancel</Button>
+						<Button round="true" danger="true" onClick={this.cancelChange}>cancel</Button>
 					</GridItem>
 					<GridItem columns="6">
 						<h4>Internal Link</h4>
 						<p>If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the following button.</p>
-						<Button round bordered onClick={this.selectInternal}>use page below</Button>
+						<Button round="true" bordered="true" onClick={this.selectInternal}>use page below</Button>
 					</GridItem>
 					<GridItem columns="6">
 						<h4>External Link</h4>
 						<p>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
 						<p><input type="text" ref="linkExternal" className="bordered" defaultValue={this.props.link} /></p>
-						<Button round bordered onClick={this.selectExternal}>use this url</Button>
+						<Button round="true" bordered="true" onClick={this.selectExternal}>use this url</Button>
 					</GridItem>
 				</GridContainer>
 				<iframe src={getWebsiteUrl() + lang} style={{ width: '100%', height: '500px' }} ref="ifr" />

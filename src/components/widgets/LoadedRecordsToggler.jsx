@@ -52,11 +52,11 @@ export default class LoadedRecordsToggler extends Component {
 	render() {
 
 		if (this.props.isClose) {
-			return <Button circle small onClick={this.loadedRecordsToggler}><Icon icon="times" side="center" /></Button>;
+			return <Button circle="true" small="true" onClick={this.loadedRecordsToggler}><Icon icon="times" side="center" /></Button>;
 		}
 
 		return (<StyledDiv onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>
-			<Icon icon="pencil-alt" />
+			<Icon icon="pencil-alt" side="center" />
 		</StyledDiv>);
 	}
 }
