@@ -5,6 +5,8 @@ import { tableSchemaMapStateToProps } from './tableSchema';
 const recordIdSelector = (state, props) => props.recordId;
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
+const tableIdSelector = (state, props) => props.tableId;
+const visibleStateSelector = state => state.freestone.fieldgroup.visibleState;
 
 const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
 const recordsSelector = state => state.freestone.recordForm.records;
@@ -50,6 +52,16 @@ function makeRecordUnalteredSelector(tableSchemaSelector) {
 	);
 }
 
+function makeActiveGroupSelector() {
+	return createSelector(
+		[tableIdSelector, visibleStateSelector],
+		(tableId, visibleState) => {
+			// console.log(collapsedState, tableId);
+			return visibleState && visibleState[tableId];
+		}
+	);
+}
+
 export function tableRecordsMapStateToProps() {
 	const selectorInst = makeTableRecordSelector(tableSchemaMapStateToProps());
 	return (state, props) => {
@@ -73,6 +85,13 @@ export function parentRecordMapStateToProps() {
 
 export function recordUnalteredMapStateToProps() {
 	const selectorInst = makeRecordUnalteredSelector(tableSchemaMapStateToProps());
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
+
+export function activeGroupMapStateToProps() {
+	const selectorInst = makeActiveGroupSelector();
 	return (state, props) => {
 		return selectorInst(state, props);
 	};

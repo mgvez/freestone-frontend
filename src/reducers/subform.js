@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { SET_SUBFORM_VIEW_TYPE, SET_SUBFORM_COLLAPSED } from '../actions/subform';
+import { SET_SUBFORM_VIEW_TYPE, SET_SUBFORM_COLLAPSED, SET_SUBFORM_VISIBLE } from '../actions/subform';
 import { CLEAR_DATA } from '../actions/dev';
 
 
@@ -37,7 +37,24 @@ export function collapsedState(state = {}, action) {
 	}
 }
 
+export function visibleState(state = {}, action) {
+	switch (action.type) {
+	case SET_SUBFORM_VISIBLE: {
+		const tableId = action.data.tableId;
+		// console.log(action);
+		const newState = {
+			...state,
+			[tableId]: action.data.isVisible,
+		};
+		return newState;
+	}
+	default:
+		return state;
+	}
+}
+
 export default combineReducers({
 	viewState,
 	collapsedState,
+	visibleState,
 });

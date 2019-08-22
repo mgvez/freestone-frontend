@@ -4,7 +4,7 @@ const fieldsSelector = state => state.freestone.schema.fields;
 import md5 from 'md5';
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps, parentTableSchemaMapStateToProps } from './tableSchema';
-import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps } from './record';
+import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps, activeGroupMapStateToProps } from './record';
 import { isGodSelector } from './credentials';
 
 const envSelector = state => state.freestone.env.freestone;
@@ -111,11 +111,11 @@ function createFieldGroups(fields) {
 	});
 }
 
-function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector) {
+function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector, activeGroupSelector) {
 
 	return createSelector(
-		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector],
-		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod) => {
+		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector, activeGroupSelector],
+		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod, activeGroup) => {
 			let { table } = schema;
 			let children;
 			let mainFields;
@@ -207,6 +207,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				env,
 				mainFields,
 				asideFields,
+				activeGroup,
 				...isGod,
 			};
 		}
@@ -221,6 +222,7 @@ export function formRecordMapStateToProps() {
 		recordUnalteredMapStateToProps(),
 		parentTableSchemaMapStateToProps(),
 		parentRecordMapStateToProps(),
+		activeGroupMapStateToProps(),
 	);
 	return (state, props) => {
 		return selectorInst(state, props);

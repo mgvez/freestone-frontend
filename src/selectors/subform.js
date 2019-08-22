@@ -6,6 +6,7 @@ import { tableSchemaMapStateToProps } from './tableSchema';
 const tableIdSelector = (state, props) => { 
 	return props.tableId || (props.table && props.table.id);
 };
+const visibleStateSelector = state => state.freestone.subform.visibleState;
 const collapsedStateSelector = state => state.freestone.subform.collapsedState;
 const viewStateSelector = state => state.freestone.subform.viewState;
 
@@ -17,7 +18,6 @@ export const subformViewSelector = createSelector(
 		};
 	}
 );
-
 
 function makeIsCollapsedSelector() {
 	return createSelector(
@@ -31,6 +31,18 @@ function makeIsCollapsedSelector() {
 	);
 }
 
+function makeIsVisibleSelector() {
+	return createSelector(
+		[tableIdSelector, visibleStateSelector],
+		(tableId, visibleState) => {
+			// console.log('process... %s', tableId);
+			return {
+				isVisible: visibleState[tableId],
+			};
+		}
+	);
+}
+
 function formCollapsedMapStateToProps() {
 	const selectorInst = makeIsCollapsedSelector();
 	return (state, props) => {
@@ -38,13 +50,21 @@ function formCollapsedMapStateToProps() {
 	};
 }
 
+function formVisibleMapStateToProps() {
+	const selectorInst = makeIsVisibleSelector();
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
 
-function makeSubformSelector(tableSchemaSelector, formCollapsedSelector) {
+
+function makeSubformSelector(tableSchemaSelector, formVisibleSelector, formCollapsedSelector) {
 	return createSelector(
-		[tableSchemaSelector, formCollapsedSelector],
-		(schema, formCollapsed) => {
+		[tableSchemaSelector, formVisibleSelector, formCollapsedSelector],
+		(schema, formVisible, formCollapsed) => {
 			return {
 				...schema,
+				...formVisible,
 				...formCollapsed,
 			};
 		}
@@ -52,7 +72,7 @@ function makeSubformSelector(tableSchemaSelector, formCollapsedSelector) {
 }
 
 export function subformMapStateToProps() {
-	const selectorInst = makeSubformSelector(tableSchemaMapStateToProps(), formCollapsedMapStateToProps());
+	const selectorInst = makeSubformSelector(tableSchemaMapStateToProps(), formVisibleMapStateToProps(), formCollapsedMapStateToProps());
 	return (state, props) => {
 		return selectorInst(state, props);
 	};
