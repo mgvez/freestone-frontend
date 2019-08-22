@@ -3,9 +3,13 @@ import { bindActionCreators } from 'redux';
 
 import UpdateFreestone from '../../components/process/UpdateFreestone';
 
-import { updateFreestone } from '../../actions/env';
+import { clearData } from '../../actions/dev';
 
 export default connect(
-	null,
-	dispatch => bindActionCreators({ updateFreestone }, dispatch)
+	(state) => {
+		return { 
+			jwt: state.freestone.auth.jwt,
+		};
+	},
+	dispatch => bindActionCreators({ clearData }, dispatch)
 )(UpdateFreestone);

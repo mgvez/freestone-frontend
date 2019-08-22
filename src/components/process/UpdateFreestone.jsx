@@ -9,6 +9,7 @@ import { Heading1, Paragraph, Label } from '../../styles/Texts';
 import colors from '../../styles/Colors';
 import { GridContainer, GridItem } from '../../styles/Grid';
 import Errors from '../../containers/Errors';
+import { getAdminUrl } from '../../freestone/api';
 
 const metaData = {
 	title: 'Freestone',
@@ -48,18 +49,28 @@ const MainZone = styled.div`
 		}
 	}
 `;
+
+const IFrame = styled.iframe`
+	overflow: scroll;
+	height: 800px;
+	width: 100%;
+	border: 1px ${colors.accentSecondary} solid;
+`;
+
 export default class UpdateFreestone extends Component {
 	static propTypes = {
 		latestVersion: PropTypes.string,
 		clientVersion: PropTypes.string,
+		jwt: PropTypes.string,
 
-		updateFreestone: PropTypes.func,
+		clearData: PropTypes.func,
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			updating: false,
+			finished: false,
 		};
 	}
 
@@ -67,12 +78,22 @@ export default class UpdateFreestone extends Component {
 		this.setState({
 			updating: true,
 		});
-		this.props.updateFreestone();
+		// this.props.updateFreestone();
+	}
+
+
+	updateFinished = () => {
+		this.setState({
+			finished: true,
+		});
 	}
 
 	render() {
 
 		// <iframe src="dummy.html" name="dummy" style={{ display: 'none' }}></iframe>
+		const url = getAdminUrl() + `updateFreestone?jwt=${this.props.jwt}`;
+
+		const finishButton = this.state.finished ? <Button primary onClick={this.props.clearData}>Update finished, click to refresh</Button> : null;
 
 		const contents = !this.state.updating ? (
 			<GridContainer>
@@ -91,7 +112,9 @@ export default class UpdateFreestone extends Component {
 			</GridContainer>
 		) : (
 			<div>
-				Updating. This might take a few minutes.
+				<Heading1>Updating Freestone, please be patient.</Heading1>
+				<p>{finishButton}</p>
+				<IFrame src={url} onLoad={this.updateFinished} />
 			</div>
 		);
 

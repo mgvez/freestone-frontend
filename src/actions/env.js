@@ -63,14 +63,3 @@ export function toggleLanguage() {
 	};
 }
 
-export function updateFreestone() {
-	return (dispatch) => {
-		// console.log('fetch env');
-		return dispatch({
-			[FREESTONE_API]: {
-				types: UPDATE_API,
-				route: 'updateFreestone',
-			},
-		});
-	};
-}
