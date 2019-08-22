@@ -1,5 +1,5 @@
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './Colors';
 import { hexToRgb, darken, lighten } from './Utils';
 import cssVariables from './Variables';
@@ -117,25 +117,11 @@ export const NavItem = styled.li`
 		transition: background 0.3s;
 		/* border-left: 3px solid ${colors.accentPrimary}; */
 		font-size: 12px;
+		line-height: 1.3em;
 		background: ${colors.navLinkBackground};
 
 		color: ${colors.backgroundDark};
 		text-decoration: none;
-
-		&.dashboard {
-			padding: 0px 50px 0px 15px;
-			font-size: 14px;
-			font-weight: ${cssVariables.fontWeightNormal};
-			
-			i {
-				font-size: 14px;
-				margin-right: 0px;
-			}
-
-			span {
-				margin-left: 8px;
-			}
-		}
 
 		.nrecords, .flag {
 			display: block;

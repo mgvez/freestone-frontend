@@ -26,7 +26,6 @@ export const Subform = styled.section`
 	border-left: 10px solid ${colors.backgroundMainAccent};
 	position: relative;
 	border-radius: 5px;
-	background: rgba(255, 255, 255, 0.4);
 
 	.fcn {
 		text-align: right;
@@ -40,6 +39,7 @@ export const Subform = styled.section`
 		border-left: 10px solid ${colors.accentPrimary};
 		border-radius: 5px;
 		margin: 20px 0;
+		background: rgba(255, 255, 255, 0.4);
 
 		&:first-of-type {
 			margin-top: 40px;
@@ -47,6 +47,7 @@ export const Subform = styled.section`
 
 		&:nth-of-type(2n) {
 			border-color: ${colors.accentPrimaryLight};
+			background: ${colors.backgroundLight};
 		}
 	}
 `;
@@ -54,6 +55,7 @@ export const Subform = styled.section`
 export const SubformHeader = styled.header`
 	${GridContainerStyle}
 	margin-top: 20px;
+	padding-bottom: 20px;
 	align-items: center;
 
 	h2 {
@@ -137,4 +139,32 @@ export const TabsContainer = styled.nav`
 		}
 	}
 
+`;
+
+
+export const Sidebar = styled.div`
+	padding: 30px;
+	background: ${colors.backgroundDark};
+	color: ${colors.textSecondary};
+
+	textarea,
+	input[type="text"],
+	input[type="search"],
+	input[type="password"],
+	input[type="email"],
+	input[role="combobox"] {
+		color: ${colors.textPrimary};
+	}
+
+	label {
+		color: ${colors.textSecondary};
+	}
+
+	ul li {
+		color: ${colors.textPrimary};
+
+		&:hover, &:focus {
+			color: ${colors.textSecondary};
+		}
+	}
 `;
