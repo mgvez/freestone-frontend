@@ -18,7 +18,7 @@ export function getActionCss(props) {
 		}
 
 		i {
-			margin-right: 10px;
+			margin-right: 5px;
 			width: 20px;
 			text-align: center;
 		}
