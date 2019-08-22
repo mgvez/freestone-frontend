@@ -19,6 +19,7 @@ export default class Collapsable extends Component {
 
 		isCollapsed: PropTypes.bool,
 		children: PropTypes.node,
+		className: PropTypes.string,
 	};
 
 
@@ -49,6 +50,6 @@ export default class Collapsable extends Component {
 	}
 
 	render() {
-		return <StyledCollapsable ref={this.getContainer}>{this.props.children}</StyledCollapsable>;
+		return <StyledCollapsable ref={this.getContainer} className={this.props.className}>{this.props.children}</StyledCollapsable>;
 	}
 }

@@ -30,8 +30,9 @@ export const TYPE_LANGUAGE = 'language';
 
 export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM];
 
-export const SUBFORM_VIEW_TABBED = 'SUBFORM_VIEW_TABBED'; 
-export const SUBFORM_VIEW_LIST = 'SUBFORM_VIEW_LIST'; 
+export const SUBFORM_VIEW_TABBED = 'tabbed';
+export const SUBFORM_VIEW_LIST = 'full list';
+export const SUBFORM_VIEW_STACKED = 'stacked';
 
 export const BANK_IMG_NAME = 'img';
 export const BANK_IMG_TABLE = 'zva_bank_img';

@@ -122,8 +122,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 			let asideFields;
 			// const recordId = record && record[PRIKEY_ALIAS];
 			// console.log(`build record for ${recordId}`, table && table.name);
-			// console.log(formCollapsed);
-			
+		
 			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
 			if (table) {
 				let dependencies;
@@ -193,7 +192,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
 					return child;
 				});
-
 
 				mainFields = createFieldGroups(table.fields.filter(f => !f.isSecondary));
 				asideFields = createFieldGroups(table.fields.filter(f => f.isSecondary));

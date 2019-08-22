@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SubformTabbed from './SubformTabbed';
+import SubformStacked from './SubformStacked';
 import SubformList from './SubformList';
 import SubformSingle from './SubformSingle';
 
-import { SUBFORM_VIEW_TABBED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/schemaProps';
 
 export default class SubformStandard extends Component {
 	static propTypes = {
@@ -17,6 +18,7 @@ export default class SubformStandard extends Component {
 		parentRecordId: PropTypes.string,
 		highestOrder: PropTypes.number,
 		currentViewType: PropTypes.string,
+		defaultViewType: PropTypes.string,
 		language: PropTypes.string,
 		isCollapsed: PropTypes.bool,
 		titleOverride: PropTypes.string,
@@ -74,13 +76,15 @@ export default class SubformStandard extends Component {
 		// console.log(this.props.table);
 
 		if (!this.props.table) return null;
-
 		if (this.props.table.type === TYPE_SUBFORM) {
-			if (this.props.currentViewType === SUBFORM_VIEW_TABBED || !this.props.currentViewType) {
-				return <SubformTabbed {...this.props} swapRecords={this.swapRecords} />;
+			const currentViewType = this.props.currentViewType || this.props.defaultViewType;
+			if (currentViewType === SUBFORM_VIEW_LIST) {
+				return <SubformList {...this.props} swapRecords={this.swapRecords} />;
+			} else if (currentViewType === SUBFORM_VIEW_STACKED) {
+				return <SubformStacked {...this.props} swapRecords={this.swapRecords} />;
 			}
-			return <SubformList {...this.props} swapRecords={this.swapRecords} />;
-
+			return <SubformTabbed {...this.props} swapRecords={this.swapRecords} />;
+			
 		} else if (this.props.table.type === TYPE_OTO) {
 			return <SubformSingle {...this.props} />;
 		}

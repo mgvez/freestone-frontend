@@ -91,7 +91,9 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 				const areLoaded = parentRecordId && childrenAreLoaded[parentTableId] && childrenAreLoaded[parentTableId][parentRecordId] && childrenAreLoaded[parentTableId][parentRecordId][table.id];
 				const parentLinkField = table.parentLink[parentTableId];
 
-				const type = parentLinkField && parentLinkField.type;
+				const type = parentLinkField && parentLinkField.foreign.foreignType;
+				const defaultViewType = parentLinkField && parentLinkField.foreign.defaultView;
+				
 				let activeRecordId;
 				let activeRecord;
 
@@ -113,8 +115,10 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 					//if record is part of a subform with a language field (so that you have french records and english records)
 					if (activeRecordId && typeof activeRecordId === 'object') activeRecordId = activeRecordId[userViewLanguage.language];
 
-					activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);
-
+					// if we specifically require not to see an active record, for example in stacked list
+					if (activeRecordId !== -1) {
+						activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);
+					}
 				}
 
 				//highest order, pour quand on add un record, qu'il soit à la suite
@@ -129,6 +133,7 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 					table,
 					highestOrder,
 					type,
+					defaultViewType,
 					childrenRecords,
 					activeRecord,
 					...subformView,

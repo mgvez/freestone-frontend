@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { DragDropContext as dragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { TabsContainer } from '../../../styles/Nav';
+import { TabsContainer } from '../../../styles/Form';
 
 import Tab from './Tab';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
@@ -24,7 +24,7 @@ export default class TabList extends Component {
 	};
 
 	render() {
-		return (<TabsContainer className="tabs">
+		return (<TabsContainer>
 			{
 				this.props.childrenRecords.map((record, index) => {
 

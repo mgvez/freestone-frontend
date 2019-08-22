@@ -53,7 +53,7 @@ export default class Subform extends Component {
 				descriptionAppend={this.props.descriptionAppend}
 			/>);
 		}
-		// console.log(this.props.language);
+		// console.log(`render ${this.props.tableId}`);
 
 		return (<SubformStandard
 			tableId={this.props.tableId}

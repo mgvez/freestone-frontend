@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 
 import { SET_SUBFORM_VIEW_TYPE, SET_SUBFORM_COLLAPSED } from '../actions/subform';
+import { CLEAR_DATA } from '../actions/dev';
 
 
 export function viewState(state = {}, action) {
 	switch (action.type) {
+	case CLEAR_DATA: return {};
 	case SET_SUBFORM_VIEW_TYPE: {
 		const tableId = action.data.tableId;
 		// console.log(action);

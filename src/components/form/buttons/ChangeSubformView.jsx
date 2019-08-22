@@ -3,7 +3,30 @@ import PropTypes from 'prop-types';
 import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
 
-import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST } from '../../../freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED } from '../../../freestone/schemaProps';
+
+function cycle(current) {
+	switch (current) {
+	case SUBFORM_VIEW_STACKED:
+		return {
+			key: SUBFORM_VIEW_LIST,
+			label: 'View all open',
+			icon: 'server',
+		};
+	case SUBFORM_VIEW_TABBED:
+		return {
+			key: SUBFORM_VIEW_STACKED,
+			label: 'View as stack',
+			icon: 'bars',
+		};
+	default:
+		return {
+			key: SUBFORM_VIEW_TABBED,
+			label: 'View tabbed',
+			icon: 'columns',
+		};
+	}
+}
 
 export default class ChangeSubformView extends Component {
 	static propTypes = {
@@ -12,17 +35,15 @@ export default class ChangeSubformView extends Component {
 		setSubformViewType: PropTypes.func,
 	};
 
+
 	setType = () => {
-		const toggled = this.props.currentViewType === SUBFORM_VIEW_LIST ? SUBFORM_VIEW_TABBED : SUBFORM_VIEW_LIST;
-		this.props.setSubformViewType(this.props.tableId, toggled);
+		const toggled = cycle(this.props.currentViewType);
+		this.props.setSubformViewType(this.props.tableId, toggled.key);
 
 	};
 
 	render() {
-		// console.log(this.props.currentViewType, this.props.tableId);
-		const label = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'View tabbed' : 'View as list';
-		const icon = this.props.currentViewType === SUBFORM_VIEW_LIST ? 'columns' : 'list';
-		return <Button onClick={this.setType} small round bordered><Icon icon={icon} side="left" />{label}</Button>;
-
+		const toggled = cycle(this.props.currentViewType);
+		return <Button onClick={this.setType} small round bordered><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>;
 	}
 }

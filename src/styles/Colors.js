@@ -13,7 +13,7 @@ const gray96 = '#f3f3f3';
 const gray97 = '#f6f6f6';
 
 const teal62 = '#19aa8d';
-const teal72 = '#23c6c8';
+const teal72 = '#009c80';
 
 const rgbTeal = hexToRgb(teal62);
 const tealLight = `rgba(${rgbTeal}, 0.7)`;
@@ -48,7 +48,7 @@ const colors = {
 	accentPrimary: teal62,
 	accentPrimaryLight: tealLight,
 	accentSecondary: blue26,
-	accentTertiary: teal72,
+	accentPrimaryAlt: teal72,
 	warnPrimary: yellow76,
 	dangerPrimary: red58,
 

@@ -91,7 +91,7 @@ export const schemaSelector = createSelector(
 			}
 
 			if (field.type === TYPE_PRIMARY) table.prikey = field;
-			if (~TYPES_PARENT_LINK.indexOf(field.type) && field.foreign) {
+			if (field.foreign && ~TYPES_PARENT_LINK.indexOf(field.foreign.foreignType)) {
 				table.parentLink[field.foreign.foreignTableId] = field;
 			}
 			return carry;
@@ -101,6 +101,7 @@ export const schemaSelector = createSelector(
 
 		Object.keys(tables).forEach((tableId) => {
 			const table = tables[tableId];
+
 			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank - b.rank);
 			if (table.searchableFields) table.searchableFields = table.searchableFields.sort((a, b) => a.rank - b.rank);
 
@@ -113,6 +114,7 @@ export const schemaSelector = createSelector(
 					return carry;
 				}, null);
 			}
+			// 
 
 		});
 

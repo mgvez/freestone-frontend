@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyledTab } from '../../../styles/Nav';
+
 import { DragSource as dragSource, DropTarget as dropTarget } from 'react-dnd';
 
 function getTabGroup(props) {
@@ -62,14 +62,16 @@ export default class Tab extends Component {
 	};
 
 	setShownRecord = () => {
-		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.recordId, this.props.language);
+		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.isActive ? -1 : this.props.recordId, this.props.language);
 	};
 
 	getMarkup(opacity = 1) {
 		const className = this.props.isActive ? 'active' : '';
 		const label = this.props.displayLabel || '';
+
+		//Only native element nodes can now be passed to React DnD connectors, that's why we don't have a styled node
 		return (
-			<div className={className} onClick={this.setShownRecord} style={{ opacity }}>
+			<div className={`tab ${className}`} onClick={this.setShownRecord} style={{ opacity }}>
 				{label}
 			</div>
 		);
@@ -86,8 +88,6 @@ export default class Tab extends Component {
 				this.getMarkup(opacity)
 			));
 		}
-
 		return this.getMarkup();
-
 	}
 }

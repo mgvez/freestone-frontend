@@ -39,7 +39,7 @@ export default class SubformSingle extends Component {
 			<Subform>
 				<SubformHeader>
 					<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
-					<nav className="tabs">
+					<nav>
 						{addBtn}
 					</nav>
 				</SubformHeader>
