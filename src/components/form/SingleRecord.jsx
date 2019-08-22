@@ -1,40 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
 import { StyledSingleRecord } from '../../styles/Form';
-import colors from '../../styles/Colors';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
-import Field from './Field';
 import { GridContainer, GridItem } from '../../styles/Grid';
-import { StyledFieldGroup } from '../../styles/Input';
-
 
 let isWaitingForFrame = false;
-const SideBar = styled.div`
-	padding: 10px 0;
-	background: ${colors.backgroundDark};
-	color: ${colors.white};
-	
-	label {
-		color: ${colors.white};
-	}
 
-	.sticky & {
-		position: fixed;
-			top: 170px;
-	}
-
-	.absolute & {
-		position: absolute;
-			top: auto;
-			bottom: 0;
-	}
-`;
 
 export default class SingleRecord extends Component {
 	state = {
@@ -46,6 +21,7 @@ export default class SingleRecord extends Component {
 		tableId: PropTypes.number,
 		recordId: PropTypes.string,
 		parentRecordId: PropTypes.string,
+		activeGroup: PropTypes.string,
 		parentTableId: PropTypes.number,
 		isSubform: PropTypes.bool,
 		isGod: PropTypes.bool,
@@ -55,7 +31,6 @@ export default class SingleRecord extends Component {
 		record: PropTypes.object,
 		recordUnaltered: PropTypes.object,
 		mainFields: PropTypes.array,
-		asideFields: PropTypes.array,
 		env: PropTypes.object,
 		language: PropTypes.string,
 		isRoot: PropTypes.bool,
@@ -102,35 +77,6 @@ export default class SingleRecord extends Component {
 		) : null;
 	}
 
-	renderField = (field, isAside = false) => {
-		if (field.subformPlaceholder) {
-			if (!isAside) {
-				const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
-				return this.renderChild(child);
-			}
-			return null;
-		}
-
-		//if field is language-specific, display it only if the current language is the field's
-		// console.log(this.props);
-		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
-		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
-		return isShowField ? (<Field
-			key={field.id} 
-			field={field}
-			tableName={this.props.table.name}
-			recordId={this.props.recordId}
-			val={this.props.record[field.id]}
-			absolutePath={this.props.record[`${field.id}${BANK_PATH_ALIAS}`]}
-			origVal={this.props.recordUnaltered && this.props.recordUnaltered[field.id]}
-			parentRecordId={this.props.parentRecordId}
-			setFieldVal={this.props.setFieldVal}
-			env={this.props.env}
-			lang={field.language}
-			isRoot={this.props.isRoot}
-		/>) : null;
-	}
-
 	stickySidebar = () => {
 		if (!this.sidebar) return;
 		if (!isWaitingForFrame) {
@@ -158,15 +104,14 @@ export default class SingleRecord extends Component {
 		}
 	}
 
-	renderGroups(fields, isAside) {
-		return fields.map((group) => {
-			//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
-			const groupFieldRows = group.fields.map((field) => this.renderField(field, isAside)).filter(a => a);
-			if (group.isPlaceholder) {
-				return groupFieldRows;
-			}
-			return <FieldGroup key={group.key} id={group.key} label={group.label}>{groupFieldRows}</FieldGroup>;
-		}, []);
+	renderGroup(fields) {
+		const activeGroup = this.props.activeGroup || fields.reduce((found, group) => {
+			if (found) return found;
+			if (group.label) return group.key;
+			return null;
+		}, null);
+
+		return <FieldGroup key={activeGroup} {...this.props} groups={fields} activeGroup={activeGroup} tableId={this.props.tableId} />;
 	}
 
 	getSidebarRef = (ref) => {
@@ -175,8 +120,6 @@ export default class SingleRecord extends Component {
 
 	render() {
 		let form;
-		let subforms;
-
 		// console.log('render', this.props.table.name);
 		// console.log('render', this.props.table, this.props.record);
 		if (this.props.table && this.props.record) {
@@ -190,17 +133,6 @@ export default class SingleRecord extends Component {
 				/>);
 			}
 
-			let sidebar;
-			if (this.props.asideFields.length > 0) {
-				sidebar = (
-					<GridItem columns="4" className={this.state.stickyState}>
-						<SideBar ref={this.getSidebarRef} data-sidebar-inner>
-							{this.renderGroups(this.props.asideFields, true)}
-						</SideBar>
-					</GridItem>
-				);
-			}
-
 			const subsiteField = null;//(this.props.isGod && this.props.table.isSubsiteDependent) ? <div>subsite</div> : null;
 
 			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
@@ -211,35 +143,35 @@ export default class SingleRecord extends Component {
 					{subsiteField}
 					<GridContainer>
 						<GridItem columns="6">
-							<StyledFieldGroup>{recIdDisplay}</StyledFieldGroup>
+							{recIdDisplay}
 						</GridItem>
 						<GridItem columns="6" justify="right">
 							{deleteBtn}
 						</GridItem>
 					</GridContainer>
 					<GridContainer>
-						<GridItem columns={`${sidebar ? 8 : 12}`}>
-							{this.renderGroups(this.props.mainFields)}
+						{/* <GridItem columns={`${sidebar ? 8 : 12}`}> */}
+						<GridItem columns="12">
+							{this.renderGroup(this.props.mainFields)}
 						</GridItem>
-						{sidebar}
 					</GridContainer>
 				</article>
 			);
 
 			//shows child forms that are not previously placed through a placeholder
-			if (this.props.children) {
-				subforms = (
-					<div>
-						{this.props.children.map(child => (!child.hasPlaceholder || null) && this.renderChild(child))}
-					</div>
-				);
+			// if (this.props.children) {
+			// 	subforms = (
+			// 		<div>
+			// 			{this.props.children.map(child => (!child.hasPlaceholder || null) && this.renderChild(child))}
+			// 		</div>
+			// 	);
 
-			}
+			// }
 		}
 		return (
 			<StyledSingleRecord>
 				{form}
-				{subforms}
+				{/* {subforms} */}
 			</StyledSingleRecord>
 		);
 	}
