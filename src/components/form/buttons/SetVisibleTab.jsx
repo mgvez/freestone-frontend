@@ -4,18 +4,18 @@ import PropTypes from 'prop-types';
 export default class SetVisibleTab extends Component {
 	static propTypes = {
 		isActive: PropTypes.bool,
-		key: PropTypes.string,
+		clickKey: PropTypes.string,
+		tableId: PropTypes.number,
 		label: PropTypes.string.isRequired,
-		onClick: PropTypes.func.isRequired,
+		showFieldGroup: PropTypes.func.isRequired,
 	};
 
 	onClick = () => {
-		const { label, onClick } = this.props;
-		onClick(label);
+		this.props.showFieldGroup(this.props.clickKey, this.props.tableId);
 	}
 
 	render() {
-		let className = 'tab tab-list-item';
+		let className = 'tab';
 		if (this.props.isActive) {
 			className += ' active';
 		}

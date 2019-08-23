@@ -16,12 +16,17 @@ function getFieldCss(displaySize) {
 	`;
 }
 
-function getFieldGroupCss(isCollapsable) {
+function getFieldGroupCss(props) {
+
 	return css`
 		display: block;
-		padding: 10px 20px;
+		padding: 10px 10px;
 
-		${isCollapsable && `
+		${props.isRoot && `
+			padding: 0;
+		`}
+
+		${props.isCollapsable && `
 			border-top: 4px solid ${colors.backgroundMainAccent};
 			background: rgba(255, 255, 255, 0.25);
 		`};
@@ -162,7 +167,7 @@ export const Input = styled.input`${props => getInputCss(props)}`;
 export const Textarea = styled.textarea`${props => getInputCss(props)}`;
 
 export const StyledField = styled.div`${props => getFieldCss(props.displaySize)}`;
-export const StyledFieldGroup = styled.div`${props => getFieldGroupCss(props.isCollapsable)}`;
+export const StyledFieldGroup = styled.div`${props => getFieldGroupCss(props)}`;
 export const CheckboxContainer = styled.div`${props => getCheckboxContainer(props)}`;
 
 

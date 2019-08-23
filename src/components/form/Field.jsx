@@ -27,6 +27,7 @@ export default class Field extends Component {
 		lang: PropTypes.string,
 		//isRoot can be true if table has property forceAsRoot that make it "main table" even if it is also subforms. 
 		isRoot: PropTypes.bool,
+		isAside: PropTypes.bool,
 		absolutePath: PropTypes.string,
 		setFieldVal: PropTypes.func,
 	};
@@ -83,7 +84,20 @@ export default class Field extends Component {
 			case 'language':
 				// input = <SelectInput {...this.props} />;
 				// break;
-				input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
+				if (this.props.field.foreign) {
+					switch (this.props.field.foreign.foreignType) {
+					case 'subform':
+					case 'rel':
+					case 'oto':
+						if (this.props.isRoot) {
+							input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
+						}
+						break;
+					default:
+					}
+				} else {
+					input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
+				}
 				break;
 			case 'img':
 			case 'file':
@@ -109,13 +123,7 @@ export default class Field extends Component {
 			case 'bankfile'://link vers image de la banque
 				input = <BankFileInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
-			case 'subform':
-			case 'rel':
-			case 'oto':
-				if (this.props.isRoot) {
-					input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
-				}
-				break;
+			
 			case 'pri':
 			case 'ajax':
 			case 'order':
@@ -125,9 +133,8 @@ export default class Field extends Component {
 				break;
 			}
 		}
-
 		if (input) {
-			return (<GridItem key={key} columns={this.props.field.columns}>
+			return (<GridItem key={key} columns={this.props.isAside ? 12 : this.props.field.columns}>
 				<StyledField displaySize={this.props.field.displaySize}>
 					<FieldLabel>
 						<label title={this.props.field.alias}>

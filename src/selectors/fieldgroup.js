@@ -37,7 +37,7 @@ export function fieldGroupsMapStateToProps() {
 	const visibleSelector = makeVisbleSelector();
 	const collapseSelector = makeCollapseSelector();
 
-	return (state, props) => {
+	return (state) => {
 		return { ...visibleSelector, ...collapseSelector };
 	};
 }

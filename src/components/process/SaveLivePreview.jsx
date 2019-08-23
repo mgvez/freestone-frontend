@@ -6,7 +6,7 @@ export default class SaveLivePreview extends Component {
 	static propTypes = {
 		tableId: PropTypes.number,
 		recordId: PropTypes.string,
-		afterSaveLocation: PropTypes.string,
+		afterSaveLocation: PropTypes.object,
 
 		table: PropTypes.object,
 		tree: PropTypes.object,

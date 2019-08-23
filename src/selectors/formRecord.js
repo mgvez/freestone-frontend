@@ -9,6 +9,8 @@ import { isGodSelector } from './credentials';
 
 const envSelector = state => state.freestone.env.freestone;
 const childrenSelector = state => state.freestone.schema.children;
+const tablesSelector = state => state.freestone.schema.tables;
+
 
 //checks if the value of a field matches a rule, so as to influence the display/hide of other fields
 function checkRule(rule, val) {
@@ -85,17 +87,26 @@ function parseDependencies(table, record) {
 }
 
 //create groups according to separators
-function createFieldGroups(fields) {
-	return (fields || []).reduce((groups, curField) => {
+function createFieldGroups(fields, children) {
+	const namedGroups = (fields || []).reduce((groups, curField) => {
 		const isSeparator = curField.type === 'separator';
 		const isPlaceholder = !!curField.subformPlaceholder;
+
+		// 	child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
+		const child = isPlaceholder && children && children.find(candidate => curField.subformPlaceholder === candidate.tableId);
+		//if childform in placeholded, remove it from list of unplaced subforms
+		if (child) {
+			child.hasPlaceholder = true;
+		}
+
 		let curGroup = groups[groups.length - 1];
 		//new group when separator, or when current or previous field was a subfrom placeholder. Placeholders are always alone in their group
-		if (isSeparator || isPlaceholder || !curGroup || curGroup.isPlaceholder) {
+		if (isSeparator || child || !curGroup || curGroup.isPlaceholder) {
 			curGroup = {
-				label: (isSeparator && curField.label) || null,
+				label: (isSeparator && curField.label) || (child && child.label) || null,
 				key: '',
-				isPlaceholder,
+				child,
+				isFirst: !curGroup, //indicate of this group is the first one in list
 				fields: [],
 			};
 			groups.push(curGroup);
@@ -109,17 +120,53 @@ function createFieldGroups(fields) {
 		gr.key = md5(gr.key);
 		return gr;
 	});
+	if (!children) return namedGroups;
+	//if there are children forms, add the remaining ones (without placeholders) to the list of form groups
+	return children.reduce((groups, child) => {
+		if (!child.hasPlaceholder) {
+			const curGroup = {
+				label: (child.label) || null,
+				key: child.key,
+				child,
+			};
+			groups.push(curGroup);
+		}
+		return groups;
+	}, namedGroups);
+
 }
+
+const parsedChildrenSelector = createSelector(
+	[childrenSelector, tablesSelector],
+	(children, tables) => {
+
+		return Object.keys(children).reduce((carry, parentId) => {
+			carry[parentId] = children[parentId].map(childId => {
+				const childDef = tables && tables[childId];
+				// console.log(childDef);
+				return {
+					tableId: childId,
+					key: `child_${parentId}_${childId}`,
+					label: childDef && childDef.displayLabel,
+				};
+			});
+			return carry;
+		}, {});
+	}
+);
+
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector, activeGroupSelector) {
 
 	return createSelector(
-		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, childrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector, activeGroupSelector],
-		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod, activeGroup) => {
+		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, parsedChildrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector, activeGroupSelector],
+		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod, activeGroupKey) => {
 			let { table } = schema;
 			let children;
-			let mainFields;
-			let asideFields;
+			// console.log(unfilteredChildren);
+			let mainGroups;
+			let asideGroups;
+			let activeGroup;
 			// const recordId = record && record[PRIKEY_ALIAS];
 			// console.log(`build record for ${recordId}`, table && table.name);
 		
@@ -129,9 +176,9 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				
 				//clone pour pas muter l'objet du state
 				table = { ...table };
-				children = unfilteredChildren[table.id].map(tableId => {
+				children = unfilteredChildren[table.id].map(desc => {
 					return {
-						tableId,
+						...desc,
 						isDisplay: true,
 					};	
 				});
@@ -187,26 +234,27 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				}
 
 				//enleve les children qui seront placés par un placeholder de la liste (qui sera loopée)
-				children = children.map(child => {
-					//détermine si ce subform est déplacé ailleurs par un placeholder
-					child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
-					return child;
-				});
+				// children = children.map(child => {
+				// 	//détermine si ce subform est déplacé ailleurs par un placeholder
+				// 	child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
+				// 	return child;
+				// });
 
-				mainFields = createFieldGroups(table.fields.filter(f => !f.isSecondary));
-				asideFields = createFieldGroups(table.fields.filter(f => f.isSecondary));
+				mainGroups = createFieldGroups(table.fields.filter(f => !f.isSecondary), children);
+				asideGroups = createFieldGroups(table.fields.filter(f => f.isSecondary));
+
+				activeGroup = mainGroups.find(g => g.key === activeGroupKey) || mainGroups[0];
 
 			}
 
-			// console.log(tableSchema, records, recordId);
+			// console.log(mainGroups);
 			return {
 				record,
 				recordUnaltered,
-				children,
 				table,
 				env,
-				mainFields,
-				asideFields,
+				mainGroups,
+				asideGroups,
 				activeGroup,
 				...isGod,
 			};

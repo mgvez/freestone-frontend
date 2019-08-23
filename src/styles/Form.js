@@ -19,8 +19,8 @@ export const StyledSingleRecord = styled.section`
 `;
 
 export const Subform = styled.section`
-	margin: 30px 0;
-	padding: 0 20px 10px;
+	margin: 20px 0;
+	padding: 0 10px 10px;
 	border-top: 1px solid ${colors.backgroundMainAccent};
 	border-bottom: 1px solid ${colors.backgroundMainAccent};
 	border-left: 10px solid ${colors.backgroundMainAccent};
@@ -39,6 +39,7 @@ export const Subform = styled.section`
 		border-left: 10px solid ${colors.accentPrimary};
 		border-radius: 5px;
 		margin: 20px 0;
+		padding: 0 10px;
 		background: rgba(255, 255, 255, 0.4);
 
 		&:first-of-type {
@@ -98,6 +99,7 @@ export const StackContainer = styled.nav`
 	.stack-record {
 		transition: border-color 1s;
 		border: 1px solid transparent;
+		padding: 0 10px;
 	}
 	.stack-record-active {
 		border-radius: 0 0 5px 5px  ;
@@ -106,9 +108,17 @@ export const StackContainer = styled.nav`
 	
 `;
 
+export const ListContainer = styled.div`
+	.list-record {
+		padding: 0 10px;
+	}
+
+`;
+
 export const TabsContainer = styled.nav`
 	border-bottom: 1px solid ${colors.accentPrimary};
-	margin: 40px 0;
+	margin: 10px 0;
+
 	.tab {
 		background: transparent;
 		display: inline-block;

@@ -45,7 +45,7 @@ export default class StackList extends Component {
 							setShownRecord={this.props.setShownRecord}
 							swapRecords={this.props.swapRecords}
 						/>
-						<Collapsable key={`rec_${record.id}`} isCollapsed={!active} animTime="0.5" className={`stack-record stack-record-${active && 'active'}`}>
+						<Collapsable key={`rec_${record.id}`} isCollapsed={!active} animTime={0.5} className={`stack-record stack-record-${active && 'active'}`}>
 							<SingleRecord 
 								tableId={this.props.table.id}
 								recordId={record.id}

@@ -74,6 +74,8 @@ export default class SubformList extends Component {
 				</SubformHeader>
 
 				{content}
+
+				
 			</Subform>
 		);
 
