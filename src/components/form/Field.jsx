@@ -94,6 +94,7 @@ export default class Field extends Component {
 						}
 						break;
 					default:
+						input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
 					}
 				} else {
 					input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;

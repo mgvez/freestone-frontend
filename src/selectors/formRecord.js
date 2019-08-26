@@ -101,7 +101,8 @@ function createFieldGroups(fields, children) {
 
 		let curGroup = groups[groups.length - 1];
 		//new group when separator, or when current or previous field was a subfrom placeholder. Placeholders are always alone in their group
-		if (isSeparator || child || !curGroup || curGroup.isPlaceholder) {
+		if (!curGroup || isSeparator || child || curGroup.child) {
+			// console.log('creating group', child, curField);
 			curGroup = {
 				label: (isSeparator && curField.label) || (child && child.label) || null,
 				key: '',
@@ -111,8 +112,9 @@ function createFieldGroups(fields, children) {
 			};
 			groups.push(curGroup);
 		}
+		// console.log(curField);
 		curGroup.key += `${curField.id}-`;
-		if (!isSeparator) {
+		if (!isSeparator && !child) {
 			curGroup.fields.push(curField);
 		}
 		return groups;

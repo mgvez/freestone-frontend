@@ -92,6 +92,7 @@ export default class SingleRecord extends Component {
 	}
 
 	renderChild = (child) => {
+		// console.log(child);
 		return child && child.isDisplay ? (
 			<GridItem key={child.tableId} columns="12">
 				<Subform
@@ -142,9 +143,9 @@ export default class SingleRecord extends Component {
 		// }
 
 		//if field is language-specific, display it only if the current language is the field's
-		// console.log(this.props);
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
 		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
+		// console.log(field.name, isShowField);
 		return isShowField ? (<Field
 			key={field.id} 
 			field={field}
@@ -198,22 +199,28 @@ export default class SingleRecord extends Component {
 		if (!this.props.isRoot || isAside) {
 			return groups.map((group) => {
 				//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
+				// console.log(group.fields);
+				// console.log('rendering group...', group.label);
+				// console.log(group);
 				const groupFieldRows = group.fields && group.fields.map((field) => this.renderField(field, isAside)).filter(a => a);
 				const groupChild = group.child && this.renderChild(group.child);
-
-				return (<FieldGroup key={group.key} id={group.key} label={group.label}>
-					{groupFieldRows}
-					{groupChild}
-				</FieldGroup>);
+				// console.log(groupFieldRows, groupChild);
+				if (groupFieldRows && groupFieldRows.length) {
+					return (<FieldGroup key={group.key} id={group.key} label={group.label}>
+						{groupFieldRows}
+						{groupChild}
+					</FieldGroup>);
+				}
+				//if only child form in the group, don't wrap it in the group (groups don't respond to hide/show rules)
+				return groupChild;
 			}, []);
 		}
 
 		//root is tabbed
 
 		const { activeGroup } = this.props;
-		
+		// console.log(activeGroup.fields);
 		const activeGroupFields = activeGroup && activeGroup.fields && activeGroup.fields.map((field) => this.renderField(field, 0)).filter(a => a);
-
 		const activeGroupChild = activeGroup && activeGroup.child && this.renderChild(activeGroup.child);
 
 		const tabs = this.renderGroupTabs(groups);
