@@ -63,7 +63,8 @@ export default class NavGroup extends Component {
 
 	render() {
 		if (!this.props.data) return null;
-		const isOpen = !this.props.toggleState[this.props.data.id];
+		const toggleState = this.props.toggleState[this.props.data.id];
+		const isOpen = !!toggleState;
 		const activeClass = isOpen ? 'active' : '';
 		const icon = this.props.data.icon || 'folder';
 

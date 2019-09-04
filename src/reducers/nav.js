@@ -43,6 +43,8 @@ function toggleState(state = {}, action) {
 			[id]: !state[id],
 		};
 	}
+	// case CLEAR_DATA:
+	// 	return {};
 	default:
 		// console.log('no change');
 		return state;

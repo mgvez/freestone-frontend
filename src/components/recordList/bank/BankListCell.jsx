@@ -11,7 +11,6 @@ import BankNUses from '../../../containers/recordList/bank/BankNUses';
 import { NavLinkButton } from '../../../styles/Button';
 import colors from '../../../styles/Colors';
 import cssVars from '../../../styles/Variables';
-import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 import { Icon } from '../../../styles/Icon';
 
 import { 
@@ -43,6 +42,8 @@ const StyledCell = styled.div`
 	background: ${colors.backgroundLight};
 	border: 1px ${colors.borderMedium} solid;
 	margin-bottom: 15px;
+	width: 100%;
+
 	${props => getItemCss(props.columns || props.cols || cssVars.gridColumns, props.offset || 'auto', props.justify, props.align)};
 `;
 
@@ -53,7 +54,7 @@ const InfosContainer = styled.div`
 	flex-direction: column;
 	font-size: 1em;
 	font-weight: ${cssVars.fontWeightNormal};
-
+	 
 	.infos {
 		margin-bottom: 10px;
 

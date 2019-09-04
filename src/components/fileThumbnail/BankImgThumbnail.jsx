@@ -5,6 +5,9 @@ import styled from 'styled-components';
 
 const ChoosenImage = styled.div`
 	margin-bottom: 10px;
+	img {
+		max-height: ${THUMBNAIL_SIZE}px;
+	}
 `;
 
 export default class BankImgThumbnail extends Component {

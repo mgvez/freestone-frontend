@@ -6,13 +6,14 @@ import { TYPE_FILE } from '../../freestone/schemaProps';
 import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
 
 const Img = styled.img`
-	width: 100%;
 	max-height: ${THUMBNAIL_SIZE}px;
 	display: block;
+	margin: 0 auto;
 `;
 
 const CheckeredBg = styled.span`
 	background-color: #fff;
+	width: 100%;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAIElEQVQoU2NkYGCQYsAEz9CFGIeIQix+wfQgyDODXSEANzEFjc0z43QAAAAASUVORK5CYII=);
 `;
 
