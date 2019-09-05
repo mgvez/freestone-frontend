@@ -93,6 +93,8 @@ export default class Field extends Component {
 							input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
 						}
 						break;
+					case 'mtm':
+						break;
 					default:
 						input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
 					}
@@ -128,7 +130,6 @@ export default class Field extends Component {
 			case 'pri':
 			case 'ajax':
 			case 'order':
-			case 'mtm':
 			default:
 				//pas d'affichage
 				break;
