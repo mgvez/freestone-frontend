@@ -57,10 +57,10 @@ function makeSelector() {
 			const recordLabel = table && allLoadedRecords && allLoadedRecords.records && allLoadedRecords.records.reduce((carry, tableRecords) => {
 
 				if (tableRecords.table && table.id !== tableRecords.table.id) return carry;
-				const candidate = tableRecords.records.filter(loadedRecord => {
+				const candidate = tableRecords.records && tableRecords.records.filter(loadedRecord => {
 					return recordId === loadedRecord.id; 
 				});
-				return candidate[0] && candidate[0].label;
+				return candidate && candidate[0] && candidate[0].label;
 			}, null);
 			// console.log(allLoadedRecords);
 			// console.log(thisRecord);
