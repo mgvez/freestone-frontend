@@ -10,6 +10,7 @@ import SetVisibleTab from './buttons/SetVisibleTab';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
+import DuplicateRecord from '../../containers/form/buttons/DuplicateRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import { GridContainer, GridItem } from '../../styles/Grid';
 import Field from './Field';
@@ -261,13 +262,23 @@ export default class SingleRecord extends Component {
 		if (this.props.table && this.props.record) {
 
 			let deleteBtn;
+			let duplicateBtn = null;
 			if (!this.props.isRoot) {
 				deleteBtn = (<DeleteRecord 
 					tableId={this.props.table.id}
 					recordId={this.props.recordId}
 					language={this.props.table.hasLanguage ? this.props.language : null}
 				/>);
+				duplicateBtn = (<DuplicateRecord 
+					table={this.props.table}
+					tableId={this.props.table.id}
+					recordId={this.props.recordId}
+					parentRecordId={this.props.parentRecordId}
+					parentTableId={this.props.parentTableId}
+					language={this.props.table.hasLanguage ? this.props.language : null}
+				/>);
 			}
+
 
 			let sidebar;
 			//if there are fields in the aside, render them separately. In a subform, they are displayed directly in the grid, on the root form they are rendered in the first group
@@ -283,6 +294,7 @@ export default class SingleRecord extends Component {
 
 			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
 
+
 			form = (
 				<article>
 					<GridContainer>
@@ -290,6 +302,7 @@ export default class SingleRecord extends Component {
 							<StyledFieldGroup>{recIdDisplay}</StyledFieldGroup>
 						</GridItem>
 						<GridItem columns="6" justify="right">
+							{duplicateBtn}
 							{deleteBtn}
 						</GridItem>
 					</GridContainer>

@@ -76,6 +76,20 @@ export function recordMapStateToProps() {
 	};
 }
 
+function makeSingleSelector(recordSelector) {
+	return createSelector([recordSelector], (record) => {
+		return { record };
+	});
+}
+export function singleRecordMapStateToProps() {
+	const selectorInst = makeSingleSelector(
+		recordMapStateToProps(),
+	);
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
+
 export function parentRecordMapStateToProps() {
 	const selectorInst = makeParentRecordSelector();
 	return (state, props) => {
