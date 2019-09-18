@@ -106,7 +106,7 @@ export default class Freestone extends Component {
 			);
 		}
 
-		if (this.props.needsUpdate) return <UpdateFreestone latestVersion={this.props.latestVersion} clientVersion={this.props.clientVersion} />;
+		if (this.props.needsUpdate) return <UpdateFreestone />;
 
 		//on login, if we want to redirect to public site (i.e. we may use the admin's login for public website access)
 		const onLogin = qstrParams('onlogin');
