@@ -137,7 +137,7 @@ export default class TextTranslations extends Component {
 		if (this.props.schema) {
 				
 			groups = this.props.schema.map((group, gIdx) => {
-				console.log(group);
+				// console.log(group);
 				const keys = group.items.map((translationProp, tIdx) => {
 
 					let labelNode = <strong>{translationProp.key}</strong>;

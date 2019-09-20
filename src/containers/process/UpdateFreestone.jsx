@@ -9,6 +9,7 @@ export default connect(
 	(state) => {
 		return { 
 			jwt: state.freestone.auth.jwt,
+			...state.freestone.env.freestone.version,
 		};
 	},
 	dispatch => bindActionCreators({ clearData }, dispatch)

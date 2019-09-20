@@ -115,7 +115,11 @@ function createFieldGroups(fields, children) {
 		// console.log(curField);
 		curGroup.key += `${curField.id}-`;
 		if (!isSeparator && !child) {
-			curGroup.fields.push(curField);
+
+			//only display displayable fields
+			if (!~['pri', 'ajax', 'order'].indexOf(curField.type) && (!curField.foreign || !~['mtm'].indexOf(curField.foreign.type)) && !curField.isHidden) {
+				curGroup.fields.push(curField);
+			}
 		}
 		return groups;
 	}, []).map(gr => {
@@ -242,8 +246,8 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				// 	return child;
 				// });
 
-				mainGroups = createFieldGroups(table.fields.filter(f => !f.isSecondary), children);
-				asideGroups = createFieldGroups(table.fields.filter(f => f.isSecondary));
+				mainGroups = createFieldGroups(table.fields.filter(f => !f.isSecondary), children).filter(g => g.child || g.fields.length);
+				asideGroups = createFieldGroups(table.fields.filter(f => f.isSecondary)).filter(g => g.child || g.fields.length);
 
 				activeGroup = mainGroups.find(g => g.key === activeGroupKey) || mainGroups[0];
 
