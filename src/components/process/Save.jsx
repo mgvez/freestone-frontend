@@ -49,6 +49,16 @@ export default class Save extends Component {
 
 		if (this.props.isTemporary) return msgDisplay;
 
+		let optimizationProgress = null;
+		if (this.props.saveState.optimization.n_remain) {
+			const { n_remain, n_todo_total } = this.props.saveState.optimization;
+			const nDone = n_todo_total - n_remain;
+			const prcDone = Math.round((nDone / n_todo_total) * 100);
+			optimizationProgress = (
+				<div key="optim">Optimizing images {prcDone}% done ({nDone} / {n_todo_total})</div>
+			);
+		}
+
 		return (
 			<section className="saving">
 				<Header>
@@ -57,10 +67,11 @@ export default class Save extends Component {
 						{
 							Object.keys(this.props.saveState.files).map(tmpName => {
 								const curPrc = this.props.saveState.files[tmpName];
-								return <div key={tmpName}>Saving {tmpName} : {curPrc}%</div>;
+								return <div key={tmpName}>Saving file {tmpName} : {curPrc}%</div>;
 							})
 						}
 						{msgDisplay}
+						{optimizationProgress}
 					</HeaderTexts>	
 				</Header>
 			</section>

@@ -121,8 +121,8 @@ export default class List extends Component {
 				}
 			}
 
-			// console.log('render list');
 			const needsFetch = !this.props.groupedRecords || this.props.needsFetch;
+			// console.log('render list needs fetch %s', needsFetch);
 			output = (
 				<section>
 					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />

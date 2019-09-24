@@ -98,7 +98,6 @@ export function callApi(route, data, label) {
 			resolve(r);
 		}).catch(res => {
 			console.log(`Error with route ${route}`);// eslint-disable-line
-			console.log(res);// eslint-disable-line
 			const err = new Error('API Error');
 			err.status = res.status;
 			err.statusText = res.statusText;
@@ -109,8 +108,10 @@ export function callApi(route, data, label) {
 				err.response = jsonResponse && jsonResponse.message;
 				err.details = jsonResponse && jsonResponse.details;
 			} catch (e) {
-				err.response = res.response;
+				err.response = err.responseText || res.response;
 			}
+			console.log(err.responseText || res);// eslint-disable-line
+
 			// console.log(err);
 			reject(err);
 		});
