@@ -87,9 +87,12 @@ export default store => next => action => { // eslint-disable-line
 		error => {
 			const msg = error.status ? `${error.message} ${error.status} ${error.statusText}` : error.message;
 			console.log(`%cERROR ${msg}`, 'color:red;font-weight:bold');// eslint-disable-line
-			console.log('for request', route, requestType, successType);// eslint-disable-line
-			console.log(data);// eslint-disable-line
-			console.trace(error);// eslint-disable-line
+			console.log('for request %c %s %c %s %s', 'color:blue;', route, 'color:violet', requestType, successType);// eslint-disable-line
+			console.groupCollapsed('View complete error');// eslint-disable-line
+			console.log('request data', data);// eslint-disable-line
+			console.trace(error); // eslint-disable-line
+			console.groupEnd();// eslint-disable-line
+
 			// console.log(error.responseText);
 			if (error.status === 401) {
 				next(loginUserFailure(error));

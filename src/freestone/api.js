@@ -97,7 +97,7 @@ export function callApi(route, data, label) {
 			}
 			resolve(r);
 		}).catch(res => {
-			console.log(`Error with route ${route}`);// eslint-disable-line
+			console.log(`%cError with route ${route}`, 'color:red;font-weight:bold;');// eslint-disable-line
 			const err = new Error('API Error');
 			err.status = res.status;
 			err.statusText = res.statusText;
@@ -107,10 +107,14 @@ export function callApi(route, data, label) {
 				err.responseText = jsonResponse && jsonResponse.message;
 				err.response = jsonResponse && jsonResponse.message;
 				err.details = jsonResponse && jsonResponse.details;
+				console.log(`Backend error: %c${err.responseText}`, 'color:blue');// eslint-disable-line
+				console.log(err.details);// eslint-disable-line
+
 			} catch (e) {
 				err.response = err.responseText || res.response;
+				console.log(`Backend response: %c${err.response}`, 'color:blue');// eslint-disable-line
+
 			}
-			console.log(err.responseText || res);// eslint-disable-line
 
 			// console.log(err);
 			reject(err);
