@@ -135,7 +135,7 @@ export default class UpdateFreestone extends Component {
 					
 					<ReleaseNotes>
 						<Heading2>Release notes</Heading2>
-						{this.props.releaseNotes.map(versionNotes => {
+						{this.props.releaseNotes && this.props.releaseNotes.map(versionNotes => {
 							return (
 								<ReleaseVersion key={versionNotes.version}>
 									<Heading3>{versionNotes.version} <em className="date">{versionNotes.date}</em></Heading3>
