@@ -26,7 +26,7 @@ export function buildTree(tableId, recordId, allRecords, allMtmRecords, allTable
 		// console.log('table %s is child of %s', childTableId, tableId);
 
 		if (allTables[childTableId] && allTables[childTableId].type === TYPE_MTM) {
-			const thisMtm = (allMtmRecords[childTableId] && allMtmRecords[childTableId][tableId] && allMtmRecords[childTableId][tableId][recordId]) || [];
+			const thisMtm = (allMtmRecords[childTableId] && allMtmRecords[childTableId][tableId] && allMtmRecords[childTableId][tableId][recordId]) || null;
 
 			allChildrenRecords.mtmChildren.push({
 				tableId: childTableId,
