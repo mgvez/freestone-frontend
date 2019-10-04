@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import UpdateFreestone from '../../components/process/UpdateFreestone';
 
-import { clearData } from '../../actions/dev';
+import { logout } from '../../actions/auth';
 
 export default connect(
 	(state) => {
@@ -12,5 +12,5 @@ export default connect(
 			...state.freestone.env.freestone.version,
 		};
 	},
-	dispatch => bindActionCreators({ clearData }, dispatch)
+	dispatch => bindActionCreators({ logout }, dispatch)
 )(UpdateFreestone);

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import { TRANSLATIONS_API, EDIT_TRANSLATION, SAVE_TRANSLATIONS_API, CLOSE_TRANSLATIONS_API } from '../actions/translations';
 import { CLEAR_DATA } from '../actions/dev';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 
 function translations(state = null, action) {
 	switch (action.type) {
@@ -31,6 +32,9 @@ function translations(state = null, action) {
 	case CLEAR_DATA:
 	case SAVE_TRANSLATIONS_API.SUCCESS:
 	case CLOSE_TRANSLATIONS_API.SUCCESS:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return null;
 	default:
 		return state;
@@ -43,6 +47,9 @@ function schema(state = [], action) {
 		return action.data.schema;
 	}
 	case CLEAR_DATA:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return [];
 	default:
 		return state;

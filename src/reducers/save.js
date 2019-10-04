@@ -3,6 +3,7 @@ import { SAVE_SUCCESS, SAVE_ERROR, SAVE_PROCESSING, SAVE_IDLE } from '../freesto
 import { CLEAR_ERRORS, CLEAR_DATA } from '../actions/dev';
 import { SAVE_RECORD_API, INIT_SAVE, SAVE_PREVIEW_API, PROCESS_IMAGES_API } from '../actions/save';
 import { FILE_API } from '../actions/sendFile';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 
 function files(state = {}, action) {
 	// console.log(action);
@@ -18,6 +19,9 @@ function files(state = {}, action) {
 	case INIT_SAVE:
 	case CLEAR_DATA:
 	case CLEAR_ERRORS:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	default:
 		// console.log('no change');
@@ -39,6 +43,9 @@ function optimization(state = {}, action) {
 	case INIT_SAVE:
 	case CLEAR_DATA:
 	case CLEAR_ERRORS:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	default:
 		// console.log('no change');
@@ -78,6 +85,9 @@ function status(state = statusDefault, action) {
 	case INIT_SAVE:
 	case CLEAR_DATA:
 	case CLEAR_ERRORS:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return statusDefault;
 	default:
 		// console.log('no change');

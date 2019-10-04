@@ -6,7 +6,8 @@ import { CLEAR_DATA } from '../actions/dev';
 
 export function viewState(state = {}, action) {
 	switch (action.type) {
-	case CLEAR_DATA: return {};
+	case CLEAR_DATA: 
+		return {};
 	case SET_SUBFORM_VIEW_TYPE: {
 		const tableId = action.data.tableId;
 		// console.log(action);

@@ -74,6 +74,7 @@ function files(state = initialState, action) {
 function categories(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
+	case LOGOUT_API.REQUEST:
 	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 	case SAVE_RECORD_API.SUCCESS:
@@ -98,6 +99,7 @@ function categories(state = {}, action) {
 function uses(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
+	case LOGOUT_API.REQUEST:
 	case LOGOUT_API.SUCCESS:
 	case CLEAR_DATA:
 	case SAVE_RECORD_API.SUCCESS:

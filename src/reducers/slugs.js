@@ -2,6 +2,7 @@
 import { SLUG_API } from '../actions/slugs';
 import { SAVE_RECORD_API, DELETE_RECORD_API } from '../actions/save';
 import { CLEAR_DATA } from '../actions/dev';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 
 function removeSlugs(state, records) {
 	// console.log(records);
@@ -23,7 +24,11 @@ function removeSlugs(state, records) {
 export default function(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA: 
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
+	
 	case SLUG_API.SUCCESS: {
 		const { tableId, recordId, slugs } = action.data;
 		// console.log(action);

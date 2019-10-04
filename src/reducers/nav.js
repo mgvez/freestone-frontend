@@ -19,6 +19,7 @@ function structure(state = navInitialState, action) {
 	case SWAP_ORDER_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return navInitialState;
@@ -108,7 +109,9 @@ function pageHashes(state = {}, action) {
 			},
 		};
 	case CLEAR_DATA:
+	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	default:
 		// console.log('no change');

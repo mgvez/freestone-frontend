@@ -32,6 +32,10 @@ export default function(state = initialState, action) {
 			isAuthenticating: false,
 			needsRelogin: false,
 		};
+	case LOGOUT_API.REQUEST:
+		return {
+			...initialState,
+		};
 	case UNAUTHORIZED:
 		// const err = action.payload.response;
 		// console.log(err);

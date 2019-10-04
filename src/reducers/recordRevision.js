@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
 
 import { CLEAR_DATA } from '../actions/dev';
-import { UNAUTHORIZED } from '../actions/auth';
+import { LOGOUT_API, UNAUTHORIZED } from '../actions/auth';
 import { RECORD_REVISION_LIST_API } from '../actions/record';
 import { SAVE_RECORD_API, SWAP_ORDER_API, DELETE_RECORD_API } from '../actions/save';
 
 function list(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case SAVE_RECORD_API.SUCCESS:
 	case SWAP_ORDER_API.SUCCESS:
 	case CLEAR_DATA:
