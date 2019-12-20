@@ -1,7 +1,7 @@
 {
 	"extends": "airbnb",
 	"parser": "babel-eslint",
-	rules: {
+	"rules": {
 		"strict": [2, "global"],
 		"space-before-function-paren": [2, "never"],
 		"indent": [2, "tab"],
@@ -23,12 +23,12 @@
 		"no-return-assign": [0],
 		"max-len": [0],
 		"global-require": [0],
-		"no-console": ["warn", { allow: ["warn", "error"] }],
+		"no-console": ["warn", { "allow": ["warn", "error"] }],
 		"react/prefer-stateless-function": [0],
 		"no-param-reassign": ["error", { "props": false }],
 		"no-underscore-dangle": ["error", { "allowAfterThis": true }],
 		"consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
-		"no-cond-assign": [2, "except-parens"],
+		"no-cond-assign": [2, "except-parens"]
 	},
 	"ecmaFeatures" : {
 		"experimentalObjectRestSpread":true
