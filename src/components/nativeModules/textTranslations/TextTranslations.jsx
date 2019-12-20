@@ -153,7 +153,7 @@ export default class TextTranslations extends Component {
 								const activeClass = isActive && 'active';
 								const onClick = () => this.setActiveGroup(gIdx);
 
-								return (<button className={`tab ${activeClass}`} key={`grouptoggle${gIdx}`} onClick={onClick}>{group.groupname}</button>);
+								return (<button className={`tab ${activeClass}`} key={`grouptoggle${gIdx}`} onClick={onClick}>{group.groupname || '........'}</button>);
 								
 							})}
 						</TabsContainer>
