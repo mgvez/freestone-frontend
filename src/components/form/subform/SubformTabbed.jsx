@@ -44,7 +44,7 @@ export default class SubformTabbed extends Component {
 	render() {
 		if (!this.props.childrenRecords || !this.props.table) return null;
 		//on peut mettre en liste uniquement si la table n'a pas de children, sinon le formulaire deient très confus
-		const changeViewBtn = (!this.props.table.hasChildren && !this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
+		const changeViewBtn = (!this.props.isCollapsed) ? <ChangeSubformView tableId={this.props.table.id} /> : null;
 		const content = this.getContent();
 		return (
 			<Subform>

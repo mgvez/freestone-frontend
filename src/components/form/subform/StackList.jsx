@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { DndProvider } from 'react-dnd';
-import Backend from 'react-dnd-html5-backend';
 import { StackContainer } from '../../../styles/Form';
 import Collapsable from '../../animation/Collapsable';
 
 import Tab from './Tab';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
 import SingleRecord from '../../../containers/form/SingleRecord';
+import DragAndDrop from '../../utils/DragAndDrop';
 
 export default class StackList extends Component {
 	static propTypes = {
@@ -26,7 +25,7 @@ export default class StackList extends Component {
 
 	render() {
 		return (<StackContainer>
-			<DndProvider backend={Backend}>
+			<DragAndDrop>
 				{
 					this.props.childrenRecords.map((record, index) => {
 
@@ -69,7 +68,7 @@ export default class StackList extends Component {
 					highestOrder={this.props.highestOrder}
 					language={this.props.language}
 				/>
-			</DndProvider>
+			</DragAndDrop>
 		</StackContainer>);
 	}
 }
