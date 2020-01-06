@@ -24,12 +24,12 @@ export default store => next => action => { // eslint-disable-line
 		isError = false;
 	}
 
-	const callAPI = action[FREESTONE_API];
-	if (typeof callAPI === 'undefined') {
+	const apiActionData = action[FREESTONE_API];
+	if (typeof apiActionData === 'undefined') {
 		// console.log(action);
 		return next(action);
 	}
-	const { route, data, types, redirectOnError } = callAPI;
+	const { route, data, types, redirectOnError } = apiActionData;
 
 	function actionWith(vals) {
 		const finalAction = Object.assign({}, action, vals);
@@ -39,6 +39,7 @@ export default store => next => action => { // eslint-disable-line
 	}
 	// console.log(types);
 	let { REQUEST: requestType, SUCCESS: successType, FAILURE: failureType } = types;
+	const { isSilent } = types;
 	requestType = requestType || FREESTONE_API_REQUEST;
 	successType = successType || FREESTONE_API_SUCCESS;
 	failureType = failureType || FREESTONE_API_FAILURE;
@@ -46,7 +47,7 @@ export default store => next => action => { // eslint-disable-line
 
 
 	const finalRoute = getEndpoint(route);
-
+	// console.log(finalRoute);
 	const hash = sha1(finalRoute + ':::' + successType + ':::' + JSON.stringify(data));
 
 	//when API has had a fatal error, we don't retry any API call until errors are cleared (to avoid eternal calls)
@@ -86,15 +87,19 @@ export default store => next => action => { // eslint-disable-line
 		error => {
 			const msg = error.status ? `${error.message} ${error.status} ${error.statusText}` : error.message;
 			console.log(`%cERROR ${msg}`, 'color:red;font-weight:bold');// eslint-disable-line
-			console.log('for request', route, requestType, successType);// eslint-disable-line
-			console.log(data);// eslint-disable-line
-			console.trace(error);// eslint-disable-line
+			console.log('for request %c %s %c %s %s', 'color:blue;', route, 'color:violet', requestType, successType);// eslint-disable-line
+			console.groupCollapsed('View complete error');// eslint-disable-line
+			console.log('request data', data);// eslint-disable-line
+			console.trace(error); // eslint-disable-line
+			console.groupEnd();// eslint-disable-line
+
 			// console.log(error.responseText);
 			if (error.status === 401) {
 				next(loginUserFailure(error));
 			} else {
 
-				isError = true;
+				//if error is silent, don't prevent further API calls, as is the case when we are displaying errors
+				isError = !isSilent && true;
 
 				//always next with specified failure type
 				next(actionWith({
@@ -105,7 +110,7 @@ export default store => next => action => { // eslint-disable-line
 				}));
 
 				//specific error type if not an API error type, we also need to throw an API error
-				if (failureType !== FREESTONE_API_FAILURE && failureType !== FREESTONE_API_FATAL_FAILURE) {
+				if (!isSilent && failureType !== FREESTONE_API_FAILURE && failureType !== FREESTONE_API_FATAL_FAILURE) {
 					next(actionWith({
 						type: FREESTONE_API_FAILURE,
 						data,

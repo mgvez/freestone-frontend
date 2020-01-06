@@ -11,6 +11,7 @@ import colors from '../../../styles/Colors';
 import { Heading2 } from '../../../styles/texts';
 import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
+import { TabsContainer } from '../../../styles/Form';
 
 const Container = styled.div`
 	${GridContainerStyle};
@@ -67,6 +68,7 @@ export default class TextTranslations extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			activeGroup: null,
 			saving: false,
 			stayOnSaved: false,
 		};
@@ -126,6 +128,12 @@ export default class TextTranslations extends Component {
 		// onSaved.then(this.goHome);
 	}
 
+	setActiveGroup(activeGroup) {
+		this.setState({
+			activeGroup,
+		});
+	}
+
 	render() {
 		let groups;
 		// console.log(this.props.schema);
@@ -135,9 +143,30 @@ export default class TextTranslations extends Component {
 		}
 
 		if (this.props.schema) {
-				
+
+			const groupsTogglers = (
+				<Container>
+					<GridItem columns="12">
+						<TabsContainer>
+							{this.props.schema.map((group, gIdx) => {
+								const isActive = this.state.activeGroup === gIdx || (!this.state.activeGroup && gIdx === 0);
+								const activeClass = isActive && 'active';
+								const onClick = () => this.setActiveGroup(gIdx);
+
+								return (<button className={`tab ${activeClass}`} key={`grouptoggle${gIdx}`} onClick={onClick}>{group.groupname || '........'}</button>);
+								
+							})}
+						</TabsContainer>
+					</GridItem>
+				</Container>
+			);
+
 			groups = this.props.schema.map((group, gIdx) => {
 				// console.log(group);
+
+				const isActive = this.state.activeGroup === gIdx || (!this.state.activeGroup && gIdx === 0);
+				if (!isActive) return null;
+
 				const keys = group.items.map((translationProp, tIdx) => {
 
 					let labelNode = <strong>{translationProp.key}</strong>;
@@ -184,7 +213,12 @@ export default class TextTranslations extends Component {
 
 			});
 
-			groups = (<div>{groups}</div>);
+			groups = (
+				<div>
+					{groupsTogglers}
+					{groups}
+				</div>
+			);
 
 		}
 

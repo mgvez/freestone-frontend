@@ -147,6 +147,7 @@ function childrenAreLoaded(state = {}, action) {
 		return removeRecords(state, action.data.records);
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	default:
 		// console.log('no change');
@@ -178,6 +179,7 @@ function records(state = {}, action) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	case RECORD_SINGLE_API.SUCCESS:
 		return receiveRecord(state, action.data);
@@ -286,15 +288,15 @@ function removeMtmRecords(state, recordsToRemove) {
 
 function mtmRecords(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-		return {};
 	case MTM_RECORD_API.SUCCESS:
 	case RECORD_SINGLE_API.SUCCESS:
 		return receiveMtmRecords(state, action.data);
 	case TOGGLE_MTM_VALUE:
 		return toggleMtmValue(state, action.data);
 	case CLEAR_DATA:
+	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_API.SUCCESS:
@@ -308,14 +310,14 @@ function mtmRecords(state = {}, action) {
 // garde les records tels que loadés de la db, sans alteration (donc ne repond pas au set field value)
 function recordsUnaltered(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-		return {};
 	case RECORD_SINGLE_API.SUCCESS:
 		return receiveRecord(state, action.data);
 	case MTM_RECORD_API.SUCCESS:
 		return receiveMtmRecords(state, action.data);
 	case CLEAR_DATA:
+	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_API.SUCCESS:
@@ -332,6 +334,7 @@ function lastEdit(state = { time: 0 }, action) {
 	switch (action.type) {
 	case TOGGLE_MTM_VALUE:
 	case SET_RECORD_DELETED:
+	case UNAUTHORIZED:
 	case SET_FIELD_VALUE:
 	case CLEAR_DATA: {
 		return {

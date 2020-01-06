@@ -18,6 +18,15 @@ export const languageKeysSelector = createSelector(
 	}
 );
 
+const schemaSelector = createSelector(
+	[translationsSchemaSelector],
+	(schema) => {
+		return schema.sort((a, b) => {
+			return a.groupname.localeCompare(b.groupname);
+		});
+	}
+);
+
 
 function makeSingleTranslationSelector() {
 	return createSelector(
@@ -42,7 +51,7 @@ export function singleTranslationMapStateToProps() {
 }
 
 export const coreTranslations = createSelector(
-	[isEditedSelector, isLoadedSelector, languageKeysSelector, translationsSchemaSelector],
+	[isEditedSelector, isLoadedSelector, languageKeysSelector, schemaSelector],
 	(isEdited, isLoaded, languages, schema) => {
 		// console.log(schema);
 		// console.log('edited...', isEdited);

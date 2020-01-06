@@ -93,7 +93,7 @@ export default class UpdateFreestone extends Component {
 		releaseNotes: PropTypes.array,
 		jwt: PropTypes.string,
 
-		clearData: PropTypes.func,
+		logout: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -123,7 +123,7 @@ export default class UpdateFreestone extends Component {
 		// <iframe src="dummy.html" name="dummy" style={{ display: 'none' }}></iframe>
 		const url = getAdminUrl() + `updateFreestone?jwt=${this.props.jwt}`;
 		// console.log(this.props.releaseNotes);
-		const finishButton = this.state.finished ? <Button primary="true" onClick={this.props.clearData}>Update finished, click to refresh</Button> : null;
+		const finishButton = this.state.finished ? <Button primary="true" onClick={this.props.logout}>Update finished, click to relog</Button> : null;
 
 		const contents = !this.state.updating ? (
 			<GridContainer>
@@ -135,7 +135,7 @@ export default class UpdateFreestone extends Component {
 					
 					<ReleaseNotes>
 						<Heading2>Release notes</Heading2>
-						{this.props.releaseNotes.map(versionNotes => {
+						{this.props.releaseNotes && this.props.releaseNotes.map(versionNotes => {
 							return (
 								<ReleaseVersion key={versionNotes.version}>
 									<Heading3>{versionNotes.version} <em className="date">{versionNotes.date}</em></Heading3>

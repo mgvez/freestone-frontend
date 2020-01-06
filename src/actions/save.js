@@ -6,6 +6,7 @@ import { createRequestTypes } from './apiAction';
 
 export const INIT_SAVE = 'INIT_SAVE';
 export const SAVE_RECORD_API = createRequestTypes('SAVE_RECORD_API');
+export const PROCESS_IMAGES_API = createRequestTypes('PROCESS_IMAGES_API', true);
 export const SAVE_SINGLE_VALUE_RECORD_API = createRequestTypes('SAVE_SINGLE_VALUE_RECORD_API');
 export const SAVE_PREVIEW_API = createRequestTypes('SAVE_PREVIEW_API');
 export const SWAP_ORDER_API = createRequestTypes('SWAP_ORDER_API');
@@ -28,6 +29,29 @@ function parseRecordBeforeSave(data) {
 	const hook = window.freestone && window.freestone.hooks && window.freestone.hooks.parseRecordBeforeSave;
 	if (!hook) return data;
 	return window.freestone.hooks.parseRecordBeforeSave(data);
+}
+
+
+//process all image resizes/optimizations that need to be created by backend
+function processImages(data, dispatch) {
+	// console.log(images);
+	if (!data || !data.images || !data.images.length) return Promise.resolve(null);
+	const onProcessed = dispatch({
+		[FREESTONE_API]: {
+			types: PROCESS_IMAGES_API,
+			route: 'imagesTransform',
+			data: { data: JSON.stringify(data) },
+		},
+	});
+
+	return onProcessed.then(res => {
+		if (res.images && res.images.length) {
+			return processImages(res, dispatch);
+		}
+		// console.log(res);
+		return res;
+	});
+
 }
 
 export function saveRecord(table, tree, records, deleted, permissions, isTemporary, gotoOnFinish, callback) {
@@ -81,39 +105,45 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 			});
 
 			onSaved.then((res) => {
-				// console.log(res);
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
 
-				const skipDefault = callback && callback(res.mainRecord, res.slugs);
-				if (!skipDefault) {
-					let pathname = '';
-					let search = '';
-					if (gotoOnFinish && gotoOnFinish.pathname) {
-						pathname = gotoOnFinish.pathname;
-						search = gotoOnFinish.search;
-					} else {
-						pathname = gotoOnFinish || `/list/${table.name}`;
-					}
-					pathname = pathname.replace('{{recordId}}', res.mainRecord.recordId);
-					
-					//si table savée est meta (zva_...)
-					if (isMeta) {
-						dispatch({
-							type: CLEAR_SCHEMA,
-						});
-					}
+				// console.log(res.images);
+				
+				//process image optimizations
+				return processImages(res && res.images && res.images, dispatch).then(imagesResult => {
+					// console.log(imagesResult);
+					const skipDefault = callback && callback(res.mainRecord, res.slugs);
+					if (!skipDefault) {
+						let pathname = '';
+						let search = '';
+						if (gotoOnFinish && gotoOnFinish.pathname) {
+							pathname = gotoOnFinish.pathname;
+							search = gotoOnFinish.search;
+						} else {
+							pathname = gotoOnFinish || `/list/${table.name}`;
+						}
+						pathname = pathname.replace('{{recordId}}', res.mainRecord.recordId);
+						
+						//si table savée est meta (zva_...)
+						if (isMeta) {
+							dispatch({
+								type: CLEAR_SCHEMA,
+							});
+						}
 
-					dispatch(pushPath({ pathname, search }));
+						dispatch(pushPath({ pathname, search }));
 
-				}
-				return null;
+					}
+					return null;
+				});
 			});
 
 			return onSaved;
 		});
 	};
 }
+
 
 export function swapOrder(tableName, recordId, direction, onComplete) {
 	return (dispatch) => {

@@ -10,7 +10,7 @@ export default (table, parentTableId, parentRecordId, orderVal, model) => {
 		return recordPromise.then(record => {
 			// console.log(record);
 			if (field.type === TYPE_ORDER) {
-				record[field.id] = orderVal || '';
+				record[field.id] = orderVal || (model && model[field.id] + 5) || '';
 			} else if (model && (model[field.id] || model[field.name])) {
 				record[field.id] = model[field.id] || model[field.name];
 			} else {

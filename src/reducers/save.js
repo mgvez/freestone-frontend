@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import { SAVE_SUCCESS, SAVE_ERROR, SAVE_PROCESSING, SAVE_IDLE } from '../freestone/codes';
 import { CLEAR_ERRORS, CLEAR_DATA } from '../actions/dev';
-import { SAVE_RECORD_API, INIT_SAVE, SAVE_PREVIEW_API } from '../actions/save';
+import { SAVE_RECORD_API, INIT_SAVE, SAVE_PREVIEW_API, PROCESS_IMAGES_API } from '../actions/save';
 import { FILE_API } from '../actions/sendFile';
+import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 
 function files(state = {}, action) {
 	// console.log(action);
@@ -18,6 +19,33 @@ function files(state = {}, action) {
 	case INIT_SAVE:
 	case CLEAR_DATA:
 	case CLEAR_ERRORS:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
+		return {};
+	default:
+		// console.log('no change');
+		return state;
+	}
+}
+
+function optimization(state = {}, action) {
+	// console.log(action);
+	switch (action.type) {
+	case PROCESS_IMAGES_API.SUCCESS: {
+		const { n_remain, n_todo_total } = action.data;
+		return {
+			...state,
+			n_remain,
+			n_todo_total,
+		};
+	}
+	case INIT_SAVE:
+	case CLEAR_DATA:
+	case CLEAR_ERRORS:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	default:
 		// console.log('no change');
@@ -36,14 +64,14 @@ function status(state = statusDefault, action) {
 	case SAVE_PREVIEW_API.REQUEST:
 		return {
 			code: SAVE_PROCESSING,
-			msg: 'saving record',
+			msg: 'Saving record...',
 			error: null,
 		};
 	case SAVE_RECORD_API.SUCCESS:
 	case SAVE_PREVIEW_API.SUCCESS:
 		return {
 			code: SAVE_SUCCESS,
-			msg: 'record saved',
+			msg: 'Record saved',
 			error: null,
 		};
 	case SAVE_RECORD_API.FAILURE:
@@ -51,12 +79,15 @@ function status(state = statusDefault, action) {
 		// console.log(action);
 		return {
 			code: SAVE_ERROR,
-			msg: 'record save error',
+			msg: 'Record save error',
 			error: action.error.response || action.error.responseText,
 		};
 	case INIT_SAVE:
 	case CLEAR_DATA:
 	case CLEAR_ERRORS:
+	case UNAUTHORIZED:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return statusDefault;
 	default:
 		// console.log('no change');
@@ -66,5 +97,6 @@ function status(state = statusDefault, action) {
 
 export default combineReducers({
 	files,
+	optimization,
 	status,
 });

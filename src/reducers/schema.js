@@ -6,8 +6,6 @@ import { SAVE_RECORD_API } from '../actions/save';
 
 function tables(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-		return {};
 	case SCHEMA_API.SUCCESS:
 		// console.log(action);
 		if (!action.data || !action.data.tables) return state;
@@ -28,7 +26,9 @@ function tables(state = {}, action) {
 		return {};
 	case CLEAR_DATA:
 	case CLEAR_SCHEMA:
+	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	default:
 		// console.log('no change');
@@ -38,8 +38,6 @@ function tables(state = {}, action) {
 
 function children(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-		return {};
 	case SCHEMA_API.SUCCESS:
 		// console.log(action);
 		if (!action.data || !action.data.children) return state;
@@ -60,6 +58,8 @@ function children(state = {}, action) {
 		return state;
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
+	case UNAUTHORIZED:
 	case CLEAR_SCHEMA:
 		return {};
 	default:
@@ -70,8 +70,6 @@ function children(state = {}, action) {
 
 function fields(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-		return {};
 	case SCHEMA_API.SUCCESS:
 		// console.log(action.data.fields);
 		if (!action.data || !action.data.fields) return state;
@@ -95,10 +93,11 @@ function fields(state = {}, action) {
 			return {};
 		}
 		return state;
+	case UNAUTHORIZED:
 	case CLEAR_ERRORS:
-		return {};
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case CLEAR_SCHEMA:
 		return {};
 	default:
@@ -109,8 +108,6 @@ function fields(state = {}, action) {
 
 function fieldDependencies(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-		return {};
 	case SCHEMA_API.SUCCESS:
 		// console.log(action.data.fields);
 		if (!action.data || !action.data.fieldDependencies) return state;
@@ -125,9 +122,10 @@ function fieldDependencies(state = {}, action) {
 		}
 		return state;
 	case CLEAR_ERRORS:
-		return {};
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
+	case UNAUTHORIZED:
 	case CLEAR_SCHEMA:
 		return {};
 	default:

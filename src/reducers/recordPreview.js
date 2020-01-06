@@ -28,6 +28,7 @@ function slugs(state = {}, action) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
@@ -65,6 +66,7 @@ function previewIds(state = {}, action) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 		return {};
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
@@ -102,6 +104,7 @@ function previewState(state = false, action) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:
@@ -119,6 +122,7 @@ function currentPreview(state = { type: PREVIEW_IFRAME }, action) {
 	case UNAUTHORIZED:
 	case CLEAR_DATA:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_API.SUCCESS:
 	case DELETE_RECORD_API.SUCCESS:

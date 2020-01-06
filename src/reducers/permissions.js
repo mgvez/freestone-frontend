@@ -47,6 +47,7 @@ function sitePermissions(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return {};
@@ -67,6 +68,7 @@ function sitePermissionsModified(state = {}, action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return {};
@@ -96,6 +98,7 @@ function groups(state = [], action) {
 	switch (action.type) {
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
 	case CLEAR_DATA:
 		// console.log('clear');
 		return null;

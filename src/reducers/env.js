@@ -1,5 +1,5 @@
 
-import { LOGOUT_API } from '../actions/auth';
+import { LOGOUT_API, UNAUTHORIZED } from '../actions/auth';
 import { ENV_API, SET_LANGUAGE, TOGGLE_LANGUAGE, ENV_VAR_API, SET_ENV_VARIABLE } from '../actions/env';
 import { CLEAR_DATA } from '../actions/dev';
 import { combineReducers } from 'redux';
@@ -37,6 +37,8 @@ function freestone(state = envInitialState, action) {
 		}, {});
 	}
 	case CLEAR_DATA:
+	case UNAUTHORIZED:
+	case LOGOUT_API.REQUEST:
 	case LOGOUT_API.SUCCESS:
 		return envInitialState;
 	default:
@@ -98,6 +100,7 @@ function userViewSettings(state = userViewSettingsInitialState, action) {
 function clientVariables(state = {}, action) {
 	switch (action.type) {
 	case CLEAR_DATA:
+	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
 		return {};
 	case ENV_VAR_API.SUCCESS:
