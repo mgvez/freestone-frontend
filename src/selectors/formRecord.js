@@ -232,9 +232,11 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 						if (field && field.foreign && field.foreign.foreignTableId === table.id) {
 							//trouve ce child
 							const child = children.find(candidate => candidate.tableId === field.table_id);
-							child.isDisplay = dependencies[targetFieldId].isDisplay;
-							child.titleOverride = dependencies[targetFieldId].titleOverride;
-							child.descriptionAppend = dependencies[targetFieldId].descriptionAppend;
+							if (child) {
+								child.isDisplay = dependencies[targetFieldId].isDisplay;
+								child.titleOverride = dependencies[targetFieldId].titleOverride;
+								child.descriptionAppend = dependencies[targetFieldId].descriptionAppend;
+							}
 						}
 					});
 				}
