@@ -89,9 +89,10 @@ export default class Field extends Component {
 					case 'subform':
 					case 'rel':
 					case 'oto':
-						if (this.props.isRoot) {
-							input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
-						}
+						//update 2020-01-17: don't show subform fields when record is shown as root (records are orphans)
+						// if (this.props.isRoot) {
+						// 	input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
+						// }
 						break;
 					case 'mtm':
 						break;
