@@ -21,7 +21,6 @@ export const SWAPPED_ANIMATED = 'SWAPPED_ANIMATED';
 export const RECORD_INFO_API = createRequestTypes('RECORD_INFO_API');
 export const RECORD_LIST_API = createRequestTypes('RECORD_LIST_API');
 export const RECORD_SINGLE_API = createRequestTypes('RECORD_SINGLE_API');
-export const RECORD_REVISION_LIST_API = createRequestTypes('RECORD_REVISION_LIST_API');
 export const MTM_RECORD_API = createRequestTypes('MTM_RECORD_API');
 export const MTM_OPTIONS_API = createRequestTypes('MTM_OPTIONS_API');
 
@@ -161,18 +160,6 @@ export function fetchRecord(tableName, id, parentTable = 0) {
 				types: RECORD_SINGLE_API,
 				route: `record/${tableName}/${parentTable}/${id}`,
 				redirectOnError: `/list/${tableName}`,
-			},
-		});
-	};
-}
-
-export function fetchRecordRevisionList(tableName, id) {
-	return (dispatch) => {
-		// console.log(`record/${tableName}/${parentTable}/${id}`);
-		return dispatch({
-			[FREESTONE_API]: {
-				types: RECORD_REVISION_LIST_API,
-				route: `recordRevision/list/${tableName}/${id}`,
 			},
 		});
 	};

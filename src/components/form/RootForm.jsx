@@ -34,7 +34,6 @@ export default class RootForm extends Component {
 		recordLabel: PropTypes.string,
 		fetchTable: PropTypes.func,
 		goTo: PropTypes.func,
-		fetchRecordRevisionList: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -112,8 +111,6 @@ export default class RootForm extends Component {
 		const { tableName } = props.params;
 		if (!props.table) {
 			this.props.fetchTable(tableName);
-		} else {
-			// this.props.fetchRecordRevisionList(this.props.table.id, this.props.params.recordId);		
 		}
 	}
 

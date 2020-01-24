@@ -8,7 +8,6 @@ import env from './env';
 import errors from './errors';
 import foreign from './foreign';
 import recordList from './recordList';
-import recordRevision from './recordRevision';
 import recordPreview from './recordPreview';
 import recordForm from './recordForm';
 import subform from './subform';
@@ -34,7 +33,6 @@ const rootReducer = combineReducers({
 	fieldgroup,
 	bank,
 	translations,
-	recordRevision,
 	slugs,
 	permissions,
 });
