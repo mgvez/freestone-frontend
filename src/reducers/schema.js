@@ -80,7 +80,7 @@ function fields(state = {}, action) {
 				//replaces language specification in field label, if any, because this is now added in the frontend.
 				if (field.language) {
 					const reg = new RegExp('\\s*\\(' + field.language + '\\)\\s*$');
-					field.label = field.label.replace(reg, '');
+					field.label = field.label && field.label.replace(reg, '');
 				}
 
 				newState[field.id] = field;
