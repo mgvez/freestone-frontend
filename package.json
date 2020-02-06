@@ -1,6 +1,6 @@
 {
   "name": "freestone-admin",
-  "version": "3.2.8",
+  "version": "3.2.36",
   "description": "",
   "scripts": {
     "start-wp1": "node server.js",
