@@ -13,17 +13,18 @@ function cycle(current) {
 			label: 'View all open',
 			icon: 'server',
 		};
-	case SUBFORM_VIEW_TABBED:
-		return {
-			key: SUBFORM_VIEW_STACKED,
-			label: 'View as stack',
-			icon: 'bars',
-		};
-	default:
+	case SUBFORM_VIEW_LIST:
 		return {
 			key: SUBFORM_VIEW_TABBED,
 			label: 'View tabbed',
 			icon: 'columns',
+		};
+	case SUBFORM_VIEW_TABBED:
+	default:
+		return {
+			key: SUBFORM_VIEW_STACKED,
+			label: 'View as stack',
+			icon: 'bars',
 		};
 	}
 }
