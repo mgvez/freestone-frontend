@@ -137,6 +137,12 @@ export default function(state = initialState, action) {
 			isRequestPending: true,
 		};
 	}
+	case RESET_API.SUCCESS: {
+		return {
+			...state,
+			isRequestPending: false,
+		};
+	}
 	default: {
 		const now = Date.now();
 		const diff = (now - lastRequestTime) / 1000;
