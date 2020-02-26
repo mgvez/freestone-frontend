@@ -118,12 +118,13 @@ export default class SubformMtm extends Component {
 			return (
 				<Subform>
 					<SubformHeader className="row">
-						<div className="col-md-8">
+						<GridItem columns="8">
 							<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
-						</div>
-						<div className="col-md-3 col-md-offset-1 fcn">
+						</GridItem>
+						<GridItem columns="4" align="end" className="fcn">
 							<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
-						</div>
+						</GridItem>
+
 					</SubformHeader>
 
 					<Collapsable isCollapsed={this.props.isCollapsed}>{options}</Collapsable>
