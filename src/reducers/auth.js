@@ -140,6 +140,9 @@ export default function(state = initialState, action) {
 	case RESET_API.SUCCESS: {
 		return {
 			...state,
+			userName: action.data.userName,
+			email: action.data.email,
+			realName: action.data.realName,
 			isRequestPending: false,
 		};
 	}
