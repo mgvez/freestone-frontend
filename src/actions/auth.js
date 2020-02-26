@@ -6,11 +6,14 @@ export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const CLEAR_AUTH_MESSAGES = 'CLEAR_AUTH_MESSAGES';
 
+export const RESET_REQUEST_API = createRequestTypes('RESET_REQUEST_API');
 export const LOGOUT_API = createRequestTypes('LOGOUT_API');
 export const LOGIN_API = createRequestTypes('LOGIN_API');
 export const INSTALL_API = createRequestTypes('INSTALL_API');
 export const PING_API = createRequestTypes('PING_API');
+export const RESET_API = createRequestTypes('RESET_API');
 
 
 //login api actions don't return their values directly through a api succes, but are rather caught by the middleware. Login can be included in any API response, not only login requests.
@@ -23,6 +26,12 @@ function loginUserSuccess(jwt, token) {
 			jwt,
 			token,
 		},
+	};
+}
+
+export function clearStatus() {
+	return {
+		type: CLEAR_AUTH_MESSAGES,
 	};
 }
 
@@ -104,6 +113,37 @@ export function loginUser(username = null, password = null, remember = null, pro
 				types: actionType,
 				route: 'login',
 				data,
+			},
+		});
+	};
+}
+
+export function requestReset(email) {
+	return (dispatch) => {
+
+		return dispatch({
+			[FREESTONE_API]: {
+				types: RESET_REQUEST_API,
+				route: 'login',
+				data: {
+					resetPassword: email,
+				},
+			},
+		});
+	};
+}
+
+export function resetPassword(rpk, password = null) {
+	return (dispatch) => {
+
+		return dispatch({
+			[FREESTONE_API]: {
+				types: RESET_API,
+				route: 'login',
+				data: {
+					rpk,
+					freestonepass: password,
+				},
 			},
 		});
 	};

@@ -53,22 +53,26 @@ export default class Login extends Component {
 		location: PropTypes.object,
 		apiGoogle: PropTypes.object,
 		statusText: PropTypes.string,
+		resetPasswordKey: PropTypes.string,
 		jwt: PropTypes.string,
 		username: PropTypes.string,
-		isAuthenticating: PropTypes.bool,
+		realName: PropTypes.string,
+		isRequestPending: PropTypes.bool,
 		isInstalled: PropTypes.bool,
 		gapiready: PropTypes.bool,
 
 		loginUser: PropTypes.func,
 		fetchVariable: PropTypes.func,
 		setVariable: PropTypes.func,
+		requestReset: PropTypes.func,
+		clearStatus: PropTypes.func,
+		resetPassword: PropTypes.func,
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			installing: false,
-			disableAuth: false,
+			isShowResetForm: false,
 			username: '',
 			password: '',
 		};
@@ -76,18 +80,12 @@ export default class Login extends Component {
 
 	componentDidMount() {
 		this.props.setVariable('isInstalled', undefined);
-		this.requireData(this.props);
+		this.requireData();
 		// console.log(this.props);
 	}
 
-	componentDidUpdate(prevProps) {
+	componentDidUpdate() {
 		this.requireData();
-
-		if (prevProps.isAuthenticating && !this.props.isAuthenticating) {
-			this.setState({
-				disableAuth: false,
-			});
-		}
 	}
 
 	requireData() {
@@ -96,6 +94,32 @@ export default class Login extends Component {
 			this.props.fetchVariable('isInstalled');
 		}
 		if (typeof this.props.apiGoogle === 'undefined') this.props.fetchVariable('api.google');
+		//if we are in the process of requesting a password change, we need to get user's info
+		if (this.props.resetPasswordKey && !this.props.realName) {
+			this.props.resetPassword(this.props.resetPasswordKey);
+		}
+	}
+	
+	toggleReset = () => {
+		this.setState(state => {
+			return {
+				...state,
+				isShowResetForm: !state.isShowResetForm,
+			};
+		});
+		this.props.clearStatus();
+	}
+
+	sendResetRequest = (e) => {
+		e.preventDefault();
+		const email = this._email.value;
+		this.props.requestReset(email);
+	}
+
+	sendReset = (e) => {
+		e.preventDefault();
+		const newPass = this._newpassword.value;
+		this.props.resetPassword(this.props.resetPasswordKey, newPass);
 	}
 
 	login = (e) => {
@@ -103,17 +127,6 @@ export default class Login extends Component {
 		const username = this._username.value;
 		const password = this._password.value;
 		const remember = this._remember.checked;
-		// console.log(username, password, remember);
-		if (!this.props.isInstalled) {
-			this.setState({
-				installing: true,
-			});
-		}
-
-		this.setState({
-			disableAuth: true,
-		});
-
 		this.props.loginUser(username, password, remember, this.props.isInstalled === false);
 	};
 
@@ -124,6 +137,8 @@ export default class Login extends Component {
 			action: 'Submit',
 		};
 
+		const opacityStyles = { opacity: this.props.isRequestPending ? '0.5' : '1' };
+
 		//si pas installé, on met des messages différents
 		if (this.props.isInstalled === false) {
 			msgs.text = 'Welcome to Freestone! Please choose a username and password in order to install Freestone.';
@@ -131,12 +146,48 @@ export default class Login extends Component {
 		}
 		
 		let loginForm = null;
-		if (!this.state.installing) {
+
+		if (this.props.resetPasswordKey) {
+			msgs.text = 'Please enter your new password.';
+			if (this.props.realName) {
+				msgs.text = `Hello ${this.props.realName}! ${msgs.text}`;
+			}
+
+			loginForm = (<form role="form" onSubmit={this.sendReset} style={opacityStyles}>
+				<Input
+					type="password"
+					className=" input-lg"
+					placeholder="New password"
+					name="freestonepassword"
+					ref={el => this._newpassword = el}
+				/>
+				<div className="btns">
+					<Button type="submit" round="true" mediumwidth="true" disabled={this.props.isRequestPending}>{msgs.action}</Button>
+				</div>
+			</form>);
+
+		} else if (this.state.isShowResetForm) {
+			msgs.text = 'Please enter your email to request a password change.';
+			loginForm = (<form role="form" onSubmit={this.sendResetRequest}>
+				<Input
+					type="text"
+					className=" input-lg"
+					placeholder="Email"
+					name="email"
+					ref={el => this._email = el}
+				/>
+				<div className="btns">
+					<Button type="submit" round="true" disabled={this.props.isRequestPending}>Request password reset</Button>
+					<Button round="true" info="true" faded="true" onClick={this.toggleReset}>Cancel</Button>
+				</div>
+			</form>);
+
+		} else {
 			let googleLoginBtn = null;
 			if (this.props.apiGoogle && this.props.apiGoogle.clientId && this.props.gapiready) {
 				googleLoginBtn = <GoogleLoginBtn />;
 			}
-			loginForm = (<form role="form" onSubmit={this.login}>
+			loginForm = (<form role="form" onSubmit={this.login} style={opacityStyles}>
 				<Input
 					type="text"
 					className=" input-lg"
@@ -159,8 +210,9 @@ export default class Login extends Component {
 					<div className="checkmark"></div>
 				</CheckboxContainer>
 				<div className="btns">
-					<Button type="submit" round="true" mediumwidth="true" disabled={this.state.disableAuth}>{msgs.action}</Button>
+					<Button type="submit" round="true" mediumwidth="true" disabled={this.props.isRequestPending}>{msgs.action}</Button>
 					{googleLoginBtn}
+					<Button round="true" info="true" faded="true" onClick={this.toggleReset}>Forgot password?</Button>
 				</div>
 			</form>);
 		}

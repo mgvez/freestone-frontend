@@ -50,6 +50,11 @@ export function configureStore(initialState) {
 	if (currentState && currentState.router) {
 		delete currentState.router;
 	}
+	if (currentState && currentState.freestone && currentState.freestone.auth) {
+		currentState.freestone.auth.statusText = null;
+		currentState.freestone.auth.isAuthenticating = false;
+		currentState.freestone.auth.isResetting = false;
+	}
 
 	const store = createStore(
 		createRootReducer(history), // root reducer with router state
