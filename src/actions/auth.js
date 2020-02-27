@@ -50,7 +50,6 @@ export function loginUserFailure(error) {
 export function receiveToken(jwt) {
 	try {
 		const token = jwtDecode(jwt);
-		// console.log(`received token ${token}`);
 		return loginUserSuccess(jwt, token);
 	} catch (e) {
 		// console.log(jwt);
