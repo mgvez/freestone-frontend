@@ -125,7 +125,7 @@ export default function(state = initialState, action) {
 			...state,
 			isAuthenticated: false,
 			isRequestPending: false,
-			isResetRequestSent: false,
+			isResetRequestSent: true,
 			jwt: null,
 			userName: null,
 			userId: null,
