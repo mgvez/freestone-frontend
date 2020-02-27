@@ -58,6 +58,7 @@ export default class Login extends Component {
 		username: PropTypes.string,
 		realName: PropTypes.string,
 		isRequestPending: PropTypes.bool,
+		isResetRequestSent: PropTypes.bool,
 		isResetKeyValid: PropTypes.bool,
 		isInstalled: PropTypes.bool,
 		gapiready: PropTypes.bool,
@@ -169,19 +170,21 @@ export default class Login extends Component {
 
 		} else if (this.state.isShowResetForm) {
 			msgs.text = 'Please enter your email to request a password change.';
-			loginForm = (<form role="form" onSubmit={this.sendResetRequest}>
-				<Input
-					type="text"
-					className=" input-lg"
-					placeholder="Email"
-					name="email"
-					ref={el => this._email = el}
-				/>
-				<div className="btns">
-					<Button type="submit" round="true" disabled={this.props.isRequestPending}>Request password reset</Button>
-					<Button round="true" info="true" faded="true" onClick={this.toggleReset}>Cancel</Button>
-				</div>
-			</form>);
+			if (!this.props.isResetRequestSent) {
+				loginForm = (<form role="form" onSubmit={this.sendResetRequest}>
+					<Input
+						type="text"
+						className=" input-lg"
+						placeholder="Email"
+						name="email"
+						ref={el => this._email = el}
+					/>
+					<div className="btns">
+						<Button type="submit" round="true" disabled={this.props.isRequestPending}>Request password reset</Button>
+						<Button round="true" info="true" faded="true" onClick={this.toggleReset}>Cancel</Button>
+					</div>
+				</form>);
+			}
 
 		} else {
 			let googleLoginBtn = null;
