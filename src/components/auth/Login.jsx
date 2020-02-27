@@ -58,6 +58,7 @@ export default class Login extends Component {
 		username: PropTypes.string,
 		realName: PropTypes.string,
 		isRequestPending: PropTypes.bool,
+		isResetKeyValid: PropTypes.bool,
 		isInstalled: PropTypes.bool,
 		gapiready: PropTypes.bool,
 
@@ -95,7 +96,7 @@ export default class Login extends Component {
 		}
 		if (typeof this.props.apiGoogle === 'undefined') this.props.fetchVariable('api.google');
 		//if we are in the process of requesting a password change, we need to get user's info
-		if (this.props.resetPasswordKey && !this.props.realName) {
+		if (this.props.isResetKeyValid && this.props.resetPasswordKey && !this.props.realName) {
 			this.props.resetPassword(this.props.resetPasswordKey);
 		}
 	}
@@ -147,7 +148,7 @@ export default class Login extends Component {
 		
 		let loginForm = null;
 
-		if (this.props.resetPasswordKey) {
+		if (this.props.resetPasswordKey && this.props.isResetKeyValid) {
 			msgs.text = 'Please enter your new password.';
 			if (this.props.realName) {
 				msgs.text = `Hello ${this.props.realName}! ${msgs.text}`;

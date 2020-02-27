@@ -14,6 +14,7 @@ const initialState = {
 	email: '',
 	userId: null,
 	picture: '',
+	isResetKeyValid: true,
 	usergroup: 0,
 	gapi_token_id: null,
 	gapi_token_access: null,
@@ -143,6 +144,14 @@ export default function(state = initialState, action) {
 			userName: action.data.userName,
 			email: action.data.email,
 			realName: action.data.realName,
+			isRequestPending: false,
+		};
+	}
+	case RESET_API.FAILURE: {
+		return {
+			...state,
+			isResetKeyValid: false,
+			statusText: 'Invalid reset key. Please enter your credentials.',
 			isRequestPending: false,
 		};
 	}
