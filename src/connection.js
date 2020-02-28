@@ -57,6 +57,7 @@ export function configureStore(initialState) {
 	if (currentState && currentState.freestone && currentState.freestone.auth) {
 		currentState.freestone.auth.statusText = null;
 		currentState.freestone.auth.isRequestPending = false;
+		currentState.freestone.auth.isResetRequestSent = false;
 	}
 
 	const store = createStore(
