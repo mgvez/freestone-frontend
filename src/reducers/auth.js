@@ -143,9 +143,11 @@ export default function(state = initialState, action) {
 	case RESET_API.SUCCESS: {
 
 		//redirect without key
-		const { protocol, host, pathname } = window.location;
-		const refreshLoc = `${protocol}//${host}${pathname}`;
-		window.location = refreshLoc;
+		if (action.data.isSuccess) {
+			const { protocol, host, pathname } = window.location;
+			const refreshLoc = `${protocol}//${host}${pathname}`;
+			window.location = refreshLoc;
+		}
 
 		return {
 			...state,
