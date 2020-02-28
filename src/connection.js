@@ -5,6 +5,7 @@ import { createHashHistory } from 'history';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reduxLocalstorage from 'redux-simple-localstorage';
+import queryString from 'query-string';
 
 import apiMiddleware from './middleware/api';
 import authMiddleware from './middleware/auth';
@@ -41,7 +42,10 @@ export function addMiddleware(m) {
 }
 
 export function configureStore(initialState) {
-	const currentState = read() || initialState;
+	//if resetting password, empty everything
+	const q = queryString.parse(window.location.search);
+
+	const currentState = (!q.rpk && read()) || initialState;
 	//remove current routing from local storage state, to return to home at refresh if fatal error
 	if (currentState && currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
 		delete currentState.errors;
