@@ -327,9 +327,9 @@ export default class TextTranslations extends Component {
 		if (this.props.searchResult && this.props.searchResult.length) {
 			navigateSearchRes = (
 				<div className="search-navig">
-					<div onClick={() => this.props.navigateSearchTranslation(-1)}><Icon icon="angle-double-left cta" /></div>
+					<div title="Click or use shortcut cmd+shift+g" onClick={() => this.props.navigateSearchTranslation(-1)}><Icon icon="angle-double-left cta" /></div>
 					<div className="n-res">{this.props.searchIndex + 1} / {this.props.searchResult.length}</div>
-					<div onClick={() => this.props.navigateSearchTranslation(1)} ><Icon icon="angle-double-right cta" /></div>
+					<div title="Click or use shortcut cmd+g" onClick={() => this.props.navigateSearchTranslation(1)} ><Icon icon="angle-double-right cta" /></div>
 				</div>
 			);
 		}
@@ -338,7 +338,7 @@ export default class TextTranslations extends Component {
 				{navigateSearchRes}
 				<div className="input-wrapper">
 					<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
-					<Button icon="true" inputCta="true" ><Icon icon="search" side="center" /></Button>
+					<Button icon="true" inputCta="true" title="cmd+f" ><Icon icon="search" side="center" /></Button>
 				</div>
 			</SearchForm>
 		);
