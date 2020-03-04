@@ -41,23 +41,31 @@ export function addMiddleware(m) {
 	middleWares.push(m);
 }
 
-export function configureStore(initialState) {
+export function configureStore(initialState = {}) {
 	//if resetting password, empty everything
 	const q = queryString.parse(window.location.search);
 
 	const currentState = (!q.rpk && read()) || initialState;
 	//remove current routing from local storage state, to return to home at refresh if fatal error
-	if (currentState && currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
+	if (currentState.errors && currentState.errors.filter(e => e.isFatal).length) {
 		delete currentState.errors;
 	}
 
-	if (currentState && currentState.router) {
-		delete currentState.router;
-	}
-	if (currentState && currentState.freestone && currentState.freestone.auth) {
-		currentState.freestone.auth.statusText = null;
-		currentState.freestone.auth.isRequestPending = false;
-		currentState.freestone.auth.isResetRequestSent = false;
+	delete currentState.router;
+
+	if (currentState.freestone) {
+		if (currentState.freestone.auth) {
+			currentState.freestone.auth.statusText = null;
+			currentState.freestone.auth.isRequestPending = false;
+			currentState.freestone.auth.isResetRequestSent = false;
+		}
+
+		delete currentState.freestone.translations;
+		delete currentState.freestone.recordList;
+		delete currentState.freestone.recordPreview;
+		delete currentState.freestone.save;
+		delete currentState.freestone.permissions;
+
 	}
 
 	const store = createStore(

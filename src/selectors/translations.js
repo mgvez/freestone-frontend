@@ -1,10 +1,13 @@
 //SHARED
 import { createSelector } from 'reselect';
 
-const allTranslationsSelector = state => state.freestone.translations && state.freestone.translations.translations;
-const isEditedSelector = state => state.freestone.translations && state.freestone.translations.translations && state.freestone.translations.translations.isEdited;
-const isLoadedSelector = state => state.freestone.translations && !!state.freestone.translations.translations;
-const translationsSchemaSelector = state => state.freestone.translations.schema && state.freestone.translations.schema;
+const allTranslationsSelector = state => state.freestone.translations.translations;
+const isEditedSelector = state => state.freestone.translations.isEdited;
+const isLoadedSelector = state => !!state.freestone.translations.translations;
+const searchResultSelector = state => state.freestone.translations.searchResult;
+const searchResultIndexSelector = state => state.freestone.translations.searchIndex;
+const activeGroupSelector = state => state.freestone.translations.activeGroup;
+const translationsSchemaSelector = state => state.freestone.translations.schema;
 const allLanguagesSelector = state => state.freestone.env.freestone.languages;
 
 const keySelector = (state, props) => props.translationKey;
@@ -50,10 +53,32 @@ export function singleTranslationMapStateToProps() {
 	);
 }
 
+const activeSearchItemSelector = createSelector(
+	[searchResultSelector, searchResultIndexSelector, schemaSelector],
+	(searchResult, searchIndex, schema) => {
+		if (!searchResult || !searchResult.length) return null;
+		const currentSearchActiveKey = searchResult[searchIndex];
+		const activeGroup = schema.findIndex(schemaItem => {
+			// console.log(schemaItem);
+			return schemaItem.items && schemaItem.items.find(item => item.key === currentSearchActiveKey.key);
+		});
+		console.log(currentSearchActiveKey);
+		console.log(activeGroup);
+
+		return {
+			activeGroup,
+			searchIndex,
+			currentSearchActiveKey,
+		};
+	}
+);
+
+
 export const coreTranslations = createSelector(
-	[isEditedSelector, isLoadedSelector, languageKeysSelector, schemaSelector],
-	(isEdited, isLoaded, languages, schema) => {
-		// console.log(schema);
+	[isEditedSelector, isLoadedSelector, languageKeysSelector, schemaSelector, searchResultSelector, activeSearchItemSelector, activeGroupSelector],
+	(isEdited, isLoaded, languages, schema, searchResult, activeSearchItem, activeGroup) => {
+		console.log(activeSearchItem);
+		console.log(activeGroup);
 		// console.log('edited...', isEdited);
 
 		return {
@@ -61,6 +86,9 @@ export const coreTranslations = createSelector(
 			isEdited,
 			languages,
 			schema,
+			searchResult,
+			...activeSearchItem,
+			activeGroup: activeGroup !== null ? activeGroup : (activeSearchItem && activeSearchItem.activeGroup),
 		};
 	}
 );

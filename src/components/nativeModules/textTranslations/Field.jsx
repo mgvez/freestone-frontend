@@ -7,6 +7,8 @@ import cssVars from '../../../styles/Variables';
 
 const Container = styled.div`
 	${GridContainerStyle}
+
+	
 	
 	.inputs-container {
 		display: flex;
@@ -23,6 +25,13 @@ const Container = styled.div`
 			height: 40px;
 			margin-bottom: 0;
 			/* padding-left: 60px; */
+		}
+	}
+
+	&.emphasis {
+		input, textarea {
+			background-color: #D4EFDF;
+			border: 1px #27AE60 solid;
 		}
 	}
 
@@ -48,6 +57,7 @@ export default class Field extends Component {
 		description: PropTypes.string,
 		val: PropTypes.any,
 		lang: PropTypes.string,
+		isEmphasis: PropTypes.bool,
 
 		onChange: PropTypes.func,
 	};
@@ -57,7 +67,7 @@ export default class Field extends Component {
 		const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
 		const desc = this.props.description ? <em className="field-description">{this.props.description}</em> : null;
 		return (
-			<Container className="field">
+			<Container className={`field ${this.props.isEmphasis && 'emphasis'}`}>
 				<GridItem className="inputs-container" columns="12" align="center">
 					<label>{this.props.label} {languageAppend}</label>
 					<div className="input-wrapper">

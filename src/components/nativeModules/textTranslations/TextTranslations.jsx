@@ -10,8 +10,10 @@ import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../
 import colors from '../../../styles/Colors';
 import { Heading2 } from '../../../styles/texts';
 import { Button } from '../../../styles/Button';
+import { Input } from '../../../styles/Input';
 import { Icon } from '../../../styles/Icon';
 import { TabsContainer } from '../../../styles/Form';
+import debounce from '../../../utils/Debounce.js';
 
 const Container = styled.div`
 	${GridContainerStyle};
@@ -59,27 +61,45 @@ export default class TextTranslations extends Component {
 		schema: PropTypes.array,
 		isEdited: PropTypes.bool,
 		isLoaded: PropTypes.bool,
+		searchResult: PropTypes.array,
+		searchIndex: PropTypes.number,
+		activeGroup: PropTypes.number,
+		currentSearchActiveKey: PropTypes.object,
 
 		fetchTranslations: PropTypes.func,
 		closeTranslations: PropTypes.func,
+		searchTranslations: PropTypes.func,
+		navigateSearchTranslation: PropTypes.func,
+		navigateTranslationsGroups: PropTypes.func,
 		goTo: PropTypes.func,
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			activeGroup: null,
+			searchVal: null,
 			saving: false,
 			stayOnSaved: false,
 		};
+
+		this.searchInput = React.createRef();
+
 	}
 
 	componentDidMount() {
 		this.requireData(this.props);
+		this.searchInput.current.addEventListener('keydown', this.onUpdateSearchField);
+		this.onUpdateSearchField();
+
 	}
 
 	componentDidUpdate() {
 		this.requireData(this.props);
+		
+	}
+
+	componentWillUnmount() {
+		this.searchInput.current.removeEventListener('keydown', this.onUpdateSearchField);
 	}
 
 	requireData(props) {
@@ -129,10 +149,17 @@ export default class TextTranslations extends Component {
 	}
 
 	setActiveGroup(activeGroup) {
-		this.setState({
-			activeGroup,
-		});
+		this.props.navigateTranslationsGroups(activeGroup);
 	}
+	
+	search() {
+		const searchVal = this.searchInput && this.searchInput.current && this.searchInput.current.value;
+		this.props.searchTranslations(searchVal);
+	}
+
+	onUpdateSearchField = debounce(() => {
+		this.search();
+	}, 500);
 
 	render() {
 		let groups;
@@ -149,7 +176,7 @@ export default class TextTranslations extends Component {
 					<GridItem columns="12">
 						<TabsContainer>
 							{this.props.schema.map((group, gIdx) => {
-								const isActive = this.state.activeGroup === gIdx || (!this.state.activeGroup && gIdx === 0);
+								const isActive = this.props.activeGroup === gIdx || (!this.props.activeGroup && gIdx === 0);
 								const activeClass = isActive && 'active';
 								const onClick = () => this.setActiveGroup(gIdx);
 
@@ -161,10 +188,11 @@ export default class TextTranslations extends Component {
 				</Container>
 			);
 
+
 			groups = this.props.schema.map((group, gIdx) => {
 				// console.log(group);
 
-				const isActive = this.state.activeGroup === gIdx || (!this.state.activeGroup && gIdx === 0);
+				const isActive = this.props.activeGroup === gIdx || (!this.props.activeGroup && gIdx === 0);
 				if (!isActive) return null;
 
 				const keys = group.items.map((translationProp, tIdx) => {
@@ -177,7 +205,7 @@ export default class TextTranslations extends Component {
 							{help}
 						</div>);
 					}
-
+					
 					return (
 						<Container key={tIdx}>
 							<GridItem columns="10" offset="1" className="translation">
@@ -189,8 +217,9 @@ export default class TextTranslations extends Component {
 									<GridItem columns="12">
 										<GridContainer>
 											{this.props.languages.map((language, idx) => {
+												const isEmphasis = this.props.currentSearchActiveKey && this.props.currentSearchActiveKey.lang === language && this.props.currentSearchActiveKey.key === translationProp.key;
 												return (<GridItem columns="6" key={idx}>
-													<Field label={language}>
+													<Field label={language} isEmphasis={isEmphasis}>
 														<SingleTranslation translationKey={translationProp.key} language={language} />
 													</Field>
 												</GridItem>);
@@ -237,12 +266,30 @@ export default class TextTranslations extends Component {
 			];
 		}
 
+		let navigateSearchRes = null;
+		if (this.props.searchResult && this.props.searchResult.length) {
+			navigateSearchRes = (
+				<div>
+					<button onClick={() => this.props.navigateSearchTranslation(-1)}>&lt;</button>
+					{this.props.searchIndex + 1} / {this.props.searchResult.length}
+					<button onClick={() => this.props.navigateSearchTranslation(1)}>&gt;</button>
+				</div>
+			);
+		}
+		const searchZone = (
+			<Container className="input-wrapper">
+				<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
+				{navigateSearchRes}
+			</Container>
+		);
+
 		return (
 			<section>
 				<FormHeader hasLanguageToggle={false} buttons={actionBtns}>
 					<h1>Text translations</h1>
 				</FormHeader>
 				<MainZone>
+					{searchZone}
 					{groups}
 				</MainZone>
 			</section>

@@ -59,7 +59,7 @@ export default class Field extends Component {
 			case 'char':
 			case 'note':
 			case 'password':
-				input = <TextInput key={key} {...this.props} changeVal={this.changeVal} />;
+				input = <TextInput key={key} size={this.props.field.size} changeVal={this.changeVal} />;
 				break;
 			case 'md':
 				input = <MarkdownInput key={key} {...this.props} changeVal={this.changeVal} />;
@@ -71,7 +71,7 @@ export default class Field extends Component {
 				input = <UrlInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'tags':
-				input = <TextInput key={key} {...this.props} changeVal={this.changeVal} />;
+				input = <TextInput key={key} size={200} changeVal={this.changeVal} />;
 				break;
 			case 'date':
 			case 'datetime':
@@ -116,7 +116,7 @@ export default class Field extends Component {
 				input = <BoolInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'permissions':
-				input = <TextInput key={key} {...this.props} changeVal={this.changeVal} />;
+				input = <TextInput key={key} size={100} changeVal={this.changeVal} />;
 				break;
 			case 'noedit'://on la voit mais on l'edit pas!
 				input = <NoEditInput key={key} {...this.props} changeVal={this.changeVal} />;
