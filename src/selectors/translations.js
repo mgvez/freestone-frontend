@@ -62,8 +62,8 @@ const activeSearchItemSelector = createSelector(
 			// console.log(schemaItem);
 			return schemaItem.items && schemaItem.items.find(item => item.key === currentSearchActiveKey.key);
 		});
-		console.log(currentSearchActiveKey);
-		console.log(activeGroup);
+		// console.log(currentSearchActiveKey);
+		// console.log(activeGroup);
 
 		return {
 			activeGroup,
@@ -77,8 +77,8 @@ const activeSearchItemSelector = createSelector(
 export const coreTranslations = createSelector(
 	[isEditedSelector, isLoadedSelector, languageKeysSelector, schemaSelector, searchResultSelector, activeSearchItemSelector, activeGroupSelector],
 	(isEdited, isLoaded, languages, schema, searchResult, activeSearchItem, activeGroup) => {
-		console.log(activeSearchItem);
-		console.log(activeGroup);
+		// console.log(activeSearchItem);
+		// console.log(activeGroup);
 		// console.log('edited...', isEdited);
 
 		return {

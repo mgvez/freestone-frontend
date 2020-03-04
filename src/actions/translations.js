@@ -3,6 +3,7 @@ import { createRequestTypes } from './apiAction';
 
 export const EDIT_TRANSLATION = 'EDIT_TRANSLATION';
 export const SEARCH_TRANSLATIONS = 'SEARCH_TRANSLATIONS';
+export const CLEAR_TRANSLATIONS = 'CLEAR_TRANSLATIONS';
 export const NAVIGATE_SEARCH_TRANSLATIONS = 'NAVIGATE_SEARCH_TRANSLATIONS';
 export const NAVIGATE_TRANSLATIONS_GROUPS = 'NAVIGATE_TRANSLATIONS_GROUPS';
 
@@ -91,6 +92,15 @@ export function navigateTranslationsGroups(groupIdx) {
 			data: {
 				groupIdx,
 			},
+		});
+	};
+}
+
+
+export function clearTranslations() {
+	return (dispatch) => {
+		return dispatch({
+			type: CLEAR_TRANSLATIONS,
 		});
 	};
 }

@@ -137,10 +137,7 @@ export const TabsContainer = styled.nav`
 		border-radius: 5px 5px 0 0;
 
 		transition: background 0.3s, color 0.3s;
-
-		& + .tab {
-			margin-left: 10px;
-		}
+		margin-right: 10px;
 
 		&:hover, &.active {
 			color: ${colors.white};

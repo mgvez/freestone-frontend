@@ -30,8 +30,8 @@ const Container = styled.div`
 
 	&.emphasis {
 		input, textarea {
-			background-color: #D4EFDF;
-			border: 1px #27AE60 solid;
+			background-color: #FCF3CF;
+			border: 1px #F8C471 solid;
 		}
 	}
 

@@ -54,6 +54,36 @@ const Container = styled.div`
 		}
 	}
 `;
+
+
+const SearchForm = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	position: relative;
+	margin-bottom: 12px;
+
+	.search-navig {
+		margin-right: 20px;
+		display: flex;
+		justify-content: center;
+		.n-res {
+			width: 80px;
+			text-align:center;
+		}
+	}
+
+	.input-wrapper {
+		position: relative;
+		
+		input {
+			width: 250px;
+			margin-bottom: 0;
+			margin-right: 0;
+		}
+	}
+`;
+
 export default class TextTranslations extends Component {
 	static propTypes = {
 		// translationKeys: PropTypes.array,
@@ -71,14 +101,15 @@ export default class TextTranslations extends Component {
 		searchTranslations: PropTypes.func,
 		navigateSearchTranslation: PropTypes.func,
 		navigateTranslationsGroups: PropTypes.func,
+		clearTranslations: PropTypes.func,
 		goTo: PropTypes.func,
 	};
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			searchVal: null,
 			saving: false,
+			closing: false,
 			stayOnSaved: false,
 		};
 
@@ -89,6 +120,7 @@ export default class TextTranslations extends Component {
 	componentDidMount() {
 		this.requireData(this.props);
 		this.searchInput.current.addEventListener('keydown', this.onUpdateSearchField);
+		window.addEventListener('keydown', this.keyboardListener);
 		this.onUpdateSearchField();
 
 	}
@@ -100,15 +132,39 @@ export default class TextTranslations extends Component {
 
 	componentWillUnmount() {
 		this.searchInput.current.removeEventListener('keydown', this.onUpdateSearchField);
+		window.removeEventListener('keydown', this.keyboardListener);
 	}
 
 	requireData(props) {
 		// console.log(props);
-		if (!this.state.saving) {
+		if (!this.state.saving && !this.state.closing) {
 			if (!props.isLoaded) {
 				props.languages.forEach(lang => {
 					this.props.fetchTranslations(lang);
 				});
+			}
+		}
+	}
+
+	/*
+	Highjack standard keyboard shortcuts for search (cmd-f, cmd-g, cmd-shift-g)
+	*/
+	keyboardListener = (e) => {
+		if (e.metaKey || e.ctrlKey) {
+			// console.log(e);
+			switch (e.key) {
+			case 'f': {
+				e.preventDefault();
+				this.searchInput.current.focus();
+				break;
+			}
+			case 'g': {
+				e.preventDefault();
+				const direction = e.shiftKey ? -1 : 1;
+				this.props.navigateSearchTranslation(direction);
+				break;
+			}
+			default:
 			}
 		}
 	}
@@ -129,7 +185,8 @@ export default class TextTranslations extends Component {
 	}
 
 	close = () => {
-		this.setState({ saving: true });
+		
+		this.setState({ closing: true });
 		const onClosed = this.props.closeTranslations();
 		onClosed.then(this.goHome);
 	}
@@ -269,18 +326,21 @@ export default class TextTranslations extends Component {
 		let navigateSearchRes = null;
 		if (this.props.searchResult && this.props.searchResult.length) {
 			navigateSearchRes = (
-				<div>
-					<button onClick={() => this.props.navigateSearchTranslation(-1)}>&lt;</button>
-					{this.props.searchIndex + 1} / {this.props.searchResult.length}
-					<button onClick={() => this.props.navigateSearchTranslation(1)}>&gt;</button>
+				<div className="search-navig">
+					<div onClick={() => this.props.navigateSearchTranslation(-1)}><Icon icon="angle-double-left cta" /></div>
+					<div className="n-res">{this.props.searchIndex + 1} / {this.props.searchResult.length}</div>
+					<div onClick={() => this.props.navigateSearchTranslation(1)} ><Icon icon="angle-double-right cta" /></div>
 				</div>
 			);
 		}
 		const searchZone = (
-			<Container className="input-wrapper">
-				<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
+			<SearchForm>
 				{navigateSearchRes}
-			</Container>
+				<div className="input-wrapper">
+					<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
+					<Button icon="true" inputCta="true" ><Icon icon="search" side="center" /></Button>
+				</div>
+			</SearchForm>
 		);
 
 		return (

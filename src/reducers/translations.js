@@ -7,6 +7,7 @@ import {
 	EDIT_TRANSLATION,
 	SAVE_TRANSLATIONS_API,
 	CLOSE_TRANSLATIONS_API,
+	CLEAR_TRANSLATIONS,
 	NAVIGATE_TRANSLATIONS_GROUPS,
 } from '../actions/translations';
 import { CLEAR_DATA } from '../actions/dev';
@@ -55,6 +56,7 @@ export default function translations(state = initial, action) {
 		const allTranslations = state.translations;
 		// console.log(searchVal);
 		const { searchVal } = action.data;
+		if (searchVal === state.searchValue) return state;
 		if (!searchVal || !allTranslations) {
 			return {
 				...state,
@@ -93,7 +95,7 @@ export default function translations(state = initial, action) {
 	}
 	case NAVIGATE_SEARCH_TRANSLATIONS: {
 		const rawSearchResultIndex = state.searchIndex + action.data.direction;
-		const searchIndex = rawSearchResultIndex === state.searchResult.length ? state.searchResult.length - 1 : (rawSearchResultIndex < 0 ? 0 : rawSearchResultIndex);
+		const searchIndex = rawSearchResultIndex === state.searchResult.length ? 0 : (rawSearchResultIndex < 0 ? state.searchResult.length - 1 : rawSearchResultIndex);
 		
 		return {
 			...state,
@@ -111,6 +113,7 @@ export default function translations(state = initial, action) {
 	case CLEAR_DATA:
 	case SAVE_TRANSLATIONS_API.SUCCESS:
 	case CLOSE_TRANSLATIONS_API.SUCCESS:
+	case CLEAR_TRANSLATIONS:
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
 	case LOGOUT_API.REQUEST:
