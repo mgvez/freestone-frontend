@@ -43,11 +43,11 @@ export default function translations(state = initial, action) {
 		// console.log(language, key, value);
 		const newState = {
 			...state,
+			isEdited: true,
 			translations: {
 				...state.translations,
-				isEdited: true,
 				[language]: {
-					...state[language],
+					...state.translations[language],
 					[key]: value,
 				},
 			},

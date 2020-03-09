@@ -131,7 +131,7 @@ export default class TextTranslations extends Component {
 	}
 
 	componentWillUnmount() {
-		this.searchInput.current.removeEventListener('keydown', this.onUpdateSearchField);
+		if (this.searchInput.current) this.searchInput.current.removeEventListener('keydown', this.onUpdateSearchField);
 		window.removeEventListener('keydown', this.keyboardListener);
 	}
 
