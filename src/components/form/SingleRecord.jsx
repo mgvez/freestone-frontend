@@ -61,7 +61,6 @@ export default class SingleRecord extends Component {
 		isRoot: PropTypes.bool,
 
 		mainGroups: PropTypes.array,
-		asideGroups: PropTypes.array,
 
 		fetchTable: PropTypes.func,
 		fetchRecord: PropTypes.func,
@@ -194,16 +193,22 @@ export default class SingleRecord extends Component {
 		return null;
 	}
 
-	renderGroups(groups, isAside, sidebar) {
+
+	renderGroups(groups) {
+
+		let renderedTabs;
+		let renderedGroup;
+		let renderedSidebar;
+		let hasSideBar = false;
 
 		//subforms groups are rendered not tabbed, they are all displayed
-		if (!this.props.isRoot || isAside) {
-			return groups.map((group) => {
+		if (!this.props.isRoot) {
+			renderedGroup = groups.map((group) => {
 				//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
 				// console.log(group.fields);
 				// console.log('rendering group...', group.label);
 				// console.log(group);
-				const groupFieldRows = group.fields && group.fields.map((field) => this.renderField(field, isAside)).filter(a => a);
+				const groupFieldRows = group.fields && group.fields.map((field) => this.renderField(field, 0)).filter(a => a);
 				const groupChild = group.child && this.renderChild(group.child);
 				// console.log(groupFieldRows, groupChild);
 				if (groupFieldRows && groupFieldRows.length) {
@@ -215,38 +220,49 @@ export default class SingleRecord extends Component {
 				//if only child form in the group, don't wrap it in the group (groups don't respond to hide/show rules)
 				return groupChild;
 			}, []);
+		} else {
+			//root form (first level) has its fields tabbed, and can have aside fields
+			const { activeGroup } = this.props;
+
+			const activeGroupFields = activeGroup && activeGroup.fields && activeGroup.fields.map((field) => this.renderField(field, 0)).filter(a => a);
+			const activeGroupChild = activeGroup && activeGroup.child && this.renderChild(activeGroup.child);
+			const activeGroupSidebarFields = activeGroup && activeGroup.asideFields && activeGroup.asideFields.map((field) => this.renderField(field, true)).filter(a => a);
+
+			hasSideBar = activeGroupSidebarFields && activeGroupSidebarFields.length;
+			renderedTabs = this.renderGroupTabs(groups);
+
+			renderedGroup = (
+				<FieldGroup key={activeGroup.key} id={activeGroup.key} isRoot label={activeGroup.label} hideHeading>
+					{activeGroupFields}
+					{activeGroupChild}
+				</FieldGroup>
+			);
+			
+			//if we show first group of root form and there is an aside, grid it to the right
+			if (hasSideBar) {
+				renderedSidebar = (
+					<GridItem key="sidegroup" columns="4" className={this.state.stickyState}>
+						<SideBar ref={this.getSidebarRef} data-sidebar-inner>
+							<FieldGroup>
+								{activeGroupSidebarFields}	
+							</FieldGroup>
+						</SideBar>
+					</GridItem>	
+				);
+			}
 		}
 
-		//root is tabbed
-
-		const { activeGroup } = this.props;
-		// console.log(activeGroup.fields);
-		const activeGroupFields = activeGroup && activeGroup.fields && activeGroup.fields.map((field) => this.renderField(field, 0)).filter(a => a);
-		const activeGroupChild = activeGroup && activeGroup.child && this.renderChild(activeGroup.child);
-
-		const tabs = this.renderGroupTabs(groups);
-
-		let renderedGroup = (
-			<FieldGroup key={activeGroup.key} id={activeGroup.key} isRoot label={activeGroup.label} hideHeading>
-				{activeGroupFields}
-				{activeGroupChild}
-			</FieldGroup>
+		return (
+			<React.Fragment>
+				{renderedTabs}
+				<GridContainer>
+					<GridItem key="maingroup" columns={hasSideBar ? 8 : 12}>
+						{renderedGroup}
+					</GridItem>
+					{renderedSidebar}
+				</GridContainer>
+			</React.Fragment>
 		);
-		
-		//if we show first group of root form and there is an aside, grid it to the right
-		if (sidebar && this.props.isRoot && activeGroup.isFirst) {
-			renderedGroup = (<GridContainer>
-				<GridItem columns={8}>
-					{renderedGroup}
-				</GridItem>
-				{sidebar}
-			</GridContainer>);
-		}
-
-		return (<div>
-			{tabs}
-			{renderedGroup}
-		</div>);
 
 	}
 
@@ -279,19 +295,6 @@ export default class SingleRecord extends Component {
 				/>);
 			}
 
-
-			let sidebar;
-			//if there are fields in the aside, render them separately. In a subform, they are displayed directly in the grid, on the root form they are rendered in the first group
-			if (this.props.asideGroups.length) {
-				sidebar = (
-					<GridItem columns="4" className={this.state.stickyState}>
-						<SideBar ref={this.getSidebarRef} data-sidebar-inner>
-							{this.renderGroups(this.props.asideGroups, true)}
-						</SideBar>
-					</GridItem>
-				);
-			}
-
 			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
 
 
@@ -306,12 +309,7 @@ export default class SingleRecord extends Component {
 							{deleteBtn}
 						</GridItem>
 					</GridContainer>
-					<GridContainer>
-						<GridItem columns={`${sidebar && !this.props.isRoot ? 8 : 12}`}>
-							{this.renderGroups(this.props.mainGroups, false, sidebar)}
-						</GridItem>
-						{!this.props.isRoot && sidebar}
-					</GridContainer>
+					{this.renderGroups(this.props.mainGroups)}
 				</article>
 			);
 

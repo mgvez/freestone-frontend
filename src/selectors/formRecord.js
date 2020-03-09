@@ -109,6 +109,7 @@ function createFieldGroups(fields, children) {
 				child,
 				isFirst: !curGroup, //indicate of this group is the first one in list
 				fields: [],
+				asideFields: [],
 			};
 			groups.push(curGroup);
 		}
@@ -118,7 +119,9 @@ function createFieldGroups(fields, children) {
 
 			//only display displayable fields
 			if (!~['pri', 'ajax', 'order'].indexOf(curField.type) && (!curField.foreign || !~['mtm'].indexOf(curField.foreign.type)) && !curField.isHidden) {
-				curGroup.fields.push(curField);
+				//push field in aside field list OR main field list, depending on field config
+				const holder = !curField.isSecondary ? curGroup.fields : curGroup.asideFields;
+				holder.push(curField);
 			}
 		}
 		return groups;
@@ -126,6 +129,7 @@ function createFieldGroups(fields, children) {
 		gr.key = md5(gr.key);
 		return gr;
 	});
+
 	if (!children) return namedGroups;
 	//if there are children forms, add the remaining ones (without placeholders) to the list of form groups
 	return children.reduce((groups, child) => {
@@ -171,7 +175,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 			let children;
 			// console.log(unfilteredChildren);
 			let mainGroups;
-			let asideGroups;
 			let activeGroup;
 			// const recordId = record && record[PRIKEY_ALIAS];
 			// console.log(`build record for ${recordId}`, table && table.name);
@@ -248,21 +251,20 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				// 	return child;
 				// });
 
-				mainGroups = createFieldGroups(table.fields.filter(f => !f.isSecondary), children).filter(g => g.child || g.fields.length);
-				asideGroups = createFieldGroups(table.fields.filter(f => f.isSecondary)).filter(g => g.child || g.fields.length);
+				mainGroups = createFieldGroups(table.fields, children).filter(g => g.child || g.fields.length || g.asideFields.length);
 
 				activeGroup = mainGroups.find(g => g.key === activeGroupKey) || mainGroups[0];
 
 			}
 
 			// console.log(mainGroups);
+
 			return {
 				record,
 				recordUnaltered,
 				table,
 				env,
 				mainGroups,
-				asideGroups,
 				activeGroup,
 				...isGod,
 			};

@@ -14,7 +14,7 @@ export default class SingleTranslation extends Component {
 	changeVal = (e) => {
 		const v = (e && e.target) ? e.target.value : e;
 		this.props.editTranslation(this.props.language, this.props.translationKey, v);
-		// console.log(`change ${this.props.translationKey}`);
+		// console.log(`change ${this.props.translationKey} ${v}`);
 	}
 
 	render() {

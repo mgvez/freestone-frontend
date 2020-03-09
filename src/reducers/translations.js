@@ -40,15 +40,20 @@ export default function translations(state = initial, action) {
 	case EDIT_TRANSLATION: {
 		const { language, key, value } = action.data;
 		if (!language) return state;
+		// console.log(language, key, value);
 		const newState = {
 			...state,
-			isEdited: true,
-			[language]: {
-				...state[language],
-				[key]: value,
+			translations: {
+				...state.translations,
+				isEdited: true,
+				[language]: {
+					...state[language],
+					[key]: value,
+				},
 			},
 		};
-		return newState; 
+		// console.log(newState[language][key]);
+		return newState;
 	}
 	case SEARCH_TRANSLATIONS: {
 
