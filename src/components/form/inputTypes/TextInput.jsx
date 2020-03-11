@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Textarea, Input } from '../../../styles/Input';
+import { Input } from '../../../styles/Input';
 import AutoAdjustText from './AutoAdjustText';
-
-const MAX_HEIGHT = 600;
-const MIN_HEIGHT = 300;
 
 export default class TextInput extends Component {
 	static propTypes = {

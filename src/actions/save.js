@@ -111,7 +111,7 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				// console.log(res.images);
 				
 				//process image optimizations
-				return processImages(res && res.images && res.images, dispatch).then(imagesResult => {
+				return processImages(res && res.images && res.images, dispatch).then(() => {
 					// console.log(imagesResult);
 					const skipDefault = callback && callback(res.mainRecord, res.slugs);
 					if (!skipDefault) {
