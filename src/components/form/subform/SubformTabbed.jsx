@@ -13,7 +13,7 @@ import { GridItem } from '../../../styles/Grid';
 export default class SubformTabbed extends Component {
 	static propTypes = {
 		table: PropTypes.object,
-		activeRecord: PropTypes.object,
+		activeRecords: PropTypes.array,
 		childrenRecords: PropTypes.array,
 		language: PropTypes.string,
 		parentRecordId: PropTypes.string,
@@ -26,7 +26,8 @@ export default class SubformTabbed extends Component {
 	};
 
 	getContent() {
-		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
+		//show active record OR first record if none active
+		const activeRecordId = (this.props.activeRecords && this.props.activeRecords.length && this.props.activeRecords[0].id) || (this.props.childrenRecords && this.props.childrenRecords.length && this.props.childrenRecords[0].id);
 
 		return (<Collapsable isCollapsed={this.props.isCollapsed}>
 			<TabList {...this.props} activeRecordId={activeRecordId} />

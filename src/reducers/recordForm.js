@@ -4,7 +4,7 @@ import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, LOADED_TIME_ALIAS, PREVIEW_EDI
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { TOGGLE_SITE_PERMISSION } from '../actions/permissions';
 import { CLEAR_DATA } from '../actions/dev';
-import { SET_FIELD_VALUE, SET_SHOWN_RECORD, RECORD_SINGLE_API, SET_RECORD_DELETED, MTM_RECORD_API, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from '../actions/record';
+import { SET_FIELD_VALUE, SET_SHOWN_RECORD, TOGGLE_SHOWN_RECORD, RECORD_SINGLE_API, SET_RECORD_DELETED, MTM_RECORD_API, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from '../actions/record';
 import { SAVE_RECORD_API, SAVE_PREVIEW_API, DELETE_RECORD_API } from '../actions/save';
 
 
@@ -358,14 +358,42 @@ function shownRecords(state = {}, action) {
 				...(state[tableId] || {}),
 				[parentRecordId]: language ? {
 					...((state[tableId] && state[tableId][parentRecordId]) || {}),
-					[language]: recordId,
-				} : recordId,
+					[language]: [recordId],
+				} : [recordId],
 			},
 		};
 		// console.log(action.data);
 		// console.log(newState);
 		return newState;
 	}
+	case TOGGLE_SHOWN_RECORD: {
+		const { tableId, parentRecordId, recordId, language } = action.data;
+		// console.log(action);
+
+		const newState = {
+			...state,
+			[tableId]: {
+				...(state[tableId] || {}),
+				[parentRecordId]: language ? {
+					...((state[tableId] && state[tableId][parentRecordId]) || {}),
+					[language]: [...((state[tableId] && state[tableId][parentRecordId] && state[tableId][parentRecordId][language]) || [])],
+				} : [...((state[tableId] && state[tableId][parentRecordId]) || [])],
+			},
+		};
+
+		const curValues = language ? newState[tableId][parentRecordId][language] : newState[tableId][parentRecordId];
+		const curIndex = curValues.indexOf(recordId);
+		if (curIndex === -1) {
+			curValues.push(recordId);
+		} else {
+			curValues.splice(curIndex, 1);
+		}
+		// console.log(action.data);
+		// console.log(recordId, curIndex);
+		return newState;
+	}
+	case CLEAR_DATA:
+		return {};
 	default:
 		return state;
 	}

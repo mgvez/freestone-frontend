@@ -11,10 +11,13 @@ import ToggleCollapse from '../buttons/ToggleCollapse';
 import { Subform, SubformHeader } from '../../../styles/Form';
 import { GridItem } from '../../../styles/Grid';
 
+/*
+List of all records, all open, one over the other
+*/
 export default class SubformList extends Component {
 	static propTypes = {
 		table: PropTypes.object,
-		activeRecord: PropTypes.object,
+		activeRecords: PropTypes.array,
 		childrenRecords: PropTypes.array,
 		parentTableId: PropTypes.number,
 		parentRecordId: PropTypes.string,
@@ -24,7 +27,6 @@ export default class SubformList extends Component {
 		titleOverride: PropTypes.string,
 		descriptionAppend: PropTypes.string,
 		swapRecords: PropTypes.func,
-		setShownRecord: PropTypes.func,
 
 		changeCollapsedState: PropTypes.func,
 	};

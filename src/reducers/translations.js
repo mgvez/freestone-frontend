@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 
 import { 
 	NAVIGATE_SEARCH_TRANSLATIONS, 

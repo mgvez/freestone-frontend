@@ -9,10 +9,13 @@ import FormHeaderContent from '../../header/FormHeaderContent';
 import { Subform, SubformHeader } from '../../../styles/Form';
 import { GridItem } from '../../../styles/Grid';
 
+/*
+List of all records, each one collapsable, one over the other
+*/
 export default class SubformStacked extends Component {
 	static propTypes = {
 		table: PropTypes.object,
-		activeRecord: PropTypes.object,
+		activeRecords: PropTypes.array,
 		childrenRecords: PropTypes.array,
 		language: PropTypes.string,
 		parentRecordId: PropTypes.string,
@@ -20,15 +23,15 @@ export default class SubformStacked extends Component {
 		titleOverride: PropTypes.string,
 		descriptionAppend: PropTypes.string,
 		changeCollapsedState: PropTypes.func,
+		toggleShownRecord: PropTypes.func,
 
 		isCollapsed: PropTypes.bool,
 	};
 
 	getContent() {
-		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
 
 		return (<Collapsable isCollapsed={this.props.isCollapsed}>
-			<StackList {...this.props} isVertical activeRecordId={activeRecordId} />
+			<StackList {...this.props} isVertical activeRecords={this.props.activeRecords} />
 		</Collapsable>);
 	}
 

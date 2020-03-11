@@ -10,7 +10,6 @@ import DeleteBtn from '../../containers/recordList/DeleteBtn';
 import { Button } from '../../styles/Button';
 import { getActionCss } from '../../styles/RecordActions';
 import { PromptContainer, PromptWidget } from '../../styles/Prompts';
-import colors from '../../styles/Colors';
 import { Icon } from '../../styles/Icon';
 
 import { LASTMODIF_DATE_ALIAS, CREATED_DATE_ALIAS, PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, SLUG_PSEUDOFIELD_ALIAS } from '../../freestone/schemaProps';
@@ -62,12 +61,12 @@ export default class RecordInteractions extends Component {
 		this.props.rememberListPage(this.props.table.name, this.props.values[PRIKEY_ALIAS], this.props.route);
 	}
 
-	onWindowClick = (e) => {
+	onWindowClick = () => {
 		if (!this.clicked) this.toggleActions();
 		this.clicked = false;
 	}
 
-	toggleActions = (e) => {
+	toggleActions = () => {
 		this.clicked = true;
 		const isActiveNewState = !this.state.active;
 

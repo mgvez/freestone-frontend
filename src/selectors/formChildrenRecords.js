@@ -94,8 +94,7 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 				const type = parentLinkField && parentLinkField.foreign.foreignType;
 				const defaultViewType = parentLinkField && parentLinkField.foreign.defaultView;
 				
-				let activeRecordId;
-				let activeRecord;
+				let activeRecords = [];
 
 				let childrenRecords;
 				if (areLoaded || isNew(parentRecordId)) {
@@ -110,15 +109,21 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 					// console.log(childrenRecords);
 					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField, rawForeignOptions);
 					
-					activeRecordId = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || null);
+					let activeRecordIds = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || []);
 
 					//if record is part of a subform with a language field (so that you have french records and english records)
-					if (activeRecordId && typeof activeRecordId === 'object') activeRecordId = activeRecordId[userViewLanguage.language];
-
-					// if we specifically require not to see an active record, for example in stacked list
-					if (activeRecordId !== -1) {
-						activeRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId) || childrenRecords[childrenRecords.length - 1]);
+					if (activeRecordIds && activeRecordIds[userViewLanguage.language]) activeRecordIds = activeRecordIds[userViewLanguage.language];
+					// console.log(activeRecordIds);
+					
+					// if we specifically require not to see an active record, for example in stacked list. Make sure that ids is an array, because we might get a primitive from older versions
+					if (activeRecordIds && activeRecordIds.map) {
+						activeRecords = activeRecordIds.map((activeRecordId) => {
+							if (activeRecordId === -1) return null;
+							const foundActiveRecord = childrenRecords && (childrenRecords.find(rec => rec.id === activeRecordId));
+							return foundActiveRecord;
+						}).filter(a => a);
 					}
+					
 				}
 
 				//highest order, pour quand on add un record, qu'il soit à la suite
@@ -135,7 +140,7 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 					type,
 					defaultViewType,
 					childrenRecords,
-					activeRecord,
+					activeRecords,
 					...subformView,
 				};
 			}

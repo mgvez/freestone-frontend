@@ -15,12 +15,12 @@ export default class StackList extends Component {
 		childrenRecords: PropTypes.array,
 		parentTableId: PropTypes.number,
 		parentRecordId: PropTypes.string,
-		activeRecordId: PropTypes.string,
+		activeRecords: PropTypes.array,
 		language: PropTypes.string,
 		highestOrder: PropTypes.number,
 
 		swapRecords: PropTypes.func,
-		setShownRecord: PropTypes.func,
+		toggleShownRecord: PropTypes.func,
 	};
 
 	render() {
@@ -29,7 +29,7 @@ export default class StackList extends Component {
 				{
 					this.props.childrenRecords.map((record, index) => {
 
-						const active = record.id === this.props.activeRecordId;
+						const active = this.props.activeRecords && this.props.activeRecords.find(activeRecord => record.id === activeRecord.id) && true;
 						return (<div key={record.id}>
 							<Tab
 								key={`tab_${record.id}`}
@@ -41,7 +41,7 @@ export default class StackList extends Component {
 								tableId={this.props.table.id}
 								language={this.props.table.languageField ? this.props.language : null}
 								parentRecordId={this.props.parentRecordId}
-								setShownRecord={this.props.setShownRecord}
+								setShownRecord={this.props.toggleShownRecord}
 								swapRecords={this.props.swapRecords}
 							/>
 							<Collapsable key={`rec_${record.id}`} isCollapsed={!active} animTime={0.5} className={`stack-record stack-record-${active && 'active'}`}>

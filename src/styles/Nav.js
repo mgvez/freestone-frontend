@@ -1,7 +1,7 @@
 
 import styled from 'styled-components';
 import colors from './Colors';
-import { hexToRgb, darken, lighten } from './Utils';
+import { lighten } from './Utils';
 import cssVariables from './Variables';
 
 export const NavGroup = styled.li `

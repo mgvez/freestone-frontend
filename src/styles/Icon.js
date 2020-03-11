@@ -1,7 +1,7 @@
 import React from 'react';
 
-import styled, { css } from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; //eslint-disable-line
 import colors from './Colors';
 
 const StyledEm = styled.i`

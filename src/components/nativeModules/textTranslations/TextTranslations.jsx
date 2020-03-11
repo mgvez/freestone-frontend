@@ -8,7 +8,7 @@ import FormHeader from '../../header/FormHeader';
 import styled from 'styled-components';
 import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 import colors from '../../../styles/Colors';
-import { Heading2 } from '../../../styles/texts';
+import { Heading2 } from '../../../styles/Texts';
 import { Button } from '../../../styles/Button';
 import { Input } from '../../../styles/Input';
 import { Icon } from '../../../styles/Icon';

@@ -10,7 +10,7 @@ import { Subform, SubformHeader } from '../../../styles/Form';
 export default class SubformSingle extends Component {
 	static propTypes = {
 		table: PropTypes.object,
-		activeRecord: PropTypes.object,
+		activeRecords: PropTypes.array,
 		childrenRecords: PropTypes.array,
 		parentTableId: PropTypes.number,
 		parentRecordId: PropTypes.string,
@@ -22,7 +22,7 @@ export default class SubformSingle extends Component {
 	};
 
 	render() {
-		const activeRecordId = this.props.activeRecord && this.props.activeRecord.id;
+		const activeRecordId = this.props.activeRecords && this.props.activeRecords.length && this.props.activeRecords[0].id;
 
 		let addBtn;
 		if (!this.props.childrenRecords || !this.props.childrenRecords.length) {

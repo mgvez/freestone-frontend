@@ -1,5 +1,5 @@
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './Colors';
 import { triangle, hexToRgb } from './Utils';
 

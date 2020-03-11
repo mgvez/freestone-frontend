@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import NavGroup from './NavGroup';
 import UserInfos from '../../containers/widgets/UserInfos';
-import { NavbarContainer, NavGroup as StyledNavGroup, NavItem } from '../../styles/Nav';
+import { NavbarContainer, NavItem } from '../../styles/Nav';
 import { NavLinkButton } from '../../styles/Button';
 import { Icon } from '../../styles/Icon';
 import cssVars from '../../styles/Variables';

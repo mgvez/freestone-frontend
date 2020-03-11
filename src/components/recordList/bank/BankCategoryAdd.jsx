@@ -8,7 +8,7 @@ import { Heading3 } from '../../../styles/Texts';
 import { Button } from '../../../styles/Button';
 import styled from 'styled-components';
 import colors from '../../../styles/Colors';
-import { getInputCss, Input } from '../../../styles/Input';
+import { Input } from '../../../styles/Input';
 
 const AddContainer = styled.section`
 	margin-top: 40px;

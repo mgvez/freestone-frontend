@@ -1,15 +1,15 @@
 import { hexToRgb } from './Utils';
 
 
-const gray31 = '#4a4a4a';
-const gray43 = '#62666c';
+// const gray31 = '#4a4a4a';
+// const gray43 = '#62666c';
 const gray45 = '#686b6c';
-const gray51 = '#79797a';
+// const gray51 = '#79797a';
 const gray76 = '#bababb';
 const gray86 = '#d4d8d9';
-const gray90 = '#e1e1e1';
+// const gray90 = '#e1e1e1';
 const gray93 = '#e7eaec';
-const gray96 = '#f3f3f3';
+// const gray96 = '#f3f3f3';
 const gray97 = '#f6f6f6';
 
 const teal62 = '#19aa8d';

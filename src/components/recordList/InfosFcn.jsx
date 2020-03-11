@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import colors from '../../styles/Colors';
 import { Button } from '../../styles/Button';
 import { Tooltip } from '../../styles/Prompts';
 import { Icon } from '../../styles/Icon';

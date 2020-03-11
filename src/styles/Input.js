@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import colors from './Colors';
 import cssVars from './Variables';
 import { textMedium, textSmall } from './Texts';
-import { darken, lighten } from './Utils';
 
 
 function getFieldCss(displaySize) {

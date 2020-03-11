@@ -1,5 +1,5 @@
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import cssVars from './Variables';
 import colors from './Colors';
 import { GridContainerStyle, getItemCss } from './Grid';

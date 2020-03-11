@@ -10,7 +10,10 @@ export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
 export const SET_RECORD_IS_PREVIEWING = 'SET_RECORD_IS_PREVIEWING';
 export const SET_CURRENT_PREVIEW = 'SET_CURRENT_PREVIEW';
 export const SET_PREVIEW_VIEW_TYPE = 'SET_PREVIEW_VIEW_TYPE';
+
 export const SET_SHOWN_RECORD = 'SET_SHOWN_RECORD';
+export const TOGGLE_SHOWN_RECORD = 'TOGGLE_SHOWN_RECORD';
+
 export const RECEIVE_RECORD = 'RECEIVE_RECORD';
 export const ADD_RECORD = 'ADD_RECORD';
 export const SET_RECORD_DELETED = 'SET_RECORD_DELETED';
@@ -115,10 +118,25 @@ export function toggleMtm(tableId, parentTableId, parentRecordId, optionId) {
 	};
 }
 
+/*
+sets a SINGLE record to be shown amongst list of children. Used when viewing one record at a time, i.e. in tabs list
+*/
 export function setShownRecord(tableId, parentRecordId, recordId, language) {
 	return (dispatch) => {
 		return dispatch({
 			type: SET_SHOWN_RECORD,
+			data: { tableId, parentRecordId, recordId, language },
+		});
+	};
+}
+
+/*
+toggle a record to be shown/hidden amongst the list of shown childre. Used when possible to view more than one record at a time
+*/
+export function toggleShownRecord(tableId, parentRecordId, recordId, language) {
+	return (dispatch) => {
+		return dispatch({
+			type: TOGGLE_SHOWN_RECORD,
 			data: { tableId, parentRecordId, recordId, language },
 		});
 	};

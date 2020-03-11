@@ -74,10 +74,6 @@ const Row = styled.div`
 	margin: 10px 0;
 `;
 
-const Label = styled.div`
-	display: inline-block;
-	font-weight: ${cssVars.fontWeightBold};
-`;
 
 export default class BankListCell extends Component {
 	static propTypes = {

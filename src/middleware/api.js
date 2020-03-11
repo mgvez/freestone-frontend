@@ -108,7 +108,7 @@ export default store => next => action => { // eslint-disable-line
 					error,
 					redirectOnError,
 				}));
-				console.log(isSilent);
+
 				//specific error type if not an API error type, we also need to throw an API error
 				if (!isSilent && failureType !== FREESTONE_API_FAILURE && failureType !== FREESTONE_API_FATAL_FAILURE) {
 					next(actionWith({

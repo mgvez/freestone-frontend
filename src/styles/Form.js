@@ -1,7 +1,7 @@
 
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './Colors';
-import { darken, lighten, hexToRgb } from './Utils';
+import { hexToRgb } from './Utils';
 import { GridContainerStyle } from './Grid';
 
 

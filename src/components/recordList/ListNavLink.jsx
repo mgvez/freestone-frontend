@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import colors from '../../styles/Colors';
 import { NavLink } from 'react-router-dom';
 
 

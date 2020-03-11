@@ -62,7 +62,7 @@ export default class Tab extends Component {
 	};
 
 	setShownRecord = () => {
-		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.isActive ? -1 : this.props.recordId, this.props.language);
+		this.props.setShownRecord(this.props.tableId, this.props.parentRecordId, this.props.recordId, this.props.language);
 	};
 
 	getMarkup(opacity = 1) {

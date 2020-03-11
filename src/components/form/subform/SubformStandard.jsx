@@ -9,11 +9,14 @@ import SubformSingle from './SubformSingle';
 
 import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/schemaProps';
 
+/*
+Regular children records (i.e. not mtm), will choose view depending on user preference
+*/
 export default class SubformStandard extends Component {
 	static propTypes = {
 		tableId: PropTypes.number,
 		table: PropTypes.object,
-		activeRecord: PropTypes.object,
+		activeRecords: PropTypes.array,
 		childrenRecords: PropTypes.array,
 		parentTableId: PropTypes.number,
 		parentRecordId: PropTypes.string,
@@ -29,6 +32,7 @@ export default class SubformStandard extends Component {
 		fetchRecord: PropTypes.func,
 		setOrder: PropTypes.func,
 		setShownRecord: PropTypes.func,
+		toggleShownRecord: PropTypes.func,
 		changeCollapsedState: PropTypes.func,
 	};
 
