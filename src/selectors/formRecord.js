@@ -176,8 +176,9 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 			// console.log(unfilteredChildren);
 			let mainGroups;
 			let activeGroup;
-			// const recordId = record && record[PRIKEY_ALIAS];
+			// const recordId = record && record.prikey;
 			// console.log(`build record for ${recordId}`, table && table.name);
+			// console.log(record);
 		
 			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
 			if (table) {

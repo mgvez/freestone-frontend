@@ -22,7 +22,7 @@ export default class SubformSingle extends Component {
 	};
 
 	render() {
-		const activeRecordId = this.props.activeRecords && this.props.activeRecords.length && this.props.activeRecords[0].id;
+		const activeRecordId = (this.props.childrenRecords && this.props.childrenRecords.length && this.props.childrenRecords[0].id) || null;
 
 		let addBtn;
 		if (!this.props.childrenRecords || !this.props.childrenRecords.length) {
