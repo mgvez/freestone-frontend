@@ -158,7 +158,8 @@ export default class TextTranslations extends Component {
 				this.searchInput.current.focus();
 				break;
 			}
-			case 'g': {
+			case 'g':
+			case 'G': {
 				e.preventDefault();
 				const direction = e.shiftKey ? -1 : 1;
 				this.props.navigateSearchTranslation(direction);
