@@ -199,7 +199,7 @@ export default class SingleRecord extends Component {
 		let renderedTabs;
 		let renderedGroup;
 		let renderedSidebar;
-		let hasSideBar = false;
+		let sidebarFields;
 
 		//subforms groups are rendered not tabbed, they are all displayed
 		if (!this.props.isRoot) {
@@ -220,15 +220,22 @@ export default class SingleRecord extends Component {
 				//if only child form in the group, don't wrap it in the group (groups don't respond to hide/show rules)
 				return groupChild;
 			}, []);
+
+			sidebarFields = groups.reduce((carry, group) => {
+				return [
+					...carry,
+					...((group.asideFields && group.asideFields.map((field) => this.renderField(field, 0))) || []),
+				];
+			}, []).filter(a => a);
+
 		} else {
 			//root form (first level) has its fields tabbed, and can have aside fields
 			const { activeGroup } = this.props;
 
 			const activeGroupFields = activeGroup && activeGroup.fields && activeGroup.fields.map((field) => this.renderField(field, 0)).filter(a => a);
 			const activeGroupChild = activeGroup && activeGroup.child && this.renderChild(activeGroup.child);
-			const activeGroupSidebarFields = activeGroup && activeGroup.asideFields && activeGroup.asideFields.map((field) => this.renderField(field, true)).filter(a => a);
+			sidebarFields = activeGroup && activeGroup.asideFields && activeGroup.asideFields.map((field) => this.renderField(field, true)).filter(a => a);
 
-			hasSideBar = activeGroupSidebarFields && activeGroupSidebarFields.length;
 			renderedTabs = this.renderGroupTabs(groups);
 
 			renderedGroup = (
@@ -238,18 +245,19 @@ export default class SingleRecord extends Component {
 				</FieldGroup>
 			);
 			
-			//if we show first group of root form and there is an aside, grid it to the right
-			if (hasSideBar) {
-				renderedSidebar = (
-					<GridItem key="sidegroup" columns="4" className={this.state.stickyState}>
-						<SideBar ref={this.getSidebarRef} data-sidebar-inner>
-							<FieldGroup>
-								{activeGroupSidebarFields}	
-							</FieldGroup>
-						</SideBar>
-					</GridItem>	
-				);
-			}
+		}
+
+		const hasSideBar = sidebarFields && sidebarFields.length;
+		if (hasSideBar) {
+			renderedSidebar = (
+				<GridItem key="sidegroup" columns="4" className={this.state.stickyState}>
+					<SideBar ref={this.getSidebarRef} data-sidebar-inner>
+						<FieldGroup>
+							{sidebarFields}	
+						</FieldGroup>
+					</SideBar>
+				</GridItem>	
+			);
 		}
 
 		return (
