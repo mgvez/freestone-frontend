@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_BANKIMG, TYPE_BANKFILE, TYPE_MARKDOWN } from '../../../freestone/schemaProps';
+import { TYPE_BANKIMG, TYPE_BANKFILE, TYPE_MARKDOWN, BANK_DOCS_NAME } from '../../../freestone/schemaProps';
 import { PLACEHOLDER } from '../../../freestone/settings';
 import { callApi, getEndpoint } from '../../../freestone/api';
 import { Button } from '../../../styles/Button';
@@ -11,6 +11,7 @@ export default class SelectBankItemBtn extends Component {
 	static propTypes = {
 		gotoOnChoose: PropTypes.string,
 		bankItemId: PropTypes.string,
+		bankName: PropTypes.string,
 		lang: PropTypes.string,
 
 		targetFieldValue: PropTypes.any,
@@ -32,7 +33,7 @@ export default class SelectBankItemBtn extends Component {
 
 		const bankItemId = this.props.bankItemId;
 		const { tableId, recordId, fieldId, fieldType } = this.props.bankDestination;
-		const { targetFieldValue, gotoOnChoose, lang } = this.props;
+		const { targetFieldValue, gotoOnChoose, lang, bankName } = this.props;
 
 		this.props.cancelBankSelect();
 
@@ -47,9 +48,9 @@ export default class SelectBankItemBtn extends Component {
 			// console.log('fetch markup');
 			// console.log(this.props);
 
-			const action = fieldType === TYPE_MARKDOWN ? 'item' : 'figure';
+			const action = bankName === BANK_DOCS_NAME ? 'link' : (fieldType === TYPE_MARKDOWN ? 'item' : 'figure');
 
-			callApi(getEndpoint(`bank/images/${action}/${bankItemId}/${lang}`)).then(res => {
+			callApi(getEndpoint(`bank/${bankName}/${action}/${bankItemId}/${lang}`)).then(res => {
 				let replacement = res.data.markup;
 				if (fieldType === TYPE_MARKDOWN && res.data.item) {
 					// // console.log(res.data);

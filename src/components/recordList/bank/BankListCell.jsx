@@ -151,7 +151,7 @@ export default class BankListCell extends Component {
 					</InfosContainer>
 
 					<Row key="select">
-						<SelectBankItemBtn bankItemId={prikeyVal} />
+						<SelectBankItemBtn bankName={bankName} bankItemId={prikeyVal} />
 					</Row>
 
 					<Row key="fcn" className="btns">
