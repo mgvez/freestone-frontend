@@ -43,7 +43,7 @@ export const TINYMCE_CONFIG = {
 	paste_merge_formats: true,
 	theme_modern_toolbar_location: 'top',
 	theme_modern_toolbar_align: 'left',
-	block_formats: 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre',
+	block_formats: 'Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre;Blockquote=blockquote',
 	extended_valid_elements: 'img[src|alt=|title|class|id|style|height|width|srcset|sizes]',
 	valid_elements: VALID_ELEMENTS,
 	force_br_newlines: false,
