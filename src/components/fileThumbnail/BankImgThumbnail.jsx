@@ -5,6 +5,8 @@ import styled from 'styled-components';
 
 const ChoosenImage = styled.div`
 	margin-bottom: 10px;
+	width: max-content;
+	
 	img {
 		max-height: ${THUMBNAIL_SIZE}px;
 	}
