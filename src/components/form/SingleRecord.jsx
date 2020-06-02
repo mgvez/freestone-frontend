@@ -153,7 +153,7 @@ export default class SingleRecord extends Component {
 			tableName={this.props.table.name}
 			recordId={this.props.recordId}
 			val={this.props.record[field.id]}
-			absolutePath={this.props.record[`${field.id}${BANK_PATH_ALIAS}`]}
+			absolutePath={this.props.record[`${field.name}_${BANK_PATH_ALIAS}`]}
 			origVal={this.props.recordUnaltered && this.props.recordUnaltered[field.id]}
 			parentRecordId={this.props.parentRecordId}
 			setFieldVal={this.props.setFieldVal}
