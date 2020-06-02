@@ -73,7 +73,7 @@ export default class FileThumbnail extends Component {
 		if (this.props.type === TYPE_FILE) {
 			const extMatch = this.props.val && this.props.val.match(/\.(.{2,5})$/);
 			const ext = (extMatch && extMatch[1].toUpperCase()) || 'file';
-			return <FileLink href={path} target="_blank">{ext}</FileLink>;
+			return this.props.val ? <FileLink href={path} target="_blank">{ext}</FileLink> : null;
 		}
 		//image
 		//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
