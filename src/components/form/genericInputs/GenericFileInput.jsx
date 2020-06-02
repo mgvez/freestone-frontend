@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
-import { TYPE_IMG } from '../../../freestone/schemaProps';
+import { TYPE_FILE, TYPE_IMG } from '../../../freestone/schemaProps';
 import { Button } from '../../../styles/Button';
 import { THUMBNAIL_SIZE } from '../../../freestone/settings';
 import { Icon } from '../../../styles/Icon';
@@ -125,26 +125,47 @@ export default class GenericFileInput extends Component {
 		// console.log(`render input ${this.props.field.name}`);
 		// console.log(this.props.field);
 		const { origVal, val } = this.props;
+
+		// Vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
 		const inMemory = this.getSavedInput().getFilePath();
-		//vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
-		const inputVal = inMemory && inMemory.split(/(\\|\/)/g).pop();
-		// console.log(val);
+		const fileName = inMemory && inMemory.split(/(\\|\/)/g).pop();
+
+		// Si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		let revertBtn;
-		let deleteBtn;
-		//si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		if (origVal && val !== origVal) {
 			revertBtn = <Button round="true" bordered="true" warn="true" onClick={this.clearSavedInput}>Revert to db {typeLabel}</Button>;
 		}
 
-		// s'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
+		// S'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
+		let deleteBtn;
 		if (val && origVal === val) {
 			deleteBtn = <Button round="true" bordered="true" danger="true" onClick={this.setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
 		}
 
-		const displayVal = this.props.type === TYPE_IMG ? val && (inputVal || origVal) : null;
+		let displayVal;
+		// TYPE_FILE shows the extension and file name.
+		if (this.props.type === TYPE_FILE) {
+			// Add : Show nothing at first, then show val.
+			// 		before : val and origVal are null
+			//  	after : val is set and origVal is null
+			// Edit : Show origVal at first, then show val.
+			// 		before : val is set and origVal is the same
+			// 		afterChange : val is set and origVal is set but is different
+			//		afterDelete : val is null and origVal is set
+			displayVal = val !== origVal ? (val ? fileName : null) : origVal;
+		}
+		// TYPE_IMG shows the picture.
+		if (this.props.type === TYPE_IMG) {
+			// If displayBal is null, FileThumbnail will display the uploaded file as an image or nothing if no file was
+			// uploaded.
+			// Add : Show nothing at first, then show the uploaded.
+			// Edit : Show the original at first, then show the uploaded.
+			// Delete : Shows nothing.
+			displayVal = val !== origVal ? null : origVal;
+		}
 
 		const thumbnail = (<FileThumbnail
-			val={origVal === val ? val : null}
+			val={displayVal}
 			absolutePath={this.props.absolutePath}
 			localVal={this.state.localFile}
 			dir={this.props.folder}
@@ -154,10 +175,10 @@ export default class GenericFileInput extends Component {
 
 		return (
 			<Container>
-				{val && (<FileInfos>
+				<FileInfos>
 					{thumbnail}
-					{displayVal}
-				</FileInfos>)}
+					{(this.props.type === TYPE_FILE ? displayVal : null)}
+				</FileInfos>
 
 				<FileInputContainer>
 					<input id={id} type="file" value="" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
