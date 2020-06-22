@@ -28,14 +28,13 @@ export default class SubformTabbed extends Component {
 	getContent() {
 		//show active record OR first record if none active
 		const activeRecordId = (this.props.activeRecords && this.props.activeRecords.length && this.props.activeRecords[0].id) || (this.props.childrenRecords && this.props.childrenRecords.length && this.props.childrenRecords[0].id) || null;
-
 		return (<Collapsable isCollapsed={this.props.isCollapsed}>
 			<TabList {...this.props} activeRecordId={activeRecordId} />
 			<SingleRecord
 				tableId={this.props.table.id}
 				parentRecordId={this.props.parentRecordId}
 				parentTableId={this.props.parentTableId}
-				recordId={String(activeRecordId)}
+				recordId={activeRecordId && String(activeRecordId)}
 				language={this.props.language}
 				isSubform
 			/>
