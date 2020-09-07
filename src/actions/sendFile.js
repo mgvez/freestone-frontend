@@ -1,15 +1,31 @@
 import { Promise } from 'bluebird';
 
 import { FREESTONE_API } from '../middleware/api';
-import { getFileVal } from '../freestone/fileInputs';
+import { getFileVal, getCropSettings } from '../freestone/fileInputs';
 import { createRequestTypes } from './apiAction';
 
 export const FILE_API = createRequestTypes('FILE_API');
 
 const CHUNK_SIZE = 1024 * 1024;
 
+function sendCrop(dispatch, fileDef) {
+	const data = {
+		...fileDef,
+		totalSize: fileDef.file.size,
+	};
+	const reqAction = dispatch({
+		[FREESTONE_API]: {
+			types: FILE_API,
+			route: 'file/crop',
+			data,
+		},
+	});
+	return reqAction;
+
+}
+
 function sendChunk(dispatch, fileDef, rangeStart = 0) {
-	const { file, tmpName, fieldId } = fileDef;
+	const { file, tmpName, fieldId, crop } = fileDef;
 	let rangeEnd = rangeStart + CHUNK_SIZE;
 	if (rangeEnd > file.size) {
 		rangeEnd = file.size;
@@ -36,11 +52,13 @@ function sendChunk(dispatch, fileDef, rangeStart = 0) {
 	});
 
 	if (rangeEnd === file.size) {
+		if (crop) return chunkReqAction.then(() => sendCrop(dispatch, fileDef));
 		return chunkReqAction;
 	}
 
 	return chunkReqAction.then(() => sendChunk(dispatch, fileDef, rangeEnd));
 }
+
 
 export function sendRecordFiles(dispatch, records) {
 	//loop et send files
@@ -54,7 +72,8 @@ export function sendRecordFiles(dispatch, records) {
 				//on n'a pas besoin de vérifier si le champ est d'un type particulier: le getfile retournera un file basé sur la value seulement, qui est un hash
 				const file = tmpName && getFileVal(tmpName);
 				if (!file) return null;
-				// console.log(file, tmpName);
+				const crop = getCropSettings(tmpName);
+				console.log(crop, tmpName);
 				return {
 					tmpName,
 					file,
@@ -62,6 +81,7 @@ export function sendRecordFiles(dispatch, records) {
 					fieldId,
 					recordId,
 					tableId,
+					crop,
 				};
 			}).filter(r => r));
 		}, recordsFiles);

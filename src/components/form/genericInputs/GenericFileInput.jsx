@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ReactCrop from 'react-image-crop';
 import styled from 'styled-components';
+import 'react-image-crop/lib/ReactCrop.scss';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
@@ -58,6 +60,8 @@ export default class GenericFileInput extends Component {
 		super(props);
 		this.state = {
 			localFile: null,
+			isCropping: false,
+			crop: null,
 		};
 	}
 
@@ -97,6 +101,19 @@ export default class GenericFileInput extends Component {
 		this.props.changeVal('');
 	}
 
+	setIsCropping = (isCropping, isCancelling) => {
+		// when stopping crop, register current settings to saved input (unless cancelling)
+		if (!isCropping && !isCancelling) {
+			console.log(this.state.crop);
+			this.getSavedInput().setCropSettings(this.state.crop);
+		}
+
+		this.setState({
+			isCropping,
+			crop: null,
+		});
+	}
+
 	changeFileVal = (e) => {
 		const input = e.target;
 		const savedInput = this.getSavedInput();
@@ -118,6 +135,13 @@ export default class GenericFileInput extends Component {
 			this.fileinp.click();
 			// console.log(this.fileinp);
 		}
+	}
+
+	setCrop = (newCrop, newCropPrc) => {
+		this.setState({
+			// crop: newCrop,
+			crop: newCropPrc,
+		});
 	}
 
 	render() {
@@ -143,6 +167,7 @@ export default class GenericFileInput extends Component {
 		}
 
 		let displayVal;
+		let cropBtn;
 		// TYPE_FILE shows the extension and file name.
 		if (this.props.type === TYPE_FILE) {
 			// Add : Show nothing at first, then show val.
@@ -161,7 +186,25 @@ export default class GenericFileInput extends Component {
 			// Add : Show nothing at first, then show the uploaded.
 			// Edit : Show the original at first, then show the uploaded.
 			// Delete : Shows nothing.
+			// console.log(this.props);
 			displayVal = val !== origVal ? null : origVal;
+
+			// display option to crop file, if to be uploaded
+			if (this.state.localFile) {
+				cropBtn = <Button round bordered cta faded onClick={() => this.setIsCropping(true)}><Icon icon="crop" />Crop</Button>;
+			}
+		}
+
+		let cropper = null;
+		const currentCrop = this.state.crop || this.getSavedInput().getCropSettings() || { unit: '%' };
+		if (this.state.isCropping) {
+			cropper = (
+				<div>
+					<ReactCrop src={this.state.localFile} crop={currentCrop} onChange={this.setCrop} />
+					<Button round bordered cta onClick={() => this.setIsCropping(false)}><Icon icon="crop" />OK</Button>
+					<Button round bordered danger onClick={() => this.setIsCropping(false, true)}><Icon icon="times" />Cancel</Button>
+				</div>
+			);
 		}
 
 		const thumbnail = (<FileThumbnail
@@ -170,11 +213,13 @@ export default class GenericFileInput extends Component {
 			localVal={this.state.localFile}
 			dir={this.props.folder}
 			type={this.props.type}
+			crop={currentCrop}
 		/>);
 		const id = `${this.props.fieldId}__${this.props.recordId}`;
 
 		return (
 			<Container>
+				{cropper}
 				<FileInfos>
 					{thumbnail}
 					{(this.props.type === TYPE_FILE ? displayVal : null)}
@@ -186,6 +231,7 @@ export default class GenericFileInput extends Component {
 				</FileInputContainer>
 				{revertBtn}
 				{deleteBtn}
+				{cropBtn}
 
 			</Container>
 		);

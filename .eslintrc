@@ -27,7 +27,7 @@
 		"react/prefer-stateless-function": [0],
 		"no-param-reassign": ["error", { "props": false }],
 		"no-underscore-dangle": ["error", { "allowAfterThis": true }],
-		"consistent-return": ["error", { "treatUndefinedAsUnspecified": true }],
+		"consistent-return": [0],
 		"no-cond-assign": [2, "except-parens"]
 	},
 	"ecmaFeatures" : {

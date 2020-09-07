@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -9,6 +9,13 @@ const Img = styled.img`
 	max-height: ${THUMBNAIL_SIZE}px;
 	display: block;
 	margin: 0 auto;
+`;
+const CroppedImg = styled.img`
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform-origin: top left;
+	max-width: none;
 `;
 
 const CheckeredBg = styled.span`
@@ -39,51 +46,104 @@ const ImgLink = styled.a`
 	align-items: center;
 	justify-content: center;
 	border-radius: 3px;
+	position: relative;
 `;
 
-export default class FileThumbnail extends Component {
-	static propTypes = {
-		env: PropTypes.object,
-		dir: PropTypes.string,
-		val: PropTypes.string, //actual value in db of this file
-		localVal: PropTypes.string, //image not yet uploaded, as an input's file value
-		absolutePath: PropTypes.string,
-		thumbnailPath: PropTypes.string,
-		type: PropTypes.string,
-	};
-
-	getLocalPath() {
-		return `${this.props.env.filesDir}/${this.props.dir}/${this.props.val}`;
+const FileThumbnail = (props) => {
+	
+	const imgRef = useRef(null);
+	function getLocalPath() {
+		return `${props.env.filesDir}/${props.dir}/${props.val}`;
 	}
 
-	getAbsolutePath(absolutePath) {
+	function getAbsolutePath(absolutePath) {
 		if (!absolutePath) return null;
 		if (absolutePath.indexOf('http') === 0) return absolutePath;
 		if (absolutePath.indexOf('//') === 0) return getProtocol() + absolutePath;
 		
-		return getProtocol() + `${this.props.env.domain}${absolutePath}`;
+		return getProtocol() + `${props.env.domain}${absolutePath}`;
 	}
 
-	render() {
+	const [naturalWidth, setNaturalWidth] = useState(null);
+	const [naturalHeight, setNaturalHeight] = useState(null);
 
-		if (!this.props.val && !this.props.localVal && !this.props.absolutePath) return null;
-		const absolutePath = this.getAbsolutePath(this.props.absolutePath);
-		const path = absolutePath || this.getLocalPath();
+	useEffect(() => {
 
-		if (this.props.type === TYPE_FILE) {
-			const extMatch = this.props.val && this.props.val.match(/\.(.{2,5})$/);
-			const ext = (extMatch && extMatch[1].toUpperCase()) || 'file';
-			return this.props.val ? <FileLink href={path} target="_blank">{ext}</FileLink> : null;
+		if (!imgRef.current) return;
+
+		const setNaturalDimensions = () => {
+			setNaturalWidth(imgRef.current.naturalWidth);
+			setNaturalHeight(imgRef.current.naturalHeight);
+		};
+
+		if (imgRef.current.naturalWidth) {
+			setNaturalDimensions();
+			return;
 		}
-		//image
-		//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
-		let thumbVal = this.props.localVal;
-		if (this.props.val) {
-			const absoluteThumbPath = this.getAbsolutePath(this.props.thumbnailPath);
-			// 2019-06-17: plus de thumbnails générés par l'admin pour les fichiers.
-			thumbVal = absoluteThumbPath || path;
-		}
-		return <ImgLink href={path} target="_blank"><CheckeredBg><Img src={thumbVal} /></CheckeredBg></ImgLink>;
+		imgRef.current.addEventListener('load', setNaturalDimensions);
+		return () => {
+			imgRef.current.removeEventListener('load', setNaturalDimensions);
+		};
+	});
 
+
+	// console.log(props.crop);
+	if (!props.val && !props.localVal && !props.absolutePath) return null;
+	const absolutePath = getAbsolutePath(props.absolutePath);
+	const path = absolutePath || getLocalPath();
+
+	if (props.type === TYPE_FILE) {
+		const extMatch = props.val && props.val.match(/\.(.{2,5})$/);
+		const ext = (extMatch && extMatch[1].toUpperCase()) || 'file';
+		return props.val ? <FileLink href={path} target="_blank">{ext}</FileLink> : null;
 	}
-}
+	//image
+	//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
+	let thumbVal = props.localVal;
+	if (props.val) {
+		const absoluteThumbPath = getAbsolutePath(props.thumbnailPath);
+		// 2019-06-17: plus de thumbnails générés par l'admin pour les fichiers.
+		thumbVal = absoluteThumbPath || path;
+	}
+	const cropStyle = {};
+	const imgCropStyle = {};
+	let ImgComponent = Img;
+	if (props.crop && props.crop.width && props.crop.height) {
+		const absolute = {
+			width: props.crop.width * naturalWidth * 0.01,
+			height: props.crop.height * naturalHeight * 0.01,
+			x: props.crop.x * naturalWidth * 0.01,
+			y: props.crop.y * naturalHeight * 0.01,
+		};
+		const ratio = absolute.width / absolute.height;
+		const maxSizeProp = `${THUMBNAIL_SIZE}px`;
+		cropStyle.width = ratio > 1 ? maxSizeProp : `${THUMBNAIL_SIZE * ratio}px`;
+		cropStyle.height = ratio > 1 ? `${THUMBNAIL_SIZE / ratio}px` : maxSizeProp;
+		cropStyle.overflow = 'hidden';
+
+		const sizeRatio = ratio > 1 ? THUMBNAIL_SIZE / absolute.width : THUMBNAIL_SIZE / absolute.height;
+		imgCropStyle.width = `${naturalWidth}px`;
+		imgCropStyle.height = `${naturalHeight}px`;
+		imgCropStyle.left = `-${absolute.x * sizeRatio}px`;
+		imgCropStyle.top = `-${absolute.y * sizeRatio}px`;
+
+		ImgComponent = CroppedImg;
+		imgCropStyle.transform = `scale(${sizeRatio})`;
+	}
+	return <ImgLink href={path} target="_blank" style={cropStyle}><CheckeredBg><ImgComponent src={thumbVal} style={imgCropStyle} ref={imgRef} /></CheckeredBg></ImgLink>;
+
+
+};
+
+FileThumbnail.propTypes = {
+	env: PropTypes.object,
+	crop: PropTypes.object,
+	dir: PropTypes.string,
+	val: PropTypes.string, //actual value in db of this file
+	localVal: PropTypes.string, //image not yet uploaded, as an input's file value
+	absolutePath: PropTypes.string,
+	thumbnailPath: PropTypes.string,
+	type: PropTypes.string,
+};
+
+export default FileThumbnail;

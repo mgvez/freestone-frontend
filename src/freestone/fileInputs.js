@@ -16,6 +16,9 @@ export function showFileInputs() {
 export function getFileVal(inputKey) {
 	return inputs[inputKey] && inputs[inputKey].fileVal;
 }
+export function getCropSettings(inputKey) {
+	return inputs[inputKey] && inputs[inputKey].cropSettings;
+}
 
 export class SavedFileInput {
 	constructor(val) {
@@ -39,6 +42,13 @@ export class SavedFileInput {
 		// showfileInputs();
 	}
 
+	setCropSettings(cropSettings) {
+		inputs[this.key] = {
+			...inputs[this.key],
+			cropSettings,
+		};
+	}
+
 	getFilePath() {
 		// console.log(this.key, inputs[this.key]);
 		return inputs[this.key] && inputs[this.key].filePath;
@@ -54,6 +64,9 @@ export class SavedFileInput {
 
 	getFile() {
 		return inputs[this.key] && inputs[this.key].fileVal;
+	}
+	getCropSettings() {
+		return inputs[this.key] && inputs[this.key].cropSettings;
 	}
 }
 
