@@ -6,6 +6,7 @@ import 'react-image-crop/lib/ReactCrop.scss';
 
 import { SavedFileInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
+import Cropper from '../../images/Cropper';
 import { TYPE_FILE, TYPE_IMG } from '../../../freestone/schemaProps';
 import { Button } from '../../../styles/Button';
 import { THUMBNAIL_SIZE } from '../../../freestone/settings';
@@ -61,7 +62,6 @@ export default class GenericFileInput extends Component {
 		this.state = {
 			localFile: null,
 			isCropping: false,
-			crop: null,
 		};
 	}
 
@@ -101,16 +101,10 @@ export default class GenericFileInput extends Component {
 		this.props.changeVal('');
 	}
 
-	setIsCropping = (isCropping, isCancelling) => {
-		// when stopping crop, register current settings to saved input (unless cancelling)
-		if (!isCropping && !isCancelling) {
-			console.log(this.state.crop);
-			this.getSavedInput().setCropSettings(this.state.crop);
-		}
+	setIsCropping = isCropping => {
 
 		this.setState({
 			isCropping,
-			crop: null,
 		});
 	}
 
@@ -137,11 +131,8 @@ export default class GenericFileInput extends Component {
 		}
 	}
 
-	setCrop = (newCrop, newCropPrc) => {
-		this.setState({
-			// crop: newCrop,
-			crop: newCropPrc,
-		});
+	setCrop = (newCrop) => {
+		this.getSavedInput().setCropSettings(newCrop);
 	}
 
 	render() {
@@ -196,15 +187,23 @@ export default class GenericFileInput extends Component {
 		}
 
 		let cropper = null;
-		const currentCrop = this.state.crop || this.getSavedInput().getCropSettings() || { unit: '%' };
+		const currentCrop = this.getSavedInput().getCropSettings();
 		if (this.state.isCropping) {
 			cropper = (
-				<div>
-					<ReactCrop src={this.state.localFile} crop={currentCrop} onChange={this.setCrop} />
-					<Button round bordered cta onClick={() => this.setIsCropping(false)}><Icon icon="crop" />OK</Button>
-					<Button round bordered danger onClick={() => this.setIsCropping(false, true)}><Icon icon="times" />Cancel</Button>
-				</div>
+				<Cropper
+					src={this.state.localFile}
+					setIsCropping={this.setIsCropping}
+					setCrop={this.setCrop}
+					crop={currentCrop}
+				/>
 			);
+			// cropper = (
+			// 	<div>
+			// 		<ReactCrop src={this.state.localFile} crop={currentCrop} onChange={this.setCrop} />
+			// 		<Button round bordered cta onClick={() => this.setIsCropping(false)}><Icon icon="crop" />OK</Button>
+			// 		<Button round bordered danger onClick={() => this.setIsCropping(false, true)}><Icon icon="times" />Cancel</Button>
+			// 	</div>
+			// );
 		}
 
 		const thumbnail = (<FileThumbnail
