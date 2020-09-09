@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { TYPE_IMG, BANK_IMG_TABLE } from '../../../freestone/schemaProps';
 
@@ -45,34 +46,39 @@ export default class BankImgInput extends Component {
 	render() {
 
 		const bankImgId = Number(this.props.val);
-		const hasLocalFile = bankImgId !== 0 && !bankImgId;
+		const hasLocalFile = !bankImgId && this.props.val;
 		const localFileId = hasLocalFile ? this.props.val : null;
-
-		const bankThumbnail = bankImgId ? <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} /> : null;
-
-		const chooseBtn = <Button round="true" bordered="true" info="true" onClick={this.gotoSelect}><Icon icon="check" /> Choose image</Button>;
-		const changeBtn = <Button round="true" bordered="true" info="true" onClick={this.gotoSelect}><Icon icon="exchange-alt" /> Change</Button>;
-		const chooseChangeBtn = bankImgId ? changeBtn : chooseBtn;
-		const deleteBtn = bankImgId ? <Button round="true" danger="true" bordered="true" onClick={this.delete}><Icon icon="times" /> Remove value</Button> : null;
-
 		//si une image de banque deja placée, on peut pas mettre un fichier direct. O peut juste changer l'image de la banque, parce que sinon ça donne l'impression que le fichier direct edit le record de banque.
-		let localFileInput = null;
+		let fileDisplay = null;
+		let deleteBtn = null;
+		let chooseBtn = null;
 		if (!bankImgId) {
-			localFileInput = (<GenericFileInput 
-				type={TYPE_IMG}
-				fieldId={this.props.field.id}
-				recordId={this.props.recordId}
-				val={localFileId}
-				changeVal={this.handleEditorChange}
-			/>);
-		}
+			fileDisplay = (
+				<GenericFileInput 
+					type={TYPE_IMG}
+					fieldId={this.props.field.id}
+					recordId={this.props.recordId}
+					val={localFileId}
+					changeVal={this.handleEditorChange}
+				/>
+			);
 
+			if (!hasLocalFile) {
+				chooseBtn = <Button small round bordered info onClick={this.gotoSelect}><Icon icon="check" /> Choose in bank</Button>;
+
+			}
+		} else {
+			deleteBtn = <Button small round danger bordered onClick={this.delete}><Icon icon="times" /> Remove value</Button>;
+			fileDisplay = <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} />;
+			chooseBtn = <Button small round bordered info onClick={this.gotoSelect}><Icon icon="exchange-alt" /> Change</Button>;
+		}
+		
+		
 		return (
 			<div>
-				{bankThumbnail}
-				{chooseChangeBtn}
+				{fileDisplay}
+				{chooseBtn}
 				{deleteBtn}
-				{localFileInput}
 			</div>
 		);
 	}

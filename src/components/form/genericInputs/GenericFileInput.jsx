@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactCrop from 'react-image-crop';
 import styled from 'styled-components';
 import 'react-image-crop/lib/ReactCrop.scss';
 
@@ -16,7 +15,6 @@ import { Icon } from '../../../styles/Icon';
 const Container = styled.div`
 	display: inline-block;
 	vertical-align: middle;
-	margin-left: 10px;
 `;
 
 const FileInfos = styled.div`
@@ -79,6 +77,7 @@ export default class GenericFileInput extends Component {
 		reader.readAsDataURL(file);
 	}
 
+
 	getFileName() {
 		return this.props.val;
 	}
@@ -121,6 +120,9 @@ export default class GenericFileInput extends Component {
 
 	clearSavedInput = () => {
 		this.getSavedInput().deleteInput();
+		this.setState({
+			localFile: null,
+		});
 		this.props.changeVal(this.props.origVal);
 	}
 
@@ -137,8 +139,6 @@ export default class GenericFileInput extends Component {
 
 	render() {
 		const typeLabel = this.props.type === TYPE_IMG ? 'image' : 'file';
-		// console.log(`render input ${this.props.field.name}`);
-		// console.log(this.props.field);
 		const { origVal, val } = this.props;
 
 		// Vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
@@ -148,13 +148,15 @@ export default class GenericFileInput extends Component {
 		// Si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 		let revertBtn;
 		if (origVal && val !== origVal) {
-			revertBtn = <Button round="true" bordered="true" warn="true" onClick={this.clearSavedInput}>Revert to db {typeLabel}</Button>;
+			revertBtn = <Button round bordered warn small onClick={this.clearSavedInput}>Revert to db {typeLabel}</Button>;
+		} else if (val) {
+			revertBtn = <Button round bordered warn small onClick={this.clearSavedInput}>Clear</Button>;
 		}
 
 		// S'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
 		let deleteBtn;
 		if (val && origVal === val) {
-			deleteBtn = <Button round="true" bordered="true" danger="true" onClick={this.setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
+			deleteBtn = <Button round bordered small danger onClick={this.setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
 		}
 
 		let displayVal;
@@ -182,7 +184,7 @@ export default class GenericFileInput extends Component {
 
 			// display option to crop file, if to be uploaded
 			if (this.state.localFile) {
-				cropBtn = <Button round bordered cta faded onClick={() => this.setIsCropping(true)}><Icon icon="crop" />Crop</Button>;
+				cropBtn = <Button round small bordered cta faded onClick={() => this.setIsCropping(true)}><Icon icon="crop" />Crop</Button>;
 			}
 		}
 
@@ -197,14 +199,8 @@ export default class GenericFileInput extends Component {
 					crop={currentCrop}
 				/>
 			);
-			// cropper = (
-			// 	<div>
-			// 		<ReactCrop src={this.state.localFile} crop={currentCrop} onChange={this.setCrop} />
-			// 		<Button round bordered cta onClick={() => this.setIsCropping(false)}><Icon icon="crop" />OK</Button>
-			// 		<Button round bordered danger onClick={() => this.setIsCropping(false, true)}><Icon icon="times" />Cancel</Button>
-			// 	</div>
-			// );
 		}
+		// console.log(this.props.absolutePath);
 
 		const thumbnail = (<FileThumbnail
 			val={displayVal}
@@ -226,7 +222,7 @@ export default class GenericFileInput extends Component {
 
 				<FileInputContainer>
 					<input id={id} type="file" value="" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
-					<Button round="true" bordered="true" info="true" onClick={this.triggerSelectFile}><Icon icon="upload" />{val ? 'Change file' : 'Upload file'}</Button>
+					<Button round small bordered info onClick={this.triggerSelectFile}><Icon icon="upload" />{val ? 'Change file' : 'Upload file'}</Button>
 				</FileInputContainer>
 				{revertBtn}
 				{deleteBtn}
