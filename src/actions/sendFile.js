@@ -1,7 +1,7 @@
 import { Promise } from 'bluebird';
 
 import { FREESTONE_API } from '../middleware/api';
-import { getFileVal, getCropSettings } from '../freestone/fileInputs';
+import { SavedFileInput } from '../freestone/fileInputs';
 import { createRequestTypes } from './apiAction';
 
 export const FILE_API = createRequestTypes('FILE_API');
@@ -11,7 +11,7 @@ const CHUNK_SIZE = 1024 * 1024;
 function sendCrop(dispatch, fileDef) {
 	const data = {
 		...fileDef,
-		totalSize: fileDef.file.size,
+		totalSize: fileDef.file && fileDef.file.size,
 	};
 	const reqAction = dispatch({
 		[FREESTONE_API]: {
@@ -25,7 +25,13 @@ function sendCrop(dispatch, fileDef) {
 }
 
 function sendChunk(dispatch, fileDef, rangeStart = 0) {
+	// console.log(fileDef, rangeStart);
 	const { file, tmpName, fieldId, crop } = fileDef;
+
+	if (!file) {
+		if (crop) return sendCrop(dispatch, fileDef);
+	}
+
 	let rangeEnd = rangeStart + CHUNK_SIZE;
 	if (rangeEnd > file.size) {
 		rangeEnd = file.size;
@@ -68,16 +74,23 @@ export function sendRecordFiles(dispatch, records) {
 			const record = tableRecords[recordId];
 			// console.log(record);
 			return tableFiles.concat(Object.keys(record).map(fieldId => {
-				const tmpName = record[fieldId];
-				//on n'a pas besoin de vérifier si le champ est d'un type particulier: le getfile retournera un file basé sur la value seulement, qui est un hash
-				const file = tmpName && getFileVal(tmpName);
-				if (!file) return null;
-				const crop = getCropSettings(tmpName);
-				console.log(crop, tmpName);
+				const val = record[fieldId];
+				// console.log(tmpName);
+				const fileInput = val && new SavedFileInput(val);
+
+				// no need to check for field type. Input will exist only if it was created, the value being a hash
+				const file = fileInput && fileInput.getFile();
+				// but if we have no file per se, it is not impossible that the field is a bank image with a crop, whose value is held in fileinputs
+				const crop = fileInput && fileInput.getCropSettings();
+
+				if (!file && !crop) return null;
+				const bankImgId = fileInput.getBankItemId();
+				// console.log(crop, tmpName);
 				return {
-					tmpName,
+					tmpName: val,
+					bankImgId,
 					file,
-					fileName: file.name,
+					fileName: file && file.name,
 					fieldId,
 					recordId,
 					tableId,

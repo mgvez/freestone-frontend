@@ -2,6 +2,7 @@ import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 
 export const BANK_IMAGE_API = createRequestTypes('BANK_IMAGE_API');
+export const BANK_IMAGE_ITEM_API = createRequestTypes('BANK_IMAGE_ITEM_API');
 export const BANK_FILE_API = createRequestTypes('BANK_FILE_API');
 export const BANK_USES_API = createRequestTypes('BANK_USES_API');
 export const BANK_CATEGORIES_API = createRequestTypes('BANK_CATEGORIES_API');
@@ -15,6 +16,16 @@ export function fetchBankImage(id, size) {
 			[FREESTONE_API]: {
 				types: BANK_IMAGE_API,
 				route: `bank/images/thumbnail/${id}/en/${size}`,
+			},
+		});
+	};
+}
+export function fetchImageBankItem(id) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: BANK_IMAGE_ITEM_API,
+				route: `bank/images/item/${id}`,
 			},
 		});
 	};

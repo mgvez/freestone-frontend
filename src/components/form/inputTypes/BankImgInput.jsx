@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { TYPE_IMG, BANK_IMG_TABLE } from '../../../freestone/schemaProps';
+import { TYPE_IMG, BANK_IMG_TABLE, BANK_PATH_ALIAS } from '../../../freestone/schemaProps';
 
-import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import GenericFileInput from '../genericInputs/GenericFileInput';
+import CroppableBankImgInput from '../../../containers/form/genericInputs/CroppableBankImgInput';
 import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
+import { getSavedInput } from '../../../freestone/fileInputs';
 
 export default class BankImgInput extends Component {
 	static propTypes = {
@@ -21,6 +22,12 @@ export default class BankImgInput extends Component {
 		goTo: PropTypes.func,
 		setupBankSelect: PropTypes.func,
 	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			isCroppingBankImg: null,
+		};
+	}
 
 	gotoSelect = () => {
 		this.props.setupBankSelect(
@@ -34,52 +41,64 @@ export default class BankImgInput extends Component {
 		this.props.goTo(`/list/${BANK_IMG_TABLE}/`);
 	}
 
-	handleEditorChange = (v) => {
-		// console.log('set val', v);
+	changeValue = (v) => {
 		this.props.changeVal(v);
 	};
 
 	delete = () => {
-		this.handleEditorChange(0);
+		this.changeValue(0);
 	};
 
 	render() {
 
-		const bankImgId = Number(this.props.val);
-		const hasLocalFile = !bankImgId && this.props.val;
-		const localFileId = hasLocalFile ? this.props.val : null;
-		//si une image de banque deja placée, on peut pas mettre un fichier direct. O peut juste changer l'image de la banque, parce que sinon ça donne l'impression que le fichier direct edit le record de banque.
-		let fileDisplay = null;
-		let deleteBtn = null;
-		let chooseBtn = null;
-		if (!bankImgId) {
-			fileDisplay = (
-				<GenericFileInput 
-					type={TYPE_IMG}
-					fieldId={this.props.field.id}
-					recordId={this.props.recordId}
-					val={localFileId}
-					changeVal={this.handleEditorChange}
-				/>
-			);
+		let bankImgId = Number(this.props.val);
+		let hasLocalFile = false;
+		// check whether there's a saved input for current value.
+		if (!bankImgId && this.props.val) {
+			const fileInput = getSavedInput(this.props.val);
+			if (fileInput) {
+				//if we have a file input, we need to know if it's a bank crop, or an upload file
+				bankImgId = Number(fileInput.getBankItemId());
+				if (!bankImgId) {
+					hasLocalFile = fileInput.hasFile();
+				}
+			} else {
+				// we have a val which refers to an input that does not exist
+				this.delete();
+				return null;
+			}
+		}
 
+		if (!bankImgId) {
+			let chooseBtn;
 			if (!hasLocalFile) {
 				chooseBtn = <Button small round bordered info onClick={this.gotoSelect}><Icon icon="check" /> Choose in bank</Button>;
-
 			}
-		} else {
-			deleteBtn = <Button small round danger bordered onClick={this.delete}><Icon icon="times" /> Remove value</Button>;
-			fileDisplay = <BankImgThumbnail id={bankImgId} onClick={this.gotoSelect} />;
-			chooseBtn = <Button small round bordered info onClick={this.gotoSelect}><Icon icon="exchange-alt" /> Change</Button>;
-		}
-		
-		
+			return (
+				<div>
+					<GenericFileInput 
+						type={TYPE_IMG}
+						fieldId={this.props.field.id}
+						recordId={this.props.recordId}
+						val={this.props.val || null}
+						changeVal={this.changeValue}
+					/>
+					{chooseBtn}
+				</div>
+			);
+		} 
+
 		return (
-			<div>
-				{fileDisplay}
-				{chooseBtn}
-				{deleteBtn}
-			</div>
+			<CroppableBankImgInput
+				fieldId={this.props.field.id}
+				recordId={this.props.recordId}
+				id={bankImgId}
+				val={this.props.val}
+				gotoSelect={this.gotoSelect}
+				delete={this.delete}
+				changeVal={this.changeValue}
+			/>
 		);
+
 	}
 }

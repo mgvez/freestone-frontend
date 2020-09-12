@@ -68,7 +68,6 @@ const FileThumbnail = (props) => {
 	const [naturalHeight, setNaturalHeight] = useState(null);
 
 	useEffect(() => {
-
 		if (!imgRef.current) return;
 
 		const setNaturalDimensions = () => {
@@ -91,7 +90,6 @@ const FileThumbnail = (props) => {
 	if (!props.val && !props.localVal && !props.absolutePath) return null;
 	const absolutePath = getAbsolutePath(props.absolutePath);
 	const path = absolutePath || getLocalPath();
-
 	if (props.type === TYPE_FILE) {
 		const extMatch = props.val && props.val.match(/\.(.{2,5})$/);
 		const ext = (extMatch && extMatch[1].toUpperCase()) || 'file';
@@ -99,7 +97,7 @@ const FileThumbnail = (props) => {
 	}
 	//image
 	//le thumbnail peut être un fichier local (quand on a pas encore savé) ou un thumbnail de l'admin
-	let thumbVal = props.localVal;
+	let thumbVal = props.localVal || path;
 	if (props.val) {
 		const absoluteThumbPath = getAbsolutePath(props.thumbnailPath);
 		// 2019-06-17: plus de thumbnails générés par l'admin pour les fichiers.

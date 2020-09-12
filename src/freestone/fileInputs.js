@@ -3,22 +3,7 @@ import uniqueId from '../utils/UniqueId';
 Conserve les nodes des inputs file en mémoire pour pouvoir les poster, il est impossible de les recréer (on ne peut pas mettre dynamiquement une valeur à un input file pour raisons de sécurité
 */
 
-
 const inputs = {};
-
-export function showFileInputs() {
-	// console.log(inputs);
-	Object.keys(inputs).forEach(k => {
-		console.warn(k, inputs[k], inputs[k].input.value);
-	});
-}
-
-export function getFileVal(inputKey) {
-	return inputs[inputKey] && inputs[inputKey].fileVal;
-}
-export function getCropSettings(inputKey) {
-	return inputs[inputKey] && inputs[inputKey].cropSettings;
-}
 
 export class SavedFileInput {
 	constructor(val) {
@@ -26,7 +11,7 @@ export class SavedFileInput {
 		// console.log('get saved input %s -> %s', val, this.key);
 	}
 
-	setInput(input, fieldId, recId) {
+	setInput(input, fieldId, recordId) {
 		// console.log('%cchange input', 'color:red;font-weight:bold;');
 		this.deleteInput();
 		this.key = uniqueId();
@@ -36,17 +21,22 @@ export class SavedFileInput {
 			fileVal,
 			filePath,
 			fieldId,
-			recId,
+			recordId,
 			id: this.key,
 		};
 		// showfileInputs();
 	}
 
-	setCropSettings(cropSettings) {
+	setValues(values) {
+		inputs[this.key] = inputs[this.key] || {};
 		inputs[this.key] = {
 			...inputs[this.key],
-			cropSettings,
+			...values,
 		};
+	}
+
+	setCropSettings(cropSettings) {
+		this.setValues({ cropSettings });
 	}
 
 	getFilePath() {
@@ -58,6 +48,13 @@ export class SavedFileInput {
 		return inputs[this.key] && this.key;
 	}
 
+	getBankItemId() {
+		return inputs[this.key] && inputs[this.key].bankItemId;
+	}
+	setBankItemId(bankItemId) {
+		this.setValues({ bankItemId });
+	}
+
 	deleteInput() {
 		if (inputs[this.key]) delete inputs[this.key];
 	}
@@ -65,8 +62,26 @@ export class SavedFileInput {
 	getFile() {
 		return inputs[this.key] && inputs[this.key].fileVal;
 	}
+
+	hasFile() {
+		return inputs[this.key] && inputs[this.key].fileVal;
+	}
+
 	getCropSettings() {
 		return inputs[this.key] && inputs[this.key].cropSettings;
 	}
 }
 
+
+export const getSavedInput = (key) => {
+	if (inputs[key]) {
+		return new SavedFileInput(key);
+	}
+	return null;
+};
+
+export const clearSavedInput = (key) => {
+	if (inputs[key]) {
+		delete inputs[key];
+	}
+};

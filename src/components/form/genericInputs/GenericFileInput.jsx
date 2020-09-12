@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import 'react-image-crop/lib/ReactCrop.scss';
 
-import { SavedFileInput } from '../../../freestone/fileInputs';
+import { SavedFileInput, getSavedInput, clearSavedInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import Cropper from '../../images/Cropper';
 import { TYPE_FILE, TYPE_IMG } from '../../../freestone/schemaProps';
@@ -54,7 +54,7 @@ export default class GenericFileInput extends Component {
 		changeVal: PropTypes.func,
 		absolutePath: PropTypes.string,
 	};
-
+	
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -77,7 +77,6 @@ export default class GenericFileInput extends Component {
 		reader.readAsDataURL(file);
 	}
 
-
 	getFileName() {
 		return this.props.val;
 	}
@@ -85,6 +84,7 @@ export default class GenericFileInput extends Component {
 	getSavedInput() {
 		// console.log('get input %s', this.props.val);
 		const saved = new SavedFileInput(this.props.val);
+
 		//si pas de input mais que la val est une ref à un input, c'est que le input existe pas... reset la val à original
 		if (this.props.val && this.props.val !== this.props.origVal && !saved.getFilePath()) {
 			this.props.changeVal(this.props.origVal);
@@ -96,12 +96,11 @@ export default class GenericFileInput extends Component {
 	}
 
 	setForDelete = () => {
-		this.getSavedInput().deleteInput();
+		clearSavedInput(this.props.val);
 		this.props.changeVal('');
 	}
 
 	setIsCropping = isCropping => {
-
 		this.setState({
 			isCropping,
 		});
@@ -109,7 +108,8 @@ export default class GenericFileInput extends Component {
 
 	changeFileVal = (e) => {
 		const input = e.target;
-		const savedInput = this.getSavedInput();
+		const savedInput = this.getSavedInput(this.props.val);
+
 		savedInput.setInput(input, this.props.fieldId, this.props.recordId);
 		// console.log('change val %s', savedInput.getId());
 		this.setState({
@@ -119,7 +119,7 @@ export default class GenericFileInput extends Component {
 	}
 
 	clearSavedInput = () => {
-		this.getSavedInput().deleteInput();
+		clearSavedInput(this.props.val);
 		this.setState({
 			localFile: null,
 		});
@@ -133,16 +133,13 @@ export default class GenericFileInput extends Component {
 		}
 	}
 
-	setCrop = (newCrop) => {
-		this.getSavedInput().setCropSettings(newCrop);
-	}
-
 	render() {
 		const typeLabel = this.props.type === TYPE_IMG ? 'image' : 'file';
 		const { origVal, val } = this.props;
 
+		const input = this.getSavedInput();
 		// Vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
-		const inMemory = this.getSavedInput().getFilePath();
+		const inMemory = input.getFilePath();
 		const fileName = inMemory && inMemory.split(/(\\|\/)/g).pop();
 
 		// Si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
@@ -189,13 +186,13 @@ export default class GenericFileInput extends Component {
 		}
 
 		let cropper = null;
-		const currentCrop = this.getSavedInput().getCropSettings();
+		const currentCrop = input.getCropSettings();
 		if (this.state.isCropping) {
 			cropper = (
 				<Cropper
 					src={this.state.localFile}
 					setIsCropping={this.setIsCropping}
-					setCrop={this.setCrop}
+					setCrop={(newCrop) => input.setCropSettings(newCrop)}
 					crop={currentCrop}
 				/>
 			);

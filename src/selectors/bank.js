@@ -10,6 +10,7 @@ const recordsSelector = state => state.freestone.recordList;
 // const recordListSelector = state => state.freestone.imageBankList;
 const bankImgSelector = state => state.freestone.bank.images;
 const bankFileSelector = state => state.freestone.bank.files;
+const bankImageItemsSelector = state => state.freestone.bank.imageItems;
 const allUsesSelector = state => state.freestone.bank.uses;
 const selectionSelector = state => state.freestone.bank.selection;
 const allBankCategoriesSelector = state => state.freestone.bank.categories;
@@ -37,16 +38,13 @@ export const bankSidebarSelector = createSelector(
 export const bankSelectionSelector = createSelector(
 	[selectionSelector, routeSelector, recordsFormSelector],
 	(selection, route, records) => {
-		// console.log(selection);
-		// console.log(table);
-
 		//find value of target field, where we want to put the value of the bank item
 		let targetFieldValue;
 		if (selection) {
 			const { tableId, fieldId, recordId } = selection;
-			targetFieldValue = records[tableId] && records[tableId][recordId] && records[tableId][recordId][fieldId];
+			const record = records[tableId] && records[tableId][recordId] && records[tableId][recordId];
+			targetFieldValue = record && record[fieldId];
 		}
-
 		return {
 			isChoosingBankItem: !!selection,
 			gotoOnChoose: selection && selection.returnTo,
@@ -58,6 +56,14 @@ export const bankSelectionSelector = createSelector(
 	}
 );
 
+export const bankItemSelector = createSelector(
+	[idSelector, bankImageItemsSelector],
+	(id, imageItems) => {
+		return {
+			imageBankItem: imageItems && id && imageItems[id],
+		};
+	}
+);
 
 function buildByCategory(records, categFieldAlias) {
 	const categs = records && records.reduce((all, record) => {

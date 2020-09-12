@@ -74,7 +74,8 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 		});
 
 		return sendRecordFiles(dispatch, records).then(filesResult => {
-
+			console.log(filesResult);
+			console.log(records);
 			const filesErr = catchError(filesResult);
 			if (filesErr) return filesErr;
 
