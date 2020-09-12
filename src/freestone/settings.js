@@ -7,6 +7,9 @@ const PROD_FREESTONE_LOCATION = '';
 //how many seconds a record can be open on the front-end and still considered "safe". Should be the same as lock time on the backend
 export const RECORD_LOADED_SAFE_LIFE = 3600;
 
+// number of megapixels above which images are considered too large and trigger a warning
+export const IMAGE_MAX_SAFE_MP = 12;
+
 //when we are placing values, for example bank images, in fields, we need a temporary placeholder which will be replaced by the selection
 export const PLACEHOLDER = '{{placeholder}}';
 

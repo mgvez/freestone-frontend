@@ -1,32 +1,23 @@
-import React, { Component } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import 'react-image-crop/lib/ReactCrop.scss';
 
 import { SavedFileInput, getSavedInput, clearSavedInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import Cropper from '../../images/Cropper';
+import RatioWarning from '../../images/RatioWarning';
+import FileInfos from './FileInfos';
 import { TYPE_FILE, TYPE_IMG } from '../../../freestone/schemaProps';
 import { Button } from '../../../styles/Button';
-import { THUMBNAIL_SIZE } from '../../../freestone/settings';
+import { WarningMessage } from '../../../styles/Texts';
+import { THUMBNAIL_SIZE, IMAGE_MAX_SAFE_MP } from '../../../freestone/settings';
 import { Icon } from '../../../styles/Icon';
+import { useImageDimensions } from '../../../hooks/imageDimensions';
 
 
 const Container = styled.div`
 	display: inline-block;
 	vertical-align: middle;
-`;
-
-const FileInfos = styled.div`
-	font-style: italic;
-	display: block;
-	margin-right: 10px;
-	max-width: ${THUMBNAIL_SIZE}px;
-
-	a {
-		display: block;
-		margin-bottom: 5px;
-	}
 `;
 
 const FileInputContainer = styled.div`
@@ -42,190 +33,200 @@ const FileInputContainer = styled.div`
 	}
 `;
 
-export default class GenericFileInput extends Component {
 
-	static propTypes = {
-		fieldId: PropTypes.number,
-		val: PropTypes.string,
-		origVal: PropTypes.string,
-		type: PropTypes.string,
-		folder: PropTypes.string,
-		recordId: PropTypes.string,
-		changeVal: PropTypes.func,
-		absolutePath: PropTypes.string,
-	};
-	
-	constructor(props) {
-		super(props);
-		this.state = {
-			localFile: null,
-			isCropping: false,
-		};
-	}
+const GenericFileInput = (props) => {
 
-	getLocalImage(file) {
-		if (!file || this.state.localFile || this.props.type !== TYPE_IMG) return undefined;
+	const [localFile, setLocalFile] = useState(null);
+	const [isCropping, setIsCropping] = useState(false);
+	const inputRef = useRef(false);
+
+	const getLocalImage = (file) => {
+		if (!file || localFile || props.type !== TYPE_IMG) return undefined;
 
 		const reader = new FileReader();
 
 		reader.onload = (e) => {
-			this.setState({
-				localFile: e.target.result,
-			});
+			setLocalFile(e.target.result);
 		};
 
 		reader.readAsDataURL(file);
-	}
+	};
 
-	getFileName() {
-		return this.props.val;
-	}
-
-	getSavedInput() {
-		// console.log('get input %s', this.props.val);
-		const saved = new SavedFileInput(this.props.val);
+	const getCurrentSavedInput = () => {
+		// console.log('get input %s', props.val);
+		const saved = new SavedFileInput(props.val);
 
 		//si pas de input mais que la val est une ref à un input, c'est que le input existe pas... reset la val à original
-		if (this.props.val && this.props.val !== this.props.origVal && !saved.getFilePath()) {
-			this.props.changeVal(this.props.origVal);
+		if (props.val && props.val !== props.origVal && !saved.getFilePath()) {
+			props.changeVal(props.origVal);
 		}
 		if (saved.getFile()) {
-			this.getLocalImage(saved.getFile());
+			getLocalImage(saved.getFile());
 		}
 		return saved;
-	}
+	};
 
-	setForDelete = () => {
-		clearSavedInput(this.props.val);
-		this.props.changeVal('');
-	}
+	const setForDelete = () => {
+		clearSavedInput(props.val);
+		props.changeVal('');
+	};
 
-	setIsCropping = isCropping => {
-		this.setState({
-			isCropping,
-		});
-	}
-
-	changeFileVal = (e) => {
+	const changeFileVal = (e) => {
 		const input = e.target;
-		const savedInput = this.getSavedInput(this.props.val);
+		const savedInput = getCurrentSavedInput();
 
-		savedInput.setInput(input, this.props.fieldId, this.props.recordId);
+		savedInput.setInput(input, props.fieldId, props.recordId);
 		// console.log('change val %s', savedInput.getId());
-		this.setState({
-			localFile: null,
-		});
-		this.props.changeVal(savedInput.getId());
+		setLocalFile(null);
+		props.changeVal(savedInput.getId());
+	};
+
+	const onClearSavedInput = () => {
+		clearSavedInput(props.val);
+		setLocalFile(null);
+		props.changeVal(props.origVal);
+	};
+
+	const triggerSelectFile = () => {
+		if (inputRef.current) {
+			inputRef.current.click();
+		}
+	};
+
+
+	const typeLabel = props.type === TYPE_IMG ? 'image' : 'file';
+	const { origVal, val } = props;
+
+	const [localImgWidth, localImgHeight] = useImageDimensions(props.type === TYPE_IMG && localFile);
+
+	const input = getCurrentSavedInput();
+	// Vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
+	const inMemory = input.getFilePath();
+	const fileName = inMemory && inMemory.split(/(\\|\/)/g).pop();
+
+	// Si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
+	let revertBtn;
+	if (origVal && val !== origVal) {
+		revertBtn = <Button round bordered warn small onClick={onClearSavedInput}>Revert to db {typeLabel}</Button>;
+	} else if (val) {
+		revertBtn = <Button round bordered warn small onClick={onClearSavedInput}>Clear</Button>;
 	}
 
-	clearSavedInput = () => {
-		clearSavedInput(this.props.val);
-		this.setState({
-			localFile: null,
-		});
-		this.props.changeVal(this.props.origVal);
+	// S'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
+	let deleteBtn;
+	if (val && origVal === val) {
+		deleteBtn = <Button round bordered small danger onClick={setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
 	}
 
-	triggerSelectFile = () => {
-		if (this.fileinp) {
-			this.fileinp.click();
-			// console.log(this.fileinp);
-		}
+	let displayVal;
+	let cropBtn;
+	// TYPE_FILE shows the extension and file name.
+	if (props.type === TYPE_FILE) {
+		// Add : Show nothing at first, then show val.
+		// 		before : val and origVal are null
+		//  	after : val is set and origVal is null
+		// Edit : Show origVal at first, then show val.
+		// 		before : val is set and origVal is the same
+		// 		afterChange : val is set and origVal is set but is different
+		//		afterDelete : val is null and origVal is set
+		displayVal = val !== origVal ? (val ? fileName : null) : origVal;
 	}
+	// TYPE_IMG shows the picture.
+	let sizeInfos;
+	let sizeWarning;
+	let ratioWarning;
+	const currentCrop = input.getCropSettings();
 
-	render() {
-		const typeLabel = this.props.type === TYPE_IMG ? 'image' : 'file';
-		const { origVal, val } = this.props;
+	if (props.type === TYPE_IMG) {
+		// If displayBal is null, FileThumbnail will display the uploaded file as an image or nothing if no file was
+		// uploaded.
+		// Add : Show nothing at first, then show the uploaded.
+		// Edit : Show the original at first, then show the uploaded.
+		// Delete : Shows nothing.
+		// console.log(props);
+		displayVal = val !== origVal ? null : origVal;
 
-		const input = this.getSavedInput();
-		// Vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
-		const inMemory = input.getFilePath();
-		const fileName = inMemory && inMemory.split(/(\\|\/)/g).pop();
-
-		// Si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
-		let revertBtn;
-		if (origVal && val !== origVal) {
-			revertBtn = <Button round bordered warn small onClick={this.clearSavedInput}>Revert to db {typeLabel}</Button>;
-		} else if (val) {
-			revertBtn = <Button round bordered warn small onClick={this.clearSavedInput}>Clear</Button>;
-		}
-
-		// S'il y a une val originale et pas d'input (i.e. pas de val user encore) on peut vouloir deleter simplement la val db
-		let deleteBtn;
-		if (val && origVal === val) {
-			deleteBtn = <Button round bordered small danger onClick={this.setForDelete}><Icon icon="times" />Delete {typeLabel}</Button>;
-		}
-
-		let displayVal;
-		let cropBtn;
-		// TYPE_FILE shows the extension and file name.
-		if (this.props.type === TYPE_FILE) {
-			// Add : Show nothing at first, then show val.
-			// 		before : val and origVal are null
-			//  	after : val is set and origVal is null
-			// Edit : Show origVal at first, then show val.
-			// 		before : val is set and origVal is the same
-			// 		afterChange : val is set and origVal is set but is different
-			//		afterDelete : val is null and origVal is set
-			displayVal = val !== origVal ? (val ? fileName : null) : origVal;
-		}
-		// TYPE_IMG shows the picture.
-		if (this.props.type === TYPE_IMG) {
-			// If displayBal is null, FileThumbnail will display the uploaded file as an image or nothing if no file was
-			// uploaded.
-			// Add : Show nothing at first, then show the uploaded.
-			// Edit : Show the original at first, then show the uploaded.
-			// Delete : Shows nothing.
-			// console.log(this.props);
-			displayVal = val !== origVal ? null : origVal;
-
-			// display option to crop file, if to be uploaded
-			if (this.state.localFile) {
-				cropBtn = <Button round small bordered cta faded onClick={() => this.setIsCropping(true)}><Icon icon="crop" />Crop</Button>;
+		// display option to crop file, if to be uploaded
+		if (localFile) {
+			cropBtn = <Button round small bordered cta faded onClick={() => setIsCropping(true)}><Icon icon="crop" />Crop</Button>;
+			const megaPixels = Math.round(((localImgWidth * localImgHeight) / (1000000)) * 100 + Number.EPSILON) / 100;
+			if (megaPixels > IMAGE_MAX_SAFE_MP) {
+				sizeWarning = (
+					<WarningMessage>
+						Image is larger than {IMAGE_MAX_SAFE_MP} megapixels. It may cause performance issues or server errors. Please consider using a smaller image.
+					</WarningMessage>
+				);
 			}
-		}
 
-		let cropper = null;
-		const currentCrop = input.getCropSettings();
-		if (this.state.isCropping) {
-			cropper = (
-				<Cropper
-					src={this.state.localFile}
-					setIsCropping={this.setIsCropping}
-					setCrop={(newCrop) => input.setCropSettings(newCrop)}
-					crop={currentCrop}
-				/>
+			ratioWarning = (
+				<RatioWarning imageWidth={localImgWidth} imageHeight={localImgHeight} suggestedRatio={props.ratio} crop={currentCrop} />
+			);
+
+			sizeInfos = (
+				<div className="sizeInfos">
+					{localImgWidth}px * {localImgHeight}px, {megaPixels} megapixels
+				</div>
 			);
 		}
-		// console.log(this.props.absolutePath);
+	}
 
-		const thumbnail = (<FileThumbnail
-			val={displayVal}
-			absolutePath={this.props.absolutePath}
-			localVal={this.state.localFile}
-			dir={this.props.folder}
-			type={this.props.type}
-			crop={currentCrop}
-		/>);
-		const id = `${this.props.fieldId}__${this.props.recordId}`;
-
-		return (
-			<Container>
-				{cropper}
-				<FileInfos>
-					{thumbnail}
-					{(this.props.type === TYPE_FILE ? displayVal : null)}
-				</FileInfos>
-
-				<FileInputContainer>
-					<input id={id} type="file" value="" onChange={this.changeFileVal} ref={el => this.fileinp = el} />
-					<Button round small bordered info onClick={this.triggerSelectFile}><Icon icon="upload" />{val ? 'Change file' : 'Upload file'}</Button>
-				</FileInputContainer>
-				{revertBtn}
-				{deleteBtn}
-				{cropBtn}
-
-			</Container>
+	let cropper = null;
+	if (isCropping) {
+		cropper = (
+			<Cropper
+				src={localFile}
+				setIsCropping={setIsCropping}
+				setCrop={(newCrop) => input.setCropSettings(newCrop)}
+				crop={currentCrop}
+				ratio={props.ratio}
+			/>
 		);
 	}
-}
+	// console.log(props.absolutePath);
+
+	const thumbnail = (<FileThumbnail
+		val={displayVal}
+		absolutePath={props.absolutePath}
+		localVal={localFile}
+		dir={props.folder}
+		type={props.type}
+		crop={currentCrop}
+	/>);
+	const id = `${props.fieldId}__${props.recordId}`;
+
+	return (
+		<Container>
+			{cropper}
+			<FileInfos 
+				thumbnail={thumbnail}
+				sizeInfos={sizeInfos}
+				warnings={[sizeWarning, ratioWarning]}
+				displayVal={(props.type === TYPE_FILE ? displayVal : null)}
+			/>
+
+			<FileInputContainer>
+				<input id={id} type="file" value="" onChange={changeFileVal} ref={inputRef} />
+				<Button round small bordered info onClick={triggerSelectFile}><Icon icon="upload" />{val ? 'Change file' : 'Upload file'}</Button>
+			</FileInputContainer>
+			{revertBtn}
+			{deleteBtn}
+			{cropBtn}
+
+		</Container>
+	);
+
+};
+
+GenericFileInput.propTypes = {
+	fieldId: PropTypes.number,
+	ratio: PropTypes.number,
+	val: PropTypes.string,
+	origVal: PropTypes.string,
+	type: PropTypes.string,
+	folder: PropTypes.string,
+	recordId: PropTypes.string,
+	changeVal: PropTypes.func,
+	absolutePath: PropTypes.string,
+};
+export default GenericFileInput;
+

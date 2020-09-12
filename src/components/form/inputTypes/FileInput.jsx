@@ -20,6 +20,7 @@ export default class FileInput extends Component {
 			val={this.props.val}
 			origVal={this.props.origVal}
 			type={this.props.field.type}
+			ratio={this.props.field.size}
 			folder={this.props.field.folder}
 			fieldId={this.props.field.id}
 			recordId={this.props.recordId}

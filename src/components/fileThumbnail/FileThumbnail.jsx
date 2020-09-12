@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { TYPE_FILE } from '../../freestone/schemaProps';
+import { useImageDimensions } from '../../hooks/imageDimensions';
 import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
 
 const Img = styled.img`
@@ -51,7 +52,6 @@ const ImgLink = styled.a`
 
 const FileThumbnail = (props) => {
 	
-	const imgRef = useRef(null);
 	function getLocalPath() {
 		return `${props.env.filesDir}/${props.dir}/${props.val}`;
 	}
@@ -63,28 +63,6 @@ const FileThumbnail = (props) => {
 		
 		return getProtocol() + `${props.env.domain}${absolutePath}`;
 	}
-
-	const [naturalWidth, setNaturalWidth] = useState(null);
-	const [naturalHeight, setNaturalHeight] = useState(null);
-
-	useEffect(() => {
-		if (!imgRef.current) return;
-
-		const setNaturalDimensions = () => {
-			setNaturalWidth(imgRef.current.naturalWidth);
-			setNaturalHeight(imgRef.current.naturalHeight);
-		};
-
-		if (imgRef.current.naturalWidth) {
-			setNaturalDimensions();
-			return;
-		}
-		imgRef.current.addEventListener('load', setNaturalDimensions);
-		return () => {
-			imgRef.current.removeEventListener('load', setNaturalDimensions);
-		};
-	});
-
 
 	// console.log(props.crop);
 	if (!props.val && !props.localVal && !props.absolutePath) return null;
@@ -103,6 +81,9 @@ const FileThumbnail = (props) => {
 		// 2019-06-17: plus de thumbnails générés par l'admin pour les fichiers.
 		thumbVal = absoluteThumbPath || path;
 	}
+
+	const [naturalWidth, naturalHeight] = useImageDimensions(thumbVal);
+
 	const cropStyle = {};
 	const imgCropStyle = {};
 	let ImgComponent = Img;
@@ -128,7 +109,7 @@ const FileThumbnail = (props) => {
 		ImgComponent = CroppedImg;
 		imgCropStyle.transform = `scale(${sizeRatio})`;
 	}
-	return <ImgLink href={path} target="_blank" style={cropStyle}><CheckeredBg><ImgComponent src={thumbVal} style={imgCropStyle} ref={imgRef} /></CheckeredBg></ImgLink>;
+	return <ImgLink href={path} target="_blank" style={cropStyle}><CheckeredBg><ImgComponent src={thumbVal} style={imgCropStyle} /></CheckeredBg></ImgLink>;
 
 
 };

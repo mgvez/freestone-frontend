@@ -74,8 +74,6 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 		});
 
 		return sendRecordFiles(dispatch, records).then(filesResult => {
-			console.log(filesResult);
-			console.log(records);
 			const filesErr = catchError(filesResult);
 			if (filesErr) return filesErr;
 
@@ -83,7 +81,6 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 				carry[fileResult.tmpName] = fileResult.name;
 				return carry;
 			}, {});
-			// console.log(tree, records);
 
 			const data = parseRecordBeforeSave(JSON.stringify({
 				tree,
@@ -108,12 +105,9 @@ export function saveRecord(table, tree, records, deleted, permissions, isTempora
 			onSaved.then((res) => {
 				const saveErr = catchError(res);
 				if (saveErr) return saveErr;
-
-				// console.log(res.images);
 				
 				//process image optimizations
 				return processImages(res && res.images && res.images, dispatch).then(() => {
-					// console.log(imagesResult);
 					const skipDefault = callback && callback(res.mainRecord, res.slugs);
 					if (!skipDefault) {
 						let pathname = '';

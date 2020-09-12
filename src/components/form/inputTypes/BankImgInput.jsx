@@ -78,6 +78,7 @@ export default class BankImgInput extends Component {
 				<div>
 					<GenericFileInput 
 						type={TYPE_IMG}
+						ratio={this.props.field.size}
 						fieldId={this.props.field.id}
 						recordId={this.props.recordId}
 						val={this.props.val || null}
@@ -92,6 +93,7 @@ export default class BankImgInput extends Component {
 			<CroppableBankImgInput
 				fieldId={this.props.field.id}
 				recordId={this.props.recordId}
+				ratio={this.props.field.size}
 				id={bankImgId}
 				val={this.props.val}
 				gotoSelect={this.gotoSelect}

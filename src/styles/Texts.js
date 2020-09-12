@@ -49,17 +49,28 @@ export const Heading4 = styled.h4`
 
 
 export const ErrorTitle = styled(Heading3)`
-	color:red;
+	color: #721c24;
 	text-transform:uppercase;
 	margin:0 0 20px 0;
 `;
 
 export const ErrorMessage = styled.div`
-	background: #ffdddd;
-	color:red;
+	background: #f8d7da;
+	color: #721c24;
+	line-height: 1.2em;
+	border: 1px #f5c6cb solid;
 	border-radius: 5px;
 	padding: 10px;
-	margin: 20px 0;
+	margin-bottom: 4px;
+`;
+export const WarningMessage = styled.div`
+	background: #ffde96;
+	color: #93580a;
+	line-height: 1.2em;
+	border: 1px #ffb24f solid;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 4px;
 `;
 
 export const Paragraph = styled.div`
