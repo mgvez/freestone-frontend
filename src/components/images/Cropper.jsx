@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useImageDimensions } from '../../hooks/imageDimensions';
 
 import ReactCrop from 'react-image-crop';
+import 'react-image-crop/lib/ReactCrop.scss';
 import { Button } from '../../styles/Button';
 import { Icon } from '../../styles/Icon';
 import customStyle from '../../styles/Modal.js';
@@ -33,9 +34,19 @@ const ImageContainer = styled.div`
 	}
 `;
 const FcnContainer = styled.div`
-
 	margin: 20px 0;
-	flex: 1 0 100%;
+	display: flex;
+	justify-content: flex-end;
+
+`;
+const InfoContainer = styled.div`
+	margin: 20px 0;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	.dimension {
+		margin-left: 20px;
+	}
 `;
 
 const notCropped = { unit: '%' };
@@ -70,13 +81,27 @@ const Cropper = (props) => {
 		const absHeight = (currentCrop.height * naturalHeight) / 100;
 		const ratio = Math.round((absWidth / absHeight) * 100 + Number.EPSILON) / 100;
 		info = (
-			<div>{Math.round(absWidth)}px * {Math.round(absHeight)}px -- {ratio} : 1</div>
+			<div className="dimension">{Math.round(absWidth)}px * {Math.round(absHeight)}px, {ratio}:1 ratio</div>
 		);
 	}
 
+	const onConstrain = () => {
+		if (!constrainRatio) {
+			setConstrainRatio(props.ratio);
+			setCrop({
+				...notCropped,
+				...currentCrop,
+				height: null,
+			});
+		} else {
+			setConstrainRatio(null);
+		}
+	};
+
 	let constrainBtn;
 	if (props.ratio) {
-		constrainBtn = (<Button onClick={() => setConstrainRatio(props.ratio)}>Constrain to {props.ratio}</Button>);
+		const label = constrainRatio ? 'Do not constrain ratio' : `Constrain to suggested ratio of ${props.ratio}:1`;
+		constrainBtn = (<Button round bordered small onClick={onConstrain}>{label}</Button>);
 	}
 
 	return (
@@ -88,17 +113,22 @@ const Cropper = (props) => {
 			ariaHideApp={false}
 		>
 			<Wrapper>
-				<p>Click and drag frame across image and click OK to crop.</p>
-				{info}
-				{constrainBtn}
-				<ImageContainer>
-					<ReactCrop src={props.src} crop={currentCrop} onChange={receiveCrop} />
-				</ImageContainer>
-				<FcnContainer>
-					<Button round bordered danger onClick={cancel}><Icon icon="times" />Cancel</Button>
-					<Button round bordered warn onClick={reset}><Icon icon="undo" />Reset</Button>
-					<Button round bordered cta onClick={accept} disabled={!hasCropped}><Icon icon="check" />OK</Button>
-				</FcnContainer>
+				<div>
+					<p>Click and drag frame across image and click OK to crop.</p>
+					
+					<ImageContainer>
+						<ReactCrop src={props.src} crop={currentCrop} onChange={receiveCrop} />
+					</ImageContainer>
+					<InfoContainer>
+						{constrainBtn}
+						{info}
+					</InfoContainer>
+					<FcnContainer>
+						<Button round bordered danger onClick={cancel}><Icon icon="times" />Cancel</Button>
+						<Button round bordered warn onClick={reset}><Icon icon="undo" />Reset</Button>
+						<Button round bordered cta onClick={accept} disabled={!hasCropped}><Icon icon="check" />OK</Button>
+					</FcnContainer>
+				</div>
 			</Wrapper>
 		</Modal>
 	);

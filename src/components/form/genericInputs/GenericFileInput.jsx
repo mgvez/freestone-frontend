@@ -152,14 +152,14 @@ const GenericFileInput = (props) => {
 			const megaPixels = Math.round(((localImgWidth * localImgHeight) / (1000000)) * 100 + Number.EPSILON) / 100;
 			if (megaPixels > IMAGE_MAX_SAFE_MP) {
 				sizeWarning = (
-					<WarningMessage>
+					<WarningMessage key="size">
 						Image is larger than {IMAGE_MAX_SAFE_MP} megapixels. It may cause performance issues or server errors. Please consider using a smaller image.
 					</WarningMessage>
 				);
 			}
 
 			ratioWarning = (
-				<RatioWarning imageWidth={localImgWidth} imageHeight={localImgHeight} suggestedRatio={props.ratio} crop={currentCrop} />
+				<RatioWarning key="ratio" imageWidth={localImgWidth} imageHeight={localImgHeight} suggestedRatio={props.ratio} crop={currentCrop} />
 			);
 
 			sizeInfos = (

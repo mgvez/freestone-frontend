@@ -60,6 +60,7 @@ function parseDependencies(table, record) {
 					isDisplay: !rule.isDisplay,
 					descriptionAppend: '',
 					titleOverride: '',
+					sizeOverride: undefined,
 					forceDisplay: undefined,
 				};
 			}
@@ -72,10 +73,12 @@ function parseDependencies(table, record) {
 			if (ruleApplies) {
 				// console.log('%s applies displays (%s)', rule.rule, rule.isDisplay);
 				// console.log(carry[dependingFieldId]);
+				// console.log(rule);
 
 				carry[dependingFieldId].isDisplay = typeof carry[dependingFieldId].forceDisplay === 'undefined' ? rule.isDisplay : carry[dependingFieldId].forceDisplay;
 				carry[dependingFieldId].descriptionAppend = (carry[dependingFieldId].descriptionAppend || '') + (rule.descriptionAppend || '');
 				carry[dependingFieldId].titleOverride = rule.titleOverride;
+				carry[dependingFieldId].sizeOverride = Number(rule.sizeOverride);
 			}
 
 			return carry;
@@ -213,7 +216,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					table.fields = table.fields.map(field => {
 						if (dependencies[field.id] === undefined) return field;
 						//field depends on another?
-						const { isDisplay, descriptionAppend, titleOverride } = dependencies[field.id];
+						const { isDisplay, descriptionAppend, titleOverride, sizeOverride } = dependencies[field.id];
 
 						if (isDisplay) {
 							//field description can have an append that is set by dependencies
@@ -222,6 +225,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 								...field,
 								descriptionAppend,
 								label: titleOverride || field.label,
+								size: sizeOverride || field.size,
 							};
 						}
 						// console.log('field %s.%s hidden', table.name, field.name);
@@ -239,6 +243,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 							if (child) {
 								child.isDisplay = dependencies[targetFieldId].isDisplay;
 								child.titleOverride = dependencies[targetFieldId].titleOverride;
+								child.sizeOverride = dependencies[targetFieldId].sizeOverride;
 								child.descriptionAppend = dependencies[targetFieldId].descriptionAppend;
 							}
 						}

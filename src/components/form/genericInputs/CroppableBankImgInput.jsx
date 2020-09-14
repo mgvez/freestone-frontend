@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -24,8 +24,16 @@ const CroppableBankImgInput = (props) => {
 
 	const { id, imageBankItem } = props;
 
+	const imageAbsolutePath = imageBankItem && imageBankItem.item[BANK_PATH_ALIAS];
+	const [localImgWidth, localImgHeight] = useImageDimensions(imageAbsolutePath);
+
+	useEffect(() => {
+		if (id && !imageBankItem) {
+			props.fetchImageBankItem(id);
+		}
+	}); 
+
 	if (id && !imageBankItem) {
-		props.fetchImageBankItem(id);
 		return null;
 	}
 	const savedInput = new SavedFileInput(props.val);
@@ -38,12 +46,10 @@ const CroppableBankImgInput = (props) => {
 
 	let cropper = null;
 	// console.log(props.imageBankItem);
-	const imageAbsolutePath = props.imageBankItem && props.imageBankItem.item[BANK_PATH_ALIAS];
-	const [localImgWidth, localImgHeight] = useImageDimensions(imageAbsolutePath);
 	const currentCrop = savedInput.getCropSettings();
 
 	const ratioWarning = (
-		<RatioWarning imageWidth={localImgWidth} imageHeight={localImgHeight} suggestedRatio={props.ratio} crop={currentCrop} />
+		<RatioWarning key="ratio" imageWidth={localImgWidth} imageHeight={localImgHeight} suggestedRatio={props.ratio} crop={currentCrop} />
 	);
 
 	if (isCropping) {

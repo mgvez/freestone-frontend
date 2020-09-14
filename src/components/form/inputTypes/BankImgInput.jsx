@@ -50,7 +50,6 @@ export default class BankImgInput extends Component {
 	};
 
 	render() {
-
 		let bankImgId = Number(this.props.val);
 		let hasLocalFile = false;
 		// check whether there's a saved input for current value.
