@@ -65,6 +65,7 @@ export default class Field extends Component {
 				input = <MarkdownInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'html':
+			case 'tinyhtml':
 				input = <HtmlInput key={key} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'url':

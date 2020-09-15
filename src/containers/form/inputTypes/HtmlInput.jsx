@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import HtmlInput from '../../../components/form/inputTypes/HtmlInput';
 
 import { fetchVariable } from '../../../actions/env';
-import { mceConfigSelector } from '../../../selectors/env';
+import { mceConfigSelector } from '../../../selectors/htmleditor';
 import { setupBankSelect } from '../../../actions/bank';
 import { goTo } from '../../../actions/nav';
 
