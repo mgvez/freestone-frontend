@@ -47,7 +47,7 @@ const FileInfos = (props) => {
 
 FileInfos.propTypes = {
 	thumbnail: PropTypes.element,
-	displayVal: PropTypes.element,
+	displayVal: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
 	sizeInfos: PropTypes.element,
 	warnings: PropTypes.arrayOf(PropTypes.element),
 };

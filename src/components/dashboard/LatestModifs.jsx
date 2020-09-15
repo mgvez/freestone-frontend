@@ -5,8 +5,6 @@ import Gravatar from '../widgets/Gravatar';
 import { Link } from 'react-router-dom';
 
 import Table from '../menu/Table';
-import Module from '../menu/Module';
-import Page from '../menu/Page';
 import NativeModule from '../menu/NativeModule';
 import colors from '../../styles/Colors';
 import { Button } from '../../styles/Button';
@@ -63,19 +61,30 @@ const Bottom = styled.div`
 
 const LatestModifs = (props) => {
 	const [hasFetched, setHasFetched] = useState(false);
+
+	// console.log(props.values);
+
 	useEffect(() => {
-		if (!props.latestModifs || !hasFetched) {
+		if (!props.values || !hasFetched) {
 			setHasFetched(true);
-			props.fetchLatestModifs();
+			props.fetchLatestModifs(true);
 		}
 	});
 
-	if (!props.latestModifs || !props.latestModifs.length) return null;
+
+	if (!props.values || !props.values.length || !hasFetched) return null;
+
+	let nextBtn = null;
+	if (props.hasMoreRecords) {
+		const nextMaxDate = props.values[props.values.length - 1].date;
+		nextBtn = <Button onClick={() => props.fetchLatestModifs(false, nextMaxDate)}>Load more</Button>;
+	}
+
 	return (
 		<Wrapper>
 			<Grid>
 				{
-					props.latestModifs.map((item) => {
+					props.values.map((item, index) => {
 						const { 
 							user,
 							recordId,
@@ -130,7 +139,7 @@ const LatestModifs = (props) => {
 									<RoundIcon><Gravatar size={50} email={userEmail} /></RoundIcon>
 								</UserIcon>
 								<UserInfo>
-									<strong>{user}</strong> {label} <strong>{tableDisplay}</strong> {typeDisplay} on {env}
+									{index + 1}. <strong>{user}</strong> {label} <strong>{tableDisplay}</strong> {typeDisplay} on {env}
 								</UserInfo>
 								<DateInfo>
 									{date}
@@ -154,11 +163,13 @@ const LatestModifs = (props) => {
 					})
 				}
 			</Grid>
+			{nextBtn}
 		</Wrapper>
 	);
 };
 LatestModifs.propTypes = {
-	latestModifs: PropTypes.array,
+	values: PropTypes.array,
+	hasMoreRecords: PropTypes.bool,
 	fetchLatestModifs: PropTypes.func,
 };
 export default LatestModifs;

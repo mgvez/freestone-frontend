@@ -15,7 +15,6 @@ export default class FileInput extends Component {
 	};
 
 	render() {
-
 		return (<GenericFileInput 
 			val={this.props.val}
 			origVal={this.props.origVal}

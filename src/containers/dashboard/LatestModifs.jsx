@@ -7,8 +7,9 @@ import { fetchLatestModifs } from '../../actions/dashboard';
 
 export default connect(
 	state => {
+		if (!state.freestone.dashboard.latestModifs) return {};
 		return {
-			latestModifs: state.freestone.dashboard && state.freestone.dashboard.latestModifs,
+			...state.freestone.dashboard.latestModifs,
 		};
 	},
 	dispatch => bindActionCreators({ fetchLatestModifs }, dispatch)
