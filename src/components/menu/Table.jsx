@@ -1,28 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-export default class Table extends Component {
-	static propTypes = {
-		name: PropTypes.string,
-		displayLabel: PropTypes.string,
-		nrecords: PropTypes.any,
-		id: PropTypes.number,
-		className: PropTypes.string,
-		clearList: PropTypes.func,
+const Table = (props) => {
 
-	};
-
-	render() {
-		// console.log('table rendered', this.oldtable, this.oldtable === this.props);
-		// this.oldtable = this.props;
-		return (
-			<NavLink to={`/list/${this.props.name}`} onClick={this.props.clearList} activeClassName="active" className={this.props.className}>
-				{this.props.displayLabel}
+	let content = props.children;
+	if (!content) {
+		content = (
+			<React.Fragment>
+				{props.displayLabel}
 				<span className="nrecords">
-					<span className="n">{this.props.nrecords}</span>
+					<span className="n">{props.nrecords}</span>
 				</span>
-			</NavLink>
+			</React.Fragment>
 		);
 	}
-}
+
+	return (
+		<NavLink to={`/list/${props.name}`} onClick={props.clearList} activeClassName="active" className={props.className}>
+			{content}
+		</NavLink>
+	);
+
+};
+Table.propTypes = {
+	name: PropTypes.string,
+	displayLabel: PropTypes.string,
+	nrecords: PropTypes.any,
+	id: PropTypes.number,
+	className: PropTypes.string,
+	clearList: PropTypes.func,
+	children: PropTypes.node,
+};
+export default Table;

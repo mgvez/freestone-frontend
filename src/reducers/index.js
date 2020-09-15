@@ -16,6 +16,7 @@ import bank from './bank';
 import slugs from './slugs';
 import permissions from './permissions';
 import save from './save';
+import dashboard from './dashboard';
 
 const rootReducer = combineReducers({
 	siteHeader,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
 	translations,
 	slugs,
 	permissions,
+	dashboard,
 });
 
 export default rootReducer;

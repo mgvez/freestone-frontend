@@ -106,7 +106,6 @@ export default class GoogleAnalytics extends Component {
 		const gapi = window.gapi;
 		if (!gapi || !this.props.clientId || !this.props.gapi_token_access) return undefined;
 		// this.renderAnalyticsTimeline();
-		// console.log(gapi);
 		gapi.load('analytics', () => {
 
 			const analytics = gapi.analytics;
