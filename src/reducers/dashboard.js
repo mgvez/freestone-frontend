@@ -5,7 +5,7 @@ import { CLEAR_DATA } from '../actions/dev';
 import { combineReducers } from 'redux';
 
 
-function latestModifs(state = [], action) {
+function latestModifs(state = null, action) {
 	switch (action.type) {
 	case LATEST_MODIFS_API.SUCCESS: {
 		return action.data;
@@ -14,7 +14,7 @@ function latestModifs(state = [], action) {
 	case UNAUTHORIZED:
 	case LOGOUT_API.REQUEST:
 	case LOGOUT_API.SUCCESS:
-		return [];
+		return null;
 	default:
 		return state;
 	}

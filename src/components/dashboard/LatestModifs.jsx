@@ -19,7 +19,8 @@ const Wrapper = styled.div`
 `;
 const Grid = styled.div`
 	display: grid;
-	grid-template-columns: 60px auto 150px;
+	grid-template-columns: 55px auto 150px;
+	grid-gap: 5px;
 `;
 const UserIcon = styled.div`
 	grid-column: 1;
@@ -42,6 +43,11 @@ const DateInfo = styled.div`
 `;
 const RecordInfo = styled.div`
 	grid-column: 2 / 3;
+
+	img {
+		max-width: 100px;
+		max-height: 50px;
+	}
 
 `;
 
@@ -70,28 +76,77 @@ const LatestModifs = (props) => {
 			<Grid>
 				{
 					props.latestModifs.map((item) => {
-						const { user, recordId, tableId, userId, ts, userEmail, tableName, date, recordLabel, tableLabel } = item;
+						const { 
+							user,
+							recordId,
+							tableId,
+							action = '',
+							env,
+							userEmail,
+							tableName,
+							date,
+							recordLabel,
+							tableLabel,
+							editAction,
+							imgSrc,
+						} = item;
+
+						let label;
+						let hasEditBtn = true;
+						let typeDisplay = 'record';
+
+						switch (action.toUpperCase()) {
+						case 'DELETE':
+							label = ' has deleted a ';
+							hasEditBtn = false;
+							break;
+						case 'INSERT':
+							label = ' has added a ';
+							break;
+						case 'UPDATE':
+						default:
+							label = ' has updated a ';
+						}
+
+						let tableDisplay;
+						switch (editAction) {
+						case 'translations':
+							tableDisplay = <NativeModule label={tableLabel} url="TextTranslations" />;
+							typeDisplay = '';
+							hasEditBtn = false;
+							break;
+						default:
+							tableDisplay = <Table name={tableName} displayLabel={tableLabel} id={Number(tableId)} />;
+						}
+
+						let displayDetails = recordLabel;
+						if (imgSrc) {
+							displayDetails = <img src={imgSrc} />;
+						}
+
 						return (
 							<React.Fragment key={`${recordId}_${date}`}>
 								<UserIcon>
 									<RoundIcon><Gravatar size={50} email={userEmail} /></RoundIcon>
 								</UserIcon>
 								<UserInfo>
-									<strong>{user}</strong> has modified a <strong><Table name={tableName} displayLabel={tableLabel} id={Number(tableId)} /></strong> record
+									<strong>{user}</strong> {label} <strong>{tableDisplay}</strong> {typeDisplay} on {env}
 								</UserInfo>
 								<DateInfo>
 									{date}
 								</DateInfo>
 								<RecordInfo>
-									{recordLabel}
+									{displayDetails || `record id ${recordId}`}
 								</RecordInfo>
 
 								<Functions>
-									<Link to={`/edit/${tableId}/${recordId}`}>
-										<Button round info small bordered>
-											Edit
-										</Button>
-									</Link>
+									{hasEditBtn ? (
+										<Link to={`/edit/${tableId}/${recordId}`}>
+											<Button round info small bordered>
+												Edit
+											</Button>
+										</Link>
+									) : null}
 								</Functions>
 								<Bottom />
 							</React.Fragment>
