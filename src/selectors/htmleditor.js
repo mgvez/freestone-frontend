@@ -12,7 +12,6 @@ function makeSelector(currentFieldTypeSelector) {
 		[currentFieldTypeSelector, settingsSelector, cssPathSelector, clientPathSelector, routeSelector],
 		(fieldType, settings, cssPath, clientPath, route) => {
 			if (!settings) return {};
-			console.log('make selector for ' + fieldType);
 			const defaultConfig = fieldType === 'tinyhtml' ? TINYMCE_TINY_CONFIG : TINYMCE_CONFIG;
 
 			const config = (settings && settings.tinymceConfig) || {};
