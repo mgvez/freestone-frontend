@@ -61,30 +61,46 @@ const Bottom = styled.div`
 
 const LatestModifs = (props) => {
 	const [hasFetched, setHasFetched] = useState(false);
+	const [values, setValues] = useState(null);
+	const [hasMoreRecords, setHasMoreRecords] = useState(false);
 
 	// console.log(props.values);
 
+	const fetchModifs = (nextMaxDate = null) => {
+		props.fetchLatestModifs(nextMaxDate).then(res => {
+			if (!res) return;
+			setHasMoreRecords(res.hasMoreRecords);
+			if (!res.values) return;
+			const oldValues = values || [];
+			setValues([
+				...oldValues,
+				...res.values,
+			]);
+		});
+
+	};
+
 	useEffect(() => {
-		if (!props.values || !hasFetched) {
+		if (!values || !hasFetched) {
 			setHasFetched(true);
-			props.fetchLatestModifs(true);
+			fetchModifs();
 		}
 	});
 
 
-	if (!props.values || !props.values.length || !hasFetched) return null;
+	if (!values || !values.length || !hasFetched) return null;
 
 	let nextBtn = null;
-	if (props.hasMoreRecords) {
-		const nextMaxDate = props.values[props.values.length - 1].date;
-		nextBtn = <Button onClick={() => props.fetchLatestModifs(false, nextMaxDate)}>Load more</Button>;
+	if (hasMoreRecords) {
+		const nextMaxDate = values[values.length - 1].date;
+		nextBtn = <Button onClick={() => fetchModifs(nextMaxDate)}>Load more</Button>;
 	}
 
 	return (
 		<Wrapper>
 			<Grid>
 				{
-					props.values.map((item, index) => {
+					values.map((item, index) => {
 						const { 
 							user,
 							recordId,
@@ -174,8 +190,6 @@ const LatestModifs = (props) => {
 	);
 };
 LatestModifs.propTypes = {
-	values: PropTypes.array,
-	hasMoreRecords: PropTypes.bool,
 	fetchLatestModifs: PropTypes.func,
 };
 export default LatestModifs;

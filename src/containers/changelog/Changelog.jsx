@@ -5,12 +5,7 @@ import Changelog from '../../components/changelog/Changelog';
 import { fetchChangelog } from '../../actions/changelog';
 
 export default connect(
-	state => {
-		if (!state.freestone.changelog.latestModifs) return {};
-		return {
-			...state.freestone.changelog.latestModifs,
-		};
-	},
+	null,
 	dispatch => bindActionCreators({ fetchChangelog }, dispatch)
 )(Changelog);
 
