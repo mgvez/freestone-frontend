@@ -49,6 +49,16 @@ export default class BankImgInput extends Component {
 		this.changeValue(0);
 	};
 
+	componentDidUpdate() {
+		const bankImgId = Number(this.props.val);
+		if (!bankImgId && this.props.val) {
+			const fileInput = getSavedInput(this.props.val);
+			if (!fileInput) {
+				this.delete();
+			}
+		}
+	}
+
 	render() {
 		let bankImgId = Number(this.props.val);
 		let hasLocalFile = false;
@@ -63,7 +73,6 @@ export default class BankImgInput extends Component {
 				}
 			} else {
 				// we have a val which refers to an input that does not exist
-				this.delete();
 				return null;
 			}
 		}

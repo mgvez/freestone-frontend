@@ -125,7 +125,13 @@ const LatestModifs = (props) => {
 							hasEditBtn = false;
 							break;
 						default:
-							tableDisplay = <Table name={tableName} displayLabel={tableLabel} id={Number(tableId)} />;
+							if (tableLabel) {
+								tableDisplay = <Table name={tableName} displayLabel={tableLabel} id={Number(tableId)} />;
+							} else {
+								//table has been deleted since...
+								hasEditBtn = false;
+								tableDisplay = `(${tableName})`;
+							}
 						}
 
 						let displayDetails = recordLabel;

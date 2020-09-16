@@ -1,6 +1,6 @@
 
 import { LOGOUT_API, UNAUTHORIZED } from '../actions/auth';
-import { LATEST_MODIFS_API, CLEAR_LATEST_MODIFS } from '../actions/dashboard';
+import { LATEST_MODIFS_API, CLEAR_LATEST_MODIFS, CHANGELOG_API } from '../actions/changelog';
 import { CLEAR_DATA } from '../actions/dev';
 import { combineReducers } from 'redux';
 
@@ -30,6 +30,22 @@ function latestModifs(state = null, action) {
 	}
 }
 
+function changeLog(state = {}, action) {
+	switch (action.type) {
+	case CHANGELOG_API.SUCCESS: {
+		return state;
+	}
+	case CLEAR_DATA:
+	case UNAUTHORIZED:
+	case LOGOUT_API.REQUEST:
+	case LOGOUT_API.SUCCESS:
+		return {};
+	default:
+		return state;
+	}
+}
+
 export default combineReducers({
 	latestModifs,
+	changeLog,
 });

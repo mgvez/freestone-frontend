@@ -3,6 +3,7 @@ import { createRequestTypes } from './apiAction';
 
 
 export const LATEST_MODIFS_API = createRequestTypes('LATEST_MODIFS_API');
+export const CHANGELOG_API = createRequestTypes('CHANGELOG_API');
 export const CLEAR_LATEST_MODIFS = 'CLEAR_LATEST_MODIFS';
 
 export function fetchLatestModifs(refresh = false, maxDate = null) {
@@ -19,6 +20,17 @@ export function fetchLatestModifs(refresh = false, maxDate = null) {
 				data: {
 					maxDate,
 				},
+			},
+		});
+	};
+}
+
+export function fetchChangelog(tableId, recordId) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: CHANGELOG_API,
+				route: `changelog/${tableId}/${recordId}`,
 			},
 		});
 	};

@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import LatestModifs from '../../components/dashboard/LatestModifs';
-
-import { fetchLatestModifs } from '../../actions/changelog';
+import Changelog from '../../components/changelog/Changelog';
+import { fetchChangelog } from '../../actions/changelog';
 
 export default connect(
 	state => {
@@ -12,6 +11,6 @@ export default connect(
 			...state.freestone.changelog.latestModifs,
 		};
 	},
-	dispatch => bindActionCreators({ fetchLatestModifs }, dispatch)
-)(LatestModifs);
+	dispatch => bindActionCreators({ fetchChangelog }, dispatch)
+)(Changelog);
 

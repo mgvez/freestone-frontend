@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps, parentTableSchemaMapStateToProps } from './tableSchema';
 import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps, activeGroupMapStateToProps } from './record';
 import { isGodSelector } from './credentials';
+import { isNew } from '../utils/UniqueId';
 
 const envSelector = state => state.freestone.env.freestone;
 const childrenSelector = state => state.freestone.schema.children;
@@ -263,10 +264,9 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 
 			}
 
-			// console.log(mainGroups);
-
 			return {
 				record,
+				isNew: isNew(record && record.prikey),
 				recordUnaltered,
 				table,
 				env,

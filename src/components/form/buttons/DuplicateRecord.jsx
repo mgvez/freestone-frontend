@@ -36,6 +36,6 @@ export default class DuplicateRecord extends Component {
 
 	render() {
 		// console.log(this.props);
-		return <Button onClick={this.addDuplicateRecord} round="true" warn="true" small="true" margin="5px 5px 0 0 "><Icon icon="copy" /> Duplicate record</Button>;
+		return <Button onClick={this.addDuplicateRecord} round="true" warn="true" small="true"><Icon icon="copy" /> Duplicate record</Button>;
 	}
 }

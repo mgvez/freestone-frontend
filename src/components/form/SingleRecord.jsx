@@ -6,10 +6,12 @@ import colors from '../../styles/Colors';
 
 import { StyledSingleRecord, TabsContainer } from '../../styles/Form';
 import { StyledFieldGroup } from '../../styles/Input';
+import { Button } from '../../styles/Button';
 import SetVisibleTab from './buttons/SetVisibleTab';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
+import Changelog from '../../containers/changelog/Changelog';
 import DuplicateRecord from '../../containers/form/buttons/DuplicateRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import { GridContainer, GridItem } from '../../styles/Grid';
@@ -52,6 +54,7 @@ export default class SingleRecord extends Component {
 		parentTableId: PropTypes.number,
 		isSubform: PropTypes.bool,
 		isGod: PropTypes.bool,
+		isNew: PropTypes.bool,
 		
 		table: PropTypes.object,
 		record: PropTypes.object,
@@ -67,7 +70,15 @@ export default class SingleRecord extends Component {
 		setFieldVal: PropTypes.func,
 		showFieldGroup: PropTypes.func,
 		toggleFieldGroup: PropTypes.func,
+		fetchChangelog: PropTypes.func,
 	};
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			showChangelog: false,
+		};
+	}
 
 	componentDidMount() {
 		this.requireData(this.props);
@@ -264,6 +275,7 @@ export default class SingleRecord extends Component {
 			<React.Fragment>
 				{renderedTabs}
 				<GridContainer>
+					
 					<GridItem key="maingroup" columns={hasSideBar ? 8 : 12}>
 						{renderedGroup}
 					</GridItem>
@@ -278,12 +290,26 @@ export default class SingleRecord extends Component {
 		this.sidebar = ref;
 	}
 
+	toggleChangelog = () => {
+		this.setState((state) => (
+			{
+				showChangelog: !state.showChangelog,
+			}
+		));
+	}
+
 	render() {
 		let form;
 
 		// console.log('render', this.props.table.name);
 		// console.log('render', this.props.table, this.props.record);
 		if (this.props.table && this.props.record) {
+
+			if (this.state.showChangelog) {
+				return (
+					<Changelog tableId={this.props.tableId} recordId={this.props.recordId} onClose={this.toggleChangelog} />
+				);
+			}
 
 			let deleteBtn;
 			let duplicateBtn = null;
@@ -304,7 +330,7 @@ export default class SingleRecord extends Component {
 			}
 
 			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
-
+			const showChangelog = !this.props.isNew && <Button round small bordered info onClick={this.toggleChangelog}>Changelog</Button>;
 
 			form = (
 				<article>
@@ -313,6 +339,7 @@ export default class SingleRecord extends Component {
 							<StyledFieldGroup>{recIdDisplay}</StyledFieldGroup>
 						</GridItem>
 						<GridItem columns="6" justify="right">
+							{showChangelog}
 							{duplicateBtn}
 							{deleteBtn}
 						</GridItem>
