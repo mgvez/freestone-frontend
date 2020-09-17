@@ -10,6 +10,7 @@ const ChoosenImage = styled.div`
 	
 	img {
 		max-height: ${THUMBNAIL_SIZE}px;
+		min-width: ${THUMBNAIL_SIZE / 2}px;
 	}
 `;
 
@@ -38,7 +39,6 @@ export default class BankImgThumbnail extends Component {
 
 	render() {
 		if (!this.props.id) return null;
-
 		return (
 			<ChoosenImage onClick={this.props.onClick} dangerouslySetInnerHTML={{ __html: this.props.markup }} />
 		);

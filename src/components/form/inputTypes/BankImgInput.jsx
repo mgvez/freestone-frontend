@@ -63,7 +63,7 @@ export default class BankImgInput extends Component {
 		let bankImgId = Number(this.props.val);
 		let hasLocalFile = false;
 		// check whether there's a saved input for current value.
-		if (!bankImgId && this.props.val) {
+		if (!bankImgId && bankImgId !== 0 && this.props.val) {
 			const fileInput = getSavedInput(this.props.val);
 			if (fileInput) {
 				//if we have a file input, we need to know if it's a bank crop, or an upload file
@@ -71,12 +71,8 @@ export default class BankImgInput extends Component {
 				if (!bankImgId) {
 					hasLocalFile = fileInput.hasFile();
 				}
-			} else {
-				// we have a val which refers to an input that does not exist
-				return null;
 			}
 		}
-
 		if (!bankImgId) {
 			let chooseBtn;
 			if (!hasLocalFile) {
@@ -96,7 +92,6 @@ export default class BankImgInput extends Component {
 				</div>
 			);
 		} 
-
 		return (
 			<CroppableBankImgInput
 				fieldId={this.props.field.id}

@@ -26,7 +26,8 @@ const CroppableBankImgInput = (props) => {
 
 	const imageAbsolutePath = imageBankItem && imageBankItem.item[BANK_PATH_ALIAS];
 	const [localImgWidth, localImgHeight] = useImageDimensions(imageAbsolutePath);
-
+	const isSvg = imageAbsolutePath && /\.svg$/i.test(imageAbsolutePath);
+	// console.log(imageAbsolutePath, isSvg);
 	useEffect(() => {
 		if (id && !imageBankItem) {
 			props.fetchImageBankItem(id);
@@ -63,7 +64,7 @@ const CroppableBankImgInput = (props) => {
 			/>
 		);
 	}
-	// console.log(currentCrop);
+
 	let thumbnail;
 	if (!currentCrop) {
 		thumbnail = <BankImgThumbnail id={props.id} onClick={props.gotoSelect} />;
@@ -74,14 +75,14 @@ const CroppableBankImgInput = (props) => {
 			crop={currentCrop}
 		/>);
 	}
-	
+	const cropBtn = !isSvg && <Button round small bordered cta faded onClick={() => setIsCropping(true)}><Icon icon="crop" />Crop</Button>;
 	return (
 		<Container>
 			{cropper}
 			<FileInfos thumbnail={thumbnail} warnings={[ratioWarning]} />
 			<Button small round bordered info onClick={props.gotoSelect}><Icon icon="exchange-alt" /> Change</Button>	
 			<Button small round danger bordered onClick={props.delete}><Icon icon="times" /> Remove value</Button>
-			<Button round small bordered cta faded onClick={() => setIsCropping(true)}><Icon icon="crop" />Crop</Button>
+			{cropBtn}
 		</Container>
 	);
 };

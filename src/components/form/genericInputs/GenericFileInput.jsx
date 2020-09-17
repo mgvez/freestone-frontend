@@ -103,6 +103,7 @@ const GenericFileInput = (props) => {
 	// Vérifie si on a une val qui provient du local storage mais pour laquelle on n'aurait pu l'input (par ex si reloaded)
 	const inMemory = input.getFilePath();
 	const fileName = inMemory && inMemory.split(/(\\|\/)/g).pop();
+	const isSvg = fileName && /\.svg$/i.test(fileName);
 
 	// Si la val originale est pas la meme que la val actuelle, on peut vouloir revenir à la val originale
 	let revertBtn;
@@ -147,7 +148,7 @@ const GenericFileInput = (props) => {
 		displayVal = val !== origVal ? null : origVal;
 
 		// display option to crop file, if to be uploaded
-		if (localFile) {
+		if (localFile && !isSvg) {
 			cropBtn = <Button round small bordered cta faded onClick={() => setIsCropping(true)}><Icon icon="crop" />Crop</Button>;
 			const megaPixels = Math.round(((localImgWidth * localImgHeight) / (1000000)) * 100 + Number.EPSILON) / 100;
 			if (megaPixels > IMAGE_MAX_SAFE_MP) {
@@ -182,7 +183,6 @@ const GenericFileInput = (props) => {
 			/>
 		);
 	}
-	// console.log(props.absolutePath);
 
 	const thumbnail = (<FileThumbnail
 		val={displayVal}

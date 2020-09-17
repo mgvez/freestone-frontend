@@ -10,6 +10,7 @@ const Img = styled.img`
 	max-height: ${THUMBNAIL_SIZE}px;
 	display: block;
 	margin: 0 auto;
+	min-width: ${THUMBNAIL_SIZE / 2}px;
 `;
 const CroppedImg = styled.img`
 	position: absolute;
@@ -109,6 +110,7 @@ const FileThumbnail = (props) => {
 		ImgComponent = CroppedImg;
 		imgCropStyle.transform = `scale(${sizeRatio})`;
 	}
+	console.log(thumbVal);
 	return <ImgLink href={path} target="_blank" style={cropStyle}><CheckeredBg><ImgComponent src={thumbVal} style={imgCropStyle} /></CheckeredBg></ImgLink>;
 
 
