@@ -53,7 +53,7 @@ const notCropped = { unit: '%' };
 
 const Cropper = (props) => {
 	const [crop, setCrop] = useState(null);
-	const [constrainRatio, setConstrainRatio] = useState(null);
+	const [constrainRatio, setConstrainRatio] = useState(!!props.ratio);
 	const currentCrop = crop || props.crop || notCropped;
 	currentCrop.aspect = constrainRatio;
 	const hasCropped = !!crop;

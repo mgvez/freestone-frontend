@@ -58,8 +58,9 @@ export const TINYMCE_TINY_CONFIG = {
 	resize: false,
 	forced_root_block: '',
 	height: '3em',
-	toolbar: 'bold italic | subscript superscript | code',
+	toolbar: 'bold italic | subscript superscript | freestoneLink | code',
 	plugins: [
+		'link',
 		'code',
 		'freestone',
 		'tabfocus',

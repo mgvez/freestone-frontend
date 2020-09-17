@@ -59,6 +59,12 @@ const StyledHeader = styled.header`
 			margin: 0 5px;
 		}
 	}
+	.version {
+		font-size: 0.6em;
+		position: absolute;
+		right: 10px;
+		top: 2px;
+	}
 `;
 
 export default class SiteHeader extends Component {
@@ -66,6 +72,10 @@ export default class SiteHeader extends Component {
 		isGod: PropTypes.bool,
 		isProdEnv: PropTypes.bool,
 		isNavVisible: PropTypes.bool,
+		versionInfo: PropTypes.shape({
+			val: PropTypes.string,	
+			date: PropTypes.string,	
+		}),
 
 		logout: PropTypes.func,
 		clearData: PropTypes.func,
@@ -73,7 +83,7 @@ export default class SiteHeader extends Component {
 	};
 
 	render() {
-		// console.log(this.props);
+		console.log(this.props);
 		const debug = this.props.isGod || window.IS_DEV ? (<div className="debug-fcn">
 			<Button info="true" faded="true" round="true" small="true" onClick={this.props.clearSchema}>
 				Clear schema
@@ -83,6 +93,12 @@ export default class SiteHeader extends Component {
 			</Button>
 			
 		</div>) : null;
+
+		let versionDisplay;
+
+		if (this.props.versionInfo) {
+			versionDisplay = <div className="version">v{this.props.versionInfo.val} updated on {this.props.versionInfo.date}</div>;
+		}
 
 		const prodWarning = this.props.isProdEnv ? <ProdEnvWarning /> : null;
 
@@ -104,6 +120,7 @@ export default class SiteHeader extends Component {
 					</div>
 
 					<LoadedRecordsToggler />
+					{versionDisplay}
 				</div>
 
 			</StyledHeader>

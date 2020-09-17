@@ -22,6 +22,7 @@ const envInitialState = {
 		latestVersion: null,
 		clientVersion: null,
 	},
+	versionInfo: null,
 };
 
 function freestone(state = envInitialState, action) {
