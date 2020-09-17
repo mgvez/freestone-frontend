@@ -110,7 +110,6 @@ const FileThumbnail = (props) => {
 		ImgComponent = CroppedImg;
 		imgCropStyle.transform = `scale(${sizeRatio})`;
 	}
-	console.log(thumbVal);
 	return <ImgLink href={path} target="_blank" style={cropStyle}><CheckeredBg><ImgComponent src={thumbVal} style={imgCropStyle} /></CheckeredBg></ImgLink>;
 
 
