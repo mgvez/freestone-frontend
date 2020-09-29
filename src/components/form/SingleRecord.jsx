@@ -102,20 +102,22 @@ export default class SingleRecord extends Component {
 		}
 	}
 
-	renderChild = (child) => {
+	renderChildren = children => {
 		// console.log(child);
-		return child && child.isDisplay ? (
-			<GridItem key={child.tableId} columns="12">
-				<Subform
-					tableId={child.tableId}
-					titleOverride={child.titleOverride}
-					descriptionAppend={child.descriptionAppend}
-					parentTableId={this.props.table.id}
-					parentRecordId={this.props.recordId}
-					language={this.props.language}
-				/>
-			</GridItem>
-		) : null;
+		return children && children.map(child => {
+			return child.isDisplay ? (
+				<GridItem key={child.tableId} columns="12">
+					<Subform
+						tableId={child.tableId}
+						titleOverride={child.titleOverride}
+						descriptionAppend={child.descriptionAppend}
+						parentTableId={this.props.table.id}
+						parentRecordId={this.props.recordId}
+						language={this.props.language}
+					/>
+				</GridItem>
+			) : null;
+		});
 	}
 
 	stickySidebar = () => {
@@ -220,16 +222,16 @@ export default class SingleRecord extends Component {
 				// console.log('rendering group...', group.label);
 				// console.log(group);
 				const groupFieldRows = group.fields && group.fields.map((field) => this.renderField(field, 0)).filter(a => a);
-				const groupChild = group.child && this.renderChild(group.child);
+				const groupChildren = group.children && this.renderChildren(group.children);
 				// console.log(groupFieldRows, groupChild);
 				if (groupFieldRows && groupFieldRows.length) {
 					return (<FieldGroup key={group.key} id={group.key} label={group.label}>
 						{groupFieldRows}
-						{groupChild}
+						{groupChildren}
 					</FieldGroup>);
 				}
 				//if only child form in the group, don't wrap it in the group (groups don't respond to hide/show rules)
-				return groupChild;
+				return groupChildren;
 			}, []);
 
 			sidebarFields = groups.reduce((carry, group) => {
@@ -244,7 +246,7 @@ export default class SingleRecord extends Component {
 			const { activeGroup } = this.props;
 
 			const activeGroupFields = activeGroup && activeGroup.fields && activeGroup.fields.map((field) => this.renderField(field, 0)).filter(a => a);
-			const activeGroupChild = activeGroup && activeGroup.child && this.renderChild(activeGroup.child);
+			const activeGroupChildren = activeGroup && activeGroup.children && this.renderChildren(activeGroup.children);
 			sidebarFields = activeGroup && activeGroup.asideFields && activeGroup.asideFields.map((field) => this.renderField(field, true)).filter(a => a);
 
 			renderedTabs = this.renderGroupTabs(groups);
@@ -252,7 +254,7 @@ export default class SingleRecord extends Component {
 			renderedGroup = (
 				<FieldGroup key={activeGroup.key} id={activeGroup.key} isRoot label={activeGroup.label} hideHeading>
 					{activeGroupFields}
-					{activeGroupChild}
+					{activeGroupChildren}
 				</FieldGroup>
 			);
 			

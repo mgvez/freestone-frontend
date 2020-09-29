@@ -96,21 +96,14 @@ function createFieldGroups(fields, children) {
 		const isSeparator = curField.type === 'separator';
 		const isPlaceholder = !!curField.subformPlaceholder;
 
-		// 	child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
-		const child = isPlaceholder && children && children.find(candidate => curField.subformPlaceholder === candidate.tableId);
-		//if childform in placeholded, remove it from list of unplaced subforms
-		if (child) {
-			child.hasPlaceholder = true;
-		}
-
 		let curGroup = groups[groups.length - 1];
 		//new group when separator, or when current or previous field was a subfrom placeholder. Placeholders are always alone in their group
-		if (!curGroup || isSeparator || child || curGroup.child) {
+		if (!curGroup || isSeparator) {
 			// console.log('creating group', child, curField);
 			curGroup = {
-				label: (isSeparator && curField.label) || (child && child.label) || null,
+				label: (isSeparator && curField.label) || null,
 				key: '',
-				child,
+				children: [],
 				isFirst: !curGroup, //indicate of this group is the first one in list
 				fields: [],
 				asideFields: [],
@@ -119,7 +112,16 @@ function createFieldGroups(fields, children) {
 		}
 		// console.log(curField);
 		curGroup.key += `${curField.id}-`;
-		if (!isSeparator && !child) {
+
+		// 	child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
+		const child = isPlaceholder && children && children.find(candidate => curField.subformPlaceholder === candidate.tableId);
+		//if childform in placeholded, remove it from list of unplaced subforms
+		if (child) {
+			child.hasPlaceholder = true;
+			curGroup.children.push(child);
+		}
+
+		if (!isSeparator && !isPlaceholder) {
 
 			//only display displayable fields
 			if (!~['pri', 'ajax', 'order'].indexOf(curField.type) && (!curField.foreign || !~['mtm'].indexOf(curField.foreign.type)) && !curField.isHidden) {
@@ -141,7 +143,9 @@ function createFieldGroups(fields, children) {
 			const curGroup = {
 				label: (child.label) || null,
 				key: child.key,
-				child,
+				children: [child],
+				asideFields: [],
+				fields: [],
 			};
 			groups.push(curGroup);
 		}
@@ -251,14 +255,8 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 					});
 				}
 
-				//enleve les children qui seront placés par un placeholder de la liste (qui sera loopée)
-				// children = children.map(child => {
-				// 	//détermine si ce subform est déplacé ailleurs par un placeholder
-				// 	child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
-				// 	return child;
-				// });
-
-				mainGroups = createFieldGroups(table.fields, children).filter(g => g.child || g.fields.length || g.asideFields.length);
+				mainGroups = createFieldGroups(table.fields, children).filter(g => g.children.length || g.fields.length || g.asideFields.length);
+				// console.log(mainGroups);
 
 				activeGroup = mainGroups.find(g => g.key === activeGroupKey) || mainGroups[0];
 

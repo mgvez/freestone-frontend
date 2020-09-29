@@ -83,7 +83,6 @@ export default class SiteHeader extends Component {
 	};
 
 	render() {
-		console.log(this.props);
 		const debug = this.props.isGod || window.IS_DEV ? (<div className="debug-fcn">
 			<Button info="true" faded="true" round="true" small="true" onClick={this.props.clearSchema}>
 				Clear schema
