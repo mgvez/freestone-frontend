@@ -10,12 +10,15 @@ export const PREVIEW_EDITED_PSEUDOFIELD_ALIAS = '__ispreviewedited';
 export const PREVIEWID_PSEUDOFIELD_ALIAS = '__previewid';
 export const SLUG_PSEUDOFIELD_ALIAS = '__slug';
 export const SUBSITE_FIELD = '___sub';
+export const GUID_FIELD = '___guid';
 
 export const TYPE_MAIN = 'main';
 
 export const TYPE_MTM = 'mtm';
 export const TYPE_OTO = 'oto';
+export const TYPE_OTO_GUID = 'oto_guid';
 export const TYPE_SUBFORM = 'subform';
+export const TYPE_SUBFORM_GUID = 'subform_guid';
 export const TYPE_PRIMARY = 'pri';
 export const TYPE_MARKDOWN = 'md';
 export const TYPE_ORDER = 'order';
@@ -28,7 +31,7 @@ export const TYPE_BOOL = 'bool';
 export const TYPE_ISPUBLISHED = 'ispublished';
 export const TYPE_LANGUAGE = 'language';
 
-export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM];
+export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM, TYPE_SUBFORM_GUID, TYPE_OTO_GUID];
 
 export const SUBFORM_VIEW_TABBED = 'tabbed';
 export const SUBFORM_VIEW_LIST = 'full list';

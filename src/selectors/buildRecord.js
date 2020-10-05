@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from './tableSchema';
 import { schemaSelector } from './schema';
-import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
+import { getSubformFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
 import { isNew } from '../utils/UniqueId';
 // import createRecord from 'freestone/createRecord';
 
@@ -34,7 +34,7 @@ export function buildTree(tableId, recordId, allRecords, allMtmRecords, allTable
 			});
 
 		} else {
-			const subformFieldId = getForeignFieldId(childTableId, tableId, allTables);
+			const subformFieldId = getSubformFieldId(childTableId, tableId, allTables);
 			const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, subformFieldId);
 			const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
 				return buildTree(childTableId, childRecId, allRecords, allMtmRecords, allTables, unfilteredChildren);

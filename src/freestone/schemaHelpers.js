@@ -2,20 +2,16 @@
 import { PRIKEY_ALIAS } from './schemaProps';
 
 
-export function getForeignFieldId(tableFromId, tableToId, allTables) {
-	// console.log(allTables);
-	// console.log(tableFromId, tableToId);
+export function getSubformFieldId(tableFromId, tableToId, allTables) {
 	const tableFrom = allTables[tableFromId];
 	if (!tableFrom) return null;
-	const foreignField = tableFrom.fields.find(field => {
-		return field.foreign && field.foreign.foreignTableId === tableToId;
-	});
+	const foreignField = tableFrom.parentLink[tableToId];
 	// console.log(foreignField);
 	return foreignField && foreignField.id;
 }
 
 export function getChildrenRecordIds(records, parentRecordId, linkFieldId) {
-	// console.log(records, parentRecordId);
+	// console.log(records, parentRecordId, linkFieldId);
 	return linkFieldId && records && Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		// console.log(record);

@@ -49,6 +49,7 @@ export default class SingleRecord extends Component {
 	static propTypes = {
 		tableId: PropTypes.number,
 		recordId: PropTypes.string,
+		recordGUID: PropTypes.string,
 		parentRecordId: PropTypes.string,
 		activeGroup: PropTypes.object,
 		parentTableId: PropTypes.number,
@@ -103,8 +104,11 @@ export default class SingleRecord extends Component {
 	}
 
 	renderChildren = children => {
-		// console.log(child);
+
+		// console.log(this.props.recordGUID);
+
 		return children && children.map(child => {
+			console.log(child);
 			return child.isDisplay ? (
 				<GridItem key={child.tableId} columns="12">
 					<Subform
@@ -218,7 +222,7 @@ export default class SingleRecord extends Component {
 		if (!this.props.isRoot) {
 			renderedGroup = groups.map((group) => {
 				//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
-				// console.log(group.fields);
+				console.log(group.fields);
 				// console.log('rendering group...', group.label);
 				// console.log(group);
 				const groupFieldRows = group.fields && group.fields.map((field) => this.renderField(field, 0)).filter(a => a);
@@ -304,7 +308,7 @@ export default class SingleRecord extends Component {
 		let form;
 
 		// console.log('render', this.props.table.name);
-		// console.log('render', this.props.table, this.props.record);
+		// console.log('render', this.props);
 		if (this.props.table && this.props.record) {
 
 			if (this.state.showChangelog) {

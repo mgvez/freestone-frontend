@@ -7,6 +7,7 @@ import { tableSchemaMapStateToProps, parentTableSchemaMapStateToProps } from './
 import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps, activeGroupMapStateToProps } from './record';
 import { isGodSelector } from './credentials';
 import { isNew } from '../utils/UniqueId';
+import { GUID_FIELD } from '../freestone/schemaProps';
 
 const envSelector = state => state.freestone.env.freestone;
 const childrenSelector = state => state.freestone.schema.children;
@@ -264,6 +265,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 
 			return {
 				record,
+				recordGUID: record && record[GUID_FIELD],
 				isNew: isNew(record && record.prikey),
 				recordUnaltered,
 				table,

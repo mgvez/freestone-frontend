@@ -3,7 +3,7 @@
 import { createSelector } from 'reselect';
 import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 
-import { getForeignFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
+import { getSubformFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
 
 import { userViewLanguageSelector } from './userViewLanguage';
 import { tableSchemaMapStateToProps } from './tableSchema';
@@ -31,7 +31,7 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 		if (carry) return true;
 
 		//field id link entre cette table et son parent
-		const subformFieldId = getForeignFieldId(childTableId, tableId, allTables);
+		const subformFieldId = getSubformFieldId(childTableId, tableId, allTables);
 		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, subformFieldId);
 		if (!subformFieldId || !childrenRecordIds) return false;
 		// console.log(childTableId);

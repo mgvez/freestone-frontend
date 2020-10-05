@@ -7,7 +7,7 @@ import SubformStacked from './SubformStacked';
 import SubformList from './SubformList';
 import SubformSingle from './SubformSingle';
 
-import { SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED, TYPE_SUBFORM, TYPE_OTO } from '../../../freestone/schemaProps';
+import { SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED, TYPE_SUBFORM, TYPE_OTO, TYPE_OTO_GUID, TYPE_SUBFORM_GUID } from '../../../freestone/schemaProps';
 
 /*
 Regular children records (i.e. not mtm), will choose view depending on user preference
@@ -81,7 +81,7 @@ export default class SubformStandard extends Component {
 		// console.log(this.props.table);
 
 		if (!this.props.table) return null;
-		if (this.props.table.type === TYPE_SUBFORM) {
+		if (this.props.table.type === TYPE_SUBFORM || this.props.table.type === TYPE_SUBFORM_GUID) {
 			const currentViewType = this.props.currentViewType || this.props.defaultViewType;
 			if (currentViewType === SUBFORM_VIEW_LIST) {
 				return <SubformList {...this.props} swapRecords={this.swapRecords} />;
@@ -90,7 +90,7 @@ export default class SubformStandard extends Component {
 			}
 			return <SubformTabbed {...this.props} swapRecords={this.swapRecords} />;
 			
-		} else if (this.props.table.type === TYPE_OTO) {
+		} else if (this.props.table.type === TYPE_OTO || this.props.table.type === TYPE_OTO_GUID) {
 			return <SubformSingle {...this.props} />;
 		}
 		return null;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { TYPE_SUBFORM, TYPE_SUBFORM_GUID, TYPE_OTO, TYPE_OTO_GUID, TYPE_MTM } from '../../freestone/schemaProps';
 
 import TextInput from './inputTypes/TextInput';
 import BoolInput from './inputTypes/BoolInput';
@@ -87,15 +88,17 @@ export default class Field extends Component {
 				// break;
 				if (this.props.field.foreign) {
 					switch (this.props.field.foreign.foreignType) {
-					case 'subform':
+					case TYPE_SUBFORM:
+					case TYPE_SUBFORM_GUID:
+					case TYPE_OTO:
+					case TYPE_OTO_GUID:
 					case 'rel':
-					case 'oto':
 						//update 2020-01-17: don't show subform fields when record is shown as root (records are orphans)
 						// if (this.props.isRoot) {
 						// 	input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;
 						// }
 						break;
-					case 'mtm':
+					case TYPE_MTM:
 						break;
 					default:
 						input = <AutocompleteInput key={key} {...this.props} changeVal={this.changeVal} />;

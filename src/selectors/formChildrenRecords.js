@@ -6,10 +6,10 @@ import { tableRecordsMapStateToProps } from './record';
 import { subformViewSelector } from './subform';
 import { schemaSelector } from './schema';
 import { isNew } from '../utils/UniqueId';
-import { getForeignFieldId } from '../freestone/schemaHelpers';
+import { getSubformFieldId } from '../freestone/schemaHelpers';
 import { userViewLanguageSelector } from './userViewLanguage';
 
-import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
+import { PRIKEY_ALIAS, DELETED_PSEUDOFIELD_ALIAS, GUID_FIELD } from '../freestone/schemaProps';
 import { MAX_TAB_LABEL_LENGTH } from '../freestone/settings';
 
 const childrenAreLoadedSelector = state => state.freestone.recordForm.childrenAreLoaded;
@@ -19,12 +19,18 @@ const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 const rawForeignOptionsSelector = state => state.freestone.foreign.options;
 
+const parentRecordSelector = (state, props) => {
+	const { parentRecordId, parentTableId } = props;
+	const tableRecords = state.freestone.recordForm.records[parentTableId];
+	const parentRecord = tableRecords && tableRecords[parentRecordId];
+	return parentRecord;
+};
 
-function getRecordsFromParent(records, parentRecordId, linkFieldId) {
+
+function getRecordsFromParent(records, parentRecord, linkFieldId) {
 	return Object.keys(records).map((recordId) => {
 		const record = records[recordId];
-		// console.log(record);
-		return (record[linkFieldId] === parentRecordId && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
+		return ((record[linkFieldId] === parentRecord.prikey || record[linkFieldId] === parentRecord[GUID_FIELD]) && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
 	}).filter(record => record);
 }
 
@@ -82,8 +88,8 @@ function getLabeledRecords(records, searchableFields, orderField, rawForeignOpti
 
 function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 	return createSelector(
-		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector, rawForeignOptionsSelector, userViewLanguageSelector],
-		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions, userViewLanguage) => {
+		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector, rawForeignOptionsSelector, userViewLanguageSelector, parentRecordSelector],
+		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions, userViewLanguage, parentRecord) => {
 			const { table } = schema;
 			const { tables } = allSchema;
 
@@ -98,15 +104,14 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 
 				let childrenRecords;
 				if (areLoaded || isNew(parentRecordId)) {
-					const subformFieldId = getForeignFieldId(table.id, parentTableId, tables);
+					const subformFieldId = getSubformFieldId(table.id, parentTableId, tables);
 					// console.log(subformFieldId);
 					// console.log(tableRecords);
-					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecordId, subformFieldId) : [];
+					childrenRecords = tableRecords ? getRecordsFromParent(tableRecords, parentRecord, subformFieldId) : [];
 
 					//if table has language field, only show children that are the current
 					childrenRecords = filterLangRecords(childrenRecords, table.languageField, userViewLanguage.language);
 					
-					// console.log(childrenRecords);
 					childrenRecords = getLabeledRecords(childrenRecords, table.searchableFields, table.orderField, rawForeignOptions);
 					
 					let activeRecordIds = shownRecords && shownRecords[table.id] && (shownRecords[table.id][parentRecordId] || []);
@@ -133,6 +138,7 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 						return record.order > highest ? Number(record.order) : highest;
 					}, 0);
 				}
+				// console.log(childrenRecords);
 
 				return {
 					table,

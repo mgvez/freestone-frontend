@@ -92,7 +92,17 @@ export const schemaSelector = createSelector(
 
 			if (field.type === TYPE_PRIMARY) table.prikey = field;
 			if (field.foreign && ~TYPES_PARENT_LINK.indexOf(field.foreign.foreignType)) {
-				table.parentLink[field.foreign.foreignTableId] = field;
+				// console.log(field.foreign.freeforeigns);
+				// if it has a free foreign, this field contains links to as many tables as there are free foreigns defined for it
+				if (field.foreign.freeforeigns) {
+					table.parentLink = Object.values(field.foreign.freeforeigns).reduce((accumulator, current) => {
+						// console.log(current);
+						accumulator[current.foreignTableId] = field;
+						return accumulator;
+					}, table.parentLink);
+				} else if (field.foreign.foreignTableId) {
+					table.parentLink[field.foreign.foreignTableId] = field;
+				}
 			}
 			return carry;
 		}, tables);
