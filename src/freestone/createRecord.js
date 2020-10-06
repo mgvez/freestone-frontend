@@ -3,7 +3,7 @@ import uniqueId from '../utils/UniqueId';
 import { callApi, getEndpoint } from './api';
 import { PRIKEY_ALIAS, TYPE_ORDER } from './schemaProps';
 
-export default (table, parentTableId, parentRecordId, orderVal, model) => {
+export default (table, parentTableId, parentRecordLinkValue, orderVal, model) => {
 
 	const newRecordPromise = table.fields.reduce((recordPromise, field) => {
 		// console.log(field.name, field.default);
@@ -51,7 +51,7 @@ export default (table, parentTableId, parentRecordId, orderVal, model) => {
 
 		if (parentTableId) {
 			const parentFieldId = table.parentLink[parentTableId] && table.parentLink[parentTableId].id;
-			newRecord[parentFieldId] = parentRecordId;
+			newRecord[parentFieldId] = parentRecordLinkValue;
 		}
 
 		return {

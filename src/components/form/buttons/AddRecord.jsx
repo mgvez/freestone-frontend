@@ -10,6 +10,7 @@ export default class AddRecord extends Component {
 		highestOrder: PropTypes.number,
 		parentTableId: PropTypes.number,
 		parentRecordId: PropTypes.string,
+		linkValue: PropTypes.string,
 		language: PropTypes.string,
 		isTab: PropTypes.bool,
 
@@ -23,7 +24,7 @@ export default class AddRecord extends Component {
 		const model = this.props.table.hasLanguage ? {
 			[this.props.table.languageField.id]: language,
 		} : null;
-		createRecord(this.props.table, this.props.parentTableId, this.props.parentRecordId, (this.props.highestOrder || 0) + 100, model).then(res => {
+		createRecord(this.props.table, this.props.parentTableId, this.props.linkValue, (this.props.highestOrder || 0) + 100, model).then(res => {
 			const { newRecord, newRecordId } = res;
 			// console.log(newRecord);
 			this.props.addRecord(this.props.table.id, newRecord);

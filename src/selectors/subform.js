@@ -1,6 +1,8 @@
 
 import { createSelector } from 'reselect';
+import { PRIKEY_ALIAS, GUID_FIELD } from '../freestone/schemaProps';
 import { tableSchemaMapStateToProps } from './tableSchema';
+import { parentRecordSelector } from './formChildrenRecords';
 
 
 const tableIdSelector = (state, props) => { 
@@ -73,6 +75,48 @@ function makeSubformSelector(tableSchemaSelector, formVisibleSelector, formColla
 
 export function subformMapStateToProps() {
 	const selectorInst = makeSubformSelector(tableSchemaMapStateToProps(), formVisibleMapStateToProps(), formCollapsedMapStateToProps());
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
+
+
+const tableSelector = (state, props) => props && props.table;
+const parentTableIdSelector = (state, props) => props && props.parentTableId;
+// returns the value to add to a subform link field, tha links to its parent. Normally it's the parent's primary key, but in the case of guid foreigns it's the parent's GUID value, if it exists.
+function makeAddRecordSelector() {
+	return createSelector(
+		[tableSelector, parentTableIdSelector, parentRecordSelector],
+		(table, parentTableId, parentRecord) => {
+			// the field, on the child table, that links to the parent.
+			const parentLinkField = table && table.parentLink && table.parentLink[parentTableId];
+			
+			// if foreign link is not directly on parent table, and we have a free foreign, and a free foreign is the link to parent return parent guid
+			// if it exists. If not, use parent id, as it is a simili-guid (new record identifier)
+			if (
+				parentLinkField
+				&& parentLinkField.foreign
+				&& parentLinkField.foreign.foreignTableId !== parentTableId
+				&& parentLinkField.foreign.freeforeigns
+			) {
+				const parentLinkFieldFreeForeign = parentLinkField.foreign.freeforeigns.find(ff => ff.foreignTableId === parentTableId);
+				if (parentLinkFieldFreeForeign) {
+					return {
+						linkValue: parentRecord[GUID_FIELD] || parentRecord[PRIKEY_ALIAS],
+					};
+				}
+			}
+			
+			// if field is a direct link to record id, it will have a simple foreign to it, we don't need any more info (we already have parent record ID)
+			return {
+				linkValue: parentRecord[PRIKEY_ALIAS],
+			};
+		}
+	);
+}
+
+export function addRecordMapStateToProps() {
+	const selectorInst = makeAddRecordSelector();
 	return (state, props) => {
 		return selectorInst(state, props);
 	};

@@ -19,7 +19,7 @@ const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 const rawForeignOptionsSelector = state => state.freestone.foreign.options;
 
-const parentRecordSelector = (state, props) => {
+export const parentRecordSelector = (state, props) => {
 	const { parentRecordId, parentTableId } = props;
 	const tableRecords = state.freestone.recordForm.records[parentTableId];
 	const parentRecord = tableRecords && tableRecords[parentRecordId];

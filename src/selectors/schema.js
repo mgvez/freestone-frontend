@@ -95,7 +95,7 @@ export const schemaSelector = createSelector(
 				// console.log(field.foreign.freeforeigns);
 				// if it has a free foreign, this field contains links to as many tables as there are free foreigns defined for it
 				if (field.foreign.freeforeigns) {
-					table.parentLink = Object.values(field.foreign.freeforeigns).reduce((accumulator, current) => {
+					table.parentLink = field.foreign.freeforeigns.reduce((accumulator, current) => {
 						// console.log(current);
 						accumulator[current.foreignTableId] = field;
 						return accumulator;
