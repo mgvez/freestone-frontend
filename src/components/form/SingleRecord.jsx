@@ -17,8 +17,6 @@ import FieldGroup from '../../containers/form/FieldGroup';
 import { GridContainer, GridItem } from '../../styles/Grid';
 import Field from './Field';
 
-let isWaitingForFrame = false;
-
 const SideBar = styled.div`
 	padding: 10px 10px;
 	background: ${colors.backgroundDark};

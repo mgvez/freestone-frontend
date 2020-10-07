@@ -1,9 +1,10 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS, PRIKEY_ALIAS } from '../freestone/schemaProps';
 
-import { getSubformFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
+import { getSubformFieldId } from '../freestone/schemaHelpers';
+import { getRecordsFromParent } from './formChildrenRecords';
 
 import { userViewLanguageSelector } from './userViewLanguage';
 import { tableSchemaMapStateToProps } from './tableSchema';
@@ -32,11 +33,14 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 
 		//field id link entre cette table et son parent
 		const subformFieldId = getSubformFieldId(childTableId, tableId, allTables);
-		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, subformFieldId);
+		const childrenRecordIds = getRecordsFromParent(allRecords[childTableId], allRecords[tableId] && allRecords[tableId][recordId], subformFieldId).filter(
+			r => r
+		).map(
+			r => r[PRIKEY_ALIAS]
+		);
+
 		if (!subformFieldId || !childrenRecordIds) return false;
-		// console.log(childTableId);
-		// console.log(childrenRecordIds);
-		// console.log(subformFieldId);
+
 		return childrenRecordIds.reduce((isChildEdited, childRecordId) => {
 			if (isChildEdited) return true;
 			return getIsEdited(allTables, allChildren, allRecords, childTableId, childRecordId, isForPreview);

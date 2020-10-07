@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from './tableSchema';
 import { schemaSelector } from './schema';
-import { getSubformFieldId, getChildrenRecordIds } from '../freestone/schemaHelpers';
+import { getSubformFieldId } from '../freestone/schemaHelpers';
+import { getRecordsFromParent } from './formChildrenRecords';
 import { isNew } from '../utils/UniqueId';
 // import createRecord from 'freestone/createRecord';
 
-import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
+import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM, PRIKEY_ALIAS } from '../freestone/schemaProps';
 
 const recordsSelector = state => state.freestone.recordForm.records;
 const mtmRecordsSelector = state => state.freestone.recordForm.mtmRecords;
@@ -18,7 +19,7 @@ const saveStateSelector = state => state.freestone.save;
 const listPageAfterSaveSelector = state => state.freestone.nav.listPageAfterSave;
 
 //get un tree de IDs de records et de ses children
-export function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
+function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
 	const childrenTables = unfilteredChildren && unfilteredChildren[tableId] || [];
 	// children =
 	// console.log(childrenTables, tableId);
@@ -35,7 +36,12 @@ export function buildTree(tableId, recordId, allRecords, allMtmRecords, allTable
 
 		} else {
 			const subformFieldId = getSubformFieldId(childTableId, tableId, allTables);
-			const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, subformFieldId);
+			const childrenRecordIds = getRecordsFromParent(allRecords[childTableId], allRecords[tableId] && allRecords[tableId][recordId], subformFieldId).filter(
+				record => record
+			).map(
+				record => record[PRIKEY_ALIAS]
+			);
+
 			const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
 				return buildTree(childTableId, childRecId, allRecords, allMtmRecords, allTables, unfilteredChildren);
 			});

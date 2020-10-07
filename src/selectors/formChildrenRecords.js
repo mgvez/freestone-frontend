@@ -27,7 +27,8 @@ export const parentRecordSelector = (state, props) => {
 };
 
 
-function getRecordsFromParent(records, parentRecord, linkFieldId) {
+export function getRecordsFromParent(records, parentRecord, linkFieldId) {
+	if (!parentRecord || !records) return [];
 	return Object.keys(records).map((recordId) => {
 		const record = records[recordId];
 		return ((record[linkFieldId] === parentRecord.prikey || record[linkFieldId] === parentRecord[GUID_FIELD]) && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;

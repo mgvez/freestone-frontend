@@ -23,7 +23,6 @@ export default class SubformSingle extends Component {
 
 	render() {
 		const activeRecordId = (this.props.childrenRecords && this.props.childrenRecords.length && this.props.childrenRecords[0].id) || null;
-
 		let addBtn;
 		if (!this.props.childrenRecords || !this.props.childrenRecords.length) {
 			addBtn = (

@@ -10,15 +10,3 @@ export function getSubformFieldId(tableFromId, tableToId, allTables) {
 	return foreignField && foreignField.id;
 }
 
-export function getChildrenRecordIds(records, parentRecordId, linkFieldId) {
-	// console.log(records, parentRecordId, linkFieldId);
-	return linkFieldId && records && Object.keys(records).map((recordId) => {
-		const record = records[recordId];
-		// console.log(record);
-		return record[linkFieldId] === parentRecordId && record;
-	}).filter(
-		record => record
-	).map(
-		record => record[PRIKEY_ALIAS]
-	);
-}

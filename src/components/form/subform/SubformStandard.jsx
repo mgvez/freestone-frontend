@@ -78,8 +78,6 @@ export default class SubformStandard extends Component {
 	};
 
 	render() {
-		// console.log(this.props.table);
-
 		if (!this.props.table) return null;
 		if (this.props.table.type === TYPE_SUBFORM || this.props.table.type === TYPE_SUBFORM_GUID) {
 			const currentViewType = this.props.currentViewType || this.props.defaultViewType;
