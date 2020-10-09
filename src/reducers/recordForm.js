@@ -6,6 +6,7 @@ import { TOGGLE_SITE_PERMISSION } from '../actions/permissions';
 import { CLEAR_DATA } from '../actions/dev';
 import { SET_FIELD_VALUE, SET_SHOWN_RECORD, TOGGLE_SHOWN_RECORD, RECORD_SINGLE_API, SET_RECORD_DELETED, MTM_RECORD_API, TOGGLE_MTM_VALUE, CANCEL_EDIT_RECORD } from '../actions/record';
 import { SAVE_RECORD_API, SAVE_PREVIEW_API, DELETE_RECORD_API } from '../actions/save';
+import { isNew } from '../utils/UniqueId';
 
 
 function removeRecords(state, recordsToRemove) {
@@ -183,8 +184,17 @@ function records(state = {}, action) {
 		return {};
 	case RECORD_SINGLE_API.SUCCESS:
 		return receiveRecord(state, action.data);
-	case SET_RECORD_DELETED:
+	case SET_RECORD_DELETED: {
+		// if record was new (i.e. not saved yet) remove it from store
+		const { tableId, recordId } = action.data;
+		if (isNew(recordId)) {
+			return removeRecords(state, [{
+				tableId,
+				recordId,
+			}]);
+		}
 		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
+	}
 	case SET_FIELD_VALUE:
 		return setFieldValue(state, action.data);
 	case TOGGLE_MTM_VALUE:

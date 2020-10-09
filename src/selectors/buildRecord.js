@@ -2,11 +2,11 @@ import { createSelector } from 'reselect';
 import { tableSchemaSelector } from './tableSchema';
 import { schemaSelector } from './schema';
 import { getSubformFieldId } from '../freestone/schemaHelpers';
-import { getRecordsFromParent } from './formChildrenRecords';
+import { getChildrenRecordIds } from './formChildrenRecords';
 import { isNew } from '../utils/UniqueId';
 // import createRecord from 'freestone/createRecord';
 
-import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM, PRIKEY_ALIAS } from '../freestone/schemaProps';
+import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
 
 const recordsSelector = state => state.freestone.recordForm.records;
 const mtmRecordsSelector = state => state.freestone.recordForm.mtmRecords;
@@ -35,13 +35,7 @@ function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfi
 			});
 
 		} else {
-			const subformFieldId = getSubformFieldId(childTableId, tableId, allTables);
-			const childrenRecordIds = getRecordsFromParent(allRecords[childTableId], allRecords[tableId] && allRecords[tableId][recordId], subformFieldId).filter(
-				record => record
-			).map(
-				record => record[PRIKEY_ALIAS]
-			);
-
+			const childrenRecordIds = getChildrenRecordIds(tableId, recordId, childTableId, allTables, allRecords);
 			const childrenRecords = childrenRecordIds && childrenRecordIds.map(childRecId => {
 				return buildTree(childTableId, childRecId, allRecords, allMtmRecords, allTables, unfilteredChildren);
 			});
@@ -88,7 +82,6 @@ function getRecords(branch, allRecords, getDeleted, records = {}) {
 	) {
 		records[tableId][recordId] = hookRecord(record);
 	}
-
 	return children.reduce((carry, childBranch) => {
 		return getRecords(childBranch, allRecords, getDeleted, carry);
 	}, records);

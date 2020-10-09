@@ -27,12 +27,23 @@ export const parentRecordSelector = (state, props) => {
 };
 
 
-export function getRecordsFromParent(records, parentRecord, linkFieldId) {
+function getRecordsFromParent(records, parentRecord, linkFieldId, includeDeleted = false) {
+	
 	if (!parentRecord || !records) return [];
 	return Object.keys(records).map((recordId) => {
 		const record = records[recordId];
-		return ((record[linkFieldId] === parentRecord.prikey || record[linkFieldId] === parentRecord[GUID_FIELD]) && record[DELETED_PSEUDOFIELD_ALIAS] !== true) && record;
+		const isDeleted = record[DELETED_PSEUDOFIELD_ALIAS];
+		if (!includeDeleted && isDeleted) return null;
+		return (record[linkFieldId] === parentRecord.prikey || record[linkFieldId] === parentRecord[GUID_FIELD]) && record;
 	}).filter(record => record);
+}
+
+export function getChildrenRecordIds(tableId, recordId, childTableId, allTables, allRecords) {
+	const subformFieldId = getSubformFieldId(childTableId, tableId, allTables);
+	if (!subformFieldId) return null;
+	return getRecordsFromParent(allRecords[childTableId], allRecords[tableId] && allRecords[tableId][recordId], subformFieldId, true).map(
+		r => r[PRIKEY_ALIAS]
+	);
 }
 
 function sortRecords(records, orderField) {

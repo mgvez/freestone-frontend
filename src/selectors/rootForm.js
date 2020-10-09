@@ -1,10 +1,9 @@
 //SHARED
 
 import { createSelector } from 'reselect';
-import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS, PRIKEY_ALIAS } from '../freestone/schemaProps';
+import { LASTMODIF_DATE_ALIAS, EDITED_PSEUDOFIELD_ALIAS, PREVIEW_EDITED_PSEUDOFIELD_ALIAS } from '../freestone/schemaProps';
 
-import { getSubformFieldId } from '../freestone/schemaHelpers';
-import { getRecordsFromParent } from './formChildrenRecords';
+import { getChildrenRecordIds } from './formChildrenRecords';
 
 import { userViewLanguageSelector } from './userViewLanguage';
 import { tableSchemaMapStateToProps } from './tableSchema';
@@ -25,21 +24,13 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 	const record = recordId && allRecords[tableId] && allRecords[tableId][recordId];
 	if (!record) return false;
 	if (record[fieldToCheck]) return true;
-
+	
 	const children = [...allChildren[tableId]];
 	if (!children) return false;
 	return children.reduce((carry, childTableId) => {
 		if (carry) return true;
-
-		//field id link entre cette table et son parent
-		const subformFieldId = getSubformFieldId(childTableId, tableId, allTables);
-		const childrenRecordIds = getRecordsFromParent(allRecords[childTableId], allRecords[tableId] && allRecords[tableId][recordId], subformFieldId).filter(
-			r => r
-		).map(
-			r => r[PRIKEY_ALIAS]
-		);
-
-		if (!subformFieldId || !childrenRecordIds) return false;
+		const childrenRecordIds = getChildrenRecordIds(tableId, recordId, childTableId, allTables, allRecords);
+		if (!childrenRecordIds) return false;
 
 		return childrenRecordIds.reduce((isChildEdited, childRecordId) => {
 			if (isChildEdited) return true;
