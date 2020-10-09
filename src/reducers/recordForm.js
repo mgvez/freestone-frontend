@@ -201,8 +201,11 @@ function records(state = {}, action) {
 		return toggleMainEditedFromMtm(state, action.data);
 	case CANCEL_EDIT_RECORD:
 	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return removeRecords(state, action.data.records);
+	case DELETE_RECORD_API.SUCCESS: {
+		const newState = removeRecords(state, action.data.records);
+		if (!action.data.deleted) return newState;
+		return removeRecords(state, action.data.deleted);
+	}
 	case SAVE_PREVIEW_API.SUCCESS:
 		return receivePreviewIds(state, action.data.records);
 	case TOGGLE_SITE_PERMISSION:
