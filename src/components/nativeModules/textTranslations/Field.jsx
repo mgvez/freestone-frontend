@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { GridContainerStyle, GridItem } from '../../../styles/Grid';
@@ -50,33 +50,42 @@ const Container = styled.div`
 		font-weight: ${cssVars.fontWeightBold};
 	}
 `;
-export default class Field extends Component {
-	static propTypes = {
-		children: PropTypes.any,
-		label: PropTypes.string,
-		description: PropTypes.string,
-		val: PropTypes.any,
-		lang: PropTypes.string,
-		isEmphasis: PropTypes.bool,
+const Field = (props) => {
+	const fieldRef = useRef();
+	const languageAppend = props.lang ? <em className="lang-append">(<span>{props.lang}</span>)</em> : '';
+	const desc = props.description ? <em className="field-description">{props.description}</em> : null;
 
-		onChange: PropTypes.func,
-	};
+	useEffect(() => {
+		if (props.isEmphasis && fieldRef.current) {
+			fieldRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			// const elementOffset = fieldRef.current.getBoundingClientRect();
+			// const targetPos = elementOffset.top - document.documentElement.scrollTop;
+			// window.scrollTo(0, targetPos);
+		}
+	}, [props.isEmphasis]);
 
-	render() {
+	return (
+		<Container className={`field ${props.isEmphasis && 'emphasis'}`} ref={fieldRef}>
+			<GridItem className="inputs-container" columns="12" align="center">
+				<label>{props.label} {languageAppend}</label>
+				<div className="input-wrapper">
+					{props.children}
+					{desc}
+				</div>
+			</GridItem>
+		</Container>
+	);
+};
 
-		const languageAppend = this.props.lang ? <em className="lang-append">(<span>{this.props.lang}</span>)</em> : '';
-		const desc = this.props.description ? <em className="field-description">{this.props.description}</em> : null;
-		return (
-			<Container className={`field ${this.props.isEmphasis && 'emphasis'}`}>
-				<GridItem className="inputs-container" columns="12" align="center">
-					<label>{this.props.label} {languageAppend}</label>
-					<div className="input-wrapper">
-						{this.props.children}
-						{desc}
-					</div>
-				</GridItem>
-			</Container>
-		);
+Field.propTypes = {
+	children: PropTypes.any,
+	label: PropTypes.string,
+	description: PropTypes.string,
+	val: PropTypes.any,
+	lang: PropTypes.string,
+	isEmphasis: PropTypes.bool,
 
-	}
-}
+	onChange: PropTypes.func,
+};
+
+export default Field;

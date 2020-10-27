@@ -56,7 +56,7 @@ export function singleTranslationMapStateToProps() {
 const activeSearchItemSelector = createSelector(
 	[searchResultSelector, searchResultIndexSelector, schemaSelector],
 	(searchResult, searchIndex, schema) => {
-		if (!searchResult || !searchResult.length) return null;
+		if (!searchResult || !searchResult.length || searchIndex < 0) return null;
 		const currentSearchActiveKey = searchResult[searchIndex];
 		const activeGroup = schema.findIndex(schemaItem => {
 			// console.log(schemaItem);

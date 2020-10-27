@@ -126,6 +126,7 @@ export default class TextTranslations extends Component {
 	}
 
 	componentDidUpdate() {
+
 		this.requireData(this.props);
 		
 	}
@@ -221,7 +222,6 @@ export default class TextTranslations extends Component {
 
 	render() {
 		let groups;
-		// console.log(this.props.schema);
 
 		if (this.state.saving) {
 			return <SaveTranslations key="save-trans" callback={this.finishSave} />;
@@ -325,11 +325,13 @@ export default class TextTranslations extends Component {
 		}
 
 		let navigateSearchRes = null;
-		if (this.props.searchResult && this.props.searchResult.length) {
+		if (this.props.searchResult) {
+			const oneIndexed = this.props.searchIndex + 1;
+			const displayCurrentResult = oneIndexed ? `${oneIndexed} / ` : null; 
 			navigateSearchRes = (
 				<div className="search-navig">
 					<div title="Click or use shortcut cmd+shift+g" onClick={() => this.props.navigateSearchTranslation(-1)}><Icon icon="angle-double-left cta" /></div>
-					<div className="n-res">{this.props.searchIndex + 1} / {this.props.searchResult.length}</div>
+					<div className="n-res">{displayCurrentResult}{this.props.searchResult.length} found</div>
 					<div title="Click or use shortcut cmd+g" onClick={() => this.props.navigateSearchTranslation(1)} ><Icon icon="angle-double-right cta" /></div>
 				</div>
 			);
