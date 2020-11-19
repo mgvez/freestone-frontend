@@ -50,7 +50,7 @@ export default class BankFileInput extends Component {
 
 		const bankThumbnail = bankFileId ? <BankFileThumbnail id={bankFileId} /> : null;
 
-		const label = bankFileId ? 'Change' : 'Choose file';
+		const label = bankFileId ? 'Change' : 'Choose in bank';
 		const deleteBtn = bankFileId ? <Button round="true" danger="true" bordered="true" onClick={this.delete}><Icon icon="times" />Remove value</Button> : null;
 
 		//si une image de banque deja placée, on peut pas mettre un fichier direct. O peut juste changer l'image de la banque, parce que sinon ça donne l'impression que le fichier direct edit le record de banque.
@@ -68,9 +68,9 @@ export default class BankFileInput extends Component {
 		return (
 			<div className="bank-file-input-thumbnail">
 				{bankThumbnail}
-				<Button round="true" bordered="true" info="true" onClick={this.gotoSelect}><Icon icon="check" />{label}</Button>
-				{deleteBtn}
 				{localFileInput}
+				<Button round bordered info small onClick={this.gotoSelect}><Icon icon="check" />{label}</Button>
+				{deleteBtn}
 			</div>
 		);
 	}
