@@ -33,7 +33,6 @@ export default class BankImgThumbnail extends Component {
 	}
 
 	requireData(props) {
-		// console.log(props);
 		if (props.id && !props.markup) this.props.fetchBankImage(props.id, this.props.maxSize || THUMBNAIL_SIZE);
 	}
 

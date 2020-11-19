@@ -46,6 +46,7 @@ export const BANK_DOCS_CATEGORIES_TABLE = 'zva_bank_docs_categ';
 export const BANK_CATEG_FOREIGN_FIELD = 'categ_id';
 
 export const BANK_FILE_ALIAS = 'file';
+export const BANK_OPTIMIZED_FILE_ALIAS = 'optimized_file';
 export const BANK_FOLDER_ALIAS = 'folder';
 export const BANK_TITLE_ALIAS = '_title_';
 export const BANK_COMMENTS_ALIAS = 'file';

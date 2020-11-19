@@ -65,7 +65,6 @@ const FileThumbnail = (props) => {
 		return getProtocol() + `${props.env.domain}${absolutePath}`;
 	}
 
-	// console.log(props.crop);
 	if (!props.val && !props.localVal && !props.absolutePath) return null;
 	const absolutePath = getAbsolutePath(props.absolutePath);
 	const path = absolutePath || getLocalPath();
