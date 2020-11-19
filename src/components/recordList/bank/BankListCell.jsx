@@ -19,6 +19,7 @@ import {
 	BANK_DOCS_NAME,
 	BANK_FILESIZE_ALIAS,
 	BANK_FILE_ALIAS,
+	BANK_OPTIMIZED_FILE_ALIAS,
 	BANK_IMG_DIM_ALIAS,
 	BANK_TITLE_ALIAS,
 	BANK_COMMENTS_ALIAS,
@@ -101,12 +102,11 @@ export default class BankListCell extends Component {
 
 		const { name: tableName, bankName } = this.props.table;
 
-		const filePath = record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_PATH_ALIAS}`];
+		const filePath = record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_PATH_ALIAS}`] || record[`${tableName}_${BANK_OPTIMIZED_FILE_ALIAS}_${BANK_PATH_ALIAS}`];
+		const val = record[`${tableName}_${BANK_FILE_ALIAS}`] || record[`${tableName}_${BANK_OPTIMIZED_FILE_ALIAS}`];
 		const thumbPath = record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_THUMB_ALIAS}`];
 		const nUses = Number(record[`${tableName}_${BANK_NUSES_ALIAS}`]);
 		const isLocked = !!Number(record[`${tableName}_${BANK_ISLOCKED_ALIAS}`]);
-
-		// console.log(record);
 
 		const comments = record[`${tableName}_${BANK_COMMENTS_ALIAS}`] ? (<div key="comments" className="infos">
 			<strong>Comments</strong> : {record[`${tableName}_${BANK_COMMENTS_ALIAS}`]}
@@ -125,7 +125,7 @@ export default class BankListCell extends Component {
 		return (
 			<StyledCell columns="4" justify="center" key={`item-${prikeyVal}`}>
 				<FileThumbnail
-					val={record[`${tableName}_${BANK_FILE_ALIAS}`]}
+					val={val}
 					absolutePath={filePath}
 					thumbnailPath={thumbPath}
 					dir={record[`${tableName}_${BANK_FILE_ALIAS}_${BANK_FOLDER_ALIAS}`]}
