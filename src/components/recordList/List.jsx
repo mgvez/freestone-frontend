@@ -139,6 +139,7 @@ export default class List extends Component {
 					
 					<TablePermissions table={this.props.table} />
 					<MainZone>
+						
 						<ListSearch 
 							key={`search_${this.props.tableName}`}
 							tableName={this.props.tableName}
@@ -149,7 +150,14 @@ export default class List extends Component {
 						>
 							<ListFetch needsFetch={needsFetch} tableName={this.props.tableName} params={this.props.params} />
 						</ListSearch>
-					
+						{this.props.table.isBatchEditable && (
+							<Button warn="true" onClick={() => this.props.goTo(`/batch/${this.props.tableName}`)}>Batch edit</Button>
+						)}
+						<Paging
+							nPages={this.props.nPages}
+							curPage={this.props.curPage}
+							tableName={this.props.tableName}
+						/>
 						{records}
 						<Paging
 							nPages={this.props.nPages}
