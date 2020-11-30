@@ -16,22 +16,24 @@ function buildlink(contents, link, linkLabel, linkTarget) {
 		val = `//${val}`;
 	}
 	
-	// console.log(val);
+	console.log(val);
+	console.log(linkLabel);
 
 	if (linkLabel) {
 		// If linking on a Bank image
-		if (linkLabel.indexOf('<figure') === 0) {
-			const tags = linkLabel.match(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[\^'">\s]+))?)+\s*|\s*)\/?>/g); // Array de tags HTML
-			val = tags[0] + `<a href=${val} target=${linkTarget}>${tags[1]}</a>` + tags[2];
-		} else {
-			val = `<a href="${val}" target="${linkTarget}">${linkLabel}</a>`;
-		}
+		// if (linkLabel.indexOf('<figure') === 0) {
+		// 	const tags = linkLabel.match(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[\^'">\s]+))?)+\s*|\s*)\/?>/g); // Array de tags HTML
+		// 	val = tags[0] + `<a href=${val} target=${linkTarget}>${tags[1]}</a>` + tags[2];
+		// } else {
+		val = `<a href="${val}" target="${linkTarget}">${linkLabel}</a>`;
+		// }
 	}
+	console.log(contents);
 
 	if (contents && ~contents.indexOf(PLACEHOLDER)) {
 		val = contents.replace(PLACEHOLDER, val);
 	}
-	// console.log(val);
+	console.log(val);
 	return val;
 }
 
