@@ -109,7 +109,7 @@ const GenericFileInput = (props) => {
 	let revertBtn;
 	if (origVal && val !== origVal) {
 		revertBtn = <Button round bordered warn small onClick={onClearSavedInput}>Revert to db {typeLabel}</Button>;
-	} else if (val) {
+	} else if (val && !origVal) {
 		revertBtn = <Button round bordered warn small onClick={onClearSavedInput}>Clear</Button>;
 	}
 
