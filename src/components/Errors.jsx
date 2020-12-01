@@ -30,6 +30,7 @@ export default class Errors extends Component {
 		return (
 			<Modal
 				isOpen
+				ariaHideApp={false}
 				closeTimeoutMS={300}
 				contentLabel="."
 				style={customStyle}

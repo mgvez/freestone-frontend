@@ -113,7 +113,7 @@ export default class HtmlInput extends Component {
 			}
 		}
 
-		// console.log(`render input ${this.props.field.name}`, this.props.val);
+		console.log(`render input ${this.props.field.name}`, this.props.val);
 		return (
 			<TinyMCEInput
 				key={this.props.recordId}

@@ -9,32 +9,21 @@ import { GridContainer, GridItem } from '../../../styles/Grid';
 
 function buildlink(contents, link, linkLabel, linkTarget) {
 	let val = link.trim();
-	
-	// console.log(val, !!~val.indexOf('{lnk'), !!~val.indexOf('//'));
 
 	if (!~val.indexOf('mailto:') && !~val.indexOf('//') && !~val.indexOf('{lnk')) {
 		val = `//${val}`;
 	}
-	
-	console.log(val);
-	console.log(linkLabel);
 
 	if (linkLabel) {
-		// If linking on a Bank image
-		// if (linkLabel.indexOf('<figure') === 0) {
-		// 	const tags = linkLabel.match(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[\^'">\s]+))?)+\s*|\s*)\/?>/g); // Array de tags HTML
-		// 	val = tags[0] + `<a href=${val} target=${linkTarget}>${tags[1]}</a>` + tags[2];
-		// } else {
 		val = `<a href="${val}" target="${linkTarget}">${linkLabel}</a>`;
-		// }
 	}
-	console.log(contents);
 
+	let newContents = val;
 	if (contents && ~contents.indexOf(PLACEHOLDER)) {
-		val = contents.replace(PLACEHOLDER, val);
+		newContents = contents.replace(PLACEHOLDER, val);
 	}
-	console.log(val);
-	return val;
+
+	return newContents;
 }
 
 let internalUrl;
@@ -63,11 +52,6 @@ export default class LinkInsert extends Component {
 	componentWillUnMount() {
 		window.removeEventListener('message', receiveUrl);
 	}
-
-	afterOpenModal = () => {
-		// references are now sync'd and can be accessed.
-		// this.refs.subtitle.style.color = '#f00';
-	};
 
 	selectInternal = () => {
 		try {
@@ -114,6 +98,7 @@ export default class LinkInsert extends Component {
 		return (
 			<Modal
 				isOpen
+				ariaHideApp={false}
 				onAfterOpen={this.afterOpenModal}
 				onRequestClose={this.cancelChange}
 				closeTimeoutMS={n}
