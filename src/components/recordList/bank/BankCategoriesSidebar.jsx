@@ -82,7 +82,9 @@ export default class BankCategoriesSidebar extends Component {
 	onCancel = () => {
 		// reset content to what it was before
 		const { tableId, recordId, fieldId, contentBefore } = this.props.bankDestination;
-		this.props.setFieldVal(tableId, recordId, fieldId, contentBefore);
+		if (contentBefore) {
+			this.props.setFieldVal(tableId, recordId, fieldId, contentBefore);
+		}
 
 		this.props.cancelBankSelect();
 		this.props.goTo(this.props.gotoOnChoose);
