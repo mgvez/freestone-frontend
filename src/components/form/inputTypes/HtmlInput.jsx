@@ -27,8 +27,8 @@ export default class HtmlInput extends Component {
 
 		const ExecCommand = (e) => {
 			// console.log(e);
-			const { command } = e;
 			// console.log(command);
+			const { command, value: { contentBefore } } = e;
 			switch (command) {
 			case 'insertLink':
 				this.setState({
@@ -39,10 +39,10 @@ export default class HtmlInput extends Component {
 				});
 				break;
 			case 'addImageFromBank':
-				this.gotoSelect(BANK_IMG_TABLE);
+				this.gotoSelect(BANK_IMG_TABLE, contentBefore);
 				break;
 			case 'addDocFromBank':
-				this.gotoSelect(BANK_DOCS_TABLE);
+				this.gotoSelect(BANK_DOCS_TABLE, contentBefore);
 				break;
 			default:
 				break;
@@ -78,14 +78,15 @@ export default class HtmlInput extends Component {
 		this.props.changeVal(evt.target.getContent());
 	};
 
-	gotoSelect = (bankTable) => {
+	gotoSelect = (bankTable, contentBefore) => {
 		this.props.setupBankSelect(
 			this.props.field.table_id,
 			this.props.recordId,
 			this.props.field.id,
 			this.props.field.type,
 			this.props.lang,
-			this.props.route
+			this.props.route,
+			contentBefore
 		);
 		this.props.goTo(`/list/${bankTable}/`);
 	}

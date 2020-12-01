@@ -66,7 +66,7 @@ export function fetchBankFile(id) {
 }
 
 //indicates that we are in the process of choosing a bank item to put its value in a field of a record
-export function setupBankSelect(tableId, recordId, fieldId, fieldType, lang, returnTo) {
+export function setupBankSelect(tableId, recordId, fieldId, fieldType, lang, returnTo, contentBefore) {
 	return (dispatch) => {
 		return dispatch({
 			type: BANK_SETUP_SELECT,
@@ -76,6 +76,7 @@ export function setupBankSelect(tableId, recordId, fieldId, fieldType, lang, ret
 			fieldType,
 			lang,
 			returnTo,
+			contentBefore,
 		});
 	};
 }
