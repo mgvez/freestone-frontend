@@ -48,6 +48,7 @@ export const TINYMCE_CONFIG = {
 	valid_elements: VALID_ELEMENTS,
 	force_br_newlines: false,
 	force_p_newlines: true,
+	schema: 'html5',
 };
 
 
