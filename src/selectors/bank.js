@@ -28,6 +28,7 @@ export const bankSidebarSelector = createSelector(
 		const categories = allCategories && allCategories[bankName];
 		return {
 			isChoosingBankItem: !!selection,
+			bankDestination: selection,
 			gotoOnChoose: selection && selection.returnTo,
 			categories,
 		};
