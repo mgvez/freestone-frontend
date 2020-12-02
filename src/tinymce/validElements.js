@@ -88,7 +88,7 @@ export const VALID_ELEMENTS = 'a[accesskey|charset|class|coords|dir<ltr?rtl|href
  + '|onmouseup|style|title],'
  + 'div[align<center?justify?left?right|class|dir<ltr?rtl|id|lang|onclick'
  + '|ondblclick|onkeydown|onkeypress|onkeyup|onmousedown|onmousemove'
- + '|onmouseout|onmouseover|onmouseup|style|title],'
+ + '|onmouseout|onmouseover|onmouseup|style|title|role],'
  + 'dl[class|compact<compact|dir<ltr?rtl|id|lang|onclick|ondblclick|onkeydown'
  + '|onkeypress|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover'
  + '|onmouseup|style|title],'

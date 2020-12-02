@@ -74,7 +74,6 @@ export default class HtmlInput extends Component {
 	}
 
 	handleEditorChange = (evt) => {
-		// console.log(evt.target.getContent());
 		this.props.changeVal(evt.target.getContent());
 	};
 
@@ -101,11 +100,9 @@ export default class HtmlInput extends Component {
 
 	render() {
 
-		// console.log(this.props.val);
 		if (!this.props.tinymceConfig) return null;
 		if (this.state.command) {
 			const { name, params } = this.state.command;
-			// console.log(command);
 			switch (name) {
 			case 'insertLink':
 				return <LinkInsert onClose={this.closeModal} setVal={this.setContentFromPlugin} {...params} lang={this.props.lang} />;
@@ -114,7 +111,6 @@ export default class HtmlInput extends Component {
 			}
 		}
 
-		// console.log(`render input ${this.props.field.name}`, this.props.val);
 		return (
 			<TinyMCEInput
 				key={this.props.recordId}
