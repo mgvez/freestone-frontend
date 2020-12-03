@@ -27,7 +27,7 @@ export default class BatchEdit extends Component {
 
 		tableName: PropTypes.string,
 		table: PropTypes.object,
-		searchableFields: PropTypes.array,
+		batchEditableFields: PropTypes.array,
 		groupedRecords: PropTypes.array,
 		nPages: PropTypes.number,
 		curPage: PropTypes.number,
@@ -81,7 +81,6 @@ export default class BatchEdit extends Component {
 	render() {
 		// console.log(this.props.swappedRecords);
 		// console.log('render list', this.props.table);
-		// console.log(this.props.searchableFields);
 		let output;
 		let readyToScroll = false;
 		if (this.props.table) {
@@ -110,9 +109,7 @@ export default class BatchEdit extends Component {
 						</HeaderTexts>
 					</Header>
 					
-					<TablePermissions table={this.props.table} />
 					<MainZone>
-						
 						<ListSearch 
 							key={`search_${this.props.tableName}`}
 							tableName={this.props.tableName}

@@ -96,7 +96,7 @@ export default class EditableList extends Component {
 
 
 		table: PropTypes.object,
-		searchableFields: PropTypes.array,
+		batchEditableFields: PropTypes.array,
 		groupedRecords: PropTypes.array,
 		swappedRecords: PropTypes.object,
 
@@ -127,7 +127,7 @@ export default class EditableList extends Component {
 		if (this.props.isLarge) {
 			heading = (<thead>
 				<Heading
-					fields={this.props.searchableFields}
+					fields={this.props.batchEditableFields}
 					tableName={this.props.tableName}
 					params={this.props.params}
 					isSelfTree={this.props.table.isSelfTree}
@@ -161,7 +161,7 @@ export default class EditableList extends Component {
 
 									return (<Row
 										key={`${this.props.table.name}_${pk}`}
-										fields={this.props.searchableFields}
+										fields={this.props.batchEditableFields}
 										values={record}
 										table={this.props.table}
 										isLarge={this.props.isLarge}
@@ -169,7 +169,6 @@ export default class EditableList extends Component {
 										handleHover={this.handleHover}
 										swappedRecords={this.props.swappedRecords}
 										fetchRecords={this.fetchRecords}
-										hasCustomOrder={!!this.props.params.order}
 									/>);
 								})
 							}

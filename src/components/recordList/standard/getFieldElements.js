@@ -26,41 +26,31 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 		if (field.isGroup || field.type === 'order') return null;
 
 		let val = values[field.listAlias];
-		// if (!val) {
-		// 	return null;
-		// }
+
 		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
-			val = React.createElement(
-				FileThumbnail,
-				{
-					val: values[field.listAlias],
-					absolutePath: values[field.listAlias + BANK_PATH_ALIAS],
-					thumbnailPath: values[field.listAlias + BANK_THUMB_ALIAS],
-					dir: field.folder,
-					type: field.type,
-				}
+			val = (
+				<FileThumbnail
+					val={values[field.listAlias]}
+					absolutePath={values[field.listAlias + BANK_PATH_ALIAS]}
+					thumbnailPath={values[field.listAlias + BANK_THUMB_ALIAS]}
+					dir={field.folder}
+					type={field.type}
+				/>
 			);
-		}
-		if (field.type === TYPE_BANKIMG) {
-			val = React.createElement(
-				BankImgThumbnail,
-				{
-					id: values[field.listAlias],
-					maxSize: MAX_THUMB_SIZE,
-				}
+		} else if (field.type === TYPE_BANKIMG) {
+			val = (
+				<BankImgThumbnail
+					id={values[field.listAlias]}
+					maxSize={MAX_THUMB_SIZE}
+				/>
 			);
-		}
-		
-		if (field.type === TYPE_BOOL || field.type === TYPE_ISPUBLISHED) {
-			// console.log(values);
-			// console.log(values[PRIKEY_ALIAS]);
-			val = React.createElement(
-				BoolSwitch,
-				{
-					field,
-					val: values[field.listAlias],
-					recordId: values[PRIKEY_ALIAS],
-				}
+		} else if (field.type === TYPE_BOOL || field.type === TYPE_ISPUBLISHED) {
+			val = (
+				<BoolSwitch
+					field={field}
+					val={values[field.listAlias]}
+					recordId={values[PRIKEY_ALIAS]}
+				/>
 			);
 		}
 

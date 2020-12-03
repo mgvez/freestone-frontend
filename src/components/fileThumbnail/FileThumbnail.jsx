@@ -6,12 +6,7 @@ import { TYPE_FILE } from '../../freestone/schemaProps';
 import { useImageDimensions } from '../../hooks/imageDimensions';
 import { THUMBNAIL_SIZE, getProtocol } from '../../freestone/settings';
 
-const Img = styled.img`
-	max-height: ${THUMBNAIL_SIZE}px;
-	display: block;
-	margin: 0 auto;
-	min-width: ${THUMBNAIL_SIZE / 2}px;
-`;
+
 const CroppedImg = styled.img`
 	position: absolute;
 	top: 0;
@@ -84,9 +79,17 @@ const FileThumbnail = (props) => {
 
 	const [naturalWidth, naturalHeight] = useImageDimensions(thumbVal);
 
+	const thumbFinalSize = props.maxSize || THUMBNAIL_SIZE;
+
+	let ImgComponent = styled.img`
+		max-height: ${thumbFinalSize}px;
+		display: block;
+		margin: 0 auto;
+		min-width: ${thumbFinalSize / 2}px;
+	`;
+
 	const cropStyle = {};
 	const imgCropStyle = {};
-	let ImgComponent = Img;
 	if (props.crop && props.crop.width && props.crop.height) {
 		const absolute = {
 			width: props.crop.width * naturalWidth * 0.01,
@@ -95,12 +98,12 @@ const FileThumbnail = (props) => {
 			y: props.crop.y * naturalHeight * 0.01,
 		};
 		const ratio = absolute.width / absolute.height;
-		const maxSizeProp = `${THUMBNAIL_SIZE}px`;
-		cropStyle.width = ratio > 1 ? maxSizeProp : `${THUMBNAIL_SIZE * ratio}px`;
-		cropStyle.height = ratio > 1 ? `${THUMBNAIL_SIZE / ratio}px` : maxSizeProp;
+		const maxSizeProp = `${thumbFinalSize}px`;
+		cropStyle.width = ratio > 1 ? maxSizeProp : `${thumbFinalSize * ratio}px`;
+		cropStyle.height = ratio > 1 ? `${thumbFinalSize / ratio}px` : maxSizeProp;
 		cropStyle.overflow = 'hidden';
 
-		const sizeRatio = ratio > 1 ? THUMBNAIL_SIZE / absolute.width : THUMBNAIL_SIZE / absolute.height;
+		const sizeRatio = ratio > 1 ? thumbFinalSize / absolute.width : thumbFinalSize / absolute.height;
 		imgCropStyle.width = `${naturalWidth}px`;
 		imgCropStyle.height = `${naturalHeight}px`;
 		imgCropStyle.left = `-${absolute.x * sizeRatio}px`;
@@ -123,6 +126,7 @@ FileThumbnail.propTypes = {
 	absolutePath: PropTypes.string,
 	thumbnailPath: PropTypes.string,
 	type: PropTypes.string,
+	maxSize: PropTypes.number,
 };
 
 export default FileThumbnail;

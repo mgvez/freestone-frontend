@@ -20,6 +20,7 @@ export const schemaSelector = createSelector(
 				...table,
 				fields: [],
 				searchableFields: [],
+				batchEditableFields: [],
 				labelFields: [],
 				fieldDependencies: {},
 				prikey: null,
@@ -74,6 +75,10 @@ export const schemaSelector = createSelector(
 
 			}
 
+			if (field.isBatchEditable) {
+				table.batchEditableFields.push(field);
+			}
+
 			if (field.type === TYPE_ORDER) {
 				table.hasOrder = true;
 				table.orderField = field;
@@ -104,6 +109,7 @@ export const schemaSelector = createSelector(
 
 			if (table.fields) table.fields = table.fields.sort((a, b) => a.rank - b.rank);
 			if (table.searchableFields) table.searchableFields = table.searchableFields.sort((a, b) => a.rank - b.rank);
+			if (table.batchEditableFields) table.batchEditableFields = table.batchEditableFields.sort((a, b) => a.rank - b.rank);
 
 			//if table has many to many field, we need to find the option field
 			if (table.type === TYPE_MTM) {

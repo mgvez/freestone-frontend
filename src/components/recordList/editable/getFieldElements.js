@@ -5,7 +5,7 @@ import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import BoolSwitch from '../../../containers/recordList/BoolSwitch';
 
-const MAX_THUMB_SIZE = 200;
+const MAX_THUMB_SIZE = 100;
 
 export function getFieldElements(table, fields, values, elementType = 'td', options = {}) {
 	if (fields.length === 0) {
@@ -26,38 +26,32 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 		if (field.isGroup || field.type === 'order') return null;
 
 		let val;
-		// if (!val) {
-		// 	return null;
-		// }
+
 		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
-			val = React.createElement(
-				FileThumbnail,
-				{
-					val: values[field.listAlias],
-					absolutePath: values[field.listAlias + BANK_PATH_ALIAS],
-					thumbnailPath: values[field.listAlias + BANK_THUMB_ALIAS],
-					dir: field.folder,
-					type: field.type,
-				}
+			val = (
+				<FileThumbnail
+					val={values[field.listAlias]}
+					absolutePath={values[field.listAlias + BANK_PATH_ALIAS]}
+					thumbnailPath={values[field.listAlias + BANK_THUMB_ALIAS]}
+					maxSize={MAX_THUMB_SIZE}
+					dir={field.folder}
+					type={field.type}
+				/>
 			);
 		} else if (field.type === TYPE_BANKIMG) {
-			val = React.createElement(
-				BankImgThumbnail,
-				{
-					id: values[field.listAlias],
-					maxSize: MAX_THUMB_SIZE,
-				}
+			val = (
+				<BankImgThumbnail
+					id={values[field.listAlias]}
+					maxSize={MAX_THUMB_SIZE}
+				/>
 			);
 		} else if (field.type === TYPE_BOOL || field.type === TYPE_ISPUBLISHED) {
-			// console.log(values);
-			// console.log(values[PRIKEY_ALIAS]);
-			val = React.createElement(
-				BoolSwitch,
-				{
-					field,
-					val: values[field.listAlias],
-					recordId: values[PRIKEY_ALIAS],
-				}
+			val = (
+				<BoolSwitch
+					field={field}
+					val={values[field.listAlias]}
+					recordId={values[PRIKEY_ALIAS]}
+				/>
 			);
 		} else {
 			val = <input value={values[field.listAlias]} />;

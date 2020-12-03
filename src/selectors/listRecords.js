@@ -121,6 +121,7 @@ export const listRecordsSelector = createSelector(
 			tableName,
 			table,
 			searchableFields: table && table.searchableFields,
+			batchEditableFields: table && table.batchEditableFields,
 			groupedRecords,
 			curPage: providedPage,
 			nPages,
