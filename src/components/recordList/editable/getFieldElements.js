@@ -4,6 +4,8 @@ import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, TYPE_ISPUBL
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import BoolSwitch from '../../../containers/recordList/BoolSwitch';
+import Field from '../../form/Field';
+import TextInput from '../../form/inputTypes/TextInput';
 
 const MAX_THUMB_SIZE = 100;
 
@@ -54,7 +56,12 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 				/>
 			);
 		} else {
-			val = <input value={values[field.listAlias]} />;
+			val = (
+				<TextInput
+					val={values[field.listAlias]}
+					setFieldVal={(v) => console.log(v)}
+				/>
+			);
 		}
 
 		return React.createElement(

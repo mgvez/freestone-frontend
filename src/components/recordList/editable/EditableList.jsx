@@ -67,17 +67,15 @@ const ListTable = styled.table`
 	}
 
 	td {
-		padding: 12px 20px;
+		padding: 2px;
 		vertical-align: middle;
 		background: ${colors.white};
-
-		&.selfjoin-label{
-			span {
-				margin-right: 0.35em;
-			}
+		max-width: 200px;
+		input {
+			border: 1px black solid;
 		}
 	}
-
+	
 
 `;
 

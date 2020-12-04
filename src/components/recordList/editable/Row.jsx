@@ -6,23 +6,7 @@ import RecordInteractions from '../../../containers/recordList/RecordInteraction
 import { getFieldElements } from './getFieldElements';
 import { PRIKEY_ALIAS } from '../../../freestone/schemaProps';
 
-const SelfjoinContentCell = styled.td`
-	.level-1 & {
-		padding-left: 0px;
-	}
-	.level-2 & {
-		padding-left: 20px;
-	}
-	.level-3 & {
-		padding-left: 40px;
-	}
-	.level-4 & {
-		padding-left: 60px;
-	}
-`;
-
 const Interaction = styled.td`
-	width: 250px;
 
 	
 

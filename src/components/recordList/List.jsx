@@ -30,7 +30,6 @@ export default class List extends Component {
 
 		tableName: PropTypes.string,
 		table: PropTypes.object,
-		searchableFields: PropTypes.array,
 		groupedRecords: PropTypes.array,
 		nPages: PropTypes.number,
 		curPage: PropTypes.number,
