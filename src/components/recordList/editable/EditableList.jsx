@@ -166,7 +166,6 @@ export default class EditableList extends Component {
 										isHovering={isHovering}
 										handleHover={this.handleHover}
 										swappedRecords={this.props.swappedRecords}
-										fetchRecords={this.fetchRecords}
 									/>);
 								})
 							}

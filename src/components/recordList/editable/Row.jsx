@@ -23,7 +23,6 @@ export default class Row extends Component {
 
 		handleHover: PropTypes.func,
 		swapAnimated: PropTypes.func,
-		fetchRecords: PropTypes.func,
 	};
 
 	constructor(props) {

@@ -42,7 +42,6 @@ export default class Row extends Component {
 
 		handleHover: PropTypes.func,
 		swapAnimated: PropTypes.func,
-		fetchRecords: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -74,7 +73,7 @@ export default class Row extends Component {
 	}
 
 	getInteractions() {
-		return <RecordInteractions key={this.state.key} table={this.props.table} fields={this.props.fields} values={this.props.values} fetchRecords={this.props.fetchRecords} hasCustomOrder={this.props.hasCustomOrder} />;
+		return <RecordInteractions key={this.state.key} table={this.props.table} fields={this.props.fields} values={this.props.values} hasCustomOrder={this.props.hasCustomOrder} />;
 	}
 
 	renderSelfTree() {

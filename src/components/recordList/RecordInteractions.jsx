@@ -41,7 +41,6 @@ export default class RecordInteractions extends Component {
 
 		rememberListPage: PropTypes.func,
 		lockScroll: PropTypes.func,
-		fetchRecords: PropTypes.func,
 	};
 
 	constructor(props) {
@@ -113,7 +112,7 @@ export default class RecordInteractions extends Component {
 					label={this.props.values[LABEL_PSEUDOFIELD_ALIAS]}
 					tableName={this.props.table.name}
 				/>
-				{this.props.table.hasOrder && !this.props.hasCustomOrder && <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} fetchRecords={this.props.fetchRecords} />}
+				{this.props.table.hasOrder && !this.props.hasCustomOrder && <OrderFcn tableName={this.props.table.name} prikey={prikeyVal} />}
 			</Container>
 		);
 	}

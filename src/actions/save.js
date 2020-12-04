@@ -153,7 +153,9 @@ export function swapOrder(tableName, recordId, direction, onComplete) {
 				},
 			},
 		}).then(() => {
-			onComplete();
+			if (onComplete) onComplete();
+		}).catch(e => {
+			console.log(e);	
 		});
 	};
 }
