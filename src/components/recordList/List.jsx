@@ -67,6 +67,7 @@ export default function List(props) {
 		if (!props.table.bankName || isQuickEdit) {
 			records = (<StandardList
 				isLarge={isLarge}
+				fields={isQuickEdit ? props.batchEditableFields : props.searchableFields}
 				{...props}
 			/>);
 		} else {
@@ -148,6 +149,8 @@ List.propTypes = {
 	tableName: PropTypes.string,
 	table: PropTypes.object,
 	groupedRecords: PropTypes.array,
+	batchEditableFields: PropTypes.array,
+	searchableFields: PropTypes.array,
 	nPages: PropTypes.number,
 	curPage: PropTypes.number,
 	nRecords: PropTypes.number,

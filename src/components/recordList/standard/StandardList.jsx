@@ -100,7 +100,7 @@ export default function StandardList(props) {
 	if (props.isLarge) {
 		heading = (<thead>
 			<Heading
-				fields={props.searchableFields}
+				fields={props.fields}
 				tableName={props.tableName}
 				params={props.params}
 				isSelfTree={props.table.isSelfTree}
@@ -134,7 +134,7 @@ export default function StandardList(props) {
 
 								return (<Row
 									key={`${props.table.name}_${pk}`}
-									fields={props.searchableFields}
+									fields={props.fields}
 									values={record}
 									table={props.table}
 									isLarge={props.isLarge}
@@ -167,7 +167,7 @@ StandardList.propTypes = {
 
 
 	table: PropTypes.object,
-	searchableFields: PropTypes.array,
+	fields: PropTypes.array,
 	groupedRecords: PropTypes.array,
 	swappedRecords: PropTypes.object,
 
