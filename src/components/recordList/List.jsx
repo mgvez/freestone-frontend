@@ -21,6 +21,7 @@ const LARGE_MINW_BREAKPOINT = 1024;
 export default function List(props) {
 
 	const [isLarge, setIsLarge] = useState(true);
+	const [isQuickEdit, setIsQuickEdit] = useState(false);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -52,83 +53,80 @@ export default function List(props) {
 		});
 	};
 
+	if (!props.table) return null;
 
-	// console.log(props.swappedRecords);
-	// console.log('render list', props.table);
-	// console.log(props.searchableFields);
-	let output;
 	let readyToScroll = false;
-	if (props.table) {
 
-		const addBtn = props.canAdd ? <Button onClick={addRecord} round="true"><Icon icon="plus-circle" /> New record</Button> : null;
-		
-		let records = null;
-		// if record list is loaded, display records. Bank records are displayed differently than regular records.
-		if (props.groupedRecords) {
-			readyToScroll = true;
+	const addBtn = props.canAdd ? <Button onClick={addRecord} round="true"><Icon icon="plus-circle" /> New record</Button> : null;
+	
+	let records = null;
+	// if record list is loaded, display records. Bank records are displayed differently than regular records.
+	if (props.groupedRecords) {
+		readyToScroll = true;
 
-			if (props.table.bankName) {
-				records = (<BankList
-					isLarge={isLarge}
-					bankName={props.table.bankName}
-					{...props}
-				/>);
-			} else {
-				records = (<StandardList
-					isLarge={isLarge}
-					{...props}
-				/>);
-			}
+		if (!props.table.bankName || isQuickEdit) {
+			records = (<StandardList
+				isLarge={isLarge}
+				{...props}
+			/>);
+		} else {
+			records = (<BankList
+				isLarge={isLarge}
+				bankName={props.table.bankName}
+				{...props}
+			/>);
 		}
-
-		const needsFetch = !props.groupedRecords || props.needsFetch;
-		// console.log('render list needs fetch %s', needsFetch);
-		output = (
-			<section>
-				<DocumentMeta title={`${props.table.displayLabel} - list`} />
-
-				<Header>
-					<HeaderTexts columns="8">
-						<Heading1>{props.table.displayLabel}</Heading1>
-						<p dangerouslySetInnerHTML={{ __html: props.table.help }} />
-					</HeaderTexts>
-					<HeaderFcn columns="3" offset="10" justify="end" align="end">
-						{addBtn}
-					</HeaderFcn>
-				</Header>
-				
-				<TablePermissions table={props.table} />
-				<MainZone>
-					
-					<ListSearch 
-						key={`search_${props.tableName}`}
-						tableName={props.tableName}
-						numRecords={getNumRecords()}
-						search={props.params.search}
-						goTo={props.goTo}
-						needsFetch={needsFetch}
-					>
-						<ListFetch needsFetch={needsFetch} tableName={props.tableName} params={props.params} />
-					</ListSearch>
-					{props.table.isBatchEditable && (
-						<Button warn="true" onClick={() => props.goTo(`/batch/${props.tableName}`)}>Batch edit</Button>
-					)}
-					<Paging
-						nPages={props.nPages}
-						curPage={props.curPage}
-						tableName={props.tableName}
-					/>
-					{records}
-					<Paging
-						nPages={props.nPages}
-						curPage={props.curPage}
-						tableName={props.tableName}
-					/>
-				</MainZone>
-				
-			</section>
-		);
 	}
+
+	const needsFetch = !props.groupedRecords || props.needsFetch;
+	// console.log('render list needs fetch %s', needsFetch);
+	const output = (
+		<section>
+			<DocumentMeta title={`${props.table.displayLabel} - list`} />
+
+			<Header>
+				<HeaderTexts columns="8">
+					<Heading1>{props.table.displayLabel}</Heading1>
+					<p dangerouslySetInnerHTML={{ __html: props.table.help }} />
+				</HeaderTexts>
+				<HeaderFcn columns="3" offset="10" justify="end" align="end">
+					{addBtn}
+				</HeaderFcn>
+			</Header>
+			
+			<TablePermissions table={props.table} />
+			<MainZone>
+				
+				<ListSearch 
+					key={`search_${props.tableName}`}
+					tableName={props.tableName}
+					numRecords={getNumRecords()}
+					search={props.params.search}
+					goTo={props.goTo}
+					needsFetch={needsFetch}
+				>
+					<ListFetch needsFetch={needsFetch} tableName={props.tableName} params={props.params} />
+				</ListSearch>
+				{props.table.isBatchEditable && (
+					<Button warn="true" onClick={() => setIsQuickEdit(!isQuickEdit)}>
+						{isQuickEdit ? 'Default list' : 'Batch edit'}
+					</Button>
+				)}
+				<Paging
+					nPages={props.nPages}
+					curPage={props.curPage}
+					tableName={props.tableName}
+				/>
+				{records}
+				<Paging
+					nPages={props.nPages}
+					curPage={props.curPage}
+					tableName={props.tableName}
+				/>
+			</MainZone>
+			
+		</section>
+	);
 
 	return (
 		<InScroll isReady={readyToScroll}>
