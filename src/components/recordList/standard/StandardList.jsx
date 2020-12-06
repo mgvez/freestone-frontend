@@ -82,7 +82,6 @@ const ListTable = styled.table`
 `;
 
 export default function StandardList(props) {
-
 	const [hoveringId, setHoveringId] = useState(0);
 
 	/**
@@ -105,6 +104,7 @@ export default function StandardList(props) {
 				params={props.params}
 				isSelfTree={props.table.isSelfTree}
 				fetchList={props.fetchList}
+				isQuickEdit={props.isQuickEdit}
 			/>
 		</thead>);
 	}
@@ -136,6 +136,7 @@ export default function StandardList(props) {
 									key={`${props.table.name}_${pk}`}
 									fields={props.fields}
 									values={record}
+									isQuickEdit={props.isQuickEdit}
 									table={props.table}
 									isLarge={props.isLarge}
 									isHovering={isHovering}
@@ -155,6 +156,7 @@ export default function StandardList(props) {
 
 StandardList.propTypes = {
 	isLarge: PropTypes.bool,
+	isQuickEdit: PropTypes.bool,
 	hoveringId: PropTypes.string,
 	tableName: PropTypes.string,
 

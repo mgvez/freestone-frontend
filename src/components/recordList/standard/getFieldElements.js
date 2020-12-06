@@ -4,10 +4,11 @@ import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, TYPE_ISPUBL
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import BoolSwitch from '../../../containers/recordList/BoolSwitch';
+import QuickeditField from '../../../containers/recordList/standard/QuickeditField';
 
-const MAX_THUMB_SIZE = 200;
+const MAX_THUMB_SIZE = 100;
 
-export function getFieldElements(table, fields, values, elementType = 'td', options = {}) {
+export function getFieldElements(table, fields, values, isQuickEdit, elementType = 'td', options = {}) {
 	if (fields.length === 0) {
 		// console.log(values);
 		return React.createElement(
@@ -24,7 +25,6 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 
 	return fields.map((field) => {
 		if (field.isGroup || field.type === 'order') return null;
-
 		let val = values[field.listAlias];
 
 		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
@@ -33,6 +33,7 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 					val={values[field.listAlias]}
 					absolutePath={values[field.listAlias + BANK_PATH_ALIAS]}
 					thumbnailPath={values[field.listAlias + BANK_THUMB_ALIAS]}
+					maxSize={MAX_THUMB_SIZE}
 					dir={field.folder}
 					type={field.type}
 				/>
@@ -52,12 +53,15 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 					recordId={values[PRIKEY_ALIAS]}
 				/>
 			);
+		} else if (isQuickEdit) {
+			val = <QuickeditField recordId={values[PRIKEY_ALIAS]} val={val} table={table} field={field} />;
 		}
+		
 
 		return React.createElement(
 			elementType,
 			{
-				key: `val_${field.id}`,
+				key: `val_${field.id}}`,
 				'data-field-label': field.label,
 				...options,
 			},

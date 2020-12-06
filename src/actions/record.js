@@ -7,6 +7,7 @@ export const PREVIEW_IFRAME = 'iframe';
 export const PREVIEW_WIN = 'window';
 
 export const SET_FIELD_VALUE = 'SET_FIELD_VALUE';
+export const SET_QUICKEDIT_FIELD_VALUE = 'SET_QUICKEDIT_FIELD_VALUE';
 export const SET_RECORD_IS_PREVIEWING = 'SET_RECORD_IS_PREVIEWING';
 export const SET_CURRENT_PREVIEW = 'SET_CURRENT_PREVIEW';
 export const SET_PREVIEW_VIEW_TYPE = 'SET_PREVIEW_VIEW_TYPE';
@@ -104,6 +105,15 @@ export function setFieldVal(tableId, recordId, fieldId, val) {
 	return (dispatch) => {
 		return dispatch({
 			type: SET_FIELD_VALUE,
+			data: { tableId, recordId, fieldId, val },
+		});
+	};
+}
+
+export function setQuickeditFieldVal(tableId, recordId, fieldId, val) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_QUICKEDIT_FIELD_VALUE,
 			data: { tableId, recordId, fieldId, val },
 		});
 	};

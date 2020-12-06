@@ -6,7 +6,32 @@ import { searchParamsSelector } from './route';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
 
-const recordsSelector = state => state.freestone.recordList;
+const stateRecordsSelector = state => state.freestone.recordList;
+const recordsQuickeditSelector = state => state.freestone.recordQuickedit;
+
+const fieldSelector = (state, props) => props.field;
+const recordIdSelector = (state, props) => props.recordId;
+
+
+function makeQuickeditValSelector() {
+	return createSelector(
+		[recordsQuickeditSelector, fieldSelector, recordIdSelector],
+		(recordsQuickedit, field, recordId) => {
+			const { table_id, id: field_id } = field;
+			const editedVal = recordsQuickedit && recordsQuickedit[table_id] && recordsQuickedit[table_id][recordId] && recordsQuickedit[table_id][recordId][field_id];
+			return {
+				editedVal,
+			};
+		}
+	);
+}
+
+export function quickeditFieldMapStateToProps() {
+	const selectorInst = makeQuickeditValSelector();
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
 
 function flatten(records, flat = [], breadcrumb = [], level = 0) {
 	if (!records) return flat;
@@ -41,7 +66,7 @@ function reorderSelfTree(records) {
 }
 
 export const listRecordsSelector = createSelector(
-	[tableNameSelector, tableSchemaSelector, recordsSelector, searchParamsSelector],
+	[tableNameSelector, tableSchemaSelector, stateRecordsSelector, searchParamsSelector],
 	(tableName, schema, stateRecords, searchParams) => {
 
 		const { 
@@ -137,3 +162,4 @@ export const listRecordsSelector = createSelector(
 		};
 	}
 );
+

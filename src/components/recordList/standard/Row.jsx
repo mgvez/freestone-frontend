@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -25,130 +25,119 @@ const SelfjoinContentCell = styled.td`
 
 const Interaction = styled.td`
 	width: 250px;
-
-	
-
 `;
 
-export default class Row extends Component {
-	static propTypes = {
-		table: PropTypes.object,
-		fields: PropTypes.array,
-		values: PropTypes.object,
-		isLarge: PropTypes.bool,
-		isHovering: PropTypes.bool,
-		hasCustomOrder: PropTypes.bool,
-		swappedRecords: PropTypes.object,
+export default function Row(props) {
+	if (!props.values) return null;
+	const prikeyVal = props.values && props.values[PRIKEY_ALIAS];
+	const recordRow = useRef();
+	const animationRef = useRef();
+	const { fields, values, table, hasCustomOrder, isLarge, isQuickEdit } = props;
 
-		handleHover: PropTypes.func,
-		swapAnimated: PropTypes.func,
-	};
-
-	constructor(props) {
-		super(props);
-		const prikeyVal = this.props.values[PRIKEY_ALIAS];
-		this.state = {
-			key: `${this.props.table}_${prikeyVal}`,
-		};
-	}
-
-	componentDidUpdate() {
-		const prikeyVal = this.props.values[PRIKEY_ALIAS];
-		if (this.props.swappedRecords && this.props.swappedRecords.origin === prikeyVal.toString()) this.animate().then(this.props.swapAnimated);
-	}
-
-	animate = () => {
-
-		const animation = this.animation = this.animation || new Promise((resolve) => {
-			TweenMax.to(this.recordRow.children, 0.3, { backgroundColor: 'rgba(25, 170, 141)', onComplete: () => {
-				this.animation = null;
+	const animate = () => {
+		const animation = animationRef.current = animationRef.current || new Promise((resolve) => {
+			TweenMax.to(recordRow.current.children, 0.3, { backgroundColor: 'rgba(25, 170, 141)', onComplete: () => {
+				animationRef.current = null;
 				resolve();
 			}, clearProps: 'background-color' });
 		});
 		return animation;
-	}
+	};
 
-	handleHover = () => {
-		this.props.handleHover(this.props.values[PRIKEY_ALIAS]);
-	}
+	useEffect(() => {
+		if (props.swappedRecords && props.swappedRecords.origin === prikeyVal.toString()) animate().then(props.swapAnimated);
+	});
+	
+	const handleHover = () => {
+		props.handleHover(props.values[PRIKEY_ALIAS]);
+	};
 
-	getInteractions() {
-		return <RecordInteractions key={this.state.key} table={this.props.table} fields={this.props.fields} values={this.props.values} hasCustomOrder={this.props.hasCustomOrder} />;
-	}
+	const getInteractions = () => {
+		return !isQuickEdit && (
+			<Interaction>
+				<RecordInteractions
+					table={table}
+					fields={fields}
+					values={values}
+					hasCustomOrder={hasCustomOrder}
+				/>
+			</Interaction>
+		);
+	};
 
-	renderSelfTree() {
-		const { fields, values, table } = this.props;
+	const renderSelfTree = () => {
 
 		const breadcrumb = values.breadcrumb ? values.breadcrumb : '0';
 		const level = values.level ? values.level : '0';
 		// console.log(values);
-		const interactions = this.getInteractions();
-		if (this.props.isLarge) {
-			const label = getFieldElements(table, fields, values, 'span');
+		const interactions = getInteractions();
+		if (isLarge) {
+			const label = getFieldElements(table, fields, values, isQuickEdit, 'span');
 
 			return (
-				<tr className={`level-${level}`} onMouseOver={this.handleHover} ref={(el) => { this.recordRow = el; }}>
+				<tr className={`level-${level}`} onMouseOver={handleHover} ref={recordRow}>
 					<td key="cellBread" className="selfjoin-breadcrumb">{breadcrumb}</td>
 					<SelfjoinContentCell key="cellLabel" className="selfjoin-label">{label}</SelfjoinContentCell>
-					<Interaction>
-						{interactions}
-					</Interaction>
+					{interactions}
 				</tr>
 			);
 		}
 
-		const content = getFieldElements(table, fields, values, 'div', { className: 'mobile-cell' });
+		const content = getFieldElements(table, fields, values, isQuickEdit, 'div', { className: 'mobile-cell' });
 		return (
-			<tr className="selfjoin-row" ref={(el) => { this.recordRow = el; }}>
+			<tr className="selfjoin-row" ref={recordRow}>
 				<td>
 					{content}
 				</td>
-				<Interaction>
-					{interactions}
-				</Interaction>
+				{interactions}
 			</tr>
 		);
 
-	}
+	};
 
-	renderRegular() {
-		const { fields, values, table } = this.props;
+	const renderRegular = () => {
 		let content;
-		const interactions = this.getInteractions();
+		const interactions = getInteractions();
 
 		//ROW NORMAL, LARGE
-		if (this.props.isLarge) {
-			content = getFieldElements(table, fields, values);
+		if (isLarge) {
+			content = getFieldElements(table, fields, values, isQuickEdit);
 
 			return (
-				<tr ref={(el) => { this.recordRow = el; }} onMouseOver={this.handleHover}>
+				<tr ref={recordRow} onMouseOver={handleHover}>
 					{content}
-					<Interaction>
-						{interactions}
-					</Interaction>
+					{interactions}
 				</tr>
 			);
 		}
 
 		//ROW NORMAL, MOBILE
-		content = getFieldElements(table, fields, values, 'div', { className: 'mobile-cell' });
+		content = getFieldElements(table, fields, values, isQuickEdit, 'div', { className: 'mobile-cell' });
 		return (
-			<tr ref={(el) => { this.recordRow = el; }}>
+			<tr ref={recordRow}>
 				<td>
 					{content}
 				</td>
-				<Interaction>
-					{interactions}
-				</Interaction>
+				{interactions}
 			</tr>
 		);
 
-	}
+	};
 
-	render() {
-		// console.log('render %s', this.props.values.prikey);
-		// console.log(this.props.table);
-		return this.props.table.isSelfTree ? this.renderSelfTree() : this.renderRegular();
-
-	}
+	return props.table.isSelfTree ? renderSelfTree() : renderRegular();
 }
+
+
+Row.propTypes = {
+	table: PropTypes.object,
+	fields: PropTypes.array,
+	values: PropTypes.object,
+	isLarge: PropTypes.bool,
+	isQuickEdit: PropTypes.bool,
+	isHovering: PropTypes.bool,
+	hasCustomOrder: PropTypes.bool,
+	swappedRecords: PropTypes.object,
+
+	handleHover: PropTypes.func,
+	swapAnimated: PropTypes.func,
+};

@@ -22,6 +22,12 @@ export default function List(props) {
 
 	const [isLarge, setIsLarge] = useState(true);
 	const [isQuickEdit, setIsQuickEdit] = useState(false);
+	const toggleQuickEdit = () => {
+		const newIsQuickEdit = !isQuickEdit;
+		// close side nav if quick editing
+		if (newIsQuickEdit) props.toggleNavVisibility(false);
+		setIsQuickEdit(newIsQuickEdit);
+	};
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -67,7 +73,9 @@ export default function List(props) {
 		if (!props.table.bankName || isQuickEdit) {
 			records = (<StandardList
 				isLarge={isLarge}
+				isQuickEdit={isQuickEdit}
 				fields={isQuickEdit ? props.batchEditableFields : props.searchableFields}
+				isQuickEdit={isQuickEdit}
 				{...props}
 			/>);
 		} else {
@@ -109,7 +117,7 @@ export default function List(props) {
 					<ListFetch needsFetch={needsFetch} tableName={props.tableName} params={props.params} />
 				</ListSearch>
 				{props.table.isBatchEditable && (
-					<Button warn="true" onClick={() => setIsQuickEdit(!isQuickEdit)}>
+					<Button warn="true" onClick={toggleQuickEdit}>
 						{isQuickEdit ? 'Default list' : 'Batch edit'}
 					</Button>
 				)}
@@ -161,5 +169,6 @@ List.propTypes = {
 	fetchTable: PropTypes.func,
 	addRecord: PropTypes.func,
 	goTo: PropTypes.func,
+	toggleNavVisibility: PropTypes.func,
 
 };
