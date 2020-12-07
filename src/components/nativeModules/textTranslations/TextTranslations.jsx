@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import SingleTranslation from '../../../containers/nativeModules/textTranslations/SingleTranslation';
 import SaveTranslations from '../../../containers/process/SaveTranslations';
 import Field from './Field';
-import FormHeader from '../../header/FormHeader'; 
+import FixedHeader from '../../header/FixedHeader'; 
 import styled from 'styled-components';
 import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 import colors from '../../../styles/Colors';
@@ -14,6 +14,7 @@ import { Input } from '../../../styles/Input';
 import { Icon } from '../../../styles/Icon';
 import { TabsContainer } from '../../../styles/Form';
 import debounce from '../../../utils/Debounce.js';
+import FormHeaderCore from '../../../containers/header/FormHeaderCore'; 
 
 const Container = styled.div`
 	${GridContainerStyle};
@@ -348,9 +349,20 @@ export default class TextTranslations extends Component {
 
 		return (
 			<section>
-				<FormHeader hasLanguageToggle={false} buttons={actionBtns}>
-					<h1>Text translations</h1>
-				</FormHeader>
+				<FixedHeader
+					renderContent={(headerProps) => {
+						return (
+							<FormHeaderCore
+								buttons={actionBtns}
+								isLight={headerProps.isFixed}
+								{...headerProps}
+							>
+								<h1>Text translations</h1>
+							</FormHeaderCore>
+						);
+
+					}}
+				/>
 				<MainZone>
 					{searchZone}
 					{groups}
