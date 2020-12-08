@@ -34,9 +34,7 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 		const subformFieldId = getForeignFieldId(childTableId, tableId, allTables);
 		const childrenRecordIds = getChildrenRecordIds(allRecords[childTableId], recordId, subformFieldId);
 		if (!subformFieldId || !childrenRecordIds) return false;
-		// console.log(childTableId);
-		// console.log(childrenRecordIds);
-		// console.log(subformFieldId);
+
 		return childrenRecordIds.reduce((isChildEdited, childRecordId) => {
 			if (isChildEdited) return true;
 			return getIsEdited(allTables, allChildren, allRecords, childTableId, childRecordId, isForPreview);
@@ -60,15 +58,9 @@ function makeSelector() {
 				});
 				return candidate && candidate[0] && candidate[0].label;
 			}, null);
-			// console.log(allLoadedRecords);
-			// console.log(thisRecord);
 
 			//if the current preview is for the current record, we are viewing preview
 			const isViewingPreview = table && currentPreview && currentPreview.tableId === table.id && currentPreview.recordId === recordId;
-
-			// console.log(isViewingPreview, currentPreview.type);
-			// console.log(record);
-			// console.log(userViewLanguage);
 			const hasLanguageToggle = table && table.fields.some((f) => {
 				return !!f.language;
 			});

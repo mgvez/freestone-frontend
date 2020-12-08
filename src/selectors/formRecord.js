@@ -175,17 +175,12 @@ const parsedChildrenSelector = createSelector(
 
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector, activeGroupSelector) {
-	console.log('make selector');
 	return createSelector(
 		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, parsedChildrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector, activeGroupSelector],
 		(tableSchema, allFields, record, recordUnaltered, unfilteredChildren, env, parentTable, parentRecord, isGod, activeGroupKey) => {
 			let children;
-			// console.log(unfilteredChildren);
 			let mainGroups;
 			let activeGroup;
-			// const recordId = record && record.prikey;
-			// console.log(`build record for ${recordId}`, table && table.name);
-			console.log(tableSchema);
 			let table;
 			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
 			if (tableSchema) {
