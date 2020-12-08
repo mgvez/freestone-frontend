@@ -61,9 +61,9 @@ function formVisibleMapStateToProps() {
 function makeSubformSelector(tableSchemaSelector, formVisibleSelector, formCollapsedSelector) {
 	return createSelector(
 		[tableSchemaSelector, formVisibleSelector, formCollapsedSelector],
-		(schema, formVisible, formCollapsed) => {
+		(table, formVisible, formCollapsed) => {
 			return {
-				...schema,
+				table,
 				...formVisible,
 				...formCollapsed,
 			};

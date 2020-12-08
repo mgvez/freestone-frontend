@@ -14,9 +14,7 @@ const parentTableIdSelector = (state, props) => props.parentTableId;
 function makeSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, allMtmOptionsSelector, tableIdSelector, parentTableIdSelector, parentRecordIdSelector, childrenAreLoadedSelector, recordsSelector],
-		(schema, allMtmOptions, tableId, parentTableId, parentRecordId, childrenAreLoaded, allRecords) => {
-			
-			const { table } = schema;
+		(table, allMtmOptions, tableId, parentTableId, parentRecordId, childrenAreLoaded, allRecords) => {
 
 			let mtmOptions;
 			let records;

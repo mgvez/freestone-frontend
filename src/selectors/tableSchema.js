@@ -16,9 +16,7 @@ function makeSelector(tableIdSelector) {
 			// console.log('process... %s', resolvedTableId);
 			const table = schema.tables[resolvedTableId];
 			//retourne une copie de la table, parce que certains reselectors peuvent retourner une copie altérée, par exemple à cause des dependances de champs
-			return {
-				table,
-			};
+			return table;
 		}
 	);
 }

@@ -16,8 +16,7 @@ const recordsQuickeditSelectorRaw = state => state.freestone.recordQuickedit;
 function makeTableRecordSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, recordsSelector],
-		(schema, records) => {
-			const { table } = schema;
+		(table, records) => {
 			return table && records[table.id];
 		}
 	);
@@ -26,8 +25,7 @@ function makeTableRecordSelector(tableSchemaSelector) {
 function makeRecordSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, recordsSelector, recordIdSelector],
-		(schema, records, recordId) => {
-			const { table } = schema;
+		(table, records, recordId) => {
 			// console.log(`%c record ${recordId}`, 'font-weight:bold;color:#449944;');
 			return recordId && table && records[table.id] && records[table.id][recordId];
 		}
@@ -46,8 +44,7 @@ function makeParentRecordSelector() {
 function makeRecordUnalteredSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, recordsUnalteredSelector, recordIdSelector],
-		(schema, recordsUnaltered, recordId) => {
-			const { table } = schema;
+		(table, recordsUnaltered, recordId) => {
 			// console.log(`%c record unaltered ${recordId}`, 'font-weight:bold;color:#449944;');
 			return recordId && table && recordsUnaltered[table.id] && recordsUnaltered[table.id][recordId];
 		}
@@ -117,8 +114,8 @@ export function activeGroupMapStateToProps() {
 export function makeRecordQuickeditSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, tableSelector, recordsQuickeditSelectorRaw],
-		(schema, resolvedTable, records) => {
-			const table = resolvedTable || schema.table;
+		(tableSchema, resolvedTable, records) => {
+			const table = resolvedTable || tableSchema;
 			return table && records[table.id];
 		}
 	);

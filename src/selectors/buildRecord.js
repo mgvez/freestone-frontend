@@ -99,9 +99,8 @@ function getPermissions(branch, allPerms, permissions = {}) {
 
 const buildRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, allPermsSelector, childrenSelector, listPageAfterSaveSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, allPerms, unfilteredChildren, allListPageAfterSave) => {
+	(table, allSchema, allRecords, allMtmRecords, recordId, allPerms, unfilteredChildren, allListPageAfterSave) => {
 		// console.log(`build record for ${recordId}`);
-		const { table } = mainTableSchema;
 		const { tables } = allSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecords(tree, allRecords, false);
@@ -143,9 +142,8 @@ function getRecordIds(branch, allRecords, records = []) {
  */
 export const buildCancelRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, listPageAfterSaveSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
+	(table, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
 		// console.log(`build record for ${recordId}`);
-		const { table } = mainTableSchema;
 		const { tables } = allSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecordIds(tree, allRecords);

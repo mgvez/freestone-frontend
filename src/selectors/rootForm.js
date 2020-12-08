@@ -48,9 +48,7 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 function makeSelector() {
 	return createSelector(
 		[tableSchemaMapStateToProps(), paramsSelector, recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, currentPreviewSelector],
-		(schema, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, currentPreview) => {
-
-			const { table } = schema;
+		(table, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, currentPreview) => {
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
 
 			//loaded records have a general label for the records, use this as the heading label for the form

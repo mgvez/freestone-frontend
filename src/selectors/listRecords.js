@@ -68,7 +68,7 @@ function reorderSelfTree(records) {
 
 export const listRecordsSelector = createSelector(
 	[tableNameSelector, tableSchemaSelector, stateRecordsSelector, searchParamsSelector, makeRecordQuickeditMapStateToProps()],
-	(tableName, schema, stateRecords, searchParams, recordsQuickedit) => {
+	(tableName, table, stateRecords, searchParams, recordsQuickedit) => {
 		const { 
 			records: loadedRecords,
 			table: recordsTable,
@@ -86,8 +86,7 @@ export const listRecordsSelector = createSelector(
 
 		const nPages = Math.ceil(nRecords / pageSize);
 		console.log(tableName);
-		console.log(schema);
-		const { table } = schema;
+		console.log(table);
 
 		let groupedRecords;
 

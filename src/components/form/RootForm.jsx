@@ -29,13 +29,12 @@ export default function RootForm(props) {
 		}
 	}, []);
 
-	useState(() => {
+	useEffect(() => {
 		const { tableName } = props.params;
 		if (!props.table) {
 			props.fetchTable(tableName);
 		}
 	});
-
 
 	const saveAndForm = () => {
 		setIsSaving(true);
