@@ -66,9 +66,17 @@ function reorderSelfTree(records) {
 	return flatten(tree);
 }
 
+const nQuickeditedSelector = createSelector(
+	[makeRecordQuickeditMapStateToProps()],
+	(recordsQuickedit) => {
+		if (!recordsQuickedit) return 0;
+		return Object.keys(recordsQuickedit).length;
+	}
+);
+
 export const listRecordsSelector = createSelector(
-	[tableNameSelector, tableSchemaSelector, stateRecordsSelector, searchParamsSelector, makeRecordQuickeditMapStateToProps()],
-	(tableName, table, stateRecords, searchParams, recordsQuickedit) => {
+	[tableNameSelector, tableSchemaSelector, stateRecordsSelector, searchParamsSelector, nQuickeditedSelector],
+	(tableName, table, stateRecords, searchParams, nQuickedited) => {
 		const { 
 			records: loadedRecords,
 			table: recordsTable,
@@ -85,8 +93,6 @@ export const listRecordsSelector = createSelector(
 		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = searchParams;
 
 		const nPages = Math.ceil(nRecords / pageSize);
-		console.log(tableName);
-		console.log(table);
 
 		let groupedRecords;
 
@@ -159,7 +165,7 @@ export const listRecordsSelector = createSelector(
 				...searchParams,
 			},
 			swappedRecords,
-			isQuickedited: !!recordsQuickedit,
+			nQuickedited,
 		};
 	}
 );

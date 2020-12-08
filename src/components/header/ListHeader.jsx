@@ -1,12 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import cssVars from '../../styles/Variables';
 import { Header, HeaderTexts, HeaderFcn, headerMarginBottom } from '../../styles/Header';
 import { Heading1 } from '../../styles/Texts';
-
-import ProdEnvWarning from '../widgets/ProdEnvWarning';
-
 export default function ListHeader(props) {
 	
 	const headerRef = useRef();

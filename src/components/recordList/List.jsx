@@ -71,9 +71,9 @@ export default function List(props) {
 			<Icon icon={isQuickEdit ? 'list' : 'bolt'} />{isQuickEdit ? 'Default list' : 'Quick edit'}
 		</Button>
 	);
-	const quickEditSaveButton = isQuickEdit && props.isQuickedited && (
+	const quickEditSaveButton = isQuickEdit && props.nQuickedited && (
 		<Button key="save" cta round onClick={toggleQuickEdit}>
-			<Icon icon="save" />Save
+			<Icon icon="save" />{`Save (${props.nQuickedited})`}
 		</Button>
 	);
 
@@ -176,7 +176,7 @@ List.propTypes = {
 	swappedRecords: PropTypes.object,
 	canAdd: PropTypes.bool,
 	needsFetch: PropTypes.bool,
-	isQuickedited: PropTypes.bool,
+	nQuickedited: PropTypes.number,
 
 	fetchTable: PropTypes.func,
 	addRecord: PropTypes.func,
