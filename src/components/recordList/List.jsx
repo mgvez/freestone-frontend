@@ -11,10 +11,11 @@ import TablePermissions from '../../containers/permissions/TablePermissions';
 import ListFetch from '../../containers/process/ListFetch';
 import createRecord from '../../freestone/createRecord';
 import { Button } from '../../styles/Button';
-import { Header, HeaderTexts, HeaderFcn } from '../../styles/Header';
-import { Heading1 } from '../../styles/Texts';
 import { MainZone } from '../../styles/Grid';
 import { Icon } from '../../styles/Icon';
+
+import FixedHeader from '../header/FixedHeader';
+import ListHeader from '../header/ListHeader';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
@@ -63,8 +64,19 @@ export default function List(props) {
 
 	let readyToScroll = false;
 
-	const addBtn = props.canAdd ? <Button onClick={addRecord} round="true"><Icon icon="plus-circle" /> New record</Button> : null;
+	const addButton = props.canAdd && !isQuickEdit && <Button key="add" onClick={addRecord} round><Icon icon="plus-circle" /> New record</Button>;
 	
+	const quickEditButton = props.table.isBatchEditable && (
+		<Button key="quickedit" warn round onClick={toggleQuickEdit}>
+			<Icon icon={isQuickEdit ? 'list' : 'bolt'} />{isQuickEdit ? 'Default list' : 'Quick edit'}
+		</Button>
+	);
+	const quickEditSaveButton = isQuickEdit && props.isQuickedited && (
+		<Button key="save" cta round onClick={toggleQuickEdit}>
+			<Icon icon="save" />Save
+		</Button>
+	);
+
 	let records = null;
 	// if record list is loaded, display records. Bank records are displayed differently than regular records.
 	if (props.groupedRecords) {
@@ -93,16 +105,20 @@ export default function List(props) {
 		<section>
 			<DocumentMeta title={`${props.table.displayLabel} - list`} />
 
-			<Header>
-				<HeaderTexts columns="8">
-					<Heading1>{props.table.displayLabel}</Heading1>
-					<p dangerouslySetInnerHTML={{ __html: props.table.help }} />
-				</HeaderTexts>
-				<HeaderFcn columns="3" offset="10" justify="end" align="end">
-					{addBtn}
-				</HeaderFcn>
-			</Header>
-			
+			<FixedHeader
+				renderContent={(headerProps) => {
+					return (
+						<ListHeader
+							table={props.table}
+							isLight={headerProps.isFixed}
+							buttons={[quickEditSaveButton, quickEditButton, addButton]}
+							{...headerProps}
+						/>
+					);
+
+				}}
+			/>
+
 			<TablePermissions table={props.table} />
 			<MainZone>
 				
@@ -116,11 +132,6 @@ export default function List(props) {
 				>
 					<ListFetch needsFetch={needsFetch} tableName={props.tableName} params={props.params} />
 				</ListSearch>
-				{props.table.isBatchEditable && (
-					<Button warn="true" onClick={toggleQuickEdit}>
-						{isQuickEdit ? 'Default list' : 'Batch edit'}
-					</Button>
-				)}
 				<Paging
 					nPages={props.nPages}
 					curPage={props.curPage}
@@ -165,6 +176,7 @@ List.propTypes = {
 	swappedRecords: PropTypes.object,
 	canAdd: PropTypes.bool,
 	needsFetch: PropTypes.bool,
+	isQuickedited: PropTypes.bool,
 
 	fetchTable: PropTypes.func,
 	addRecord: PropTypes.func,

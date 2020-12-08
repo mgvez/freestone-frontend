@@ -3,11 +3,12 @@ import { tableSchemaSelector, tableNameSelector } from './tableSchema';
 
 import { getRecordLabel } from './recordLabel';
 import { searchParamsSelector } from './route';
+import { makeRecordQuickeditMapStateToProps } from './record';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
 
 const stateRecordsSelector = state => state.freestone.recordList;
-const recordsQuickeditSelector = state => state.freestone.recordQuickedit;
+// const recordsQuickeditSelector = state => state.freestone.recordQuickedit;
 
 const fieldSelector = (state, props) => props.field;
 const recordIdSelector = (state, props) => props.recordId;
@@ -15,10 +16,10 @@ const recordIdSelector = (state, props) => props.recordId;
 
 function makeQuickeditValSelector() {
 	return createSelector(
-		[recordsQuickeditSelector, fieldSelector, recordIdSelector],
+		[makeRecordQuickeditMapStateToProps(), fieldSelector, recordIdSelector],
 		(recordsQuickedit, field, recordId) => {
-			const { table_id, id: field_id } = field;
-			const editedVal = recordsQuickedit && recordsQuickedit[table_id] && recordsQuickedit[table_id][recordId] && recordsQuickedit[table_id][recordId][field_id];
+			const { id: field_id } = field;
+			const editedVal = recordsQuickedit && recordsQuickedit[recordId] && recordsQuickedit[recordId][field_id];
 			return {
 				editedVal,
 			};
@@ -66,9 +67,8 @@ function reorderSelfTree(records) {
 }
 
 export const listRecordsSelector = createSelector(
-	[tableNameSelector, tableSchemaSelector, stateRecordsSelector, searchParamsSelector],
-	(tableName, schema, stateRecords, searchParams) => {
-
+	[tableNameSelector, tableSchemaSelector, stateRecordsSelector, searchParamsSelector, makeRecordQuickeditMapStateToProps()],
+	(tableName, schema, stateRecords, searchParams, recordsQuickedit) => {
 		const { 
 			records: loadedRecords,
 			table: recordsTable,
@@ -159,6 +159,7 @@ export const listRecordsSelector = createSelector(
 				...searchParams,
 			},
 			swappedRecords,
+			isQuickedited: !!recordsQuickedit,
 		};
 	}
 );

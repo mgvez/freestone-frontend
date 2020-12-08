@@ -2,59 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import cssVars from '../../styles/Variables';
-import { Header, HeaderTexts, HeaderFcn } from '../../styles/Header';
+import { Header, HeaderTexts, HeaderFcn, headerMarginBottom } from '../../styles/Header';
 
 import LanguageToggler from '../../containers/form/LanguageToggler';
 import ProdEnvWarning from '../widgets/ProdEnvWarning';
 import PreviewRecord from '../../containers/process/PreviewRecord';
 import { NavLinkButton, Button } from '../../styles/Button';
 import { Icon } from '../../styles/Icon';
-
-const marginBottom = 60;
-const StyledHeader = styled(Header)`
-	
-	margin-bottom: ${marginBottom}px;
-
-	&.prod-warning-enhance {
-		background: rgb(255, 245, 201);
-	}
-
-	&.light {
-		justify-content: space-between;
-		position: fixed;
-			top: 0;
-			left: 0;
-		transition: transform 0.3s ease;
-		z-index: 5;
-		padding-left: calc(250px + 40px);
-
-		padding-top: 15px;
-		padding-bottom: 15px;
-	}
-	
-	.permalinks {
-		line-height: 1.3em;
-		
-		span {
-			font-weight: bold;
-			text-transform: uppercase;
-		}
-	}
-
-	.last-modif-date {
-		margin: 20px 0 10px 0;
-		font-weight: ${cssVars.fontWeightMedium};
-	}
-
-	.popout {
-		position: absolute;
-		bottom:0;
-		right: 30px;
-
-		display: flex;
-		transform: translate(0, 100%);
-	}
-`;
 
 
 export default function FormHeaderCore(props) {
@@ -66,23 +20,10 @@ export default function FormHeaderCore(props) {
 
 	const headerRef = useRef();
 
-	// useEffect(() => {
-	// 	const onResize = () => {
-	// 		const h = headerRef.current.getBoundingClientRect().height;
-	// 		// this.context.setHeight(this.props.isLight, h, marginBottom);
-	// 	};
-	// 	window.addEventListener('resize', onResize);
-
-	// 	return () => {
-	// 		window.removeEventListener('resize', onResize);
-	// 	};
-
-	// }, []);
-
 	useEffect(() => {
 		if (props.reportDimensions) {
 			const rect = headerRef.current.getBoundingClientRect();
-			props.reportDimensions(rect.width, rect.height, { bottom: marginBottom });
+			props.reportDimensions(rect.width, rect.height, { bottom: headerMarginBottom });
 		}
 	}, []);
 	
@@ -162,7 +103,7 @@ export default function FormHeaderCore(props) {
 
 	// console.log(this.props.isProdEnv);
 	return (
-		<StyledHeader className={classList.join(' ')} style={style} ref={headerRef}>
+		<Header className={classList.join(' ')} style={style} ref={headerRef}>
 			<HeaderTexts columns="8">
 				{infos}
 			</HeaderTexts>
@@ -176,7 +117,7 @@ export default function FormHeaderCore(props) {
 				{previewProcessor}
 				{languageToggler}
 			</div>
-		</StyledHeader>
+		</Header>
 	);
 
 }

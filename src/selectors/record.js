@@ -6,10 +6,12 @@ const recordIdSelector = (state, props) => props.recordId;
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 const tableIdSelector = (state, props) => props.tableId;
+const tableSelector = (state, props) => props.table;
 const visibleStateSelector = state => state.freestone.fieldgroup.visibleState;
 
 const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
 const recordsSelector = state => state.freestone.recordForm.records;
+const recordsQuickeditSelectorRaw = state => state.freestone.recordQuickedit;
 
 function makeTableRecordSelector(tableSchemaSelector) {
 	return createSelector(
@@ -110,3 +112,22 @@ export function activeGroupMapStateToProps() {
 		return selectorInst(state, props);
 	};
 }
+
+
+export function makeRecordQuickeditSelector(tableSchemaSelector) {
+	return createSelector(
+		[tableSchemaSelector, recordsQuickeditSelectorRaw],
+		(schema, records) => {
+			const { table } = schema;
+			return table && records[table.id];
+		}
+	);
+}
+
+
+export const makeRecordQuickeditMapStateToProps = () => {
+	const selectorInst = makeRecordQuickeditSelector(tableSchemaMapStateToProps());
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+};

@@ -9,7 +9,7 @@ import PermissionsForm from '../../containers/permissions/PermissionsForm';
 import FormHeaderCore from '../../containers/header/FormHeaderCore'; 
 
 import FormHeaderContent from '../header/FormHeaderContent';
-import FixedHeader from '../header/FixedHeader'; 
+import FixedHeader from '../header/FixedHeader';
 import InScroll from '../../containers/utils/InScroll'; 
 import { Button } from '../../styles/Button';
 import { MainZone } from '../../styles/Grid';

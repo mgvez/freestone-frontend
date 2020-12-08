@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 export const useImageDimensions = src => {
 	const [naturalWidth, setNaturalWidth] = useState(null);
 	const [naturalHeight, setNaturalHeight] = useState(null);
 
-	useMemo(() => {
+	useEffect(() => {
 		if (!src) return;
 		const img = document.createElement('img');
 		img.src = src;
