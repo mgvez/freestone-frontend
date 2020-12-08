@@ -85,7 +85,8 @@ export const listRecordsSelector = createSelector(
 		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = searchParams;
 
 		const nPages = Math.ceil(nRecords / pageSize);
-
+		console.log(tableName);
+		console.log(schema);
 		const { table } = schema;
 
 		let groupedRecords;

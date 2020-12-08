@@ -116,9 +116,9 @@ export function activeGroupMapStateToProps() {
 
 export function makeRecordQuickeditSelector(tableSchemaSelector) {
 	return createSelector(
-		[tableSchemaSelector, recordsQuickeditSelectorRaw],
-		(schema, records) => {
-			const { table } = schema;
+		[tableSchemaSelector, tableSelector, recordsQuickeditSelectorRaw],
+		(schema, resolvedTable, records) => {
+			const table = resolvedTable || schema.table;
 			return table && records[table.id];
 		}
 	);
