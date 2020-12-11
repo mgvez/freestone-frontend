@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 
 import SaveQuickedit from '../../components/process/SaveQuickedit';
 
-import { saveRecord } from '../../actions/save';
-import { buildSaveRecordSelector } from '../../selectors/buildRecord';
+import { saveQuickedit } from '../../actions/save';
+import { buildSaveQuickeditRecordSelector } from '../../selectors/buildRecord';
 
 export default connect(
-	buildSaveRecordSelector,
-	dispatch => bindActionCreators({ saveRecord }, dispatch)
+	buildSaveQuickeditRecordSelector,
+	dispatch => bindActionCreators({ saveQuickedit }, dispatch)
 )(SaveQuickedit);

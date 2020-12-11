@@ -10,7 +10,9 @@ export default function QuickeditField(props) {
 		const v = (e && e.target) ? e.target.value : e;
 		props.setQuickeditFieldVal(props.field.table_id, props.recordId, props.field.id, v);
 	};
-	return <TextInput val={props.editedVal || props.val} changeVal={changeVal} />;
+	const hasChanged = props.editedVal !== undefined;
+
+	return <TextInput val={hasChanged ? props.editedVal : props.val} changeVal={changeVal} />;
 
 }
 

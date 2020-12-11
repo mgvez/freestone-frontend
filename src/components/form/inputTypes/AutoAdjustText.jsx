@@ -36,7 +36,7 @@ export default class AutoAdjustText extends Component {
 		const area = this.inputRef.current;
 		if (!area) return;
 		if (area.scrollHeight > area.clientHeight) {
-			let height = (area.scrollHeight + 10);
+			let height = (area.scrollHeight + 2);
 			if (height > MAX_HEIGHT) height = MAX_HEIGHT;
 			if (height === this.state.height) return;
 			this.setState({

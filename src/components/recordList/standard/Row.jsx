@@ -24,15 +24,18 @@ const SelfjoinContentCell = styled.td`
 `;
 
 const Interaction = styled.td`
-	width: 250px;
+	width: 200px;
 `;
+
 
 export default function Row(props) {
 	if (!props.values) return null;
+
 	const prikeyVal = props.values && props.values[PRIKEY_ALIAS];
 	const recordRow = useRef();
 	const animationRef = useRef();
-	const { fields, values, table, hasCustomOrder, isLarge, isQuickEdit } = props;
+	const { fields, values, table, hasCustomOrder, isLarge, isQuickEdit, quickeditedRecord } = props;
+	const rowClass = isQuickEdit && quickeditedRecord ? 'edited' : null;
 
 	const animate = () => {
 		const animation = animationRef.current = animationRef.current || new Promise((resolve) => {
@@ -104,7 +107,7 @@ export default function Row(props) {
 			content = getFieldElements(table, fields, values, isQuickEdit);
 
 			return (
-				<tr ref={recordRow} onMouseOver={handleHover}>
+				<tr ref={recordRow} onMouseOver={handleHover} className={rowClass}>
 					{content}
 					{interactions}
 				</tr>
@@ -114,7 +117,7 @@ export default function Row(props) {
 		//ROW NORMAL, MOBILE
 		content = getFieldElements(table, fields, values, isQuickEdit, 'div', { className: 'mobile-cell' });
 		return (
-			<tr ref={recordRow}>
+			<tr ref={recordRow} className={rowClass}>
 				<td>
 					{content}
 				</td>
@@ -137,6 +140,7 @@ Row.propTypes = {
 	isHovering: PropTypes.bool,
 	hasCustomOrder: PropTypes.bool,
 	swappedRecords: PropTypes.object,
+	quickeditedRecord: PropTypes.object,
 
 	handleHover: PropTypes.func,
 	swapAnimated: PropTypes.func,

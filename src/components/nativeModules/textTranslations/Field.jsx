@@ -22,7 +22,7 @@ const Container = styled.div`
 			position: relative;
 			left: 50px;
 			width: calc(100% - 50px);
-			height: 40px;
+
 			margin-bottom: 0;
 			/* padding-left: 60px; */
 		}

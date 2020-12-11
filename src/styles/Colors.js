@@ -19,6 +19,7 @@ const rgbTeal = hexToRgb(teal62);
 const tealLight = `rgba(${rgbTeal}, 0.7)`;
 
 const yellow76 = '#f8ac59';
+const emphasisBackground = '#c8dfe8';
 
 const red58 = '#ed5565';
 
@@ -47,6 +48,7 @@ const colors = {
 	ctaPrimary: teal62,
 	accentPrimary: teal62,
 	accentPrimaryLight: tealLight,
+	emphasisBackground,
 	accentSecondary: blue26,
 	accentPrimaryAlt: teal72,
 	warnPrimary: yellow76,

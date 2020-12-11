@@ -61,20 +61,36 @@ const ListTable = styled.table`
 	}
 
 	th {
-		padding: 20px 20px;
+		padding: 20px 4px;
 		background: ${colors.backgroundMainAccent};
 		font-weight: ${cssVariables.fontWeightBold}
 	}
 
+	th, td {
+		&:last-child {
+			padding-right: 10px;
+		}
+		&:first-child {
+			padding-left: 10px;
+		}
+	}
+
 	td {
-		padding: 12px 20px;
-		vertical-align: middle;
+		padding: 4px;
+		vertical-align: top;
 		background: ${colors.white};
+		
 
 		&.selfjoin-label{
 			span {
 				margin-right: 0.35em;
 			}
+		}
+	}
+
+	tr.edited {
+		td {
+			background: ${colors.emphasisBackground};
 		}
 	}
 

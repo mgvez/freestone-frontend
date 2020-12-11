@@ -29,6 +29,6 @@ export const GridItem = styled.div`
 `;
 
 export const MainZone = styled.section`
-	width: calc(100% - 80px);
-	margin: 40px auto;
+	width: calc(100% - 30px);
+	margin: 15px auto;
 `;

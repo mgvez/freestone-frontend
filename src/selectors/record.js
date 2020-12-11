@@ -1,8 +1,9 @@
 
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
+import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 
-const recordIdSelector = (state, props) => props.recordId;
+const recordIdSelector = (state, props) => (props.recordId || props.values && props.values[PRIKEY_ALIAS]);
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 const tableIdSelector = (state, props) => props.tableId;
@@ -111,7 +112,7 @@ export function activeGroupMapStateToProps() {
 }
 
 
-export function makeRecordQuickeditSelector(tableSchemaSelector) {
+function makeTableRecordQuickeditSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, tableSelector, recordsQuickeditSelectorRaw],
 		(tableSchema, resolvedTable, records) => {
@@ -122,9 +123,23 @@ export function makeRecordQuickeditSelector(tableSchemaSelector) {
 }
 
 
-export const makeRecordQuickeditMapStateToProps = () => {
-	const selectorInst = makeRecordQuickeditSelector(tableSchemaMapStateToProps());
+export const makeTableRecordsQuickeditMapStateToProps = () => {
+	const selectorInst = makeTableRecordQuickeditSelector(tableSchemaMapStateToProps());
 	return (state, props) => {
 		return selectorInst(state, props);
 	};
 };
+
+
+export function makeRecordQuickeditSelector() {
+	const tableRecordQuickeditSelector = makeTableRecordsQuickeditMapStateToProps();
+	return createSelector(
+		[tableRecordQuickeditSelector, recordIdSelector],
+		(tableRecords, recordId) => {
+			return {
+				quickeditedRecord: tableRecords && tableRecords[recordId],
+			};
+		}
+	);
+}
+

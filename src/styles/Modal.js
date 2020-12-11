@@ -9,7 +9,7 @@ export default {
 		backgroundColor: 'rgba(255, 255, 255, 0.75)',
 		zIndex: 3000,
 	},
-	content: {
+	xcontent: {
 		position: 'absolute',
 		top: '40px',
 		left: '40px',

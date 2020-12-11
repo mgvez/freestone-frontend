@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 
+import Modal from 'react-modal';
+
+import customStyle from '../../styles/Modal.js';
+
+import SaveQuickedit from '../../containers/process/SaveQuickedit';
 import Paging from './Paging';
 import StandardList from './standard/StandardList';
 import BankList from './bank/BankList';
@@ -23,12 +28,19 @@ export default function List(props) {
 
 	const [isLarge, setIsLarge] = useState(true);
 	const [isQuickEdit, setIsQuickEdit] = useState(false);
+	const [isSavingRequested, setIsSaving] = useState(null);
+	const isSaving = isSavingRequested && props.table && isSavingRequested === props.table.id;
+
 	const toggleQuickEdit = () => {
 		const newIsQuickEdit = !isQuickEdit;
 		// close side nav if quick editing
 		if (newIsQuickEdit) props.toggleNavVisibility(false);
 		setIsQuickEdit(newIsQuickEdit);
 	};
+
+	const onSaved = useCallback(() => {
+		// setIsSaving(false);
+	});
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -45,6 +57,11 @@ export default function List(props) {
 	useEffect(() => {
 		if (!props.table) props.fetchTable(props.tableName);
 	});
+
+	useEffect(() => {
+		setIsSaving(false);
+		setIsQuickEdit(false);
+	}, [props.table]);
 	
 	const getNumRecords = () => {
 		return props.groupedRecords && props.groupedRecords.reduce((total, gr) => total + gr.records.reduce((subtotal) => subtotal + 1, 0), 0);
@@ -71,11 +88,11 @@ export default function List(props) {
 			<Icon icon={isQuickEdit ? 'list' : 'bolt'} />{isQuickEdit ? 'Default list' : 'Quick edit'}
 		</Button>
 	);
-	const quickEditSaveButton = isQuickEdit && props.nQuickedited && (
-		<Button key="save" cta round onClick={toggleQuickEdit}>
+	const quickEditSaveButton = isQuickEdit && (props.nQuickedited && (
+		<Button key="save" cta round onClick={() => setIsSaving(props.table.id)}>
 			<Icon icon="save" />{`Save (${props.nQuickedited})`}
 		</Button>
-	);
+	)) || null;
 
 	let records = null;
 	// if record list is loaded, display records. Bank records are displayed differently than regular records.
@@ -99,6 +116,25 @@ export default function List(props) {
 		}
 	}
 
+	let savingComponent = null;
+	if (isSaving) {
+		savingComponent = (
+			<Modal
+				isOpen
+				ariaHideApp={false}
+				closeTimeoutMS={300}
+				contentLabel="."
+				style={customStyle}
+			>
+				<SaveQuickedit
+					tableId={props.table.id}
+					key={props.table.id}
+					onSaved={onSaved}
+				/>
+			</Modal>
+		);
+	}
+
 	const needsFetch = !props.groupedRecords || props.needsFetch;
 	// console.log('render list needs fetch %s', needsFetch);
 	const output = (
@@ -120,7 +156,7 @@ export default function List(props) {
 			/>
 
 			<TablePermissions table={props.table} />
-			<MainZone>
+			<MainZone className={isSaving && 'disabled'}>
 				
 				<ListSearch 
 					key={`search_${props.tableName}`}
@@ -144,7 +180,7 @@ export default function List(props) {
 					tableName={props.tableName}
 				/>
 			</MainZone>
-			
+			{savingComponent}
 		</section>
 	);
 

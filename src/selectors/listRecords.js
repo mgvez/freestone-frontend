@@ -3,7 +3,7 @@ import { tableSchemaSelector, tableNameSelector } from './tableSchema';
 
 import { getRecordLabel } from './recordLabel';
 import { searchParamsSelector } from './route';
-import { makeRecordQuickeditMapStateToProps } from './record';
+import { makeTableRecordsQuickeditMapStateToProps } from './record';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
 
@@ -16,7 +16,7 @@ const recordIdSelector = (state, props) => props.recordId;
 
 function makeQuickeditValSelector() {
 	return createSelector(
-		[makeRecordQuickeditMapStateToProps(), fieldSelector, recordIdSelector],
+		[makeTableRecordsQuickeditMapStateToProps(), fieldSelector, recordIdSelector],
 		(recordsQuickedit, field, recordId) => {
 			const { id: field_id } = field;
 			const editedVal = recordsQuickedit && recordsQuickedit[recordId] && recordsQuickedit[recordId][field_id];
@@ -67,7 +67,7 @@ function reorderSelfTree(records) {
 }
 
 const nQuickeditedSelector = createSelector(
-	[makeRecordQuickeditMapStateToProps()],
+	[makeTableRecordsQuickeditMapStateToProps()],
 	(recordsQuickedit) => {
 		if (!recordsQuickedit) return 0;
 		return Object.keys(recordsQuickedit).length;

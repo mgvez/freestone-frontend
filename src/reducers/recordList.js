@@ -1,7 +1,7 @@
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { RECORD_LIST_API, SWAPPED_ANIMATED, RECORD_INFO_API } from '../actions/record';
 import { CLEAR_LIST } from '../actions/nav';
-import { SAVE_RECORD_API, SWAP_ORDER_API, DELETE_RECORD_API, SAVE_SINGLE_VALUE_RECORD_API } from '../actions/save';
+import { SAVE_RECORD_API, SWAP_ORDER_API, DELETE_RECORD_API, SAVE_SINGLE_VALUE_RECORD_API, FINISH_SAVE_QUICKEDIT } from '../actions/save';
 import { CLEAR_DATA } from '../actions/dev';
 
 const initialState = {
@@ -24,6 +24,7 @@ export default function(state = initialState, action) {
 	case LOGOUT_API.SUCCESS:
 	case LOGOUT_API.REQUEST:
 	case DELETE_RECORD_API.SUCCESS:
+	case FINISH_SAVE_QUICKEDIT:
 		return initialState;
 	case SWAPPED_ANIMATED:
 		return { ...state, swappedRecords: null };

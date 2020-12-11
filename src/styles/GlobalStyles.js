@@ -45,6 +45,12 @@ const GlobalStyle = createGlobalStyle`
 		line-height: 1.3;
 	}
 
+	.disabled {
+		opacity: 0.5;
+		pointer-events: none; 
+		cursor: default;
+	}
+
 	${ReactComponents}
 
 	.mce-tinymce {

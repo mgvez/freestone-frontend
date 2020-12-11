@@ -26,7 +26,7 @@ export function getFieldElements(table, fields, values, isQuickEdit, elementType
 	return fields.map((field) => {
 		if (field.isGroup || field.type === 'order') return null;
 		let val = values[field.listAlias];
-
+		let maxWidth;
 		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
 			val = (
 				<FileThumbnail
@@ -38,6 +38,7 @@ export function getFieldElements(table, fields, values, isQuickEdit, elementType
 					type={field.type}
 				/>
 			);
+			maxWidth = `${MAX_THUMB_SIZE}px`;
 		} else if (field.type === TYPE_BANKIMG) {
 			val = (
 				<BankImgThumbnail
@@ -56,14 +57,21 @@ export function getFieldElements(table, fields, values, isQuickEdit, elementType
 		} else if (isQuickEdit) {
 			val = <QuickeditField recordId={values[PRIKEY_ALIAS]} val={val} table={table} field={field} />;
 		}
-		
+
+		const attr = { 
+			...options,
+			style: {
+				...(options.style || {}),
+				maxWidth,
+			},
+		};
 
 		return React.createElement(
 			elementType,
 			{
 				key: `val_${field.id}}`,
 				'data-field-label': field.label,
-				...options,
+				...attr,
 			},
 			val
 		);
