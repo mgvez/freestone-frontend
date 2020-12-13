@@ -1,15 +1,17 @@
 
+const overlay = {
+	position: 'fixed',
+	top: 0,
+	left: 0,
+	right: 0,
+	bottom: 0,
+	backgroundColor: 'rgba(255, 255, 255, 0.5)',
+	zIndex: 3000,
+};
+
 export default {
-	overlay: {
-		position: 'fixed',
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
-		backgroundColor: 'rgba(255, 255, 255, 0.75)',
-		zIndex: 3000,
-	},
-	xcontent: {
+	overlay,
+	content: {
 		position: 'absolute',
 		top: '40px',
 		left: '40px',
@@ -22,6 +24,28 @@ export default {
 		borderRadius: '4px',
 		outline: 'none',
 		padding: '20px',
+	},
+};
+
+export const transparentModal = {
+	overlay,
+	content: {
+		position: 'absolute',
+		top: '40px',
+		left: '40px',
+		right: '40px',
+		bottom: '40px',
+		overflow: 'auto',
+		WebkitOverflowScrolling: 'touch',
+		border: 0,
+		background: 'none',
+		outline: 'none',
+		padding: '20px',
+		color: 'black',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignContent: 'center',
 	},
 };
 

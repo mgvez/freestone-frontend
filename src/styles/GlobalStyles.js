@@ -46,7 +46,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 
 	.disabled {
-		opacity: 0.5;
+		opacity: 0.9;
 		pointer-events: none; 
 		cursor: default;
 	}

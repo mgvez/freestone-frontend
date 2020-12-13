@@ -4,7 +4,7 @@ import DocumentMeta from 'react-document-meta';
 
 import Modal from 'react-modal';
 
-import customStyle from '../../styles/Modal.js';
+import { transparentModal } from '../../styles/Modal.js';
 
 import SaveQuickedit from '../../containers/process/SaveQuickedit';
 import Paging from './Paging';
@@ -39,7 +39,7 @@ export default function List(props) {
 	};
 
 	const onSaved = useCallback(() => {
-		// setIsSaving(false);
+		setIsSaving(false);
 	});
 
 	useEffect(() => {
@@ -124,7 +124,7 @@ export default function List(props) {
 				ariaHideApp={false}
 				closeTimeoutMS={300}
 				contentLabel="."
-				style={customStyle}
+				style={transparentModal}
 			>
 				<SaveQuickedit
 					tableId={props.table.id}

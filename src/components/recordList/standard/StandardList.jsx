@@ -77,7 +77,7 @@ const ListTable = styled.table`
 
 	td {
 		padding: 4px;
-		vertical-align: top;
+		vertical-align: middle;
 		background: ${colors.white};
 		
 
@@ -85,6 +85,13 @@ const ListTable = styled.table`
 			span {
 				margin-right: 0.35em;
 			}
+		}
+	}
+
+	&.quickedit {
+		td {
+			vertical-align: top;
+
 		}
 	}
 
@@ -125,7 +132,7 @@ export default function StandardList(props) {
 		</thead>);
 	}
 	return (
-		<ListTable onMouseLeave={hideAllHovers}>
+		<ListTable onMouseLeave={hideAllHovers} className={props.isQuickEdit && 'quickedit'}>
 			{heading}
 			{
 				props.groupedRecords.map((group, groupIdx) => {

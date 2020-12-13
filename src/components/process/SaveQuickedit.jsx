@@ -15,26 +15,22 @@ export default function SaveQuickedit(props) {
 		const onSaved = props.saveQuickedit(props.table, props.tree, props.records, props.onSaved);
 	}, [props.table, props.records, props.tree, props.onSaved]);
 	
-	// // console.log(this.props.saveState);
-	// const isError = this.props.saveState && !!this.props.saveState.status.error;
-	// let msgDisplay = null;
-	// if (isError) {
-	// 	msgDisplay = (<div>
-	// 		<ErrorTitle>{this.props.saveState.status.msg}</ErrorTitle>
-	// 		<ErrorMessage>{this.props.saveState.status.error}</ErrorMessage>
-	// 		<Button onClick={this.props.cancelSave} danger="true"><Icon icon="pencil-alt" /> <span>Go back to form</span></Button>
-	// 	</div>);
-	// } else {
-	// 	msgDisplay = (<div>
-	// 		{this.props.saveState && this.props.saveState.status.msg}
-	// 	</div>);
-	// }
-
-	// if (this.props.isTemporary) return msgDisplay;
+	const isError = props.saveState && !!props.saveState.status.error;
+	let msgDisplay = null;
+	if (isError) {
+		msgDisplay = (<div>
+			<ErrorTitle>{props.saveState.status.msg}</ErrorTitle>
+			<ErrorMessage>{props.saveState.status.error}</ErrorMessage>
+		</div>);
+	} else {
+		msgDisplay = (<div>
+			Saved {nRecordTotal - props.nRecords} / {nRecordTotal}
+		</div>);
+	}
 
 	return (
 		<section className="saving">
-			<Heading2>Saved {nRecordTotal - props.nRecords} / {nRecordTotal}</Heading2>
+			{msgDisplay}
 		</section>
 	);
 }
@@ -44,6 +40,7 @@ SaveQuickedit.propTypes = {
 	table: PropTypes.object,
 	records: PropTypes.object,
 	tree: PropTypes.object,
+	saveState: PropTypes.object,
 	nRecords: PropTypes.number,
 
 	saveQuickedit: PropTypes.func,
