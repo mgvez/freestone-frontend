@@ -9,6 +9,7 @@ const overlay = {
 	zIndex: 3000,
 };
 
+
 export default {
 	overlay,
 	content: {
@@ -48,4 +49,3 @@ export const transparentModal = {
 		alignContent: 'center',
 	},
 };
-

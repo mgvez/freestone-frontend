@@ -66,6 +66,19 @@ const GlobalStyle = createGlobalStyle`
 		${unorderedLists};
 	}
 
+	.ReactModal__Overlay {
+		opacity: 0;
+		transition: opacity 100ms ease-in-out;
+	}
+	
+	.ReactModal__Overlay--after-open{
+		opacity: 1;
+	}
+	
+	.ReactModal__Overlay--before-close{
+		opacity: 0;
+	}
+
 `;
 
 export default GlobalStyle;

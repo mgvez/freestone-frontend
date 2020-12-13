@@ -29,6 +29,7 @@ export default function List(props) {
 	const [isLarge, setIsLarge] = useState(true);
 	const [isQuickEdit, setIsQuickEdit] = useState(false);
 	const [isSavingRequested, setIsSaving] = useState(null);
+	const [isSaved, setIsSaved] = useState(false);
 	const isSaving = isSavingRequested && props.table && isSavingRequested === props.table.id;
 
 	const toggleQuickEdit = () => {
@@ -39,6 +40,11 @@ export default function List(props) {
 	};
 
 	const onSaved = useCallback(() => {
+		setIsSaved(true);
+	});
+
+	const onSaveCleanup = useCallback(() => {
+		setIsSaved(false);
 		setIsSaving(false);
 	});
 
@@ -60,6 +66,7 @@ export default function List(props) {
 
 	useEffect(() => {
 		setIsSaving(false);
+		setIsSaved(false);
 		setIsQuickEdit(false);
 	}, [props.table]);
 	
@@ -120,11 +127,12 @@ export default function List(props) {
 	if (isSaving) {
 		savingComponent = (
 			<Modal
-				isOpen
+				isOpen={!isSaved}
 				ariaHideApp={false}
-				closeTimeoutMS={300}
+				closeTimeoutMS={100}
 				contentLabel="."
 				style={transparentModal}
+				onAfterClose={onSaveCleanup}
 			>
 				<SaveQuickedit
 					tableId={props.table.id}
@@ -134,6 +142,7 @@ export default function List(props) {
 			</Modal>
 		);
 	}
+	console.log('saving %s, saved %s', isSaving, isSaved);
 
 	const needsFetch = !props.groupedRecords || props.needsFetch;
 	// console.log('render list needs fetch %s', needsFetch);

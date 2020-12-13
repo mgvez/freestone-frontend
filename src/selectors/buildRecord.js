@@ -165,25 +165,25 @@ export const buildSaveQuickeditRecordSelector = createSelector(
 		const tableId = table.id;
 
 		const recordIds = Object.keys(quickeditRecords);
-		const nRecords = recordIds.length;
-		const recordId = recordIds.shift();
 
-		const tree = (nRecords || null) && {
-			tableId,
-			recordId,
-		};
+		const builtRecords = recordIds.map(recordId => {
+			return {
+				tree: {
+					tableId,
+					recordId,
+				},
+				records: {
+					[tableId]: {
+						[recordId]: quickeditRecords[recordId],
+					},
+				},
+			};
 
-		const records = (nRecords || null) && {
-			[tableId]: {
-				[recordId]: quickeditRecords[recordId],
-			},
-		};
+		});
 
 		return {
 			table,
-			records,
-			tree,
-			nRecords,
+			builtRecords,
 			saveState,
 		};
 	},

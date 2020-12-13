@@ -8,12 +8,15 @@ import { Heading2, ErrorTitle, ErrorMessage } from '../../styles/Texts';
 
 export default function SaveQuickedit(props) {
 
-	const [nRecordTotal] = useState(props.nRecords);
+	const [nRecordTotal] = useState(props.builtRecords.length);
 
-	// console.log(props);
+	// init save with first list of records passed
 	useEffect(() => {
-		const onSaved = props.saveQuickedit(props.table, props.tree, props.records, props.onSaved);
-	}, [props.table, props.records, props.tree, props.onSaved]);
+		const t = setTimeout(() => {
+			props.saveQuickedit(props.table, props.builtRecords, props.onSaved);
+		}, 100);
+		return () => clearTimeout(t);
+	}, []);
 	
 	const isError = props.saveState && !!props.saveState.status.error;
 	let msgDisplay = null;
@@ -24,7 +27,7 @@ export default function SaveQuickedit(props) {
 		</div>);
 	} else {
 		msgDisplay = (<div>
-			Saved {nRecordTotal - props.nRecords} / {nRecordTotal}
+			Saved {nRecordTotal - props.builtRecords.length} / {nRecordTotal}
 		</div>);
 	}
 
@@ -38,8 +41,12 @@ export default function SaveQuickedit(props) {
 SaveQuickedit.propTypes = {
 	tableId: PropTypes.number,
 	table: PropTypes.object,
-	records: PropTypes.object,
-	tree: PropTypes.object,
+	builtRecords: PropTypes.arrayOf( 
+		PropTypes.shape({
+			records: PropTypes.object,
+			tree: PropTypes.object,
+		}),
+	),
 	saveState: PropTypes.object,
 	nRecords: PropTypes.number,
 
