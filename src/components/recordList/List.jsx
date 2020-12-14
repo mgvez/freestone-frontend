@@ -4,7 +4,7 @@ import DocumentMeta from 'react-document-meta';
 
 import Modal from 'react-modal';
 
-import { transparentModal } from '../../styles/Modal.js';
+import { transparentModal, MODAL_TRANSITION_MS } from '../../styles/Modal.js';
 
 import SaveQuickedit from '../../containers/process/SaveQuickedit';
 import Paging from './Paging';
@@ -64,6 +64,7 @@ export default function List(props) {
 		if (!props.table) props.fetchTable(props.tableName);
 	});
 
+	// reset saving state when changing table
 	useEffect(() => {
 		setIsSaving(false);
 		setIsSaved(false);
@@ -129,7 +130,7 @@ export default function List(props) {
 			<Modal
 				isOpen={!isSaved}
 				ariaHideApp={false}
-				closeTimeoutMS={100}
+				closeTimeoutMS={MODAL_TRANSITION_MS}
 				contentLabel="."
 				style={transparentModal}
 				onAfterClose={onSaveCleanup}

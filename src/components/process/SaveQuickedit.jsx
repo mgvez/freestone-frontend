@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Header, HeaderTexts } from '../../styles/Header';
-import { Button } from '../../styles/Button';
-import { Heading2, ErrorTitle, ErrorMessage } from '../../styles/Texts';
+import { MODAL_TRANSITION_MS } from '../../styles/Modal';
+import { ErrorTitle, ErrorMessage } from '../../styles/Texts';
 
 
 export default function SaveQuickedit(props) {
@@ -14,7 +13,7 @@ export default function SaveQuickedit(props) {
 	useEffect(() => {
 		const t = setTimeout(() => {
 			props.saveQuickedit(props.table, props.builtRecords, props.onSaved);
-		}, 100);
+		}, MODAL_TRANSITION_MS);
 		return () => clearTimeout(t);
 	}, []);
 	

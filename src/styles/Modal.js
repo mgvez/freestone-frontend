@@ -1,3 +1,4 @@
+export const MODAL_TRANSITION_MS = 150;
 
 const overlay = {
 	position: 'fixed',
