@@ -91,7 +91,7 @@ export default function List(props) {
 
 	const addButton = props.canAdd && !isQuickEdit && <Button key="add" onClick={addRecord} round><Icon icon="plus-circle" /> New record</Button>;
 	
-	const quickEditButton = props.table.isBatchEditable && (
+	const quickEditButton = props.table.isQuickEditable && (
 		<Button key="quickedit" warn round onClick={toggleQuickEdit}>
 			<Icon icon={isQuickEdit ? 'list' : 'bolt'} />{isQuickEdit ? 'Default list' : 'Quick edit'}
 		</Button>
@@ -111,7 +111,7 @@ export default function List(props) {
 			records = (<StandardList
 				isLarge={isLarge}
 				isQuickEdit={isQuickEdit}
-				fields={isQuickEdit ? props.batchEditableFields : props.searchableFields}
+				fields={isQuickEdit ? props.quickEditableFields : props.searchableFields}
 				isQuickEdit={isQuickEdit}
 				{...props}
 			/>);
@@ -214,7 +214,7 @@ List.propTypes = {
 	tableName: PropTypes.string,
 	table: PropTypes.object,
 	groupedRecords: PropTypes.array,
-	batchEditableFields: PropTypes.array,
+	quickEditableFields: PropTypes.array,
 	searchableFields: PropTypes.array,
 	nPages: PropTypes.number,
 	curPage: PropTypes.number,
