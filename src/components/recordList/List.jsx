@@ -143,7 +143,6 @@ export default function List(props) {
 			</Modal>
 		);
 	}
-	console.log('saving %s, saved %s', isSaving, isSaved);
 
 	const needsFetch = !props.groupedRecords || props.needsFetch;
 	// console.log('render list needs fetch %s', needsFetch);

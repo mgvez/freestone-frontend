@@ -10,16 +10,22 @@ import { isNew } from '../utils/UniqueId';
 
 
 function removeRecords(state, recordsToRemove) {
+	console.log(recordsToRemove);
+	console.log(state);
 	if (!recordsToRemove) return state;
-	return recordsToRemove.reduce((carry, record) => {
+	const res = recordsToRemove.reduce((carry, record) => {
 		//when getting records from the database, the original record is either the db id OR the temp id if it was a new record. We need to remove that one, as the records on the front are referred to by their temp id until they are saved.
 		const { tableId, recordId, recordOriginalId } = record;
+		console.log('removing %s rec %s (%s)', tableId, recordId, recordOriginalId);
 		const finalRecordId = recordOriginalId || recordId;
 		const tableRecords = { ...carry[tableId] };
 		delete tableRecords[finalRecordId];
 		carry[tableId] = tableRecords;
 		return carry;
 	}, { ...state });
+	console.log('after');
+	console.log(res);
+	return res;
 }
 
 /**
@@ -204,7 +210,7 @@ function records(state = {}, action) {
 	case DELETE_RECORD_API.SUCCESS: {
 		const newState = removeRecords(state, action.data.records);
 		if (!action.data.deleted) return newState;
-		return removeRecords(state, action.data.deleted);
+		return removeRecords(newState, action.data.deleted);
 	}
 	case SAVE_PREVIEW_API.SUCCESS:
 		return receivePreviewIds(state, action.data.records);
