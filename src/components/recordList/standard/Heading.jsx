@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import ListNavLink from '../../../containers/recordList/ListNavLink';
@@ -9,70 +9,67 @@ import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../../freestone/schemaProp
 const nonOrderable = [TYPE_IMG, TYPE_BANKIMG, TYPE_FILE];
 
 
-export default class Heading extends Component {
-	static propTypes = {
-		fields: PropTypes.array,
-		isSelfTree: PropTypes.bool,
-		fetchList: PropTypes.func,
-		tableName: PropTypes.string,
-		params: PropTypes.shape({
-			page: PropTypes.string,
-			search: PropTypes.string,
-			filter: PropTypes.string,
-			order: PropTypes.string,
-		}),
-	};
+export default function Heading(props) {
 
-	constructor(props) {
-		super(props);
-		this.state = { windowWidth: 0, isLarge: true, hoveringId: 0 };
-	}
 
-	getLink = (field) => {
+	const getLink = (field) => {
+		const language = field.language ? `(${field.language})` : null;
 		if (~nonOrderable.indexOf(field.type)) {
-			return <span>{field.label}</span>;
+			return <span>{field.label} {language}</span>;
 		}
 		let iconClass = null;
 
-		const current = Number(this.props.params.order || 0);
+		const current = Number(props.params.order || 0);
 		if (Math.abs(current) === Math.abs(field.id)) {
 			if (current) iconClass = current < 1 ? 'angle-down' : 'angle-up';
 		}
 		const icon = iconClass && <Icon icon={iconClass} side="right" />;
-		return <ListNavLink tableName={this.props.tableName} order={field.id} activeClassName="active" className="">{field.label} {icon}</ListNavLink>;
+		return <ListNavLink tableName={props.tableName} order={field.id} activeClassName="active" className="">{field.label} {language} {icon}</ListNavLink>;
 
-	}
+	};
 
-	render() {
-
-		//si self tree, cells par defaut
-		if (this.props.isSelfTree) {
-			return (
-				<tr>
-					<th>Level</th>
-					<th>Item</th>
-					<th>Functions</th>
-				</tr>
-			);
-		}
-		//sinon, une cell pour chaque field de recherche. Si aucun, en ajoute un vide pour mettre le label du record dedans
-		// console.log(this.props.fields);
-		let cells;
-		if (this.props.fields.length) {
-			cells = this.props.fields.map((field) => {
-				if (field.isGroup || field.type === 'order') return null;
-				const link = this.getLink(field);
-				return <th key={`fld_${field.id}`}>{link}</th>;
-			});
-		} else {
-			cells = <th />;
-		}
+	//si self tree, cells par defaut
+	if (props.isSelfTree) {
 		return (
 			<tr>
-				{cells}
+				<th>Level</th>
+				<th>Item</th>
 				<th>Functions</th>
 			</tr>
 		);
-
 	}
+	//sinon, une cell pour chaque field de recherche. Si aucun, en ajoute un vide pour mettre le label du record dedans
+	// console.log(this.props.fields);
+	let cells;
+	if (props.fields.length) {
+		cells = props.fields.map((field) => {
+			if (field.isGroup || field.type === 'order') return null;
+			const link = getLink(field);
+			return <th key={`fld_${field.id}`}>{link}</th>;
+		});
+	} else {
+		cells = <th />;
+	}
+	return (
+		<tr>
+			{cells}
+			{!props.isQuickEdit && <th>Functions</th>}
+		</tr>
+	);
+
+
 }
+
+Heading.propTypes = {
+	fields: PropTypes.array,
+	isSelfTree: PropTypes.bool,
+	isQuickEdit: PropTypes.bool,
+	fetchList: PropTypes.func,
+	tableName: PropTypes.string,
+	params: PropTypes.shape({
+		page: PropTypes.string,
+		search: PropTypes.string,
+		filter: PropTypes.string,
+		order: PropTypes.string,
+	}),
+};

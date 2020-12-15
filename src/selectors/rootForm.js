@@ -43,9 +43,7 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 function makeSelector() {
 	return createSelector(
 		[tableSchemaMapStateToProps(), paramsSelector, recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, currentPreviewSelector],
-		(schema, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, currentPreview) => {
-
-			const { table } = schema;
+		(table, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, currentPreview) => {
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
 
 			//loaded records have a general label for the records, use this as the heading label for the form
@@ -57,15 +55,9 @@ function makeSelector() {
 				});
 				return candidate && candidate[0] && candidate[0].label;
 			}, null);
-			// console.log(allLoadedRecords);
-			// console.log(thisRecord);
 
 			//if the current preview is for the current record, we are viewing preview
 			const isViewingPreview = table && currentPreview && currentPreview.tableId === table.id && currentPreview.recordId === recordId;
-
-			// console.log(isViewingPreview, currentPreview.type);
-			// console.log(record);
-			// console.log(userViewLanguage);
 			const hasLanguageToggle = table && table.fields.some((f) => {
 				return !!f.language;
 			});

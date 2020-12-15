@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import DocumentMeta from 'react-document-meta';
 
+import Modal from 'react-modal';
+
+import { transparentModal, MODAL_TRANSITION_MS } from '../../styles/Modal.js';
+
+import SaveQuickedit from '../../containers/process/SaveQuickedit';
 import Paging from './Paging';
 import StandardList from './standard/StandardList';
 import BankList from './bank/BankList';
@@ -11,161 +16,217 @@ import TablePermissions from '../../containers/permissions/TablePermissions';
 import ListFetch from '../../containers/process/ListFetch';
 import createRecord from '../../freestone/createRecord';
 import { Button } from '../../styles/Button';
-import { Header, HeaderTexts, HeaderFcn } from '../../styles/Header';
-import { Heading1 } from '../../styles/Texts';
 import { MainZone } from '../../styles/Grid';
 import { Icon } from '../../styles/Icon';
 
+import FixedHeader from '../header/FixedHeader';
+import ListHeader from '../header/ListHeader';
+
 const LARGE_MINW_BREAKPOINT = 1024;
 
-export default class List extends Component {
-	static propTypes = {
+export default function List(props) {
 
-		params: PropTypes.shape({
-			filter: PropTypes.string,
-			page: PropTypes.string,
-			search: PropTypes.string,
-			order: PropTypes.string,
-		}),
+	const [isLarge, setIsLarge] = useState(true);
+	const [isQuickEdit, setIsQuickEdit] = useState(false);
+	const [isSavingRequested, setIsSaving] = useState(null);
+	const [isSaved, setIsSaved] = useState(false);
+	const isSaving = isSavingRequested && props.table && isSavingRequested === props.table.id;
 
-		tableName: PropTypes.string,
-		table: PropTypes.object,
-		searchableFields: PropTypes.array,
-		groupedRecords: PropTypes.array,
-		nPages: PropTypes.number,
-		curPage: PropTypes.number,
-		nRecords: PropTypes.number,
-		swappedRecords: PropTypes.object,
-		canAdd: PropTypes.bool,
-		needsFetch: PropTypes.bool,
-
-		fetchTable: PropTypes.func,
-		addRecord: PropTypes.func,
-		goTo: PropTypes.func,
-
+	const toggleQuickEdit = () => {
+		const newIsQuickEdit = !isQuickEdit;
+		// close side nav if quick editing
+		if (newIsQuickEdit) props.toggleNavVisibility(false);
+		setIsQuickEdit(newIsQuickEdit);
 	};
 
-	static contextTypes = {
-		router: PropTypes.object,
-	};
+	const onSaved = useCallback(() => {
+		setIsSaved(true);
+	});
 
-	constructor(props) {
-		super(props);
-		this.state = { windowWidth: 0, isLarge: true };
-	}
+	const onSaveCleanup = useCallback(() => {
+		setIsSaved(false);
+		setIsSaving(false);
+	});
+
+	useEffect(() => {
+		const handleResize = () => {
+			const w = window.innerWidth;
+			setIsLarge(w > LARGE_MINW_BREAKPOINT);
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (!props.table) props.fetchTable(props.tableName);
+	});
+
+	// reset saving state when changing table
+	useEffect(() => {
+		setIsSaving(false);
+		setIsSaved(false);
+		setIsQuickEdit(false);
+	}, [props.table]);
 	
-	componentDidMount() {
-		this.requireData();
-		window.addEventListener('resize', this.handleResize);
-		this.handleResize();
-	}
+	const getNumRecords = () => {
+		return props.groupedRecords && props.groupedRecords.reduce((total, gr) => total + gr.records.reduce((subtotal) => subtotal + 1, 0), 0);
+	};
 
-	componentDidUpdate() {
-		this.requireData();
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
-	}
-
-	getNumRecords = () => {
-		return this.props.groupedRecords && this.props.groupedRecords.reduce((total, gr) => total + gr.records.reduce((subtotal) => subtotal + 1, 0), 0);
-	}
-
-	requireData() {
-		if (!this.props.table) this.props.fetchTable(this.props.tableName);
-	}
-
-	handleResize = () => {
-		const windowWidth = window.innerWidth;
-		const isLarge = windowWidth > LARGE_MINW_BREAKPOINT;
-		this.setState({ windowWidth, isLarge });
-	}
-
-	addRecord = () => {
-		createRecord(this.props.table).then(res => {
+	const addRecord = () => {
+		createRecord(props.table).then(res => {
 			const { newRecord, newRecordId } = res;
-			this.props.addRecord(this.props.table.id, newRecord);
+			props.addRecord(props.table.id, newRecord);
 
-			const path = `/edit/${this.props.tableName}/${newRecordId}`;
-			this.props.goTo(path);
+			const path = `/edit/${props.tableName}/${newRecordId}`;
+			props.goTo(path);
 		});
+	};
+
+	if (!props.table) return null;
+
+	let readyToScroll = false;
+
+	const addButton = props.canAdd && !isQuickEdit && <Button key="add" onClick={addRecord} round><Icon icon="plus-circle" /> New record</Button>;
+	
+	const quickEditButton = props.table.isQuickEditable && (
+		<Button key="quickedit" warn round onClick={toggleQuickEdit}>
+			<Icon icon={isQuickEdit ? 'list' : 'bolt'} />{isQuickEdit ? 'Default list' : 'Quick edit'}
+		</Button>
+	);
+	const quickEditSaveButton = isQuickEdit && (props.nQuickedited && (
+		<Button key="save" cta round onClick={() => setIsSaving(props.table.id)}>
+			<Icon icon="save" />{`Save (${props.nQuickedited})`}
+		</Button>
+	)) || null;
+
+	let records = null;
+	// if record list is loaded, display records. Bank records are displayed differently than regular records.
+	if (props.groupedRecords) {
+		readyToScroll = true;
+
+		if (!props.table.bankName || isQuickEdit) {
+			records = (<StandardList
+				isLarge={isLarge}
+				isQuickEdit={isQuickEdit}
+				fields={isQuickEdit ? props.quickEditableFields : props.searchableFields}
+				isQuickEdit={isQuickEdit}
+				{...props}
+			/>);
+		} else {
+			records = (<BankList
+				isLarge={isLarge}
+				bankName={props.table.bankName}
+				{...props}
+			/>);
+		}
 	}
 
-	render() {
-		// console.log(this.props.swappedRecords);
-		// console.log('render list', this.props.table);
-		// console.log(this.props.searchableFields);
-		let output;
-		let readyToScroll = false;
-		if (this.props.table) {
-
-			const addBtn = this.props.canAdd ? <Button onClick={this.addRecord} round="true"><Icon icon="plus-circle" /> New record</Button> : null;
-			
-			let records = null;
-			// if record list is loaded, display records. Bank records are displayed differently than regular records.
-			if (this.props.groupedRecords) {
-				readyToScroll = true;
-
-				if (this.props.table.bankName) {
-					records = (<BankList
-						isLarge={this.state.isLarge}
-						bankName={this.props.table.bankName}
-						{...this.props}
-					/>);
-				} else {
-					records = (<StandardList
-						isLarge={this.state.isLarge}
-						{...this.props}
-					/>);
-				}
-			}
-
-			const needsFetch = !this.props.groupedRecords || this.props.needsFetch;
-			// console.log('render list needs fetch %s', needsFetch);
-			output = (
-				<section>
-					<DocumentMeta title={`${this.props.table.displayLabel} - list`} />
-
-					<Header>
-						<HeaderTexts columns="8">
-							<Heading1>{this.props.table.displayLabel}</Heading1>
-							<p dangerouslySetInnerHTML={{ __html: this.props.table.help }} />
-						</HeaderTexts>
-						<HeaderFcn columns="3" offset="10" justify="end" align="end">
-							{addBtn}
-						</HeaderFcn>
-					</Header>
-					
-					<TablePermissions table={this.props.table} />
-					<MainZone>
-						<ListSearch 
-							key={`search_${this.props.tableName}`}
-							tableName={this.props.tableName}
-							numRecords={this.getNumRecords()}
-							search={this.props.params.search}
-							goTo={this.props.goTo}
-							needsFetch={needsFetch}
-						>
-							<ListFetch needsFetch={needsFetch} tableName={this.props.tableName} params={this.props.params} />
-						</ListSearch>
-					
-						{records}
-						<Paging
-							nPages={this.props.nPages}
-							curPage={this.props.curPage}
-							tableName={this.props.tableName}
-						/>
-					</MainZone>
-					
-				</section>
-			);
-		}
-
-		return (
-			<InScroll isReady={readyToScroll}>
-				{output}
-			</InScroll>
+	let savingComponent = null;
+	if (isSaving) {
+		savingComponent = (
+			<Modal
+				isOpen={!isSaved}
+				ariaHideApp={false}
+				closeTimeoutMS={MODAL_TRANSITION_MS}
+				contentLabel="."
+				style={transparentModal}
+				onAfterClose={onSaveCleanup}
+			>
+				<SaveQuickedit
+					tableId={props.table.id}
+					key={props.table.id}
+					onSaved={onSaved}
+				/>
+			</Modal>
 		);
 	}
+	console.log('saving %s, saved %s', isSaving, isSaved);
+
+	const needsFetch = !props.groupedRecords || props.needsFetch;
+	// console.log('render list needs fetch %s', needsFetch);
+	const output = (
+		<section>
+			<DocumentMeta title={`${props.table.displayLabel} - list`} />
+
+			<FixedHeader
+				renderContent={(headerProps) => {
+					return (
+						<ListHeader
+							table={props.table}
+							isLight={headerProps.isFixed}
+							buttons={[quickEditSaveButton, quickEditButton, addButton]}
+							{...headerProps}
+						/>
+					);
+
+				}}
+			/>
+
+			<TablePermissions table={props.table} />
+			<MainZone className={isSaving && 'disabled'}>
+				
+				<ListSearch 
+					key={`search_${props.tableName}`}
+					tableName={props.tableName}
+					numRecords={getNumRecords()}
+					search={props.params.search}
+					goTo={props.goTo}
+					needsFetch={needsFetch}
+				>
+					<ListFetch needsFetch={needsFetch} tableName={props.tableName} params={props.params} />
+				</ListSearch>
+				<Paging
+					nPages={props.nPages}
+					curPage={props.curPage}
+					tableName={props.tableName}
+				/>
+				{records}
+				<Paging
+					nPages={props.nPages}
+					curPage={props.curPage}
+					tableName={props.tableName}
+				/>
+			</MainZone>
+			{savingComponent}
+		</section>
+	);
+
+	return (
+		<InScroll isReady={readyToScroll}>
+			{output}
+		</InScroll>
+	);
+
 }
+
+List.propTypes = {
+
+	params: PropTypes.shape({
+		filter: PropTypes.string,
+		page: PropTypes.string,
+		search: PropTypes.string,
+		order: PropTypes.string,
+	}),
+
+	tableName: PropTypes.string,
+	table: PropTypes.object,
+	groupedRecords: PropTypes.array,
+	quickEditableFields: PropTypes.array,
+	searchableFields: PropTypes.array,
+	nPages: PropTypes.number,
+	curPage: PropTypes.number,
+	nRecords: PropTypes.number,
+	swappedRecords: PropTypes.object,
+	canAdd: PropTypes.bool,
+	needsFetch: PropTypes.bool,
+	nQuickedited: PropTypes.number,
+
+	fetchTable: PropTypes.func,
+	addRecord: PropTypes.func,
+	goTo: PropTypes.func,
+	toggleNavVisibility: PropTypes.func,
+
+};

@@ -3,17 +3,6 @@ import PropTypes from 'prop-types';
 import { THUMBNAIL_SIZE } from '../../freestone/settings';
 import styled from 'styled-components';
 
-const ChoosenImage = styled.div`
-	margin-bottom: 10px;
-	width: max-content;
-	cursor: pointer;
-	
-	img {
-		max-height: ${THUMBNAIL_SIZE}px;
-		min-width: ${THUMBNAIL_SIZE / 2}px;
-	}
-`;
-
 export default class BankImgThumbnail extends Component {
 	static propTypes = {
 		id: PropTypes.any,
@@ -33,12 +22,22 @@ export default class BankImgThumbnail extends Component {
 	}
 
 	requireData(props) {
-		// console.log(props);
 		if (props.id && !props.markup) this.props.fetchBankImage(props.id, this.props.maxSize || THUMBNAIL_SIZE);
 	}
 
 	render() {
 		if (!this.props.id) return null;
+		const ChoosenImage = styled.div`
+			margin-bottom: 10px;
+			width: max-content;
+			cursor: pointer;
+			
+			img {
+				max-height: ${this.props.maxSize || THUMBNAIL_SIZE}px;
+				max-width: ${this.props.maxSize || THUMBNAIL_SIZE}px;
+				min-width: ${(this.props.maxSize || THUMBNAIL_SIZE) / 2}px;
+			}
+		`;
 		return (
 			<ChoosenImage onClick={this.props.onClick} dangerouslySetInnerHTML={{ __html: this.props.markup }} />
 		);

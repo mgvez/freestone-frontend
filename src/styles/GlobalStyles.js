@@ -4,6 +4,8 @@ import Reset from './Reset';
 import colors from './Colors';
 import cssVars from './Variables';
 import { unorderedLists } from './Texts';
+import { MODAL_TRANSITION_MS } from './Modal';
+
 
 const GlobalStyle = createGlobalStyle`
 	@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
@@ -45,6 +47,12 @@ const GlobalStyle = createGlobalStyle`
 		line-height: 1.3;
 	}
 
+	.disabled {
+		opacity: 0.9;
+		pointer-events: none; 
+		cursor: default;
+	}
+
 	${ReactComponents}
 
 	.mce-tinymce {
@@ -58,6 +66,19 @@ const GlobalStyle = createGlobalStyle`
 
 	ul {
 		${unorderedLists};
+	}
+
+	.ReactModal__Overlay {
+		opacity: 0;
+		transition: opacity ${MODAL_TRANSITION_MS}ms ease-in-out;
+	}
+	
+	.ReactModal__Overlay--after-open{
+		opacity: 1;
+	}
+	
+	.ReactModal__Overlay--before-close{
+		opacity: 0;
 	}
 
 `;

@@ -1,21 +1,23 @@
 
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
+import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 
-const recordIdSelector = (state, props) => props.recordId;
+const recordIdSelector = (state, props) => (props.recordId || props.values && props.values[PRIKEY_ALIAS]);
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
 const tableIdSelector = (state, props) => props.tableId;
+const tableSelector = (state, props) => props.table;
 const visibleStateSelector = state => state.freestone.fieldgroup.visibleState;
 
 const recordsUnalteredSelector = state => state.freestone.recordForm.recordsUnaltered;
 const recordsSelector = state => state.freestone.recordForm.records;
+const recordsQuickeditSelectorRaw = state => state.freestone.recordQuickedit;
 
 function makeTableRecordSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, recordsSelector],
-		(schema, records) => {
-			const { table } = schema;
+		(table, records) => {
 			return table && records[table.id];
 		}
 	);
@@ -24,8 +26,7 @@ function makeTableRecordSelector(tableSchemaSelector) {
 function makeRecordSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, recordsSelector, recordIdSelector],
-		(schema, records, recordId) => {
-			const { table } = schema;
+		(table, records, recordId) => {
 			// console.log(`%c record ${recordId}`, 'font-weight:bold;color:#449944;');
 			return recordId && table && records[table.id] && records[table.id][recordId];
 		}
@@ -44,8 +45,7 @@ function makeParentRecordSelector() {
 function makeRecordUnalteredSelector(tableSchemaSelector) {
 	return createSelector(
 		[tableSchemaSelector, recordsUnalteredSelector, recordIdSelector],
-		(schema, recordsUnaltered, recordId) => {
-			const { table } = schema;
+		(table, recordsUnaltered, recordId) => {
 			// console.log(`%c record unaltered ${recordId}`, 'font-weight:bold;color:#449944;');
 			return recordId && table && recordsUnaltered[table.id] && recordsUnaltered[table.id][recordId];
 		}
@@ -110,3 +110,36 @@ export function activeGroupMapStateToProps() {
 		return selectorInst(state, props);
 	};
 }
+
+
+function makeTableRecordQuickeditSelector(tableSchemaSelector) {
+	return createSelector(
+		[tableSchemaSelector, tableSelector, recordsQuickeditSelectorRaw],
+		(tableSchema, resolvedTable, records) => {
+			const table = resolvedTable || tableSchema;
+			return table && records[table.id];
+		}
+	);
+}
+
+
+export const makeTableRecordsQuickeditMapStateToProps = () => {
+	const selectorInst = makeTableRecordQuickeditSelector(tableSchemaMapStateToProps());
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+};
+
+
+export function makeRecordQuickeditSelector() {
+	const tableRecordQuickeditSelector = makeTableRecordsQuickeditMapStateToProps();
+	return createSelector(
+		[tableRecordQuickeditSelector, recordIdSelector],
+		(tableRecords, recordId) => {
+			return {
+				quickeditedRecord: tableRecords && tableRecords[recordId],
+			};
+		}
+	);
+}
+

@@ -100,9 +100,10 @@ function getLabeledRecords(records, searchableFields, orderField, rawForeignOpti
 
 function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 	return createSelector(
+
 		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector, rawForeignOptionsSelector, userViewLanguageSelector, parentRecordSelector],
-		(schema, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions, userViewLanguage, parentRecord) => {
-			const { table } = schema;
+		(table, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions, userViewLanguage, parentRecord) => {
+
 			const { tables } = allSchema;
 
 			if (table) {

@@ -8,6 +8,7 @@ import env from './env';
 import errors from './errors';
 import foreign from './foreign';
 import recordList from './recordList';
+import recordQuickedit from './recordQuickedit';
 import recordPreview from './recordPreview';
 import recordForm from './recordForm';
 import subform from './subform';
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
 	recordList,
 	recordForm,
 	recordPreview,
+	recordQuickedit,
 	foreign,
 	save,
 	subform,

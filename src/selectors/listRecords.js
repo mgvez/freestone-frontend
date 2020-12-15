@@ -3,10 +3,36 @@ import { tableSchemaSelector, tableNameSelector } from './tableSchema';
 
 import { getRecordLabel } from './recordLabel';
 import { searchParamsSelector } from './route';
+import { makeTableRecordsQuickeditMapStateToProps } from './record';
 
 import { PRIKEY_ALIAS, LABEL_PSEUDOFIELD_ALIAS, TYPE_BOOL } from '../freestone/schemaProps';
 
-const recordsSelector = state => state.freestone.recordList;
+const stateRecordsSelector = state => state.freestone.recordList;
+// const recordsQuickeditSelector = state => state.freestone.recordQuickedit;
+
+const fieldSelector = (state, props) => props.field;
+const recordIdSelector = (state, props) => props.recordId;
+
+
+function makeQuickeditValSelector() {
+	return createSelector(
+		[makeTableRecordsQuickeditMapStateToProps(), fieldSelector, recordIdSelector],
+		(recordsQuickedit, field, recordId) => {
+			const { id: field_id } = field;
+			const editedVal = recordsQuickedit && recordsQuickedit[recordId] && recordsQuickedit[recordId][field_id];
+			return {
+				editedVal,
+			};
+		}
+	);
+}
+
+export function quickeditFieldMapStateToProps() {
+	const selectorInst = makeQuickeditValSelector();
+	return (state, props) => {
+		return selectorInst(state, props);
+	};
+}
 
 function flatten(records, flat = [], breadcrumb = [], level = 0) {
 	if (!records) return flat;
@@ -40,10 +66,17 @@ function reorderSelfTree(records) {
 	return flatten(tree);
 }
 
-export const listRecordsSelector = createSelector(
-	[tableNameSelector, tableSchemaSelector, recordsSelector, searchParamsSelector],
-	(tableName, schema, stateRecords, searchParams) => {
+const nQuickeditedSelector = createSelector(
+	[makeTableRecordsQuickeditMapStateToProps()],
+	(recordsQuickedit) => {
+		if (!recordsQuickedit) return 0;
+		return Object.keys(recordsQuickedit).length;
+	}
+);
 
+export const listRecordsSelector = createSelector(
+	[tableNameSelector, tableSchemaSelector, stateRecordsSelector, searchParamsSelector, nQuickeditedSelector],
+	(tableName, table, stateRecords, searchParams, nQuickedited) => {
 		const { 
 			records: loadedRecords,
 			table: recordsTable,
@@ -60,8 +93,6 @@ export const listRecordsSelector = createSelector(
 		const { page: requestedPage, search: requestedSearch, order: requestedOrder, filter: requestedFilter } = searchParams;
 
 		const nPages = Math.ceil(nRecords / pageSize);
-
-		const { table } = schema;
 
 		let groupedRecords;
 
@@ -121,6 +152,7 @@ export const listRecordsSelector = createSelector(
 			tableName,
 			table,
 			searchableFields: table && table.searchableFields,
+			quickEditableFields: table && table.quickEditableFields,
 			groupedRecords,
 			curPage: providedPage,
 			nPages,
@@ -133,6 +165,8 @@ export const listRecordsSelector = createSelector(
 				...searchParams,
 			},
 			swappedRecords,
+			nQuickedited,
 		};
 	}
 );
+

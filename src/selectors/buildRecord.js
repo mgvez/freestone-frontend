@@ -4,7 +4,7 @@ import { schemaSelector } from './schema';
 import { getSubformFieldId } from '../freestone/schemaHelpers';
 import { getChildrenRecordIds } from './formChildrenRecords';
 import { isNew } from '../utils/UniqueId';
-// import createRecord from 'freestone/createRecord';
+import { makeTableRecordsQuickeditMapStateToProps } from './record';
 
 import { DELETED_PSEUDOFIELD_ALIAS, TYPE_MTM } from '../freestone/schemaProps';
 
@@ -21,10 +21,7 @@ const listPageAfterSaveSelector = state => state.freestone.nav.listPageAfterSave
 //get un tree de IDs de records et de ses children
 function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
 	const childrenTables = unfilteredChildren && unfilteredChildren[tableId] || [];
-	// children =
-	// console.log(childrenTables, tableId);
 	const children = childrenTables.reduce((allChildrenRecords, childTableId) => {
-		// console.log('table %s is child of %s', childTableId, tableId);
 
 		if (allTables[childTableId] && allTables[childTableId].type === TYPE_MTM) {
 			const thisMtm = (allMtmRecords[childTableId] && allMtmRecords[childTableId][tableId] && allMtmRecords[childTableId][tableId][recordId]) || null;
@@ -47,7 +44,6 @@ function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfi
 
 		return allChildrenRecords;
 	}, { children: [], mtmChildren: [] });
-	// console.log(children);
 	const branch = {
 		recordId,
 		tableId,
@@ -98,22 +94,15 @@ function getPermissions(branch, allPerms, permissions = {}) {
 
 const buildRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, allPermsSelector, childrenSelector, listPageAfterSaveSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, allPerms, unfilteredChildren, allListPageAfterSave) => {
-		// console.log(`build record for ${recordId}`);
-		const { table } = mainTableSchema;
+	(table, allSchema, allRecords, allMtmRecords, recordId, allPerms, unfilteredChildren, allListPageAfterSave) => {
 		const { tables } = allSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecords(tree, allRecords, false);
 		const deleted = getRecords(tree, allRecords, true);
 		const permissions = getPermissions(tree, allPerms);
-		// console.log(tree);
-		// console.log(tables);
-		// console.log(records);
-		// console.log(permissions);
 
-		// console.log(unfilteredChildren);
 		const afterSaveLocation = table && allListPageAfterSave[table.name] && allListPageAfterSave[table.name][recordId];
-		// console.log(allListPageAfterSave);
+
 		return {
 			tree,
 			table,
@@ -142,9 +131,7 @@ function getRecordIds(branch, allRecords, records = []) {
  */
 export const buildCancelRecordSelector = createSelector(
 	[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, listPageAfterSaveSelector],
-	(mainTableSchema, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
-		// console.log(`build record for ${recordId}`);
-		const { table } = mainTableSchema;
+	(table, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, allListPageAfterSave) => {
 		const { tables } = allSchema;
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecordIds(tree, allRecords);
@@ -165,6 +152,37 @@ export const buildSaveRecordSelector = createSelector(
 		
 		return {
 			...builtRecord,
+			saveState,
+		};
+	},
+);
+
+export const buildSaveQuickeditRecordSelector = createSelector(
+	[tableSchemaSelector, makeTableRecordsQuickeditMapStateToProps(), saveStateSelector],
+	(table, quickeditRecords, saveState) => {
+
+		const tableId = table.id;
+
+		const recordIds = Object.keys(quickeditRecords);
+
+		const builtRecords = recordIds.map(recordId => {
+			return {
+				tree: {
+					tableId,
+					recordId,
+				},
+				records: {
+					[tableId]: {
+						[recordId]: quickeditRecords[recordId],
+					},
+				},
+			};
+
+		});
+
+		return {
+			table,
+			builtRecords,
 			saveState,
 		};
 	},

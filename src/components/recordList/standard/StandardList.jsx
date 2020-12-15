@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -61,15 +61,25 @@ const ListTable = styled.table`
 	}
 
 	th {
-		padding: 20px 20px;
+		padding: 20px 4px;
 		background: ${colors.backgroundMainAccent};
 		font-weight: ${cssVariables.fontWeightBold}
 	}
 
+	th, td {
+		&:last-child {
+			padding-right: 10px;
+		}
+		&:first-child {
+			padding-left: 10px;
+		}
+	}
+
 	td {
-		padding: 12px 20px;
+		padding: 4px;
 		vertical-align: middle;
 		background: ${colors.white};
+		
 
 		&.selfjoin-label{
 			span {
@@ -78,106 +88,113 @@ const ListTable = styled.table`
 		}
 	}
 
+	&.quickedit {
+		td {
+			vertical-align: top;
+
+		}
+	}
+
+	tr.edited {
+		td {
+			background: ${colors.emphasisBackground};
+		}
+	}
+
 
 `;
 
-export default class StandardList extends Component {
-	static propTypes = {
-		isLarge: PropTypes.bool,
-		hoveringId: PropTypes.string,
-		tableName: PropTypes.string,
-
-		params: PropTypes.shape({
-			page: PropTypes.string,
-			filter: PropTypes.string,
-			search: PropTypes.string,
-			order: PropTypes.string,
-		}),
-
-
-		table: PropTypes.object,
-		searchableFields: PropTypes.array,
-		groupedRecords: PropTypes.array,
-		swappedRecords: PropTypes.object,
-
-		fetchList: PropTypes.func,
-
-	};
-
-	constructor(props) {
-		super(props);
-		this.state = { hoveringId: 0 };
-	}
+export default function StandardList(props) {
+	const [hoveringId, setHoveringId] = useState(0);
 
 	/**
 		Les rows appellent le hover ici
 	*/
-	handleHover = (recordId) => {
-		// console.log('hovering %s', recordId);
-		this.setState({ hoveringId: recordId });
+	const handleHover = recordId => {
+		setHoveringId(recordId);
+	};
+
+	const hideAllHovers = () => {
+		handleHover(null);
+	};
+
+	let heading = null;
+	if (props.isLarge) {
+		heading = (<thead>
+			<Heading
+				fields={props.fields}
+				tableName={props.tableName}
+				params={props.params}
+				isSelfTree={props.table.isSelfTree}
+				fetchList={props.fetchList}
+				isQuickEdit={props.isQuickEdit}
+			/>
+		</thead>);
 	}
-
-	hideAllHovers = () => {
-		this.handleHover(null);
-	}
-
-	render() {
-
-		let heading = null;
-		if (this.props.isLarge) {
-			heading = (<thead>
-				<Heading
-					fields={this.props.searchableFields}
-					tableName={this.props.tableName}
-					params={this.props.params}
-					isSelfTree={this.props.table.isSelfTree}
-					fetchList={this.fetchList}
-				/>
-			</thead>);
-		}
-		return (
-			<ListTable onMouseLeave={this.hideAllHovers} ref={el => this._list = el}>
-				{heading}
-				{
-					this.props.groupedRecords.map((group, groupIdx) => {
-						let groupHeading;
-						if (group.label) {
-							groupHeading = (
-								<tr className="group-heading">
-									<td colSpan="20">
-										<strong>{group.label}</strong>
-									</td>
-								</tr>
-							);
-						}
-
-						return (
-							<tbody key={groupIdx}>
-							{groupHeading}
-							{
-								group.records.map((record) => {
-									const pk = record[PRIKEY_ALIAS];
-									const isHovering = this.props.hoveringId === pk;
-
-									return (<Row
-										key={`${this.props.table.name}_${pk}`}
-										fields={this.props.searchableFields}
-										values={record}
-										table={this.props.table}
-										isLarge={this.props.isLarge}
-										isHovering={isHovering}
-										handleHover={this.handleHover}
-										swappedRecords={this.props.swappedRecords}
-										fetchRecords={this.fetchRecords}
-										hasCustomOrder={!!this.props.params.order}
-									/>);
-								})
-							}
-							</tbody>
+	return (
+		<ListTable onMouseLeave={hideAllHovers} className={props.isQuickEdit && 'quickedit'}>
+			{heading}
+			{
+				props.groupedRecords.map((group, groupIdx) => {
+					let groupHeading;
+					if (group.label) {
+						groupHeading = (
+							<tr className="group-heading">
+								<td colSpan="20">
+									<strong>{group.label}</strong>
+								</td>
+							</tr>
 						);
-					})
-				}
-			</ListTable>
-		);
-	}
+					}
+
+					return (
+						<tbody key={groupIdx}>
+						{groupHeading}
+						{
+							group.records.map((record) => {
+								const pk = record[PRIKEY_ALIAS];
+								const isHovering = hoveringId === pk;
+
+								return (<Row
+									key={`${props.table.name}_${pk}`}
+									fields={props.fields}
+									values={record}
+									isQuickEdit={props.isQuickEdit}
+									table={props.table}
+									isLarge={props.isLarge}
+									isHovering={isHovering}
+									handleHover={handleHover}
+									swappedRecords={props.swappedRecords}
+									hasCustomOrder={!!props.params.order}
+								/>);
+							})
+						}
+						</tbody>
+					);
+				})
+			}
+		</ListTable>
+	);
 }
+
+StandardList.propTypes = {
+	isLarge: PropTypes.bool,
+	isQuickEdit: PropTypes.bool,
+	hoveringId: PropTypes.string,
+	tableName: PropTypes.string,
+
+	params: PropTypes.shape({
+		page: PropTypes.string,
+		filter: PropTypes.string,
+		search: PropTypes.string,
+		order: PropTypes.string,
+	}),
+
+
+	table: PropTypes.object,
+	fields: PropTypes.array,
+	groupedRecords: PropTypes.array,
+	swappedRecords: PropTypes.object,
+
+	fetchList: PropTypes.func,
+};

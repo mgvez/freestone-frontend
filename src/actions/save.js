@@ -3,9 +3,13 @@ import { FREESTONE_API } from '../middleware/api';
 import { sendRecordFiles } from './sendFile';
 import { CLEAR_SCHEMA } from './schema';
 import { createRequestTypes } from './apiAction';
+import { Promise } from 'bluebird';
 
 export const INIT_SAVE = 'INIT_SAVE';
+export const INIT_SAVE_QUICKEDIT = 'INIT_SAVE_QUICKEDIT';
+export const FINISH_SAVE_QUICKEDIT = 'FINISH_SAVE_QUICKEDIT';
 export const SAVE_RECORD_API = createRequestTypes('SAVE_RECORD_API');
+export const SAVE_QUICKRECORD_API = createRequestTypes('SAVE_QUICKRECORD_API');
 export const PROCESS_IMAGES_API = createRequestTypes('PROCESS_IMAGES_API', true);
 export const SAVE_SINGLE_VALUE_RECORD_API = createRequestTypes('SAVE_SINGLE_VALUE_RECORD_API');
 export const SAVE_PREVIEW_API = createRequestTypes('SAVE_PREVIEW_API');
@@ -54,11 +58,39 @@ function processImages(data, dispatch) {
 
 }
 
+export function saveQuickedit(table, builtRecords, onFinish) {
+	return (dispatch) => {
+		
+		dispatch({
+			type: INIT_SAVE_QUICKEDIT,
+		});
+		const tableName = table.name;
+		
+		const onAllSaved = Promise.mapSeries(builtRecords, builtRecord => {
+			const data = parseRecordBeforeSave(JSON.stringify({
+				...builtRecord,
+				tableName,
+			}));
+			return dispatch({
+				[FREESTONE_API]: {
+					types: SAVE_QUICKRECORD_API,
+					route: `save/${tableName}`,
+					data: { data },
+				},
+			});
+		});
+
+		return onAllSaved.then(res => {
+			onFinish();
+			return dispatch({
+				type: FINISH_SAVE_QUICKEDIT,
+			});
+		});
+	};
+}
+
 export function saveRecord(table, tree, records, deleted, permissions, isTemporary, gotoOnFinish, callback) {
 	return (dispatch) => {
-		// console.log(tree);
-		// console.log(records);
-		// console.log(deleted);
 
 		const tableName = table.name;
 		const { isMeta } = table;
@@ -153,7 +185,9 @@ export function swapOrder(tableName, recordId, direction, onComplete) {
 				},
 			},
 		}).then(() => {
-			onComplete();
+			if (onComplete) onComplete();
+		}).catch(e => {
+			console.log(e);	
 		});
 	};
 }

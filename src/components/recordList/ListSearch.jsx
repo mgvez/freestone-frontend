@@ -62,12 +62,6 @@ export default class ListSearch extends Component {
 	componentDidMount() {
 		this.searchInput.current.addEventListener('keydown', this.onUpdateSearchField);
 	}
-	
-	// componentDidUpdate(prevProps) {
-	// 	if (prevProps.tableName !== this.props.tableName && this.searchInput) {
-	// 		this.searchInput.value = '';
-	// 	}
-	// }
 
 	componentWillUnmount() {
 		this.searchInput.current.removeEventListener('keydown', this.onUpdateSearchField);

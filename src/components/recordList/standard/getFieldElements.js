@@ -4,10 +4,11 @@ import { PRIKEY_ALIAS, TYPE_IMG, TYPE_FILE, TYPE_BANKIMG, TYPE_BOOL, TYPE_ISPUBL
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import BankImgThumbnail from '../../../containers/fileThumbnail/BankImgThumbnail';
 import BoolSwitch from '../../../containers/recordList/BoolSwitch';
+import QuickeditField from '../../../containers/recordList/standard/QuickeditField';
 
-const MAX_THUMB_SIZE = 200;
+const MAX_THUMB_SIZE = 100;
 
-export function getFieldElements(table, fields, values, elementType = 'td', options = {}) {
+export function getFieldElements(table, fields, values, isQuickEdit, elementType = 'td', options = {}) {
 	if (fields.length === 0) {
 		// console.log(values);
 		return React.createElement(
@@ -24,52 +25,53 @@ export function getFieldElements(table, fields, values, elementType = 'td', opti
 
 	return fields.map((field) => {
 		if (field.isGroup || field.type === 'order') return null;
-
 		let val = values[field.listAlias];
-		// if (!val) {
-		// 	return null;
-		// }
+		let maxWidth;
 		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
-			val = React.createElement(
-				FileThumbnail,
-				{
-					val: values[field.listAlias],
-					absolutePath: values[field.listAlias + BANK_PATH_ALIAS],
-					thumbnailPath: values[field.listAlias + BANK_THUMB_ALIAS],
-					dir: field.folder,
-					type: field.type,
-				}
+			val = (
+				<FileThumbnail
+					val={values[field.listAlias]}
+					absolutePath={values[field.listAlias + BANK_PATH_ALIAS]}
+					thumbnailPath={values[field.listAlias + BANK_THUMB_ALIAS]}
+					maxSize={MAX_THUMB_SIZE}
+					dir={field.folder}
+					type={field.type}
+				/>
 			);
-		}
-		if (field.type === TYPE_BANKIMG) {
-			val = React.createElement(
-				BankImgThumbnail,
-				{
-					id: values[field.listAlias],
-					maxSize: MAX_THUMB_SIZE,
-				}
+			maxWidth = `${MAX_THUMB_SIZE}px`;
+		} else if (field.type === TYPE_BANKIMG) {
+			val = (
+				<BankImgThumbnail
+					id={values[field.listAlias]}
+					maxSize={MAX_THUMB_SIZE}
+				/>
 			);
-		}
-		
-		if (field.type === TYPE_BOOL || field.type === TYPE_ISPUBLISHED) {
-			// console.log(values);
-			// console.log(values[PRIKEY_ALIAS]);
-			val = React.createElement(
-				BoolSwitch,
-				{
-					field,
-					val: values[field.listAlias],
-					recordId: values[PRIKEY_ALIAS],
-				}
+		} else if (field.type === TYPE_BOOL || field.type === TYPE_ISPUBLISHED) {
+			val = (
+				<BoolSwitch
+					field={field}
+					val={values[field.listAlias]}
+					recordId={values[PRIKEY_ALIAS]}
+				/>
 			);
+		} else if (isQuickEdit) {
+			val = <QuickeditField recordId={values[PRIKEY_ALIAS]} val={val} table={table} field={field} />;
 		}
+
+		const attr = { 
+			...options,
+			style: {
+				...(options.style || {}),
+				maxWidth,
+			},
+		};
 
 		return React.createElement(
 			elementType,
 			{
-				key: `val_${field.id}`,
+				key: `val_${field.id}}`,
 				'data-field-label': field.label,
-				...options,
+				...attr,
 			},
 			val
 		);

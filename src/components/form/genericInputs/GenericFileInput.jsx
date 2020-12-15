@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -39,7 +39,6 @@ const GenericFileInput = (props) => {
 	const [localFile, setLocalFile] = useState(null);
 	const [isCropping, setIsCropping] = useState(false);
 	const inputRef = useRef(false);
-
 	const getLocalImage = (file) => {
 		if (!file || localFile || props.type !== TYPE_IMG) return undefined;
 
@@ -53,18 +52,20 @@ const GenericFileInput = (props) => {
 	};
 
 	const getCurrentSavedInput = () => {
-		// console.log('get input %s', props.val);
 		const saved = new SavedFileInput(props.val);
-
-		//si pas de input mais que la val est une ref à un input, c'est que le input existe pas... reset la val à original
-		if (props.val && props.val !== props.origVal && !saved.getFilePath()) {
-			props.changeVal(props.origVal);
-		}
 		if (saved.getFile()) {
 			getLocalImage(saved.getFile());
 		}
 		return saved;
 	};
+
+	useEffect(() => {
+		const saved = new SavedFileInput(props.val);
+		//si pas de input mais que la val est une ref à un input, c'est que le input existe pas... reset la val à original
+		if (props.val && props.val !== props.origVal && !saved.getFilePath()) {
+			props.changeVal(props.origVal);
+		}
+	});
 
 	const setForDelete = () => {
 		clearSavedInput(props.val);
@@ -76,7 +77,6 @@ const GenericFileInput = (props) => {
 		const savedInput = getCurrentSavedInput();
 
 		savedInput.setInput(input, props.fieldId, props.recordId);
-		// console.log('change val %s', savedInput.getId());
 		setLocalFile(null);
 		props.changeVal(savedInput.getId());
 	};
@@ -109,7 +109,7 @@ const GenericFileInput = (props) => {
 	let revertBtn;
 	if (origVal && val !== origVal) {
 		revertBtn = <Button round bordered warn small onClick={onClearSavedInput}>Revert to db {typeLabel}</Button>;
-	} else if (val) {
+	} else if (val && !origVal) {
 		revertBtn = <Button round bordered warn small onClick={onClearSavedInput}>Clear</Button>;
 	}
 

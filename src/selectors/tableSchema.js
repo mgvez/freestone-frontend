@@ -16,9 +16,7 @@ function makeSelector(tableIdSelector) {
 			// console.log('process... %s', resolvedTableId);
 			const table = schema.tables[resolvedTableId];
 			//retourne une copie de la table, parce que certains reselectors peuvent retourner une copie altérée, par exemple à cause des dependances de champs
-			return {
-				table,
-			};
+			return table;
 		}
 	);
 }
@@ -28,7 +26,6 @@ export const tableSchemaSelector = makeSelector(mainTableIdSelector);
 export function tableSchemaMapStateToProps() {
 	const selectorInst = makeSelector(mainTableIdSelector);
 	return (state, props) => {
-		// console.log('reselect table', (props.tableId || (props.params && props.params.tableId)) || props.tableName || (props.params && props.params.tableName));
 		return selectorInst(state, props);
 	};
 }

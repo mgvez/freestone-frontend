@@ -58,10 +58,11 @@ export default function translations(state = initial, action) {
 
 		//filter keys where the search key is found. DOne in selector, so that search result don't change even if we change the translations. Only thing that can change result is searching anew
 		const allTranslations = state.translations;
-		// console.log(searchVal);
-		const { searchVal } = action.data;
-		if (searchVal === state.searchValue) return state;
-		if (!searchVal || !allTranslations) {
+
+		const { searchVal: searchValueRaw } = action.data;
+		const searchValue = searchValueRaw && searchValueRaw.toLowerCase();
+		if (searchValue === state.searchValue) return state;
+		if (!searchValue || !allTranslations) {
 			return {
 				...state,
 				searchValue: null,
@@ -76,7 +77,10 @@ export default function translations(state = initial, action) {
 			const keys = Object.keys(langTranslations);
 			return keys.reduce((langFound, key) => {
 				const tx = langTranslations[key];
-				if (tx && ~tx.toLowerCase().indexOf(searchVal)) {
+				if (
+					(tx && ~tx.toLowerCase().indexOf(searchValue))
+					|| ~key.toLowerCase().indexOf(searchValue)
+				) {
 					langFound.push({ lang, key });
 				}
 				return langFound;
@@ -91,13 +95,14 @@ export default function translations(state = initial, action) {
 
 		return {
 			...state,
-			searchValue: action.data.searchVal,
+			searchValue,
 			searchResult: allFound,
-			searchIndex: 0,
+			searchIndex: -1,
 			activeGroup: null,
 		};
 	}
 	case NAVIGATE_SEARCH_TRANSLATIONS: {
+		if (!state.searchResult) return state;
 		const rawSearchResultIndex = state.searchIndex + action.data.direction;
 		const searchIndex = rawSearchResultIndex === state.searchResult.length ? 0 : (rawSearchResultIndex < 0 ? state.searchResult.length - 1 : rawSearchResultIndex);
 		

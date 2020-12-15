@@ -58,11 +58,12 @@ export default class BankCategoriesSidebar extends Component {
 		bankName: PropTypes.string,
 		categories: PropTypes.array,
 		isChoosingBankItem: PropTypes.bool, //indicate whether we are in the process of choosing an item to put in a record, or merely browsing the list
+		bankDestination: PropTypes.object,
 
 		fetchBankCategories: PropTypes.func,
 		cancelBankSelect: PropTypes.func,
 		goTo: PropTypes.func,
-		
+		setFieldVal: PropTypes.func,
 
 	};
 
@@ -79,6 +80,12 @@ export default class BankCategoriesSidebar extends Component {
 	}
 
 	onCancel = () => {
+		// reset content to what it was before
+		const { tableId, recordId, fieldId, contentBefore } = this.props.bankDestination;
+		if (contentBefore) {
+			this.props.setFieldVal(tableId, recordId, fieldId, contentBefore);
+		}
+
 		this.props.cancelBankSelect();
 		this.props.goTo(this.props.gotoOnChoose);
 	}

@@ -106,6 +106,7 @@ export default class HotspotInsert extends Component {
 		const saveBtn = this.state.x !== -1 ? (<Button onClick={this.save} round="true">Save</Button>) : '';
 		return (
 			<Modal
+				ariaHideApp={false}
 				isOpen
 				contentLabel="Hotspot"
 				closeTimeoutMS={300}

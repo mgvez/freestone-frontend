@@ -176,25 +176,19 @@ const parsedChildrenSelector = createSelector(
 
 
 function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelector, parentTableSchemaSelector, parentRecordSelector, activeGroupSelector) {
-
 	return createSelector(
 		[tableSchemaSelector, fieldsSelector, recordSelector, recordUnalteredSelector, parsedChildrenSelector, envSelector, parentTableSchemaSelector, parentRecordSelector, isGodSelector, activeGroupSelector],
-		(schema, allFields, record, recordUnaltered, unfilteredChildren, env, parentSchema, parentRecord, isGod, activeGroupKey) => {
-			let { table } = schema;
+		(tableSchema, allFields, record, recordUnaltered, unfilteredChildren, env, parentTable, parentRecord, isGod, activeGroupKey) => {
 			let children;
-			// console.log(unfilteredChildren);
 			let mainGroups;
 			let activeGroup;
-			// const recordId = record && record.prikey;
-			// console.log(`build record for ${recordId}`, table && table.name);
-			// console.log(record);
-		
+			let table;
 			//some subforms are parsed in between fields through placeholders. If so, we don't replace them in remaining children loop, so we have to remove them from children
-			if (table) {
+			if (tableSchema) {
 				let dependencies;
 				
 				//clone pour pas muter l'objet du state
-				table = { ...table };
+				table = { ...tableSchema };
 				children = unfilteredChildren[table.id].map(desc => {
 					return {
 						...desc,
@@ -205,7 +199,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				dependencies = parseDependencies(table, record);
 
 				//fields on this table that might depend on the parent record's
-				const { table: parentTable } = parentSchema;
 				if (parentTable && parentRecord) {
 					const parentDependencies = parseDependencies(parentTable, parentRecord);
 					if (parentDependencies) {

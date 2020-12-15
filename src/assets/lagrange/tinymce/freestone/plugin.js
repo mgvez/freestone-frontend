@@ -4,28 +4,37 @@
 	
 	const PLACEHOLDER = '{{placeholder}}';
 
-	function pepareContent(placeholder, ed) {
+	function pepareContent(ed) {
 		const contentBefore = ed.getContent();
 		const selectedNode = ed.selection.getNode();
 
+		// navigate selected node to see if there is already a link, to use as default value
 		const container = document.createElement('div');
 		container.appendChild(selectedNode.cloneNode(true));
-		// console.log(container.innerHTML);
 		const links = container.querySelectorAll('a');
 		let link = null;
 		if (links.length) {
 			link = links[0].getAttribute('href');
 		}
 
-		// console.log(links);
 		const selection = ed.selection.getContent();
-		ed.execCommand('mceInsertContent', false, placeholder);
-		const contentAfter = ed.getContent();
+
+		let contentAfter;
+		// tinymce does not replace figures selection correctly. Replace manually, with assumption that figure tag is the only one placed in the wysiwyg
+		if (selection && selection.trim().indexOf('<figure') === 0) {
+			contentAfter = ed.getContent();
+			contentAfter = contentAfter.replace(selection, PLACEHOLDER);
+
+		} else {
+			ed.execCommand('mceReplaceContent', false, PLACEHOLDER);
+			contentAfter = ed.getContent();
+		}
+
 		return {
-			contentBefore: contentBefore,
-			contentAfter: contentAfter,
-			selection: selection,
-			link: link,
+			contentBefore,
+			contentAfter,
+			selection,
+			link,
 		};
 	}
 
@@ -43,7 +52,7 @@
 				icon: "image",
 				tooltip:"Insert image from bank",
 				onclick: function() {
-					ed.execCommand('addImageFromBank', false, pepareContent(PLACEHOLDER, ed));
+					ed.execCommand('addImageFromBank', false, pepareContent(ed));
 				}
 			});
 
@@ -51,7 +60,7 @@
 				tooltip:"Insert document from bank",
 				icon:"browse",
 				onclick: function() {
-					ed.execCommand('addDocFromBank', false, pepareContent(PLACEHOLDER, ed));
+					ed.execCommand('addDocFromBank', false, pepareContent(ed));
 				}
 			});
 
@@ -59,7 +68,7 @@
 				tooltip:"Insert link",
 				icon:"link",
 				onclick: function() {
-					ed.execCommand('insertLink', false, pepareContent(PLACEHOLDER, ed));
+					ed.execCommand('insertLink', false, pepareContent(ed));
 				}
 			});
 
