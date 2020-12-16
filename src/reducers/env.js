@@ -14,6 +14,7 @@ const envInitialState = {
 	domain: '',
 	clientPath: '',
 	pathCss: [],
+	htmlEditorConfig: null,
 	languages: [],
 	defaultLanguage: '',
 	isProdEnv: false,

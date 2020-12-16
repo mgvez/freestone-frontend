@@ -2,26 +2,30 @@ import { createSelector } from 'reselect';
 import { TINYMCE_CONFIG, TINYMCE_TINY_CONFIG } from '../tinymce/default';
 import { routeSelector } from './route';
 
-const settingsSelector = state => state.freestone.env.clientVariables.settings;
 const cssPathSelector = state => state.freestone.env.freestone.pathCss;
+const htmlEditorConfigSelector = state => state.freestone.env.freestone.htmlEditorConfig;
 const clientPathSelector = state => state.freestone.env.freestone.clientPath;
 const fieldTypeSelector = (state, props) => props.field && props.field.type;
 
 function makeSelector(currentFieldTypeSelector) {
 	return createSelector(
-		[currentFieldTypeSelector, settingsSelector, cssPathSelector, clientPathSelector, routeSelector],
-		(fieldType, settings, cssPath, clientPath, route) => {
-			if (!settings) return {};
+		[currentFieldTypeSelector, cssPathSelector, htmlEditorConfigSelector, clientPathSelector, routeSelector],
+		(fieldType, cssPath, htmlEditorConfig, clientPath, route) => {
 			const defaultConfig = fieldType === 'tinyhtml' ? TINYMCE_TINY_CONFIG : TINYMCE_CONFIG;
-
-			const config = (settings && settings.tinymceConfig) || {};
+			const clientConfig = htmlEditorConfig || {};
 			const tinymceConfig = {
 				...defaultConfig,
-				...config,
+				...clientConfig,
+				style_formats: [
+					...defaultConfig.style_formats,
+					...(clientConfig.style_formats || []),
+				],
 			};
-			// console.log(tinymceConfig);
 			if (cssPath && cssPath.length) {
-				tinymceConfig.content_css = cssPath.map(p => `${clientPath}${p}`);
+				tinymceConfig.content_css = [
+					...(tinymceConfig.content_css || []),
+					...cssPath.map(p => `${clientPath}${p}`),
+				];
 			}
 			
 			return {
