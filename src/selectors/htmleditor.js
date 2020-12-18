@@ -17,7 +17,7 @@ function makeSelector(currentFieldTypeSelector) {
 				...defaultConfig,
 				...clientConfig,
 				style_formats: [
-					...defaultConfig.style_formats,
+					...(defaultConfig.style_formats || []),
 					...(clientConfig.style_formats || []),
 				],
 			};

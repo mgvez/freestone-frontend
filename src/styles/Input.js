@@ -65,7 +65,6 @@ export function getInputCss(props) {
 		`};
 
 		&[size]{
-			width: auto;
 			max-width: 100%;
 		}
 
