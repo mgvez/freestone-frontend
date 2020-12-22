@@ -30,5 +30,7 @@ export const GridItem = styled.div`
 
 export const MainZone = styled.section`
 	width: calc(100% - 30px);
+	min-height: 80vh;
+	position: relative;
 	margin: 15px auto;
 `;

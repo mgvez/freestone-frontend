@@ -17,7 +17,6 @@ import cssVariables from '../styles/Variables';
 
 
 /* application components */
-import Footer from './footer/Footer';
 import Shortcuts from '../containers/utils/Shortcuts';
 import SiteHeader from '../containers/SiteHeader';
 import Errors from '../containers/Errors';
@@ -127,7 +126,6 @@ export default class Freestone extends Component {
 						<SiteHeader />
 						<LoadedRecords />
 						{this.props.children}
-						<Footer />
 						<Errors />
 					</MainContent>
 					<GoogleAuthenticate onGapiReady={this.onGapiReady} />

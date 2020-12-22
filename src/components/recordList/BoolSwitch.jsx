@@ -22,6 +22,6 @@ export default class BoolSwitch extends Component {
 	}
 
 	render() {
-		return <BoolInput field={this.props.field} val={this.props.val} recordId={this.props.recordId} changeVal={this.captureBool} small />;
+		return <BoolInput fieldId={this.props.field.id} val={this.props.val} recordId={this.props.recordId} changeVal={this.captureBool} small />;
 	}
 }

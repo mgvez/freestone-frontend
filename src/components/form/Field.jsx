@@ -117,7 +117,7 @@ export default class Field extends Component {
 				break;
 			case 'bool':
 			case 'ispublished':
-				input = <BoolInput key={key} {...this.props} changeVal={this.changeVal} />;
+				input = <BoolInput key={key} fieldId={this.props.field.id} {...this.props} changeVal={this.changeVal} />;
 				break;
 			case 'permissions':
 				input = <TextInput key={key} val={this.props.val} size={100} changeVal={this.changeVal} />;

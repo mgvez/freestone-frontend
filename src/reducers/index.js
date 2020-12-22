@@ -17,6 +17,7 @@ import bank from './bank';
 import slugs from './slugs';
 import permissions from './permissions';
 import save from './save';
+import blockFieldDeps from './blockFieldDeps';
 
 const rootReducer = combineReducers({
 	siteHeader,
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
 	translations,
 	slugs,
 	permissions,
+	blockFieldDeps,
 });
 
 export default rootReducer;
