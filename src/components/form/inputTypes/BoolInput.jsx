@@ -8,8 +8,8 @@ export default function BoolInput(props) {
 	const id = `${props.recordId}-${props.fieldId}`;
 	const isChecked = props.val === '1' || props.val === true || props.val === 1;
 	return (
-		<ToggleContainer key={id} small={props.small}>
-			<input id={id} type="checkbox" value={isChecked ? 0 : 1} checked={isChecked} onChange={props.changeVal} />
+		<ToggleContainer small={props.small}>
+			<input id={id} type="checkbox" checked={isChecked} onChange={() => props.changeVal(!isChecked)} />
 			<label htmlFor={id} data-on-label="Yes" data-off-label="No" />
 		</ToggleContainer>
 	);

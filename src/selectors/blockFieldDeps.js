@@ -34,7 +34,6 @@ const transformedSchemaSelector = createSelector(
 export const blockFieldDepsSelector = createSelector(
 	[allDependenciesSelector, configSelector, transformedSchemaSelector],
 	(dependencies, config, table) => {
-
 		const dependenciesByField = dependencies && dependencies.reduce((carry, dependency) => {
 			const { dependingFieldId, rule } = dependency;
 			carry[dependingFieldId] = carry[dependingFieldId] || {};

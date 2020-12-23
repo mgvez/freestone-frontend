@@ -2,7 +2,11 @@ import { combineReducers } from 'redux';
 
 import { 
 	BLOCK_FIELD_DEPS_API,
-	SET_SINGLE_DEPENDENCY,
+	SET_BLOCK_FIELD_DEP,
+	CLOSE_BLOCK_FIELD_DEPS_API,
+	SAVE_BLOCK_FIELD_DEPS_API,
+	FINISH_SAVE_BLOCK_FIELD_DEP,
+	CLEAR_BLOCK_FIELD_DEP,
 } from '../actions/blockFieldDeps';
 import { CLEAR_DATA } from '../actions/dev';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
@@ -13,7 +17,7 @@ function dependencies(state = null, action) {
 		const { data } = action;
 		return data.dependencies;
 	}
-	case SET_SINGLE_DEPENDENCY: {
+	case SET_BLOCK_FIELD_DEP: {
 		const { data: { fieldId, typeId, isDisplay } } = action;
 		const newState = [...(state || [])];
 		const oldValueIndex = newState.findIndex(d => d.rule === String(typeId) && d.dependingFieldId === fieldId);
@@ -35,8 +39,12 @@ function dependencies(state = null, action) {
 	}
 	case CLEAR_DATA:
 	case UNAUTHORIZED:
+	case CLOSE_BLOCK_FIELD_DEPS_API.SUCCESS:
 	case LOGOUT_API.SUCCESS:
 	case LOGOUT_API.REQUEST:
+	case CLEAR_BLOCK_FIELD_DEP:
+	// case FINISH_SAVE_BLOCK_FIELD_DEP:
+	// case SAVE_BLOCK_FIELD_DEPS_API.SUCCESS:
 		return null;
 	default:
 		return state;
@@ -68,6 +76,10 @@ function suggestions(state = null, action) {
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:
 	case LOGOUT_API.REQUEST:
+	case CLOSE_BLOCK_FIELD_DEPS_API.SUCCESS:
+	case CLEAR_BLOCK_FIELD_DEP:
+	// case FINISH_SAVE_BLOCK_FIELD_DEP:
+	// case SAVE_BLOCK_FIELD_DEPS_API.SUCCESS:
 		return null;
 	default:
 		return state;

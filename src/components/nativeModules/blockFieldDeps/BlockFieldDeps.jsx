@@ -1,83 +1,134 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import Modal from 'react-modal';
+
+import { transparentModal, MODAL_TRANSITION_MS } from '../../../styles/Modal.js';
 import { Button } from '../../../styles/Button';
 import { Preloader } from '../../widgets/Preloader';
 import BoolInput from '../../form/inputTypes/BoolInput';
+import SaveContentBlockDependencies from '../../../containers/process/SaveContentBlockDependencies'; 
+import { GridContainer, GridItem, MainZone } from '../../../styles/Grid';
+import { TabsContainer } from '../../../styles/Form';
 
 import FixedHeader from '../../header/FixedHeader'; 
 import styled from 'styled-components';
-import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 import colors from '../../../styles/Colors';
 import { Heading2 } from '../../../styles/Texts';
 import { Input } from '../../../styles/Input';
 import { Icon } from '../../../styles/Icon';
-import { TabsContainer } from '../../../styles/Form';
-import debounce from '../../../utils/Debounce.js';
 import FormHeaderCore from '../../../containers/header/FormHeaderCore'; 
 
 const VIEW_BY_FIELD = 'VIEW_BY_FIELD';
 const VIEW_BY_TPL = 'VIEW_BY_TPL';
 
-
 export default function BlockFieldDeps(props) {
 	
 	const { dependenciesByField, dependencies, tableId, table, types } = props;
-	console.log(dependenciesByField);
 
 	const [currentView, setCurrentView] = useState(VIEW_BY_FIELD);
 	const [currentType, setCurrentType] = useState();
 	const [currentField, setCurrentField] = useState();
+	const [isSaving, setIsSaving] = useState(false);
+	const [isSaved, setIsSaved] = useState(false);
 
-	if (!dependencies) {
-		props.fetchAllData();
-	} 
-	if (tableId && !table) {
-		props.fetchTable(tableId);
-	}
+	// console.log(dependencies);
+	const onFinishSave = useCallback(() => {
+		setIsSaved(true);
+	});
+	const onSaveCleanup = useCallback(() => {
+		props.clearDependencies();
+		props.goTo('/');
+	});
 
-	if (!types || !table) return <MainZone><Preloader /></MainZone>;
+	useEffect(() => {
+		if (!isSaved) {
+			if (!dependencies) {
+				props.fetchAllData();
+			}
+			if (tableId && !table) {
+				props.fetchTable(tableId);
+			}
+		}
+	}, [isSaved, dependencies, tableId, table]);
+	
+	if (!types || !table || !dependencies) return <MainZone><Preloader /></MainZone>;
+
+	const getRow = (key, label, fieldId, typeId) => {
+		const onChange = v => {
+			props.setSingleDependency(fieldId, typeId, v);
+		};
+		const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
+		const isChecked = currentDependency && currentDependency.isDisplay;
+		return (
+			<GridContainer key={key}>
+				<GridItem cols="2">
+					{label}
+				</GridItem>
+				<GridItem cols="2">
+					<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isChecked && isChecked !== '0'} fieldId={fieldId} recordId={typeId} changeVal={onChange} />
+				</GridItem>
+			</GridContainer>
+		);
+	};
 
 	let tabs;
 	let switches;
+	let header;
 	if (currentView === VIEW_BY_TPL) {
-		tabs = types.map((type, tIdx) => {
-			const isActive = currentType === type.id || (!currentType && tIdx === 0);
+		const activeTypeId = currentType || types[0].id;
+		const activeType = types.find(type => activeTypeId === type.id);
+		tabs = types.map(type => {
+			const isActive = activeTypeId === type.id;
 			const activeClass = isActive && 'active';
 			const onClick = () => setCurrentType(type.id);
 
 			return (<button className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
 			
 		});
+		switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field.id, activeTypeId));
+
+		header = (
+			<div>
+				<Heading2>When type is <strong>{activeType.name}</strong>, display fields:</Heading2>
+			</div>
+		);
+
 	} else {
 		const activeFieldId = currentField || table.dependingFields[0].id;
+		const activeField = table.dependingFields.find(field => activeFieldId === field.id);
+
 		tabs = table.dependingFields.map(field => {
 			
 			const isActive = activeFieldId === field.id;
 			const activeClass = isActive && 'active';
 			const onClick = () => setCurrentField(field.id);
 
-			return (<button className={`tab ${activeClass}`} key={`fieldtoggle${field.id}`} onClick={onClick}>{field.label}</button>);
+			return (<button className={`tab ${activeClass}`} key={field.id} onClick={onClick}>{field.langAgnosticName}</button>);
 			
 		});
+		switches = types.map(type => getRow(type.name, type.name, activeFieldId, type.id));
+		header = (
+			<div>
+				<Heading2>Display field <strong>{activeField.langAgnosticName}</strong> when type is:</Heading2>
+			</div>
+		);
+	}
 
-		const currentFieldDependencies = dependenciesByField[activeFieldId];
-		// console.log(currentFieldDependencies);
-		switches = types.map(type => {
-			console.log(type);
-			const onChange = e => {
-				console.log(activeFieldId, type.id, e.currentTarget.value);
-				props.setSingleDependency(activeFieldId, type.id, e.currentTarget.value);
-			};
-			const isChecked = currentFieldDependencies && currentFieldDependencies[type.id] && currentFieldDependencies[type.id].idDisplay;
-			return (
-				<div key={type.name}>
-					{type.name}
-					<BoolInput val={isChecked ? '1' : '0'} fieldId={activeFieldId} recordId={type.id} changeVal={onChange} />
-				</div>
-			);
-		});
-
+	let savingComponent;
+	if (isSaving) {
+		savingComponent = (
+			<Modal
+				isOpen={!isSaved}
+				ariaHideApp={false}
+				closeTimeoutMS={MODAL_TRANSITION_MS}
+				contentLabel="."
+				style={transparentModal}
+				onAfterClose={onSaveCleanup}
+			>
+				<SaveContentBlockDependencies key="save-deps" onFinish={onFinishSave} />
+			</Modal>
+		);
 	}
 
 	const groupsTogglers = (
@@ -85,7 +136,6 @@ export default function BlockFieldDeps(props) {
 			<GridItem columns="12">
 				<TabsContainer>
 					{tabs}
-					{switches}
 				</TabsContainer>
 			</GridItem>
 		</GridContainer>
@@ -95,14 +145,17 @@ export default function BlockFieldDeps(props) {
 		<MainZone>
 			<GridContainer>
 				<GridItem columns="12">
-
 					<div>
-						<Button cta faded={currentView === VIEW_BY_FIELD} onClick={() => setCurrentView(VIEW_BY_FIELD)}>set by field</Button>
-						<Button cta faded={currentView === VIEW_BY_TPL} onClick={() => setCurrentView(VIEW_BY_TPL)}>set by template</Button>
+						<Button cta={currentView === VIEW_BY_TPL} info={currentView === VIEW_BY_FIELD} onClick={() => setCurrentView(VIEW_BY_FIELD)}>set by field</Button>
+						<Button cta={currentView === VIEW_BY_FIELD} info={currentView === VIEW_BY_TPL} onClick={() => setCurrentView(VIEW_BY_TPL)}>set by template</Button>
 					</div>
-					{groupsTogglers}
 				</GridItem>
 			</GridContainer>
+			{groupsTogglers}
+			{header}
+			{switches}
+			<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>
+			{savingComponent}
 		</MainZone>
 	);
 }
@@ -119,4 +172,5 @@ BlockFieldDeps.propTypes = {
 	fetchTable: PropTypes.func,
 	setSingleDependency: PropTypes.func,
 	goTo: PropTypes.func,
+	clearDependencies: PropTypes.func,
 };

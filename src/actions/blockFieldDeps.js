@@ -3,7 +3,11 @@ import { createRequestTypes } from './apiAction';
 
 
 export const BLOCK_FIELD_DEPS_API = createRequestTypes('BLOCK_FIELD_DEPS_API');
-export const SET_SINGLE_DEPENDENCY = createRequestTypes('SET_SINGLE_DEPENDENCY');
+export const SAVE_BLOCK_FIELD_DEPS_API = createRequestTypes('SAVE_BLOCK_FIELD_DEPS_API');
+export const CLOSE_BLOCK_FIELD_DEPS_API = createRequestTypes('CLOSE_BLOCK_FIELD_DEPS_API');
+export const SET_BLOCK_FIELD_DEP = 'SET_BLOCK_FIELD_DEP';
+export const CLEAR_BLOCK_FIELD_DEP = 'CLEAR_BLOCK_FIELD_DEP';
+export const FINISH_SAVE_BLOCK_FIELD_DEP = 'FINISH_SAVE_BLOCK_FIELD_DEP';
 
 
 export function fetchAllData() {
@@ -20,11 +24,54 @@ export function fetchAllData() {
 export function setSingleDependency(fieldId, typeId, isDisplay) {
 	return (dispatch) => {
 		return dispatch({
-			type: SET_SINGLE_DEPENDENCY,
+			type: SET_BLOCK_FIELD_DEP,
 			data: {
 				fieldId,
 				typeId,
 				isDisplay,
+			},
+		});
+	};
+}
+
+export function clearDependencies(fieldId, typeId, isDisplay) {
+	return (dispatch) => {
+		return dispatch({
+			type: CLEAR_BLOCK_FIELD_DEP,
+		});
+	};
+}
+
+export function saveDependencies(dependencies, onFinish) {
+
+	return (dispatch) => {
+		const onSaved = dispatch({
+			[FREESTONE_API]: {
+				types: SAVE_BLOCK_FIELD_DEPS_API,
+				// types: 'test',
+				route: 'blockFieldDeps/save',
+				data: {
+					dependencies,
+				},
+			},
+		});
+
+		return onSaved.then(res => {
+			onFinish();
+			return dispatch({
+				type: FINISH_SAVE_BLOCK_FIELD_DEP,
+			});
+		});
+
+	};
+}
+
+export function closeDependencies() {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: CLOSE_BLOCK_FIELD_DEPS_API,
+				route: 'blockFieldDeps/unlock',
 			},
 		});
 	};
