@@ -7,11 +7,7 @@ import { MODAL_TRANSITION_MS } from '../../styles/Modal';
 export default function SaveContentBlockDependencies(props) {
 
 	useEffect(() => {
-		const t = setTimeout(() => {
-			props.saveDependencies(props.dependencies, props.onFinish);
-		}, MODAL_TRANSITION_MS);
-		return () => clearTimeout(t);
-
+		props.saveDependencies(props.dependencies, props.onFinish);
 	}, []);
 
 	return (

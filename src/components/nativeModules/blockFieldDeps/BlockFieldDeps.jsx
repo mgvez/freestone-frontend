@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Modal from 'react-modal';
+// import Modal from 'react-modal';
+import AjaxModal from '../../widgets/AjaxModal';
 
 import { transparentModal, MODAL_TRANSITION_MS } from '../../../styles/Modal.js';
 import { Button } from '../../../styles/Button';
@@ -30,19 +31,20 @@ export default function BlockFieldDeps(props) {
 	const [currentType, setCurrentType] = useState();
 	const [currentField, setCurrentField] = useState();
 	const [isSaving, setIsSaving] = useState(false);
-	const [isSaved, setIsSaved] = useState(false);
+	// const [isSaved, setIsSaved] = useState(false);
 
-	// console.log(dependencies);
-	const onFinishSave = useCallback(() => {
-		setIsSaved(true);
-	});
+	// const onFinishSave = useCallback(() => {
+	// 	setIsSaved(true);
+	// });
 	const onSaveCleanup = useCallback(() => {
+		console.log('saved');
 		props.clearDependencies();
-		props.goTo('/');
+		setIsSaving(false);
+		// props.goTo('/');
 	});
 
 	useEffect(() => {
-		if (!isSaved) {
+		if (!isSaving) {
 			if (!dependencies) {
 				props.fetchAllData();
 			}
@@ -50,7 +52,7 @@ export default function BlockFieldDeps(props) {
 				props.fetchTable(tableId);
 			}
 		}
-	}, [isSaved, dependencies, tableId, table]);
+	}, [isSaving, dependencies, tableId, table]);
 	
 	if (!types || !table || !dependencies) return <MainZone><Preloader /></MainZone>;
 
@@ -118,16 +120,22 @@ export default function BlockFieldDeps(props) {
 	let savingComponent;
 	if (isSaving) {
 		savingComponent = (
-			<Modal
-				isOpen={!isSaved}
-				ariaHideApp={false}
-				closeTimeoutMS={MODAL_TRANSITION_MS}
-				contentLabel="."
-				style={transparentModal}
-				onAfterClose={onSaveCleanup}
-			>
-				<SaveContentBlockDependencies key="save-deps" onFinish={onFinishSave} />
-			</Modal>
+			<AjaxModal
+				onClosed={onSaveCleanup}
+				children={onFinish => {
+					return <SaveContentBlockDependencies key="save-deps" onFinish={onFinish} />;
+				}}
+			/>
+			// <Modal
+			// 	isOpen={!isSaved}
+			// 	ariaHideApp={false}
+			// 	closeTimeoutMS={MODAL_TRANSITION_MS}
+			// 	contentLabel="."
+			// 	style={transparentModal}
+			// 	onAfterClose={onSaveCleanup}
+			// >
+			// 	<SaveContentBlockDependencies key="save-deps" onFinish={onFinishSave} />
+			// </Modal>
 		);
 	}
 

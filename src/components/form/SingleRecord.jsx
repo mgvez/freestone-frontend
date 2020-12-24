@@ -125,7 +125,6 @@ export default class SingleRecord extends Component {
 		//if field is language-specific, display it only if the current language is the field's
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
 		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
-
 		return isShowField ? (<Field
 			key={field.id} 
 			field={field}
@@ -187,7 +186,7 @@ export default class SingleRecord extends Component {
 				//group is not a group of fields, it's only a placeholder to place a subform amongst main table's fields list.
 				const groupFieldRows = group.fields && group.fields.map((field) => this.renderField(field, 0)).filter(a => a);
 				const groupChildren = group.children && this.renderChildren(group.children);
-				// console.log(groupFieldRows, groupChild);
+				// console.log(group.key);
 				if (groupFieldRows && groupFieldRows.length) {
 					return (<FieldGroup key={group.key} id={group.key} label={group.label}>
 						{groupFieldRows}

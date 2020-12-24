@@ -54,8 +54,11 @@ function parseDependencies(table, record) {
 
 	//defaults all depending fields to the inverse of their set rules, that is, if rules are for displaying a field, hide it until we match a rule
 	const dependenciesValues = controlFieldIds.reduce((defaults, controlFieldId) => {
+		// const controlField = table.fields.find(f => f.id === Number(controlFieldId));
 		return fieldDependencies[controlFieldId].reduce((carry, rule) => {
 			const { dependingFieldId } = rule;
+			// const dependingField = table.fields.find(f => f.id === dependingFieldId);
+
 			//sets default if first time we encounter this depending field in the loop
 			if (carry[dependingFieldId] === undefined) {
 				carry[dependingFieldId] = {
@@ -63,25 +66,40 @@ function parseDependencies(table, record) {
 					descriptionAppend: '',
 					titleOverride: '',
 					sizeOverride: undefined,
-					forceDisplay: undefined,
 				};
 			}
-
-			if (rule.rule === '*') carry[dependingFieldId].forceDisplay = rule.forceDisplay;
+			const current = carry[dependingFieldId];
+			
+			// first pass for this field
+			if (current.byControl === undefined) {
+				current.byControl = {
+					[controlFieldId]: current.isDisplay,
+				};
+			} else if (current.byControl[controlFieldId] === undefined) {
+				// first rule of a subsequent field. If depending field was set as invisible by a previous control, 
+				// then depending is not shown (it's a AND)
+				if (!current.isDisplay) return carry;
+				// invert first rule for this control (each control field behaves the same)
+				if (rule.isDisplay) current.isDisplay = false;
+				current.byControl[controlFieldId] = !rule.isDisplay;
+			}
+			// console.log('c %s d %s rule %s val %s applies %s', controlField && controlField.name, dependingField && dependingField.name, rule.rule, record[controlFieldId], carry[dependingFieldId].isDisplay);
 
 			//does the control field value match the rule?
 			const ruleApplies = checkRule(rule.rule, record[controlFieldId]);
-			// console.log(rule.rule, controlFieldId, dependingFieldId, ruleApplies);
+			// console.log(rule.rule, record[controlFieldId], controlFieldId, dependingFieldId, ruleApplies);
 			if (ruleApplies) {
 				// console.log('%s applies displays (%s)', rule.rule, rule.isDisplay);
 				// console.log(carry[dependingFieldId]);
 				// console.log(rule);
-
-				carry[dependingFieldId].isDisplay = typeof carry[dependingFieldId].forceDisplay === 'undefined' ? rule.isDisplay : carry[dependingFieldId].forceDisplay;
-				carry[dependingFieldId].descriptionAppend = (carry[dependingFieldId].descriptionAppend || '') + (rule.descriptionAppend || '');
-				carry[dependingFieldId].titleOverride = rule.titleOverride;
-				carry[dependingFieldId].sizeOverride = Number(rule.sizeOverride);
+				current.isDisplay = rule.isDisplay;
+				current.descriptionAppend = (current.descriptionAppend || '') + (rule.descriptionAppend || '');
+				current.titleOverride = rule.titleOverride;
+				current.sizeOverride = Number(rule.sizeOverride);
 			}
+
+			// keep display status for each control fields. all controlling field's display statuses must be true in order for this field to be shown
+			current.byControl[controlFieldId] = current.isDisplay;
 
 			return carry;
 		}, defaults);
@@ -103,7 +121,7 @@ function createFieldGroups(fields, children) {
 			// console.log('creating group', child, curField);
 			curGroup = {
 				label: (isSeparator && curField.label) || null,
-				key: '',
+				key: `group-${curField.id}`,
 				children: [],
 				isFirst: !curGroup, //indicate of this group is the first one in list
 				fields: [],
@@ -112,7 +130,7 @@ function createFieldGroups(fields, children) {
 			groups.push(curGroup);
 		}
 		// console.log(curField);
-		curGroup.key += `${curField.id}-`;
+		// curGroup.key += `${curField.id}-`;
 
 		// 	child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
 		const child = isPlaceholder && children && children.find(candidate => curField.subformPlaceholder === candidate.tableId);
@@ -132,10 +150,7 @@ function createFieldGroups(fields, children) {
 			}
 		}
 		return groups;
-	}, []).map(gr => {
-		gr.key = md5(gr.key);
-		return gr;
-	});
+	}, []);
 
 	if (!children) return namedGroups;
 	//if there are children forms, add the remaining ones (without placeholders) to the list of form groups
@@ -143,7 +158,7 @@ function createFieldGroups(fields, children) {
 		if (!child.hasPlaceholder) {
 			const curGroup = {
 				label: (child.label) || null,
-				key: child.key,
+				key: `child-${child.key}`,
 				children: [child],
 				asideFields: [],
 				fields: [],
