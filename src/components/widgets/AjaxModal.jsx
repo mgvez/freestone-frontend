@@ -12,7 +12,6 @@ export default function AjaxModal(props) {
 
 	const [isProcessed, setIsProcessed] = useState(false);
 	const [startTime] = useState(new Date());
-
 	const onKilled = useCallback(() => {
 		props.onClosed();
 	}, [props.onClosed]);
@@ -20,11 +19,13 @@ export default function AjaxModal(props) {
 	const onFinish = useCallback(() => {
 		const elapsed = (new Date()) - startTime;
 		if (elapsed < TOTAL_IN_TIME) {
-			setTimeout(() => setIsProcessed(true), TOTAL_IN_TIME - elapsed);
+			setTimeout(() => {
+				setIsProcessed(true);
+			}, TOTAL_IN_TIME - elapsed);
 		} else {
 			setIsProcessed(true);
 		}
-	}, [startTime]);
+	}, [startTime, setIsProcessed]);
 
 	return (
 		<Modal

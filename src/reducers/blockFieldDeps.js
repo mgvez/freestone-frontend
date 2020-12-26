@@ -43,8 +43,8 @@ function dependencies(state = null, action) {
 	case LOGOUT_API.SUCCESS:
 	case LOGOUT_API.REQUEST:
 	case CLEAR_BLOCK_FIELD_DEP:
+	case SAVE_BLOCK_FIELD_DEPS_API.SUCCESS:
 	// case FINISH_SAVE_BLOCK_FIELD_DEP:
-	// case SAVE_BLOCK_FIELD_DEPS_API.SUCCESS:
 		return null;
 	default:
 		return state;
@@ -67,28 +67,8 @@ function config(state = null, action) {
 	}
 }
 
-function suggestions(state = null, action) {
-	switch (action.type) {
-	case BLOCK_FIELD_DEPS_API.SUCCESS: {
-		return state;
-	}
-	case CLEAR_DATA:
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CLOSE_BLOCK_FIELD_DEPS_API.SUCCESS:
-	case CLEAR_BLOCK_FIELD_DEP:
-	// case FINISH_SAVE_BLOCK_FIELD_DEP:
-	// case SAVE_BLOCK_FIELD_DEPS_API.SUCCESS:
-		return null;
-	default:
-		return state;
-	}
-}
-
 
 export default combineReducers({
 	dependencies,
 	config,
-	suggestions,
 });

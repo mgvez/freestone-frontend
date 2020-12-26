@@ -48,10 +48,6 @@ function parseDependencies(table, record) {
 	const controlFieldIds = fieldDependencies && Object.keys(fieldDependencies);
 	if (!controlFieldIds || controlFieldIds.length === 0) return null;
 
-	// console.log(fieldDependencies);
-	// console.log(record);
-	// console.log(table.fields);
-
 	//defaults all depending fields to the inverse of their set rules, that is, if rules are for displaying a field, hide it until we match a rule
 	const dependenciesValues = controlFieldIds.reduce((defaults, controlFieldId) => {
 		// const controlField = table.fields.find(f => f.id === Number(controlFieldId));

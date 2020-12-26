@@ -30,11 +30,42 @@ const transformedSchemaSelector = createSelector(
 	}
 );
 
-
-export const blockFieldDepsSelector = createSelector(
-	[allDependenciesSelector, configSelector, transformedSchemaSelector],
-	(dependencies, config, table) => {
-		const dependenciesByField = dependencies && dependencies.reduce((carry, dependency) => {
+const suggestionsSelector = createSelector(
+	[configSelector, schemaSelector],
+	(config, allSchema) => {
+		if (!config || !allSchema) return null;
+		const table = config.tableId && allSchema.tables && allSchema.tables[config.tableId];
+		if (!table) return null;
+		const { templates } = config;
+		const suggestionsByTypeId = templates.reduce((carry, template) => {
+			carry[template.id] = template.placedItems.fields && template.placedItems.fields.map(fieldName => {
+				const field = table.fields.find(f => f.name === fieldName);
+				return field && field.id;
+			}).filter(f => f);
+			return carry;
+		}, {});
+		return suggestionsByTypeId;
+	}
+);
+const dependenciesSelector = createSelector(
+	[allDependenciesSelector, suggestionsSelector],
+	(dependencies, suggestions) => {
+		if (!dependencies || !suggestions) return null;
+		const parsed = dependencies.map(dependency => {
+			const { dependingFieldId, rule } = dependency;
+			let isSuggested = false;
+			if (suggestions[rule]) {
+				isSuggested = suggestions[rule].find(placed => placed === dependingFieldId) && true;
+				// if (isSuggested) console.log('SUGGESTED', rule, suggestions[rule]);
+			}
+			// if (isSuggested) console.log(dependency);
+			return {
+				...dependency,
+				isSuggested,
+			};
+		});
+		// console.log(parsed);
+		const dependenciesByField = parsed && parsed.reduce((carry, dependency) => {
 			const { dependingFieldId, rule } = dependency;
 			carry[dependingFieldId] = carry[dependingFieldId] || {};
 			carry[dependingFieldId][rule] = dependency;
@@ -42,8 +73,20 @@ export const blockFieldDepsSelector = createSelector(
 		}, {});
 
 		return {
-			dependencies,
+			dependencies: parsed,
 			dependenciesByField,
+		};
+	}
+);
+
+
+export const blockFieldDepsSelector = createSelector(
+	[configSelector, transformedSchemaSelector, dependenciesSelector],
+	(config, table, dependencies) => {
+		
+
+		return {
+			...dependencies,
 			...config,
 			table,
 		};

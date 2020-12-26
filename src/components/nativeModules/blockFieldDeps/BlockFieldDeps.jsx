@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-// import Modal from 'react-modal';
 import AjaxModal from '../../widgets/AjaxModal';
 
-import { transparentModal, MODAL_TRANSITION_MS } from '../../../styles/Modal.js';
 import { Button } from '../../../styles/Button';
 import { Preloader } from '../../widgets/Preloader';
 import BoolInput from '../../form/inputTypes/BoolInput';
@@ -31,17 +29,12 @@ export default function BlockFieldDeps(props) {
 	const [currentType, setCurrentType] = useState();
 	const [currentField, setCurrentField] = useState();
 	const [isSaving, setIsSaving] = useState(false);
-	// const [isSaved, setIsSaved] = useState(false);
 
-	// const onFinishSave = useCallback(() => {
-	// 	setIsSaved(true);
-	// });
 	const onSaveCleanup = useCallback(() => {
-		console.log('saved');
-		props.clearDependencies();
+		// props.clearDependencies();
 		setIsSaving(false);
 		// props.goTo('/');
-	});
+	}, []);
 
 	useEffect(() => {
 		if (!isSaving) {
@@ -54,67 +47,104 @@ export default function BlockFieldDeps(props) {
 		}
 	}, [isSaving, dependencies, tableId, table]);
 	
-	if (!types || !table || !dependencies) return <MainZone><Preloader /></MainZone>;
 
-	const getRow = (key, label, fieldId, typeId) => {
-		const onChange = v => {
-			props.setSingleDependency(fieldId, typeId, v);
+	let content;
+	if (types && table && dependencies) {
+
+		const getRow = (key, label, fieldId, typeId) => {
+			const onChange = v => {
+				props.setSingleDependency(fieldId, typeId, v);
+			};
+			const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
+			const isChecked = currentDependency && currentDependency.isDisplay;
+			const isSuggested = currentDependency && currentDependency.isSuggested;
+			const background = isSuggested ? 'green' : 'red';
+			return (
+				<GridContainer key={key}>
+					<GridItem cols="2">
+						{label}
+					</GridItem>
+					<GridItem cols="2">
+						<div style={{ background }}>Suggested? {isSuggested}</div>
+					</GridItem>
+					<GridItem cols="2">
+						<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isChecked && isChecked !== '0'} fieldId={fieldId} recordId={typeId} changeVal={onChange} />
+					</GridItem>
+				</GridContainer>
+			);
 		};
-		const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
-		const isChecked = currentDependency && currentDependency.isDisplay;
-		return (
-			<GridContainer key={key}>
-				<GridItem cols="2">
-					{label}
-				</GridItem>
-				<GridItem cols="2">
-					<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isChecked && isChecked !== '0'} fieldId={fieldId} recordId={typeId} changeVal={onChange} />
+
+		let tabs;
+		let switches;
+		let header;
+		if (currentView === VIEW_BY_TPL) {
+			const activeTypeId = currentType || types[0].id;
+			const activeType = types.find(type => activeTypeId === type.id);
+			tabs = types.map(type => {
+				const isActive = activeTypeId === type.id;
+				const activeClass = isActive && 'active';
+				const onClick = () => setCurrentType(type.id);
+
+				return (<button className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
+				
+			});
+			switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field.id, activeTypeId));
+
+			header = (
+				<div>
+					<Heading2>When type is <strong>{activeType.name}</strong>, display fields:</Heading2>
+				</div>
+			);
+
+		} else {
+			const activeFieldId = currentField || table.dependingFields[0].id;
+			const activeField = table.dependingFields.find(field => activeFieldId === field.id);
+
+			tabs = table.dependingFields.map(field => {
+				
+				const isActive = activeFieldId === field.id;
+				const activeClass = isActive && 'active';
+				const onClick = () => setCurrentField(field.id);
+
+				return (<button className={`tab ${activeClass}`} key={field.id} onClick={onClick}>{field.langAgnosticName}</button>);
+				
+			});
+			switches = types.map(type => getRow(type.name, type.name, activeFieldId, type.id));
+			header = (
+				<div>
+					<Heading2>Display field <strong>{activeField.langAgnosticName}</strong> when type is:</Heading2>
+				</div>
+			);
+		}
+		const groupsTogglers = (
+			<GridContainer>
+				<GridItem columns="12">
+					<TabsContainer>
+						{tabs}
+					</TabsContainer>
 				</GridItem>
 			</GridContainer>
 		);
-	};
 
-	let tabs;
-	let switches;
-	let header;
-	if (currentView === VIEW_BY_TPL) {
-		const activeTypeId = currentType || types[0].id;
-		const activeType = types.find(type => activeTypeId === type.id);
-		tabs = types.map(type => {
-			const isActive = activeTypeId === type.id;
-			const activeClass = isActive && 'active';
-			const onClick = () => setCurrentType(type.id);
-
-			return (<button className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
-			
-		});
-		switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field.id, activeTypeId));
-
-		header = (
-			<div>
-				<Heading2>When type is <strong>{activeType.name}</strong>, display fields:</Heading2>
-			</div>
+		content = (
+			<React.Fragment>
+				<GridContainer>
+					<GridItem columns="12">
+						<div>
+							<Button cta={currentView === VIEW_BY_TPL} info={currentView === VIEW_BY_FIELD} onClick={() => setCurrentView(VIEW_BY_FIELD)}>set by field</Button>
+							<Button cta={currentView === VIEW_BY_FIELD} info={currentView === VIEW_BY_TPL} onClick={() => setCurrentView(VIEW_BY_TPL)}>set by template</Button>
+						</div>
+					</GridItem>
+				</GridContainer>
+				{groupsTogglers}
+				{header}
+				{switches}
+				<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>
+			</React.Fragment>
 		);
 
-	} else {
-		const activeFieldId = currentField || table.dependingFields[0].id;
-		const activeField = table.dependingFields.find(field => activeFieldId === field.id);
-
-		tabs = table.dependingFields.map(field => {
-			
-			const isActive = activeFieldId === field.id;
-			const activeClass = isActive && 'active';
-			const onClick = () => setCurrentField(field.id);
-
-			return (<button className={`tab ${activeClass}`} key={field.id} onClick={onClick}>{field.langAgnosticName}</button>);
-			
-		});
-		switches = types.map(type => getRow(type.name, type.name, activeFieldId, type.id));
-		header = (
-			<div>
-				<Heading2>Display field <strong>{activeField.langAgnosticName}</strong> when type is:</Heading2>
-			</div>
-		);
+	} else if (!isSaving) {
+		content = <Preloader />;
 	}
 
 	let savingComponent;
@@ -126,43 +156,12 @@ export default function BlockFieldDeps(props) {
 					return <SaveContentBlockDependencies key="save-deps" onFinish={onFinish} />;
 				}}
 			/>
-			// <Modal
-			// 	isOpen={!isSaved}
-			// 	ariaHideApp={false}
-			// 	closeTimeoutMS={MODAL_TRANSITION_MS}
-			// 	contentLabel="."
-			// 	style={transparentModal}
-			// 	onAfterClose={onSaveCleanup}
-			// >
-			// 	<SaveContentBlockDependencies key="save-deps" onFinish={onFinishSave} />
-			// </Modal>
 		);
 	}
 
-	const groupsTogglers = (
-		<GridContainer>
-			<GridItem columns="12">
-				<TabsContainer>
-					{tabs}
-				</TabsContainer>
-			</GridItem>
-		</GridContainer>
-	);
-
 	return (
 		<MainZone>
-			<GridContainer>
-				<GridItem columns="12">
-					<div>
-						<Button cta={currentView === VIEW_BY_TPL} info={currentView === VIEW_BY_FIELD} onClick={() => setCurrentView(VIEW_BY_FIELD)}>set by field</Button>
-						<Button cta={currentView === VIEW_BY_FIELD} info={currentView === VIEW_BY_TPL} onClick={() => setCurrentView(VIEW_BY_TPL)}>set by template</Button>
-					</div>
-				</GridItem>
-			</GridContainer>
-			{groupsTogglers}
-			{header}
-			{switches}
-			<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>
+			{content}
 			{savingComponent}
 		</MainZone>
 	);
