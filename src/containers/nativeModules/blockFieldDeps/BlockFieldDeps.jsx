@@ -5,10 +5,10 @@ import BlockFieldDeps from '../../../components/nativeModules/blockFieldDeps/Blo
 
 import { goTo } from '../../../actions/nav';
 import { fetchTable } from '../../../actions/schema';
-import { fetchAllData, setSingleDependency, clearDependencies } from '../../../actions/blockFieldDeps';
+import { fetchAllData, setSingleDependency, setMultipleDependencies, clearDependencies } from '../../../actions/blockFieldDeps';
 import { blockFieldDepsSelector } from '../../../selectors/blockFieldDeps';
 
 export default connect(
 	blockFieldDepsSelector,
-	dispatch => bindActionCreators({ goTo, fetchAllData, fetchTable, setSingleDependency, clearDependencies }, dispatch)
+	dispatch => bindActionCreators({ goTo, fetchAllData, fetchTable, setSingleDependency, setMultipleDependencies, clearDependencies }, dispatch)
 )(BlockFieldDeps);

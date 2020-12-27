@@ -6,6 +6,7 @@ export const BLOCK_FIELD_DEPS_API = createRequestTypes('BLOCK_FIELD_DEPS_API');
 export const SAVE_BLOCK_FIELD_DEPS_API = createRequestTypes('SAVE_BLOCK_FIELD_DEPS_API');
 export const CLOSE_BLOCK_FIELD_DEPS_API = createRequestTypes('CLOSE_BLOCK_FIELD_DEPS_API');
 export const SET_BLOCK_FIELD_DEP = 'SET_BLOCK_FIELD_DEP';
+export const SET_BLOCK_MULTIPLE_FIELD_DEP = 'SET_BLOCK_MULTIPLE_FIELD_DEP';
 export const CLEAR_BLOCK_FIELD_DEP = 'CLEAR_BLOCK_FIELD_DEP';
 export const FINISH_SAVE_BLOCK_FIELD_DEP = 'FINISH_SAVE_BLOCK_FIELD_DEP';
 
@@ -34,7 +35,16 @@ export function setSingleDependency(fieldId, typeId, isDisplay) {
 	};
 }
 
-export function clearDependencies(fieldId, typeId, isDisplay) {
+export function setMultipleDependencies(data) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_BLOCK_MULTIPLE_FIELD_DEP,
+			data,
+		});
+	};
+}
+
+export function clearDependencies() {
 	return (dispatch) => {
 		return dispatch({
 			type: CLEAR_BLOCK_FIELD_DEP,
@@ -43,6 +53,7 @@ export function clearDependencies(fieldId, typeId, isDisplay) {
 }
 
 export function saveDependencies(dependencies, onFinish) {
+	const data = { data: JSON.stringify(dependencies) };
 
 	return (dispatch) => {
 		const onSaved = dispatch({
@@ -50,9 +61,7 @@ export function saveDependencies(dependencies, onFinish) {
 				types: SAVE_BLOCK_FIELD_DEPS_API,
 				// types: 'test',
 				route: 'blockFieldDeps/save',
-				data: {
-					dependencies,
-				},
+				data,
 			},
 		});
 

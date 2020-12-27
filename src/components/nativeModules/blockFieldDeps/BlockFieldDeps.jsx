@@ -21,6 +21,10 @@ import FormHeaderCore from '../../../containers/header/FormHeaderCore';
 const VIEW_BY_FIELD = 'VIEW_BY_FIELD';
 const VIEW_BY_TPL = 'VIEW_BY_TPL';
 
+const BATCH_SET_SHOW = 'BATCH_SET_SHOW';
+const BATCH_SET_HIDE = 'BATCH_SET_HIDE';
+const BATCH_SET_SUGGESTED = 'BATCH_SET_SUGGESTED';
+
 export default function BlockFieldDeps(props) {
 	
 	const { dependenciesByField, dependencies, tableId, table, types } = props;
@@ -58,14 +62,11 @@ export default function BlockFieldDeps(props) {
 			const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
 			const isChecked = currentDependency && currentDependency.isDisplay;
 			const isSuggested = currentDependency && currentDependency.isSuggested;
-			const background = isSuggested ? 'green' : 'red';
+			const color = isSuggested ? 'green' : 'red';
 			return (
 				<GridContainer key={key}>
-					<GridItem cols="2">
-						{label}
-					</GridItem>
-					<GridItem cols="2">
-						<div style={{ background }}>Suggested? {isSuggested}</div>
+					<GridItem cols="3">
+						<div style={{ color }}>{label}</div>
 					</GridItem>
 					<GridItem cols="2">
 						<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isChecked && isChecked !== '0'} fieldId={fieldId} recordId={typeId} changeVal={onChange} />
@@ -77,18 +78,52 @@ export default function BlockFieldDeps(props) {
 		let tabs;
 		let switches;
 		let header;
+
+		const getActiveField = () => {
+			if (!currentField) return table.dependingFields[0];
+			return table.dependingFields.find(field => currentField === field.id);
+		};
+		
+		const getActiveType = () => {
+			if (!currentType) return types[0];
+			return types.find(type => currentType === type.id);
+		};
+		
+		const setAll = action => {
+			let batch;
+			const getVal = (field, type) => {
+				switch (action) {
+				case BATCH_SET_SHOW: return true;
+				case BATCH_SET_HIDE: return false;
+				case BATCH_SET_SUGGESTED: {
+					const currentDependency = dependenciesByField[field.id] && dependenciesByField[field.id][type.id];
+					return currentDependency && currentDependency.isSuggested;
+				}
+				default: return undefined;
+				}
+			};
+			if (currentView === VIEW_BY_TPL) {
+				const activeType = getActiveType();
+				batch = table.dependingFields.map(field => ({ fieldId: field.id, typeId: activeType.id, isDisplay: getVal(field, activeType) }));
+			} else {
+				const activeField = getActiveField();
+				batch = types.map(type => ({ fieldId: activeField.id, typeId: type.id, isDisplay: getVal(activeField, type) }));
+				
+			}
+			props.setMultipleDependencies(batch);
+		};
+
 		if (currentView === VIEW_BY_TPL) {
-			const activeTypeId = currentType || types[0].id;
-			const activeType = types.find(type => activeTypeId === type.id);
+			const activeType = getActiveType();
 			tabs = types.map(type => {
-				const isActive = activeTypeId === type.id;
+				const isActive = activeType.id === type.id;
 				const activeClass = isActive && 'active';
 				const onClick = () => setCurrentType(type.id);
 
 				return (<button className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
 				
 			});
-			switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field.id, activeTypeId));
+			switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field.id, activeType.id));
 
 			header = (
 				<div>
@@ -97,19 +132,18 @@ export default function BlockFieldDeps(props) {
 			);
 
 		} else {
-			const activeFieldId = currentField || table.dependingFields[0].id;
-			const activeField = table.dependingFields.find(field => activeFieldId === field.id);
+			const activeField = getActiveField();
 
 			tabs = table.dependingFields.map(field => {
 				
-				const isActive = activeFieldId === field.id;
+				const isActive = activeField.id === field.id;
 				const activeClass = isActive && 'active';
 				const onClick = () => setCurrentField(field.id);
 
 				return (<button className={`tab ${activeClass}`} key={field.id} onClick={onClick}>{field.langAgnosticName}</button>);
 				
 			});
-			switches = types.map(type => getRow(type.name, type.name, activeFieldId, type.id));
+			switches = types.map(type => getRow(type.name, type.name, activeField.id, type.id));
 			header = (
 				<div>
 					<Heading2>Display field <strong>{activeField.langAgnosticName}</strong> when type is:</Heading2>
@@ -139,6 +173,9 @@ export default function BlockFieldDeps(props) {
 				{groupsTogglers}
 				{header}
 				{switches}
+				<Button cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
+				<Button cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
+				<Button cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
 				<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>
 			</React.Fragment>
 		);
@@ -178,6 +215,7 @@ BlockFieldDeps.propTypes = {
 	fetchAllData: PropTypes.func,
 	fetchTable: PropTypes.func,
 	setSingleDependency: PropTypes.func,
+	setMultipleDependencies: PropTypes.func,
 	goTo: PropTypes.func,
 	clearDependencies: PropTypes.func,
 };

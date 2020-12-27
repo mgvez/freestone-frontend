@@ -8,7 +8,7 @@ import { saveDependencies } from '../../actions/blockFieldDeps';
 export default connect(
 	(state) => {
 		return {
-			dependencies: state.freestone.dependencies && state.freestone.dependencies.dependencies,
+			dependencies: state.freestone.blockFieldDeps && state.freestone.blockFieldDeps.dependencies,
 		};
 	},
 	dispatch => bindActionCreators({ saveDependencies }, dispatch)
