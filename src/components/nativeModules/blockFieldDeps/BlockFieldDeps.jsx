@@ -6,6 +6,7 @@ import AjaxModal from '../../widgets/AjaxModal';
 import { Button } from '../../../styles/Button';
 import { Preloader } from '../../widgets/Preloader';
 import BoolInput from '../../form/inputTypes/BoolInput';
+import TextInput from '../../form/inputTypes/TextInput';
 import SaveContentBlockDependencies from '../../../containers/process/SaveContentBlockDependencies'; 
 import { GridContainer, GridItem, MainZone } from '../../../styles/Grid';
 import { TabsContainer } from '../../../styles/Form';
@@ -56,11 +57,19 @@ export default function BlockFieldDeps(props) {
 	if (types && table && dependencies) {
 
 		const getRow = (key, label, fieldId, typeId) => {
-			const onChange = v => {
-				props.setSingleDependency(fieldId, typeId, v);
+			const onChangeIsDisplay = isDisplay => {
+				props.setSingleDependency(fieldId, typeId, { isDisplay });
+			};
+			const onChangeTitle = e => {
+				const titleOverride = e.currentTarget.value;
+				props.setSingleDependency(fieldId, typeId, { titleOverride });
+			};
+			const onChangeDescription = e => {
+				const descriptionAppend = e.currentTarget.value;
+				props.setSingleDependency(fieldId, typeId, { descriptionAppend });
 			};
 			const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
-			const isChecked = currentDependency && currentDependency.isDisplay;
+			const isDisplay = currentDependency && currentDependency.isDisplay && currentDependency.isDisplay !== '0';
 			const isSuggested = currentDependency && currentDependency.isSuggested;
 			const color = isSuggested ? 'green' : 'red';
 			return (
@@ -69,8 +78,18 @@ export default function BlockFieldDeps(props) {
 						<div style={{ color }}>{label}</div>
 					</GridItem>
 					<GridItem cols="2">
-						<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isChecked && isChecked !== '0'} fieldId={fieldId} recordId={typeId} changeVal={onChange} />
+						<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isDisplay} fieldId={fieldId} recordId={typeId} changeVal={onChangeIsDisplay} />
 					</GridItem>
+					{isDisplay && (
+						<React.Fragment>
+							<GridItem cols="2">
+								<TextInput key={`${key}-${fieldId}-title`} val={currentDependency && currentDependency.titleOverride} changeVal={onChangeTitle} />
+							</GridItem>
+							<GridItem cols="2">
+								<TextInput key={`${key}-${fieldId}-decs`} val={currentDependency && currentDependency.descriptionAppend} changeVal={onChangeDescription} />
+							</GridItem>
+						</React.Fragment>
+					)}
 				</GridContainer>
 			);
 		};

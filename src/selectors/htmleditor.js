@@ -21,13 +21,18 @@ function makeSelector(currentFieldTypeSelector) {
 					...(clientConfig.style_formats || []),
 				],
 			};
+
+			if (tinymceConfig.content_css) {
+				tinymceConfig.content_css = typeof tinymceConfig.content_css === 'string' ? [tinymceConfig.content_css] : tinymceConfig.content_css;
+			}
+
 			if (cssPath && cssPath.length) {
+				const addedCss = typeof cssPath === 'string' ? [cssPath] : cssPath;
 				tinymceConfig.content_css = [
 					...(tinymceConfig.content_css || []),
-					...cssPath.map(p => `${clientPath}${p}`),
+					...addedCss.map(p => `${clientPath}${p}`),
 				];
 			}
-			
 			return {
 				tinymceConfig,
 				route: route.route.pathname,

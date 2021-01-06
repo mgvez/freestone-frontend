@@ -13,14 +13,13 @@ import { CLEAR_DATA } from '../actions/dev';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 
 function setSingleDependency(state, dependency) {
-	const { fieldId, typeId, isDisplay } = dependency;
-
+	const { fieldId, typeId, ...rest } = dependency;
 	const newState = [...(state || [])];
 	const oldValueIndex = newState.findIndex(d => d.rule === String(typeId) && d.dependingFieldId === fieldId);
 	const newValue = {
 		rule: typeId,
 		dependingFieldId: fieldId,
-		isDisplay,
+		...rest,
 	};
 	if (oldValueIndex === -1) {
 		newState.push(newValue);

@@ -22,14 +22,14 @@ export function fetchAllData() {
 	};
 }
 
-export function setSingleDependency(fieldId, typeId, isDisplay) {
+export function setSingleDependency(fieldId, typeId, data) {
 	return (dispatch) => {
 		return dispatch({
 			type: SET_BLOCK_FIELD_DEP,
 			data: {
 				fieldId,
 				typeId,
-				isDisplay,
+				...data,
 			},
 		});
 	};
