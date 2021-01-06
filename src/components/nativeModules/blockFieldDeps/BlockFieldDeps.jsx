@@ -52,21 +52,31 @@ export default function BlockFieldDeps(props) {
 		}
 	}, [isSaving, dependencies, tableId, table]);
 	
+	const getActionParams = (field, typeId, values) => {
+		const allFieldIds = field.languageSiblingIds && field.languageSiblingIds.length ? field.languageSiblingIds : [field.id];
+		return allFieldIds.map(fieldId => (
+			{ fieldId, typeId, ...values }
+		));
+	};
 
 	let content;
 	if (types && table && dependencies) {
 
-		const getRow = (key, label, fieldId, typeId) => {
+		const getRow = (key, label, field, typeId) => {
+			const fieldId = field.id;
+			// console.log(field);
 			const onChangeIsDisplay = isDisplay => {
-				props.setSingleDependency(fieldId, typeId, { isDisplay });
+				props.setMultipleDependencies(getActionParams(field, typeId, { isDisplay }));
+
 			};
 			const onChangeTitle = e => {
 				const titleOverride = e.currentTarget.value;
-				props.setSingleDependency(fieldId, typeId, { titleOverride });
+				props.setMultipleDependencies(getActionParams(field, typeId, { titleOverride }));
+
 			};
 			const onChangeDescription = e => {
 				const descriptionAppend = e.currentTarget.value;
-				props.setSingleDependency(fieldId, typeId, { descriptionAppend });
+				props.setMultipleDependencies(getActionParams(field, typeId, { descriptionAppend }));
 			};
 			const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
 			const isDisplay = currentDependency && currentDependency.isDisplay && currentDependency.isDisplay !== '0';
@@ -112,22 +122,32 @@ export default function BlockFieldDeps(props) {
 			let batch;
 			const getVal = (field, type) => {
 				switch (action) {
-				case BATCH_SET_SHOW: return true;
-				case BATCH_SET_HIDE: return false;
+				case BATCH_SET_SHOW: return { isDisplay: true };
+				case BATCH_SET_HIDE: return { isDisplay: false };
 				case BATCH_SET_SUGGESTED: {
 					const currentDependency = dependenciesByField[field.id] && dependenciesByField[field.id][type.id];
-					return currentDependency && currentDependency.isSuggested;
+					return { isDisplay: currentDependency && currentDependency.isSuggested };
 				}
-				default: return undefined;
+				default:
 				}
+				return {};
 			};
 			if (currentView === VIEW_BY_TPL) {
 				const activeType = getActiveType();
-				batch = table.dependingFields.map(field => ({ fieldId: field.id, typeId: activeType.id, isDisplay: getVal(field, activeType) }));
+				batch = table.dependingFields.reduce((all, field) => {
+					return [
+						...all,
+						...getActionParams(field, activeType.id, getVal(field, activeType)),	
+					];
+				}, []);
 			} else {
 				const activeField = getActiveField();
-				batch = types.map(type => ({ fieldId: activeField.id, typeId: type.id, isDisplay: getVal(activeField, type) }));
-				
+				batch = types.reduce((all, type) => {
+					return [
+						...all,
+						...getActionParams(activeField, type.id, getVal(activeField, type)),	
+					];
+				}, []);
 			}
 			props.setMultipleDependencies(batch);
 		};
@@ -142,7 +162,7 @@ export default function BlockFieldDeps(props) {
 				return (<button className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
 				
 			});
-			switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field.id, activeType.id));
+			switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field, activeType.id));
 
 			header = (
 				<div>
@@ -162,7 +182,7 @@ export default function BlockFieldDeps(props) {
 				return (<button className={`tab ${activeClass}`} key={field.id} onClick={onClick}>{field.langAgnosticName}</button>);
 				
 			});
-			switches = types.map(type => getRow(type.name, type.name, activeField.id, type.id));
+			switches = types.map(type => getRow(type.name, type.name, activeField, type.id));
 			header = (
 				<div>
 					<Heading2>Display field <strong>{activeField.langAgnosticName}</strong> when type is:</Heading2>
