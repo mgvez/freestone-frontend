@@ -68,6 +68,8 @@ function config(state = null, action) {
 		const { data } = action;
 		return data.config;
 	}
+	case CLOSE_BLOCK_FIELD_DEPS_API.SUCCESS:
+	case SAVE_BLOCK_FIELD_DEPS_API.SUCCESS:
 	case CLEAR_DATA:
 	case UNAUTHORIZED:
 	case LOGOUT_API.SUCCESS:

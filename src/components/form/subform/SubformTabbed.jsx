@@ -6,7 +6,7 @@ import Collapsable from '../../animation/Collapsable';
 import SingleRecord from '../../../containers/form/SingleRecord';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import ToggleCollapse from '../buttons/ToggleCollapse';
-import FormHeaderContent from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/info/FormHeaderContent';
 import { Subform, SubformHeader } from '../../../styles/Form';
 import { GridItem } from '../../../styles/Grid';
 

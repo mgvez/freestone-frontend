@@ -20,7 +20,7 @@ import { MainZone } from '../../styles/Grid';
 import { Icon } from '../../styles/Icon';
 
 import FixedHeader from '../header/FixedHeader';
-import ListHeader from '../header/ListHeader';
+import TableInfo from '../header/info/TableInfo';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
@@ -151,17 +151,8 @@ export default function List(props) {
 			<DocumentMeta title={`${props.table.displayLabel} - list`} />
 
 			<FixedHeader
-				renderContent={(headerProps) => {
-					return (
-						<ListHeader
-							table={props.table}
-							isLight={headerProps.isFixed}
-							buttons={[quickEditSaveButton, quickEditButton, addButton]}
-							{...headerProps}
-						/>
-					);
-
-				}}
+				buttons={() => [quickEditSaveButton, quickEditButton, addButton]}
+				infos={(isFixed) => <TableInfo isLight={isFixed} table={props.table} />}
 			/>
 
 			<TablePermissions table={props.table} />

@@ -6,10 +6,12 @@ import Save from '../../containers/process/Save';
 import Cancel from '../../containers/process/Cancel';
 import SingleRecord from '../../containers/form/SingleRecord';
 import PermissionsForm from '../../containers/permissions/PermissionsForm';
-import FormHeaderCore from '../../containers/header/FormHeaderCore'; 
+import LanguageToggler from '../../containers/form/LanguageToggler';
+import PreviewRecord from '../../containers/process/PreviewRecord';
+import RecordInfo from '../../containers/header/info/RecordInfo';
 
-import FormHeaderContent from '../header/FormHeaderContent';
 import FixedHeader from '../header/FixedHeader';
+import FormHeaderContent from '../header/info/FormHeaderContent';
 import InScroll from '../../containers/utils/InScroll'; 
 import { Button } from '../../styles/Button';
 import { MainZone } from '../../styles/Grid';
@@ -74,11 +76,11 @@ export default function RootForm(props) {
 	//langue peut être locale (si par ex. dans une modale) pour éviter les rerender des autres formulaires. Si présente en state, priorité sur store
 	const language = stateLanguage || props.language;
 	// console.log('rendering main form...', this.state);
-
-	if (props.table) {
-
+	const { table } = props;
+	if (table) {
+		const { recordId } = props.params;
 		if (isSaving) {
-			return <Save tableId={props.table.id} recordId={props.params.recordId} callback={afterSave} cancelSave={cancelSave} />;
+			return <Save tableId={table.id} recordId={recordId} callback={afterSave} cancelSave={cancelSave} />;
 		}
 
 		let actionBtns;
@@ -86,46 +88,58 @@ export default function RootForm(props) {
 		if (props.isEdited) {
 			actionBtns = [
 				<Button key="save" onClick={save} round="true" title="Hold ALT key to leave form open after save">Save</Button>,
-				<Cancel key="cancel" tableName={props.table.name} recordId={props.params.recordId} label="Discard changes" />,
+				<Cancel key="cancel" tableName={table.name} recordId={recordId} label="Discard changes" />,
 			];
 		//record pas été édité: juste btn close
 		} else {
 			actionBtns = [
-				<Cancel key="cancel" tableName={props.table.name} recordId={props.params.recordId} label="Close" />,
+				<Cancel key="cancel" tableName={table.name} recordId={recordId} label="Close" />,
 			];
 		}
 
 
 		let permsWidget = null;
-		if (props.table.hasSitePermission) {
-			permsWidget = <PermissionsForm table={props.table} recordId={props.params.recordId} />;
+		if (table.hasSitePermission) {
+			permsWidget = <PermissionsForm table={table} recordId={recordId} />;
 		}
 
+		const previewProcessor = table && table.hasTemplate ? (
+			<PreviewRecord
+				key="preview"
+				tableId={table.id}
+				recordId={recordId}
+				isPreviewEdited={props.isPreviewEdited}
+				isViewingPreview={props.isViewingPreview}
+				setIsPreviewing={props.setIsPreviewing}
+			/>
+		) : null;
+
 		return (<InScroll isReady autoLock>
-			<DocumentMeta title={`${props.table.displayLabel} : /${props.params.recordId}`} />
+			<DocumentMeta title={`${table.displayLabel} : /${recordId}`} />
 
 			<FixedHeader
-				renderContent={(headerProps) => {
-					return (
-						<FormHeaderCore
-							{...props}
-							hasLanguageToggle
-							setLanguageState={setStateLanguage}
-							buttons={actionBtns}
-							isLight={headerProps.isFixed}
-							{...headerProps}
-						>
-							<FormHeaderContent table={props.table} label={props.recordLabel} language={props.language} />
-						</FormHeaderCore>
-					);
-
-				}}
+				buttons={() => actionBtns}
+				infos={(isFixed) => (
+					<RecordInfo
+						tableId={table.id}
+						recordId={recordId}
+						lastmodifdate={props.lastmodifdate}
+						isLight={isFixed}
+					>
+						<FormHeaderContent table={table} label={props.recordLabel} language={language} />
+					</RecordInfo>
+				)}
+				popout={() => [
+					previewProcessor,
+					<LanguageToggler key="langtoggle" onChangeLang={props.isModal ? setStateLanguage : null} localLanguage={language} />,
+				]}
 			/>
+			
 
 			{permsWidget}
 			
 			<MainZone>
-				<SingleRecord tableId={props.table.id} recordId={props.params.recordId} isRoot language={language} />
+				<SingleRecord tableId={table.id} recordId={recordId} isRoot language={language} />
 			</MainZone>
 		</InScroll>);
 
@@ -155,4 +169,6 @@ RootForm.propTypes = {
 	recordLabel: PropTypes.string,
 	fetchTable: PropTypes.func,
 	goTo: PropTypes.func,
+	setIsPreviewing: PropTypes.func,
+	fetchSlug: PropTypes.func,
 };

@@ -12,12 +12,12 @@ import { GridContainer, GridItem, MainZone } from '../../../styles/Grid';
 import { TabsContainer } from '../../../styles/Form';
 
 import FixedHeader from '../../header/FixedHeader'; 
+
 import styled from 'styled-components';
 import colors from '../../../styles/Colors';
-import { Heading2 } from '../../../styles/Texts';
+import { Heading1, Heading2 } from '../../../styles/Texts';
 import { Input } from '../../../styles/Input';
 import { Icon } from '../../../styles/Icon';
-import FormHeaderCore from '../../../containers/header/FormHeaderCore'; 
 
 const VIEW_BY_FIELD = 'VIEW_BY_FIELD';
 const VIEW_BY_TPL = 'VIEW_BY_TPL';
@@ -36,9 +36,9 @@ export default function BlockFieldDeps(props) {
 	const [isSaving, setIsSaving] = useState(false);
 
 	const onSaveCleanup = useCallback(() => {
-		// props.clearDependencies();
+		props.closeDependencies();
 		setIsSaving(false);
-		// props.goTo('/');
+		props.goTo('/');
 	}, []);
 
 	useEffect(() => {
@@ -200,7 +200,7 @@ export default function BlockFieldDeps(props) {
 		);
 
 		content = (
-			<React.Fragment>
+			<React.Fragment>				
 				<GridContainer>
 					<GridItem columns="12">
 						<div>
@@ -215,7 +215,6 @@ export default function BlockFieldDeps(props) {
 				<Button cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
 				<Button cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
 				<Button cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
-				<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>
 			</React.Fragment>
 		);
 
@@ -236,10 +235,17 @@ export default function BlockFieldDeps(props) {
 	}
 
 	return (
-		<MainZone>
-			{content}
-			{savingComponent}
-		</MainZone>
+		<React.Fragment>
+			<FixedHeader
+				buttons={() => [<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>]}
+				infos={() => <Heading1>Field dependencies</Heading1>}
+			/>
+
+			<MainZone>
+				{content}
+				{savingComponent}
+			</MainZone>
+		</React.Fragment>
 	);
 }
 
@@ -257,4 +263,5 @@ BlockFieldDeps.propTypes = {
 	setMultipleDependencies: PropTypes.func,
 	goTo: PropTypes.func,
 	clearDependencies: PropTypes.func,
+	closeDependencies: PropTypes.func,
 };

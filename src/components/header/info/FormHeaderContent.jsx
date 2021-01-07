@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import { Heading2 } from '../../styles/Texts';
-import { GridItem } from '../../styles/Grid';
+import { Heading2 } from '../../../styles/Texts';
+import { GridItem } from '../../../styles/Grid';
 
 const Help = styled.div`
 	margin-top: 10px;

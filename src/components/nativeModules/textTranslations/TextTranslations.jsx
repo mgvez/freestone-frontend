@@ -8,13 +8,12 @@ import FixedHeader from '../../header/FixedHeader';
 import styled from 'styled-components';
 import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 import colors from '../../../styles/Colors';
-import { Heading2 } from '../../../styles/Texts';
+import { Heading1, Heading2 } from '../../../styles/Texts';
 import { Button } from '../../../styles/Button';
 import { Input } from '../../../styles/Input';
 import { Icon } from '../../../styles/Icon';
 import { TabsContainer } from '../../../styles/Form';
 import debounce from '../../../utils/Debounce.js';
-import FormHeaderCore from '../../../containers/header/FormHeaderCore'; 
 
 const Container = styled.div`
 	${GridContainerStyle};
@@ -350,19 +349,10 @@ export default class TextTranslations extends Component {
 		return (
 			<section>
 				<FixedHeader
-					renderContent={(headerProps) => {
-						return (
-							<FormHeaderCore
-								buttons={actionBtns}
-								isLight={headerProps.isFixed}
-								{...headerProps}
-							>
-								<h1>Text translations</h1>
-							</FormHeaderCore>
-						);
-
-					}}
+					buttons={() => actionBtns}
+					infos={() => <Heading1>Text translations</Heading1>}
 				/>
+				
 				<MainZone>
 					{searchZone}
 					{groups}

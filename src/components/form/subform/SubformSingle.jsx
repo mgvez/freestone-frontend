@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import AddRecord from '../../../containers/form/buttons/AddRecord';
-import FormHeaderContent from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/info/FormHeaderContent';
 import SingleRecord from '../../../containers/form/SingleRecord';
 
 import { Subform, SubformHeader } from '../../../styles/Form';

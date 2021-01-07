@@ -6,8 +6,9 @@ import RootForm from '../../components/form/RootForm';
 import { fetchTable } from '../../actions/schema';
 import { goTo } from '../../actions/nav';
 import { rootFormMapStateToProps } from '../../selectors/rootForm';
+import { setIsPreviewing } from '../../actions/record';
 
 export default connect(
 	rootFormMapStateToProps,
-	dispatch => bindActionCreators({ fetchTable, goTo }, dispatch)
+	dispatch => bindActionCreators({ fetchTable, goTo, setIsPreviewing }, dispatch)
 )(RootForm);

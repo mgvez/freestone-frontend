@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import FormHeaderContent from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/info/FormHeaderContent';
 import Collapsable from '../../animation/Collapsable';
 import ToggleCollapse from '../buttons/ToggleCollapse';
 import { Subform, SubformHeader } from '../../../styles/Form';

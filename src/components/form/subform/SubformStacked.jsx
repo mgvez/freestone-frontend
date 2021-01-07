@@ -5,7 +5,7 @@ import StackList from './StackList';
 import Collapsable from '../../animation/Collapsable';
 import ToggleCollapse from '../buttons/ToggleCollapse';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
-import FormHeaderContent from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/info/FormHeaderContent';
 import { Subform, SubformHeader } from '../../../styles/Form';
 import { GridItem } from '../../../styles/Grid';
 

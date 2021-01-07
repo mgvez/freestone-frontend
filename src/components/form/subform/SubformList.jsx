@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import SingleRecord from '../../../containers/form/SingleRecord';
-import FormHeaderContent from '../../header/FormHeaderContent';
+import FormHeaderContent from '../../header/info/FormHeaderContent';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
 import Collapsable from '../../animation/Collapsable';
