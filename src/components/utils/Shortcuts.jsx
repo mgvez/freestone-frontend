@@ -21,8 +21,8 @@ export default class Shortcuts extends Component {
 	}
 	
 	render() {
-		return (<div>
+		return (<React.Fragment>
 			{this.props.children},
-		</div>);
+		</React.Fragment>);
 	}
 }

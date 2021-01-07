@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import ProdEnvWarning from '../../widgets/ProdEnvWarning';
+import AnimatedHeight from '../../animation/AnimatedHeight';
 
 export default function RecordInfo(props) {
 	useEffect(() => {
@@ -32,17 +33,16 @@ export default function RecordInfo(props) {
 	) : null;
 	
 
-	const infos = isLight ? renderedSlugs : (
+	return (
 		<React.Fragment>
-			{children}
-			{lastModif}
-			{renderedSlugs}
+			<AnimatedHeight isOpen={!isLight}>
+				{children}
+				{lastModif}
+			</AnimatedHeight>
 			{isProdEnv && <ProdEnvWarning />}
+			{renderedSlugs}
 		</React.Fragment>
 	);
-
-	return infos;
-
 }
 
 RecordInfo.propTypes = {

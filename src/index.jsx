@@ -17,11 +17,11 @@ setStore(store);
 
 function render() {
 	ReactDOM.render(
-		<div>
+		<React.Fragment>
 			<Provider store={store}>
 				<App history={history} />
 			</Provider>
-		</div>,
+		</React.Fragment>,
 		document.getElementById('root')
 	);
 }

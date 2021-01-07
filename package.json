@@ -23,6 +23,7 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^7.0.0",
+    "babel-plugin-styled-components": "^1.12.0",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
@@ -93,6 +94,7 @@
     "react-hot-loader": "^4.13.0",
     "react-hotkeys": "^1.1.4",
     "react-image-crop": "^8.6.6",
+    "react-intersection-observer": "^8.31.0",
     "react-load-script": "0.0.6",
     "react-modal": "^3.12.1",
     "react-redux": "^6.0.1",
@@ -106,6 +108,7 @@
     "reqwest": "^2.0.5",
     "reselect": "^2.5.1",
     "sha1": "^1.1.1",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "use-resize-observer": "^7.0.0"
   }
 }

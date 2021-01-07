@@ -3,20 +3,29 @@ import styled from 'styled-components';
 import cssVars from './Variables';
 import colors from './Colors';
 import { GridContainerStyle, getItemCss } from './Grid';
-const headerMarginBottom = 60;
+
+const popoutHeight = 30;
+const headerMarginBottom = 10;
 
 
-export const Header = styled.header`
+// top -1px is used for intersection observer, to detect when element becomes sticky
+export const FixedHeaderContainer = styled.header`
+	width: 100%;
+	position: sticky;
+	top: -1px;
+	z-index: 5000;
+	margin-bottom: ${headerMarginBottom}px;
+`;
+
+export const Header = styled.div`
 	padding: 25px 40px;
 	background: ${colors.backgroundLightest};
 	border-top: 1px solid ${colors.backgroundMainAccent};
 	border-bottom: 1px solid ${colors.backgroundMainAccent};
-	margin-bottom: 40px;
 	position: relative;
 	width: 100%;
 	${GridContainerStyle};
 
-	margin-bottom: ${headerMarginBottom}px;
 
 	&.prod-warning-enhance {
 		background: rgb(255, 245, 201);
@@ -24,7 +33,6 @@ export const Header = styled.header`
 
 	&.light {
 		justify-content: space-between;
-		position: fixed;
 			top: 0;
 			left: 0;
 		transition: transform 0.3s ease;
@@ -48,16 +56,15 @@ export const Header = styled.header`
 		margin: 20px 0 10px 0;
 		font-weight: ${cssVars.fontWeightMedium};
 	}
+`;
 
-
-	.popout {
-		position: absolute;
-		bottom:0;
-		right: 30px;
-
-		display: flex;
-		transform: translate(0, 100%);
-	}
+export const Popout = styled.div`
+	height: ${popoutHeight}px;
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 30px;
+	transform: translate(0, -1px);
 `;
 
 export const HeaderTexts = styled.div`
