@@ -14,18 +14,16 @@ const useMaxHeight = () => {
 			}
 		},
 	});
-
-	const resetHeight = useCallback(() => {
-		setNeedsRecompute(true);
-	});
-
 	useEffect(() => {
+		const resetHeight = () => {
+			setNeedsRecompute(true);
+		};
 		window.addEventListener('resize', resetHeight);
 		return () => {
 			window.removeEventListener('resize', resetHeight);
 		};
 	}, []);
-	return [maxHeight, ref, resetHeight];
+	return [maxHeight, ref];
 };
 
 export default useMaxHeight;

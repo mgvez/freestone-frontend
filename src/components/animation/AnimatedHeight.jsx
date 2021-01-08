@@ -1,13 +1,30 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
+
 import useMaxHeight from '../../hooks/useMaxHeight';
 
-export const Wrapper = styled.div`
+const animTime = 150;
+
+const Animation = styled.div`
 	transition: all 0.15s ease;
 	height: auto;
 	overflow: hidden;
+
+	&.appear,
+	&.enter {
+		height: 0;
+	}
+	&.appear-active,
+	&.enter-active,
+	&.exit {
+		${props => `height: ${props.maxHeight}px;`}
+	}
+	&.exit-active {
+		height: 0;
+	}
 `;
 
 const AnimatedHeight = ({
@@ -15,7 +32,7 @@ const AnimatedHeight = ({
 	children,	
 }) => {
 
-	const [maxHeight, infoRef, resetHeight] = useMaxHeight();
+	const [maxHeight, infoRef] = useMaxHeight();
 
 	const styles = {};
 	if (maxHeight) {
@@ -24,9 +41,18 @@ const AnimatedHeight = ({
 	styles.opacity = isOpen ? 1 : 0;
 
 	return (
-		<Wrapper ref={infoRef} style={styles}>
-			{children}
-		</Wrapper>
+		<CSSTransition
+			in={isOpen}
+			appear
+			timeout={animTime}
+			unmountOnExit
+		>
+			<Animation maxHeight={maxHeight}>
+				<div ref={infoRef}>
+					{children}
+				</div>
+			</Animation>
+		</CSSTransition>
 	);
 };
 
