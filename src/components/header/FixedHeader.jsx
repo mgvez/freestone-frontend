@@ -22,8 +22,8 @@ export default function FixedHeader(props) {
 	const classList = [];
 	
 	return (
-		<FixedHeaderContainer ref={wrapperRef} style={{ height: maxHeight }}>
-			<div ref={headerRef} >
+		<FixedHeaderContainer ref={wrapperRef} contentHeight={maxHeight}>
+			<div ref={headerRef}>
 				<Header className={classList.join(' ')}>
 					<HeaderTexts columns="8">
 						{props.infos && props.infos(isFixed)}

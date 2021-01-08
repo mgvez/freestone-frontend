@@ -14,7 +14,17 @@ export const FixedHeaderContainer = styled.header`
 	position: sticky;
 	top: -1px;
 	z-index: 5000;
-	margin-bottom: ${headerMarginBottom}px;
+	pointer-events: none;
+
+	${props => {
+		const finalHeight = props.contentHeight + headerMarginBottom || headerMarginBottom;
+		return `height: ${finalHeight}px;`;
+	}}
+
+	&> div {
+		pointer-events: auto;
+	}
+	
 `;
 
 export const Header = styled.div`

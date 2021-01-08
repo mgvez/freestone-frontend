@@ -118,6 +118,7 @@ export default function RootForm(props) {
 			<DocumentMeta title={`${table.displayLabel} : /${recordId}`} />
 
 			<FixedHeader
+				key={`${table.id}:${recordId}`}
 				buttons={() => actionBtns}
 				infos={(isFixed) => (
 					<RecordInfo

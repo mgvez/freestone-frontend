@@ -237,6 +237,7 @@ export default function BlockFieldDeps(props) {
 	return (
 		<React.Fragment>
 			<FixedHeader
+				key="dependencies"
 				buttons={() => [<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>]}
 				infos={() => <Heading1>Field dependencies</Heading1>}
 			/>

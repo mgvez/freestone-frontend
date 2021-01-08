@@ -52,20 +52,25 @@ export function clearDependencies() {
 	};
 }
 
-export function saveDependencies(dependencies, onFinish) {
+export function saveDependencies(dependencies, setMessage, onFinish) {
 	const data = { data: JSON.stringify(dependencies) };
 
 	return (dispatch) => {
+		setMessage('Saving...');
 		const onSaved = dispatch({
 			[FREESTONE_API]: {
 				types: SAVE_BLOCK_FIELD_DEPS_API,
-				// types: 'test',
 				route: 'blockFieldDeps/save',
 				data,
 			},
 		});
 
 		return onSaved.then(res => {
+			setMessage('Dependencies saved');
+			return new Promise(resolve => {
+				setTimeout(() => resolve(res), 2000);
+			});
+		}).then(res => {
 			onFinish();
 			return dispatch({
 				type: FINISH_SAVE_BLOCK_FIELD_DEP,

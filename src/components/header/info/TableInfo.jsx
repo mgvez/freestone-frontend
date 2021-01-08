@@ -9,9 +9,9 @@ const TableInfo = ({
 	table,	
 }) => {
 	return (
-		<React.Fragment>
+		<React.Fragment key={table.name}>
 			<Heading1>{table.displayLabel}</Heading1>
-			<AnimatedHeight isOpen={!isLight}>
+			<AnimatedHeight key={table.name} isOpen={!isLight}>
 				<div dangerouslySetInnerHTML={{ __html: table.help }} />
 			</AnimatedHeight>
 		</React.Fragment>

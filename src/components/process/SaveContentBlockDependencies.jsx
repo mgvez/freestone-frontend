@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Header, HeaderTexts } from '../../styles/Header';
 import { Heading2 } from '../../styles/Texts';
 
 export default function SaveContentBlockDependencies(props) {
+
+	const [statusMessage, setStatusMessage] = useState();
+
 	useEffect(() => {
-		props.saveDependencies(props.dependencies, props.onFinish);
+		props.saveDependencies(props.dependencies, setStatusMessage, props.onFinish);
 	}, []);
+
 	return (
 		<section className="saving">
-			<Header>
-				<HeaderTexts>
-					<Heading2>Saving...</Heading2>
-				</HeaderTexts>	
-			</Header>
+			<Heading2>{statusMessage}</Heading2>
 		</section>
 	);
 }

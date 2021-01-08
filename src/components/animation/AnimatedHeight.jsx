@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useMaxHeight from '../../hooks/useMaxHeight';
@@ -15,16 +15,16 @@ const AnimatedHeight = ({
 	children,	
 }) => {
 
-	const [maxHeight, infoRef] = useMaxHeight();
+	const [maxHeight, infoRef, resetHeight] = useMaxHeight();
 
-	const infoStyle = {};
+	const styles = {};
 	if (maxHeight) {
-		infoStyle.height = isOpen ? maxHeight : 0;
+		styles.height = isOpen ? maxHeight : 0;
 	}
-	infoStyle.opacity = isOpen ? 1 : 0;
+	styles.opacity = isOpen ? 1 : 0;
 
 	return (
-		<Wrapper ref={infoRef} style={infoStyle}>
+		<Wrapper ref={infoRef} style={styles}>
 			{children}
 		</Wrapper>
 	);

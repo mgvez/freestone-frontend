@@ -349,6 +349,7 @@ export default class TextTranslations extends Component {
 		return (
 			<section>
 				<FixedHeader
+					key="translations"
 					buttons={() => actionBtns}
 					infos={() => <Heading1>Text translations</Heading1>}
 				/>

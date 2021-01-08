@@ -151,6 +151,7 @@ export default function List(props) {
 			<DocumentMeta title={`${props.table.displayLabel} - list`} />
 
 			<FixedHeader
+				key={`list:${props.table.id}`}
 				buttons={() => [quickEditSaveButton, quickEditButton, addButton]}
 				infos={(isFixed) => <TableInfo isLight={isFixed} table={props.table} />}
 			/>
