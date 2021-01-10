@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useInView } from 'react-intersection-observer';
@@ -12,7 +12,7 @@ import { FixedHeaderContainer, Header, HeaderTexts, HeaderFcn, Popout } from '..
 export default function FixedHeader(props) {
 
 	// detect if header is sticky or relative
-	const [wrapperRef, isRelative, entry] = useInView({
+	const [wrapperRef, isRelative] = useInView({
 		threshold: 1,
 	});
 

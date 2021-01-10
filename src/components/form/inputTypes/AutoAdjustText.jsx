@@ -8,6 +8,7 @@ export default class AutoAdjustText extends Component {
 	static propTypes = {
 		value: PropTypes.string,
 		onChange: PropTypes.func,
+		placeholder: PropTypes.string,
 	};
 
 	constructor(props) {
@@ -56,7 +57,8 @@ export default class AutoAdjustText extends Component {
 				overflow: this.state.overflow,
 				minHeight: `${this.state.height}px`,
 				maxHeight: `${MAX_HEIGHT}px`,
-			}} 
+			}}
+			placeholder={this.props.placeholder}
 			onChange={this.props.onChange}
 		/>);
 	}

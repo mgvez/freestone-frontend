@@ -49,6 +49,11 @@ export function getInputCss(props) {
 			outline: none;
 		}
 
+		&::placeholder {
+
+			opacity: 0.3;
+		}
+
 		${props.search && `
 			width: 200px;
 			vertical-align: middle;

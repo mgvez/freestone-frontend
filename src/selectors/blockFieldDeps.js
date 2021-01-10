@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
 import { schemaSelector } from './schema';
+import { routeSelector } from './route';
+
+
 import { TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER, TYPE_ISPUBLISHED, TYPE_LANGUAGE } from '../freestone/schemaProps';
 const INDEPENDENT_FIELD_TYPES = [TYPE_PRIMARY, TYPE_ORDER, TYPE_ISPUBLISHED, TYPE_LANGUAGE];
 
@@ -13,16 +16,31 @@ const transformedSchemaSelector = createSelector(
 		const table = config.tableId && allSchema.tables && allSchema.tables[config.tableId];
 		if (!table) return null;
 
-		const dependingFields = Object.values(table.fields.map(field => {
-			if (field.foreign && ~TYPES_PARENT_LINK.indexOf(field.foreign.foreignType)) return null;
-			if (~INDEPENDENT_FIELD_TYPES.indexOf(field.type)) return null;
-			if (field.name === config.controlFieldName) return null;
-			return field;
-		}).filter(f => f).reduce((carry, field) => {
-			const { langAgnosticName } = field;
-			carry[langAgnosticName] = field;
-			return carry;
-		}, {}));
+		const dependingFields = [
+			...Object.values(table.fields.map(field => {
+				if (field.foreign && ~TYPES_PARENT_LINK.indexOf(field.foreign.foreignType)) return null;
+				if (~INDEPENDENT_FIELD_TYPES.indexOf(field.type)) return null;
+				if (field.name === config.controlFieldName) return null;
+				return {
+					...field,
+					displayLabel: field.langAgnosticName,
+				};
+			}).filter(f => f).reduce((carry, field) => {
+				const { langAgnosticName } = field;
+				carry[langAgnosticName] = field;
+				return carry;
+			}, {})),
+
+			// also add subform link fields
+			...(config.subforms || []).map(subform => {
+				const displayLabel = `Subform: ${subform.tableName}`;
+				return {
+					...subform.linkField,
+					displayLabel,
+				};
+			}),
+		];
+
 		return {
 			...table,
 			dependingFields,
@@ -50,12 +68,13 @@ const dependenciesSelector = createSelector(
 
 
 export const blockFieldDepsSelector = createSelector(
-	[configSelector, transformedSchemaSelector, dependenciesSelector],
-	(config, table, parsedDependencies) => {
+	[configSelector, transformedSchemaSelector, dependenciesSelector, routeSelector],
+	(config, table, parsedDependencies, route) => {
 		return {
 			...parsedDependencies,
 			...config,
 			table,
+			...route,
 		};
 	}
 );

@@ -249,6 +249,7 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 						//pour indiquer si le subform s'affiche ou pas dépendant de la value, on se fie sur le champ foreign qui lie le subform à son parent. Les autres fields seront traités dans le subform, s'il s'affiche.
 						if (field && field.foreign && field.foreign.foreignTableId === table.id) {
 							//trouve ce child
+							// console.log(field);
 							const child = children.find(candidate => candidate.tableId === field.table_id);
 							if (child) {
 								child.isDisplay = dependencies[targetFieldId].isDisplay;

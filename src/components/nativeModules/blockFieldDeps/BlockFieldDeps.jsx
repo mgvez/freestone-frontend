@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import AjaxModal from '../../widgets/AjaxModal';
@@ -13,11 +13,7 @@ import { TabsContainer } from '../../../styles/Form';
 
 import FixedHeader from '../../header/FixedHeader'; 
 
-import styled from 'styled-components';
-import colors from '../../../styles/Colors';
 import { Heading1, Heading2 } from '../../../styles/Texts';
-import { Input } from '../../../styles/Input';
-import { Icon } from '../../../styles/Icon';
 
 const VIEW_BY_FIELD = 'VIEW_BY_FIELD';
 const VIEW_BY_TPL = 'VIEW_BY_TPL';
@@ -34,11 +30,25 @@ export default function BlockFieldDeps(props) {
 	const [currentType, setCurrentType] = useState();
 	const [currentField, setCurrentField] = useState();
 	const [isSaving, setIsSaving] = useState(false);
+	const saved = useRef(false);
 
 	const onSaveCleanup = useCallback(() => {
 		props.closeDependencies();
 		setIsSaving(false);
+		saved.current = true;
 		props.goTo('/');
+	}, []);
+
+	useEffect(() => {
+		return () => {
+			if (saved.current) return;
+			const isLeaving = confirm('Changes have not been saved. Are you sure you want to leave and lose all your changes?');
+			if (isLeaving) {
+				props.closeDependencies();
+				return;
+			}
+			props.goTo((props.route && props.route.pathname) || '/');
+		};
 	}, []);
 
 	useEffect(() => {
@@ -93,10 +103,20 @@ export default function BlockFieldDeps(props) {
 					{isDisplay && (
 						<React.Fragment>
 							<GridItem cols="2">
-								<TextInput key={`${key}-${fieldId}-title`} val={currentDependency && currentDependency.titleOverride} changeVal={onChangeTitle} />
+								<TextInput 
+									key={`${key}-${fieldId}-title`}
+									val={currentDependency && currentDependency.titleOverride}
+									changeVal={onChangeTitle}
+									placeholder="Title Override"
+								/>
 							</GridItem>
 							<GridItem cols="2">
-								<TextInput key={`${key}-${fieldId}-decs`} val={currentDependency && currentDependency.descriptionAppend} changeVal={onChangeDescription} />
+								<TextInput
+									key={`${key}-${fieldId}-decs`}
+									val={currentDependency && currentDependency.descriptionAppend}
+									changeVal={onChangeDescription}
+									placeholder="Description Append"
+								/>
 							</GridItem>
 						</React.Fragment>
 					)}
@@ -159,10 +179,10 @@ export default function BlockFieldDeps(props) {
 				const activeClass = isActive && 'active';
 				const onClick = () => setCurrentType(type.id);
 
-				return (<button className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
+				return (<button key={type.name} className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
 				
 			});
-			switches = table.dependingFields.map(field => getRow(field.name, field.langAgnosticName, field, activeType.id));
+			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id));
 
 			header = (
 				<div>
@@ -178,14 +198,13 @@ export default function BlockFieldDeps(props) {
 				const isActive = activeField.id === field.id;
 				const activeClass = isActive && 'active';
 				const onClick = () => setCurrentField(field.id);
-
-				return (<button className={`tab ${activeClass}`} key={field.id} onClick={onClick}>{field.langAgnosticName}</button>);
+				return (<div key={`f${field.id}`} className={`tab ${activeClass}`} onClick={onClick}>{field.displayLabel}</div>);
 				
 			});
 			switches = types.map(type => getRow(type.name, type.name, activeField, type.id));
 			header = (
 				<div>
-					<Heading2>Display field <strong>{activeField.langAgnosticName}</strong> when type is:</Heading2>
+					<Heading2>Display field <strong>{activeField.displayLabel}</strong> when type is:</Heading2>
 				</div>
 			);
 		}
@@ -204,17 +223,31 @@ export default function BlockFieldDeps(props) {
 				<GridContainer>
 					<GridItem columns="12">
 						<div>
-							<Button cta={currentView === VIEW_BY_TPL} info={currentView === VIEW_BY_FIELD} onClick={() => setCurrentView(VIEW_BY_FIELD)}>set by field</Button>
-							<Button cta={currentView === VIEW_BY_FIELD} info={currentView === VIEW_BY_TPL} onClick={() => setCurrentView(VIEW_BY_TPL)}>set by template</Button>
+							<Button 
+								key={VIEW_BY_TPL}
+								cta={currentView === VIEW_BY_TPL}
+								info={currentView === VIEW_BY_FIELD} 
+								onClick={() => setCurrentView(VIEW_BY_FIELD)}
+							>
+									set by field
+							</Button>
+							<Button 
+								key={VIEW_BY_FIELD}
+								cta={currentView === VIEW_BY_FIELD}
+								info={currentView === VIEW_BY_TPL}
+								onClick={() => setCurrentView(VIEW_BY_TPL)}
+							>
+								set by template
+							</Button>
 						</div>
 					</GridItem>
 				</GridContainer>
 				{groupsTogglers}
 				{header}
 				{switches}
-				<Button cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
-				<Button cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
-				<Button cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
+				<Button key={BATCH_SET_SHOW} cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
+				<Button key={BATCH_SET_HIDE} cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
+				<Button key={BATCH_SET_SUGGESTED} cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
 			</React.Fragment>
 		);
 
@@ -238,7 +271,7 @@ export default function BlockFieldDeps(props) {
 		<React.Fragment>
 			<FixedHeader
 				key="dependencies"
-				buttons={() => [<Button cta onClick={() => setIsSaving(true)}>SAVE</Button>]}
+				buttons={() => [<Button key="save" cta onClick={() => setIsSaving(true)}>SAVE</Button>]}
 				infos={() => <Heading1>Field dependencies</Heading1>}
 			/>
 
@@ -255,6 +288,7 @@ BlockFieldDeps.propTypes = {
 	tableId: PropTypes.number,
 	types: PropTypes.array,
 	controlFieldName: PropTypes.string,
+	subforms: PropTypes.array,
 	table: PropTypes.object,
 	dependenciesByField: PropTypes.object,
 	dependencies: PropTypes.array,

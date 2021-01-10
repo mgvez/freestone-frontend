@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import { tableSchemaSelector } from './tableSchema';
 import { schemaSelector } from './schema';
-import { getSubformFieldId } from '../freestone/schemaHelpers';
 import { getChildrenRecordIds } from './formChildrenRecords';
 import { isNew } from '../utils/UniqueId';
 import { makeTableRecordsQuickeditMapStateToProps } from './record';
