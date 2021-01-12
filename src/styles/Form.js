@@ -118,36 +118,70 @@ export const ListContainer = styled.div`
 export const TabsContainer = styled.nav`
 	border-bottom: 1px solid ${colors.accentPrimary};
 	margin: 10px 0;
+	display: flex;
+	flx-direction: row;
 
 	.tab {
-		background: transparent;
-		display: inline-block;
 		vertical-align: middle;
+		background-color: ${colors.accentPrimaryLighter};
 
 		height: 25px;
 		line-height: 25px;
 		padding: 0 25px;
 
-		border: 1px solid ${colors.accentPrimary};
+		border: 1px solid ${colors.accentPrimaryLight};
 		border-bottom: none;
 
-		color: ${colors.accentPrimary};
+		color: ${colors.white};
 		cursor: pointer;
 
-		border-radius: 5px 5px 0 0;
+		border-radius: 3px 3px 0 0;
 
 		transition: background 0.3s, color 0.3s;
 		margin-right: 10px;
+		font-weight: bold;
+		font-size: 0.8em;
 
 		&:hover, &.active {
-			color: ${colors.white};
+			opacity: 1;
 			background-color: ${colors.accentPrimary};
 			text-decoration: none;
 		}
 	}
 
+	${props => {
+		if (props.isSidebarView) {
+			return `
+				flex-direction: column;
+				border-right: 1px solid ${colors.accentPrimary};
+				border-bottom: none;
+
+				.tab {
+					margin: 0 0 2px 0;
+
+					border: 1px solid ${colors.accentPrimary};
+					border-right: none;
+					border-radius: 3px 0 0 3px;
+
+				}
+
+			`;
+		}
+	}}
+
 `;
 
+
+export const SubformTabbedContainer = styled.div`
+	${props => {
+		if (props.isSidebarView) {
+			return `
+				display: flex;
+				flex-direction: row;
+			`;
+		}
+	}}
+`;
 
 export const Sidebar = styled.div`
 	padding: 30px;
