@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import AjaxModal from '../../widgets/AjaxModal';
 
 import { Button } from '../../../styles/Button';
+import colors from '../../../styles/Colors';
 import { Preloader } from '../../widgets/Preloader';
 import BoolInput from '../../form/inputTypes/BoolInput';
 import TextInput from '../../form/inputTypes/TextInput';
@@ -21,6 +23,71 @@ const VIEW_BY_TPL = 'VIEW_BY_TPL';
 const BATCH_SET_SHOW = 'BATCH_SET_SHOW';
 const BATCH_SET_HIDE = 'BATCH_SET_HIDE';
 const BATCH_SET_SUGGESTED = 'BATCH_SET_SUGGESTED';
+
+const FormHeader = styled.div`
+	margin: 0 0 30px 0;
+`;
+
+const MainContainer = styled.div`
+	background: white;
+	border: 1px ${colors.borderMedium} solid;
+	padding: 20px;
+	margin: 0 0 20px 0;
+`;
+
+const DependenciesTable = styled.div`
+	min-width: 50%;
+
+	display: grid;
+	border-collapse: collapse;
+	grid-template-columns: 
+		minmax(150px, 2fr)
+		minmax(50px, 1fr)
+		minmax(150px, 4fr)
+		minmax(150px, 4fr);
+
+`;
+
+const ItemRow = styled.div`
+`;
+const ItemCell = styled.div`
+	padding: 2px;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px ${colors.borderMedium} solid;
+`;
+const ItemLabel = styled.div`
+	font-weight: bold;
+	position: relative;
+	&:after {
+		content: '';
+		border-radius: 100%;
+		position: absolute;
+		left: -12px;
+		top: 50%;
+		width: 8px;
+		height: 8px;
+		background-color: red;
+		transform: translate(0, -50%);
+		opacity: 0.5;
+	}
+	&.suggested:after {
+		background-color: green;
+	}
+	&:hover&:before {
+		content: "Field is detected in template";
+		border-radius: 2px;
+		position: absolute;
+		right: 0;
+		transform: translate(110%, -50%);
+		padding: 2px;
+		border: 1px ${colors.borderMedium} solid;
+		background: white;
+		font-size: 0.5em;
+		font-weight: normal;
+	}
+`;
+
 
 export default function BlockFieldDeps(props) {
 	
@@ -91,36 +158,35 @@ export default function BlockFieldDeps(props) {
 			const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
 			const isDisplay = currentDependency && currentDependency.isDisplay && currentDependency.isDisplay !== '0';
 			const isSuggested = currentDependency && currentDependency.isSuggested;
-			const color = isSuggested ? 'green' : 'red';
 			return (
-				<GridContainer key={key}>
-					<GridItem cols="3">
-						<div style={{ color }}>{label}</div>
-					</GridItem>
-					<GridItem cols="2">
+				<React.Fragment key={key}>
+					<ItemCell>
+						<ItemLabel className={isSuggested && 'suggested'}>{label}</ItemLabel>
+					</ItemCell>
+					<ItemCell>
 						<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isDisplay} fieldId={fieldId} recordId={typeId} changeVal={onChangeIsDisplay} />
-					</GridItem>
+					</ItemCell>
+					<ItemCell>
 					{isDisplay && (
-						<React.Fragment>
-							<GridItem cols="2">
-								<TextInput 
-									key={`${key}-${fieldId}-title`}
-									val={currentDependency && currentDependency.titleOverride}
-									changeVal={onChangeTitle}
-									placeholder="Title Override"
-								/>
-							</GridItem>
-							<GridItem cols="2">
-								<TextInput
-									key={`${key}-${fieldId}-decs`}
-									val={currentDependency && currentDependency.descriptionAppend}
-									changeVal={onChangeDescription}
-									placeholder="Description Append"
-								/>
-							</GridItem>
-						</React.Fragment>
+						<TextInput 
+							key={`${key}-${fieldId}-title`}
+							val={currentDependency && currentDependency.titleOverride}
+							changeVal={onChangeTitle}
+							placeholder="Title Override"
+						/>
 					)}
-				</GridContainer>
+					</ItemCell>
+					<ItemCell>
+					{isDisplay && (
+						<TextInput 
+							key={`${key}-${fieldId}-decs`}
+							val={currentDependency && currentDependency.descriptionAppend}
+							changeVal={onChangeDescription}
+							placeholder="Description Append"
+						/>
+					)}
+					</ItemCell>
+				</React.Fragment>
 			);
 		};
 
@@ -185,9 +251,7 @@ export default function BlockFieldDeps(props) {
 			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id));
 
 			header = (
-				<div>
-					<Heading2>When type is <strong>{activeType.name}</strong>, display fields:</Heading2>
-				</div>
+				<Heading2>When type is <strong>{activeType.name}</strong>, display fields:</Heading2>
 			);
 
 		} else {
@@ -203,9 +267,7 @@ export default function BlockFieldDeps(props) {
 			});
 			switches = types.map(type => getRow(type.name, type.name, activeField, type.id));
 			header = (
-				<div>
-					<Heading2>Display field <strong>{activeField.displayLabel}</strong> when type is:</Heading2>
-				</div>
+				<Heading2>Display field <strong>{activeField.displayLabel}</strong> when type is:</Heading2>
 			);
 		}
 		const groupsTogglers = (
@@ -224,17 +286,15 @@ export default function BlockFieldDeps(props) {
 					<GridItem columns="12">
 						<div>
 							<Button 
-								key={VIEW_BY_TPL}
-								cta={currentView === VIEW_BY_TPL}
-								info={currentView === VIEW_BY_FIELD} 
+								key={VIEW_BY_FIELD}
+								faded={currentView === VIEW_BY_TPL} 
 								onClick={() => setCurrentView(VIEW_BY_FIELD)}
 							>
 									set by field
 							</Button>
 							<Button 
-								key={VIEW_BY_FIELD}
-								cta={currentView === VIEW_BY_FIELD}
-								info={currentView === VIEW_BY_TPL}
+								key={VIEW_BY_TPL}
+								faded={currentView === VIEW_BY_FIELD}
 								onClick={() => setCurrentView(VIEW_BY_TPL)}
 							>
 								set by template
@@ -242,9 +302,19 @@ export default function BlockFieldDeps(props) {
 						</div>
 					</GridItem>
 				</GridContainer>
+				
 				{groupsTogglers}
-				{header}
-				{switches}
+
+				<MainContainer>
+
+					<FormHeader>
+						{header}
+					</FormHeader>
+					<DependenciesTable>
+						{switches}
+					</DependenciesTable>
+				</MainContainer>
+				
 				<Button key={BATCH_SET_SHOW} cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
 				<Button key={BATCH_SET_HIDE} cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
 				<Button key={BATCH_SET_SUGGESTED} cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
