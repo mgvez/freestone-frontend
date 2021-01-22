@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
 
-import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED } from '../../../freestone/schemaProps';
+import { SUBFORM_VIEW_TABBED, SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED, SUBFORM_VIEW_TABBED_VERTICAL } from '../../../freestone/schemaProps';
 
 function cycle(current) {
 	switch (current) {
@@ -20,6 +20,12 @@ function cycle(current) {
 			icon: 'columns',
 		};
 	case SUBFORM_VIEW_TABBED:
+		return {
+			key: SUBFORM_VIEW_TABBED_VERTICAL,
+			label: 'View sidebar',
+			icon: 'rows',
+		};
+	case SUBFORM_VIEW_TABBED_VERTICAL:
 	default:
 		return {
 			key: SUBFORM_VIEW_STACKED,

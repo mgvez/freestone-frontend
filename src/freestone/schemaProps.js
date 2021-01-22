@@ -34,6 +34,7 @@ export const TYPE_LANGUAGE = 'language';
 export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM, TYPE_SUBFORM_GUID, TYPE_OTO_GUID];
 
 export const SUBFORM_VIEW_TABBED = 'tabbed';
+export const SUBFORM_VIEW_TABBED_VERTICAL = 'tabbed-vertical';
 export const SUBFORM_VIEW_LIST = 'full list';
 export const SUBFORM_VIEW_STACKED = 'stacked';
 

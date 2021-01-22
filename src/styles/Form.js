@@ -116,33 +116,47 @@ export const ListContainer = styled.div`
 `;
 
 export const TabsContainer = styled.nav`
-	border-bottom: 1px solid ${colors.accentPrimary};
-	margin: 10px 0;
+	border-bottom: 1px solid ${colors.borderMedium};
+	margin: 10px 0 0 0;
+	font-size: 0.8em;
 
 	.tab {
-		background: transparent;
+		background: rgba(255, 255, 255, 0.4);
 		display: inline-block;
 		vertical-align: middle;
-
-		height: 25px;
-		line-height: 25px;
+		position: relative;
+		height: 35px;
+		line-height: 35px;
 		padding: 0 25px;
+		opacity: 0.6;
+		font-weight: 600;
 
-		border: 1px solid ${colors.accentPrimary};
-		border-bottom: none;
-
-		color: ${colors.accentPrimary};
+		color: ${colors.textPrimary};
+		border-style: solid;
+		border-width: 1px 1px 0 1px;
+		border-color: transparent;
 		cursor: pointer;
 
-		border-radius: 5px 5px 0 0;
+		border-radius: 2px 2px 0 0;
 
 		transition: background 0.3s, color 0.3s;
-		margin-right: 10px;
+		margin-right: 5px;
+		margin-top: 4px;
 
-		&:hover, &.active {
-			color: ${colors.white};
-			background-color: ${colors.accentPrimary};
+		&:hover {
+			color: ${colors.linksPrimary};
+			background-color: ${colors.white};
 			text-decoration: none;
+			opacity: 1;
+		}
+		&.active {
+			color: ${colors.linksPrimary};
+			border-color: ${colors.borderMedium};
+			background-color: ${colors.white};
+			text-decoration: none;
+			opacity: 1;
+			transform: translate(0, 1px);
+
 		}
 	}
 

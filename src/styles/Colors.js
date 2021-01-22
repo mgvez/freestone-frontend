@@ -5,6 +5,7 @@ import { hexToRgb } from './Utils';
 // const gray43 = '#62666c';
 const gray45 = '#686b6c';
 // const gray51 = '#79797a';
+const gray54 = '#7f818a';
 const gray76 = '#bababb';
 const gray86 = '#d4d8d9';
 // const gray90 = '#e1e1e1';
@@ -61,7 +62,7 @@ const colors = {
 	backgroundDark: blue26,
 	backgroundDarkHover: blue23,
 
-	borderDark: blue30,
+	borderDark: gray54,
 	borderMedium: gray86,
 	borderLight: gray93,
 

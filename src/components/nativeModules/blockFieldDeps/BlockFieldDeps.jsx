@@ -31,6 +31,7 @@ const FormHeader = styled.div`
 const MainContainer = styled.div`
 	background: white;
 	border: 1px ${colors.borderMedium} solid;
+	border-top: 0;
 	padding: 20px;
 	margin: 0 0 20px 0;
 `;
