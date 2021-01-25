@@ -19,17 +19,17 @@ const StyledDiv = styled.div`
 
 	&:not([data-num="0"]):after {
 		position: absolute;
-			top: -7px;
-			right: -4px;
+			top: -5px;
+			right: -5px;
 		content: attr(data-num);
 		font-family: ${cssVariables.fontFamilyBase};
 		font-weight: ${cssVariables.fontWeightExtrabold};
 		color: ${colors.white};
-		font-size: 11px;
+		font-size: 9px;
 		background: ${colors.accentPrimary};
 		padding: 4px 5px;
 		height: auto;
-		line-height: 11px;
+		line-height: 9px;
 		border-radius: 4px;
 	}
 `;

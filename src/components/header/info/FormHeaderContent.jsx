@@ -7,7 +7,8 @@ import { GridItem } from '../../../styles/Grid';
 
 const Help = styled.div`
 	margin-top: 10px;
-	line-height: 1.3em;
+	line-height: 1.2em;
+	font-size: 0.8em;
 `;
 
 export default class FormHeaderContent extends Component {

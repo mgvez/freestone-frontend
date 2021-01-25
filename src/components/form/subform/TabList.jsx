@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { TabsContainer } from '../../../styles/Form';
@@ -7,53 +7,52 @@ import DragAndDrop from '../../utils/DragAndDrop';
 import Tab from './Tab';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
 
-export default class TabList extends Component {
-	static propTypes = {
-		table: PropTypes.object,
-		childrenRecords: PropTypes.array,
-		parentTableId: PropTypes.number,
-		parentRecordId: PropTypes.string,
-		activeRecordId: PropTypes.string,
-		language: PropTypes.string,
-		highestOrder: PropTypes.number,
+export default function TabList(props) {
+	return (<TabsContainer isSidebarView={props.isSidebarView}>
+		<DragAndDrop>
 
-		swapRecords: PropTypes.func,
-		setShownRecord: PropTypes.func,
-	};
+			{
+				props.childrenRecords.map((record, index) => {
 
-	render() {
-		return (<TabsContainer>
-			<DragAndDrop>
+					const active = record.id === props.activeRecordId;
+					return (<Tab
+						key={record.id}
+						displayLabel={record.label}
+						hasOrder={!!props.table.orderField}
+						isActive={active}
+						recordId={record.id}
+						index={index}
+						tableId={props.table.id}
+						language={props.table.languageField ? props.language : null}
+						parentRecordId={props.parentRecordId}
+						setShownRecord={props.setShownRecord}
+						swapRecords={props.swapRecords}
+					/>);
+				})
+			}
 
-				{
-					this.props.childrenRecords.map((record, index) => {
-
-						const active = record.id === this.props.activeRecordId;
-						return (<Tab
-							key={record.id}
-							displayLabel={record.label}
-							hasOrder={!!this.props.table.orderField}
-							isActive={active}
-							recordId={record.id}
-							index={index}
-							tableId={this.props.table.id}
-							language={this.props.table.languageField ? this.props.language : null}
-							parentRecordId={this.props.parentRecordId}
-							setShownRecord={this.props.setShownRecord}
-							swapRecords={this.props.swapRecords}
-						/>);
-					})
-				}
-
-				<AddRecord
-					table={this.props.table}
-					isTab
-					parentRecordId={this.props.parentRecordId}
-					parentTableId={this.props.parentTableId}
-					highestOrder={this.props.highestOrder}
-					language={this.props.language}
-				/>
-			</DragAndDrop>
-		</TabsContainer>);
-	}
+			<AddRecord
+				table={props.table}
+				isTab
+				parentRecordId={props.parentRecordId}
+				parentTableId={props.parentTableId}
+				highestOrder={props.highestOrder}
+				language={props.language}
+			/>
+		</DragAndDrop>
+	</TabsContainer>);
 }
+
+TabList.propTypes = {
+	table: PropTypes.object,
+	childrenRecords: PropTypes.array,
+	parentTableId: PropTypes.number,
+	parentRecordId: PropTypes.string,
+	activeRecordId: PropTypes.string,
+	language: PropTypes.string,
+	highestOrder: PropTypes.number,
+	isSidebarView: PropTypes.bool,
+
+	swapRecords: PropTypes.func,
+	setShownRecord: PropTypes.func,
+};

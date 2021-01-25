@@ -28,7 +28,7 @@ export const FixedHeaderContainer = styled.header`
 `;
 
 export const Header = styled.div`
-	padding: 25px 40px;
+	padding: 25px ${cssVars.contentSidePadding}px;
 	background: ${colors.backgroundLightest};
 	border-top: 1px solid ${colors.backgroundMainAccent};
 	border-bottom: 1px solid ${colors.backgroundMainAccent};
@@ -73,7 +73,7 @@ export const Popout = styled.div`
 	position: relative;
 	display: flex;
 	justify-content: flex-end;
-	padding-right: 30px;
+	padding-right: ${cssVars.contentSidePadding}px;
 	transform: translate(0, -1px);
 `;
 

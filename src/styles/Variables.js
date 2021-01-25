@@ -4,6 +4,7 @@ const vars = {
 	recordsWidth: 350, //px
 	topHeaderHeight: 60, //px
 	gridColumns: 12,
+	contentSidePadding: 20, // px
 	fontSizeText: '14px',
 	fontSizeTitle1: '2em',
 	fontSizeTitle2: '1.6em',

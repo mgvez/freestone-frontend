@@ -26,7 +26,7 @@ function getFieldGroupCss(props) {
 		`}
 
 		${props.isCollapsable && `
-			border-top: 4px solid ${colors.backgroundMainAccent};
+			border-top: 3px solid ${colors.backgroundMainAccent};
 			background: rgba(255, 255, 255, 0.25);
 		`};
 	`;
@@ -38,14 +38,14 @@ export function getInputCss(props) {
 		width: 100%;
 		height: 2.2em;
 		line-height:2.2em;
-		border: 2px solid transparent;
+		border: 1px solid rgba(0, 0, 0, 0.1);
 		color: ${colors.textPrimary};
 
 		padding: 0 10px;
 		margin: 0 0 0.7em;
 
 		&:focus {
-			border: 2px solid ${colors.accentPrimary};
+			border: 1px solid ${colors.accentPrimary};
 			outline: none;
 		}
 
@@ -61,7 +61,7 @@ export function getInputCss(props) {
 		`};
 
 		${props.bordered && `
-			border: 2px solid ${colors.borderDark};
+			border: 1px solid ${colors.borderDark};
 		`};
 
 		${props.rounded && `
@@ -100,8 +100,8 @@ export const FieldLabel = styled.div`
 
 export const FieldDescription = styled.div`
 	display: block;
-	margin: 0.7em 0.5em;
-	font-size: 0.8em;
+	margin: 0 0.5em 0.7em;
+	font-size: 0.6em;
 	line-height: 1.3;
 `;
 
@@ -180,7 +180,7 @@ function getToggleCss(props) {
 			display: none;
 
 			&:checked + label {
-				background: ${colors.accentPrimary};
+				background: ${colors.positive};
 
 				&:after {
 					left: calc(100% - 25px);
@@ -224,7 +224,7 @@ function getToggleCss(props) {
 			margin: 10px 0;
 
 			border-radius: 22px;
-			background: ${colors.dangerPrimary};
+			background: ${colors.negative};
 			border: 2px solid transparent;
 
 			transition: background 0.2s;

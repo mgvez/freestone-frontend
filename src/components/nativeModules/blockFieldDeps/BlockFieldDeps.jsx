@@ -11,7 +11,7 @@ import BoolInput from '../../form/inputTypes/BoolInput';
 import TextInput from '../../form/inputTypes/TextInput';
 import SaveContentBlockDependencies from '../../../containers/process/SaveContentBlockDependencies'; 
 import { GridContainer, GridItem, MainZone } from '../../../styles/Grid';
-import { TabsContainer } from '../../../styles/Form';
+import { TabsContainer, SubformTabbedContainer, MainRecordSection } from '../../../styles/Form';
 
 import FixedHeader from '../../header/FixedHeader'; 
 
@@ -29,11 +29,10 @@ const FormHeader = styled.div`
 `;
 
 const MainContainer = styled.div`
-	background: white;
-	border: 1px ${colors.borderMedium} solid;
-	border-top: 0;
-	padding: 20px;
-	margin: 0 0 20px 0;
+	margin: 20px 0;
+`;
+const FunctionContainer = styled.div`
+	margin: 20px 0;
 `;
 
 const DependenciesTable = styled.div`
@@ -64,16 +63,16 @@ const ItemLabel = styled.div`
 		content: '';
 		border-radius: 100%;
 		position: absolute;
-		left: -12px;
+		right: -12px;
 		top: 50%;
 		width: 8px;
 		height: 8px;
-		background-color: red;
+		background-color: ${colors.negative};
 		transform: translate(0, -50%);
 		opacity: 0.5;
 	}
 	&.suggested:after {
-		background-color: green;
+		background-color: ${colors.positive};
 	}
 	&:hover&:before {
 		content: "Field is detected in template";
@@ -165,7 +164,7 @@ export default function BlockFieldDeps(props) {
 						<ItemLabel className={isSuggested && 'suggested'}>{label}</ItemLabel>
 					</ItemCell>
 					<ItemCell>
-						<BoolInput key={`${key}-${fieldId}-${typeId}`} val={isDisplay} fieldId={fieldId} recordId={typeId} changeVal={onChangeIsDisplay} />
+						<BoolInput key={`${key}-${fieldId}-${typeId}`} small val={isDisplay} fieldId={fieldId} recordId={typeId} changeVal={onChangeIsDisplay} />
 					</ItemCell>
 					<ItemCell>
 					{isDisplay && (
@@ -246,7 +245,7 @@ export default function BlockFieldDeps(props) {
 				const activeClass = isActive && 'active';
 				const onClick = () => setCurrentType(type.id);
 
-				return (<button key={type.name} className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</button>);
+				return (<div className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</div>);
 				
 			});
 			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id));
@@ -271,15 +270,6 @@ export default function BlockFieldDeps(props) {
 				<Heading2>Display field <strong>{activeField.displayLabel}</strong> when type is:</Heading2>
 			);
 		}
-		const groupsTogglers = (
-			<GridContainer>
-				<GridItem columns="12">
-					<TabsContainer>
-						{tabs}
-					</TabsContainer>
-				</GridItem>
-			</GridContainer>
-		);
 
 		content = (
 			<React.Fragment>				
@@ -304,21 +294,29 @@ export default function BlockFieldDeps(props) {
 					</GridItem>
 				</GridContainer>
 				
-				{groupsTogglers}
-
 				<MainContainer>
+					<SubformTabbedContainer isSidebarView>
+						<TabsContainer isSidebarView>
+							{tabs}
+						</TabsContainer>
+						<MainRecordSection hasLeftTabs>
+							<FormHeader>
+								{header}
+							</FormHeader>
+							<DependenciesTable>
+								{switches}
+							</DependenciesTable>
 
-					<FormHeader>
-						{header}
-					</FormHeader>
-					<DependenciesTable>
-						{switches}
-					</DependenciesTable>
+							<FunctionContainer>
+								<Button key={BATCH_SET_SHOW} cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
+								<Button key={BATCH_SET_HIDE} cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
+								<Button key={BATCH_SET_SUGGESTED} cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
+							</FunctionContainer>
+
+						</MainRecordSection>
+
+					</SubformTabbedContainer>
 				</MainContainer>
-				
-				<Button key={BATCH_SET_SHOW} cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
-				<Button key={BATCH_SET_HIDE} cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
-				<Button key={BATCH_SET_SUGGESTED} cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
 			</React.Fragment>
 		);
 

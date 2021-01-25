@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
-import styled from 'styled-components';
-import colors from '../../styles/Colors';
 
-import { StyledSingleRecord, TabsContainer } from '../../styles/Form';
+import { StyledSingleRecord, TabsContainer, Aside, MainRecordSection } from '../../styles/Form';
 import { StyledFieldGroup } from '../../styles/Input';
 import { Button } from '../../styles/Button';
 import SetVisibleTab from './buttons/SetVisibleTab';
@@ -16,27 +14,6 @@ import DuplicateRecord from '../../containers/form/buttons/DuplicateRecord';
 import FieldGroup from '../../containers/form/FieldGroup';
 import { GridContainer, GridItem } from '../../styles/Grid';
 import Field from './Field';
-
-const SideBar = styled.div`
-	padding: 10px 10px;
-	background: ${colors.backgroundDark};
-	color: ${colors.white};
-	
-	label {
-		color: ${colors.white};
-	}
-
-	.sticky & {
-		position: fixed;
-			top: 170px;
-	}
-
-	.absolute & {
-		position: absolute;
-			top: auto;
-			bottom: 0;
-	}
-`;
 
 export default class SingleRecord extends Component {
 	state = {
@@ -52,6 +29,7 @@ export default class SingleRecord extends Component {
 		activeGroup: PropTypes.object,
 		parentTableId: PropTypes.number,
 		isSubform: PropTypes.bool,
+		isSidebarView: PropTypes.bool,
 		isGod: PropTypes.bool,
 		isNew: PropTypes.bool,
 		
@@ -227,11 +205,11 @@ export default class SingleRecord extends Component {
 		if (hasSideBar) {
 			renderedSidebar = (
 				<GridItem key="sidegroup" columns="4" className={this.state.stickyState}>
-					<SideBar ref={this.getSidebarRef} data-sidebar-inner>
+					<Aside ref={this.getSidebarRef} data-sidebar-inner>
 						<FieldGroup>
 							{sidebarFields}	
 						</FieldGroup>
-					</SideBar>
+					</Aside>
 				</GridItem>	
 			);
 		}
@@ -239,13 +217,14 @@ export default class SingleRecord extends Component {
 		return (
 			<React.Fragment>
 				{renderedTabs}
-				<GridContainer>
-					
-					<GridItem key="maingroup" columns={hasSideBar ? 8 : 12}>
-						{renderedGroup}
-					</GridItem>
-					{renderedSidebar}
-				</GridContainer>
+				<MainRecordSection isSubform={this.props.isSubform} hasTopTabs={groups && groups.length > 1}>
+					<GridContainer>
+						<GridItem key="maingroup" columns={hasSideBar ? 8 : 12}>
+							{renderedGroup}
+						</GridItem>
+						{renderedSidebar}
+					</GridContainer>
+				</MainRecordSection>
 			</React.Fragment>
 		);
 
@@ -312,7 +291,7 @@ export default class SingleRecord extends Component {
 
 		}
 		return (
-			<StyledSingleRecord>
+			<StyledSingleRecord isSubform={this.props.isSubform} isSidebarView={this.props.isSidebarView}>
 				{form}
 			</StyledSingleRecord>
 		);

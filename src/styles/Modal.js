@@ -7,7 +7,7 @@ const overlay = {
 	right: 0,
 	bottom: 0,
 	backgroundColor: 'rgba(255, 255, 255, 0.5)',
-	zIndex: 3000,
+	zIndex: 10000,
 };
 
 
@@ -26,6 +26,7 @@ export default {
 		borderRadius: '4px',
 		outline: 'none',
 		padding: '20px',
+		zIndex: 10000,
 	},
 };
 

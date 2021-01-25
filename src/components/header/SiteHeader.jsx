@@ -15,7 +15,7 @@ const verticalPadding = 15;
 const innerHeight = cssVariables.topHeaderHeight - (2 * verticalPadding);
 
 const StyledHeader = styled.header`
-	padding: ${verticalPadding}px 25px;
+	padding: ${verticalPadding}px ${cssVariables.contentSidePadding}px;
 	background: ${colors.backgroundMain};
 	position: absolute;
 		top: 0;
@@ -60,10 +60,10 @@ const StyledHeader = styled.header`
 		}
 	}
 	.version {
-		font-size: 0.6em;
+		font-size: 0.5em;
 		position: absolute;
-		right: 10px;
-		top: 2px;
+		right: ${cssVariables.contentSidePadding}px;
+		top: 1px;
 	}
 `;
 

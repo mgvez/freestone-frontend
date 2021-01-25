@@ -29,7 +29,7 @@ export const GridItem = styled.div`
 `;
 
 export const MainZone = styled.section`
-	width: calc(100% - 30px);
+	width: calc(100% - ${2 * cssVars.contentSidePadding}px);
 	min-height: 80vh;
 	position: relative;
 	margin: 15px auto;
