@@ -40,7 +40,7 @@ export const StyledSingleRecord = styled.section`
 
 `;
 
-export const MainRecordSection = styled.section`
+export const TabContentSection = styled.section`
 	${props => {
 		//styles for root record container
 		if (!props.isSubform) {
@@ -59,11 +59,10 @@ export const MainRecordSection = styled.section`
 export const Subform = styled.section`
 	margin: 20px 0;
 	padding: 0 10px 10px;
-	border-top: 1px solid ${colors.backgroundMainAccent};
-	border-bottom: 1px solid ${colors.backgroundMainAccent};
-	border-left: 10px solid ${colors.backgroundMainAccent};
+	border: 1px solid ${colors.backgroundMainAccent};
+	border-left-width: 10px;
 	position: relative;
-	border-radius: 5px;
+	border-radius: 2px;
 	background: ${colors.backgroundMain};
 
 	.fcn {
@@ -154,7 +153,7 @@ export const ListContainer = styled.div`
 
 `;
 
-export const TabsContainer = styled.nav`
+export const TabsList = styled.nav`
 	border-bottom: 1px solid ${colors.borderForm};
 	margin: 10px 0 0 0;
 	font-size: 0.8em;
@@ -228,7 +227,7 @@ export const TabsContainer = styled.nav`
 `;
 
 
-export const SubformTabbedContainer = styled.div`
+export const TabbedContainer = styled.div`
 	${props => {
 		if (props.isSidebarView) {
 			return `

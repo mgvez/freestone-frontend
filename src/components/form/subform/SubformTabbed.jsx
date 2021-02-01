@@ -7,7 +7,7 @@ import SingleRecord from '../../../containers/form/SingleRecord';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import ToggleCollapse from '../buttons/ToggleCollapse';
 import FormHeaderContent from '../../header/info/FormHeaderContent';
-import { Subform, SubformHeader, SubformTabbedContainer } from '../../../styles/Form';
+import { Subform, SubformHeader, TabbedContainer } from '../../../styles/Form';
 import { GridItem } from '../../../styles/Grid';
 import { SUBFORM_VIEW_TABBED_VERTICAL } from '../../../freestone/schemaProps';
 
@@ -33,7 +33,7 @@ export default function SubformTabbed(props) {
 				</GridItem>
 			</SubformHeader>
 			<Collapsable isCollapsed={props.isCollapsed}>
-				<SubformTabbedContainer isSidebarView={isSidebarView}>
+				<TabbedContainer isSidebarView={isSidebarView}>
 					<TabList {...props} isSidebarView={isSidebarView} activeRecordId={activeRecordId} />
 					<SingleRecord
 						tableId={props.table.id}
@@ -44,7 +44,7 @@ export default function SubformTabbed(props) {
 						isSubform
 						isSidebarView={isSidebarView}
 					/>
-				</SubformTabbedContainer>
+				</TabbedContainer>
 			</Collapsable>
 		</Subform>
 	);

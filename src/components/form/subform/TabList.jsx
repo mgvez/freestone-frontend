@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TabsContainer } from '../../../styles/Form';
+import { TabsList } from '../../../styles/Form';
 import DragAndDrop from '../../utils/DragAndDrop';
 
 import Tab from './Tab';
 import AddRecord from '../../../containers/form/buttons/AddRecord';
 
 export default function TabList(props) {
-	return (<TabsContainer isSidebarView={props.isSidebarView}>
+	return (<TabsList isSidebarView={props.isSidebarView}>
 		<DragAndDrop>
 
 			{
@@ -40,7 +40,7 @@ export default function TabList(props) {
 				language={props.language}
 			/>
 		</DragAndDrop>
-	</TabsContainer>);
+	</TabsList>);
 }
 
 TabList.propTypes = {

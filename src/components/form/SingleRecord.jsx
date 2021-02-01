@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
 
-import { StyledSingleRecord, TabsContainer, Aside, MainRecordSection } from '../../styles/Form';
+import { StyledSingleRecord, TabsList, Aside, TabContentSection } from '../../styles/Form';
 import { StyledFieldGroup } from '../../styles/Input';
 import { Button } from '../../styles/Button';
 import SetVisibleTab from './buttons/SetVisibleTab';
@@ -126,7 +126,7 @@ export default class SingleRecord extends Component {
 		if (groups.length > 1) {
 			return (<GridContainer key="tabs">
 				<GridItem column="12">
-					<TabsContainer className="tab-list">
+					<TabsList className="tab-list">
 						{groups.map((group) => {
 							if (!group) return null;
 							const isActive = activeGroup.key === group.key;
@@ -143,7 +143,7 @@ export default class SingleRecord extends Component {
 								/>
 							);
 						})}
-					</TabsContainer>
+					</TabsList>
 				</GridItem>
 			</GridContainer>);
 		}
@@ -217,14 +217,14 @@ export default class SingleRecord extends Component {
 		return (
 			<React.Fragment>
 				{renderedTabs}
-				<MainRecordSection isSubform={this.props.isSubform} hasTopTabs={groups && groups.length > 1}>
+				<TabContentSection isSubform={this.props.isSubform} hasTopTabs={groups && groups.length > 1}>
 					<GridContainer>
 						<GridItem key="maingroup" columns={hasSideBar ? 8 : 12}>
 							{renderedGroup}
 						</GridItem>
 						{renderedSidebar}
 					</GridContainer>
-				</MainRecordSection>
+				</TabContentSection>
 			</React.Fragment>
 		);
 

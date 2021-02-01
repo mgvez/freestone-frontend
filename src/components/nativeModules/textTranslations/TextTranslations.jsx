@@ -12,7 +12,7 @@ import { Heading1, Heading2 } from '../../../styles/Texts';
 import { Button } from '../../../styles/Button';
 import { Input } from '../../../styles/Input';
 import { Icon } from '../../../styles/Icon';
-import { TabsContainer } from '../../../styles/Form';
+import { TabsList } from '../../../styles/Form';
 import debounce from '../../../utils/Debounce.js';
 
 const Container = styled.div`
@@ -232,7 +232,7 @@ export default class TextTranslations extends Component {
 			const groupsTogglers = (
 				<Container>
 					<GridItem columns="12">
-						<TabsContainer>
+						<TabsList>
 							{this.props.schema.map((group, gIdx) => {
 								const isActive = this.props.activeGroup === gIdx || (!this.props.activeGroup && gIdx === 0);
 								const activeClass = isActive && 'active';
@@ -241,7 +241,7 @@ export default class TextTranslations extends Component {
 								return (<button className={`tab ${activeClass}`} key={`grouptoggle${gIdx}`} onClick={onClick}>{group.groupname || '........'}</button>);
 								
 							})}
-						</TabsContainer>
+						</TabsList>
 					</GridItem>
 				</Container>
 			);

@@ -10,8 +10,8 @@ import { Preloader } from '../../widgets/Preloader';
 import BoolInput from '../../form/inputTypes/BoolInput';
 import TextInput from '../../form/inputTypes/TextInput';
 import SaveContentBlockDependencies from '../../../containers/process/SaveContentBlockDependencies'; 
-import { GridContainer, GridItem, MainZone } from '../../../styles/Grid';
-import { TabsContainer, SubformTabbedContainer, MainRecordSection } from '../../../styles/Form';
+import { MainZone } from '../../../styles/Grid';
+import { TabsList, TabbedContainer, TabContentSection, Subform } from '../../../styles/Form';
 
 import FixedHeader from '../../header/FixedHeader'; 
 
@@ -37,14 +37,13 @@ const FunctionContainer = styled.div`
 
 const DependenciesTable = styled.div`
 	min-width: 50%;
-
 	display: grid;
 	border-collapse: collapse;
 	grid-template-columns: 
-		minmax(150px, 2fr)
+		minmax(200px, 3fr)
 		minmax(50px, 1fr)
-		minmax(150px, 4fr)
-		minmax(150px, 4fr);
+		minmax(200px, 4fr)
+		minmax(200px, 4fr);
 
 `;
 
@@ -59,11 +58,12 @@ const ItemCell = styled.div`
 const ItemLabel = styled.div`
 	font-weight: bold;
 	position: relative;
+	padding-right: 12px;
 	&:after {
 		content: '';
 		border-radius: 100%;
 		position: absolute;
-		right: -12px;
+		right: 0px;
 		top: 50%;
 		width: 8px;
 		height: 8px;
@@ -272,52 +272,52 @@ export default function BlockFieldDeps(props) {
 		}
 
 		content = (
-			<React.Fragment>				
-				<GridContainer>
-					<GridItem columns="12">
-						<div>
-							<Button 
-								key={VIEW_BY_FIELD}
-								faded={currentView === VIEW_BY_TPL} 
-								onClick={() => setCurrentView(VIEW_BY_FIELD)}
-							>
-									set by field
-							</Button>
-							<Button 
-								key={VIEW_BY_TPL}
-								faded={currentView === VIEW_BY_FIELD}
-								onClick={() => setCurrentView(VIEW_BY_TPL)}
-							>
-								set by template
-							</Button>
-						</div>
-					</GridItem>
-				</GridContainer>
-				
-				<MainContainer>
-					<SubformTabbedContainer isSidebarView>
-						<TabsContainer isSidebarView>
-							{tabs}
-						</TabsContainer>
-						<MainRecordSection hasLeftTabs>
-							<FormHeader>
-								{header}
-							</FormHeader>
-							<DependenciesTable>
-								{switches}
-							</DependenciesTable>
+			<TabbedContainer>
+				<TabsList>
+					<div 
+						className={`tab ${currentView === VIEW_BY_FIELD && 'active'}`} 
+						key={VIEW_BY_FIELD} 
+						onClick={() => setCurrentView(VIEW_BY_FIELD)}
+					>
+						set by field
+					</div>
+					<div 
+						className={`tab ${currentView === VIEW_BY_TPL && 'active'}`} 
+						key={VIEW_BY_TPL} 
+						onClick={() => setCurrentView(VIEW_BY_TPL)}
+					>
+						set by template
+					</div>
+				</TabsList>
+				<TabContentSection hasTopTabs>
+					<Subform>
+						<MainContainer>
+							<TabbedContainer isSidebarView>
+								<TabsList isSidebarView>
+									{tabs}
+								</TabsList>
+								<TabContentSection hasLeftTabs>
+									<FormHeader>
+										{header}
+									</FormHeader>
+									<DependenciesTable>
+										{switches}
+									</DependenciesTable>
 
-							<FunctionContainer>
-								<Button key={BATCH_SET_SHOW} cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
-								<Button key={BATCH_SET_HIDE} cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
-								<Button key={BATCH_SET_SUGGESTED} cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
-							</FunctionContainer>
+									<FunctionContainer>
+										<Button key={BATCH_SET_SHOW} cta onClick={() => setAll(BATCH_SET_SHOW)}>SET ALL SHOWN</Button>
+										<Button key={BATCH_SET_HIDE} cta onClick={() => setAll(BATCH_SET_HIDE)}>SET ALL HIDDEN</Button>
+										<Button key={BATCH_SET_SUGGESTED} cta onClick={() => setAll(BATCH_SET_SUGGESTED)}>SET ALL SUGGESTED</Button>
+									</FunctionContainer>
 
-						</MainRecordSection>
+								</TabContentSection>
 
-					</SubformTabbedContainer>
-				</MainContainer>
-			</React.Fragment>
+							</TabbedContainer>
+						</MainContainer>
+					</Subform>
+				</TabContentSection>
+
+			</TabbedContainer>
 		);
 
 	} else if (!isSaving) {
