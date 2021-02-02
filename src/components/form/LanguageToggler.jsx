@@ -28,12 +28,10 @@ const StyledTab = styled.div`
 	transition: background 0.3s, color 0.3s;
 
 	&:first-child {
-		border-radius: 0 0 0 10px;
 		border-right: 0;
 	}
 
 	&:last-child {
-		border-radius: 0 0 10px 0;
 		border-left: 0;
 	}
 
