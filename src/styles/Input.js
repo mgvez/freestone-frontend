@@ -10,7 +10,6 @@ function getFieldCss(displaySize) {
 		${displaySize === 'small' && textSmall};
 		${displaySize === 'medium' && textMedium};
 		height: 100%;
-		border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
 		padding-bottom: 10px;
 	`;
 }
@@ -38,11 +37,13 @@ export function getInputCss(props) {
 		width: 100%;
 		height: 2.2em;
 		line-height:2.2em;
-		border: 1px solid rgba(0, 0, 0, 0.1);
+		border: 1px solid rgba(255, 255, 255, 1);
 		color: ${colors.textPrimary};
 
 		padding: 0 10px;
 		margin: 0 0 0.7em;
+
+		transition: border-color 0.2s ease;
 
 		&:focus {
 			border: 1px solid ${colors.accentPrimary};

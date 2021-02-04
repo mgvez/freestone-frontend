@@ -96,7 +96,7 @@ export default class ListSearch extends Component {
 			{this.getSearchResults()}
 			<Container>
 				<Container className="input-wrapper">
-					<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
+					<Input search type="search" placeholder="search" ref={this.searchInput} />
 					<Button icon="true" inputCta="true" ><Icon icon="search" side="center" /></Button>
 				</Container>
 				

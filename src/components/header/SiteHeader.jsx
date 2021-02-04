@@ -54,9 +54,11 @@ const StyledHeader = styled.header`
 	.debug-fcn {
 		display: flex;
 		align-items: center;
+
+		margin-left: 15px;
 		
 		button {
-			margin: 0 5px;
+			height: 100%;
 		}
 	}
 	.version {

@@ -15,18 +15,19 @@ export default {
 	overlay,
 	content: {
 		position: 'absolute',
-		top: '40px',
-		left: '40px',
-		right: '40px',
-		bottom: '40px',
-		border: '1px solid #ccc',
+		top: '20px',
+		left: '20px',
+		right: '20px',
+		bottom: '20px',
+		border: 'none',
 		background: '#fff',
 		overflow: 'auto',
 		WebkitOverflowScrolling: 'touch',
-		borderRadius: '4px',
+		borderRadius: '0',
 		outline: 'none',
 		padding: '20px',
 		zIndex: 10000,
+		'box-shadow': '0px 0px 65px -26px rgb(0 0 0 / 50%)',
 	},
 };
 
@@ -51,3 +52,25 @@ export const transparentModal = {
 		alignContent: 'center',
 	},
 };
+
+
+export const url_helper = {
+	overlay,
+	content: {
+		position: 'absolute',
+		top: '20px',
+		left: '20px',
+		right: '20px',
+		bottom: '20px',
+		border: 'none',
+		background: '#fff',
+		overflow: 'auto',
+		WebkitOverflowScrolling: 'touch',
+		borderRadius: '0',
+		outline: 'none',
+		padding: '20px',
+		zIndex: 10000,
+		'box-shadow': '0px 0px 65px -26px rgb(0 0 0 / 50%)',
+	},
+}
+

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
-
 import { getWebsiteUrl, PLACEHOLDER } from '../../../freestone/settings';
-import customStyle from '../../../styles/Modal.js';
+import url_helper from '../../../styles/Modal.js';
 import { Button } from '../../../styles/Button';
 import { GridContainer, GridItem } from '../../../styles/Grid';
 
@@ -95,6 +94,33 @@ export default class LinkInsert extends Component {
 
 		const labelInput = this.props.isUrlOnly ? null : <p>link label: <input defaultValue={this.props.selection} ref="linkLabel" /></p>;
 		const lang = this.props.lang || '';
+
+		const title_styles = {
+			margin: '17px 0 10px 0',	
+			'font-weight': 'bold',
+		}
+
+		const p_styles = {
+			margin: '0 0 15px 0',
+			'line-height': '1.2',
+		}
+
+		const left_p_styles = {
+			display: 'inline-block',
+			'line-height': '1.2',
+			width: '70%',
+		}
+
+		const grid_ctn_styles = {
+			position: 'absolute',
+			'margin-top': '-12px',
+			'background-color': 'white',
+			'box-shadow': '0px 13px 36px -39px rgb(0 0 0 / 75%)',
+			width: 'calc(100% - 40px)',
+		}
+
+	
+
 		return (
 			<Modal
 				isOpen
@@ -102,28 +128,33 @@ export default class LinkInsert extends Component {
 				onAfterOpen={this.afterOpenModal}
 				onRequestClose={this.cancelChange}
 				closeTimeoutMS={n}
-				style={customStyle}
+				style={url_helper}
 			>
-				<GridContainer>
-					<GridItem columns="6">
+	
+				<GridContainer style={grid_ctn_styles}>
+					<GridItem columns="12">
 						{labelInput}
 					</GridItem>
-					<GridItem columns="6">
+					<GridItem columns="5" style={{ margin: '0 10px 25px 0', padding: '0 15px 15px 15px', 'background-color' : '#e7eaec' }}>
+						<h4 style={title_styles}>Internal Link</h4>
+						<div>
+							<p style={left_p_styles}> If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the following button.</p>
+							<Button style={{ 'vertical-align': 'top', 'margin-left': '10px' }} bordered="true" onClick={this.selectInternal}>use page below</Button>
+						</div>
+					</GridItem>
+					<GridItem columns="6" style={{ margin: '0 0 25px 0'  }}>
+						<h4 style={title_styles}>External Link</h4>
+						<p style={p_styles}>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
+						<div>
+							<input type="text" ref="linkExternal" style={{ 'border-color': 'rgba(0,0,0,0)', width: '70%', height: '30px', 'background-color' : '#e7eaec' }} defaultValue={this.props.link} />
+							<Button style={{ 'margin-top': '-3px', 'margin-left':'15px' }} onClick={this.selectExternal}>use this url</Button>
+						</div>
+					</GridItem>
+					<GridItem columns="1" style={{'text-align': 'right'}}>
 						<Button round="true" danger="true" onClick={this.cancelChange}>cancel</Button>
 					</GridItem>
-					<GridItem columns="6">
-						<h4>Internal Link</h4>
-						<p>If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the following button.</p>
-						<Button round="true" bordered="true" onClick={this.selectInternal}>use page below</Button>
-					</GridItem>
-					<GridItem columns="6">
-						<h4>External Link</h4>
-						<p>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
-						<p><input type="text" ref="linkExternal" className="bordered" defaultValue={this.props.link} /></p>
-						<Button round="true" bordered="true" onClick={this.selectExternal}>use this url</Button>
-					</GridItem>
 				</GridContainer>
-				<iframe src={getWebsiteUrl() + lang} style={{ width: '100%', height: '500px' }} ref="ifr" />
+				<iframe src={getWebsiteUrl() + lang} style={{ width: '100%', height: '100%', 'padding-top': '140px' }} ref="ifr" />
 			</Modal>
 		);
 	}

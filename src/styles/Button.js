@@ -52,7 +52,7 @@ function getCss(props) {
 		cursor: pointer;
 		display: inline-block;
 		vertical-align: middle;
-		border-radius: 5px;
+		border-radius: 0;
 
 		color: ${colors.textSecondary};
 
@@ -150,24 +150,12 @@ function getCss(props) {
 		${props.icon && `i {
 			margin: 0;
 		}`};
-
-		${props.round && 'border-radius: 15px;'};
-		${props.flat && `
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-			border-bottom-left-radius: 10px;
-			border-bottom-right-radius: 10px;
-		`};
 		
 		${props.inputCta && `
 			position: absolute;
 				top: 0;
 				right: 0;
 			height: 100%;
-			border-top-left-radius: 0px;
-			border-bottom-left-radius: 0px;
-			border-top-right-radius: 15px;
-			border-bottom-right-radius: 15px;
 		`};
 
 		${buttonColorModifier(mainColor, props.bordered)};

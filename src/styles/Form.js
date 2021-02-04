@@ -118,8 +118,6 @@ export const StackContainer = styled.nav`
 		font-weight: bold;
 		background-color: ${bg};
 		color: ${colors.white};
-		transition: border-radius 1s;
-
 
 		&:hover, &.active {
 			background-color: ${colors.accentPrimary};
