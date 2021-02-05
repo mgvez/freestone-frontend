@@ -53,7 +53,6 @@ const MainZone = styled.div`
 
 const ReleaseNotes = styled.div`
 	background: ${colors.backgroundMain};
-	border-radius: 5px;
 	border: 1px ${colors.borderMedium} solid;
 	padding: 10px;
 `;

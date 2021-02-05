@@ -62,7 +62,7 @@ export default class Module extends Component {
 		// console.log('module', time);
 		const url = `${host}module/${this.props.url}/?jwt=${this.props.jwt}&nocache=${time}`;
 		return (
-			<section>
+			<section style={{ backgroundColor: 'white' }}>
 				<DocumentMeta {...metaData} />
 				<Header>
 					<HeaderTexts>
@@ -70,7 +70,7 @@ export default class Module extends Component {
 						<p>{this.props.description}</p>
 					</HeaderTexts>
 				</Header>
-				<iframe className="module" src={url} style={{ width: '100%', minHeight: '100vh' }} />
+				<iframe className="module" src={url} style={{ width: '90%', minHeight: '100vh', marginLeft: '5%', marginTop: '50px' }} />
 			</section>
 		);
 	}

@@ -47,8 +47,6 @@ const Container = styled.div`
 		border-left: 10px solid ${colors.accentPrimary};
 		background: rgba(255, 255, 255, 0.4);
 
-		border-radius: 5px;
-
 		label {
 			background-color: ${colors.backgroundMain};
 		}
@@ -276,7 +274,7 @@ export default class TextTranslations extends Component {
 										<GridContainer>
 											{this.props.languages.map((language, idx) => {
 												const isEmphasis = this.props.currentSearchActiveKey && this.props.currentSearchActiveKey.lang === language && this.props.currentSearchActiveKey.key === translationProp.key;
-												return (<GridItem columns="6" key={idx}>
+												return (<GridItem columns="6" key={idx} style={{ minHeight: '40px' }}>
 													<Field label={language} isEmphasis={isEmphasis}>
 														<SingleTranslation translationKey={translationProp.key} language={language} />
 													</Field>
@@ -340,7 +338,7 @@ export default class TextTranslations extends Component {
 			<SearchForm>
 				{navigateSearchRes}
 				<div className="input-wrapper">
-					<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
+					<Input search type="search" placeholder="search" ref={this.searchInput} />
 					<Button icon="true" inputCta="true" title="cmd+f" ><Icon icon="search" side="center" /></Button>
 				</div>
 			</SearchForm>

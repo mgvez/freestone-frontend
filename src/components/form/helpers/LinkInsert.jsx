@@ -98,28 +98,26 @@ export default class LinkInsert extends Component {
 		const title_styles = {
 			margin: '17px 0 10px 0',	
 			'font-weight': 'bold',
-		}
+		};
 
 		const p_styles = {
 			margin: '0 0 15px 0',
 			'line-height': '1.2',
-		}
+		};
 
 		const left_p_styles = {
 			display: 'inline-block',
 			'line-height': '1.2',
 			width: '70%',
-		}
+		};
 
 		const grid_ctn_styles = {
 			position: 'absolute',
-			'margin-top': '-12px',
-			'background-color': 'white',
-			'box-shadow': '0px 13px 36px -39px rgb(0 0 0 / 75%)',
+			marginTop: '-12px',
+			backgroundColor: 'white',
+			boxShadow: '0px 13px 36px -39px rgb(0 0 0 / 75%)',
 			width: 'calc(100% - 40px)',
-		}
-
-	
+		};
 
 		return (
 			<Modal
@@ -135,22 +133,22 @@ export default class LinkInsert extends Component {
 					<GridItem columns="12">
 						{labelInput}
 					</GridItem>
-					<GridItem columns="5" style={{ margin: '0 10px 25px 0', padding: '0 15px 15px 15px', 'background-color' : '#e7eaec' }}>
+					<GridItem columns="5" style={{ margin: '0 10px 25px 0', padding: '0 15px 15px 15px', backgroundColor: '#e7eaec' }}>
 						<h4 style={title_styles}>Internal Link</h4>
 						<div>
 							<p style={left_p_styles}> If you want to link to a page in your website, in the window below navigate to the page where the link is to point to, and then click the following button.</p>
 							<Button style={{ 'vertical-align': 'top', 'margin-left': '10px' }} bordered="true" onClick={this.selectInternal}>use page below</Button>
 						</div>
 					</GridItem>
-					<GridItem columns="6" style={{ margin: '0 0 25px 0'  }}>
+					<GridItem columns="6" style={{ margin: '0 0 25px 0' }}>
 						<h4 style={title_styles}>External Link</h4>
 						<p style={p_styles}>If you want to link to a page anywhere on the web, please paste its url in the box and click on the submit button.</p>
 						<div>
-							<input type="text" ref="linkExternal" style={{ 'border-color': 'rgba(0,0,0,0)', width: '70%', height: '30px', 'background-color' : '#e7eaec' }} defaultValue={this.props.link} />
-							<Button style={{ 'margin-top': '-3px', 'margin-left':'15px' }} onClick={this.selectExternal}>use this url</Button>
+							<input type="text" ref="linkExternal" style={{ borderColor: 'rgba(0,0,0,0)', width: '70%', height: '30px', backgroundColor: '#e7eaec' }} defaultValue={this.props.link} />
+							<Button style={{ 'margin-top': '-3px', marginLeft: '15px' }} onClick={this.selectExternal}>use this url</Button>
 						</div>
 					</GridItem>
-					<GridItem columns="1" style={{'text-align': 'right'}}>
+					<GridItem columns="1" style={{ 'text-align': 'right' }}>
 						<Button round="true" danger="true" onClick={this.cancelChange}>cancel</Button>
 					</GridItem>
 				</GridContainer>

@@ -28,7 +28,6 @@ const FileLink = styled.a`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 3px;
 	font-size: ${THUMBNAIL_SIZE / 8}px;
 	font-weight: 600;
 	color: black;
@@ -42,7 +41,6 @@ const ImgLink = styled.a`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 3px;
 	position: relative;
 `;
 

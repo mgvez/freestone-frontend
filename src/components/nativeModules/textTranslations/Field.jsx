@@ -17,11 +17,14 @@ const Container = styled.div`
 
 	.input-wrapper {
 		width: 100%;
+		min-height: 40px;
 
 		input, textarea {
 			position: relative;
 			left: 50px;
 			width: calc(100% - 50px);
+
+			min-height: 40px;
 
 			margin-bottom: 0;
 			/* padding-left: 60px; */

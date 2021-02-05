@@ -82,7 +82,7 @@ export const HeaderTexts = styled.div`
 	
 	p, ul li {
 		margin-bottom: 3px;
-		line-height: 1.5em;
+		line-height: 1.3em;
 	}
 `;
 

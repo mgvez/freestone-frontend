@@ -59,7 +59,6 @@ export const ErrorMessage = styled.div`
 	color: #721c24;
 	line-height: 1.2em;
 	border: 1px #f5c6cb solid;
-	border-radius: 5px;
 	padding: 10px;
 	margin-bottom: 4px;
 `;
@@ -68,7 +67,6 @@ export const WarningMessage = styled.div`
 	color: #93580a;
 	line-height: 1.2em;
 	border: 1px #ffb24f solid;
-	border-radius: 5px;
 	padding: 10px;
 	margin-bottom: 4px;
 `;
@@ -87,7 +85,6 @@ export const Label = styled.div`
 
 	display: inline-block;
 	vertical-align: middle;
-	border-radius: 5px;
 	color: ${colors.textSecondary};
 	font-weight: ${cssVars.fontWeightSemibold};
 	white-space: nowrap;

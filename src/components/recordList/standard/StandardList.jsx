@@ -32,9 +32,17 @@ const ListTable = styled.table`
 		}
 	}
 
-	tr:hover {
-		td {
-			background: ${colors.backgroundLight};
+	tr:not(.group-heading) {
+		&:nth-of-type(2n + 1) {
+			td {
+				background-color: #fafafa;
+			}
+		}
+
+		&:hover {
+			td {
+				background: ${colors.backgroundLight}!important;
+			}
 		}
 	}
 
@@ -48,9 +56,6 @@ const ListTable = styled.table`
 
 	th, td {
 		text-align: left;
-		border-bottom: 1px solid ${colors.borderLight};
-		border-top: 1px solid ${colors.borderLight};
-
 		&:first-child {
 			border-left: 1px solid ${colors.borderLight};
 		}
@@ -63,7 +68,7 @@ const ListTable = styled.table`
 	th {
 		padding: 20px 4px;
 		background: ${colors.backgroundMainAccent};
-		font-weight: ${cssVariables.fontWeightBold}
+		font-weight: ${cssVariables.fontWeightBold};
 	}
 
 	th, td {

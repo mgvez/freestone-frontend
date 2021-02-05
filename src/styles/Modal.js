@@ -10,7 +10,6 @@ const overlay = {
 	zIndex: 10000,
 };
 
-
 export default {
 	overlay,
 	content: {
@@ -27,7 +26,7 @@ export default {
 		outline: 'none',
 		padding: '20px',
 		zIndex: 10000,
-		'box-shadow': '0px 0px 65px -26px rgb(0 0 0 / 50%)',
+		boxShadow: '0px 0px 65px -26px rgb(0 0 0 / 50%)',
 	},
 };
 
@@ -53,7 +52,6 @@ export const transparentModal = {
 	},
 };
 
-
 export const url_helper = {
 	overlay,
 	content: {
@@ -70,7 +68,6 @@ export const url_helper = {
 		outline: 'none',
 		padding: '20px',
 		zIndex: 10000,
-		'box-shadow': '0px 0px 65px -26px rgb(0 0 0 / 50%)',
+		boxShadow: '0px 0px 65px -26px rgb(0 0 0 / 50%)',
 	},
-}
-
+};

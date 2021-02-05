@@ -12,7 +12,6 @@ export const Tooltip = styled.div`
 	font-size: 12px;
 	color: ${colors.white};
 	padding: 10px;
-	border-radius: 5px;
 	line-height: 1.3;
 	width: 260px;
 

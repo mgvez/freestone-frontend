@@ -27,10 +27,10 @@ const StyledDiv = styled.div`
 		color: ${colors.white};
 		font-size: 9px;
 		background: ${colors.accentPrimary};
-		padding: 4px 5px;
+		padding: 4px 6px;
 		height: auto;
 		line-height: 9px;
-		border-radius: 4px;
+		border-radius: 100%;
 	}
 `;
 
@@ -52,7 +52,7 @@ export default class LoadedRecordsToggler extends Component {
 	render() {
 
 		if (this.props.isClose) {
-			return <Button circle="true" small="true" onClick={this.loadedRecordsToggler}><Icon icon="times" side="center" /></Button>;
+			return <Button square="true" small="true" onClick={this.loadedRecordsToggler}><Icon icon="times" side="center" /></Button>;
 		}
 
 		return (<StyledDiv onClick={this.loadedRecordsToggler} data-num={this.props.nLoadedRecords}>

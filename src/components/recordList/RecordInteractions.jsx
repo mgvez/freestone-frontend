@@ -94,8 +94,8 @@ export default class RecordInteractions extends Component {
 
 		return (
 			<Container>
-				<PromptContainer className={`actions ${this.state.active && 'active'}`}>
-					<Button round="true" info="true" bordered="true" onClick={this.toggleActions}>{DEFAULT_LABEL} <Icon icon="angle-down" side="right" /></Button>
+				<PromptContainer style={{marginBottom:'0'}} className={`actions ${this.state.active && 'active'}`}>
+					<Button smaller={true} info="true" bordered="true" onClick={this.toggleActions}>{DEFAULT_LABEL} <Icon icon="angle-down" side="right" /></Button>
 					{this.state.active && (<PromptWidget>
 						<ActionNavLink to={`/edit/${this.props.table.name}/${prikeyVal}`} onClick={this.onEditClick} accent="true">
 							<Icon icon="pencil-alt" /> {EDIT_LABEL}

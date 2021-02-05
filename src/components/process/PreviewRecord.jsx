@@ -29,12 +29,8 @@ const Tab = styled.div `
 	transition: background 0.3s, color 0.3s;
 	font-size: 10px;
 
-	&:last-child {
-		border-radius: 0 0 10px 0;
-	}
 	&:first-child {
 		border-left: 1px solid ${colors.accentPrimary};
-		border-radius: 0 0 0 10px;
 	}
 
 	&:hover, &.active {

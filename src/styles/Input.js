@@ -67,7 +67,6 @@ export function getInputCss(props) {
 
 		${props.rounded && `
 			padding-right: 65px;
-			border-radius: 50px;
 		`};
 
 		&[size]{
@@ -184,7 +183,7 @@ function getToggleCss(props) {
 				background: ${colors.positive};
 
 				&:after {
-					left: calc(100% - 25px);
+					left: calc(100% - 17px);
 				}
 
 				&:before {
@@ -223,8 +222,6 @@ function getToggleCss(props) {
 			padding: 0 35px;
 
 			margin: 10px 0;
-
-			border-radius: 22px;
 			background: ${colors.negative};
 			border: 2px solid transparent;
 
@@ -232,14 +229,13 @@ function getToggleCss(props) {
 
 			&:after {
 				position: absolute;
-					top: 5px;
-					left: 5px;
+					top: 2px;
+					left: 2px;
 
-				height: 20px;
-				width: 20px;
+				height: 26px;
+				width: 15px;
 				content: ' ';
 				background: #fff;
-				border-radius: 100%;
 
 				transition: left 0.2s;
 			}
@@ -258,7 +254,6 @@ function getToggleCss(props) {
 			${props.small && `
 				height: 22px;
 				padding: 0 23px;
-				border-radius: 11px;
 				font-size: 0.9em;
 
 				&:after {

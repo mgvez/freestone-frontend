@@ -74,6 +74,8 @@ function getCss(props) {
 			background: ${darken(colors.accentPrimary, 0.2)};
 		}
 
+
+
 		${props.fullwidth && `
 			width: 100%;
 			margin: 0.8em 0 1.5em 0;
@@ -142,6 +144,33 @@ function getCss(props) {
 			`};
 		`};
 
+		${props.square && `
+		text-align: center;
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+
+		padding: 0;
+
+		i {
+			margin: 0;
+		}
+
+		${props.small && `
+			width: ${height}px;
+			height: ${height}px;
+			line-height: ${height}px;
+		`};
+		
+		${props.tiny && `
+			width: 18px;
+			height: 18px;
+			line-height: 18px;
+			font-size: 0.8em;
+
+		`};
+	`};
+
 		${props.underline && `
 			text-decoration: underline;
 			text-underline-position: under;
@@ -170,6 +199,13 @@ function getCss(props) {
 				color: ${colors.accentPrimary};
 
 			}
+		`};
+
+		${props.smaller && `
+			padding: 0 5px 0 10px;
+			height: 25px;
+			line-height: 15px;
+			font-size: 14px;
 		`};
 	`;
 }

@@ -12,14 +12,12 @@ import { Heading2, Heading3 } from '../../styles/Texts';
 const Wrapper = styled.div`
 	font-size: 0.8em;
 	background: white;
-	border-radius: 5px;
 	padding: 20px;
 `;
 
 const ChangeGroup = styled.div`
 	margin: 0 0 40px;
 	border: 1px ${colors.borderMedium} solid;
-	border-radius: 6px;
 	padding: 10px;
 `;
 const ChangeField = styled.div`

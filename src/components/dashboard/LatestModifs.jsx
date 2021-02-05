@@ -12,7 +12,6 @@ import { Button } from '../../styles/Button';
 const Wrapper = styled.div`
 	font-size: 0.8em;
 	background: white;
-	border-radius: 5px;
 	padding: 20px;
 `;
 const Grid = styled.div`
@@ -26,7 +25,6 @@ const UserIcon = styled.div`
 `;
 const RoundIcon = styled.div`
 	img {
-		border-radius: 50%;
 		width: 50px;
 		height: 50px;
 	}

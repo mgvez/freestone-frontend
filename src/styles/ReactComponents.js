@@ -194,7 +194,6 @@ font-size: 0.8rem;
 background-color: #fff;
 color: #000;
 border: 1px solid #aeaeae;
-border-radius: 0.3rem;
 display: inline-block;
 position: relative;
 li {
@@ -208,14 +207,6 @@ left: 35px;
 
 .react-datepicker--time-only .react-datepicker__time-container {
 border-left: 0;
-}
-
-.react-datepicker--time-only .react-datepicker__time {
-border-radius: 0.3rem;
-}
-
-.react-datepicker--time-only .react-datepicker__time-box {
-border-radius: 0.3rem;
 }
 
 .react-datepicker__triangle {
@@ -432,7 +423,6 @@ width: 70px;
 .react-datepicker__time-container--with-today-button {
 display: inline;
 border: 1px solid #aeaeae;
-border-radius: 0.3rem;
 position: absolute;
 right: -72px;
 top: 0;
@@ -504,7 +494,6 @@ cursor: pointer;
 }
 
 .react-datepicker__week-number.react-datepicker__week-number--clickable:hover {
-border-radius: 0.3rem;
 background-color: #f0f0f0;
 }
 
@@ -531,7 +520,6 @@ cursor: pointer;
 
 .react-datepicker__day:hover,
 .react-datepicker__month-text:hover {
-border-radius: 0.3rem;
 background-color: #f0f0f0;
 }
 
@@ -542,7 +530,6 @@ font-weight: bold;
 
 .react-datepicker__day--highlighted,
 .react-datepicker__month-text--highlighted {
-border-radius: 0.3rem;
 background-color: #3dcc4a;
 color: #fff;
 }
@@ -566,7 +553,6 @@ color: green;
 .react-datepicker__month-text--selected,
 .react-datepicker__month-text--in-selecting-range,
 .react-datepicker__month-text--in-range {
-border-radius: 0.3rem;
 background-color: #216ba5;
 color: #fff;
 }
@@ -580,7 +566,6 @@ background-color: #1d5d90;
 
 .react-datepicker__day--keyboard-selected,
 .react-datepicker__month-text--keyboard-selected {
-border-radius: 0.3rem;
 background-color: #2a87d0;
 color: #fff;
 }
@@ -621,7 +606,6 @@ display: inline-block;
 .react-datepicker__month-read-view,
 .react-datepicker__month-year-read-view {
 border: 1px solid transparent;
-border-radius: 0.3rem;
 }
 
 .react-datepicker__year-read-view:hover,
@@ -660,7 +644,6 @@ left: 25%;
 top: 30px;
 z-index: 1;
 text-align: center;
-border-radius: 0.3rem;
 border: 1px solid #aeaeae;
 }
 
@@ -746,7 +729,6 @@ right: 7px;
 
 .react-datepicker__close-icon::after {
 background-color: #216ba5;
-border-radius: 50%;
 bottom: 0;
 box-sizing: border-box;
 color: #fff;

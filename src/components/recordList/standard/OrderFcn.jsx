@@ -10,6 +10,11 @@ const OrderContainer = styled.div`
 
 	.ctaup {
 		margin-bottom: 10px;
+		margin-top: 5px;
+	}
+
+	.ctdwn {
+		margin-bottom: 5px;
 	}
 
 	i {
@@ -44,7 +49,7 @@ export default class OrderFcn extends Component {
 		return (
 			<OrderContainer>
 				<div className="ctaup" onClick={this.swapOrderUp} key="ctaup"><Icon icon="arrow-up" cta side="center" /></div>
-				<div onClick={this.swapOrderDown} key="ctadown"><Icon icon="arrow-down" side="center" onClick={this.swapOrderDown} cta /></div>
+				<div className="ctdwn" onClick={this.swapOrderDown} key="ctadown"><Icon icon="arrow-down" side="center" onClick={this.swapOrderDown} cta /></div>
 			</OrderContainer>
 		);
 	}

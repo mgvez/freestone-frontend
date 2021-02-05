@@ -62,7 +62,6 @@ export const Subform = styled.section`
 	border: 1px solid ${colors.backgroundMainAccent};
 	border-left-width: 10px;
 	position: relative;
-	border-radius: 2px;
 	background: ${colors.backgroundMain};
 
 	.fcn {
@@ -75,7 +74,6 @@ export const Subform = styled.section`
 
 	&.subform-list section {
 		border-left: 10px solid ${colors.accentPrimary};
-		border-radius: 5px;
 		margin: 20px 0;
 		padding: 0 10px;
 		background: rgba(255, 255, 255, 0.4);
@@ -112,7 +110,6 @@ export const StackContainer = styled.nav`
 		display: block;
 		width: 100%;
 		margin: 4px 0 0 0;
-		border-radius: 2px;
 		padding: 12px 25px;
 		border: 1px solid ${border};
 		font-weight: bold;
@@ -128,7 +125,6 @@ export const StackContainer = styled.nav`
 		&.active {
 			border-color: ${colors.accentPrimary};
 			border-bottom: 0;
-			border-radius: 5px 5px 0 0 ;
 		}
 	}
 
@@ -138,7 +134,6 @@ export const StackContainer = styled.nav`
 		padding: 0 10px;
 	}
 	.stack-record-active {
-		border-radius: 0 0 5px 5px  ;
 		border: 1px solid ${colors.accentPrimary};
 	}
 	
@@ -172,7 +167,6 @@ export const TabsList = styled.nav`
 		border-color: transparent;
 		cursor: pointer;
 		white-space: nowrap;
-		border-radius: 2px 2px 0 0;
 
 		transition: background 0.3s, color 0.3s;
 		margin-right: 5px;
@@ -209,7 +203,6 @@ export const TabsList = styled.nav`
 					margin: 0 0 2px 0;
 					border: 1px solid ${colors.backgroundMain};
 					border-right: none;
-					border-radius: 2px 0 0 2px;
 
 					&.active {
 						transform: translate(1px, 0);
