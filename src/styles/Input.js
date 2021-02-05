@@ -37,7 +37,7 @@ export function getInputCss(props) {
 		width: 100%;
 		height: 2.2em;
 		line-height:2.2em;
-		border: 1px solid rgba(255, 255, 255, 1);
+		border: 1px solid rgba(243, 243, 243, 1);
 		color: ${colors.textPrimary};
 
 		padding: 0 10px;

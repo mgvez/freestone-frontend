@@ -27,8 +27,6 @@ const Container = styled.div`
 	}
 
 	.translation-label {
-		margin-bottom: 15px;
-
 		.key {
 			margin-left: 10px;
 			font-style: italic;
@@ -263,7 +261,7 @@ export default class TextTranslations extends Component {
 					}
 					
 					return (
-						<Container key={tIdx}>
+						<Container key={tIdx} style={{marginBottom: "0"}}>
 							<GridItem columns="10" offset="1" className="translation">
 								<GridContainer>
 									<GridItem columns="12" align="center" className="translation-label">
@@ -301,7 +299,10 @@ export default class TextTranslations extends Component {
 			groups = (
 				<div>
 					{groupsTogglers}
-					{groups}
+
+					<div style={{backgroundColor:'#fafafa', marginTop: '-30px', padding: '15px', borderLeft: '1px solid', borderRight: '1px solid', borderBottom: '1px solid', borderColor: '#d4d8d9'}}>
+						{groups}
+					</div>
 				</div>
 			);
 
