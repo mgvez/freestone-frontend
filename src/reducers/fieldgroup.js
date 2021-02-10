@@ -6,10 +6,10 @@ import { CLEAR_DATA } from '../actions/dev';
 function collapsedState(state = {}, action) {
 	switch (action.type) {
 	case TOGGLE_FIELD_GROUP: {
-		const { groupId, tableId } = action.data;
+		const { groupId } = action.data;
 		return {
 			...state,
-			[tableId]: groupId,
+			[groupId]: !state[groupId],
 		};
 	}
 	default:

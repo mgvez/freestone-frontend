@@ -25,7 +25,6 @@ function makeCollapseSelector() {
 	return createSelector(
 		[groupIdSelector, collapsedStateSelector],
 		(groupId, collapsedState) => {
-			// console.log('process... %s', tableId);
 			return {
 				isCollapsed: collapsedState[groupId],
 			};
@@ -36,8 +35,11 @@ function makeCollapseSelector() {
 export function fieldGroupsMapStateToProps() {
 	const visibleSelector = makeVisbleSelector();
 	const collapseSelector = makeCollapseSelector();
+	return (state, props) => {
+		return {
+			...visibleSelector(state, props),
+			...collapseSelector(state, props),
+		};
 
-	return () => {
-		return { ...visibleSelector, ...collapseSelector };
 	};
 }

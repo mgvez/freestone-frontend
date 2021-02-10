@@ -14,13 +14,12 @@ export function showFieldGroup(groupId, tableId) {
 	};
 }
 
-export function toggleFieldGroup(groupId, tableId) {
+export function toggleFieldGroup(groupId) {
 	return (dispatch) => {
 		return dispatch({
 			type: TOGGLE_FIELD_GROUP,
 			data: {
 				groupId,
-				tableId,
 			},
 		});
 	};

@@ -46,7 +46,6 @@ export default class SingleRecord extends Component {
 		fetchRecord: PropTypes.func,
 		setFieldVal: PropTypes.func,
 		showFieldGroup: PropTypes.func,
-		toggleFieldGroup: PropTypes.func,
 		fetchChangelog: PropTypes.func,
 	};
 

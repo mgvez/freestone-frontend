@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import SingleTranslation from '../../../containers/nativeModules/textTranslations/SingleTranslation';
@@ -84,281 +84,265 @@ const SearchForm = styled.div`
 	}
 `;
 
-export default class TextTranslations extends Component {
-	static propTypes = {
-		// translationKeys: PropTypes.array,
-		languages: PropTypes.array,
-		schema: PropTypes.array,
-		isEdited: PropTypes.bool,
-		isLoaded: PropTypes.bool,
-		searchResult: PropTypes.array,
-		searchIndex: PropTypes.number,
-		activeGroup: PropTypes.number,
-		currentSearchActiveKey: PropTypes.object,
+export default function TextTranslations(props) {
+	
+	const [isSaving, setIsSaving] = useState(false);
+	const [isClosing, setIsClosing] = useState(false);
+	const [stayOnSaved, setStayOnSaved] = useState(false);
+	const searchInput = useRef();
 
-		fetchTranslations: PropTypes.func,
-		closeTranslations: PropTypes.func,
-		searchTranslations: PropTypes.func,
-		navigateSearchTranslation: PropTypes.func,
-		navigateTranslationsGroups: PropTypes.func,
-		clearTranslations: PropTypes.func,
-		goTo: PropTypes.func,
-	};
 
-	constructor(props) {
-		super(props);
-		this.state = {
-			saving: false,
-			closing: false,
-			stayOnSaved: false,
+	useEffect(() => {
+		return () => {
+	// 		if (saved.current) return;
+	// 		const isLeaving = confirm('Changes have not been saved. Are you sure you want to leave and lose all your changes?');
+	// 		if (isLeaving) {
+	// 			props.closeDependencies();
+	// 			return;
+	// 		}
+	// 		props.goTo((props.route && props.route.pathname) || '/');
 		};
+	}, []);
 
-		this.searchInput = React.createRef();
-
-	}
-
-	componentDidMount() {
-		this.requireData(this.props);
-		this.searchInput.current.addEventListener('keydown', this.onUpdateSearchField);
-		window.addEventListener('keydown', this.keyboardListener);
-		this.onUpdateSearchField();
-
-	}
-
-	componentDidUpdate() {
-
-		this.requireData(this.props);
-		
-	}
-
-	componentWillUnmount() {
-		if (this.searchInput.current) this.searchInput.current.removeEventListener('keydown', this.onUpdateSearchField);
-		window.removeEventListener('keydown', this.keyboardListener);
-	}
-
-	requireData(props) {
-		// console.log(props);
-		if (!this.state.saving && !this.state.closing) {
+	useEffect(() => {
+		if (!isSaving && !isClosing) {
 			if (!props.isLoaded) {
 				props.languages.forEach(lang => {
-					this.props.fetchTranslations(lang);
+					props.fetchTranslations(lang);
 				});
 			}
 		}
-	}
+	}, [props.isLoaded, props.fetchTranslations, props.languages]);
 
-	/*
-	Highjack standard keyboard shortcuts for search (cmd-f, cmd-g, cmd-shift-g)
-	*/
-	keyboardListener = (e) => {
-		if (e.metaKey || e.ctrlKey) {
-			// console.log(e);
-			switch (e.key) {
-			case 'f': {
-				e.preventDefault();
-				this.searchInput.current.focus();
-				break;
+	const debouncedUpdateSearchField = useCallback(
+		debounce(val => {
+			props.searchTranslations(val);
+		}, 500),
+		[]
+	);
+
+	const onUpdateSearchField = (e) => {
+		debouncedUpdateSearchField(e.target.value);
+	};
+
+	useEffect(() => {
+		/*
+		Highjack standard keyboard shortcuts for search (cmd-f, cmd-g, cmd-shift-g)
+		*/
+		const keyboardListener = (e) => {
+			if (e.metaKey || e.ctrlKey) {
+				// console.log(e);
+				switch (e.key) {
+				case 'f': {
+					e.preventDefault();
+					searchInput.current.focus();
+					break;
+				}
+				case 'g':
+				case 'G': {
+					e.preventDefault();
+					const direction = e.shiftKey ? -1 : 1;
+					props.navigateSearchTranslation(direction);
+					break;
+				}
+				default:
+				}
 			}
-			case 'g':
-			case 'G': {
-				e.preventDefault();
-				const direction = e.shiftKey ? -1 : 1;
-				this.props.navigateSearchTranslation(direction);
-				break;
-			}
-			default:
-			}
-		}
-	}
+		};
+		window.addEventListener('keydown', keyboardListener);
+		return () => {
+			window.removeEventListener('keydown', keyboardListener);
+		};
+
+	}, [props.navigateSearchTranslation]);
+
 
 	//ferme le form, va au home
-	goHome = () => {
-		this.props.goTo('/');
-	}
+	const goHome = useCallback(() => {
+		props.goTo('/');
+	}, [props.goTo]);
 
-	finishSave = () => {
-		if (!this.state.stayOnSaved) {
-			this.goHome();
+	const finishSave = () => {
+		if (!stayOnSaved) {
+			goHome();
 		} else {
-			this.setState({
-				saving: false,
-			});
+			setIsSaving(false);
 		}
+	};
+
+	const close = () => {
+		setIsClosing(true);
+		const onClosed = props.closeTranslations();
+		onClosed.then(goHome);
+	};
+
+	const save = (e) => {
+		setIsSaving(true);
+		setStayOnSaved(e.altKey);
+	};
+
+	const setActiveGroup = (activeGroup) => {
+		props.navigateTranslationsGroups(activeGroup);
+	};
+
+
+	let groups;
+
+	if (isSaving) {
+		return <SaveTranslations key="save-trans" callback={finishSave} />;
 	}
 
-	close = () => {
-		
-		this.setState({ closing: true });
-		const onClosed = this.props.closeTranslations();
-		onClosed.then(this.goHome);
-	}
+	if (props.schema) {
 
-	save = (e) => {
+		const groupsTogglers = (
+			<Container>
+				<GridItem columns="12">
+					<TabsList>
+						{props.schema.map((group, gIdx) => {
+							const isActive = props.activeGroup === gIdx || (!props.activeGroup && gIdx === 0);
+							const activeClass = isActive && 'active';
+							const onClick = () => setActiveGroup(gIdx);
 
-		// if (e.altKey) {
-		// 	this.props.saveTranslations(this.props.translations);
-		// 	return;
-		// }
-		this.setState({
-			saving: true,
-			stayOnSaved: e.altKey,
-		});
-		// const onSaved = this.props.saveTranslations(this.props.translations);
-		// onSaved.then(this.goHome);
-	}
-
-	setActiveGroup(activeGroup) {
-		this.props.navigateTranslationsGroups(activeGroup);
-	}
-	
-	search() {
-		const searchVal = this.searchInput && this.searchInput.current && this.searchInput.current.value;
-		this.props.searchTranslations(searchVal);
-	}
-
-	onUpdateSearchField = debounce(() => {
-		this.search();
-	}, 500);
-
-	render() {
-		let groups;
-
-		if (this.state.saving) {
-			return <SaveTranslations key="save-trans" callback={this.finishSave} />;
-		}
-
-		if (this.props.schema) {
-
-			const groupsTogglers = (
-				<Container>
-					<GridItem columns="12">
-						<TabsList>
-							{this.props.schema.map((group, gIdx) => {
-								const isActive = this.props.activeGroup === gIdx || (!this.props.activeGroup && gIdx === 0);
-								const activeClass = isActive && 'active';
-								const onClick = () => this.setActiveGroup(gIdx);
-
-								return (<button className={`tab ${activeClass}`} key={`grouptoggle${gIdx}`} onClick={onClick}>{group.groupname || '........'}</button>);
-								
-							})}
-						</TabsList>
-					</GridItem>
-				</Container>
-			);
-
-
-			groups = this.props.schema.map((group, gIdx) => {
-				// console.log(group);
-
-				const isActive = this.props.activeGroup === gIdx || (!this.props.activeGroup && gIdx === 0);
-				if (!isActive) return null;
-
-				const keys = group.items.map((translationProp, tIdx) => {
-
-					let labelNode = <strong>{translationProp.key}</strong>;
-					if (translationProp.label) {
-						const help = translationProp.description ? <div className="help">{translationProp.description}</div> : '';
-						labelNode = (<div>
-							<strong>{translationProp.label}</strong> <span className="key">{translationProp.key}</span>
-							{help}
-						</div>);
-					}
-					
-					return (
-						<Container key={tIdx}>
-							<GridItem columns="10" offset="1" className="translation">
-								<GridContainer>
-									<GridItem columns="12" align="center" className="translation-label">
-										{labelNode}
-									</GridItem>
-
-									<GridItem columns="12">
-										<GridContainer>
-											{this.props.languages.map((language, idx) => {
-												const isEmphasis = this.props.currentSearchActiveKey && this.props.currentSearchActiveKey.lang === language && this.props.currentSearchActiveKey.key === translationProp.key;
-												return (<GridItem columns="6" key={idx}>
-													<Field label={language} isEmphasis={isEmphasis}>
-														<SingleTranslation translationKey={translationProp.key} language={language} />
-													</Field>
-												</GridItem>);
-											})}
-										</GridContainer>
-									</GridItem>
-									
-								</GridContainer>
-							</GridItem>
-						</Container>
-					);
-				});
-
-				return (<Container key={`group${gIdx}`}>
-					<GridItem columns="12">
-						<Heading2>{group.groupname}</Heading2>
-						{keys}
-					</GridItem>
-				</Container>);
-
-			});
-
-			groups = (
-				<div>
-					{groupsTogglers}
-					{groups}
-				</div>
-			);
-
-		}
-
-		let actionBtns;
-		//le record a été édité depuis son load à la db. On met les actions pour le save
-		if (this.props.isEdited) {
-			
-			actionBtns = [
-				<Button key="save" onClick={this.save} round="true" title="Hold ALT key to leave form open after save">Save</Button>,
-				<Button key="cancel" onClick={this.close} round="true" danger="true"><Icon icon="times" /> Discard changes</Button>,
-			];
-		//record pas été édité: juste btn close
-		} else {
-			actionBtns = [
-				<Button key="close" onClick={this.close} round="true" danger="true">Close</Button>,
-			];
-		}
-
-		let navigateSearchRes = null;
-		if (this.props.searchResult) {
-			const oneIndexed = this.props.searchIndex + 1;
-			const displayCurrentResult = oneIndexed ? `${oneIndexed} / ` : null; 
-			navigateSearchRes = (
-				<div className="search-navig">
-					<div title="Click or use shortcut cmd+shift+g" onClick={() => this.props.navigateSearchTranslation(-1)}><Icon icon="angle-double-left cta" /></div>
-					<div className="n-res">{displayCurrentResult}{this.props.searchResult.length} found</div>
-					<div title="Click or use shortcut cmd+g" onClick={() => this.props.navigateSearchTranslation(1)} ><Icon icon="angle-double-right cta" /></div>
-				</div>
-			);
-		}
-		const searchZone = (
-			<SearchForm>
-				{navigateSearchRes}
-				<div className="input-wrapper">
-					<Input search rounded type="search" placeholder="search" ref={this.searchInput} />
-					<Button icon="true" inputCta="true" title="cmd+f" ><Icon icon="search" side="center" /></Button>
-				</div>
-			</SearchForm>
+							return (<button className={`tab ${activeClass}`} key={`grouptoggle${gIdx}`} onClick={onClick}>{group.groupname || '........'}</button>);
+							
+						})}
+					</TabsList>
+				</GridItem>
+			</Container>
 		);
 
-		return (
-			<section>
-				<FixedHeader
-					key="translations"
-					buttons={() => actionBtns}
-					infos={() => <Heading1>Text translations</Heading1>}
-				/>
+
+		groups = props.schema.map((group, gIdx) => {
+			// console.log(group);
+
+			const isActive = props.activeGroup === gIdx || (!props.activeGroup && gIdx === 0);
+			if (!isActive) return null;
+
+			const keys = group.items.map((translationProp, tIdx) => {
+
+				let labelNode = <strong>{translationProp.key}</strong>;
+				if (translationProp.label) {
+					const help = translationProp.description ? <div className="help">{translationProp.description}</div> : '';
+					labelNode = (<div>
+						<strong>{translationProp.label}</strong> <span className="key">{translationProp.key}</span>
+						{help}
+					</div>);
+				}
 				
-				<MainZone>
-					{searchZone}
-					{groups}
-				</MainZone>
-			</section>
+				return (
+					<Container key={tIdx}>
+						<GridItem columns="10" offset="1" className="translation">
+							<GridContainer>
+								<GridItem columns="12" align="center" className="translation-label">
+									{labelNode}
+								</GridItem>
+
+								<GridItem columns="12">
+									<GridContainer>
+										{props.languages.map((language, idx) => {
+											const isEmphasis = props.currentSearchActiveKey && props.currentSearchActiveKey.lang === language && props.currentSearchActiveKey.key === translationProp.key;
+											return (<GridItem columns="6" key={idx}>
+												<Field label={language} isEmphasis={isEmphasis}>
+													<SingleTranslation translationKey={translationProp.key} language={language} />
+												</Field>
+											</GridItem>);
+										})}
+									</GridContainer>
+								</GridItem>
+								
+							</GridContainer>
+						</GridItem>
+					</Container>
+				);
+			});
+
+			return (<Container key={`group${gIdx}`}>
+				<GridItem columns="12">
+					<Heading2>{group.groupname}</Heading2>
+					{keys}
+				</GridItem>
+			</Container>);
+
+		});
+
+		groups = (
+			<div>
+				{groupsTogglers}
+				{groups}
+			</div>
+		);
+
+	}
+
+	let actionBtns;
+	//le record a été édité depuis son load à la db. On met les actions pour le save
+	if (props.isEdited) {
+		
+		actionBtns = [
+			<Button key="save" onClick={save} round="true" title="Hold ALT key to leave form open after save">Save</Button>,
+			<Button key="cancel" onClick={close} round="true" danger="true"><Icon icon="times" /> Discard changes</Button>,
+		];
+	//record pas été édité: juste btn close
+	} else {
+		actionBtns = [
+			<Button key="close" onClick={close} round="true" danger="true">Close</Button>,
+		];
+	}
+
+	let navigateSearchRes = null;
+	if (props.searchResult) {
+		const oneIndexed = props.searchIndex + 1;
+		const displayCurrentResult = oneIndexed ? `${oneIndexed} / ` : null; 
+		navigateSearchRes = (
+			<div className="search-navig">
+				<div title="Click or use shortcut cmd+shift+g" onClick={() => props.navigateSearchTranslation(-1)}><Icon icon="angle-double-left cta" /></div>
+				<div className="n-res">{displayCurrentResult}{props.searchResult.length} found</div>
+				<div title="Click or use shortcut cmd+g" onClick={() => props.navigateSearchTranslation(1)} ><Icon icon="angle-double-right cta" /></div>
+			</div>
 		);
 	}
+	const searchZone = (
+		<SearchForm>
+			{navigateSearchRes}
+			<div className="input-wrapper">
+				<Input search rounded type="search" placeholder="search" onChange={onUpdateSearchField} ref={searchInput} />
+				<Button icon="true" inputCta="true" title="cmd+f" ><Icon icon="search" side="center" /></Button>
+			</div>
+		</SearchForm>
+	);
+
+	return (
+		<section>
+			<FixedHeader
+				key="translations"
+				buttons={() => actionBtns}
+				infos={() => <Heading1>Text translations</Heading1>}
+			/>
+			
+			<MainZone>
+				{searchZone}
+				{groups}
+			</MainZone>
+		</section>
+	);
 }
+
+TextTranslations.propTypes = {
+	// translationKeys: PropTypes.array,
+	languages: PropTypes.array,
+	schema: PropTypes.array,
+	isEdited: PropTypes.bool,
+	isLoaded: PropTypes.bool,
+	searchResult: PropTypes.array,
+	searchIndex: PropTypes.number,
+	activeGroup: PropTypes.number,
+	currentSearchActiveKey: PropTypes.object,
+
+	fetchTranslations: PropTypes.func,
+	closeTranslations: PropTypes.func,
+	searchTranslations: PropTypes.func,
+	navigateSearchTranslation: PropTypes.func,
+	navigateTranslationsGroups: PropTypes.func,
+	clearTranslations: PropTypes.func,
+	goTo: PropTypes.func,
+};

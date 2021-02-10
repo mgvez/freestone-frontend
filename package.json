@@ -16,7 +16,7 @@
     "dist",
     "src"
   ],
-  "author": "",
+  "author": "",          
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.0.2",

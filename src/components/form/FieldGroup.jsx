@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Collapsable from '../animation/Collapsable';
@@ -7,51 +7,44 @@ import { StyledFieldGroup } from '../../styles/Input';
 import { GridContainer, GridItem } from '../../styles/Grid';
 import { Heading2 } from '../../styles/Texts';
 
-export default class FieldGroup extends Component {
-	static propTypes = {
+export default function FieldGroup(props) {
 
-		id: PropTypes.string,
-		label: PropTypes.string,
-		hideHeading: PropTypes.bool,
-		children: PropTypes.node,
-		isCollapsed: PropTypes.bool,
-		isRoot: PropTypes.bool,
+	const clickCollapse = () => {
+		props.toggleFieldGroup(props.id);
+	};
 
-		toggleFieldGroup: PropTypes.func,
+	if (props.label && !props.hideHeading) {
+		return (<StyledFieldGroup isCollapsable isRoot={props.isRoot}>
+			<GridContainer>
+				<GridItem columns="6">
+					<Heading2>{props.label}</Heading2>
+				</GridItem>
+				<GridItem columns="6" justify="end">
+					<ToggleCollapse isCollapsed={props.isCollapsed} toggle={clickCollapse} />
+				</GridItem>
+			</GridContainer>
+			<Collapsable isCollapsed={props.isCollapsed}>
+				<GridContainer>{props.children}</GridContainer>
+			</Collapsable>
+		</StyledFieldGroup>);
 	}
+	
+	//unnamed group... list of fields flowing in the main form's grid
+	return (
+		<StyledFieldGroup isRoot={props.isRoot} >
+			<GridContainer>{props.children}</GridContainer>
+		</StyledFieldGroup>
+	);
 
-	clickCollapse = () => {
-		this.props.toggleFieldGroup(this.props.id);
-	}
-
-	render() {
-		
-		const classNames = [
-		];
-		// console.log(this.props.isRoot, classNames);
-		//named group: collapsable
-		if (this.props.label && !this.props.hideHeading) {
-			return (<StyledFieldGroup isCollapsable isRoot={this.props.isRoot} className={classNames.join(' ')}>
-				<GridContainer>
-					<GridItem columns="6">
-						<Heading2>{this.props.label}</Heading2>
-					</GridItem>
-					<GridItem columns="6" justify="end">
-						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.clickCollapse} />
-					</GridItem>
-				</GridContainer>
-				<Collapsable isCollapsed={this.props.isCollapsed}>
-					<GridContainer>{this.props.children}</GridContainer>
-				</Collapsable>
-			</StyledFieldGroup>);
-
-		}
-		
-		//unnamed group... list of fields flowing in the main form's grid
-		return (
-			<StyledFieldGroup isRoot={this.props.isRoot} >
-				<GridContainer>{this.props.children}</GridContainer>
-			</StyledFieldGroup>
-		);
-	}
 }
+
+FieldGroup.propTypes = {
+	id: PropTypes.string,
+	label: PropTypes.string,
+	hideHeading: PropTypes.bool,
+	children: PropTypes.node,
+	isCollapsed: PropTypes.bool,
+	isRoot: PropTypes.bool,
+
+	toggleFieldGroup: PropTypes.func,
+};
