@@ -17,21 +17,23 @@ const Pagination = styled.ul`
 
 const Page = styled.li`
 	display: inline-block;
-	padding: 7px 0;
-	background: #fff;
 	border: 1px solid ${colors.accentPrimary};
 	border-radius: 5px;
-	width: 35px;
 	text-align: center;
 
 	a {
+		display: block;
+		width: 35px;
+		padding: 7px 0;
+		background: #fff;
 		color: ${colors.accentPrimary};
 		text-decoration: none;
+
 	}
 
 	&.active {
-		background: ${colors.accentPrimary};
 		a {
+			background: ${colors.accentPrimary};
 			color: #fff;
 		}
 	}
