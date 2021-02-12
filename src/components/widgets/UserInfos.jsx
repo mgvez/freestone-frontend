@@ -18,6 +18,7 @@ const Container = styled.div`
 	}
 
 	p {
+		margin-top: 10px;
 		margin-bottom: 0;
 
 		a {
