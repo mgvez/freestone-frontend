@@ -13,25 +13,26 @@ const Pagination = styled.ul`
 	padding-left: 0;
 	text-align: right;
 	margin: 12px 0;
-	padding-right: 1px; // compensating for border-width
 `;
 
 const Page = styled.li`
 	display: inline-block;
-	padding: 7px 0;
-	background: #fff;
 	border: 1px solid ${colors.accentPrimary};
 	width: 35px;
 	text-align: center;
 
 	a {
+		display: block;
+		width: 35px;
+		padding: 7px 0;
+		background: #fff;
 		color: ${colors.accentPrimary};
 		text-decoration: none;
 	}
 
 	&.active {
-		background: ${colors.accentPrimary};
 		a {
+			background: ${colors.accentPrimary};
 			color: #fff;
 		}
 	}
