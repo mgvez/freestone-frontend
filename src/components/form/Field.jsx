@@ -51,7 +51,11 @@ export default class Field extends Component {
 		// console.log(`render input ${this.props.field.name} ${this.props.field.language}`);
 		let input;
 		if (this.props.field.isUneditable) {
-			input = <NoEditInput key={key} {...this.props} />;
+			if (this.props.field.type === 'bool') {
+				input = <BoolInput key={key} fieldId={this.props.field.id} {...this.props} changeVal={this.changeVal} readonly />;
+			} else {
+				input = <NoEditInput key={key} {...this.props} />;
+			}
 		} else {
 			switch (this.props.field.type) {
 			case 'int':

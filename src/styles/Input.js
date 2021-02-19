@@ -224,6 +224,7 @@ function getToggleCss(props) {
 			margin: 10px 0;
 			background: ${colors.negative};
 			border: 2px solid transparent;
+			border-radius: 17px;
 
 			transition: background 0.2s;
 
@@ -233,9 +234,10 @@ function getToggleCss(props) {
 					left: 2px;
 
 				height: 26px;
-				width: 15px;
+				width: 26px;
 				content: ' ';
 				background: #fff;
+				border-radius: 50%;
 
 				transition: left 0.2s;
 			}
@@ -251,10 +253,16 @@ function getToggleCss(props) {
 				line-height: 30px;
 			}
 
+			${props.readonly && `
+				opacity: 0.6;
+				cursor: default;
+			`}
+
 			${props.small && `
 				height: 22px;
 				padding: 0 23px;
 				font-size: 0.9em;
+				border-radius: 11px;
 
 				&:after {
 					top: 1px;
