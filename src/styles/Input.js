@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import colors from './Colors';
 import cssVars from './Variables';
 import { textMedium, textSmall } from './Texts';
+import { hexToRgb } from './Utils';
 
 
 function getFieldCss(displaySize) {
@@ -37,7 +38,7 @@ export function getInputCss(props) {
 		width: 100%;
 		height: 2.2em;
 		line-height:2.2em;
-		border: 1px solid rgba(243, 243, 243, 1);
+		border: 1px solid rgba(${hexToRgb(colors.textPrimary)}, 0.25);
 		color: ${colors.textPrimary};
 
 		padding: 0 10px;
