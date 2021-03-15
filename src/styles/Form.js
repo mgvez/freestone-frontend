@@ -153,7 +153,7 @@ export const TabsList = styled.nav`
 
 	.tab {
 		display: inline-block;
-		background: rgba(255, 255, 255, 0.2);
+		background: rgba(255, 255, 255, 0.6);
 		vertical-align: middle;
 		position: relative;
 		height: 35px;
@@ -162,9 +162,11 @@ export const TabsList = styled.nav`
 		opacity: 0.6;
 		font-weight: 600;
 		color: ${colors.textPrimary};
-		border-style: solid;
-		border-width: 1px 1px 0 1px;
-		border-color: transparent;
+		border: 1px solid ${colors.borderForm};
+		border-bottom: none;
+
+		transform: translate(0, 1px);
+
 		cursor: pointer;
 		white-space: nowrap;
 
@@ -172,20 +174,19 @@ export const TabsList = styled.nav`
 		margin-right: 5px;
 		margin-top: 4px;
 
-
 		&:hover {
 			color: ${colors.linksPrimary};
 			background-color: ${colors.white};
 			text-decoration: none;
-			opacity: 1;
+			opacity: 0.8;
 		}
+		
 		&.active {
 			color: ${colors.linksPrimary};
 			border-color: ${colors.borderForm};
 			background-color: ${colors.backgroundForm};
 			text-decoration: none;
 			opacity: 1;
-			transform: translate(0, 1px);
 		}
 	}
 

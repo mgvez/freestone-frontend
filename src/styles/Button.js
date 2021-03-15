@@ -52,7 +52,7 @@ function getCss(props) {
 		cursor: pointer;
 		display: inline-block;
 		vertical-align: middle;
-		border-radius: 0;
+		border-radius: 3px;
 
 		color: ${colors.textSecondary};
 

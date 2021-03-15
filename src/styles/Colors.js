@@ -69,7 +69,7 @@ const colors = {
 	backgroundDark: blue26,
 	backgroundDarkHover: blue23,
 	
-	backgroundForm: gray98,
+	backgroundForm: white,
 	borderForm: gray86,
 
 	borderDark: gray54,
