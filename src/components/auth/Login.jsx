@@ -62,9 +62,10 @@ export default class Login extends Component {
 		isResetKeyValid: PropTypes.bool,
 		isInstalled: PropTypes.bool,
 		gapiready: PropTypes.bool,
+		ssoAdminURL: PropTypes.string,
+		siteName: PropTypes.string,
 
 		loginUser: PropTypes.func,
-		loginAsSSO: PropTypes.func,
 		fetchVariable: PropTypes.func,
 		setVariable: PropTypes.func,
 		requestReset: PropTypes.func,
@@ -225,9 +226,13 @@ export default class Login extends Component {
 					<Button round="true" info="true" faded="true" onClick={this.toggleReset}>Forgot password?</Button>
 				</div>
 
-				<div className="btns">
-					<FlatTopButton href={`http://sso.local.enclos.ca:2999/?site_name=dummyproject&redirect_url=${encodeURIComponent(`${window.location.protocol}//${window.location.hostname}:2999`)}`}>Log in with SSO</FlatTopButton>
-				</div>
+				{
+					this.props.ssoAdminURL && this.props.siteName ? (
+						<div className="btns">
+							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${window.location.protocol}//${window.location.hostname}:2999`)}`}>Log in with SSO</FlatTopButton>
+						</div>
+					) : null
+				}
 			</form>);
 		}
 
