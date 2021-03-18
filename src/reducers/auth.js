@@ -1,5 +1,5 @@
 
-import { UNAUTHORIZED, LOGIN_API, RESET_REQUEST_API, INSTALL_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API, CLEAR_AUTH_MESSAGES, RESET_API } from '../actions/auth';
+import { UNAUTHORIZED, LOGIN_API, RESET_REQUEST_API, INSTALL_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API, CLEAR_AUTH_MESSAGES, RESET_API, SET_TOKEN } from '../actions/auth';
 import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 
@@ -55,6 +55,12 @@ export default function(state = initialState, action) {
 			email: null,
 			needsRelogin: false,
 			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
+		};
+	case SET_TOKEN:
+		return {
+			...state,
+			jwt: action.payload.jwt,
+			needsRelogin: true,
 		};
 	case INSTALL_API.REQUEST:
 		return {

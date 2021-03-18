@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import DocumentMeta from 'react-document-meta';
 import GlobalStyles from '../../styles/GlobalStyles';
 import GoogleLoginBtn from './GoogleLoginBtn';
-import { Button } from '../../styles/Button';
+import { Button, FlatTopButton } from '../../styles/Button';
 import { Input, CheckboxContainer } from '../../styles/Input';
 import colors from '../../styles/Colors';
 import { GridContainer, GridItem } from '../../styles/Grid';
@@ -64,6 +64,7 @@ export default class Login extends Component {
 		gapiready: PropTypes.bool,
 
 		loginUser: PropTypes.func,
+		loginAsSSO: PropTypes.func,
 		fetchVariable: PropTypes.func,
 		setVariable: PropTypes.func,
 		requestReset: PropTypes.func,
@@ -129,7 +130,12 @@ export default class Login extends Component {
 		const username = this._username.value;
 		const password = this._password.value;
 		const remember = this._remember.checked;
-		this.props.loginUser(username, password, remember, this.props.isInstalled === false);
+		const shouldInstall = this.props.isInstalled === false;
+		
+		const queryString = (new URL(window.location.href)).searchParams;
+		const siteName = queryString.get('site_name');
+
+		this.props.loginUser(username, password, remember, shouldInstall, siteName);
 	};
 
 	render() {
@@ -217,6 +223,10 @@ export default class Login extends Component {
 					<Button type="submit" round="true" mediumwidth="true" disabled={this.props.isRequestPending}>{msgs.action}</Button>
 					{googleLoginBtn}
 					<Button round="true" info="true" faded="true" onClick={this.toggleReset}>Forgot password?</Button>
+				</div>
+
+				<div className="btns">
+					<FlatTopButton href={`http://sso.local.enclos.ca:2999/?site_name=dummyproject&redirect_url=${encodeURIComponent(`${window.location.protocol}//${window.location.hostname}:2999`)}`}>Log in with SSO</FlatTopButton>
 				</div>
 			</form>);
 		}

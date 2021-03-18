@@ -22,16 +22,18 @@ class NoMatch extends Component {
 	}
 }
 
-export default (
-	<Freestone>
-		<Switch>
-			<Route exact path="/" component={Home} />
-			<Route path="/list/:tableName" exact component={List} />
-			<Route path="/edit/:tableName/:recordId" component={RootForm} />
-			<Route path="/module/:url" component={Module} />
-			<Route path="/page/:id" component={Page} />
-			<Route path="/n-module/:name" component={NativeModule} />
-			<Route component={NoMatch} />
-		</Switch>
-	</Freestone>
-);
+export default function Routes({ history }) {
+	return (
+		<Freestone history={history}>
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route path="/list/:tableName" exact component={List} />
+				<Route path="/edit/:tableName/:recordId" component={RootForm} />
+				<Route path="/module/:url" component={Module} />
+				<Route path="/page/:id" component={Page} />
+				<Route path="/n-module/:name" component={NativeModule} />
+				<Route component={NoMatch} />
+			</Switch>
+		</Freestone>
+	);
+};

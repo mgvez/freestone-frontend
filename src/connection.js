@@ -1,7 +1,7 @@
 
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-import { createHashHistory } from 'history';
+import { createHashHistory, createBrowserHistory } from 'history';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import reduxLocalstorage from 'redux-simple-localstorage';
@@ -12,7 +12,7 @@ import authMiddleware from './middleware/auth';
 import hooksMiddleware from './middleware/hooks';
 import rootReducer from './reducers';
 
-export const history = createHashHistory();
+export const history = createBrowserHistory();
 
 const logger = createLogger({ collapsed: true });
 const { read, write } = reduxLocalstorage('freestone');

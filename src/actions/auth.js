@@ -7,6 +7,7 @@ export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const CLEAR_AUTH_MESSAGES = 'CLEAR_AUTH_MESSAGES';
+export const SET_TOKEN = 'SET_TOKEN';
 
 export const RESET_REQUEST_API = createRequestTypes('RESET_REQUEST_API');
 export const LOGOUT_API = createRequestTypes('LOGOUT_API');
@@ -60,6 +61,15 @@ export function receiveToken(jwt) {
 	}
 }
 
+export function setToken(jwt) {
+	return (dispatch) => {
+		dispatch({
+			type: SET_TOKEN,
+			payload: { jwt },
+		});
+	};
+}
+
 // function loginUserRequest() {
 // 	return {
 // 		type: 'LOGIN_USER_REQUEST',
@@ -97,7 +107,7 @@ export function unauthorized(error = {}) {
 }
 
 
-export function loginUser(username = null, password = null, remember = null, processInstall = false) {
+export function loginUser(username = null, password = null, remember = null, processInstall = false, siteName = null) {
 	return (dispatch) => {
 		// console.log(redirect);
 		const data = (username || password) ? {
@@ -106,6 +116,11 @@ export function loginUser(username = null, password = null, remember = null, pro
 			freestoneremember: remember ? '1' : '0',
 			freestoneinstall: processInstall ? '1' : '0',
 		} : {};
+		
+		if (siteName) {
+			data.site_name = siteName;
+		}
+
 		const actionType = processInstall ? INSTALL_API : LOGIN_API;
 		return dispatch({
 			[FREESTONE_API]: {
