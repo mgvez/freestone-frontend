@@ -68,7 +68,7 @@ export default store => next => action => { // eslint-disable-line
 		res => {
 			// console.log(res);
 			if (res.jwt) {
-				next(receiveToken(res.jwt));
+				next(receiveToken(res.jwt, res.ticket));
 			}
 
 			if (typeof res === 'string') {

@@ -132,10 +132,9 @@ export default class Login extends Component {
 		const password = this._password.value;
 		const remember = this._remember.checked;
 		const shouldInstall = this.props.isInstalled === false;
-		
+
 		const queryString = (new URL(window.location.href)).searchParams;
 		const siteName = queryString.get('site_name');
-
 		this.props.loginUser(username, password, remember, shouldInstall, siteName);
 	};
 
@@ -227,11 +226,11 @@ export default class Login extends Component {
 				</div>
 
 				{
-					this.props.ssoAdminURL && this.props.siteName ? (
+					this.props.ssoAdminURL && (
 						<div className="btns">
-							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${window.location.protocol}//${window.location.hostname}:2999`)}`}>Log in with SSO</FlatTopButton>
+							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${window.location.origin}/admin`)}`}>Log in with SSO</FlatTopButton>
 						</div>
-					) : null
+					)
 				}
 			</form>);
 		}

@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 
 import Freestone from '../components/Freestone';
 
-import { loginUser, setToken } from '../actions/auth';
+import { loginUser, setTicket } from '../actions/auth';
 import { fetchVariable, fetchEnv } from '../actions/env';
 import { appRootSelector } from '../selectors/env';
 
 
-const actionCreators = { loginUser, fetchVariable, fetchEnv, setToken };
+const actionCreators = { loginUser, fetchVariable, fetchEnv, setTicket };
 
 export default connect(
 	appRootSelector,

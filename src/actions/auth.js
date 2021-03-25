@@ -7,7 +7,7 @@ export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const CLEAR_AUTH_MESSAGES = 'CLEAR_AUTH_MESSAGES';
-export const SET_TOKEN = 'SET_TOKEN';
+export const SET_TICKET = 'SET_TICKET';
 
 export const RESET_REQUEST_API = createRequestTypes('RESET_REQUEST_API');
 export const LOGOUT_API = createRequestTypes('LOGOUT_API');
@@ -20,12 +20,13 @@ export const RESET_API = createRequestTypes('RESET_API', true);
 //login api actions don't return their values directly through a api succes, but are rather caught by the middleware. Login can be included in any API response, not only login requests.
 
 //middleware will call receiveToken hwne a jwt is part of a response from the API. These can be included in the response of any API call, and are not limited to login requests, so the login requests don't need to set a success or failure action.
-function loginUserSuccess(jwt, token) {
+function loginUserSuccess(jwt, token, ticket) {
 	return {
 		type: LOGIN_USER_SUCCESS,
 		payload: {
 			jwt,
 			token,
+			ticket,
 		},
 	};
 }
@@ -48,10 +49,10 @@ export function loginUserFailure(error) {
 	};
 }
 
-export function receiveToken(jwt) {
+export function receiveToken(jwt, ticket) {
 	try {
 		const token = jwtDecode(jwt);
-		return loginUserSuccess(jwt, token);
+		return loginUserSuccess(jwt, token, ticket);
 	} catch (e) {
 		// console.log(jwt);
 		return loginUserFailure({
@@ -61,11 +62,11 @@ export function receiveToken(jwt) {
 	}
 }
 
-export function setToken(jwt) {
+export function setTicket(ticket) {
 	return (dispatch) => {
 		dispatch({
-			type: SET_TOKEN,
-			payload: { jwt },
+			type: SET_TICKET,
+			payload: { ticket },
 		});
 	};
 }
@@ -106,7 +107,6 @@ export function unauthorized(error = {}) {
 	};
 }
 
-
 export function loginUser(username = null, password = null, remember = null, processInstall = false, siteName = null) {
 	return (dispatch) => {
 		// console.log(redirect);
@@ -116,7 +116,14 @@ export function loginUser(username = null, password = null, remember = null, pro
 			freestoneremember: remember ? '1' : '0',
 			freestoneinstall: processInstall ? '1' : '0',
 		} : {};
-		
+
+		const queryString = (new URL(window.location.href)).searchParams;
+		const ticket = queryString.get('ticket');
+		console.log('action ticket', ticket);
+		if (ticket) {
+			data.ticket = ticket;
+		}
+
 		if (siteName) {
 			data.site_name = siteName;
 		}

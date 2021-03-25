@@ -10,14 +10,14 @@ export const clientComponentInfosSelector = createSelector(
 	}
 );
 
-const stateJWTSelector = state => state.freestone.auth.jwt;
-const urlJWTSelector = createSelector(
+const stateTicketSelector = state => state.freestone.auth.ticket;
+const urlTicketSelector = createSelector(
 	[],
 	() => {
 		const currentURL = new URL(window.location.href);
-		const jwtInGET = currentURL.searchParams.get('jwt');
-		if (jwtInGET && jwtInGET.length > 0) {
-			return jwtInGET;
+		const ticketInGET = currentURL.searchParams.get('ticket');
+		if (ticketInGET && ticketInGET.length > 0) {
+			return ticketInGET;
 		}
 
 		return null;
@@ -40,19 +40,21 @@ const redirectOnLoginURLSelector = createSelector(
 
 const isAuthenticatedSelector = state => state.freestone.auth.isAuthenticated;
 const needsReloginSelector = state => state.freestone.auth.needsRelogin;
+const jwtSelector = state => state.freestone.auth.jwt;
 const domainSelector = state => state.freestone.env.freestone.domain;
 const clientScriptsSelector = state => state.freestone.env.freestone.clientScripts;
 const isNavVisibleSelector = state => state.freestone.siteHeader.nav_visibility;
 const versionSelector = state => state.freestone.env.freestone.version;
 
 export const appRootSelector = createSelector(
-	[isAuthenticatedSelector, needsReloginSelector, redirectOnLoginURLSelector, stateJWTSelector, urlJWTSelector, domainSelector, clientScriptsSelector, isNavVisibleSelector, versionSelector],
-	(isAuthenticated, needsRelogin, redirectOnLoginURL, jwt, urlJWT, domain, clientScripts, isNavVisible, version) => {
+	[isAuthenticatedSelector, needsReloginSelector, jwtSelector, redirectOnLoginURLSelector, stateTicketSelector, urlTicketSelector, domainSelector, clientScriptsSelector, isNavVisibleSelector, versionSelector],
+	(isAuthenticated, needsRelogin, jwt, redirectOnLoginURL, ticket, urlTicket, domain, clientScripts, isNavVisible, version) => {
 		return {
 			needsRelogin,
 			redirectOnLoginURL,
 			jwt,
-			urlJWT,
+			ticket,
+			urlTicket,
 			isAuthenticated,
 			domain,
 			clientScripts,
