@@ -56,12 +56,13 @@ export default class Freestone extends Component {
 		domain: PropTypes.string,
 		clientScripts: PropTypes.array,
 		jwt: PropTypes.string,
-		urlJWT: PropTypes.string,
+		ticket: PropTypes.string,
+		urlTicket: PropTypes.string,
 
 		loginUser: PropTypes.func,
 		fetchVariable: PropTypes.func,
 		fetchEnv: PropTypes.func,
-		setToken: PropTypes.func,
+		setTicket: PropTypes.func,
 		children: PropTypes.any,
 		history: PropTypes.object,
 	};
@@ -77,9 +78,9 @@ export default class Freestone extends Component {
 	componentDidMount() {
 		this.requireData(this.props);
 		// At load of app, if coming back from SSO, set token in GET param
-		if (this.props.urlJWT) {
-			this.props.setToken(this.props.urlJWT);
-			this.props.history.push('/');
+		if (this.props.urlTicket) {
+			this.props.setTicket(this.props.urlTicket);
+			// this.props.history.push('/');
 		}
 
 		this.redirectToSSOClient(this.props);
@@ -112,7 +113,7 @@ export default class Freestone extends Component {
 	redirectToSSOClient(props) {
 		if (props.isAuthenticated && props.redirectOnLoginURL) {
 			const url = new URL(props.redirectOnLoginURL);
-			url.searchParams.append('jwt', props.jwt);
+			url.searchParams.append('ticket', props.ticket);
 			window.location.href = url.toString();
 		}
 	}
@@ -136,7 +137,7 @@ export default class Freestone extends Component {
 		if (onLogin) {
 			// console.log(this.props.env);
 			const loc = onLogin === 'home' ? '' : onLogin;
-			const root = `//${this.props.domain}${loc}?jwt=${this.props.jwt}`;
+			const root = `//${this.props.domain}/admin/${loc}?ticket=${this.props.ticket}`;
 			window.location = root;
 			return null;
 		}

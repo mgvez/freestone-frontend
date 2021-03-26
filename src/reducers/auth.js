@@ -1,10 +1,11 @@
 
-import { UNAUTHORIZED, LOGIN_API, RESET_REQUEST_API, INSTALL_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API, CLEAR_AUTH_MESSAGES, RESET_API, SET_TOKEN } from '../actions/auth';
+import { UNAUTHORIZED, LOGIN_API, RESET_REQUEST_API, INSTALL_API, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_API, CLEAR_AUTH_MESSAGES, RESET_API, SET_TICKET } from '../actions/auth';
 import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middleware/api';
 import { MAX_TIME_BETWEEN_API_CALLS } from '../freestone/settings';
 
 const initialState = {
 	jwt: null,
+	ticket: null,
 	userName: null,
 	isAuthenticated: false,
 	isRequestPending: false,
@@ -56,10 +57,10 @@ export default function(state = initialState, action) {
 			needsRelogin: false,
 			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
 		};
-	case SET_TOKEN:
+	case SET_TICKET:
 		return {
 			...state,
-			jwt: action.payload.jwt,
+			ticket: action.payload.ticket,
 			needsRelogin: true,
 		};
 	case INSTALL_API.REQUEST:
@@ -84,6 +85,7 @@ export default function(state = initialState, action) {
 			isRequestPending: false,
 			isAuthenticated: true,
 			jwt: action.payload.jwt,
+			ticket: action.payload.ticket,
 			userName: action.payload.token.data.realname,
 			email: action.payload.token.data.email,
 			userId: Number(action.payload.token.data.id),
@@ -100,6 +102,7 @@ export default function(state = initialState, action) {
 			isRequestPending: false,
 			isAuthenticated: false,
 			jwt: null,
+			ticket: null,
 			userName: null,
 			userId: null,
 			email: null,
