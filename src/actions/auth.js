@@ -69,6 +69,9 @@ export function receiveTicket(ticket) {
 }
 
 export function setTicket(ticket) {
+	const url = new URL(window.location);
+	url.searchParams.delete('ticket');
+	window.history.pushState({}, '', url.toString());
 	return (dispatch) => {
 		dispatch({
 			type: SET_TICKET,

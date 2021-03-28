@@ -3,13 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ConnectedRouter } from 'connected-react-router';
 
-import Routes from './routes';
+import routes from './routes';
 
 
 const App = ({ history }) => {
 	return (
 		<ConnectedRouter history={history}>
-			<Routes history={history} />
+			{routes}
 		</ConnectedRouter>
 	);
 };

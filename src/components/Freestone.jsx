@@ -64,7 +64,6 @@ export default class Freestone extends Component {
 		fetchEnv: PropTypes.func,
 		setTicket: PropTypes.func,
 		children: PropTypes.any,
-		history: PropTypes.object,
 	};
 
 	constructor(props) {
@@ -83,7 +82,6 @@ export default class Freestone extends Component {
 		// At load of app, if coming back from SSO, set token in GET param
 		if (this.props.urlTicket) {
 			this.props.setTicket(this.props.urlTicket);
-			this.props.history.push('/admin');
 		}
 
 	}
