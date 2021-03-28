@@ -36,7 +36,7 @@ export default class Module extends Component {
 		);
 		this.pingPromise.promise.then(() => {
 			this.setState({
-				pigned: true,
+				pinged: true,
 			});
 		}).catch(() => { });
 	}
@@ -46,15 +46,15 @@ export default class Module extends Component {
 	}
 
 	shouldComponentUpdate(props, state) {
-		// console.log(this.props.url, props.url, this.state.pigned, state.pigned);
+		// console.log(this.props.url, props.url, this.state.pinged, state.pinged);
 		const isSameUrl = this.props.url === props.url;
-		const isSamePing = this.state.pigned === state.pigned;
+		const isSamePing = this.state.pinged === state.pinged;
 		return !isSameUrl || !isSamePing;
 	}
 	
 	render() {
 
-		if (!this.state.pigned) return null;
+		if (!this.state.pinged) return null;
 
 		const host = getAdminUrl();
 		//adds a time to get to prevent over-aggressive server cache (I'm looking at you Radio-Canada)

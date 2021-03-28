@@ -20,13 +20,12 @@ export const RESET_API = createRequestTypes('RESET_API', true);
 //login api actions don't return their values directly through a api succes, but are rather caught by the middleware. Login can be included in any API response, not only login requests.
 
 //middleware will call receiveToken hwne a jwt is part of a response from the API. These can be included in the response of any API call, and are not limited to login requests, so the login requests don't need to set a success or failure action.
-function loginUserSuccess(jwt, token, ticket) {
+function loginUserSuccess(jwt, token) {
 	return {
 		type: LOGIN_USER_SUCCESS,
 		payload: {
 			jwt,
 			token,
-			ticket,
 		},
 	};
 }
@@ -49,10 +48,10 @@ export function loginUserFailure(error) {
 	};
 }
 
-export function receiveToken(jwt, ticket) {
+export function receiveToken(jwt) {
 	try {
 		const token = jwtDecode(jwt);
-		return loginUserSuccess(jwt, token, ticket);
+		return loginUserSuccess(jwt, token);
 	} catch (e) {
 		// console.log(jwt);
 		return loginUserFailure({
@@ -60,6 +59,13 @@ export function receiveToken(jwt, ticket) {
 			statusText: 'Invalid token',
 		});
 	}
+}
+
+export function receiveTicket(ticket) {
+	return {
+		type: SET_TICKET,
+		payload: { ticket },
+	};
 }
 
 export function setTicket(ticket) {
@@ -70,12 +76,6 @@ export function setTicket(ticket) {
 		});
 	};
 }
-
-// function loginUserRequest() {
-// 	return {
-// 		type: 'LOGIN_USER_REQUEST',
-// 	};
-// }
 
 export function logout() {
 
@@ -107,7 +107,7 @@ export function unauthorized(error = {}) {
 	};
 }
 
-export function loginUser(username = null, password = null, remember = null, processInstall = false, siteName = null) {
+export function loginUser(username = null, password = null, remember = null, processInstall = false) {
 	return (dispatch) => {
 		// console.log(redirect);
 		const data = (username || password) ? {
@@ -119,11 +119,10 @@ export function loginUser(username = null, password = null, remember = null, pro
 
 		const queryString = (new URL(window.location.href)).searchParams;
 		const ticket = queryString.get('ticket');
-		console.log('action ticket', ticket);
 		if (ticket) {
 			data.ticket = ticket;
 		}
-
+		const siteName = queryString.get('site_name');
 		if (siteName) {
 			data.site_name = siteName;
 		}

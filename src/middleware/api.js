@@ -3,7 +3,7 @@
 import Promise from 'bluebird';
 import sha1 from 'sha1';
 
-import { receiveToken, loginUserFailure } from '../actions/auth';
+import { receiveToken, loginUserFailure, receiveTicket } from '../actions/auth';
 import { CLEAR_ERRORS } from '../actions/errors';
 import { callApi, getEndpoint } from '../freestone/api';
 
@@ -66,9 +66,13 @@ export default store => next => action => { // eslint-disable-line
 
 	processing[hash] = callApi(finalRoute, data, route).then(
 		res => {
-			// console.log(res);
+
 			if (res.jwt) {
-				next(receiveToken(res.jwt, res.ticket));
+				next(receiveToken(res.jwt));
+			}
+
+			if (res.ticket) {
+				next(receiveTicket(res.ticket));
 			}
 
 			if (typeof res === 'string') {

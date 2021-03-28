@@ -77,19 +77,21 @@ export default class Freestone extends Component {
 
 	componentDidMount() {
 		this.requireData(this.props);
+
+		this.props.loginUser();
+
 		// At load of app, if coming back from SSO, set token in GET param
 		if (this.props.urlTicket) {
 			this.props.setTicket(this.props.urlTicket);
-			// this.props.history.push('/');
+			this.props.history.push('/admin');
 		}
 
-		this.redirectToSSOClient(this.props);
 	}
 
 	componentDidUpdate(prevProps) {		
 		this.redirectToSSOClient(this.props);
 
-		//at load of app, force an API call to revalidate the JWT if last validation is too old
+		// at load of app, force an API call to revalidate the JWT if last validation is too old
 		if (this.props.needsRelogin) this.props.loginUser();
 		this.requireData(this.props);
 	}
@@ -97,7 +99,6 @@ export default class Freestone extends Component {
 	onGapiReady = () => {
 		this.setState({ gapiready: true });
 	}
-
 
 	requireData(props) {
 		// console.log(props.env);
@@ -111,7 +112,7 @@ export default class Freestone extends Component {
 		as an SSO and should redirect to the client website with the JWT in GET
 	*/
 	redirectToSSOClient(props) {
-		if (props.isAuthenticated && props.redirectOnLoginURL) {
+		if (props.isAuthenticated && props.ticket && props.redirectOnLoginURL) {
 			const url = new URL(props.redirectOnLoginURL);
 			url.searchParams.append('ticket', props.ticket);
 			window.location.href = url.toString();
