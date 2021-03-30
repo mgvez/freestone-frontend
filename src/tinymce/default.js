@@ -94,6 +94,7 @@ export const TINYMCE_TINY_CONFIG = {
 	+ 'sub[class|dir<ltr?rtl|id|lang|onclick|ondblclick|onkeydown|onkeypress'
 	+ '|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|style'
 	+ '|title],'
+	+ 'br[class|clear<all?left?none?right|id|style|title],'
 	+ 'span[align<center?justify?left?right|class|dir<ltr?rtl|id|lang|onclick|ondblclick|onkeydown'
 	+ '|onkeypress|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover'
 	+ '|onmouseup|style|title]',

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import DocumentMeta from 'react-document-meta';
 import GlobalStyles from '../../styles/GlobalStyles';
 import GoogleLoginBtn from './GoogleLoginBtn';
-import { Button } from '../../styles/Button';
+import { Button, FlatTopButton } from '../../styles/Button';
 import { Input, CheckboxContainer } from '../../styles/Input';
 import colors from '../../styles/Colors';
 import { GridContainer, GridItem } from '../../styles/Grid';
@@ -62,6 +62,8 @@ export default class Login extends Component {
 		isResetKeyValid: PropTypes.bool,
 		isInstalled: PropTypes.bool,
 		gapiready: PropTypes.bool,
+		ssoAdminURL: PropTypes.string,
+		siteName: PropTypes.string,
 
 		loginUser: PropTypes.func,
 		fetchVariable: PropTypes.func,
@@ -129,7 +131,11 @@ export default class Login extends Component {
 		const username = this._username.value;
 		const password = this._password.value;
 		const remember = this._remember.checked;
-		this.props.loginUser(username, password, remember, this.props.isInstalled === false);
+		const shouldInstall = this.props.isInstalled === false;
+
+		const queryString = (new URL(window.location.href)).searchParams;
+		const siteName = queryString.get('site_name');
+		this.props.loginUser(username, password, remember, shouldInstall, siteName);
 	};
 
 	render() {
@@ -218,6 +224,14 @@ export default class Login extends Component {
 					{googleLoginBtn}
 					<Button round="true" info="true" faded="true" onClick={this.toggleReset}>Forgot password?</Button>
 				</div>
+
+				{
+					this.props.ssoAdminURL && (
+						<div className="btns">
+							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${window.location.origin}/admin`)}`}>Log in with SSO</FlatTopButton>
+						</div>
+					)
+				}
 			</form>);
 		}
 
