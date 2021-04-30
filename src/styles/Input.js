@@ -185,7 +185,7 @@ function getToggleCss(props) {
 				background: ${colors.positive};
 
 				&:after {
-					left: calc(100% - 17px);
+					left: calc(100% - 28px);
 				}
 
 				&:before {
