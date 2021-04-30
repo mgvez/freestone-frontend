@@ -24,6 +24,8 @@ const envInitialState = {
 		clientVersion: null,
 	},
 	versionInfo: null,
+	ssoAdminURL: null,
+	ssoApiURL: null,
 };
 
 function freestone(state = envInitialState, action) {

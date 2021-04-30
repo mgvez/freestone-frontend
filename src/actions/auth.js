@@ -7,6 +7,7 @@ export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const CLEAR_AUTH_MESSAGES = 'CLEAR_AUTH_MESSAGES';
+export const SET_TICKET = 'SET_TICKET';
 
 export const RESET_REQUEST_API = createRequestTypes('RESET_REQUEST_API');
 export const LOGOUT_API = createRequestTypes('LOGOUT_API');
@@ -60,11 +61,24 @@ export function receiveToken(jwt) {
 	}
 }
 
-// function loginUserRequest() {
-// 	return {
-// 		type: 'LOGIN_USER_REQUEST',
-// 	};
-// }
+export function receiveTicket(ticket) {
+	return {
+		type: SET_TICKET,
+		payload: { ticket },
+	};
+}
+
+export function setTicket(ticket) {
+	const url = new URL(window.location);
+	url.searchParams.delete('ticket');
+	window.history.pushState({}, '', url.toString());
+	return (dispatch) => {
+		dispatch({
+			type: SET_TICKET,
+			payload: { ticket },
+		});
+	};
+}
 
 export function logout() {
 
@@ -96,7 +110,6 @@ export function unauthorized(error = {}) {
 	};
 }
 
-
 export function loginUser(username = null, password = null, remember = null, processInstall = false) {
 	return (dispatch) => {
 		// console.log(redirect);
@@ -106,6 +119,17 @@ export function loginUser(username = null, password = null, remember = null, pro
 			freestoneremember: remember ? '1' : '0',
 			freestoneinstall: processInstall ? '1' : '0',
 		} : {};
+
+		const queryString = (new URL(window.location.href)).searchParams;
+		const ticket = queryString.get('ticket');
+		if (ticket) {
+			data.ticket = ticket;
+		}
+		const siteName = queryString.get('site_name');
+		if (siteName) {
+			data.site_name = siteName;
+		}
+
 		const actionType = processInstall ? INSTALL_API : LOGIN_API;
 		return dispatch({
 			[FREESTONE_API]: {
