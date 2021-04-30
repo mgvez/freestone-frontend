@@ -36,7 +36,7 @@ export function getInputCss(props) {
 	return css`
 		display: inline-block;
 		width: 100%;
-		height: 2.2em;
+		min-height: 2.2em;
 		line-height:2.2em;
 		border: 1px solid rgba(${hexToRgb(colors.textPrimary)}, 0.25);
 		color: ${colors.textPrimary};
@@ -102,7 +102,8 @@ export const FieldLabel = styled.div`
 export const FieldDescription = styled.div`
 	display: block;
 	margin: 0 0.5em 0.7em;
-	font-size: 0.6em;
+	font-size: calc(11 / 14 * 1em);
+	letter-spacing: 1.05;
 	line-height: 1.3;
 `;
 
