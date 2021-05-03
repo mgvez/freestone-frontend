@@ -7,7 +7,7 @@ const overlay = {
 	right: 0,
 	bottom: 0,
 	backgroundColor: 'rgba(255, 255, 255, 0.5)',
-	zIndex: 3000,
+	zIndex: 9000,
 };
 
 

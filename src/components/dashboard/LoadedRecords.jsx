@@ -30,7 +30,7 @@ const StyledLoadedRecords = styled.nav`
 	padding: 40px 15px;
 	background: ${colors.backgroundDark};
 	color: ${colors.textSecondary};
-	z-index: 2;
+	z-index: 6000;
 
 	transition: transform 0.3s;
 
