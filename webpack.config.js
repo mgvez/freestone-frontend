@@ -7,9 +7,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { console } = require('fp-ts');
 
+console.log(process.env.NODE_ENV);
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
+console.log('isProduction', isProduction);
 
 const jsSourcePath = path.join(__dirname, './src');
 const buildPath = path.join(__dirname, './dist');
@@ -17,7 +20,7 @@ const assetsPath = path.join(__dirname, './src/assets');
 const sourcePath = path.join(__dirname, './src');
 
 //https OR http
-const isHttps = process.argv.length === 0 || !~process.argv.indexOf('--http');
+const isHttp = process.argv.length === 0 || !~process.argv.indexOf('--https');
 
 // Common plugins
 const plugins = [
@@ -182,9 +185,9 @@ if (isProduction) {
 		}
 	);
 }
-
 module.exports = {
 	devtool: isProduction ? false : 'source-map',
+	mode: isProduction ? 'production' : 'development',
 	context: jsSourcePath,
 	entry: {
 		js: './index.jsx',
@@ -213,8 +216,8 @@ module.exports = {
 	devServer: {
 		contentBase: isProduction ? buildPath : sourcePath,
 		historyApiFallback: true,
-		port: isHttps ? 3000 : 2999,
-		https: isHttps,
+		port: isHttp ? 2999 : 3000,
+		https: !isHttp,
 		compress: isProduction,
 		inline: !isProduction,
 		// hot: !isProduction,
