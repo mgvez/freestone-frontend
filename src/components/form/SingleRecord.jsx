@@ -32,6 +32,7 @@ export default class SingleRecord extends Component {
 		isSidebarView: PropTypes.bool,
 		isGod: PropTypes.bool,
 		isNew: PropTypes.bool,
+		isOneToOne: PropTypes.bool,
 		
 		table: PropTypes.object,
 		record: PropTypes.object,
@@ -260,14 +261,16 @@ export default class SingleRecord extends Component {
 					recordId={this.props.recordId}
 					language={this.props.table.hasLanguage ? this.props.language : null}
 				/>);
-				duplicateBtn = (<DuplicateRecord 
-					table={this.props.table}
-					tableId={this.props.table.id}
-					recordId={this.props.recordId}
-					parentRecordId={this.props.parentRecordId}
-					parentTableId={this.props.parentTableId}
-					language={this.props.table.hasLanguage ? this.props.language : null}
-				/>);
+				if (!this.props.isOneToOne) {
+					duplicateBtn = (<DuplicateRecord 
+						table={this.props.table}
+						tableId={this.props.table.id}
+						recordId={this.props.recordId}
+						parentRecordId={this.props.parentRecordId}
+						parentTableId={this.props.parentTableId}
+						language={this.props.table.hasLanguage ? this.props.language : null}
+					/>);
+				}
 			}
 
 			const recIdDisplay = this.props.isGod ? <small><em>Record id {this.props.recordId}</em></small> : '';
