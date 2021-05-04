@@ -3,13 +3,16 @@ const path = require('path');
 
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const { console } = require('fp-ts');
 
+console.log(process.env.NODE_ENV);
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProduction = nodeEnv === 'production';
+console.log('isProduction', isProduction);
 
 const jsSourcePath = path.join(__dirname, './src');
 const buildPath = path.join(__dirname, './dist');
@@ -17,7 +20,7 @@ const assetsPath = path.join(__dirname, './src/assets');
 const sourcePath = path.join(__dirname, './src');
 
 //https OR http
-const isHttps = process.argv.length === 0 || !~process.argv.indexOf('--http');
+const isHttp = process.argv.length === 0 || !~process.argv.indexOf('--https');
 
 // Common plugins
 const plugins = [
@@ -26,7 +29,6 @@ const plugins = [
 			NODE_ENV: JSON.stringify(nodeEnv),
 		},
 	}),
-	new webpack.NamedModulesPlugin(),
 	new HtmlWebpackPlugin({
 		template: path.join(sourcePath, 'index.html'),
 		path: buildPath,
@@ -52,7 +54,7 @@ const plugins = [
 const rules = [
 	{
 		test: /\.(js|jsx)$/,
-		exclude: /node_modules/,
+		exclude: [/node_modules/],
 		use: [
 			// 'react-hot-loader/webpack',
 			'babel-loader',
@@ -76,6 +78,22 @@ const rules = [
 			},
 		],
 	},
+	// {
+	// 	test: /\.s(a|c)ss$/,
+	// 	exclude: /\.module.(s(a|c)ss)$/,
+	// 	use: {
+	// 		loader: [
+	// 			!isProduction ? 'style-loader' : MiniCssExtractPlugin.loader,
+	// 			'css-loader',
+	// 			{
+	// 				loader: 'sass-loader',
+	// 				options: {
+	// 					sourceMap: !isProduction,
+	// 				},
+	// 			},
+	// 		],
+	// 	},
+	// },
 ];
 
 const optimization = {};
@@ -119,20 +137,28 @@ if (isProduction) {
 		// 		comments: false,
 		// 	},
 		// }),
-		new ExtractTextPlugin('bundle.css'),
-		new CopyWebpackPlugin([
-			{ from: assetsPath + '/**/*' }
-		])
+		new CopyWebpackPlugin(
+			{
+				patterns: [
+					{ from: assetsPath + '/**/*', to: buildPath },
+				],
+			}
+		),
+		new MiniCssExtractPlugin({ filename: 'bundle.css' }),
 	);
 
 	// Production rules
 	rules.push(
 		{
 			test: /\.scss$/,
-			loader: ExtractTextPlugin.extract({
-				fallback: 'style-loader',
-				use: 'css-loader!postcss-loader!sass-loader',
-			}),
+			use: [
+				{
+					loader: MiniCssExtractPlugin.loader,
+				},
+				'css-loader',
+				'postcss-loader',
+				'sass-loader',
+			],
 		}
 	);
 } else {
@@ -148,11 +174,6 @@ if (isProduction) {
 			test: /\.scss$/,
 			use: [
 				'style-loader',
-				// Using source maps breaks urls in the CSS loader
-				// https://github.com/webpack/css-loader/issues/232
-				// This comment solves it, but breaks testing from a local network
-				// https://github.com/webpack/css-loader/issues/232#issuecomment-240449998
-				// 'css-loader?sourceMap',
 				'css-loader',
 				{
 					loader: 'postcss-loader',
@@ -164,9 +185,9 @@ if (isProduction) {
 		}
 	);
 }
-
 module.exports = {
 	devtool: isProduction ? false : 'source-map',
+	mode: isProduction ? 'production' : 'development',
 	context: jsSourcePath,
 	entry: {
 		js: './index.jsx',
@@ -195,8 +216,8 @@ module.exports = {
 	devServer: {
 		contentBase: isProduction ? buildPath : sourcePath,
 		historyApiFallback: true,
-		port: isHttps ? 3000 : 2999,
-		https: isHttps,
+		port: isHttp ? 2999 : 3000,
+		https: !isHttp,
 		compress: isProduction,
 		inline: !isProduction,
 		// hot: !isProduction,
