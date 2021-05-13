@@ -15,6 +15,7 @@
 		"no-nested-ternary": [0],
 		"no-unused-vars": [1],
 		"no-trailing-spaces": [0],
+		"no-tabs": [0],
 		"arrow-body-style": [0],
 		"newline-per-chained-call": [0],
 		"prefer-template": [0],
@@ -22,15 +23,17 @@
 		"jsx-a11y/img-has-alt": [0],
 		"no-return-assign": [0],
 		"max-len": [0],
+		"import/order": [0],
 		"global-require": [0],
 		"no-console": ["warn", { "allow": ["warn", "error"] }],
 		"react/prefer-stateless-function": [0],
+		"react/jsx-fragments": [0],
 		"no-param-reassign": ["error", { "props": false }],
 		"no-underscore-dangle": ["error", { "allowAfterThis": true }],
 		"consistent-return": [0],
 		"no-cond-assign": [2, "except-parens"]
 	},
-	"ecmaFeatures" : {
-		"experimentalObjectRestSpread":true
+	"env": {
+		"browser": true
 	}
 }

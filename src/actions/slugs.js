@@ -3,14 +3,14 @@ import { createRequestTypes } from './apiAction';
 
 export const SLUG_API = createRequestTypes('SLUG_API');
 
-export function fetchSlug(tableNameId, recordId) {
+export function fetchSlug(tableNameId, recordId, record) {
 	return (dispatch) => {
-		// console.log(tableName, recordId);
 		return dispatch({
 			[FREESTONE_API]: {
 				types: SLUG_API,
 				route: `slug/${tableNameId}/${recordId}`,
 				data: {
+					record,
 				},
 			},
 		});

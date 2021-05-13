@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import AddRecord from '../../../containers/form/buttons/AddRecord';
@@ -7,52 +7,61 @@ import SingleRecord from '../../../containers/form/SingleRecord';
 
 import { Subform, SubformHeader } from '../../../styles/Form';
 
-export default class SubformSingle extends Component {
-	static propTypes = {
-		table: PropTypes.object,
-		activeRecords: PropTypes.array,
-		childrenRecords: PropTypes.array,
-		parentTableId: PropTypes.number,
-		parentRecordId: PropTypes.string,
-		titleOverride: PropTypes.string,
-		descriptionAppend: PropTypes.string,
+export default function SubformSingle(props) {
 
-		language: PropTypes.string,
+	const { isSeoMetadata } = props.table;
+	
+	const activeRecordId = (props.childrenRecords && props.childrenRecords.length && props.childrenRecords[0].id) || null;
+	let addBtn;
+	if (!props.childrenRecords || !props.childrenRecords.length) {
 
-	};
+		// if we are on SEO metadata table, we need to enforce a record. Send a prop to add record component to automatically create it.
 
-	render() {
-		const activeRecordId = (this.props.childrenRecords && this.props.childrenRecords.length && this.props.childrenRecords[0].id) || null;
-		let addBtn;
-		if (!this.props.childrenRecords || !this.props.childrenRecords.length) {
-			addBtn = (
-				<AddRecord 
-					table={this.props.table}
-					parentRecordId={this.props.parentRecordId}
-					parentTableId={this.props.parentTableId}
-				/>
-			);
-		}
-
-		return (
-			<Subform>
-				<SubformHeader>
-					<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
-					<nav>
-						{addBtn}
-					</nav>
-				</SubformHeader>
-				<SingleRecord
-					tableId={this.props.table.id}
-					recordId={activeRecordId}
-					parentRecordId={this.props.parentRecordId}
-					parentTableId={this.props.parentTableId}
-					language={this.props.language}
-					isSubform
-					isOneToOne
-				/>
-			</Subform>
+		addBtn = (
+			<AddRecord 
+				table={props.table}
+				parentRecordId={props.parentRecordId}
+				parentTableId={props.parentTableId}
+				autoAdd={isSeoMetadata}
+			/>
 		);
-
 	}
+
+	return (
+		<Subform>
+			<SubformHeader>
+				<FormHeaderContent table={props.table} titleOverride={props.titleOverride} descriptionAppend={props.descriptionAppend} language={props.language} />
+				<nav>
+					{addBtn}
+				</nav>
+			</SubformHeader>
+			<SingleRecord
+				tableId={props.table.id}
+				recordId={activeRecordId}
+				parentRecordId={props.parentRecordId}
+				parentTableId={props.parentTableId}
+				language={props.language}
+				preventDelete={isSeoMetadata}
+				isSubform
+				isOneToOne
+				slugWidgetData={isSeoMetadata && { tableId: props.parentTableId, recordId: props.parentRecordId }}
+			/>
+		</Subform>
+	);
+
+
 }
+
+SubformSingle.propTypes = {
+	table: PropTypes.object,
+	activeRecords: PropTypes.array,
+	childrenRecords: PropTypes.array,
+	parentTableId: PropTypes.number,
+	parentRecordId: PropTypes.string,
+	titleOverride: PropTypes.string,
+	descriptionAppend: PropTypes.string,
+
+	language: PropTypes.string,
+	addRecord: PropTypes.string,
+
+};

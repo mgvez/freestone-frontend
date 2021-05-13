@@ -1,32 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class SetVisibleTab extends Component {
-	static propTypes = {
-		isActive: PropTypes.bool,
-		clickKey: PropTypes.string,
-		tableId: PropTypes.number,
-		label: PropTypes.string.isRequired,
-		showFieldGroup: PropTypes.func.isRequired,
+export default function SetVisibleTab(props) {
+
+	const onClick = () => {
+		props.showFieldGroup(props.clickKey, props.tableId);
 	};
 
-	onClick = () => {
-		this.props.showFieldGroup(this.props.clickKey, this.props.tableId);
-	}
+	const className = [
+		'tab',
+		props.isActive && 'active',
+		props.isSeoMetadata && 'seo',
+	].join(' ');
 
-	render() {
-		let className = 'tab';
-		if (this.props.isActive) {
-			className += ' active';
-		}
+	return (
+		<div
+			className={className}
+			onClick={onClick}
+		>
+			{props.label}
+		</div>
+	);
 
-		return (
-			<div
-				className={className}
-				onClick={this.onClick}
-			>
-				{this.props.label}
-			</div>
-		);
-	}
 }
+
+SetVisibleTab.propTypes = {
+	isActive: PropTypes.bool,
+	isSeoMetadata: PropTypes.bool,
+	clickKey: PropTypes.string,
+	tableId: PropTypes.number,
+	label: PropTypes.string.isRequired,
+	showFieldGroup: PropTypes.func.isRequired,
+};

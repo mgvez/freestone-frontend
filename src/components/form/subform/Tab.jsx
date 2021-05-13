@@ -7,7 +7,7 @@ function getTabGroup(props) {
 	return `tab_${props.tableId}`;
 }
 
-@dropTarget(
+export default @dropTarget(
 	getTabGroup,
 	{
 		hover(props, monitor) {
@@ -43,7 +43,7 @@ function getTabGroup(props) {
 		};
 	}
 )
-export default class Tab extends Component {
+class Tab extends Component {
 	static propTypes = {
 		tableId: PropTypes.number,
 		parentRecordId: PropTypes.string,

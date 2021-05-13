@@ -6,6 +6,7 @@ import { StyledSingleRecord, TabsList, Aside, TabContentSection } from '../../st
 import { StyledFieldGroup } from '../../styles/Input';
 import { Button } from '../../styles/Button';
 import SetVisibleTab from './buttons/SetVisibleTab';
+import RecordSlug from '../../containers/widgets/RecordSlug';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
@@ -37,9 +38,11 @@ export default class SingleRecord extends Component {
 		table: PropTypes.object,
 		record: PropTypes.object,
 		recordUnaltered: PropTypes.object,
+		slugWidgetData: PropTypes.object,
 		env: PropTypes.object,
 		language: PropTypes.string,
 		isRoot: PropTypes.bool,
+		preventDelete: PropTypes.bool,
 
 		mainGroups: PropTypes.array,
 
@@ -131,7 +134,6 @@ export default class SingleRecord extends Component {
 						{groups.map((group) => {
 							if (!group) return null;
 							const isActive = activeGroup.key === group.key;
-							// console.log(group);
 							const label = group.label || 'Main Info';
 							return ( 
 								<SetVisibleTab 
@@ -140,6 +142,7 @@ export default class SingleRecord extends Component {
 									key={group.key}
 									tableId={this.props.tableId}
 									clickKey={group.key}
+									isSeoMetadata={group.isSeoMetadata}
 									label={label}
 								/>
 							);
@@ -255,7 +258,7 @@ export default class SingleRecord extends Component {
 
 			let deleteBtn;
 			let duplicateBtn = null;
-			if (!this.props.isRoot) {
+			if (!this.props.isRoot && !this.props.preventDelete) {
 				deleteBtn = (<DeleteRecord 
 					tableId={this.props.table.id}
 					recordId={this.props.recordId}
@@ -288,6 +291,7 @@ export default class SingleRecord extends Component {
 							{deleteBtn}
 						</GridItem>
 					</GridContainer>
+					{<RecordSlug {...this.props.slugWidgetData} />}
 					{this.renderGroups(this.props.mainGroups)}
 				</article>
 			);

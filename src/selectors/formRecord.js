@@ -134,6 +134,7 @@ function createFieldGroups(fields, children) {
 		if (child) {
 			child.hasPlaceholder = true;
 			curGroup.children.push(child);
+			curGroup.isSeoMetadata = child.isSeoMetadata;
 		}
 
 		if (!isSeparator && !isPlaceholder) {
@@ -151,10 +152,12 @@ function createFieldGroups(fields, children) {
 	if (!children) return namedGroups;
 	//if there are children forms, add the remaining ones (without placeholders) to the list of form groups
 	return children.reduce((groups, child) => {
+
 		if (!child.hasPlaceholder) {
 			const curGroup = {
 				label: (child.label) || null,
 				key: `child-${child.key}`,
+				isSeoMetadata: child.isSeoMetadata,
 				children: [child],
 				asideFields: [],
 				fields: [],
@@ -178,6 +181,7 @@ const parsedChildrenSelector = createSelector(
 					tableId: childId,
 					key: `child_${parentId}_${childId}`,
 					label: childDef && childDef.displayLabel,
+					isSeoMetadata: childDef && childDef.isSeoMetadata,
 				};
 			});
 			return carry;

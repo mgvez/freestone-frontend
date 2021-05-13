@@ -1,38 +1,46 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import createRecord from '../../../freestone/createRecord';
 import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
 
-export default class AddRecord extends Component {
-	static propTypes = {
-		table: PropTypes.object,
-		highestOrder: PropTypes.number,
-		parentTableId: PropTypes.number,
-		parentRecordId: PropTypes.string,
-		linkValue: PropTypes.string,
-		language: PropTypes.string,
-		isTab: PropTypes.bool,
+export default function AddRecord(props) {
 
-		addRecord: PropTypes.func,
-		setShownRecord: PropTypes.func,
-	};
 
-	addRecord = () => {
+	const addRecord = () => {
 		//if table has a language field, we need to add it as a default prop
-		const language = this.props.table.hasLanguage ? this.props.language : null;
-		const model = this.props.table.hasLanguage ? {
-			[this.props.table.languageField.id]: language,
+		const language = props.table.hasLanguage ? props.language : null;
+		const model = props.table.hasLanguage ? {
+			[props.table.languageField.id]: language,
 		} : null;
-		createRecord(this.props.table, this.props.parentTableId, this.props.linkValue, (this.props.highestOrder || 0) + 100, model).then(res => {
+		createRecord(props.table, props.parentTableId, props.linkValue, (props.highestOrder || 0) + 100, model).then(res => {
 			const { newRecord, newRecordId } = res;
 			// console.log(newRecord);
-			this.props.addRecord(this.props.table.id, newRecord);
-			this.props.setShownRecord(this.props.table.id, this.props.parentRecordId, newRecordId, language);
+			props.addRecord(props.table.id, newRecord);
+			props.setShownRecord(props.table.id, props.parentRecordId, newRecordId, language);
 		});
 	};
 
-	render() {
-		return this.props.isTab ? <div onClick={this.addRecord} className="tab"><Icon icon="plus" side="center" /></div> : <Button onClick={this.addRecord} round="true"><Icon icon="plus" side="center" /></Button>;
-	}
+	useEffect(() => {
+		if (props.autoAdd) {
+			addRecord();
+		}
+	}, [props.autoAdd]);
+
+	return props.isTab ? <div onClick={addRecord} className="tab"><Icon icon="plus" side="center" /></div> : <Button onClick={addRecord} round="true"><Icon icon="plus" side="center" /></Button>;
+
 }
+
+AddRecord.propTypes = {
+	table: PropTypes.object,
+	highestOrder: PropTypes.number,
+	parentTableId: PropTypes.number,
+	parentRecordId: PropTypes.string,
+	linkValue: PropTypes.string,
+	language: PropTypes.string,
+	isTab: PropTypes.bool,
+	autoAdd: PropTypes.bool,
+
+	addRecord: PropTypes.func,
+	setShownRecord: PropTypes.func,
+};

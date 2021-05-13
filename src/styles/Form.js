@@ -188,6 +188,13 @@ export const TabsList = styled.nav`
 			text-decoration: none;
 			opacity: 1;
 		}
+
+		// &.seo {
+		// 	background-color: ${colors.accentPrimaryLight};
+		// 	&.active {
+		// 		background-color: ${colors.accentPrimary};
+		// 	}
+		// }
 	}
 
 	${props => {
