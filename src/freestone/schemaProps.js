@@ -33,6 +33,11 @@ export const TYPE_LANGUAGE = 'language';
 
 export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM, TYPE_SUBFORM_GUID, TYPE_OTO_GUID];
 
+
+// if a field has this as its widget property, it must be displayed by the slugs widget
+export const SLUG_WIDGET_NAME = 'SLUG';
+
+
 export const SUBFORM_VIEW_TABBED = 'tabbed';
 export const SUBFORM_VIEW_TABBED_VERTICAL = 'tabbed-vertical';
 export const SUBFORM_VIEW_LIST = 'full list';

@@ -16,13 +16,15 @@ export default function SubformSingle(props) {
 	if (!props.childrenRecords || !props.childrenRecords.length) {
 
 		// if we are on SEO metadata table, we need to enforce a record. Send a prop to add record component to automatically create it.
+		// if we have fetched records BUT we don't have any for SEO data, auto add a new one
+		const autoAdd = isSeoMetadata && props.childrenRecords && !props.childrenRecords.length;
 
 		addBtn = (
 			<AddRecord 
 				table={props.table}
 				parentRecordId={props.parentRecordId}
 				parentTableId={props.parentTableId}
-				autoAdd={isSeoMetadata}
+				autoAdd={autoAdd}
 			/>
 		);
 	}
@@ -44,7 +46,6 @@ export default function SubformSingle(props) {
 				preventDelete={isSeoMetadata}
 				isSubform
 				isOneToOne
-				slugWidgetData={isSeoMetadata && { tableId: props.parentTableId, recordId: props.parentRecordId }}
 			/>
 		</Subform>
 	);

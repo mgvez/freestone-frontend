@@ -6,7 +6,6 @@ import { StyledSingleRecord, TabsList, Aside, TabContentSection } from '../../st
 import { StyledFieldGroup } from '../../styles/Input';
 import { Button } from '../../styles/Button';
 import SetVisibleTab from './buttons/SetVisibleTab';
-import RecordSlug from '../../containers/widgets/RecordSlug';
 
 import Subform from '../../containers/form/subform/Subform';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
@@ -27,8 +26,8 @@ export default class SingleRecord extends Component {
 		recordId: PropTypes.string,
 		recordGUID: PropTypes.string,
 		parentRecordId: PropTypes.string,
-		activeGroup: PropTypes.object,
 		parentTableId: PropTypes.number,
+		activeGroup: PropTypes.object,
 		isSubform: PropTypes.bool,
 		isSidebarView: PropTypes.bool,
 		isGod: PropTypes.bool,
@@ -38,7 +37,6 @@ export default class SingleRecord extends Component {
 		table: PropTypes.object,
 		record: PropTypes.object,
 		recordUnaltered: PropTypes.object,
-		slugWidgetData: PropTypes.object,
 		env: PropTypes.object,
 		language: PropTypes.string,
 		isRoot: PropTypes.bool,
@@ -116,6 +114,7 @@ export default class SingleRecord extends Component {
 			val={this.props.record[field.id]}
 			absolutePath={this.props.record[`${field.name}_${BANK_PATH_ALIAS}`]}
 			origVal={this.props.recordUnaltered && this.props.recordUnaltered[field.id]}
+			parentTableId={this.props.parentTableId}
 			parentRecordId={this.props.parentRecordId}
 			setFieldVal={this.props.setFieldVal}
 			env={this.props.env}
@@ -291,7 +290,6 @@ export default class SingleRecord extends Component {
 							{deleteBtn}
 						</GridItem>
 					</GridContainer>
-					{<RecordSlug {...this.props.slugWidgetData} />}
 					{this.renderGroups(this.props.mainGroups)}
 				</article>
 			);

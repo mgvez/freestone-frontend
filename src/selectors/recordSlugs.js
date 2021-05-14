@@ -40,7 +40,6 @@ function makeRecordParsedSelector() {
 	return createSelector(
 		[schemaSelectorInst, recordSelectorInst],
 		(table, record) => {
-			console.log('parse record');
 			const parsedRecord = record && table && table.fields && table.fields.reduce((mounted, field) => {
 				mounted[field.name] = record[field.id];
 				return mounted;

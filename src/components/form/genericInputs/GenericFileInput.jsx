@@ -36,6 +36,7 @@ const FileInputContainer = styled.div`
 
 const GenericFileInput = (props) => {
 
+
 	const [localFile, setLocalFile] = useState(null);
 	const [isCropping, setIsCropping] = useState(false);
 	const inputRef = useRef(false);
