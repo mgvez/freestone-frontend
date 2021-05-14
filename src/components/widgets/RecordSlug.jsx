@@ -1,20 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function RecordSlug({
 	tableId,
 	recordId,
 	record,	
-	fetchSlug,
-	slugs,
+	fetchWorkingSlug,
 }) {
 	if (!tableId) return null;
 
+	const [workingSlugs, setWorkingSlugs] = useState();
+
 	useEffect(() => {
-		console.log(record);
 		if (record) {
-			fetchSlug(tableId, recordId, record).then(res => {
-				console.log(res);	
+			fetchWorkingSlug(tableId, recordId, record).then(res => {
+				if (res.slugs) {
+					setWorkingSlugs(res.slugs);	
+				}
 			});
 		}
 	}, [tableId, recordId, record]);
@@ -23,7 +25,7 @@ export default function RecordSlug({
 	return (
 		<div>
 			<div>{`record ${tableId}.${recordId}`}</div>
-			{slugs && Object.entries(slugs).map(([lang, slug]) => {
+			{workingSlugs && Object.entries(workingSlugs).map(([lang, slug]) => {
 				return (
 					<div key={lang}>{slug}</div>
 				);
@@ -36,7 +38,6 @@ export default function RecordSlug({
 RecordSlug.propTypes = {
 	tableId: PropTypes.number,
 	recordId: PropTypes.string,
-	slugs: PropTypes.object,
 	record: PropTypes.object,
-	fetchSlug: PropTypes.func,
+	fetchWorkingSlug: PropTypes.func,
 };

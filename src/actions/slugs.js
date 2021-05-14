@@ -2,12 +2,26 @@ import { FREESTONE_API } from '../middleware/api';
 import { createRequestTypes } from './apiAction';
 
 export const SLUG_API = createRequestTypes('SLUG_API');
+export const WORKING_SLUG_API = createRequestTypes('WORKING_SLUG_API');
 
-export function fetchSlug(tableNameId, recordId, record) {
+export function fetchSlug(tableNameId, recordId) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
 				types: SLUG_API,
+				route: `slug/${tableNameId}/${recordId}`,
+				data: {
+				},
+			},
+		});
+	};
+}
+
+export function fetchWorkingSlug(tableNameId, recordId, record) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: WORKING_SLUG_API,
 				route: `slug/${tableNameId}/${recordId}`,
 				data: {
 					record,
