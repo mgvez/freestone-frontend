@@ -10,14 +10,14 @@ const recordsSelector = state => state.freestone.recordList;
 // const recordListSelector = state => state.freestone.imageBankList;
 const bankImgSelector = state => state.freestone.bank.images;
 const bankFileSelector = state => state.freestone.bank.files;
-const bankImageItemsSelector = state => state.freestone.bank.imageItems;
+export const bankImageItemsSelector = state => state.freestone.bank.imageItems;
 const allUsesSelector = state => state.freestone.bank.uses;
 const selectionSelector = state => state.freestone.bank.selection;
 const allBankCategoriesSelector = state => state.freestone.bank.categories;
 const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
 const recordsFormSelector = state => state.freestone.recordForm.records;
 
-const idSelector = (state, props) => props.id;
+const idSelector = (state, props) => props.imageId || props.id;
 const maxSizeSelector = (state, props) => props.maxSize || THUMBNAIL_SIZE;
 const bankNameSelector = (state, props) => props.bankName;
 

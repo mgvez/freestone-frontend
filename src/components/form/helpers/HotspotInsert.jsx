@@ -74,6 +74,7 @@ export default class HotspotInsert extends Component {
 		imageFieldId: PropTypes.number,
 		onSave: PropTypes.func,
 		imageId: PropTypes.string,
+		imageBankItem: PropTypes.object,
 		parsedVal: PropTypes.object,
 	};
 
@@ -121,7 +122,8 @@ export default class HotspotInsert extends Component {
 				</Header>
 				<ImageContainer ref={(div) => { this.container = div; }} onClick={this.onClickImage}>
 					<HotspotElem style={{ left: `${this.state.x * 100}%`, top: `${this.state.y * 100}%` }} />
-					<BankImgThumbnail id={this.props.imageId} maxSize={1920} />
+					{/* <BankImgThumbnail id={this.props.imageBankItem.} maxSize={1920} /> */}
+					<img style={{ maxWidth: 'none', width: 'auto' }} src={this.props.imageBankItem.item.file_path} alt="" />
 				</ImageContainer>
 			</Modal>
 		);
