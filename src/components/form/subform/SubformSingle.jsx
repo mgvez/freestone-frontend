@@ -49,6 +49,7 @@ export default class SubformSingle extends Component {
 					parentTableId={this.props.parentTableId}
 					language={this.props.language}
 					isSubform
+					isOneToOne
 				/>
 			</Subform>
 		);

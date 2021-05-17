@@ -73,8 +73,8 @@ export default class HtmlInput extends Component {
 		}
 	}
 
-	handleEditorChange = (evt) => {
-		this.props.changeVal(evt.target.getContent());
+	handleEditorChange = (val) => {
+		this.props.changeVal(val);
 	};
 
 	gotoSelect = (bankTable, contentBefore) => {
@@ -114,8 +114,8 @@ export default class HtmlInput extends Component {
 		return (
 			<TinyMCEInput
 				key={this.props.recordId}
-				initialValue={this.props.val}
-				onChange={this.handleEditorChange}
+				value={this.props.val}
+				onEditorChange={this.handleEditorChange}
 				init={this.props.tinymceConfig}
 				onExecCommand={this.handlers.ExecCommand}
 			/>
