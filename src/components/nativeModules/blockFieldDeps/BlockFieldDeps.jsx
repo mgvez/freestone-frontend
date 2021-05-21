@@ -55,7 +55,7 @@ const ItemCell = styled.div`
 	align-items: center;
 	border-bottom: 1px ${colors.borderMedium} solid;
 `;
-const ItemLabel = styled.div`
+const ItemLabel = styled.div`${props => `
 	font-weight: bold;
 	position: relative;
 	padding-right: 12px;
@@ -75,7 +75,7 @@ const ItemLabel = styled.div`
 		background-color: ${colors.positive};
 	}
 	&:hover&:before {
-		content: "Field is detected in template";
+		content: "Field ${props.field} is not detected in ${props.tpl} template";
 		border-radius: 2px;
 		position: absolute;
 		right: 0;
@@ -83,10 +83,17 @@ const ItemLabel = styled.div`
 		padding: 2px;
 		border: 1px ${colors.borderMedium} solid;
 		background: white;
-		font-size: 0.5em;
+		font-size: 0.7em;
+		line-height: 1.2em;
 		font-weight: normal;
+		min-width: 150px;
+		z-index: 500;
 	}
-`;
+	&.suggested&:hover&:before {
+		content: "Field ${props.field} is detected in ${props.tpl} template";
+		font-weight: bold;
+	}
+`}`;
 
 
 export default function BlockFieldDeps(props) {
@@ -139,7 +146,7 @@ export default function BlockFieldDeps(props) {
 	let content;
 	if (types && table && dependencies) {
 
-		const getRow = (key, label, field, typeId) => {
+		const getRow = (key, label, field, typeId, typeName) => {
 			const fieldId = field.id;
 			// console.log(field);
 			const onChangeIsDisplay = isDisplay => {
@@ -155,13 +162,14 @@ export default function BlockFieldDeps(props) {
 				const descriptionAppend = e.currentTarget.value;
 				props.setMultipleDependencies(getActionParams(field, typeId, { descriptionAppend }));
 			};
+
 			const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
 			const isDisplay = currentDependency && currentDependency.isDisplay && currentDependency.isDisplay !== '0';
 			const isSuggested = currentDependency && currentDependency.isSuggested;
 			return (
 				<React.Fragment key={key}>
 					<ItemCell>
-						<ItemLabel className={isSuggested && 'suggested'}>{label}</ItemLabel>
+						<ItemLabel className={isSuggested && 'suggested'} field={field.langAgnosticName} tpl={typeName}>{label}</ItemLabel>
 					</ItemCell>
 					<ItemCell>
 						<BoolInput key={`${key}-${fieldId}-${typeId}`} small val={isDisplay} fieldId={fieldId} recordId={typeId} changeVal={onChangeIsDisplay} />
@@ -248,10 +256,10 @@ export default function BlockFieldDeps(props) {
 				return (<div className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</div>);
 				
 			});
-			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id));
+			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id, activeType.name));
 
 			header = (
-				<Heading2>When type is <strong>{activeType.name}</strong>, display fields:</Heading2>
+				<Heading2>When content block type is <strong>{activeType.name}</strong>, display fields:</Heading2>
 			);
 
 		} else {
@@ -265,9 +273,9 @@ export default function BlockFieldDeps(props) {
 				return (<div key={`f${field.id}`} className={`tab ${activeClass}`} onClick={onClick}>{field.displayLabel}</div>);
 				
 			});
-			switches = types.map(type => getRow(type.name, type.name, activeField, type.id));
+			switches = types.map(type => getRow(type.name, type.name, activeField, type.id, type.name));
 			header = (
-				<Heading2>Display field <strong>{activeField.displayLabel}</strong> when type is:</Heading2>
+				<Heading2>Display field <strong>{activeField.displayLabel}</strong> when content block  type is:</Heading2>
 			);
 		}
 
