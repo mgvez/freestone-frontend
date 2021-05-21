@@ -48,12 +48,15 @@ export default function Field(props) {
 		}
 	} else if (props.field.widget) {
 		if (props.field.widget === SLUG_WIDGET_NAME) {
-			console.log('SLUG WIDGET');
 			// Slugs widget is in the META table, so the slug really is for the meta record's parent record
 			widget = (
-				<RecordSlug 
+				<RecordSlug
+					key={key}
 					tableId={props.parentTableId} 
-					recordId={props.parentRecordId} 
+					recordId={props.parentRecordId}
+					val={props.val}
+					changeVal={changeVal}
+					lang={props.lang}
 				/>
 			);
 		}

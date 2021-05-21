@@ -3,6 +3,7 @@ import { createRequestTypes } from './apiAction';
 
 export const SLUG_API = createRequestTypes('SLUG_API');
 export const WORKING_SLUG_API = createRequestTypes('WORKING_SLUG_API');
+export const CLEAR_WORKING_SLUG = 'CLEAR_WORKING_SLUG';
 
 export function fetchSlug(tableNameId, recordId) {
 	return (dispatch) => {
@@ -17,7 +18,17 @@ export function fetchSlug(tableNameId, recordId) {
 	};
 }
 
-export function fetchWorkingSlug(tableNameId, recordId, record) {
+
+export function clearWorkingSlug(tableId, recordId) {
+	return (dispatch) => {
+		return dispatch({
+			type: CLEAR_WORKING_SLUG,
+			data: { tableId, recordId },
+		});
+	};
+}
+
+export function fetchWorkingSlug(tableNameId, recordId, record, override) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
@@ -25,6 +36,7 @@ export function fetchWorkingSlug(tableNameId, recordId, record) {
 				route: `slug/${tableNameId}/${recordId}`,
 				data: {
 					record,
+					override,
 				},
 			},
 		});

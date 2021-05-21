@@ -3,11 +3,13 @@ import { createSelector } from 'reselect';
 
 const recordIdSelector = (state, props) => props.recordId || (props.params && props.params.recordId);
 const tableIdSelector = (state, props) => props.tableId || (props.params && props.params.tableId) || (props.table && props.table.id);
-const slugsSelector = state => state.freestone.slugs;
+const realSlugsSelector = state => state.freestone.slugs.slugs;
+const langSelector = (state, props) => props.lang;
+const workingSlugsSelector = state => state.freestone.slugs.working;
 const recordsSelector = state => state.freestone.recordForm.records;
 import { tableSchemaMapStateToProps } from './tableSchema';
 
-function makeSlugSelector() {
+function makeSlugSelector(slugsSelector = realSlugsSelector) {
 	return createSelector(
 		[tableIdSelector, recordIdSelector, slugsSelector],
 		(tableId, recordId, allSlugs) => {
@@ -51,14 +53,15 @@ function makeRecordParsedSelector() {
 
 
 export function slugWidgetMapStateToProps() {
-	const slugSelectorInst = makeSlugSelector();
+	const slugSelectorInst = makeSlugSelector(workingSlugsSelector);
 	const recordSelector = makeRecordParsedSelector();
 
 	return createSelector(
-		[slugSelectorInst, recordSelector],
-		(slugs, record) => {			
+		[slugSelectorInst, recordSelector, langSelector],
+		(recordWorkingSlugs, record, lang) => {
+			const workingSlugs = recordWorkingSlugs && recordWorkingSlugs[lang];
 			return {
-				slugs,
+				workingSlugs,
 				record,
 			};
 		}
