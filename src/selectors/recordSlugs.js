@@ -7,6 +7,8 @@ const realSlugsSelector = state => state.freestone.slugs.slugs;
 const langSelector = (state, props) => props.lang;
 const workingSlugsSelector = state => state.freestone.slugs.working;
 const recordsSelector = state => state.freestone.recordForm.records;
+const rewritePatternSelector = state => state.freestone.env.freestone.rewritePattern;
+const domainSelector = state => state.freestone.env.freestone.domain;
 import { tableSchemaMapStateToProps } from './tableSchema';
 
 function makeSlugSelector(slugsSelector = realSlugsSelector) {
@@ -57,12 +59,16 @@ export function slugWidgetMapStateToProps() {
 	const recordSelector = makeRecordParsedSelector();
 
 	return createSelector(
-		[slugSelectorInst, recordSelector, langSelector],
-		(recordWorkingSlugs, record, lang) => {
+		[slugSelectorInst, recordSelector, langSelector, rewritePatternSelector, domainSelector],
+		(recordWorkingSlugs, record, lang, rewritePatternRaw, domain) => {
 			const workingSlugs = recordWorkingSlugs && recordWorkingSlugs[lang];
+			// change language in pattern
+			const rewritePattern = rewritePatternRaw && rewritePatternRaw.replace(':l', lang);
 			return {
 				workingSlugs,
 				record,
+				rewritePattern,
+				domain,
 			};
 		}
 	);

@@ -6,15 +6,24 @@ import { CLEAR_DATA } from '../actions/dev';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { SET_FIELD_VALUE } from '../actions/record';
 
-function removeRecordSlug(state, tableId, recordId) {
+function removeRecordSlug(state, tableId, recordId, lang) {
 	if (!state[tableId] || !state[tableId][recordId]) return state;
+
+	if (lang && !state[tableId][recordId][lang]) return state;
 	const newState = {
 		...state,
 		[tableId]: {
 			...state[tableId],
 		},
 	};
-	delete newState[tableId][recordId];
+	if (lang) {
+		newState[tableId][recordId] = {
+			...newState[tableId][recordId],
+		};
+		delete newState[tableId][recordId][lang];
+	} else {
+		delete newState[tableId][recordId];
+	}
 	return newState;
 
 }
@@ -42,8 +51,11 @@ function makeReducer(api, isWorkingSlugs) {
 			const newState = {
 				...state,
 				[tableId]: {
-					...state[state],
-					[recordId]: slugs,
+					...state[tableId],
+					[recordId]: {
+						...(state[tableId] && state[tableId][recordId]),
+						...slugs,
+					},
 				},
 			};
 			return newState;
@@ -56,8 +68,8 @@ function makeReducer(api, isWorkingSlugs) {
 		case CLEAR_WORKING_SLUG: {
 			if (!isWorkingSlugs) return state;
 			// if we delete slugs whenevr the record changes
-			const { tableId, recordId } = action.data;
-			return removeRecordSlug(state, tableId, recordId);
+			const { tableId, recordId, lang } = action.data;
+			return removeRecordSlug(state, tableId, recordId, lang);
 		}
 		default:
 			return state;

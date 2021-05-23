@@ -19,21 +19,21 @@ export function fetchSlug(tableNameId, recordId) {
 }
 
 
-export function clearWorkingSlug(tableId, recordId) {
+export function clearWorkingSlug(tableId, recordId, lang) {
 	return (dispatch) => {
 		return dispatch({
 			type: CLEAR_WORKING_SLUG,
-			data: { tableId, recordId },
+			data: { tableId, recordId, lang },
 		});
 	};
 }
 
-export function fetchWorkingSlug(tableNameId, recordId, record, override) {
+export function fetchWorkingSlug(tableNameId, lang, recordId, record, override) {
 	return (dispatch) => {
 		return dispatch({
 			[FREESTONE_API]: {
 				types: WORKING_SLUG_API,
-				route: `slug/${tableNameId}/${recordId}`,
+				route: `slug/${tableNameId}/${recordId}/${lang}`,
 				data: {
 					record,
 					override,

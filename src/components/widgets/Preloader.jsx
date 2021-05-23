@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import colors from '../../styles/Colors';
 
@@ -9,7 +10,7 @@ const DOT_SIZE = 6;
 
 const getRelativeSize = p => (p / 80) * SIZE;
 
-const Spinner = styled.div`
+const Spinner = styled.div`${props => `
 	display: block;
 	position: absolute;
 	left: 50%;
@@ -19,6 +20,7 @@ const Spinner = styled.div`
 	width: ${SIZE}px;
 	height: ${SIZE}px;
 	opacity: 0.5;
+	transform: scale(${props.scale});
 
 	div {
 		animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
@@ -98,12 +100,12 @@ const Spinner = styled.div`
 			transform: rotate(360deg);
 		}
 	}
-`;
+`}`;
 
-export function Preloader() {
+export function Preloader({ size = SIZE }) {
+	const scale = size / SIZE;
 	return (
-
-		<Spinner>
+		<Spinner scale={scale}>
 			<div></div>
 			<div></div>
 			<div></div>
@@ -116,3 +118,6 @@ export function Preloader() {
 
 	);
 }
+Preloader.propTypes = {
+	size: PropTypes.number,
+};

@@ -1,39 +1,55 @@
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import colors from './Colors';
 import { triangle, hexToRgb } from './Utils';
 
 
-const tooltipBgColor = `rgba(${hexToRgb(colors.backgroundDark)}, 0.9)`;
-export const Tooltip = styled.div`
+const getTooltipCss = props => {
+	let tooltipBgColor;
+	let color = colors.white;
+	if (props.warning) {
+		tooltipBgColor = '#ffde96';
+		color = '#93580a';
+	} else {
+		tooltipBgColor = `rgba(${hexToRgb(colors.backgroundDark)}, 0.9)`;
+	}
+
+	return css`
 	
-	display: block;
-	background: ${tooltipBgColor};
-	font-size: 12px;
-	color: ${colors.white};
-	padding: 10px;
-	line-height: 1.3;
-	width: 260px;
-
-	position: absolute;
-		top: -10px;
-		left: 50%;
-
-	transform: translate(-50%, -100%);
-
-	&:after {
 		display: block;
-		content: ' ';
+		background: ${tooltipBgColor};
+		font-size: 12px;
+		color: ${color};
+		padding: 10px;
+		line-height: 1.3;
+		width: 260px;
 
 		position: absolute;
-			bottom: 0;
+			top: -10px;
 			left: 50%;
 
-		transform: translate(-50%, 100%);
+		transform: translate(-50%, -100%);
 
-		${triangle('10px', tooltipBgColor, 'bottom')}
-	}
-`;
+		em {
+			font-style: italic;
+		}
+
+		&:after {
+			display: block;
+			content: ' ';
+
+			position: absolute;
+				bottom: 0;
+				left: 50%;
+
+			transform: translate(-50%, 100%);
+
+			${triangle('10px', tooltipBgColor, 'bottom')}
+		}
+		
+	`;
+};
+export const Tooltip = styled.div`${props => getTooltipCss(props)}`;
 
 export const PromptContainer = styled.div`
 	position: relative;
@@ -50,7 +66,6 @@ function getWidgetCss(props) {
 
 	return `
 		background: ${bgColor};
-
 		position: absolute;
 			top: 40px;
 			left: 0;

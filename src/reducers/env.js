@@ -34,11 +34,10 @@ function freestone(state = envInitialState, action) {
 	case ENV_API.SUCCESS: {
 		// console.log(action.data);
 		const data = action.data;
-		const defaults = envInitialState;
-		return Object.keys(defaults).reduce((vals, key) => {
-			vals[key] = data[key] || defaults[key];
-			return vals;
-		}, {});
+		return {
+			...envInitialState,
+			...data,
+		};
 	}
 	case CLEAR_DATA:
 	case UNAUTHORIZED:

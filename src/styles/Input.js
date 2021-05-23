@@ -19,13 +19,15 @@ function getFieldGroupCss(props) {
 
 	return css`
 		display: block;
-		padding: 10px 10px;
+		padding: 0 10px 10px;
+		margin-bottom: 10px;
 
 		${props.isRoot && `
 			padding: 0;
 		`}
 
 		${props.isCollapsable && `
+			padding-top: 10px;
 			border-top: 3px solid ${colors.backgroundMainAccent};
 			background: rgba(255, 255, 255, 0.25);
 		`};
