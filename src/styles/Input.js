@@ -43,7 +43,7 @@ export function getInputCss(props) {
 		border: 1px solid rgba(${hexToRgb(colors.textPrimary)}, 0.25);
 		color: ${colors.textPrimary};
 
-		padding: 0 10px;
+		padding: 2px 10px;
 		margin: 0 0 0.7em;
 
 		transition: border-color 0.2s ease;

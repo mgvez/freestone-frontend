@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Textarea } from '../../../styles/Input';
 
 const MAX_HEIGHT = 600;
-const MIN_HEIGHT = 40;
+const MIN_HEIGHT = 0;
 
 export default class AutoAdjustText extends Component {
 	static propTypes = {
@@ -37,10 +37,9 @@ export default class AutoAdjustText extends Component {
 		const area = this.inputRef.current;
 		if (!area) return;
 
-		if (area.scrollHeight > area.clientHeight) {
-			let height = area.parentNode.scrollHeight;
+		if (area.scrollHeight !== this.state.height) {
+			let height = area.scrollHeight;
 			if (height > MAX_HEIGHT) height = MAX_HEIGHT;
-			if (height === this.state.height) return;
 
 			this.setState({
 				height,
@@ -58,7 +57,7 @@ export default class AutoAdjustText extends Component {
 			value={value}
 			style={{
 				overflow: this.state.overflow,
-				minHeight: `${MIN_HEIGHT}px`,
+				height: `${this.state.height}px`,
 				maxHeight: `${MAX_HEIGHT}px`,
 			}}
 			placeholder={this.props.placeholder}
