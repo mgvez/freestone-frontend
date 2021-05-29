@@ -1,7 +1,6 @@
 //SHARED
 
 const fieldsSelector = state => state.freestone.schema.fields;
-import md5 from 'md5';
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps, parentTableSchemaMapStateToProps } from './tableSchema';
 import { recordMapStateToProps, parentRecordMapStateToProps, recordUnalteredMapStateToProps, activeGroupMapStateToProps } from './record';
@@ -65,28 +64,11 @@ function parseDependencies(table, record) {
 				};
 			}
 			const current = carry[dependingFieldId];
-			
-			// first pass for this field
-			if (current.byControl === undefined) {
-				current.byControl = {
-					[controlFieldId]: current.isDisplay,
-				};
-			} else if (current.byControl[controlFieldId] === undefined) {
-				// first rule of a subsequent field. If depending field was set as invisible by a previous control, 
-				// then depending is not shown (it's a AND)
-				if (!current.isDisplay) return carry;
-				// invert first rule for this control (each control field behaves the same)
-				if (rule.isDisplay) current.isDisplay = false;
-				current.byControl[controlFieldId] = !rule.isDisplay;
-			}
-			// console.log('c %s d %s rule %s val %s applies %s', controlField && controlField.name, dependingField && dependingField.name, rule.rule, record[controlFieldId], carry[dependingFieldId].isDisplay);
 
 			//does the control field value match the rule?
 			const ruleApplies = checkRule(rule.rule, record[controlFieldId]);
-			// console.log(rule.rule, record[controlFieldId], controlFieldId, dependingFieldId, ruleApplies);
+			// console.log('rule %s applies %s display %s', rule.rule, ruleApplies, rule.isDisplay);
 			if (ruleApplies) {
-				// console.log('%s applies displays (%s)', rule.rule, rule.isDisplay);
-				// console.log(carry[dependingFieldId]);
 				// console.log(rule);
 				current.isDisplay = rule.isDisplay;
 				current.descriptionAppend = (current.descriptionAppend || '') + (rule.descriptionAppend || '');
@@ -94,13 +76,10 @@ function parseDependencies(table, record) {
 				current.sizeOverride = Number(rule.sizeOverride);
 			}
 
-			// keep display status for each control fields. all controlling field's display statuses must be true in order for this field to be shown
-			current.byControl[controlFieldId] = current.isDisplay;
 
 			return carry;
 		}, defaults);
 	}, {});
-	// console.log(dependenciesValues);
 
 	return dependenciesValues;
 }
