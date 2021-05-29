@@ -8,6 +8,7 @@ import { Button } from '../../styles/Button';
 import SetVisibleTab from './buttons/SetVisibleTab';
 
 import Subform from '../../containers/form/subform/Subform';
+import ContentBlockPreview from '../../containers/form/widgets/ContentBlockPreview';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
 import Changelog from '../../containers/changelog/Changelog';
 import DuplicateRecord from '../../containers/form/buttons/DuplicateRecord';
@@ -246,6 +247,7 @@ export default class SingleRecord extends Component {
 	}
 
 	render() {
+
 		let form;
 		if (this.props.table && this.props.record) {
 
@@ -297,6 +299,11 @@ export default class SingleRecord extends Component {
 		}
 		return (
 			<StyledSingleRecord isSubform={this.props.isSubform} isSidebarView={this.props.isSidebarView}>
+				<ContentBlockPreview 
+					tableId={this.props.table.id}
+					recordId={this.props.recordId}
+					language={this.props.language}
+				/>
 				{form}
 			</StyledSingleRecord>
 		);

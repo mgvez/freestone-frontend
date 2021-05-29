@@ -18,7 +18,7 @@ const saveStateSelector = state => state.freestone.save;
 const listPageAfterSaveSelector = state => state.freestone.nav.listPageAfterSave;
 
 //get un tree de IDs de records et de ses children
-function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
+export function buildTree(tableId, recordId, allRecords, allMtmRecords, allTables, unfilteredChildren) {
 	const childrenTables = unfilteredChildren && unfilteredChildren[tableId] || [];
 	const children = childrenTables.reduce((allChildrenRecords, childTableId) => {
 
@@ -63,7 +63,7 @@ function hookRecord(record) {
 }
 
 //utilise le tree pour retriever les records référencés dans ce tree
-function getRecords(branch, allRecords, getDeleted, records = {}) {
+export function getRecords(branch, allRecords, getDeleted, records = {}) {
 	const { tableId, recordId, children } = branch;
 	const record = allRecords[tableId] && allRecords[tableId][recordId];
 	records[tableId] = records[tableId] || {};

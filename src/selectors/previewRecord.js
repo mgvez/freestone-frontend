@@ -4,6 +4,10 @@ import { createSelector } from 'reselect';
 import { recordSlugsMapStateToProps } from './recordSlugs';
 import { userViewLanguageSelector } from './userViewLanguage';
 
+import { schemaSelector } from './schema';
+import { tableSchemaMapStateToProps } from './tableSchema';
+import { buildTree } from './buildRecord';
+
 const lastEditSelector = state => state.freestone.recordForm.lastEdit.time;
 const previewSlugsSelector = state => state.freestone.recordPreview.slugs;
 const previewIdsSelector = state => state.freestone.recordPreview.previewIds;
@@ -63,3 +67,59 @@ export const currentPreviewSelector = createSelector(
 	}
 );
 
+
+const childrenSelector = state => state.freestone.schema.children;
+const recordsSelector = state => state.freestone.recordForm.records;
+const mtmRecordsSelector = state => state.freestone.recordForm.mtmRecords;
+const recordIdSelector = (state, props) => props.recordId;
+const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
+
+function formatRecords(branch, allRecords, allTables, language) {
+	const { tableId, recordId, children } = branch;
+
+	const record = allRecords[tableId] && allRecords[tableId][recordId];
+	const table = allTables[tableId];
+
+	if (!table || !record) return null;
+
+	const formattedRecord = table.fields.reduce((built, field) => {
+		if (field.language) {
+			if (field.language === language) {
+				built[field.langAgnosticName] = record[field.id];
+			}
+		} else {
+			built[field.name] = record[field.id];
+		}
+		return built;
+	}, {});
+	return {
+		record: formattedRecord,
+		children: children.reduce((carry, childBranch) => {
+			const childTableId = childBranch.tableId;
+			const childTable = allTables[childTableId];
+			const childTableName = childTable.name;
+			return {
+				...carry,
+				[childTableName]: [
+					...(carry[childTableName] || []),
+					formatRecords(childBranch, allRecords, allTables, language),
+				],
+			};
+		}, {}),	
+	};
+}
+
+export const previewUnsavedRecordMapStateToProps = () => createSelector(
+	[tableSchemaMapStateToProps(), schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, languageSelector],
+	(table, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, language) => {
+		const { tables } = allSchema;
+		if (table.name !== 'content_block') return {};
+		
+		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
+		const previewRecord = formatRecords(tree, allRecords, tables, language);
+
+		return {
+			previewRecord,
+		};
+	}
+);
