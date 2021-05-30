@@ -174,6 +174,7 @@ export const TabsList = styled.nav`
 		margin-right: 5px;
 		margin-top: 4px;
 
+
 		&:hover {
 			color: ${colors.linksPrimary};
 			background-color: ${colors.white};
@@ -211,6 +212,11 @@ export const TabsList = styled.nav`
 					margin: 0 0 2px 0;
 					border: 1px solid ${colors.backgroundMain};
 					border-right: none;
+
+
+					&.indent {
+						padding-left: 40px;
+					}
 
 					&.active {
 						transform: translate(1px, 0);

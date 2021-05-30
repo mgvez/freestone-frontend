@@ -95,7 +95,15 @@ const ItemLabel = styled.div`${props => `
 	}
 `}`;
 
-
+const getFieldFromId = (fields, searchId) => {
+	const found = fields.find(field => searchId === field.id);
+	if (found) return found;
+	return fields.reduce((childFound, field) => {
+		if (childFound) return childFound;
+		if (!field.childrenFields) return null;
+		return getFieldFromId(field.childrenFields, searchId);
+	}, null);
+};
 export default function BlockFieldDeps(props) {
 	
 	const { dependenciesByField, dependencies, tableId, table, types } = props;
@@ -130,11 +138,21 @@ export default function BlockFieldDeps(props) {
 			if (!dependencies) {
 				props.fetchAllData();
 			}
+		}
+	}, [isSaving, dependencies]);
+
+	useEffect(() => {
+		if (!isSaving) {
 			if (tableId && !table) {
 				props.fetchTable(tableId);
 			}
+			if (table && table.children) {
+				table.children.forEach(t => {
+					if (!t.schema) props.fetchTable(t.id);
+				});
+			}
 		}
-	}, [isSaving, dependencies, tableId, table]);
+	}, [isSaving, tableId, table]);
 	
 	const getActionParams = (field, typeId, values) => {
 		const allFieldIds = field.languageSiblingIds && field.languageSiblingIds.length ? field.languageSiblingIds : [field.id];
@@ -146,7 +164,7 @@ export default function BlockFieldDeps(props) {
 	let content;
 	if (types && table && dependencies) {
 
-		const getRow = (key, label, field, typeId, typeName) => {
+		const getRow = (key, label, field, typeId, typeName, childrenFields) => {
 			const fieldId = field.id;
 			// console.log(field);
 			const onChangeIsDisplay = isDisplay => {
@@ -194,6 +212,10 @@ export default function BlockFieldDeps(props) {
 						/>
 					)}
 					</ItemCell>
+					{isDisplay && childrenFields && childrenFields.map(childField => {
+						// getRow(field.name, field.displayLabel, field, activeType.id, activeType.name, field.childrenFields)
+						return getRow(`${key}.${childField.name}`, `${childField.tableName}.${childField.displayLabel}`, childField, typeId, typeName);
+					})}
 				</React.Fragment>
 			);
 		};
@@ -202,9 +224,12 @@ export default function BlockFieldDeps(props) {
 		let switches;
 		let header;
 
+
 		const getActiveField = () => {
 			if (!currentField) return table.dependingFields[0];
-			return table.dependingFields.find(field => currentField === field.id);
+			const active = getFieldFromId(table.dependingFields, currentField);
+			if (active) return active;
+			return table.dependingFields[0];
 		};
 		
 		const getActiveType = () => {
@@ -254,9 +279,8 @@ export default function BlockFieldDeps(props) {
 				const onClick = () => setCurrentType(type.id);
 
 				return (<div className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</div>);
-				
 			});
-			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id, activeType.name));
+			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id, activeType.name, field.childrenFields));
 
 			header = (
 				<Heading2>When content block type is <strong>{activeType.name}</strong>, display fields:</Heading2>
@@ -264,18 +288,24 @@ export default function BlockFieldDeps(props) {
 
 		} else {
 			const activeField = getActiveField();
+			const parseFieldTab = (field, indent) => {
 
-			tabs = table.dependingFields.map(field => {
-				
 				const isActive = activeField.id === field.id;
 				const activeClass = isActive && 'active';
 				const onClick = () => setCurrentField(field.id);
-				return (<div key={`f${field.id}`} className={`tab ${activeClass}`} onClick={onClick}>{field.displayLabel}</div>);
-				
-			});
+				return (
+					<React.Fragment key={`f${field.id}`} >
+						<div key={`f${field.id}`} className={`tab ${activeClass} ${indent && 'indent'}`} onClick={onClick}>{field.displayLabel}</div>
+						{field.childrenFields && field.childrenFields.map(f => parseFieldTab(f, true))}
+					</React.Fragment>
+				);
+			};
+			tabs = table.dependingFields.map(f => parseFieldTab(f, false));
 			switches = types.map(type => getRow(type.name, type.name, activeField, type.id, type.name));
 			header = (
-				<Heading2>Display field <strong>{activeField.displayLabel}</strong> when content block  type is:</Heading2>
+				<Heading2>
+					Display field <strong>{`${activeField.tableName ? `${activeField.tableName}.` : ''}${activeField.displayLabel}`}</strong> when content block  type is:
+				</Heading2>
 			);
 		}
 
