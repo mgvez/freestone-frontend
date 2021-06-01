@@ -5,6 +5,7 @@ import { SavedFileInput } from '../freestone/fileInputs';
 import { createRequestTypes } from './apiAction';
 
 export const FILE_API = createRequestTypes('FILE_API');
+export const SAVE_BANK_IMAGES_API = createRequestTypes('SAVE_BANK_IMAGES_API');
 
 const CHUNK_SIZE = 1024 * 1024;
 
@@ -65,6 +66,32 @@ function sendChunk(dispatch, fileDef, rangeStart = 0) {
 	return chunkReqAction.then(() => sendChunk(dispatch, fileDef, rangeEnd));
 }
 
+function getPostFileDef(record, recordId, tableId) {
+	return Object.keys(record).map(fieldId => {
+		const val = record[fieldId];
+		const fileInput = val && new SavedFileInput(val);
+		// console.log(fieldId, val);
+
+		// no need to check for field type. Input will exist only if it was created, the value being a hash
+		const file = fileInput && fileInput.getFile();
+		// but if we have no file per se, it is not impossible that the field is a bank image with a crop, whose value is held in fileinputs
+		const crop = fileInput && fileInput.getCropSettings();
+
+		if (!file && !crop) return null;
+		const bankImgId = fileInput.getBankItemId();
+		// console.log(crop, tmpName);
+		return {
+			tmpName: val,
+			bankImgId,
+			file,
+			fileName: file && file.name,
+			fieldId,
+			recordId,
+			tableId,
+			crop,
+		};
+	}).filter(r => r);
+}
 
 export function sendRecordFiles(dispatch, records) {
 	//loop et send files
@@ -73,30 +100,7 @@ export function sendRecordFiles(dispatch, records) {
 		return Object.keys(tableRecords).reduce((tableFiles, recordId) => {
 			const record = tableRecords[recordId];
 			// console.log(record);
-			return tableFiles.concat(Object.keys(record).map(fieldId => {
-				const val = record[fieldId];
-				// console.log(tmpName);
-				const fileInput = val && new SavedFileInput(val);
-
-				// no need to check for field type. Input will exist only if it was created, the value being a hash
-				const file = fileInput && fileInput.getFile();
-				// but if we have no file per se, it is not impossible that the field is a bank image with a crop, whose value is held in fileinputs
-				const crop = fileInput && fileInput.getCropSettings();
-
-				if (!file && !crop) return null;
-				const bankImgId = fileInput.getBankItemId();
-				// console.log(crop, tmpName);
-				return {
-					tmpName: val,
-					bankImgId,
-					file,
-					fileName: file && file.name,
-					fieldId,
-					recordId,
-					tableId,
-					crop,
-				};
-			}).filter(r => r));
+			return tableFiles.concat(getPostFileDef(record, recordId, tableId));
 		}, recordsFiles);
 	}, []);
 
@@ -104,5 +108,21 @@ export function sendRecordFiles(dispatch, records) {
 	return Promise.mapSeries(allFiles, fileDef => {
 		return sendChunk(dispatch, fileDef);
 	});
+}
 
+/*
+	Takes images that were sent to the back and save them in the bank, and return their IDs
+*/
+export function saveFilesAsBankImages(records) {
+	return (dispatch) => {
+		return dispatch({
+			[FREESTONE_API]: {
+				types: SAVE_BANK_IMAGES_API,
+				route: 'bank/img/save',
+				data: {
+					records,
+				},
+			},
+		});
+	};
 }

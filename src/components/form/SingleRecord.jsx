@@ -33,6 +33,7 @@ export default class SingleRecord extends Component {
 		isSidebarView: PropTypes.bool,
 		isGod: PropTypes.bool,
 		isNew: PropTypes.bool,
+		isInactive: PropTypes.bool,
 		isOneToOne: PropTypes.bool,
 		
 		table: PropTypes.object,
@@ -299,11 +300,11 @@ export default class SingleRecord extends Component {
 		}
 		return (
 			<StyledSingleRecord isSubform={this.props.isSubform} isSidebarView={this.props.isSidebarView}>
-				<ContentBlockPreview 
+				{!this.props.isInactive && <ContentBlockPreview 
 					tableId={this.props.table.id}
 					recordId={this.props.recordId}
 					language={this.props.language}
-				/>
+				/>}
 				{form}
 			</StyledSingleRecord>
 		);

@@ -20,9 +20,6 @@ export default class SaveLivePreview extends Component {
 	};
 
 	componentDidMount() {
-		// console.log(this.props.tree);
-		// console.log(this.props.records);
-		// console.log('MOUNT', this.props.records, this.props.deleted);
 		this.props.saveRecord(this.props.table, this.props.tree, this.props.records, this.props.deleted, null, true, null, this.props.callback);
 	}
 

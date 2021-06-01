@@ -17,7 +17,7 @@ export const SWAP_ORDER_API = createRequestTypes('SWAP_ORDER_API');
 export const DELETE_RECORD_API = createRequestTypes('DELETE_RECORD_API');
 
 
-function catchError(res) {
+export function catchError(res) {
 
 	if (res instanceof Error) {
 		console.log('%cSAVE ERROR', 'color:magenta;font-weight:bold');// eslint-disable-line

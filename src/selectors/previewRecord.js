@@ -6,7 +6,7 @@ import { userViewLanguageSelector } from './userViewLanguage';
 
 import { schemaSelector } from './schema';
 import { tableSchemaMapStateToProps } from './tableSchema';
-import { buildTree } from './buildRecord';
+import { buildTree, getRecords } from './buildRecord';
 
 const lastEditSelector = state => state.freestone.recordForm.lastEdit.time;
 const previewSlugsSelector = state => state.freestone.recordPreview.slugs;
@@ -115,11 +115,14 @@ export const previewUnsavedRecordMapStateToProps = () => createSelector(
 		const { tables } = allSchema;
 		if (table.name !== 'content_block') return {};
 		
+		
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
+		const records = getRecords(tree, allRecords, false);
 		const previewRecord = formatRecords(tree, allRecords, tables, language);
 
 		return {
 			previewRecord,
+			records,
 		};
 	}
 );
