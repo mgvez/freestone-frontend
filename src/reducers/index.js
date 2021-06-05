@@ -15,6 +15,7 @@ import subform from './subform';
 import fieldgroup from './fieldgroup';
 import bank from './bank';
 import slugs from './slugs';
+import titles from './titles';
 import permissions from './permissions';
 import save from './save';
 import blockFieldDeps from './blockFieldDeps';
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
 	bank,
 	translations,
 	slugs,
+	titles,
 	permissions,
 	blockFieldDeps,
 });

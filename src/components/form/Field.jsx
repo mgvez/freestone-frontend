@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TYPE_SUBFORM, TYPE_SUBFORM_GUID, TYPE_OTO, TYPE_OTO_GUID, TYPE_MTM, SLUG_WIDGET_NAME } from '../../freestone/schemaProps';
+import {
+	TYPE_SUBFORM,
+	TYPE_SUBFORM_GUID,
+	TYPE_OTO,
+	TYPE_OTO_GUID,
+	TYPE_MTM,
+	SLUG_WIDGET_NAME,
+	TITLE_WIDGET_NAME,
+} from '../../freestone/schemaProps';
 
 import TextInput from './inputTypes/TextInput';
 import BoolInput from './inputTypes/BoolInput';
@@ -17,6 +25,7 @@ import HtmlInput from '../../containers/form/inputTypes/HtmlInput';
 import AutocompleteInput from '../../containers/form/inputTypes/AutocompleteInput';
 
 import RecordSlug from '../../containers/form/widgets/RecordSlug';
+import RecordTitle from '../../containers/form/widgets/RecordTitle';
 
 import { StyledField, FieldLabel, FieldDescription } from '../../styles/Input';
 import { GridItem } from '../../styles/Grid';
@@ -51,6 +60,18 @@ export default function Field(props) {
 			// Slugs widget is in the META table, so the slug really is for the meta record's parent record
 			widget = (
 				<RecordSlug
+					key={key}
+					tableId={props.parentTableId} 
+					recordId={props.parentRecordId}
+					val={props.val}
+					changeVal={changeVal}
+					lang={props.lang}
+				/>
+			);
+		} else if (props.field.widget === TITLE_WIDGET_NAME) {
+			// Slugs widget is in the META table, so the slug really is for the meta record's parent record
+			widget = (
+				<RecordTitle
 					key={key}
 					tableId={props.parentTableId} 
 					recordId={props.parentRecordId}
