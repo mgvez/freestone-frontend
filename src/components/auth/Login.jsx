@@ -64,6 +64,7 @@ export default class Login extends Component {
 		gapiready: PropTypes.bool,
 		ssoAdminURL: PropTypes.string,
 		siteName: PropTypes.string,
+		clientPath: PropTypes.string,
 
 		loginUser: PropTypes.func,
 		fetchVariable: PropTypes.func,
@@ -228,7 +229,7 @@ export default class Login extends Component {
 				{
 					this.props.ssoAdminURL && (
 						<div className="btns">
-							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${window.location.origin}/admin`)}`}>Log in with SSO</FlatTopButton>
+							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${this.props.clientPath}/admin`)}`}>Log in with SSO</FlatTopButton>
 						</div>
 					)
 				}

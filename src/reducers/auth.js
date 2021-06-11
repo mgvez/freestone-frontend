@@ -77,6 +77,12 @@ export default function(state = initialState, action) {
 			gapi_token_id: action.data.googletoken_id,
 			gapi_token_access: action.data.googletoken_access,
 		};
+	case LOGIN_API.SUCCESS:
+		return {
+			...state,
+			isRequestPending: false,
+			statusText: '',
+		};
 	case LOGIN_USER_SUCCESS:
 		return {
 			...state,
