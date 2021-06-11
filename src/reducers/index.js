@@ -19,6 +19,7 @@ import titles from './titles';
 import permissions from './permissions';
 import save from './save';
 import blockFieldDeps from './blockFieldDeps';
+import settingsEditor from './settingsEditor';
 
 const rootReducer = combineReducers({
 	siteHeader,
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
 	titles,
 	permissions,
 	blockFieldDeps,
+	settingsEditor,
 });
 
 export default rootReducer;
