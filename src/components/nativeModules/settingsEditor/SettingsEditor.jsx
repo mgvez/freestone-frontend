@@ -94,20 +94,18 @@ export default function SettingsEditor(props) {
 					<GridItem columns="12">
 						<GridContainer>
 							{activeGroupItems.map(item => {
-								let value = (activeGroupValues && activeGroupValues[item.name]) || item.default || '';
+								let value = (activeGroupValues && activeGroupValues[item.key]) || item.default || '';
 								const onChange = (e) => {
 									const v = (e && e.target) ? e.target.value : e;
-									props.editSettings(currentActiveGroup, item.name, v);
+									props.editSettings(currentActiveGroup, item.key, v);
 								};
 								let input;
-								console.log(item.type);
+								// console.log(item.type);
 								const type = item.type.toLowerCase();
 								
-								switch (type) {
-								case 'predefined_object':
+								// object or array
+								if (typeof value === 'object') {
 									value = JSON.stringify(value, null, '	');
-									break;
-								default:
 								}
 
 								switch (type) {
@@ -120,7 +118,7 @@ export default function SettingsEditor(props) {
 								}
 
 								return (
-									<Field key={item.name} label={item.name} description={item.description}>
+									<Field key={item.key} label={item.key} description={item.description}>
 										{input}
 									</Field>
 								);

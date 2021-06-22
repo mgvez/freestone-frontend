@@ -178,7 +178,7 @@ export default function Field(props) {
 				lang={props.lang}
 				description={props.field.description}
 				descriptionAppend={props.field.descriptionAppend}
-				isDisplayLabel={!!widget}
+				isDisplayLabel={!widget}
 			>
 				{widget || input}
 			</GenericFormField>

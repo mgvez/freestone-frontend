@@ -12,7 +12,7 @@ export const settingsEditorSelector = createSelector(
 		// console.log(activeSearchItem);
 		// console.log(activeGroup);
 		// console.log('edited...', isEdited);
-		console.log(settingsSchema);
+		// console.log(settingsValues);
 
 		const schemaGroups = settingsSchema && Object.keys(settingsSchema);
 
