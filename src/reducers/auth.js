@@ -70,6 +70,9 @@ export default function(state = initialState, action) {
 		};
 	case LOGIN_API.REQUEST:
 		// console.log(action.data);
+		if (!action.data) {
+			return state;
+		}
 		return {
 			...state,
 			isRequestPending: true,

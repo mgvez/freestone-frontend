@@ -133,7 +133,6 @@ export default class Login extends Component {
 		const password = this._password.value;
 		const remember = this._remember.checked;
 		const shouldInstall = this.props.isInstalled === false;
-
 		const queryString = (new URL(window.location.href)).searchParams;
 		const siteName = queryString.get('site_name');
 		this.props.loginUser(username, password, remember, shouldInstall, siteName);
