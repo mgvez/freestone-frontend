@@ -16,20 +16,34 @@ const transformedSchemaSelector = createSelector(
 		const table = config.tableId && allSchema.tables && allSchema.tables[config.tableId];
 		if (!table) return null;
 
-		const dependingFields = [
-			...Object.values(table.fields.map(field => {
+		const children = (config.subforms || []).map(subform => {
+			const childTable = subform.tableId && allSchema.tables && allSchema.tables[subform.tableId];
+			return {
+				id: subform.tableId,
+				schema: childTable,
+			};
+		});
+
+		const parseTable = (tableSchema, tableName) => {
+			// console.log(tableSchema);
+			return tableSchema && Object.values(tableSchema.fields.map(field => {
 				if (field.foreign && ~TYPES_PARENT_LINK.indexOf(field.foreign.foreignType)) return null;
 				if (~INDEPENDENT_FIELD_TYPES.indexOf(field.type)) return null;
 				if (field.name === config.controlFieldName) return null;
 				return {
 					...field,
 					displayLabel: field.langAgnosticName,
+					tableName,
 				};
 			}).filter(f => f).reduce((carry, field) => {
 				const { langAgnosticName } = field;
 				carry[langAgnosticName] = field;
 				return carry;
-			}, {})),
+			}, {}));
+		};
+
+		const dependingFields = [
+			...parseTable(table),
 
 			// also add subform link fields
 			...(config.subforms || []).map(subform => {
@@ -37,12 +51,14 @@ const transformedSchemaSelector = createSelector(
 				return {
 					...subform.linkField,
 					displayLabel,
+					childrenFields: parseTable(children.find(ct => ct.id === subform.tableId).schema, subform.tableName),
 				};
 			}),
 		];
 
 		return {
 			...table,
+			children,
 			dependingFields,
 		};
 	}
