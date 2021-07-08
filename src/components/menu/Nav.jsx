@@ -68,9 +68,9 @@ export default class Nav extends Component {
 							return <NavGroup key={item.id} data={item} level={0} toggleState={this.props.toggleState} toggleCollapse={this.props.toggleCollapse} clearList={this.props.clearList} />;
 						})
 					}
-					<NavItem key="settings">
-						<NavLinkButton to="/n-module/settings" inline="true" className="menu-dashboard dashboard"><Icon icon="cog" /> <span>Settings</span></NavLinkButton>
-					</NavItem>
+					{/*<NavItem key="settings">*/}
+					{/*	<NavLinkButton to="/n-module/settings" inline="true" className="menu-dashboard dashboard"><Icon icon="cog" /> <span>Settings</span></NavLinkButton>*/}
+					{/*</NavItem>*/}
 				</NavWrapper>
 			</NavbarContainer>
 		);
