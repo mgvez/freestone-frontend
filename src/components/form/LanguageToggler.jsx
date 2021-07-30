@@ -41,40 +41,40 @@ const StyledTab = styled.div`
 	}
 `;
 
-export default class LanguageToggler extends Component {
-	static propTypes = {
-		allLanguages: PropTypes.array,
-		language: PropTypes.string,
-		localLanguage: PropTypes.string,
-
-		onChangeLang: PropTypes.func,
-		setLanguage: PropTypes.func,
-	};
-
-	changeLanguage = (e) => {
+const LanguageToggler = (props) => {
+	const changeLanguage = (e) => {
 		const lang = e && e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.value;
 
 		//si callback, la langue n'est pas sitewide, mais locale à un component, qui a un callback pour capturer le changement
-		if (this.props.onChangeLang) {
-			this.props.onChangeLang(lang);
+		if (props.onChangeLang) {
+			props.onChangeLang(lang);
 		} else {
-			this.props.setLanguage(lang);
+			props.setLanguage(lang);
 		}
 	};
 
-	render() {
-		const currentLanguage = this.props.localLanguage || this.props.language;
-		// console.log(`render input ${this.props.field.name}`);
-		return (
-			<StyledToggler>
-			{
-				this.props.allLanguages.map((language, i) => {
-					const isActive = language === currentLanguage;
-					const activeClass = isActive ? 'active' : '';
-					return <StyledTab key={i} data-value={language} onClick={this.changeLanguage} className={`language-tab ${activeClass}`} title="use alt-l to toggle between languages">{language}</StyledTab>;
-				})
-			}
-			</StyledToggler>
-		);
-	}
-}
+	const currentLanguage = props.localLanguage || props.language;
+	// console.log(`render input ${props.field.name}`);
+	return (
+		<StyledToggler>
+		{
+			props.allLanguages.map((language, i) => {
+				const isActive = language === currentLanguage;
+				const activeClass = isActive ? 'active' : '';
+				return <StyledTab key={i} data-value={language} onClick={changeLanguage} className={`language-tab ${activeClass}`} title="use alt-l to toggle between languages">{language}</StyledTab>;
+			})
+		}
+		</StyledToggler>
+	);
+};
+
+LanguageToggler.propTypes = {
+	allLanguages: PropTypes.array,
+	language: PropTypes.string,
+	localLanguage: PropTypes.string,
+
+	onChangeLang: PropTypes.func,
+	setLanguage: PropTypes.func,
+};
+
+export default LanguageToggler;
