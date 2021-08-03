@@ -70,12 +70,21 @@ export default function(state = initialState, action) {
 		};
 	case LOGIN_API.REQUEST:
 		// console.log(action.data);
+		if (!action.data) {
+			return state;
+		}
 		return {
 			...state,
 			isRequestPending: true,
 			statusText: 'Checking credentials...',
 			gapi_token_id: action.data.googletoken_id,
 			gapi_token_access: action.data.googletoken_access,
+		};
+	case LOGIN_API.SUCCESS:
+		return {
+			...state,
+			isRequestPending: false,
+			statusText: '',
 		};
 	case LOGIN_USER_SUCCESS:
 		return {

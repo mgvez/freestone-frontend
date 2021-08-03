@@ -112,22 +112,27 @@ export function unauthorized(error = {}) {
 
 export function loginUser(username = null, password = null, remember = null, processInstall = false) {
 	return (dispatch) => {
-		// console.log(redirect);
-		const data = (username || password) ? {
+		let data = (username || password) ? {
 			freestoneuser: username,
 			freestonepass: password,
 			freestoneremember: remember ? '1' : '0',
 			freestoneinstall: processInstall ? '1' : '0',
-		} : {};
+		} : null;
 
 		const queryString = (new URL(window.location.href)).searchParams;
 		const ticket = queryString.get('ticket');
 		if (ticket) {
-			data.ticket = ticket;
+			data = {
+				...data,
+				ticket,
+			};
 		}
-		const siteName = queryString.get('site_name');
-		if (siteName) {
-			data.site_name = siteName;
+		const site_name = queryString.get('site_name');
+		if (site_name) {
+			data = {
+				...data,
+				site_name,
+			};
 		}
 
 		const actionType = processInstall ? INSTALL_API : LOGIN_API;

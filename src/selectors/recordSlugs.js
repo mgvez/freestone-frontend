@@ -6,10 +6,9 @@ const tableIdSelector = (state, props) => props.tableId || (props.params && prop
 const realSlugsSelector = state => state.freestone.slugs.slugs;
 const langSelector = (state, props) => props.lang;
 const workingSlugsSelector = state => state.freestone.slugs.working;
-const recordsSelector = state => state.freestone.recordForm.records;
 const rewritePatternSelector = state => state.freestone.env.freestone.rewritePattern;
 const domainSelector = state => state.freestone.env.freestone.domain;
-import { tableSchemaMapStateToProps } from './tableSchema';
+import { makeRecordParsedSelector } from './record';
 
 function makeSlugSelector(slugsSelector = realSlugsSelector) {
 	return createSelector(
@@ -26,31 +25,6 @@ export function recordSlugsMapStateToProps() {
 	return (state, props) => {
 		return selectorInst(state, props);
 	};
-}
-
-function makeRecordSelector() {
-	return createSelector(
-		[tableIdSelector, recordIdSelector, recordsSelector],
-		(tableId, recordId, records) => {
-			return records && tableId && recordId && records[tableId] && records[tableId][recordId];
-		}
-	);
-}
-
-function makeRecordParsedSelector() {
-	const recordSelectorInst = makeRecordSelector();
-	const schemaSelectorInst = tableSchemaMapStateToProps();
-
-	return createSelector(
-		[schemaSelectorInst, recordSelectorInst],
-		(table, record) => {
-			const parsedRecord = record && table && table.fields && table.fields.reduce((mounted, field) => {
-				mounted[field.name] = record[field.id];
-				return mounted;
-			}, {});
-			return parsedRecord;
-		}
-	);
 }
 
 

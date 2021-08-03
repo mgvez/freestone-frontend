@@ -56,7 +56,7 @@ export function getEndpoint(route) {
 }
 
 
-export function callApi(route, data, label) {
+export function callApi(route, data, routeId) {
 	// console.log(`post data ${route}`, data);
 	// console.log(`JWT: ${jwt}`);
 	const method = 'post';//data ? 'post' : 'get';
@@ -65,7 +65,11 @@ export function callApi(route, data, label) {
 	if (jwt) {
 		headers.AuthorizationFreestone = `Bearer ${jwt}`;
 		// headers.Authorization = `Bearer ${jwt}`;
+	// if the call is a mere login attempt and we have neither data nor jwt, swallow
+	} else if (routeId === 'login' && !data) {
+		return Promise.reject();
 	}
+
 	const start = new Date();
 	return new Promise((resolve, reject) => {
 		reqwest({
@@ -82,7 +86,7 @@ export function callApi(route, data, label) {
 			if (r.profile && IS_PROFILING) {
 				const end = new Date();
 				const dur = end - start;
-				console.group(`${label}: ${dur}ms`);// eslint-disable-line
+				console.group(`${routeId}: ${dur}ms`);// eslint-disable-line
 				// const total = r.profile.shift();
 				r.profile.reduce((prevTime, item) => {
 

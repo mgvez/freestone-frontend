@@ -5,11 +5,14 @@ import cssVars from './Variables';
 import { textMedium, textSmall } from './Texts';
 import { hexToRgb } from './Utils';
 
+export const DISPLAYSIZE_SMALL = 'small';
+export const DISPLAYSIZE_MEDIUM = 'medium';
+export const DISPLAYSIZE_LARGE = 'large';
 
 function getFieldCss(displaySize) {
 	return css`
-		${displaySize === 'small' && textSmall};
-		${displaySize === 'medium' && textMedium};
+		${displaySize === DISPLAYSIZE_SMALL && textSmall};
+		${displaySize === DISPLAYSIZE_MEDIUM && textMedium};
 		height: 100%;
 		padding-bottom: 10px;
 	`;

@@ -379,7 +379,12 @@ export default function BlockFieldDeps(props) {
 			<FixedHeader
 				key="dependencies"
 				buttons={() => [<Button key="save" cta onClick={() => setIsSaving(true)}>SAVE</Button>]}
-				infos={() => <Heading1>Field dependencies</Heading1>}
+				infos={() => (
+					<React.Fragment>
+						<Heading1>Field dependencies</Heading1>
+						<p>NOTE: Each field needs to be displayed at least once, otherwise it won't have any dependency set and will always show, even if all its option are shown as "no". If a field is meant to be hidden everywhere, delete the field's definition.</p>
+					</React.Fragment>
+				)}
 			/>
 
 			<MainZone>

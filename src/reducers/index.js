@@ -15,9 +15,11 @@ import subform from './subform';
 import fieldgroup from './fieldgroup';
 import bank from './bank';
 import slugs from './slugs';
+import titles from './titles';
 import permissions from './permissions';
 import save from './save';
 import blockFieldDeps from './blockFieldDeps';
+import settingsEditor from './settingsEditor';
 
 const rootReducer = combineReducers({
 	siteHeader,
@@ -37,8 +39,10 @@ const rootReducer = combineReducers({
 	bank,
 	translations,
 	slugs,
+	titles,
 	permissions,
 	blockFieldDeps,
+	settingsEditor,
 });
 
 export default rootReducer;

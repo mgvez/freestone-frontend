@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TYPE_SUBFORM, TYPE_SUBFORM_GUID, TYPE_OTO, TYPE_OTO_GUID, TYPE_MTM, SLUG_WIDGET_NAME } from '../../freestone/schemaProps';
+import {
+	TYPE_SUBFORM,
+	TYPE_SUBFORM_GUID,
+	TYPE_OTO,
+	TYPE_OTO_GUID,
+	TYPE_MTM,
+	SLUG_WIDGET_NAME,
+	TITLE_WIDGET_NAME,
+} from '../../freestone/schemaProps';
 
+import GenericFormField from './GenericFormField';
 import TextInput from './inputTypes/TextInput';
 import BoolInput from './inputTypes/BoolInput';
 import FileInput from './inputTypes/FileInput';
@@ -17,9 +26,7 @@ import HtmlInput from '../../containers/form/inputTypes/HtmlInput';
 import AutocompleteInput from '../../containers/form/inputTypes/AutocompleteInput';
 
 import RecordSlug from '../../containers/form/widgets/RecordSlug';
-
-import { StyledField, FieldLabel, FieldDescription } from '../../styles/Input';
-import { GridItem } from '../../styles/Grid';
+import RecordTitle from '../../containers/form/widgets/RecordTitle';
 
 export default function Field(props) {
 
@@ -51,6 +58,18 @@ export default function Field(props) {
 			// Slugs widget is in the META table, so the slug really is for the meta record's parent record
 			widget = (
 				<RecordSlug
+					key={key}
+					tableId={props.parentTableId} 
+					recordId={props.parentRecordId}
+					val={props.val}
+					changeVal={changeVal}
+					lang={props.lang}
+				/>
+			);
+		} else if (props.field.widget === TITLE_WIDGET_NAME) {
+			// Slugs widget is in the META table, so the slug really is for the meta record's parent record
+			widget = (
+				<RecordTitle
 					key={key}
 					tableId={props.parentTableId} 
 					recordId={props.parentRecordId}
@@ -149,24 +168,21 @@ export default function Field(props) {
 		}
 	}
 	if (input || widget) {
-		return (<GridItem key={key} columns={props.isAside ? 12 : props.field.columns}>
-			<StyledField displaySize={props.field.displaySize}>
-				{!widget && (
-					<React.Fragment>
-						<FieldLabel>
-							<label title={props.field.alias}>
-								{props.field.label}
-								{props.lang && <em>(<span>{props.lang}</span>)</em>}
-							</label>
-						</FieldLabel>
-						{input}
-						{props.field.description && <FieldDescription dangerouslySetInnerHTML={{ __html: props.field.description }} />}
-						{props.field.descriptionAppend && <FieldDescription dangerouslySetInnerHTML={{ __html: props.field.descriptionAppend }} />}
-					</React.Fragment>
-				)}
-				{widget}
-			</StyledField>
-		</GridItem>);
+		return (
+			<GenericFormField
+				key={key}
+				displaySize={props.field.displaySize}
+				columns={props.isAside ? 12 : props.field.columns}
+				labelTitle={props.field.alias}
+				label={props.field.label}
+				lang={props.lang}
+				description={props.field.description}
+				descriptionAppend={props.field.descriptionAppend}
+				isDisplayLabel={!widget}
+			>
+				{widget || input}
+			</GenericFormField>
+		);
 	}
 
 	return null;
