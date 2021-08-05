@@ -5,14 +5,15 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import colors from '../../styles/Colors';
 
-const scale = 1;
+const scale = 0.5;
 const WidgetIframe = styled.iframe`
 	transformOrigin: 0 0;
-	transform: translate(0px, 0px) scale(${scale});
+	transform: translate(-50%, -50%) scale(${scale});
 	border: 0;
-	width: 100%;
-	height: 100%;
+	width: 200%;
+	height: 200%;
 	display: block;
+	border: 1px red solid;
 `;
 
 export function IFrame(props) {

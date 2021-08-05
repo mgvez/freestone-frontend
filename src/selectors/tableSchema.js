@@ -6,7 +6,7 @@ export const tableNameSelector = (state, props) => props.tableName || (props.par
 const mainTableIdSelector = (state, props) => props.tableId || (props.params && props.params.tableId) || (props.match && props.match.params && props.match.params.tableId);
 const parentTableIdSelector = (state, props) => props.parentTableId;
 
-function makeSelector(tableIdSelector) {
+function makeTableSelector(tableIdSelector) {
 	return createSelector(
 		[schemaSelector, tableNameSelector, tableIdSelector],
 		(schema, tableName, tableId) => {
@@ -21,17 +21,17 @@ function makeSelector(tableIdSelector) {
 	);
 }
 
-export const tableSchemaSelector = makeSelector(mainTableIdSelector);
+export const tableSchemaSelector = makeTableSelector(mainTableIdSelector);
 
 export function tableSchemaMapStateToProps() {
-	const selectorInst = makeSelector(mainTableIdSelector);
+	const selectorInst = makeTableSelector(mainTableIdSelector);
 	return (state, props) => {
 		return selectorInst(state, props);
 	};
 }
 
 export function parentTableSchemaMapStateToProps() {
-	const selectorInst = makeSelector(parentTableIdSelector);
+	const selectorInst = makeTableSelector(parentTableIdSelector);
 	return (state, props) => {
 		// console.log('reselect table', (props.tableId || (props.params && props.params.tableId)) || props.tableName || (props.params && props.params.tableName));
 		return selectorInst(state, props);

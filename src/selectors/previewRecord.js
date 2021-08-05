@@ -75,8 +75,8 @@ export const currentPreviewSelector = createSelector(
 const childrenSelector = state => state.freestone.schema.children;
 const recordsSelector = state => state.freestone.recordForm.records;
 const mtmRecordsSelector = state => state.freestone.recordForm.mtmRecords;
-const recordIdSelector = (state, props) => props.recordId;
-const languageSelector = (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
+const makeRecordIdSelector = () => (state, props) => props.recordId;
+const makeLanguageSelector = () => (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
 
 function formatRecords(branch, allRecords, allTables, language) {
 	const { tableId, recordId, children } = branch;
@@ -113,21 +113,25 @@ function formatRecords(branch, allRecords, allTables, language) {
 	};
 }
 
-export const previewUnsavedRecordMapStateToProps = () => createSelector(
-	[tableSchemaMapStateToProps(), schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, languageSelector],
-	(table, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, language) => {
-		const { tables } = allSchema;
-		console.log('getting built for %s', recordId);
-		// a prop is added by the back on the content block's table to tell that it is previewable. Only the content_block s are configured to do so.
-		if (!table.isContentBlockPreviewable) return {};
-		
-		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
-		const records = getRecords(tree, allRecords, false);
-		const previewRecord = formatRecords(tree, allRecords, tables, language);
+export function previewUnsavedRecordMapStateToProps() {
+	const tableSchemaSelector = tableSchemaMapStateToProps();
+	const recordIdSelector = makeRecordIdSelector();
+	const languageSelector = makeLanguageSelector();
+	return createSelector(
+		[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, languageSelector],
+		(table, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, language) => {
+			const { tables } = allSchema;
+			// a prop is added by the back on the content block's table to tell that it is previewable. Only the content_block s are configured to do so.
+			if (!table.isContentBlockPreviewable) return {};
+			
+			const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
+			const records = getRecords(tree, allRecords, false);
+			const previewRecord = formatRecords(tree, allRecords, tables, language);
 
-		return {
-			previewRecord,
-			records,
-		};
-	}
-);
+			return {
+				previewRecord: JSON.stringify(previewRecord),
+				records,
+			};
+		}
+	);
+}

@@ -13,7 +13,7 @@ export default function ContentBlockPreview({
 	fetchContentBlockPreview,
 	form,
 }) {
-	if (!tableId || !previewRecord) return null;
+
 	const [previewHtml, setPreviewHtml] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 	
