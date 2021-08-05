@@ -8,6 +8,10 @@ import { schemaSelector } from './schema';
 import { tableSchemaMapStateToProps } from './tableSchema';
 import { buildTree, getRecords } from './buildRecord';
 
+/**
+ * Manages the selectors for the content block previews. The backend has an endpoint to fetch a content block's html with a json input
+ * */
+
 const lastEditSelector = state => state.freestone.recordForm.lastEdit.time;
 const previewSlugsSelector = state => state.freestone.recordPreview.slugs;
 const previewIdsSelector = state => state.freestone.recordPreview.previewIds;
@@ -113,8 +117,9 @@ export const previewUnsavedRecordMapStateToProps = () => createSelector(
 	[tableSchemaMapStateToProps(), schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, languageSelector],
 	(table, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, language) => {
 		const { tables } = allSchema;
-		if (table.name !== 'content_block') return {};
-		
+		console.log('getting built for %s', recordId);
+		// a prop is added by the back on the content block's table to tell that it is previewable. Only the content_block s are configured to do so.
+		if (!table.isContentBlockPreviewable) return {};
 		
 		const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 		const records = getRecords(tree, allRecords, false);

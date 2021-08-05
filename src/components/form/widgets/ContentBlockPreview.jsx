@@ -1,25 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Preloader } from '../../widgets/Preloader';
-import TextInput from '../inputTypes/TextInput';
-import { Button } from '../../../styles/Button';
-import colors from '../../../styles/Colors';
-
-import styled from 'styled-components';
-
-const scale = 0.5;
-const WidgetIframe = styled.iframe`
-	transformOrigin: 0 0;
-	transform: translate(0px, 0px) scale(${scale});
-	border: 1px ${colors.borderForm} solid;
-`;
-
-const Widget = styled.div`
-	padding: 10px;
-	margin: 0 0 0.7em;
-	background: ${colors.backgroundMainAccent};
-	border: 1px ${colors.borderForm} solid;
-`;
+import { IFrame } from '../../widgets/IFrame';
+import { GridContainer, GridItem } from '../../../styles/Grid';
 
 
 export default function ContentBlockPreview({
@@ -28,13 +11,18 @@ export default function ContentBlockPreview({
 	previewRecord,
 	records,
 	fetchContentBlockPreview,
+	form,
 }) {
 	if (!tableId || !previewRecord) return null;
 	const [previewHtml, setPreviewHtml] = useState();
+	const [isLoading, setIsLoading] = useState(false);
+	
 	useEffect(() => {
 		const tid = setTimeout(() => {
+			setIsLoading(true);
 			fetchContentBlockPreview(previewRecord, records).then(res => {
 				if (res.html) setPreviewHtml(res.html);
+				setIsLoading(false);
 			});
 		}, 500);
 		return () => {
@@ -43,9 +31,15 @@ export default function ContentBlockPreview({
 	}, [previewRecord]);
 
 	return (
-		<Widget className="freestone-preview">
-			<div dangerouslySetInnerHTML={{ __html: previewHtml }} />
-		</Widget>
+		<GridContainer>
+			<GridItem columns="6">
+				<IFrame><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
+				{isLoading && <Preloader />}
+			</GridItem>
+			<GridItem columns="6">
+				{form}
+			</GridItem>
+		</GridContainer>
 	);
 
 }
@@ -55,5 +49,6 @@ ContentBlockPreview.propTypes = {
 	recordId: PropTypes.string,
 	previewRecord: PropTypes.object,
 	records: PropTypes.object,
+	form: PropTypes.element,
 	fetchContentBlockPreview: PropTypes.func,
 };

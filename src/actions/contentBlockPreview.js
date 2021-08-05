@@ -9,7 +9,7 @@ import { catchError } from './save';
 export const FETCH_CONTENTBLOCK_PREVIEW = createRequestTypes('FETCH_CONTENTBLOCK_PREVIEW');
 
 
-export function fetchContentBlockPreview(data, records) {
+export function fetchContentBlockPreview(cbRecord, records) {
 	return (dispatch) => {
 		const onFiles = sendRecordFiles(dispatch, records).then(filesResult => {
 			if (!filesResult || !filesResult.length) return;
@@ -41,12 +41,13 @@ export function fetchContentBlockPreview(data, records) {
 			});
 
 		});
-
+		// console.log(data);
+		const data = JSON.stringify(cbRecord);
 		return dispatch({
 			[FREESTONE_API]: {
 				types: FETCH_CONTENTBLOCK_PREVIEW,
 				route: 'contentBlockPreview',
-				data,
+				data: { data },
 			},
 		});
 	};

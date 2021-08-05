@@ -296,16 +296,24 @@ export default class SingleRecord extends Component {
 					{this.renderGroups(this.props.mainGroups)}
 				</article>
 			);
-
 		}
-		return (
-			<StyledSingleRecord isSubform={this.props.isSubform} isSidebarView={this.props.isSidebarView}>
-				{!this.props.isInactive && <ContentBlockPreview 
+
+		let contentOutput = form;
+		// if this is a content block record, we display the preview next to it.
+		if (this.props.table.isContentBlockPreviewable && !this.props.isInactive) {
+			contentOutput = (
+				<ContentBlockPreview 
 					tableId={this.props.table.id}
 					recordId={this.props.recordId}
 					language={this.props.language}
-				/>}
-				{form}
+					form={form}
+				/>
+			);
+		}
+
+		return (
+			<StyledSingleRecord isSubform={this.props.isSubform} isSidebarView={this.props.isSidebarView}>
+				{contentOutput}
 			</StyledSingleRecord>
 		);
 	}
