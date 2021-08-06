@@ -5,15 +5,16 @@ import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import colors from '../../styles/Colors';
 
-const scale = 0.5;
+const scale = 0.6;
+const translatePrc = -(1 - scale) * 50;
+const blowupPrc = 100 / scale;
 const WidgetIframe = styled.iframe`
 	transformOrigin: 0 0;
-	transform: translate(-50%, -50%) scale(${scale});
+	transform: translate(${translatePrc}%, ${translatePrc}%) scale(${scale});
 	border: 0;
-	width: 200%;
-	height: 200%;
+	width: ${blowupPrc}%;
+	height: ${blowupPrc}%;
 	display: block;
-	border: 1px red solid;
 `;
 
 export function IFrame(props) {
