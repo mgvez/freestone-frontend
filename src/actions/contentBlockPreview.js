@@ -7,6 +7,7 @@ import { sendRecordFiles, saveFilesAsBankImages } from './sendFile';
 import { catchError } from './save';
 
 export const FETCH_CONTENTBLOCK_PREVIEW = createRequestTypes('FETCH_CONTENTBLOCK_PREVIEW');
+export const SET_PREVIEW_WIDTH = 'SET_PREVIEW_WIDTH';
 
 
 export function fetchContentBlockPreview(jsonRecord, records) {
@@ -47,6 +48,17 @@ export function fetchContentBlockPreview(jsonRecord, records) {
 				types: FETCH_CONTENTBLOCK_PREVIEW,
 				route: 'contentBlockPreview',
 				data: { data: jsonRecord },
+			},
+		});
+	};
+}
+
+export function setPreviewWidth(ratio) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_PREVIEW_WIDTH,
+			data: {
+				ratio,
 			},
 		});
 	};
