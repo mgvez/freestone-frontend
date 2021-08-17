@@ -68,6 +68,7 @@ const dependenciesSelector = createSelector(
 	[allDependenciesSelector],
 	(dependencies) => {
 		if (!dependencies) return {};
+		console.log(dependencies);
 		const dependenciesByField = dependencies && dependencies.reduce((carry, dependency) => {
 			const { dependingFieldId, rule } = dependency;
 			carry[dependingFieldId] = carry[dependingFieldId] || {};
@@ -84,10 +85,38 @@ const dependenciesSelector = createSelector(
 
 
 export const blockFieldDepsSelector = createSelector(
-	[configSelector, transformedSchemaSelector, dependenciesSelector, routeSelector],
-	(config, table, parsedDependencies, route) => {
+	[configSelector, transformedSchemaSelector, allDependenciesSelector, routeSelector],
+	(config, table, dependencies, route) => {
+
+		// console.log(dependencies);
+		// console.log(config);
+		const dependenciesByField = dependencies && dependencies.reduce(
+			(carry, dependency) => {
+				const { dependingFieldId, rule, isDisplay } = dependency;
+				carry[dependingFieldId] = carry[dependingFieldId] || {};
+				carry[dependingFieldId][rule] = dependency;
+				return carry;
+			}, 
+			{}
+		);
+		const dependenciesByFieldFiltered = dependenciesByField && Object.entries(dependenciesByField).reduce((carry, [id, vals]) => {
+			// if all dependencies are set to false, remove all values
+			const hasDisplay = Object.values(vals).find(v => v.isDisplay);
+			if (hasDisplay) {
+				carry[id] = Object.values(config.types).reduce((parsedVals, { id: typeId }) => {
+					if (!parsedVals[typeId]) {
+						parsedVals[typeId] = { isDisplay: false };
+					}
+					return parsedVals;
+				}, vals);
+			}
+			return carry;
+		}, {});
+		// console.log(dependenciesByFieldFiltered);
+
 		return {
-			...parsedDependencies,
+			dependencies,
+			dependenciesByField: dependenciesByFieldFiltered,
 			...config,
 			table,
 			...route,

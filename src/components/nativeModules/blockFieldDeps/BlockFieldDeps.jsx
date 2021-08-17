@@ -182,7 +182,13 @@ export default function BlockFieldDeps(props) {
 			};
 
 			const currentDependency = dependenciesByField[fieldId] && dependenciesByField[fieldId][typeId];
+			// does this field have other rules set? If not, it will be displayed by default
+			const hasOtherRules = dependenciesByField[fieldId];
 			const isDisplay = currentDependency && currentDependency.isDisplay && currentDependency.isDisplay !== '0';
+			const hasValue = currentDependency && currentDependency.isDisplay !== null && currentDependency.isDisplay !== undefined;
+			if (!hasOtherRules && !hasValue) {
+				// isDisplay = true;
+			}
 			const isSuggested = currentDependency && currentDependency.isSuggested;
 			return (
 				<React.Fragment key={key}>
@@ -190,7 +196,16 @@ export default function BlockFieldDeps(props) {
 						<ItemLabel className={isSuggested && 'suggested'} field={field.langAgnosticName} tpl={typeName}>{label}</ItemLabel>
 					</ItemCell>
 					<ItemCell>
-						<BoolInput key={`${key}-${fieldId}-${typeId}`} small val={isDisplay} fieldId={fieldId} recordId={typeId} changeVal={onChangeIsDisplay} />
+						<BoolInput 
+							key={`${key}-${fieldId}-${typeId}`}
+							small 
+							val={isDisplay}
+							hasValue={hasValue}
+							fieldId={fieldId}
+							recordId={typeId}
+							changeVal={onChangeIsDisplay}
+							isCheckedWhenUnset
+						/>
 					</ItemCell>
 					<ItemCell>
 					{isDisplay && (

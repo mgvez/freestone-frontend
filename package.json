@@ -52,6 +52,7 @@
     "moment": "^2.29.1",
     "morgan": "^1.9.1",
     "normalizr": "^2.0.0",
+    
     "postcss-loader": "^2.0.6",
     "qs": "^6.9.4",
     "sass-loader": "^6.0.6",
