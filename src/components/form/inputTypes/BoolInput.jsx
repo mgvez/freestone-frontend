@@ -10,6 +10,7 @@ export default function BoolInput(props) {
 	const isChecked = props.val === '1' || props.val === true || props.val === 1;
 
 	const onChange = props.readonly ? noop : () => props.changeVal(!isChecked);
+	console.log(id, props.hasValue);
 	return (
 		<ToggleContainer readonly={props.readonly} small={props.small} hasVal={props.hasValue} showAsChecked={!props.hasValue && props.isCheckedWhenUnset}>
 			<input readOnly={props.readonly} id={id} type="checkbox" checked={isChecked} onChange={onChange} />
@@ -28,7 +29,7 @@ BoolInput.propTypes = {
 	isCheckedWhenUnset: PropTypes.bool,
 	readonly: PropTypes.bool,
 };
-BoolInput.defaultValues = {
+BoolInput.defaultProps = {
 	hasValue: true,
 	isCheckedWhenUnset: false,
 };

@@ -68,7 +68,6 @@ const dependenciesSelector = createSelector(
 	[allDependenciesSelector],
 	(dependencies) => {
 		if (!dependencies) return {};
-		console.log(dependencies);
 		const dependenciesByField = dependencies && dependencies.reduce((carry, dependency) => {
 			const { dependingFieldId, rule } = dependency;
 			carry[dependingFieldId] = carry[dependingFieldId] || {};
