@@ -42,8 +42,7 @@ export default class AutoAdjustText extends Component {
 			if (height > MAX_HEIGHT) height = MAX_HEIGHT;
 
 			const overflow = height === MAX_HEIGHT ? 'scroll' : 'hidden';
-
-			if (this.state.height !== height || this.state.overflow !== overflow) {
+			if (Math.abs(this.state.height - height) > 4 || this.state.overflow !== overflow) {
 				this.setState({
 					height,
 					overflow,
