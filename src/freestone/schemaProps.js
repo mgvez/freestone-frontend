@@ -44,6 +44,10 @@ export const SUBFORM_VIEW_TABBED_VERTICAL = 'tabbed-vertical';
 export const SUBFORM_VIEW_LIST = 'full list';
 export const SUBFORM_VIEW_STACKED = 'stacked';
 
+export const SUBFORM_PREVIEW_MODE_PREVIEWS = 'previews';
+export const SUBFORM_PREVIEW_MODE_MIXED = 'mixed';
+export const SUBFORM_PREVIEW_MODE_EDIT = 'edit';
+
 export const BANK_IMG_NAME = 'img';
 export const BANK_IMG_TABLE = 'zva_bank_img';
 export const BANK_IMG_CATEGORIES_TABLE = 'zva_bank_img_categ';
