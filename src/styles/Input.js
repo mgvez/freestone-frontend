@@ -190,13 +190,20 @@ function getToggleCss(props) {
 				background: ${colors.positive};
 
 				&:after {
-					left: calc(100% - 28px);
+					left: ${props.hasVal ? 'calc(100% - 28px)' : 'calc(50% - 28px)'};
 				}
 
 				&:before {
-					content: attr(data-on-label);
+					content: ${props.hasVal ? 'attr(data-on-label)' : ''};
 					left: 7.5px;
 				}
+			}
+
+			& + label {
+				${!props.hasVal && props.showAsChecked && `
+					background: ${colors.positive};
+					
+				`}
 			}
 
 			&:disabled + label {
@@ -207,11 +214,10 @@ function getToggleCss(props) {
 			${props.small && `
 				&:checked + label {
 					&:after {
-						left: calc(100% - 16px);
+						left: ${props.hasVal ? 'calc(100% - 16px)' : 'calc(50% - 16px)'};
 					}
 
 					&:before {
-						content: attr(data-on-label);
 						left: 6px;
 					}
 				}
@@ -221,7 +227,7 @@ function getToggleCss(props) {
 		label {
 
 			cursor: pointer;
-
+			
 			position: relative;
 			display: block;
 			width: 0;
@@ -234,11 +240,15 @@ function getToggleCss(props) {
 			border-radius: 17px;
 
 			transition: background 0.2s;
+			${!props.hasVal && `
+				background: ${colors.neutral};
+				opacity: 0.6;
+			`}
 
 			&:after {
 				position: absolute;
 					top: 2px;
-					left: 2px;
+					left: ${props.hasVal ? '2px' : 'calc(50% - 14px)'};
 
 				height: 26px;
 				width: 26px;
@@ -250,7 +260,7 @@ function getToggleCss(props) {
 			}
 
 			&:before {
-				content: attr(data-off-label);
+				content: ${props.hasVal ? 'attr(data-off-label)' : ''};
 				color: ${colors.white};
 
 				position: absolute;
@@ -273,15 +283,12 @@ function getToggleCss(props) {
 
 				&:after {
 					top: 1px;
-					left: 1px;
-
+					left: ${props.hasVal ? '1px' : 'calc(50% - 8px)'};
 					height: 16px;
 					width: 16px;
 				}
 
 				&:before {
-					content: attr(data-off-label);
-					color: ${colors.white};
 
 					position: absolute;
 						top: 0;

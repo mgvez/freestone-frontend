@@ -60,6 +60,7 @@ const colors = {
 	dangerPrimary: red58,
 
 	positive: green69,
+	neutral: gray76,
 	negative: red58,
 
 	backgroundLightest: white,
