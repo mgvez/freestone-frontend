@@ -11,8 +11,27 @@ const tableIdSelector = (state, props) => {
 const visibleStateSelector = state => state.freestone.subform.visibleState;
 const collapsedStateSelector = state => state.freestone.subform.collapsedState;
 const viewStateSelector = state => state.freestone.subform.viewState;
+// const previewModeSelector = state => state.freestone.subform.previewMode;
 
-export const subformViewSelector = createSelector(
+// const makeSubformViewSelector = (tableSchemaSelector) => createSelector(
+// 	[tableSchemaSelector, viewStateSelector, previewModeSelector],
+// 	(table, viewState, previewMode) => {
+// 		// console.log(table);
+// 		return {
+// 			// currentViewType: viewState[table.id],
+// 			// currentPreviewMode: previewMode[table.id],
+// 		};
+// 	}
+// );
+
+// export function subformViewMapStateToProps() {
+// 	const selectorInst = makeSubformViewSelector(tableSchemaMapStateToProps());
+// 	return (state, props) => {
+// 		return selectorInst(state, props);
+// 	};
+// }
+
+export const subformViewMapStateToProps = createSelector(
 	[tableIdSelector, viewStateSelector],
 	(tableId, viewState) => {
 		return {
