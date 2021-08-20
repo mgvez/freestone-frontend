@@ -3,7 +3,7 @@
 import { createSelector } from 'reselect';
 import { tableSchemaMapStateToProps } from './tableSchema';
 import { tableRecordsMapStateToProps } from './record';
-import { subformViewSelector } from './subform';
+import { subformViewMapStateToProps } from './subform';
 import { schemaSelector } from './schema';
 import { isNew } from '../utils/UniqueId';
 import { getSubformFieldId } from '../freestone/schemaHelpers';
@@ -98,11 +98,34 @@ function getLabeledRecords(records, searchableFields, orderField, rawForeignOpti
 	});
 }
 
-function makeSelector(tableSchemaSelector, tableRecordsSelector) {
+function makeSelector(tableSchemaSelector, tableRecordsSelector, subformViewSelector) {
 	return createSelector(
-
-		[tableSchemaSelector, schemaSelector, tableRecordsSelector, childrenAreLoadedSelector, parentRecordIdSelector, parentTableIdSelector, shownRecordsSelector, subformViewSelector, rawForeignOptionsSelector, userViewLanguageSelector, parentRecordSelector],
-		(table, allSchema, tableRecords, childrenAreLoaded, parentRecordId, parentTableId, shownRecords, subformView, rawForeignOptions, userViewLanguage, parentRecord) => {
+		[
+			tableSchemaSelector,
+			schemaSelector,
+			tableRecordsSelector,
+			childrenAreLoadedSelector,
+			parentRecordIdSelector,
+			parentTableIdSelector,
+			shownRecordsSelector,
+			subformViewSelector,
+			rawForeignOptionsSelector,
+			userViewLanguageSelector,
+			parentRecordSelector,
+		],
+		(
+			table,
+			allSchema,
+			tableRecords,
+			childrenAreLoaded,
+			parentRecordId,
+			parentTableId,
+			shownRecords,
+			subformView,
+			rawForeignOptions,
+			userViewLanguage,
+			parentRecord
+		) => {
 
 			const { tables } = allSchema;
 
@@ -151,7 +174,6 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 						return record.order > highest ? Number(record.order) : highest;
 					}, 0);
 				}
-				// console.log(childrenRecords);
 
 				return {
 					table,
@@ -171,7 +193,7 @@ function makeSelector(tableSchemaSelector, tableRecordsSelector) {
 }
 
 export function formChildrenRecordsMapStateToProps() {
-	const selectorInst = makeSelector(tableSchemaMapStateToProps(), tableRecordsMapStateToProps());
+	const selectorInst = makeSelector(tableSchemaMapStateToProps(), tableRecordsMapStateToProps(), subformViewMapStateToProps());
 	return (state, props) => {
 		return selectorInst(state, props);
 	};

@@ -35,18 +35,18 @@ function cycle(current) {
 
 export default function ChangeSubformPreviewMode(props) {
 	const setType = () => {
-		const toggled = cycle(props.currentPreviewMode);
+		const toggled = cycle(props.previewMode);
 		props.setSubformPreviewMode(props.tableId, toggled.key);
 	};
 
 
-	const toggled = cycle(props.currentPreviewMode);
+	const toggled = cycle(props.previewMode);
 	return <Button onClick={setType} small="true" round="true" bordered="true"><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>;
 
 }
 
 ChangeSubformPreviewMode.propTypes = {
 	tableId: PropTypes.number,
-	currentPreviewMode: PropTypes.string,
+	previewMode: PropTypes.string,
 	setSubformPreviewMode: PropTypes.func,
 };

@@ -21,6 +21,7 @@ export default class SubformStacked extends Component {
 		parentRecordId: PropTypes.string,
 		parentTableId: PropTypes.number,
 		titleOverride: PropTypes.string,
+		previewMode: PropTypes.string,
 		descriptionAppend: PropTypes.string,
 		changeCollapsedState: PropTypes.func,
 		toggleShownRecord: PropTypes.func,

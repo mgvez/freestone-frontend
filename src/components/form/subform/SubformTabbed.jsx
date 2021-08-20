@@ -43,6 +43,7 @@ export default function SubformTabbed(props) {
 						language={props.language}
 						isSubform
 						isSidebarView={isSidebarView}
+						previewMode={props.previewMode}
 					/>
 				</TabbedContainer>
 			</Collapsable>
@@ -61,6 +62,7 @@ SubformTabbed.propTypes = {
 	titleOverride: PropTypes.string,
 	descriptionAppend: PropTypes.string,
 	currentViewType: PropTypes.string,
+	previewMode: PropTypes.string,
 	changeCollapsedState: PropTypes.func,
 	isCollapsed: PropTypes.bool,
 };

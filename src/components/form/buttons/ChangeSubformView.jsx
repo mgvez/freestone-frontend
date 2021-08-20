@@ -9,6 +9,7 @@ import {
 	SUBFORM_VIEW_LIST,
 	SUBFORM_VIEW_STACKED,
 	SUBFORM_VIEW_TABBED_VERTICAL,
+	SUBFORM_PREVIEW_MODE_PREVIEWS,
 } from '../../../freestone/schemaProps';
 
 function cycle(current) {
@@ -52,13 +53,17 @@ export default function ChangeSubformView(props) {
 	const toggled = cycle(props.currentViewType);
 
 	let previewBtn;
+	let hasChangeViewButton = true;
 	if (props.isContentBlockPreviewable) {
 		previewBtn = <ChangeSubformPreviewMode tableId={props.tableId} />;
+		hasChangeViewButton = props.previewMode !== SUBFORM_PREVIEW_MODE_PREVIEWS;
 	}
 
 	return (
 		<React.Fragment>
-			<Button onClick={setType} small="true" round="true" bordered="true"><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>
+			{hasChangeViewButton && (
+				<Button onClick={setType} small="true" round="true" bordered="true"><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>
+			)}
 			{previewBtn}
 		</React.Fragment>
 	);
@@ -68,6 +73,7 @@ export default function ChangeSubformView(props) {
 ChangeSubformView.propTypes = {
 	tableId: PropTypes.number,
 	currentViewType: PropTypes.string,
+	previewMode: PropTypes.string,
 	setSubformViewType: PropTypes.func,
 	isContentBlockPreviewable: PropTypes.bool,
 };

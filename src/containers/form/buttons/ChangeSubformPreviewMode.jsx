@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import ChangeSubformPreviewMode from '../../../components/form/buttons/ChangeSubformPreviewMode';
 
 import { setSubformPreviewMode } from '../../../actions/preview';
-import { subformViewSelector } from '../../../selectors/subform';
+import { subformViewMapStateToProps } from '../../../selectors/subform';
 
 export default connect(
-	subformViewSelector,
+	subformViewMapStateToProps(),
 	dispatch => bindActionCreators({ setSubformPreviewMode }, dispatch)
 )(ChangeSubformPreviewMode);

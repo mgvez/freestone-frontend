@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TYPE_LANGUAGE, BANK_PATH_ALIAS } from '../../freestone/schemaProps';
-
+import {
+	TYPE_LANGUAGE,
+	BANK_PATH_ALIAS,
+	SUBFORM_PREVIEW_MODE_MIXED,
+} from '../../freestone/schemaProps';
 import { StyledSingleRecord, TabsList, Aside, TabContentSection } from '../../styles/Form';
 import { StyledFieldGroup } from '../../styles/Input';
 import { Button } from '../../styles/Button';
@@ -31,6 +34,7 @@ export default class SingleRecord extends Component {
 		activeGroup: PropTypes.object,
 		isSubform: PropTypes.bool,
 		isSidebarView: PropTypes.bool,
+		previewMode: PropTypes.string,
 		isGod: PropTypes.bool,
 		isNew: PropTypes.bool,
 		isInactive: PropTypes.bool,
@@ -300,7 +304,7 @@ export default class SingleRecord extends Component {
 
 		let contentOutput = form;
 		// if this is a content block record, we display the preview next to it.
-		if (this.props.table.isContentBlockPreviewable && !this.props.isInactive) {
+		if (this.props.table.isContentBlockPreviewable && !this.props.isInactive && this.props.previewMode === SUBFORM_PREVIEW_MODE_MIXED) {
 			contentOutput = (
 				<ContentBlockPreview 
 					tableId={this.props.table.id}

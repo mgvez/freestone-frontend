@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 
 import SubformTabbed from './SubformTabbed';
 import SubformStacked from './SubformStacked';
+import PreviewsStacked from './PreviewsStacked';
 import SubformList from './SubformList';
 import SubformSingle from './SubformSingle';
 
 import { 
 	SUBFORM_VIEW_LIST,
 	SUBFORM_VIEW_STACKED,
+	SUBFORM_PREVIEW_MODE_PREVIEWS,
 	TYPE_SUBFORM,
 	TYPE_OTO,
 	TYPE_OTO_GUID,
@@ -56,7 +58,10 @@ export default function SubformStandard(props) {
 	if (!table) return null;
 	if (table.type === TYPE_SUBFORM || table.type === TYPE_SUBFORM_GUID) {
 		const currentViewType = props.currentViewType || props.defaultViewType;
-		if (currentViewType === SUBFORM_VIEW_LIST) {
+		const { previewMode } = props;
+		if (previewMode === SUBFORM_PREVIEW_MODE_PREVIEWS) {
+			return <PreviewsStacked {...props} swapRecords={swapRecords} />;
+		} else if (currentViewType === SUBFORM_VIEW_LIST) {
 			return <SubformList {...props} swapRecords={swapRecords} />;
 		} else if (currentViewType === SUBFORM_VIEW_STACKED) {
 			return <SubformStacked {...props} swapRecords={swapRecords} />;
@@ -79,6 +84,7 @@ SubformStandard.propTypes = {
 	parentRecordId: PropTypes.string,
 	highestOrder: PropTypes.number,
 	currentViewType: PropTypes.string,
+	previewMode: PropTypes.string,
 	defaultViewType: PropTypes.string,
 	language: PropTypes.string,
 	isCollapsed: PropTypes.bool,

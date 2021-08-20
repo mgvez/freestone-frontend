@@ -17,6 +17,7 @@ export default class StackList extends Component {
 		parentRecordId: PropTypes.string,
 		activeRecords: PropTypes.array,
 		language: PropTypes.string,
+		previewMode: PropTypes.string,
 		highestOrder: PropTypes.number,
 
 		swapRecords: PropTypes.func,
@@ -52,6 +53,7 @@ export default class StackList extends Component {
 									parentRecordId={this.props.parentRecordId}
 									parentTableId={this.props.parentTableId}
 									language={this.props.language}
+									previewMode={this.props.previewMode}
 									isSubform
 								/>
 							</Collapsable>

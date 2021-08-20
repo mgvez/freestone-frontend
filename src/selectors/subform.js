@@ -15,12 +15,12 @@ const makeSubformViewSelector = (tableSchemaSelector) => createSelector(
 		return {
 			isContentBlockPreviewable: table.isContentBlockPreviewable,
 			currentViewType: viewState[table.id],
-			currentPreviewMode: previewMode[table.id],
+			previewMode: previewMode[table.id],
 		};
 	}
 );
 
-export function subformViewSelector() {
+export function subformViewMapStateToProps() {
 	const selectorInst = makeSubformViewSelector(tableSchemaMapStateToProps());
 	return (state, props) => {
 		return selectorInst(state, props);

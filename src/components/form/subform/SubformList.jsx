@@ -26,6 +26,7 @@ export default class SubformList extends Component {
 		isCollapsed: PropTypes.bool,
 		titleOverride: PropTypes.string,
 		descriptionAppend: PropTypes.string,
+		previewMode: PropTypes.string,
 		swapRecords: PropTypes.func,
 
 		changeCollapsedState: PropTypes.func,
@@ -42,6 +43,7 @@ export default class SubformList extends Component {
 						parentRecordId={this.props.parentRecordId}
 						parentTableId={this.props.parentTableId}
 						language={this.props.language}
+						previewMode={this.props.previewMode}
 						isSubform
 					/>);
 				})
