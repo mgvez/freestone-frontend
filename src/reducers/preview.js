@@ -99,23 +99,6 @@ function previewIds(state = {}, action) {
 	}
 }
 
-function previewState(state = false, action) {
-	switch (action.type) {
-	case UNAUTHORIZED:
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return false;
-	case SET_RECORD_IS_PREVIEWING: 
-		return action.data;
-	default:
-		return state;
-	}
-}
-
 
 function currentPreview(state = { type: PREVIEW_IFRAME }, action) {
 	switch (action.type) {
@@ -139,7 +122,24 @@ function currentPreview(state = { type: PREVIEW_IFRAME }, action) {
 	}
 }
 
-export function previewMode(state = {}, action) {
+function mainPreviewState(state = false, action) {
+	switch (action.type) {
+	case UNAUTHORIZED:
+	case CLEAR_DATA:
+	case LOGOUT_API.SUCCESS:
+	case LOGOUT_API.REQUEST:
+	case CANCEL_EDIT_RECORD:
+	case SAVE_RECORD_API.SUCCESS:
+	case DELETE_RECORD_API.SUCCESS:
+		return false;
+	case SET_RECORD_IS_PREVIEWING: 
+		return action.data;
+	default:
+		return state;
+	}
+}
+
+export function subPreviewMode(state = {}, action) {
 	switch (action.type) {
 	case SET_PREVIEW_MODE: {
 		const tableId = action.data.tableId;
@@ -159,7 +159,7 @@ export function previewMode(state = {}, action) {
 export default combineReducers({
 	slugs,
 	previewIds,
-	previewState,
+	mainPreviewState,
 	currentPreview,
-	previewMode,
+	subPreviewMode,
 });

@@ -16,7 +16,7 @@ const lastEditSelector = state => state.freestone.recordForm.lastEdit.time;
 const previewSlugsSelector = state => state.freestone.preview.slugs;
 const previewIdsSelector = state => state.freestone.preview.previewIds;
 const currentPreviewIdSelector = state => state.freestone.preview.currentPreview;
-const previewStateSelector = state => state.freestone.preview.previewState;
+const mainPreviewStateSelector = state => state.freestone.preview.mainPreviewState;
 const contentBlockPreviewSettingsSelector = state => state.freestone.contentBlockPreview.previewSettings;
 const previewProcessorTableIdSelector = (state, props) => props.tableId;
 const previewProcessorRecordIdSelector = (state, props) => props.recordId;
@@ -52,7 +52,7 @@ export function previewRecordMapStateToProps() {
 }
 
 export const currentPreviewSelector = createSelector(
-	[currentPreviewIdSelector, previewSlugsSelector, userViewLanguageSelector, previewStateSelector],
+	[currentPreviewIdSelector, previewSlugsSelector, userViewLanguageSelector, mainPreviewStateSelector],
 	(currentPreview, allSlugs, userViewLanguage, isPreviewing) => {
 		// console.log(currentPreview);
 		// console.log(allSlugs);
