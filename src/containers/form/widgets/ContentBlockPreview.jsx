@@ -8,4 +8,4 @@ import { fetchContentBlockPreview, setPreviewWidth } from '../../../actions/prev
 export default connect(
 	previewUnsavedRecordMapStateToProps,
 	dispatch => bindActionCreators({ fetchContentBlockPreview, setPreviewWidth }, dispatch)
-	)(ContentBlockPreview);
+)(ContentBlockPreview);

@@ -2,8 +2,6 @@
 export const SET_SUBFORM_VIEW_TYPE = 'SET_SUBFORM_VIEW_TYPE';
 export const SET_SUBFORM_VISIBLE = 'SET_SUBFORM_VISIBLE';
 export const SET_SUBFORM_COLLAPSED = 'SET_SUBFORM_COLLAPSED';
-export const SET_SUBFORM_PREVIEW_MODE = 'SET_SUBFORM_PREVIEW_MODE';
-
 
 export function setSubformViewType(tableId, type) {
 	return (dispatch) => {
@@ -12,18 +10,6 @@ export function setSubformViewType(tableId, type) {
 			data: {
 				tableId,
 				type,
-			},
-		});
-	};
-}
-
-export function setSubformPreviewMode(tableId, mode) {
-	return (dispatch) => {
-		return dispatch({
-			type: SET_SUBFORM_PREVIEW_MODE,
-			data: {
-				tableId,
-				mode,
 			},
 		});
 	};

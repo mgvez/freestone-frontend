@@ -17,6 +17,7 @@ const previewSlugsSelector = state => state.freestone.preview.slugs;
 const previewIdsSelector = state => state.freestone.preview.previewIds;
 const currentPreviewIdSelector = state => state.freestone.preview.currentPreview;
 const mainPreviewStateSelector = state => state.freestone.preview.mainPreviewState;
+const subPreviewModeSelector = state => state.freestone.preview.subPreviewMode;
 const contentBlockPreviewSettingsSelector = state => state.freestone.contentBlockPreview.previewSettings;
 const previewProcessorTableIdSelector = (state, props) => props.tableId;
 const previewProcessorRecordIdSelector = (state, props) => props.recordId;
@@ -127,6 +128,7 @@ export function previewUnsavedRecordMapStateToProps() {
 			recordIdSelector,
 			childrenSelector,
 			languageSelector,
+			subPreviewModeSelector,
 			contentBlockPreviewSettingsSelector,
 		],
 		(
@@ -137,12 +139,13 @@ export function previewUnsavedRecordMapStateToProps() {
 			recordId,
 			unfilteredChildren,
 			language,
+			subPreviewModes,
 			previewSettings
 		) => {
 			const { tables } = allSchema;
 			// a prop is added by the back on the content block's table to tell that it is previewable. Only the content_block s are configured to do so.
 			if (!table.isContentBlockPreviewable) return {};
-			
+			const subPreviewMode = subPreviewModes && subPreviewModes[table.id];
 			const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 			const records = getRecords(tree, allRecords, false);
 			const previewRecord = formatRecords(tree, allRecords, tables, language);
@@ -150,6 +153,7 @@ export function previewUnsavedRecordMapStateToProps() {
 				previewRecord: JSON.stringify(previewRecord),
 				previewSettings,
 				records,
+				subPreviewMode,
 			};
 		}
 	);

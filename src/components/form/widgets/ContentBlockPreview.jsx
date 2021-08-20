@@ -3,7 +3,11 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { Preloader } from '../../widgets/Preloader';
 import { IFrame } from '../../widgets/IFrame';
-// import { GridContainer, GridItem } from '../../../styles/Grid';
+import { 
+	SUBFORM_PREVIEW_MODE_PREVIEWS,
+	SUBFORM_PREVIEW_MODE_MIXED,
+	SUBFORM_PREVIEW_MODE_EDIT,
+} from '../../../freestone/schemaProps';
 
 const DEFAULT_RATIO = 0.3;
 const MIN_SCALE = 0.1;
@@ -35,8 +39,8 @@ export default function ContentBlockPreview({
 	setPreviewWidth,
 	form,
 	previewSettings = {},
+	subPreviewMode,
 }) {
-
 	const [previewHtml, setPreviewHtml] = useState();
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -117,6 +121,7 @@ ContentBlockPreview.propTypes = {
 	tableId: PropTypes.number,
 	recordId: PropTypes.string,
 	previewRecord: PropTypes.string,
+	subPreviewMode: PropTypes.string,
 	records: PropTypes.object,
 	form: PropTypes.element,
 	previewSettings: PropTypes.shape({

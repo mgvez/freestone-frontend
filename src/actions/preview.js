@@ -16,6 +16,20 @@ export const SET_RECORD_IS_PREVIEWING = 'SET_RECORD_IS_PREVIEWING';
 export const SET_CURRENT_PREVIEW = 'SET_CURRENT_PREVIEW';
 export const SET_PREVIEW_VIEW_TYPE = 'SET_PREVIEW_VIEW_TYPE';
 
+export const SET_SUBFORM_PREVIEW_MODE = 'SET_SUBFORM_PREVIEW_MODE';
+
+
+export function setSubformPreviewMode(tableId, mode) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_SUBFORM_PREVIEW_MODE,
+			data: {
+				tableId,
+				mode,
+			},
+		});
+	};
+}
 
 export function setIsPreviewing(status) {
 	return (dispatch) => {
