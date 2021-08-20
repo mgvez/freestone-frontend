@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
+import ChangeSubformPreviewMode from '../../../containers/form/buttons/ChangeSubformPreviewMode';
 
 import { 
 	SUBFORM_VIEW_TABBED,
@@ -49,7 +50,18 @@ export default function ChangeSubformView(props) {
 
 
 	const toggled = cycle(props.currentViewType);
-	return <Button onClick={setType} small="true" round="true" bordered="true"><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>;
+
+	let previewBtn;
+	if (props.isContentBlockPreviewable) {
+		previewBtn = <ChangeSubformPreviewMode tableId={props.tableId} />;
+	}
+
+	return (
+		<React.Fragment>
+			<Button onClick={setType} small="true" round="true" bordered="true"><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>
+			{previewBtn}
+		</React.Fragment>
+	);
 
 }
 

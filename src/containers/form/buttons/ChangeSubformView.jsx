@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import ChangeSubformView from '../../../components/form/buttons/ChangeSubformView';
 
 import { setSubformViewType } from '../../../actions/subform';
-import { subformViewMapStateToProps } from '../../../selectors/subform';
+import { subformViewSelector } from '../../../selectors/subform';
 
 export default connect(
-	null,
+	subformViewSelector,
 	dispatch => bindActionCreators({ setSubformViewType }, dispatch)
 )(ChangeSubformView);

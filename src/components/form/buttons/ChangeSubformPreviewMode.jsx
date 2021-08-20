@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
@@ -11,24 +11,29 @@ import {
 
 function cycle(current) {
 	switch (current) {
+	case SUBFORM_PREVIEW_MODE_EDIT:
+		return {
+			key: SUBFORM_PREVIEW_MODE_PREVIEWS,
+			label: 'Switch to Preview',
+			icon: 'eye',
+		};
 	case SUBFORM_PREVIEW_MODE_PREVIEWS:
 		return {
 			key: SUBFORM_PREVIEW_MODE_MIXED,
-			label: 'View all open',
-			icon: 'server',
+			label: 'Switch to Side by side',
+			icon: 'columns',
 		};
 	case SUBFORM_PREVIEW_MODE_MIXED:
 	default:
 		return {
 			key: SUBFORM_PREVIEW_MODE_EDIT,
-			label: 'View as stack',
-			icon: 'bars',
+			label: 'Switch to Edit',
+			icon: 'pen',
 		};
 	}
 }
 
-export default function ChangeSubformView(props) {
-
+export default function ChangeSubformPreviewMode(props) {
 	const setType = () => {
 		const toggled = cycle(props.currentPreviewMode);
 		props.setSubformPreviewMode(props.tableId, toggled.key);
@@ -40,7 +45,7 @@ export default function ChangeSubformView(props) {
 
 }
 
-ChangeSubformView.propTypes = {
+ChangeSubformPreviewMode.propTypes = {
 	tableId: PropTypes.number,
 	currentPreviewMode: PropTypes.string,
 	setSubformPreviewMode: PropTypes.func,

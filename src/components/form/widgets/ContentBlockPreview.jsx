@@ -31,15 +31,16 @@ export default function ContentBlockPreview({
 	previewRecord,
 	records,
 	fetchContentBlockPreview,
+	setPreviewWidth,
 	form,
+	previewSettings = {},
 }) {
 
 	const [previewHtml, setPreviewHtml] = useState();
 	const [isLoading, setIsLoading] = useState(false);
-	const [isDragging, setIsDragging] = useState(false);
-	const [ratio, setRatio] = useState(0.5);
 	const containerRef = useRef();
-	
+	const ratio = previewSettings.ratio || 0.3;
+
 	useEffect(() => {
 		const tid = setTimeout(() => {
 			setIsLoading(true);
@@ -59,8 +60,8 @@ export default function ContentBlockPreview({
 		const rect = containerRef.current.getBoundingClientRect();
 		const x = e.clientX - rect.left;
 		const targetRatio = x / (rect.right - rect.left);
-		setRatio(targetRatio);
-	}, [containerRef, setRatio]);
+		setPreviewWidth(tableId, targetRatio);
+	}, [containerRef, setPreviewWidth, tableId]);
 
 	const endDrag = useCallback(() => {
 		document.documentElement.removeEventListener('mousemove', onDrag);
@@ -79,10 +80,12 @@ export default function ContentBlockPreview({
 		};
 	}, [onDrag, endDrag]);
 
+	const previewScale = Math.min(0.6, Math.max(0.1, ratio));
+
 	return (
 		<Container ref={containerRef}>
 			<Panel ratio={ratio}>
-				<IFrame><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
+				<IFrame scale={previewScale}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
 				{isLoading && <Preloader />}
 			</Panel>
 			<Slider onMouseDown={startDrag} />
@@ -100,5 +103,9 @@ ContentBlockPreview.propTypes = {
 	previewRecord: PropTypes.string,
 	records: PropTypes.object,
 	form: PropTypes.element,
+	previewSettings: PropTypes.shape({
+		ratio: PropTypes.number,
+	}),
 	fetchContentBlockPreview: PropTypes.func,
+	setPreviewWidth: PropTypes.func,
 };

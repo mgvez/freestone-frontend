@@ -17,14 +17,15 @@ const previewSlugsSelector = state => state.freestone.recordPreview.slugs;
 const previewIdsSelector = state => state.freestone.recordPreview.previewIds;
 const currentPreviewIdSelector = state => state.freestone.recordPreview.currentPreview;
 const previewStateSelector = state => state.freestone.recordPreview.previewState;
+const previewSettingsSelector = state => state.freestone.recordPreview.previewSettings;
 const previewProcessorTableIdSelector = (state, props) => props.tableId;
 const previewProcessorRecordIdSelector = (state, props) => props.recordId;
 
 
 function makeSelector(slugsSelector) {
 	return createSelector(
-		[slugsSelector, userViewLanguageSelector, lastEditSelector, previewIdsSelector, previewProcessorTableIdSelector, previewProcessorRecordIdSelector, currentPreviewIdSelector],
-		(recordSlugs, userViewLanguage, lastEdit, previewIds, tableId, recordId, currentPreview) => {
+		[slugsSelector, userViewLanguageSelector, lastEditSelector, previewIdsSelector, previewProcessorTableIdSelector, previewProcessorRecordIdSelector, currentPreviewIdSelector, previewSettingsSelector],
+		(recordSlugs, userViewLanguage, lastEdit, previewIds, tableId, recordId, currentPreview, previewSettings) => {
 			// console.log(recordSlugs);
 
 			const previewRecordId = previewIds[tableId] && previewIds[tableId][recordId];
@@ -38,6 +39,7 @@ function makeSelector(slugsSelector) {
 				currentLanguage,
 				previewRecordId,
 				currentPreviewType: currentPreview.type,
+				previewSettings: previewSettings[tableId],
 			};
 		}
 	);
