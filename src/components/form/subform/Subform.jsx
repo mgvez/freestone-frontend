@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { TYPE_MTM } from '../../../freestone/schemaProps';

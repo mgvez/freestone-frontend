@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
-
 
 import SubformTabbed from './SubformTabbed';
 import SubformStacked from './SubformStacked';
@@ -19,85 +18,77 @@ import {
 /*
 Regular children records (i.e. not mtm), will choose view depending on user preference
 */
-export default class SubformStandard extends Component {
-	static propTypes = {
-		tableId: PropTypes.number,
-		table: PropTypes.object,
-		activeRecords: PropTypes.array,
-		childrenRecords: PropTypes.array,
-		parentTableId: PropTypes.number,
-		parentRecordId: PropTypes.string,
-		highestOrder: PropTypes.number,
-		currentViewType: PropTypes.string,
-		defaultViewType: PropTypes.string,
-		language: PropTypes.string,
-		isCollapsed: PropTypes.bool,
-		titleOverride: PropTypes.string,
-		descriptionAppend: PropTypes.string,
-		
-		fetchTable: PropTypes.func,
-		fetchRecord: PropTypes.func,
-		setOrder: PropTypes.func,
-		setShownRecord: PropTypes.func,
-		toggleShownRecord: PropTypes.func,
-		changeCollapsedState: PropTypes.func,
-	};
+export default function SubformStandard(props) {
 
-	componentDidMount() {
-		this.requireData(this.props);
-	}
+	const { table, tableId, parentRecordId, parentTableId, childrenRecords } = props;
 
-	componentDidUpdate() {
-		this.requireData(this.props);
-	}
-
-	requireData(props) {
-		// console.log(props);
-		const { tableId, parentRecordId, parentTableId } = props;
-		if (!props.table) {
-			this.props.fetchTable(tableId);
+	useEffect(() => {
+		if (!table) {
+			props.fetchTable(tableId);
 		} else {
-			const tableName = props.table.name;
-			if (!props.childrenRecords) {
+			const tableName = table.name;
+			if (!childrenRecords) {
 				// console.log(`fetch record ${tableName}.${parentRecordId}`);
-				this.props.fetchRecord(tableName, parentRecordId, parentTableId);
+				props.fetchRecord(tableName, parentRecordId, parentTableId);
 			}
 		}
-	}
+	}, [tableId, parentRecordId, parentTableId, childrenRecords, table]);
 
-	swapRecords = (originId, targetId) => {
-		const orderFieldId = this.props.table.orderField && this.props.table.orderField.id;
+	const swapRecords = useCallback((originId, targetId) => {
+		const orderFieldId = table.orderField && table.orderField.id;
 		if (!orderFieldId) return;
 
-		const originIdx = this.props.childrenRecords.findIndex(el => el.id === originId);
-		const targetIdx = this.props.childrenRecords.findIndex(el => el.id === targetId);
+		const originIdx = childrenRecords.findIndex(el => el.id === originId);
+		const targetIdx = childrenRecords.findIndex(el => el.id === targetId);
 
-		const item = this.props.childrenRecords[originIdx];
+		const item = childrenRecords[originIdx];
 		const dest = [
-			...this.props.childrenRecords.slice(0, originIdx),
-			...this.props.childrenRecords.slice(+originIdx + 1),
+			...childrenRecords.slice(0, originIdx),
+			...childrenRecords.slice(+originIdx + 1),
 		];
 		dest.splice(targetIdx, 0, item);
 
-		this.props.setOrder(this.props.table.id, orderFieldId, dest);
-		// console.log(this.props.childrenRecords);
+		props.setOrder(tableId, orderFieldId, dest);
+		// console.log(props.childrenRecords);
 		// console.log(dest);
-	};
+	}, [table, childrenRecords]);
 
-	render() {
-		if (!this.props.table) return null;
-		if (this.props.table.type === TYPE_SUBFORM || this.props.table.type === TYPE_SUBFORM_GUID) {
-			const currentViewType = this.props.currentViewType || this.props.defaultViewType;
-			if (currentViewType === SUBFORM_VIEW_LIST) {
-				return <SubformList {...this.props} swapRecords={this.swapRecords} />;
-			} else if (currentViewType === SUBFORM_VIEW_STACKED) {
-				return <SubformStacked {...this.props} swapRecords={this.swapRecords} />;
-			}
-			return <SubformTabbed {...this.props} swapRecords={this.swapRecords} />;
-			
-		} else if (this.props.table.type === TYPE_OTO || this.props.table.type === TYPE_OTO_GUID) {
-			return <SubformSingle {...this.props} />;
+	if (!table) return null;
+	if (table.type === TYPE_SUBFORM || table.type === TYPE_SUBFORM_GUID) {
+		const currentViewType = props.currentViewType || props.defaultViewType;
+		if (currentViewType === SUBFORM_VIEW_LIST) {
+			return <SubformList {...props} swapRecords={swapRecords} />;
+		} else if (currentViewType === SUBFORM_VIEW_STACKED) {
+			return <SubformStacked {...props} swapRecords={swapRecords} />;
 		}
-		return null;
+		return <SubformTabbed {...props} swapRecords={swapRecords} />;
+		
+	} else if (table.type === TYPE_OTO || table.type === TYPE_OTO_GUID) {
+		return <SubformSingle {...props} />;
 	}
+	return null;
+
 }
+
+SubformStandard.propTypes = {
+	tableId: PropTypes.number,
+	table: PropTypes.object,
+	activeRecords: PropTypes.array,
+	childrenRecords: PropTypes.array,
+	parentTableId: PropTypes.number,
+	parentRecordId: PropTypes.string,
+	highestOrder: PropTypes.number,
+	currentViewType: PropTypes.string,
+	defaultViewType: PropTypes.string,
+	language: PropTypes.string,
+	isCollapsed: PropTypes.bool,
+	titleOverride: PropTypes.string,
+	descriptionAppend: PropTypes.string,
+	
+	fetchTable: PropTypes.func,
+	fetchRecord: PropTypes.func,
+	setOrder: PropTypes.func,
+	setShownRecord: PropTypes.func,
+	toggleShownRecord: PropTypes.func,
+	changeCollapsedState: PropTypes.func,
+};
