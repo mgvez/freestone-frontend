@@ -7,7 +7,14 @@ import SubformStacked from './SubformStacked';
 import SubformList from './SubformList';
 import SubformSingle from './SubformSingle';
 
-import { SUBFORM_VIEW_LIST, SUBFORM_VIEW_STACKED, TYPE_SUBFORM, TYPE_OTO, TYPE_OTO_GUID, TYPE_SUBFORM_GUID } from '../../../freestone/schemaProps';
+import { 
+	SUBFORM_VIEW_LIST,
+	SUBFORM_VIEW_STACKED,
+	TYPE_SUBFORM,
+	TYPE_OTO,
+	TYPE_OTO_GUID,
+	TYPE_SUBFORM_GUID,
+} from '../../../freestone/schemaProps';
 
 /*
 Regular children records (i.e. not mtm), will choose view depending on user preference
