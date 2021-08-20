@@ -119,33 +119,33 @@ const LatestModifs = (props) => {
 						let typeDisplay = 'record';
 
 						switch (action.toUpperCase()) {
-						case 'DELETE':
-							label = ' has deleted a ';
-							hasEditBtn = false;
-							break;
-						case 'INSERT':
-							label = ' has added a ';
-							break;
-						case 'UPDATE':
-						default:
-							label = ' has updated a ';
+							case 'DELETE':
+								label = ' has deleted a ';
+								hasEditBtn = false;
+								break;
+							case 'INSERT':
+								label = ' has added a ';
+								break;
+							case 'UPDATE':
+							default:
+								label = ' has updated a ';
 						}
 
 						let tableDisplay;
 						switch (editAction) {
-						case 'translations':
-							tableDisplay = <NativeModule label={tableLabel} url="TextTranslations" />;
-							typeDisplay = '';
-							hasEditBtn = false;
-							break;
-						default:
-							if (tableLabel) {
-								tableDisplay = <Table name={tableName} displayLabel={tableLabel} id={Number(tableId)} />;
-							} else {
-								//table has been deleted since...
+							case 'translations':
+								tableDisplay = <NativeModule label={tableLabel} url="TextTranslations" />;
+								typeDisplay = '';
 								hasEditBtn = false;
-								tableDisplay = `(${tableName})`;
-							}
+								break;
+							default:
+								if (tableLabel) {
+									tableDisplay = <Table name={tableName} displayLabel={tableLabel} id={Number(tableId)} />;
+								} else {
+									//table has been deleted since...
+									hasEditBtn = false;
+									tableDisplay = `(${tableName})`;
+								}
 						}
 
 						let displayDetails = recordLabel;

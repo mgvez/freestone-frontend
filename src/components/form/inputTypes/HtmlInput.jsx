@@ -30,22 +30,22 @@ export default class HtmlInput extends Component {
 			// console.log(command);
 			const { command, value: { contentBefore } } = e;
 			switch (command) {
-			case 'insertLink':
-				this.setState({
-					command: {
-						name: command,
-						params: e.value,
-					},
-				});
-				break;
-			case 'addImageFromBank':
-				this.gotoSelect(BANK_IMG_TABLE, contentBefore);
-				break;
-			case 'addDocFromBank':
-				this.gotoSelect(BANK_DOCS_TABLE, contentBefore);
-				break;
-			default:
-				break;
+				case 'insertLink':
+					this.setState({
+						command: {
+							name: command,
+							params: e.value,
+						},
+					});
+					break;
+				case 'addImageFromBank':
+					this.gotoSelect(BANK_IMG_TABLE, contentBefore);
+					break;
+				case 'addDocFromBank':
+					this.gotoSelect(BANK_DOCS_TABLE, contentBefore);
+					break;
+				default:
+					break;
 			}
 		};
 
@@ -104,10 +104,10 @@ export default class HtmlInput extends Component {
 		if (this.state.command) {
 			const { name, params } = this.state.command;
 			switch (name) {
-			case 'insertLink':
-				return <LinkInsert onClose={this.closeModal} setVal={this.setContentFromPlugin} {...params} lang={this.props.lang} />;
-			default:
-				break;
+				case 'insertLink':
+					return <LinkInsert onClose={this.closeModal} setVal={this.setContentFromPlugin} {...params} lang={this.props.lang} />;
+				default:
+					break;
 			}
 		}
 

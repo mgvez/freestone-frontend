@@ -81,90 +81,90 @@ export default function Field(props) {
 		}
 	} else {
 		switch (props.field.type) {
-		case 'int':
-		case 'float':
-		case 'text':
-		case 'char':
-		case 'note':
-		case 'password':
-			input = <TextInput key={key} val={props.val} size={props.field.size} changeVal={changeVal} />;
-			break;
-		case 'md':
-			input = <MarkdownInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'html':
-		case 'tinyhtml':
-			input = <HtmlInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'url':
-			input = <UrlInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'tags':
-			input = <TextInput key={key} val={props.val} size={200} changeVal={changeVal} />;
-			break;
-		case 'date':
-		case 'datetime':
-			input = <DateInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'enum':
-		case 'foreign':
-		case 'selfjoin':
-		case 'foreigntext':
-		case 'language':
-			// input = <SelectInput {...props} />;
-			// break;
-			if (props.field.foreign) {
-				switch (props.field.foreign.foreignType) {
-				case TYPE_SUBFORM:
-				case TYPE_SUBFORM_GUID:
-				case TYPE_OTO:
-				case TYPE_OTO_GUID:
-				case 'rel':
-					//update 2020-01-17: don't show subform fields when record is shown as root (records are orphans)
-					// if (props.isRoot) {
-					// 	input = <AutocompleteInput key={key} {...props} changeVal={changeVal} />;
-					// }
-					break;
-				case TYPE_MTM:
-					break;
-				default:
+			case 'int':
+			case 'float':
+			case 'text':
+			case 'char':
+			case 'note':
+			case 'password':
+				input = <TextInput key={key} val={props.val} size={props.field.size} changeVal={changeVal} />;
+				break;
+			case 'md':
+				input = <MarkdownInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'html':
+			case 'tinyhtml':
+				input = <HtmlInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'url':
+				input = <UrlInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'tags':
+				input = <TextInput key={key} val={props.val} size={200} changeVal={changeVal} />;
+				break;
+			case 'date':
+			case 'datetime':
+				input = <DateInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'enum':
+			case 'foreign':
+			case 'selfjoin':
+			case 'foreigntext':
+			case 'language':
+				// input = <SelectInput {...props} />;
+				// break;
+				if (props.field.foreign) {
+					switch (props.field.foreign.foreignType) {
+						case TYPE_SUBFORM:
+						case TYPE_SUBFORM_GUID:
+						case TYPE_OTO:
+						case TYPE_OTO_GUID:
+						case 'rel':
+							//update 2020-01-17: don't show subform fields when record is shown as root (records are orphans)
+							// if (props.isRoot) {
+							// 	input = <AutocompleteInput key={key} {...props} changeVal={changeVal} />;
+							// }
+							break;
+						case TYPE_MTM:
+							break;
+						default:
+							input = <AutocompleteInput key={key} {...props} changeVal={changeVal} />;
+					}
+				} else {
 					input = <AutocompleteInput key={key} {...props} changeVal={changeVal} />;
 				}
-			} else {
-				input = <AutocompleteInput key={key} {...props} changeVal={changeVal} />;
-			}
-			break;
-		case 'img':
-		case 'file':
-			// console.log(props);
-			input = <FileInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'hotspot':
-			input = <HotspotInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'bool':
-		case 'ispublished':
-			input = <BoolInput key={key} fieldId={props.field.id} {...props} changeVal={changeVal} />;
-			break;
-		case 'permissions':
-			input = <TextInput key={key} val={props.val} size={100} changeVal={changeVal} />;
-			break;
-		case 'noedit'://on la voit mais on l'edit pas!
-			input = <NoEditInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'bankimg'://link vers image de la banque
-			input = <BankImgInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		case 'bankfile'://link vers image de la banque
-			input = <BankFileInput key={key} {...props} changeVal={changeVal} />;
-			break;
-		
-		case 'pri':
-		case 'ajax':
-		case 'order':
-		default:
-			//pas d'affichage
-			break;
+				break;
+			case 'img':
+			case 'file':
+				// console.log(props);
+				input = <FileInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'hotspot':
+				input = <HotspotInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'bool':
+			case 'ispublished':
+				input = <BoolInput key={key} fieldId={props.field.id} {...props} changeVal={changeVal} />;
+				break;
+			case 'permissions':
+				input = <TextInput key={key} val={props.val} size={100} changeVal={changeVal} />;
+				break;
+			case 'noedit'://on la voit mais on l'edit pas!
+				input = <NoEditInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'bankimg'://link vers image de la banque
+				input = <BankImgInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			case 'bankfile'://link vers image de la banque
+				input = <BankFileInput key={key} {...props} changeVal={changeVal} />;
+				break;
+			
+			case 'pri':
+			case 'ajax':
+			case 'order':
+			default:
+				//pas d'affichage
+				break;
 		}
 	}
 	if (input || widget) {

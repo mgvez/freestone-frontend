@@ -40,39 +40,39 @@ function removeSlugs(state, records) {
 function makeReducer(api, isWorkingSlugs) {
 	return (state = {}, action) => {
 		switch (action.type) {
-		case CLEAR_DATA: 
-		case UNAUTHORIZED:
-		case LOGOUT_API.SUCCESS:
-		case LOGOUT_API.REQUEST:
-			return {};
-		case api.SUCCESS: {
-			const { tableId, recordId, slugs } = action.data;
-			// console.log(action);
-			const newState = {
-				...state,
-				[tableId]: {
-					...state[tableId],
-					[recordId]: {
-						...(state[tableId] && state[tableId][recordId]),
-						...slugs,
+			case CLEAR_DATA: 
+			case UNAUTHORIZED:
+			case LOGOUT_API.SUCCESS:
+			case LOGOUT_API.REQUEST:
+				return {};
+			case api.SUCCESS: {
+				const { tableId, recordId, slugs } = action.data;
+				// console.log(action);
+				const newState = {
+					...state,
+					[tableId]: {
+						...state[tableId],
+						[recordId]: {
+							...(state[tableId] && state[tableId][recordId]),
+							...slugs,
+						},
 					},
-				},
-			};
-			return newState;
-		}
-		case SAVE_RECORD_API.SUCCESS:
-		case DELETE_RECORD_API.SUCCESS:
-			// console.log(action.data);
-			return removeSlugs(state, action.data.records);
-		case SET_FIELD_VALUE: 
-		case CLEAR_WORKING_SLUG: {
-			if (!isWorkingSlugs) return state;
-			// if we delete slugs whenevr the record changes
-			const { tableId, recordId, lang } = action.data;
-			return removeRecordSlug(state, tableId, recordId, lang);
-		}
-		default:
-			return state;
+				};
+				return newState;
+			}
+			case SAVE_RECORD_API.SUCCESS:
+			case DELETE_RECORD_API.SUCCESS:
+				// console.log(action.data);
+				return removeSlugs(state, action.data.records);
+			case SET_FIELD_VALUE: 
+			case CLEAR_WORKING_SLUG: {
+				if (!isWorkingSlugs) return state;
+				// if we delete slugs whenevr the record changes
+				const { tableId, recordId, lang } = action.data;
+				return removeRecordSlug(state, tableId, recordId, lang);
+			}
+			default:
+				return state;
 		}
 	};
 }

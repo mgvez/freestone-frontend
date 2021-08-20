@@ -102,17 +102,41 @@ export default function ContentBlockPreview({
 	const finalRatio = ratio || DEFAULT_RATIO;
 	const previewScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, finalRatio));
 
+	let op;
+	switch (subPreviewMode) {
+		case SUBFORM_PREVIEW_MODE_PREVIEWS: {
+			op = (
+				<React.Fragment>
+					<IFrame scale={previewScale}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
+					{isLoading && <Preloader />}
+				</React.Fragment>
+			);
+			break;
+		}
+		case SUBFORM_PREVIEW_MODE_EDIT: {
+			op = form;
+			break;
+		}
+		case SUBFORM_PREVIEW_MODE_MIXED:
+		default: {
+			op = (
+				<React.Fragment>
+					<Panel ratio={finalRatio}>
+						<IFrame scale={previewScale}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
+						{isLoading && <Preloader />}
+					</Panel>
+					<Slider onMouseDown={startDrag} />
+					<Panel ratio={1 - finalRatio}>
+						{form}
+					</Panel>
+				</React.Fragment>
+			);
+			break;
+		}
+	}
+
 	return (
-		<Container ref={containerRef}>
-			<Panel ratio={finalRatio}>
-				<IFrame scale={previewScale}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
-				{isLoading && <Preloader />}
-			</Panel>
-			<Slider onMouseDown={startDrag} />
-			<Panel ratio={1 - finalRatio}>
-				{form}
-			</Panel>
-		</Container>
+		<Container ref={containerRef}>{op}</Container>
 	);
 
 }

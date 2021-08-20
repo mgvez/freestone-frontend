@@ -11,25 +11,25 @@ import {
 
 function cycle(current) {
 	switch (current) {
-	case SUBFORM_PREVIEW_MODE_EDIT:
-		return {
-			key: SUBFORM_PREVIEW_MODE_PREVIEWS,
-			label: 'Switch to Preview',
-			icon: 'eye',
-		};
-	case SUBFORM_PREVIEW_MODE_PREVIEWS:
-		return {
-			key: SUBFORM_PREVIEW_MODE_MIXED,
-			label: 'Switch to Side by side',
-			icon: 'columns',
-		};
-	case SUBFORM_PREVIEW_MODE_MIXED:
-	default:
-		return {
-			key: SUBFORM_PREVIEW_MODE_EDIT,
-			label: 'Switch to Edit',
-			icon: 'pen',
-		};
+		case SUBFORM_PREVIEW_MODE_EDIT:
+			return {
+				key: SUBFORM_PREVIEW_MODE_PREVIEWS,
+				label: 'Switch to Preview',
+				icon: 'eye',
+			};
+		case SUBFORM_PREVIEW_MODE_PREVIEWS:
+			return {
+				key: SUBFORM_PREVIEW_MODE_MIXED,
+				label: 'Switch to Side by side',
+				icon: 'columns',
+			};
+		case SUBFORM_PREVIEW_MODE_MIXED:
+		default:
+			return {
+				key: SUBFORM_PREVIEW_MODE_EDIT,
+				label: 'Switch to Edit',
+				icon: 'pen',
+			};
 	}
 }
 

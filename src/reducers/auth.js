@@ -26,172 +26,172 @@ let lastRequestTime = Date.now();
 export default function(state = initialState, action) {
 
 	switch (action.type) {
-	case FREESTONE_API_FAILURE:
-	case FREESTONE_API_FATAL_FAILURE:
-		//si failure, reset pour éviter que le btn login soit désactivé
-		return {
-			...state,
-			statusText: '',
-			isRequestPending: false,
-			needsRelogin: false,
-		};
-	case LOGOUT_API.REQUEST:
-		return {
-			...initialState,
-		};
-	case CLEAR_AUTH_MESSAGES:
-		return {
-			...state,
-			statusText: null,
-		};
-	case UNAUTHORIZED:
-		// const err = action.payload.response;
-		// console.log(err);
-		return {
-			...state,
-			isAuthenticated: false,
-			jwt: null,
-			userName: null,
-			userId: null,
-			email: null,
-			needsRelogin: false,
-			statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
-		};
-	case SET_TICKET:
-		return {
-			...state,
-			ticket: action.payload.ticket,
-		};
-	case INSTALL_API.REQUEST:
-		return {
-			...state,
-			isRequestPending: true,
-			statusText: 'Installing, please wait...',
-		};
-	case LOGIN_API.REQUEST:
-		// console.log(action.data);
-		if (!action.data) {
-			return state;
-		}
-		return {
-			...state,
-			isRequestPending: true,
-			statusText: 'Checking credentials...',
-			gapi_token_id: action.data.googletoken_id,
-			gapi_token_access: action.data.googletoken_access,
-		};
-	case LOGIN_API.SUCCESS:
-		return {
-			...state,
-			isRequestPending: false,
-			statusText: '',
-		};
-	case LOGIN_USER_SUCCESS:
-		return {
-			...state,
-			isRequestPending: false,
-			isAuthenticated: true,
-			jwt: action.payload.jwt,
-			ticket: action.payload.ticket,
-			userName: action.payload.token.data.realname,
-			email: action.payload.token.data.email,
-			userId: Number(action.payload.token.data.id),
-			realName: action.payload.token.data.realname,
-			picture: action.payload.token.data.picture,
-			usergroup: Number(action.payload.token.data.usergroup),
-			needsRelogin: false,
-			statusText: 'You have been successfully logged in.',
-		};
-	case LOGIN_USER_FAILURE: {
-		const err = action.payload.message;
-		return {
-			...state,
-			isRequestPending: false,
-			isAuthenticated: false,
-			jwt: null,
-			ticket: null,
-			userName: null,
-			userId: null,
-			email: null,
-			needsRelogin: false,
-			statusText: `Authentication Error: ${err}`,
-		};
-	}
-	case LOGOUT_API.SUCCESS:
-		return {
-			...state,
-			isAuthenticated: false,
-			isRequestPending: false,
-			jwt: null,
-			userName: null,
-			userId: null,
-			email: null,
-			needsRelogin: false,
-			statusText: 'You have been successfully logged out.',
-		};
-	case RESET_REQUEST_API.REQUEST:
-		return {
-			...state,
-			isRequestPending: true,
-		};
-	case RESET_REQUEST_API.SUCCESS: {
-		const statusText = (action.data.response && action.data.response.join(', '));
-
-		return {
-			...state,
-			isAuthenticated: false,
-			isRequestPending: false,
-			isResetRequestSent: true,
-			jwt: null,
-			userName: null,
-			userId: null,
-			email: null,
-			needsRelogin: false,
-			statusText,
-		};
-	}
-	case RESET_API.REQUEST: {
-		return {
-			...state,
-			isRequestPending: true,
-		};
-	}
-	case RESET_API.SUCCESS: {
-
-		//redirect without key
-		if (action.data.isSuccess) {
-			const { protocol, host, pathname } = window.location;
-			const refreshLoc = `${protocol}//${host}${pathname}`;
-			window.location = refreshLoc;
-		}
-
-		return {
-			...state,
-			userName: action.data.userName,
-			email: action.data.email,
-			realName: action.data.realName,
-			isRequestPending: false,
-		};
-	}
-	case RESET_API.FAILURE: {
-		return {
-			...state,
-			isResetKeyValid: false,
-			statusText: 'Invalid reset key. Please enter your credentials.',
-			isRequestPending: false,
-		};
-	}
-	default: {
-		const now = Date.now();
-		const diff = (now - lastRequestTime) / 1000;
-		lastRequestTime = Date.now();
-		if (diff > MAX_TIME_BETWEEN_API_CALLS) {
+		case FREESTONE_API_FAILURE:
+		case FREESTONE_API_FATAL_FAILURE:
+			//si failure, reset pour éviter que le btn login soit désactivé
 			return {
 				...state,
-				needsRelogin: true,
+				statusText: '',
+				isRequestPending: false,
+				needsRelogin: false,
+			};
+		case LOGOUT_API.REQUEST:
+			return {
+				...initialState,
+			};
+		case CLEAR_AUTH_MESSAGES:
+			return {
+				...state,
+				statusText: null,
+			};
+		case UNAUTHORIZED:
+			// const err = action.payload.response;
+			// console.log(err);
+			return {
+				...state,
+				isAuthenticated: false,
+				jwt: null,
+				userName: null,
+				userId: null,
+				email: null,
+				needsRelogin: false,
+				statusText: `${action.payload.error.status} ${action.payload.error.statusText}`,
+			};
+		case SET_TICKET:
+			return {
+				...state,
+				ticket: action.payload.ticket,
+			};
+		case INSTALL_API.REQUEST:
+			return {
+				...state,
+				isRequestPending: true,
+				statusText: 'Installing, please wait...',
+			};
+		case LOGIN_API.REQUEST:
+			// console.log(action.data);
+			if (!action.data) {
+				return state;
+			}
+			return {
+				...state,
+				isRequestPending: true,
+				statusText: 'Checking credentials...',
+				gapi_token_id: action.data.googletoken_id,
+				gapi_token_access: action.data.googletoken_access,
+			};
+		case LOGIN_API.SUCCESS:
+			return {
+				...state,
+				isRequestPending: false,
+				statusText: '',
+			};
+		case LOGIN_USER_SUCCESS:
+			return {
+				...state,
+				isRequestPending: false,
+				isAuthenticated: true,
+				jwt: action.payload.jwt,
+				ticket: action.payload.ticket,
+				userName: action.payload.token.data.realname,
+				email: action.payload.token.data.email,
+				userId: Number(action.payload.token.data.id),
+				realName: action.payload.token.data.realname,
+				picture: action.payload.token.data.picture,
+				usergroup: Number(action.payload.token.data.usergroup),
+				needsRelogin: false,
+				statusText: 'You have been successfully logged in.',
+			};
+		case LOGIN_USER_FAILURE: {
+			const err = action.payload.message;
+			return {
+				...state,
+				isRequestPending: false,
+				isAuthenticated: false,
+				jwt: null,
+				ticket: null,
+				userName: null,
+				userId: null,
+				email: null,
+				needsRelogin: false,
+				statusText: `Authentication Error: ${err}`,
 			};
 		}
-		return state;
-	}
+		case LOGOUT_API.SUCCESS:
+			return {
+				...state,
+				isAuthenticated: false,
+				isRequestPending: false,
+				jwt: null,
+				userName: null,
+				userId: null,
+				email: null,
+				needsRelogin: false,
+				statusText: 'You have been successfully logged out.',
+			};
+		case RESET_REQUEST_API.REQUEST:
+			return {
+				...state,
+				isRequestPending: true,
+			};
+		case RESET_REQUEST_API.SUCCESS: {
+			const statusText = (action.data.response && action.data.response.join(', '));
+
+			return {
+				...state,
+				isAuthenticated: false,
+				isRequestPending: false,
+				isResetRequestSent: true,
+				jwt: null,
+				userName: null,
+				userId: null,
+				email: null,
+				needsRelogin: false,
+				statusText,
+			};
+		}
+		case RESET_API.REQUEST: {
+			return {
+				...state,
+				isRequestPending: true,
+			};
+		}
+		case RESET_API.SUCCESS: {
+
+			//redirect without key
+			if (action.data.isSuccess) {
+				const { protocol, host, pathname } = window.location;
+				const refreshLoc = `${protocol}//${host}${pathname}`;
+				window.location = refreshLoc;
+			}
+
+			return {
+				...state,
+				userName: action.data.userName,
+				email: action.data.email,
+				realName: action.data.realName,
+				isRequestPending: false,
+			};
+		}
+		case RESET_API.FAILURE: {
+			return {
+				...state,
+				isResetKeyValid: false,
+				statusText: 'Invalid reset key. Please enter your credentials.',
+				isRequestPending: false,
+			};
+		}
+		default: {
+			const now = Date.now();
+			const diff = (now - lastRequestTime) / 1000;
+			lastRequestTime = Date.now();
+			if (diff > MAX_TIME_BETWEEN_API_CALLS) {
+				return {
+					...state,
+					needsRelogin: true,
+				};
+			}
+			return state;
+		}
 	}
 }

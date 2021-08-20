@@ -256,13 +256,13 @@ export default function BlockFieldDeps(props) {
 			let batch;
 			const getVal = (field, type) => {
 				switch (action) {
-				case BATCH_SET_SHOW: return { isDisplay: true };
-				case BATCH_SET_HIDE: return { isDisplay: false };
-				case BATCH_SET_SUGGESTED: {
-					const currentDependency = dependenciesByField[field.id] && dependenciesByField[field.id][type.id];
-					return { isDisplay: currentDependency && currentDependency.isSuggested };
-				}
-				default:
+					case BATCH_SET_SHOW: return { isDisplay: true };
+					case BATCH_SET_HIDE: return { isDisplay: false };
+					case BATCH_SET_SUGGESTED: {
+						const currentDependency = dependenciesByField[field.id] && dependenciesByField[field.id][type.id];
+						return { isDisplay: currentDependency && currentDependency.isSuggested };
+					}
+					default:
 				}
 				return {};
 			};

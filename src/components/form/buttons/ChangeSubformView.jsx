@@ -13,31 +13,31 @@ import {
 
 function cycle(current) {
 	switch (current) {
-	case SUBFORM_VIEW_STACKED:
-		return {
-			key: SUBFORM_VIEW_LIST,
-			label: 'View all open',
-			icon: 'server',
-		};
-	case SUBFORM_VIEW_LIST:
-		return {
-			key: SUBFORM_VIEW_TABBED,
-			label: 'View tabbed',
-			icon: 'columns',
-		};
-	case SUBFORM_VIEW_TABBED:
-		return {
-			key: SUBFORM_VIEW_TABBED_VERTICAL,
-			label: 'View sidebar',
-			icon: 'rows',
-		};
-	case SUBFORM_VIEW_TABBED_VERTICAL:
-	default:
-		return {
-			key: SUBFORM_VIEW_STACKED,
-			label: 'View as stack',
-			icon: 'bars',
-		};
+		case SUBFORM_VIEW_STACKED:
+			return {
+				key: SUBFORM_VIEW_LIST,
+				label: 'View all open',
+				icon: 'server',
+			};
+		case SUBFORM_VIEW_LIST:
+			return {
+				key: SUBFORM_VIEW_TABBED,
+				label: 'View tabbed',
+				icon: 'columns',
+			};
+		case SUBFORM_VIEW_TABBED:
+			return {
+				key: SUBFORM_VIEW_TABBED_VERTICAL,
+				label: 'View sidebar',
+				icon: 'rows',
+			};
+		case SUBFORM_VIEW_TABBED_VERTICAL:
+		default:
+			return {
+				key: SUBFORM_VIEW_STACKED,
+				label: 'View as stack',
+				icon: 'bars',
+			};
 	}
 }
 

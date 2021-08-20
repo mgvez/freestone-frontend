@@ -16,27 +16,27 @@ export default (table, parentTableId, parentRecordLinkValue, orderVal, model) =>
 			} else {
 				let val = field.default === null ? '' : String(field.default);
 				switch (val.toLowerCase().trim()) {
-				case 'now':
-				case 'now()': {
-					const d = new Date();
-					val = 
-					d.getFullYear() + '-' +
-					(d.getMonth() + 1).toString().padStart(2, '0') + '-' + 
-					d.getDate().toString().padStart(2, '0') + 
-					' ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0') + ':' + d.getSeconds().toString().padStart(2, '0');
-					break;
-				}
-				//ajax values
-				case 'increment': {
-					const onDefault = callApi(getEndpoint(`defaultValue/${table.name}/${field.name}`), {});
-					return onDefault.then(res => {
-						// console.log(res);
-						record[field.id] = res.data;
-						return record;
-					});
-				}
-				default:
-					break;
+					case 'now':
+					case 'now()': {
+						const d = new Date();
+						val = 
+						d.getFullYear() + '-' +
+						(d.getMonth() + 1).toString().padStart(2, '0') + '-' + 
+						d.getDate().toString().padStart(2, '0') + 
+						' ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0') + ':' + d.getSeconds().toString().padStart(2, '0');
+						break;
+					}
+					//ajax values
+					case 'increment': {
+						const onDefault = callApi(getEndpoint(`defaultValue/${table.name}/${field.name}`), {});
+						return onDefault.then(res => {
+							// console.log(res);
+							record[field.id] = res.data;
+							return record;
+						});
+					}
+					default:
+						break;
 				}
 				record[field.id] = val;
 			}

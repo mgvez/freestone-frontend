@@ -109,12 +109,12 @@ export default function SettingsEditor(props) {
 								}
 
 								switch (type) {
-								case 'bool':
-								case 'boolean':
-									input = <BoolInput val={value} changeVal={onChange} />;
-									break;
-								default:
-									input = <TextInput val={String(value)} changeVal={onChange} />;
+									case 'bool':
+									case 'boolean':
+										input = <BoolInput val={value} changeVal={onChange} />;
+										break;
+									default:
+										input = <TextInput val={String(value)} changeVal={onChange} />;
 								}
 
 								return (

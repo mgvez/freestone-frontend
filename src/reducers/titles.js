@@ -39,34 +39,34 @@ function removeTitles(state, records) {
 
 export default (state = {}, action) => {
 	switch (action.type) {
-	case CLEAR_DATA: 
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case WORKING_TITLE_API.SUCCESS: {
-		const { tableId, recordId, title, lang } = action.data;
-		const newState = {
-			...state,
-			[tableId]: {
-				...state[tableId],
-				[recordId]: {
-					...(state[tableId] && state[tableId][recordId]),
-					[lang]: title,
+		case CLEAR_DATA: 
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case WORKING_TITLE_API.SUCCESS: {
+			const { tableId, recordId, title, lang } = action.data;
+			const newState = {
+				...state,
+				[tableId]: {
+					...state[tableId],
+					[recordId]: {
+						...(state[tableId] && state[tableId][recordId]),
+						[lang]: title,
+					},
 				},
-			},
-		};
-		return newState;
-	}
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return removeTitles(state, action.data.records);
-	case SET_FIELD_VALUE: 
-	case CLEAR_WORKING_TITLE: {
-		const { tableId, recordId, lang } = action.data;
-		return removeRecordTitle(state, tableId, recordId, lang);
-	}
-	default:
-		return state;
+			};
+			return newState;
+		}
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return removeTitles(state, action.data.records);
+		case SET_FIELD_VALUE: 
+		case CLEAR_WORKING_TITLE: {
+			const { tableId, recordId, lang } = action.data;
+			return removeRecordTitle(state, tableId, recordId, lang);
+		}
+		default:
+			return state;
 	}
 };

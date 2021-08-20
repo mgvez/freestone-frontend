@@ -31,133 +31,133 @@ function removeRecords(state, recordsToRemove) {
 
 function slugs(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-	case CANCEL_EDIT_RECORD:
-		return removeRecords(state, action.data.records);
-	case RECORD_SINGLE_API.SUCCESS: {
-		const { tableId } = action.data;
-		const { records } = action.data.tables;
-		if (!records) return state;
-		return records.reduce((curState, record) => {
-			return removeRecord(curState, {
-				tableId,
-				recordId: record[PRIKEY_ALIAS],
-			});
-		}, { ...state });
-	}
-	case SAVE_PREVIEW_API.SUCCESS: {
-		// console.log(action.data);
-		const { tableId, recordOriginalId } = action.data.mainRecord;
-		return {
-			...state,
-			[tableId]: {
-				...state[tableId],
-				[recordOriginalId]: action.data.slugs,
-			},
-		};
-	}
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case CLEAR_DATA:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+		case CANCEL_EDIT_RECORD:
+			return removeRecords(state, action.data.records);
+		case RECORD_SINGLE_API.SUCCESS: {
+			const { tableId } = action.data;
+			const { records } = action.data.tables;
+			if (!records) return state;
+			return records.reduce((curState, record) => {
+				return removeRecord(curState, {
+					tableId,
+					recordId: record[PRIKEY_ALIAS],
+				});
+			}, { ...state });
+		}
+		case SAVE_PREVIEW_API.SUCCESS: {
+			// console.log(action.data);
+			const { tableId, recordOriginalId } = action.data.mainRecord;
+			return {
+				...state,
+				[tableId]: {
+					...state[tableId],
+					[recordOriginalId]: action.data.slugs,
+				},
+			};
+		}
+		default:
+			return state;
 	}
 }
 
 function previewIds(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-	case CANCEL_EDIT_RECORD:
-		return removeRecords(state, action.data.records);
-	case RECORD_SINGLE_API.SUCCESS: {
-		const { tableId } = action.data;
-		const { records } = action.data.tables;
-		if (!records) return state;
-		return records.reduce((curState, record) => {
-			return removeRecord(curState, {
-				tableId,
-				recordId: Number(record[PRIKEY_ALIAS]),
-			});
-		}, { ...state });
-	}
-	case SAVE_PREVIEW_API.SUCCESS: {
-		// console.log(action.data);
-		const { tableId, recordOriginalId, recordId } = action.data.mainRecord;
-		return {
-			...state,
-			[tableId]: {
-				...state[tableId],
-				[recordOriginalId]: recordId,
-			},
-		};
-	}
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case CLEAR_DATA:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+		case CANCEL_EDIT_RECORD:
+			return removeRecords(state, action.data.records);
+		case RECORD_SINGLE_API.SUCCESS: {
+			const { tableId } = action.data;
+			const { records } = action.data.tables;
+			if (!records) return state;
+			return records.reduce((curState, record) => {
+				return removeRecord(curState, {
+					tableId,
+					recordId: Number(record[PRIKEY_ALIAS]),
+				});
+			}, { ...state });
+		}
+		case SAVE_PREVIEW_API.SUCCESS: {
+			// console.log(action.data);
+			const { tableId, recordOriginalId, recordId } = action.data.mainRecord;
+			return {
+				...state,
+				[tableId]: {
+					...state[tableId],
+					[recordOriginalId]: recordId,
+				},
+			};
+		}
+		default:
+			return state;
 	}
 }
 
 
 function currentPreview(state = { type: PREVIEW_IFRAME }, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return {};
-	case SET_PREVIEW_VIEW_TYPE:
-	case SET_CURRENT_PREVIEW: {
-		return {
-			...state,
-			...action.data,
-		};
-	}
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case CLEAR_DATA:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+		case CANCEL_EDIT_RECORD:
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return {};
+		case SET_PREVIEW_VIEW_TYPE:
+		case SET_CURRENT_PREVIEW: {
+			return {
+				...state,
+				...action.data,
+			};
+		}
+		default:
+			return state;
 	}
 }
 
 function mainPreviewState(state = false, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return false;
-	case SET_RECORD_IS_PREVIEWING: 
-		return action.data;
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case CLEAR_DATA:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+		case CANCEL_EDIT_RECORD:
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return false;
+		case SET_RECORD_IS_PREVIEWING: 
+			return action.data;
+		default:
+			return state;
 	}
 }
 
 export function subPreviewMode(state = {}, action) {
 	switch (action.type) {
-	case SET_SUBFORM_PREVIEW_MODE: {
-		const tableId = action.data.tableId;
-		// console.log(action);
-		const newState = {
-			...state,
-			[tableId]: action.data.mode,
-		};
-		return newState;
-	}
-	default:
-		return state;
+		case SET_SUBFORM_PREVIEW_MODE: {
+			const tableId = action.data.tableId;
+			// console.log(action);
+			const newState = {
+				...state,
+				[tableId]: action.data.mode,
+			};
+			return newState;
+		}
+		default:
+			return state;
 	}
 }
 

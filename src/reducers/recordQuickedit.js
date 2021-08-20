@@ -39,16 +39,16 @@ function removeRecords(state, recordsToRemove) {
 
 export default function(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case SAVE_QUICKRECORD_API.SUCCESS:
-		return removeRecords(state, action.data.records);
-	case SET_QUICKEDIT_FIELD_VALUE:
-		return setFieldValue(state, action.data);
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case CLEAR_DATA:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case SAVE_QUICKRECORD_API.SUCCESS:
+			return removeRecords(state, action.data.records);
+		case SET_QUICKEDIT_FIELD_VALUE:
+			return setFieldValue(state, action.data);
+		default:
+			return state;
 	}
 }

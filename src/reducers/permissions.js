@@ -45,71 +45,71 @@ function singleTableRecords(state, data) {
 function sitePermissions(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CLEAR_DATA:
-		// console.log('clear');
-		return {};
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return removeRecords(state, action.data.records);
-	case TOGGLE_SITE_PERMISSION:
-	case SITE_PERMISSIONS_API.SUCCESS:
-	case SAVE_SITE_PERMISSIONS_API.SUCCESS:
-		return singleTableRecords(state, action.data);
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+		case CLEAR_DATA:
+			// console.log('clear');
+			return {};
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return removeRecords(state, action.data.records);
+		case TOGGLE_SITE_PERMISSION:
+		case SITE_PERMISSIONS_API.SUCCESS:
+		case SAVE_SITE_PERMISSIONS_API.SUCCESS:
+			return singleTableRecords(state, action.data);
+		default:
+			return state;
 	}
 }
 
 function sitePermissionsModified(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CLEAR_DATA:
-		// console.log('clear');
-		return {};
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return removeRecords(state, action.data.records);
-	case SITE_PERMISSIONS_API.SUCCESS:
-	case SAVE_SITE_PERMISSIONS_API.SUCCESS:
-		return removeRecords(state, [action.data]);
-	case TOGGLE_SITE_PERMISSION: {
-		const { tableId, recordId } = action.data;
-		return { 
-			...state,
-			[tableId]: {
-				...state[tableId],
-				[recordId]: true,
-			},
-		};
-	}
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+		case CLEAR_DATA:
+			// console.log('clear');
+			return {};
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return removeRecords(state, action.data.records);
+		case SITE_PERMISSIONS_API.SUCCESS:
+		case SAVE_SITE_PERMISSIONS_API.SUCCESS:
+			return removeRecords(state, [action.data]);
+		case TOGGLE_SITE_PERMISSION: {
+			const { tableId, recordId } = action.data;
+			return { 
+				...state,
+				[tableId]: {
+					...state[tableId],
+					[recordId]: true,
+				},
+			};
+		}
+		default:
+			return state;
 	}
 }
 
 function groups(state = [], action) {
 	// console.log(action);
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CLEAR_DATA:
-		// console.log('clear');
-		return null;
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return null;
-	case USER_GROUPS_API.SUCCESS:
-		// console.log(action);
-		return action.data;
-	default:
-		return state;
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+		case CLEAR_DATA:
+			// console.log('clear');
+			return null;
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return null;
+		case USER_GROUPS_API.SUCCESS:
+			// console.log(action);
+			return action.data;
+		default:
+			return state;
 	}
 }
 

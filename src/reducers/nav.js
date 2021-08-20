@@ -14,63 +14,63 @@ const navInitialState = {
 function structure(state = navInitialState, action) {
 	// console.log(action);
 	switch (action.type) {
-	case SAVE_RECORD_API.SUCCESS:
-	case UNAUTHORIZED:
-	case SWAP_ORDER_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-	case CLEAR_DATA:
-		// console.log('clear');
-		return navInitialState;
-	case NAV_API.SUCCESS:
-		return {
-			...state,
-			...action.data,
-		};
-	default:
-		// console.log('no change');
-		return state;
+		case SAVE_RECORD_API.SUCCESS:
+		case UNAUTHORIZED:
+		case SWAP_ORDER_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+		case CLEAR_DATA:
+			// console.log('clear');
+			return navInitialState;
+		case NAV_API.SUCCESS:
+			return {
+				...state,
+				...action.data,
+			};
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
 function toggleState(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case TOGGLE_NAV: {
-		const id = action.data;
-		return {
-			...state,
-			[id]: !state[id],
-		};
-	}
-	// case CLEAR_DATA:
-	// 	return {};
-	default:
-		// console.log('no change');
-		return state;
+		case TOGGLE_NAV: {
+			const id = action.data;
+			return {
+				...state,
+				[id]: !state[id],
+			};
+		}
+		// case CLEAR_DATA:
+		// 	return {};
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
 function scrollLock(state = {}, action) {
 	// console.log(action);
 	switch (action.type) {
-	case LOCK_SCROLL: {
-		const { path, scroll } = action.data;
-		// console.log(path, scroll);
-		const newState = {
-			...state,
-		};
-		if (!scroll) {
-			delete(newState[path]);
-		} else {
-			newState[path] = scroll;
+		case LOCK_SCROLL: {
+			const { path, scroll } = action.data;
+			// console.log(path, scroll);
+			const newState = {
+				...state,
+			};
+			if (!scroll) {
+				delete(newState[path]);
+			} else {
+				newState[path] = scroll;
+			}
+			return newState;
 		}
-		return newState;
-	}
-	default:
-		// console.log('no change');
-		return state;
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
@@ -81,41 +81,41 @@ function listPageAfterSave(state = {}, action) {
 	// console.log(action);
 
 	switch (action.type) {
-	case REMEMBER_LIST_PAGE:
-		// console.log(action);
-		return {
-			...state,
-			[action.data.tableName]: {
-				...state[action.data.tableName],
-				[action.data.recId]: action.data.location,
-			},
-		};
-	default:
-		// console.log('no change');
-		return state;
+		case REMEMBER_LIST_PAGE:
+			// console.log(action);
+			return {
+				...state,
+				[action.data.tableName]: {
+					...state[action.data.tableName],
+					[action.data.recId]: action.data.location,
+				},
+			};
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
 function pageHashes(state = {}, action) {
 
 	switch (action.type) {
-	case ADD_PAGE_HASH_PATH:
-		// console.log(action.data);
-		return {
-			...state,
-			[action.data.hash]: {
-				path: action.data.path,
-				pageId: action.data.pageId,
-			},
-		};
-	case CLEAR_DATA:
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	default:
-		// console.log('no change');
-		return state;
+		case ADD_PAGE_HASH_PATH:
+			// console.log(action.data);
+			return {
+				...state,
+				[action.data.hash]: {
+					path: action.data.path,
+					pageId: action.data.pageId,
+				},
+			};
+		case CLEAR_DATA:
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 

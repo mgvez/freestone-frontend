@@ -12,14 +12,14 @@ export default class NativeModule extends Component {
 
 	render() {
 		switch (this.props.name) {
-		case 'TextTranslations':
-			return <TextTranslations />;
-		case 'ContentBlockDependencies':
-			return <BlockFieldDeps />;
-		case 'settings':
-			return <SettingsEditor />;
-		default:
-			return null;
+			case 'TextTranslations':
+				return <TextTranslations />;
+			case 'ContentBlockDependencies':
+				return <BlockFieldDeps />;
+			case 'settings':
+				return <SettingsEditor />;
+			default:
+				return null;
 		}
 	}
 }

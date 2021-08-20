@@ -117,42 +117,42 @@ function toggleMainEditedFromMtm(state, data) {
 
 function childrenAreLoaded(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-		return {};
-	case MTM_RECORD_API.SUCCESS:
-	case RECORD_SINGLE_API.SUCCESS: {
-		if (!action.data || !action.data.tables) return state;
+		case UNAUTHORIZED:
+			return {};
+		case MTM_RECORD_API.SUCCESS:
+		case RECORD_SINGLE_API.SUCCESS: {
+			if (!action.data || !action.data.tables) return state;
 
-		const newState = action.data.tables.reduce((builtState, tableRecords) => {
-			if (!tableRecords.parentTableId || !tableRecords.parentRecordId) return builtState;
-			const { parentTableId, parentRecordId, tableId } = tableRecords;
-			builtState[parentTableId] = {
-				...builtState[parentTableId],
-			};
+			const newState = action.data.tables.reduce((builtState, tableRecords) => {
+				if (!tableRecords.parentTableId || !tableRecords.parentRecordId) return builtState;
+				const { parentTableId, parentRecordId, tableId } = tableRecords;
+				builtState[parentTableId] = {
+					...builtState[parentTableId],
+				};
 
-			builtState[parentTableId][parentRecordId] = {
-				...builtState[parentTableId][parentRecordId],
-			};
-			builtState[parentTableId][parentRecordId][tableId] = !!tableRecords.records;
-			return builtState;
-		}, {
-			...state,
-		});
-		// console.log(newState);
-		return newState;
-	}
-	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		//m fonction que pour les records eux meme (structure fonctionne)
-		return removeRecords(state, action.data.records);
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	default:
-		// console.log('no change');
-		return state;
+				builtState[parentTableId][parentRecordId] = {
+					...builtState[parentTableId][parentRecordId],
+				};
+				builtState[parentTableId][parentRecordId][tableId] = !!tableRecords.records;
+				return builtState;
+			}, {
+				...state,
+			});
+			// console.log(newState);
+			return newState;
+		}
+		case CANCEL_EDIT_RECORD:
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			//m fonction que pour les records eux meme (structure fonctionne)
+			return removeRecords(state, action.data.records);
+		case CLEAR_DATA:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
@@ -177,41 +177,41 @@ function setRecordIsEdited(state, data) {
 
 function records(state = {}, action) {
 	switch (action.type) {
-	case UNAUTHORIZED:
-	case CLEAR_DATA:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case RECORD_SINGLE_API.SUCCESS:
-		return receiveRecord(state, action.data);
-	case SET_RECORD_DELETED: {
-		// if record was new (i.e. not saved yet) remove it from store
-		const { tableId, recordId } = action.data;
-		if (isNew(recordId)) {
-			return removeRecords(state, [{
-				tableId,
-				recordId,
-			}]);
+		case UNAUTHORIZED:
+		case CLEAR_DATA:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case RECORD_SINGLE_API.SUCCESS:
+			return receiveRecord(state, action.data);
+		case SET_RECORD_DELETED: {
+			// if record was new (i.e. not saved yet) remove it from store
+			const { tableId, recordId } = action.data;
+			if (isNew(recordId)) {
+				return removeRecords(state, [{
+					tableId,
+					recordId,
+				}]);
+			}
+			return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
 		}
-		return setFieldValue(state, { ...action.data, fieldId: DELETED_PSEUDOFIELD_ALIAS, val: true });
-	}
-	case SET_FIELD_VALUE:
-		return setFieldValue(state, action.data);
-	case TOGGLE_MTM_VALUE:
-		return toggleMainEditedFromMtm(state, action.data);
-	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS: {
-		const newState = removeRecords(state, action.data.records);
-		return removeRecords(newState, action.data.deleted);
-	}
-	case SAVE_PREVIEW_API.SUCCESS:
-		return receivePreviewIds(state, action.data.records);
-	case TOGGLE_SITE_PERMISSION:
-		return setRecordIsEdited(state, action.data);
-	default:
-		// console.log('no change');
-		return state;
+		case SET_FIELD_VALUE:
+			return setFieldValue(state, action.data);
+		case TOGGLE_MTM_VALUE:
+			return toggleMainEditedFromMtm(state, action.data);
+		case CANCEL_EDIT_RECORD:
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS: {
+			const newState = removeRecords(state, action.data.records);
+			return removeRecords(newState, action.data.deleted);
+		}
+		case SAVE_PREVIEW_API.SUCCESS:
+			return receivePreviewIds(state, action.data.records);
+		case TOGGLE_SITE_PERMISSION:
+			return setRecordIsEdited(state, action.data);
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
@@ -300,114 +300,114 @@ function removeMtmRecords(state, recordsToRemove) {
 
 function mtmRecords(state = {}, action) {
 	switch (action.type) {
-	case MTM_RECORD_API.SUCCESS:
-	case RECORD_SINGLE_API.SUCCESS:
-		return receiveMtmRecords(state, action.data);
-	case TOGGLE_MTM_VALUE:
-		return toggleMtmValue(state, action.data);
-	case CLEAR_DATA:
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_API.SUCCESS:
-		return removeMtmRecords(state, action.data.records);
-	default:
-		// console.log('no change');
-		return state;
+		case MTM_RECORD_API.SUCCESS:
+		case RECORD_SINGLE_API.SUCCESS:
+			return receiveMtmRecords(state, action.data);
+		case TOGGLE_MTM_VALUE:
+			return toggleMtmValue(state, action.data);
+		case CLEAR_DATA:
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case CANCEL_EDIT_RECORD:
+		case SAVE_RECORD_API.SUCCESS:
+			return removeMtmRecords(state, action.data.records);
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
 // garde les records tels que loadés de la db, sans alteration (donc ne repond pas au set field value)
 function recordsUnaltered(state = {}, action) {
 	switch (action.type) {
-	case RECORD_SINGLE_API.SUCCESS:
-		return receiveRecord(state, action.data);
-	case MTM_RECORD_API.SUCCESS:
-		return receiveMtmRecords(state, action.data);
-	case CLEAR_DATA:
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case CANCEL_EDIT_RECORD:
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		// console.log(action);
-		return removeRecords(state, action.data.records);
-	default:
-		// console.log('no change');
-		return state;
+		case RECORD_SINGLE_API.SUCCESS:
+			return receiveRecord(state, action.data);
+		case MTM_RECORD_API.SUCCESS:
+			return receiveMtmRecords(state, action.data);
+		case CLEAR_DATA:
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case CANCEL_EDIT_RECORD:
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			// console.log(action);
+			return removeRecords(state, action.data.records);
+		default:
+			// console.log('no change');
+			return state;
 	}
 }
 
 function lastEdit(state = { time: 0 }, action) {
 	switch (action.type) {
-	case TOGGLE_MTM_VALUE:
-	case SET_RECORD_DELETED:
-	case UNAUTHORIZED:
-	case SET_FIELD_VALUE:
-	case CLEAR_DATA: {
-		return {
-			...state,
-			time: new Date().getTime(),
-		};
-	}
-	default:
-		return state;
+		case TOGGLE_MTM_VALUE:
+		case SET_RECORD_DELETED:
+		case UNAUTHORIZED:
+		case SET_FIELD_VALUE:
+		case CLEAR_DATA: {
+			return {
+				...state,
+				time: new Date().getTime(),
+			};
+		}
+		default:
+			return state;
 	}
 }
 
 function shownRecords(state = {}, action) {
 	switch (action.type) {
-	case SET_SHOWN_RECORD: {
-		const { tableId, parentRecordId, recordId, language } = action.data;
-		// console.log(action);
-		const newState = {
-			...state,
-			[tableId]: {
-				...(state[tableId] || {}),
-				[parentRecordId]: language ? {
-					...((state[tableId] && state[tableId][parentRecordId]) || {}),
-					[language]: [recordId],
-				} : [recordId],
-			},
-		};
-		// console.log(action.data);
-		// console.log(newState);
-		return newState;
-	}
-	case TOGGLE_SHOWN_RECORD: {
-		const { tableId, parentRecordId, recordId, language } = action.data;
-		// console.log(action);
-
-		const newState = {
-			...state,
-			[tableId]: {
-				...(state[tableId] || {}),
-				[parentRecordId]: language ? {
-					...((state[tableId] && state[tableId][parentRecordId]) || {}),
-					[language]: [...((state[tableId] && state[tableId][parentRecordId] && state[tableId][parentRecordId][language]) || [])],
-				} : [...((state[tableId] && state[tableId][parentRecordId]) || [])],
-			},
-		};
-
-		const curValues = language ? newState[tableId][parentRecordId][language] : newState[tableId][parentRecordId];
-		const curIndex = curValues.indexOf(recordId);
-		if (curIndex === -1) {
-			curValues.push(recordId);
-		} else {
-			curValues.splice(curIndex, 1);
+		case SET_SHOWN_RECORD: {
+			const { tableId, parentRecordId, recordId, language } = action.data;
+			// console.log(action);
+			const newState = {
+				...state,
+				[tableId]: {
+					...(state[tableId] || {}),
+					[parentRecordId]: language ? {
+						...((state[tableId] && state[tableId][parentRecordId]) || {}),
+						[language]: [recordId],
+					} : [recordId],
+				},
+			};
+			// console.log(action.data);
+			// console.log(newState);
+			return newState;
 		}
-		// console.log(action.data);
-		// console.log(recordId, curIndex);
-		return newState;
-	}
-	case CLEAR_DATA:
-		return {};
-	default:
-		return state;
+		case TOGGLE_SHOWN_RECORD: {
+			const { tableId, parentRecordId, recordId, language } = action.data;
+			// console.log(action);
+
+			const newState = {
+				...state,
+				[tableId]: {
+					...(state[tableId] || {}),
+					[parentRecordId]: language ? {
+						...((state[tableId] && state[tableId][parentRecordId]) || {}),
+						[language]: [...((state[tableId] && state[tableId][parentRecordId] && state[tableId][parentRecordId][language]) || [])],
+					} : [...((state[tableId] && state[tableId][parentRecordId]) || [])],
+				},
+			};
+
+			const curValues = language ? newState[tableId][parentRecordId][language] : newState[tableId][parentRecordId];
+			const curIndex = curValues.indexOf(recordId);
+			if (curIndex === -1) {
+				curValues.push(recordId);
+			} else {
+				curValues.splice(curIndex, 1);
+			}
+			// console.log(action.data);
+			// console.log(recordId, curIndex);
+			return newState;
+		}
+		case CLEAR_DATA:
+			return {};
+		default:
+			return state;
 	}
 }
 

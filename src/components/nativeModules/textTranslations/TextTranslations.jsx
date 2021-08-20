@@ -150,19 +150,19 @@ export default class TextTranslations extends Component {
 		if (e.metaKey || e.ctrlKey) {
 			// console.log(e);
 			switch (e.key) {
-			case 'f': {
-				e.preventDefault();
-				this.searchInput.current.focus();
-				break;
-			}
-			case 'g':
-			case 'G': {
-				e.preventDefault();
-				const direction = e.shiftKey ? -1 : 1;
-				this.props.navigateSearchTranslation(direction);
-				break;
-			}
-			default:
+				case 'f': {
+					e.preventDefault();
+					this.searchInput.current.focus();
+					break;
+				}
+				case 'g':
+				case 'G': {
+					e.preventDefault();
+					const direction = e.shiftKey ? -1 : 1;
+					this.props.navigateSearchTranslation(direction);
+					break;
+				}
+				default:
 			}
 		}
 	}
