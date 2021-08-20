@@ -7,7 +7,7 @@ import { parentRecordSelector } from './formChildrenRecords';
 const visibleStateSelector = state => state.freestone.subform.visibleState;
 const collapsedStateSelector = state => state.freestone.subform.collapsedState;
 const viewStateSelector = state => state.freestone.subform.viewState;
-const previewModeSelector = state => state.freestone.recordPreview.previewMode;
+const previewModeSelector = state => state.freestone.preview.previewMode;
 
 const makeSubformViewSelector = (tableSchemaSelector) => createSelector(
 	[tableSchemaSelector, viewStateSelector, previewModeSelector],

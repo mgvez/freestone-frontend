@@ -62,7 +62,6 @@ export function configureStore(initialState = {}) {
 
 		delete currentState.freestone.translations;
 		delete currentState.freestone.recordList;
-		delete currentState.freestone.recordPreview;
 		delete currentState.freestone.save;
 		delete currentState.freestone.permissions;
 

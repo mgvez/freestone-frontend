@@ -15,7 +15,7 @@ const recordIdSelector = (state, props) => (props.params || props.match.params |
 const recordsSelector = state => state.freestone.recordForm.records;
 const isModalSelector = (state, props) => props.isModal;
 const childrenSelector = state => state.freestone.schema.children;
-const currentPreviewSelector = state => state.freestone.recordPreview.currentPreview;
+const currentPreviewSelector = state => state.freestone.preview.currentPreview;
 const defaultLanguageSelector = state => state.freestone.env.freestone.defaultLanguage;
 
 //check si le record ou un de ses enfants a été edité

@@ -13,10 +13,10 @@ import { buildTree, getRecords } from './buildRecord';
  * */
 
 const lastEditSelector = state => state.freestone.recordForm.lastEdit.time;
-const previewSlugsSelector = state => state.freestone.recordPreview.slugs;
-const previewIdsSelector = state => state.freestone.recordPreview.previewIds;
-const currentPreviewIdSelector = state => state.freestone.recordPreview.currentPreview;
-const previewStateSelector = state => state.freestone.recordPreview.previewState;
+const previewSlugsSelector = state => state.freestone.preview.slugs;
+const previewIdsSelector = state => state.freestone.preview.previewIds;
+const currentPreviewIdSelector = state => state.freestone.preview.currentPreview;
+const previewStateSelector = state => state.freestone.preview.previewState;
 const contentBlockPreviewSettingsSelector = state => state.freestone.contentBlockPreview.previewSettings;
 const previewProcessorTableIdSelector = (state, props) => props.tableId;
 const previewProcessorRecordIdSelector = (state, props) => props.recordId;

@@ -9,7 +9,7 @@ import errors from './errors';
 import foreign from './foreign';
 import recordList from './recordList';
 import recordQuickedit from './recordQuickedit';
-import recordPreview from './recordPreview';
+import preview from './preview';
 import contentBlockPreview from './contentBlockPreview';
 import recordForm from './recordForm';
 import subform from './subform';
@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
 	errors,
 	recordList,
 	recordForm,
-	recordPreview,
+	preview,
 	contentBlockPreview,
 	recordQuickedit,
 	foreign,
