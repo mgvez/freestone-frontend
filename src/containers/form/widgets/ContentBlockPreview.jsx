@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 
 import ContentBlockPreview from '../../../components/form/widgets/ContentBlockPreview';
 import { previewUnsavedRecordMapStateToProps } from '../../../selectors/previewRecord';
-import { fetchContentBlockPreview, setPreviewWidth } from '../../../actions/contentBlockPreview';
+import { fetchContentBlockPreview, setPreviewWidth } from '../../../actions/preview';
 
 export default connect(
 	previewUnsavedRecordMapStateToProps,

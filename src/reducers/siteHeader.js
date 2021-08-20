@@ -1,5 +1,5 @@
 import { TOGGLE_NAV_VISIBILITY, TOGGLE_LOADED_RECORDS } from '../actions/siteHeader';
-import { SET_CURRENT_PREVIEW } from '../actions/record';
+import { SET_CURRENT_PREVIEW } from '../actions/preview';
 
 const initialState = {
 	loaded_records_visibility: false,

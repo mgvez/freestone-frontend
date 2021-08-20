@@ -1,16 +1,16 @@
 
 import { createSelector } from 'reselect';
+import { genericTableIdSelector } from './tableSchema';
 
 
 const visibleStateSelector = state => state.freestone && state.freestone.fieldgroup.visibleState;
 const collapsedStateSelector = state => state.freestone && state.freestone.fieldgroup.collapsedState;
 
 const groupIdSelector = (state, props) => props.id;
-const tableIdSelector = (state, props) => props.tableId;
 
 function makeVisbleSelector() {
 	return createSelector(
-		[groupIdSelector, tableIdSelector, visibleStateSelector],
+		[groupIdSelector, genericTableIdSelector, visibleStateSelector],
 		(groupId, tableId, visibleState) => {
 			// console.log(groupId, tableId);
 			

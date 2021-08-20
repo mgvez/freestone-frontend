@@ -3,7 +3,8 @@ import { combineReducers } from 'redux';
 import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { CLEAR_DATA } from '../actions/dev';
-import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD, SET_RECORD_IS_PREVIEWING, SET_CURRENT_PREVIEW, SET_PREVIEW_VIEW_TYPE, PREVIEW_IFRAME } from '../actions/record';
+import { RECORD_SINGLE_API, CANCEL_EDIT_RECORD } from '../actions/record';
+import { SET_RECORD_IS_PREVIEWING, SET_CURRENT_PREVIEW, SET_PREVIEW_VIEW_TYPE, PREVIEW_IFRAME, SET_PREVIEW_MODE } from '../actions/preview';
 import { SAVE_RECORD_API, SAVE_PREVIEW_API, DELETE_RECORD_API } from '../actions/save';
 
 function removeRecord(state, record) {
@@ -138,10 +139,27 @@ function currentPreview(state = { type: PREVIEW_IFRAME }, action) {
 	}
 }
 
+export function previewMode(state = {}, action) {
+	switch (action.type) {
+	case SET_PREVIEW_MODE: {
+		const tableId = action.data.tableId;
+		// console.log(action);
+		const newState = {
+			...state,
+			[tableId]: action.data.mode,
+		};
+		return newState;
+	}
+	default:
+		return state;
+	}
+}
+
 
 export default combineReducers({
 	slugs,
 	previewIds,
 	previewState,
 	currentPreview,
+	previewMode,
 });

@@ -9,6 +9,40 @@ import { catchError } from './save';
 const FETCH_CONTENTBLOCK_PREVIEW = createRequestTypes('FETCH_CONTENTBLOCK_PREVIEW');
 export const SET_PREVIEW_WIDTH = 'SET_PREVIEW_WIDTH';
 
+export const PREVIEW_IFRAME = 'iframe';
+export const PREVIEW_WIN = 'window';
+
+export const SET_RECORD_IS_PREVIEWING = 'SET_RECORD_IS_PREVIEWING';
+export const SET_CURRENT_PREVIEW = 'SET_CURRENT_PREVIEW';
+export const SET_PREVIEW_VIEW_TYPE = 'SET_PREVIEW_VIEW_TYPE';
+
+
+export function setIsPreviewing(status) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_RECORD_IS_PREVIEWING,
+			data: status,
+		});
+	};
+}
+
+export function setCurrentPreview(tableId, recordId, type = PREVIEW_IFRAME) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_CURRENT_PREVIEW,
+			data: { tableId, recordId, type },
+		});
+	};
+}
+
+export function setPreviewViewType(type) {
+	return (dispatch) => {
+		return dispatch({
+			type: SET_PREVIEW_VIEW_TYPE,
+			data: { type },
+		});
+	};
+}
 
 export function fetchContentBlockPreview(jsonRecord, records) {
 	return (dispatch) => {

@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { SET_PREVIEW_WIDTH } from '../actions/contentBlockPreview';
-
+import { SET_PREVIEW_WIDTH } from '../actions/preview';
 
 export function previewSettings(state = {}, action) {
 	switch (action.type) {

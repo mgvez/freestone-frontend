@@ -6,6 +6,11 @@ export const tableNameSelector = (state, props) => props.tableName || (props.par
 const mainTableIdSelector = (state, props) => props.tableId || (props.params && props.params.tableId) || (props.match && props.match.params && props.match.params.tableId);
 const parentTableIdSelector = (state, props) => props.parentTableId;
 
+// generic tableId selector for when there's either a prop or a table
+export const genericTableIdSelector = (state, props) => { 
+	return props.tableId || (props.table && props.table.id);
+};
+
 function makeTableSelector(tableIdSelector) {
 	return createSelector(
 		[schemaSelector, tableNameSelector, tableIdSelector],

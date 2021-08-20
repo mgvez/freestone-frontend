@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
+import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/preview';
 import colors from '../../styles/Colors';
 import SaveLivePreview from '../../containers/process/SaveLivePreview';
 import { Button } from '../../styles/Button';

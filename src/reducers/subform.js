@@ -59,25 +59,8 @@ export function visibleState(state = {}, action) {
 	}
 }
 
-export function previewMode(state = {}, action) {
-	switch (action.type) {
-	case SET_SUBFORM_PREVIEW_MODE: {
-		const tableId = action.data.tableId;
-		// console.log(action);
-		const newState = {
-			...state,
-			[tableId]: action.data.mode,
-		};
-		return newState;
-	}
-	default:
-		return state;
-	}
-}
-
 export default combineReducers({
 	viewState,
 	collapsedState,
 	visibleState,
-	previewMode,
 });

@@ -113,6 +113,7 @@ function formatRecords(branch, allRecords, allTables, language) {
 	};
 }
 
+// for content blocks
 export function previewUnsavedRecordMapStateToProps() {
 	const tableSchemaSelector = tableSchemaMapStateToProps();
 	const recordIdSelector = makeRecordIdSelector();

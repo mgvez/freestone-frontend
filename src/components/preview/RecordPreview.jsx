@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/record';
+import { PREVIEW_IFRAME, PREVIEW_WIN } from '../../actions/preview';
 
 
 const containerStyle = {

@@ -1,12 +1,11 @@
 
 import { createSelector } from 'reselect';
-import { tableSchemaMapStateToProps } from './tableSchema';
+import { tableSchemaMapStateToProps, genericTableIdSelector } from './tableSchema';
 import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 
 const recordIdSelector = (state, props) => (props.recordId || props.values && props.values[PRIKEY_ALIAS]);
 const parentRecordIdSelector = (state, props) => props.parentRecordId;
 const parentTableIdSelector = (state, props) => props.parentTableId;
-const tableIdSelector = (state, props) => props.tableId;
 const tableSelector = (state, props) => props.table;
 const visibleStateSelector = state => state.freestone.fieldgroup.visibleState;
 
@@ -54,7 +53,7 @@ function makeRecordUnalteredSelector(tableSchemaSelector) {
 
 function makeActiveGroupSelector() {
 	return createSelector(
-		[tableIdSelector, visibleStateSelector],
+		[genericTableIdSelector, visibleStateSelector],
 		(tableId, visibleState) => {
 			// console.log(collapsedState, tableId);
 			return visibleState && visibleState[tableId];

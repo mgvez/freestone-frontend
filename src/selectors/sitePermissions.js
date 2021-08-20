@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
 import { ALL_RECORDS_ID, EVERYBODY_GROUP_ID } from '../freestone/schemaProps';
+import { genericTableIdSelector } from './tableSchema';
 
 const allPermsSelector = state => state.freestone.permissions.sitePermissions;
 const allGroupsSelector = state => state.freestone.permissions.groups;
 const permsModifiedSelector = state => state.freestone.permissions.sitePermissionsModified;
 const recordIdSelector = (state, props) => props.recordId;
-const tableIdSelector = (state, props) => props.tableId || (props.table && props.table.id);
 
 
 function parseRecordPermissions(userGroups, recordPermissionsList, tablePermissionsList, isForAllRecords) {
@@ -40,7 +40,7 @@ function parseRecordPermissions(userGroups, recordPermissionsList, tablePermissi
 	Gets the values of default premissions for all records in a table
  */
 export const tableSitePermissionsSelector = createSelector(
-	[allPermsSelector, permsModifiedSelector, tableIdSelector],
+	[allPermsSelector, permsModifiedSelector, genericTableIdSelector],
 	(allPerms, permsModified, tableId) => {
 		const tablePermissions = allPerms && allPerms[tableId] && allPerms[tableId][ALL_RECORDS_ID];
 		const isModified = permsModified && permsModified[tableId] && permsModified[tableId][ALL_RECORDS_ID];
@@ -55,7 +55,7 @@ export const tableSitePermissionsSelector = createSelector(
 	Gets permissions parsed for each group
 */
 export const sitePermissionsSelector = createSelector(
-	[allPermsSelector, allGroupsSelector, tableIdSelector, recordIdSelector],
+	[allPermsSelector, allGroupsSelector, genericTableIdSelector, recordIdSelector],
 	(allPerms, userGroups, tableId, recordId) => {
 
 		const recordPermissionsList = allPerms && allPerms[tableId] && allPerms[tableId][recordId];

@@ -1,18 +1,13 @@
 
 import { createSelector } from 'reselect';
 import { PRIKEY_ALIAS, GUID_FIELD } from '../freestone/schemaProps';
-import { tableSchemaMapStateToProps } from './tableSchema';
+import { tableSchemaMapStateToProps, genericTableIdSelector } from './tableSchema';
 import { parentRecordSelector } from './formChildrenRecords';
 
-
-const tableIdSelector = (state, props) => { 
-	return props.tableId || (props.table && props.table.id);
-};
 const visibleStateSelector = state => state.freestone.subform.visibleState;
 const collapsedStateSelector = state => state.freestone.subform.collapsedState;
 const viewStateSelector = state => state.freestone.subform.viewState;
-
-const previewModeSelector = state => state.freestone.subform.previewMode;
+const previewModeSelector = state => state.freestone.recordPreview.previewMode;
 
 const makeSubformViewSelector = (tableSchemaSelector) => createSelector(
 	[tableSchemaSelector, viewStateSelector, previewModeSelector],
@@ -35,7 +30,7 @@ export function subformViewSelector() {
 
 function makeIsCollapsedSelector() {
 	return createSelector(
-		[tableIdSelector, collapsedStateSelector],
+		[genericTableIdSelector, collapsedStateSelector],
 		(tableId, collapsedState) => {
 			// console.log('process... %s', tableId);
 			return {
@@ -47,7 +42,7 @@ function makeIsCollapsedSelector() {
 
 function makeIsVisibleSelector() {
 	return createSelector(
-		[tableIdSelector, visibleStateSelector],
+		[genericTableIdSelector, visibleStateSelector],
 		(tableId, visibleState) => {
 			// console.log('process... %s', tableId);
 			return {
