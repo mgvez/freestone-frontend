@@ -29,8 +29,6 @@ export const Slider = styled.div`
 `;
 
 export default function ContentBlockPreview({
-	tableId,
-	recordId,
 	previewRecord,
 	records,
 	fetchContentBlockPreview,
