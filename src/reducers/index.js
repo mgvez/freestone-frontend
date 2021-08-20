@@ -10,6 +10,7 @@ import foreign from './foreign';
 import recordList from './recordList';
 import recordQuickedit from './recordQuickedit';
 import recordPreview from './recordPreview';
+import contentBlockPreview from './contentBlockPreview';
 import recordForm from './recordForm';
 import subform from './subform';
 import fieldgroup from './fieldgroup';
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
 	recordList,
 	recordForm,
 	recordPreview,
+	contentBlockPreview,
 	recordQuickedit,
 	foreign,
 	save,

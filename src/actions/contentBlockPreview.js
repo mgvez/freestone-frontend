@@ -53,12 +53,11 @@ export function fetchContentBlockPreview(jsonRecord, records) {
 	};
 }
 
-export function setPreviewWidth(tableId, ratio) {
+export function setPreviewWidth(ratio) {
 	return (dispatch) => {
 		return dispatch({
 			type: SET_PREVIEW_WIDTH,
 			data: {
-				tableId,
 				ratio,
 			},
 		});

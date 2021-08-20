@@ -17,29 +17,27 @@ const previewSlugsSelector = state => state.freestone.recordPreview.slugs;
 const previewIdsSelector = state => state.freestone.recordPreview.previewIds;
 const currentPreviewIdSelector = state => state.freestone.recordPreview.currentPreview;
 const previewStateSelector = state => state.freestone.recordPreview.previewState;
-const previewSettingsSelector = state => state.freestone.recordPreview.previewSettings;
+const contentBlockPreviewSettingsSelector = state => state.freestone.contentBlockPreview.previewSettings;
 const previewProcessorTableIdSelector = (state, props) => props.tableId;
 const previewProcessorRecordIdSelector = (state, props) => props.recordId;
 
 
 function makeSelector(slugsSelector) {
 	return createSelector(
-		[slugsSelector, userViewLanguageSelector, lastEditSelector, previewIdsSelector, previewProcessorTableIdSelector, previewProcessorRecordIdSelector, currentPreviewIdSelector, previewSettingsSelector],
-		(recordSlugs, userViewLanguage, lastEdit, previewIds, tableId, recordId, currentPreview, previewSettings) => {
+		[slugsSelector, userViewLanguageSelector, lastEditSelector, previewIdsSelector, previewProcessorTableIdSelector, previewProcessorRecordIdSelector, currentPreviewIdSelector],
+		(recordSlugs, userViewLanguage, lastEdit, previewIds, tableId, recordId, currentPreview) => {
 			// console.log(recordSlugs);
 
 			const previewRecordId = previewIds[tableId] && previewIds[tableId][recordId];
 
 			const currentLanguage = (userViewLanguage && userViewLanguage.language);
 			const slug = recordSlugs && recordSlugs[currentLanguage];
-
 			return {
 				slug,
 				lastEdit,
 				currentLanguage,
 				previewRecordId,
 				currentPreviewType: currentPreview.type,
-				previewSettings: previewSettings[tableId],
 			};
 		}
 	);
@@ -120,8 +118,26 @@ export function previewUnsavedRecordMapStateToProps() {
 	const recordIdSelector = makeRecordIdSelector();
 	const languageSelector = makeLanguageSelector();
 	return createSelector(
-		[tableSchemaSelector, schemaSelector, recordsSelector, mtmRecordsSelector, recordIdSelector, childrenSelector, languageSelector],
-		(table, allSchema, allRecords, allMtmRecords, recordId, unfilteredChildren, language) => {
+		[
+			tableSchemaSelector,
+			schemaSelector,
+			recordsSelector,
+			mtmRecordsSelector,
+			recordIdSelector,
+			childrenSelector,
+			languageSelector,
+			contentBlockPreviewSettingsSelector,
+		],
+		(
+			table,
+			allSchema,
+			allRecords,
+			allMtmRecords,
+			recordId,
+			unfilteredChildren,
+			language,
+			previewSettings
+		) => {
 			const { tables } = allSchema;
 			// a prop is added by the back on the content block's table to tell that it is previewable. Only the content_block s are configured to do so.
 			if (!table.isContentBlockPreviewable) return {};
@@ -129,9 +145,9 @@ export function previewUnsavedRecordMapStateToProps() {
 			const tree = buildTree(table && table.id, recordId, allRecords, allMtmRecords, tables, unfilteredChildren);
 			const records = getRecords(tree, allRecords, false);
 			const previewRecord = formatRecords(tree, allRecords, tables, language);
-
 			return {
 				previewRecord: JSON.stringify(previewRecord),
+				previewSettings,
 				records,
 			};
 		}

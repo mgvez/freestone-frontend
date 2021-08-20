@@ -5,6 +5,9 @@ import { Preloader } from '../../widgets/Preloader';
 import { IFrame } from '../../widgets/IFrame';
 // import { GridContainer, GridItem } from '../../../styles/Grid';
 
+const DEFAULT_RATIO = 0.3;
+const MIN_SCALE = 0.1;
+const MAX_SCALE = 0.6;
 
 export const Container = styled.div`
 	display: flex;
@@ -38,8 +41,9 @@ export default function ContentBlockPreview({
 
 	const [previewHtml, setPreviewHtml] = useState();
 	const [isLoading, setIsLoading] = useState(false);
+
+	const [ratio, setRatio] = useState(previewSettings.ratio);
 	const containerRef = useRef();
-	const ratio = previewSettings.ratio || 0.3;
 
 	useEffect(() => {
 		const tid = setTimeout(() => {
@@ -60,8 +64,8 @@ export default function ContentBlockPreview({
 		const rect = containerRef.current.getBoundingClientRect();
 		const x = e.clientX - rect.left;
 		const targetRatio = x / (rect.right - rect.left);
-		setPreviewWidth(tableId, targetRatio);
-	}, [containerRef, setPreviewWidth, tableId]);
+		setRatio(targetRatio);
+	}, [containerRef, setRatio]);
 
 	const endDrag = useCallback(() => {
 		document.documentElement.removeEventListener('mousemove', onDrag);
@@ -80,16 +84,30 @@ export default function ContentBlockPreview({
 		};
 	}, [onDrag, endDrag]);
 
-	const previewScale = Math.min(0.6, Math.max(0.1, ratio));
+	useEffect(() => {
+		if (!ratio) {
+			return undefined;
+		}
+		const debouncedSetRatio = () => {
+			setPreviewWidth(ratio);
+		};
+		const t = setTimeout(debouncedSetRatio, 100);
+		return () => {
+			clearTimeout(t);
+		};
+	}, [ratio, setPreviewWidth]);
+
+	const finalRatio = ratio || DEFAULT_RATIO;
+	const previewScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, finalRatio));
 
 	return (
 		<Container ref={containerRef}>
-			<Panel ratio={ratio}>
+			<Panel ratio={finalRatio}>
 				<IFrame scale={previewScale}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
 				{isLoading && <Preloader />}
 			</Panel>
 			<Slider onMouseDown={startDrag} />
-			<Panel ratio={1 - ratio}>
+			<Panel ratio={1 - finalRatio}>
 				{form}
 			</Panel>
 		</Container>
