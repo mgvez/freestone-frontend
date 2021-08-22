@@ -18,8 +18,9 @@ export const Container = styled.div`
 	width: 100%;
 `;
 
-const getPanelCss = ({ ratio }) => `
+const getPanelCss = ({ ratio, h }) => `
 	position: relative;
+	${h && `height: ${h}px;`}
 	width: calc(${ratio * 100}% - 3px);
 `;
 export const Panel = styled.div`${props => getPanelCss(props)}`;
@@ -99,16 +100,19 @@ export default function ContentBlockPreview({
 		};
 	}, [ratio, setPreviewWidth]);
 
+
 	const finalRatio = ratio || DEFAULT_RATIO;
 	const previewScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, finalRatio));
+
+	const [contentHeight, setContentHeight] = useState(100);
 
 	let op;
 	switch (subPreviewMode) {
 		case SUBFORM_PREVIEW_MODE_PREVIEWS: {
 			op = (
 				<React.Fragment>
-					<Panel ratio={1}>
-						<IFrame scale={MAX_SCALE}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
+					<Panel ratio={1} h={contentHeight * MAX_SCALE}>
+						<IFrame scale={MAX_SCALE} reportHeight={setContentHeight}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
 						{isLoading && <Preloader />}
 					</Panel>
 				</React.Fragment>

@@ -18,6 +18,7 @@ export default function PreviewsStacked(props) {
 		return props.childrenRecords.map((record, index) => (
 			<ContentBlockPreview 
 				tableId={props.table.id}
+				key={record.id}
 				recordId={record.id}
 				parentRecordId={props.parentRecordId}
 				parentTableId={props.parentTableId}
