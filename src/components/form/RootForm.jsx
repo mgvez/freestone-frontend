@@ -12,8 +12,9 @@ import RecordInfo from '../../containers/header/info/RecordInfo';
 
 import FixedHeader from '../header/FixedHeader';
 import FormHeaderContent from '../header/info/FormHeaderContent';
-import InScroll from '../../containers/utils/InScroll'; 
-import { Button } from '../../styles/Button';
+import InScroll from '../../containers/utils/InScroll';
+import { Icon } from '../../styles/Icon';
+import { Button, NavLinkButton } from '../../styles/Button';
 import { MainZone } from '../../styles/Grid';
 
 const ACTION_STAY_FORM = 'stay_form';
@@ -103,6 +104,14 @@ export default function RootForm(props) {
 			permsWidget = <PermissionsForm table={table} recordId={recordId} />;
 		}
 
+		let editSchema = null;
+		if (props.isGod) {
+			const editSchemaLink = table ? `/edit/zva_table/${table.id}` : '';
+			if (editSchemaLink) {
+				editSchema = <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" /> Edit Schema</NavLinkButton>;
+			}
+		}
+
 		const previewProcessor = table && table.hasTemplate ? (
 			<PreviewRecord
 				key="preview"
@@ -131,6 +140,7 @@ export default function RootForm(props) {
 					</RecordInfo>
 				)}
 				popout={() => [
+					editSchema,
 					previewProcessor,
 					<LanguageToggler key="langtoggle" onChangeLang={props.isModal ? setStateLanguage : null} localLanguage={language} />,
 				]}
@@ -158,6 +168,7 @@ RootForm.propTypes = {
 		recordId: PropTypes.string,
 	}),
 
+	isGod: PropTypes.bool,
 	isModal: PropTypes.bool,
 	isEdited: PropTypes.bool,
 	isPreviewEdited: PropTypes.bool,
