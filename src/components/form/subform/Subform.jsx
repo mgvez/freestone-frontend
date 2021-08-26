@@ -55,6 +55,9 @@ export default class Subform extends Component {
 				changeCollapsedState={this.changeCollapsedState}
 				titleOverride={this.props.titleOverride}
 				descriptionAppend={this.props.descriptionAppend}
+				editSchema={() => [
+					<EditSchema table={this.props.table} location={LOCATIONS.SUBFORM} />,
+				]}
 			/>);
 		}
 		// console.log(`render ${this.props.tableId}`);

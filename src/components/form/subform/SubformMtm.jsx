@@ -29,6 +29,7 @@ export default class SubformMtm extends Component {
 		parentRecordId: PropTypes.string,
 		mtmOptions: PropTypes.array,
 		isCollapsed: PropTypes.bool,
+		editSchema: PropTypes.func,
 		titleOverride: PropTypes.string,
 		descriptionAppend: PropTypes.string,
 
@@ -122,6 +123,7 @@ export default class SubformMtm extends Component {
 							<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 						</GridItem>
 						<GridItem columns="4" align="end" className="fcn">
+							{this.props.editSchema()}
 							<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 						</GridItem>
 
