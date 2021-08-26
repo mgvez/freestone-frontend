@@ -3,7 +3,6 @@ import { createSelector } from 'reselect';
 import { PRIKEY_ALIAS, GUID_FIELD } from '../freestone/schemaProps';
 import { tableSchemaMapStateToProps } from './tableSchema';
 import { parentRecordSelector } from './formChildrenRecords';
-import { isGodSelector } from './credentials';
 
 
 const tableIdSelector = (state, props) => { 
@@ -63,13 +62,12 @@ function formVisibleMapStateToProps() {
 
 function makeSubformSelector(tableSchemaSelector, formVisibleSelector, formCollapsedSelector) {
 	return createSelector(
-		[tableSchemaSelector, formVisibleSelector, formCollapsedSelector, isGodSelector],
-		(table, formVisible, formCollapsed, isGod) => {
+		[tableSchemaSelector, formVisibleSelector, formCollapsedSelector],
+		(table, formVisible, formCollapsed) => {
 			return {
 				table,
 				...formVisible,
 				...formCollapsed,
-				...isGod,
 			};
 		}
 	);

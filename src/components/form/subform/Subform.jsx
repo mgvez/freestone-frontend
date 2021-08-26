@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { TYPE_MTM } from '../../../freestone/schemaProps';
-import { NavLinkButton } from '../../../styles/Button';
-import { Icon } from '../../../styles/Icon';
 
 import SubformMtm from '../../../containers/form/subform/SubformMtm';
 import SubformStandard from '../../../containers/form/subform/SubformStandard';
-import EditSchema, { LOCATIONS } from '../buttons/editSchema';
+import { LOCATIONS } from '../buttons/EditSchema';
+import EditSchema from '../../../containers/form/buttons/EditSchema';
 
 export default class Subform extends Component {
 	static propTypes = {
@@ -70,7 +69,7 @@ export default class Subform extends Component {
 			descriptionAppend={this.props.descriptionAppend}
 			language={this.props.language}
 			editSchema={() => [
-				<EditSchema table={this.props.table} isGod={this.props.isGod} location={LOCATIONS.SUBFORM} />,
+				<EditSchema table={this.props.table} location={LOCATIONS.SUBFORM} />,
 			]}
 		/>);
 

@@ -10,7 +10,6 @@ import { tableSchemaMapStateToProps } from './tableSchema';
 import { schemaSelector } from './schema';
 import { loadedRecords } from './loadedRecords';
 
-import { isGodSelector } from './credentials';
 const paramsSelector = (state, props) => props.params || props.match.params || {};
 const recordIdSelector = (state, props) => (props.params || props.match.params || {}).recordId;
 const recordsSelector = state => state.freestone.recordForm.records;
@@ -43,7 +42,7 @@ function getIsEdited(allTables, allChildren, allRecords, tableId, recordId, isFo
 
 function makeSelector() {
 	return createSelector(
-		[tableSchemaMapStateToProps(), paramsSelector, recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, currentPreviewSelector, isGodSelector],
+		[tableSchemaMapStateToProps(), paramsSelector, recordIdSelector, recordsSelector, isModalSelector, userViewLanguageSelector, defaultLanguageSelector, childrenSelector, schemaSelector, loadedRecords, currentPreviewSelector],
 		(table, params, recordId, records, isModal, userViewLanguage, defaultLanguage, allChildren, allSchema, allLoadedRecords, currentPreview, isGod) => {
 			const record = recordId && table && records[table.id] && records[table.id][recordId];
 
@@ -72,7 +71,6 @@ function makeSelector() {
 				previewType: (isViewingPreview && currentPreview.type) || null,
 				lastmodifdate: record && record[LASTMODIF_DATE_ALIAS],
 				...userViewLanguage,
-				...isGod,
 				isEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId),
 				isPreviewEdited: getIsEdited(allSchema.tables, allChildren, records, table && table.id, recordId, true),
 			};

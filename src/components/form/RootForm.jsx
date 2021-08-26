@@ -13,10 +13,10 @@ import RecordInfo from '../../containers/header/info/RecordInfo';
 import FixedHeader from '../header/FixedHeader';
 import FormHeaderContent from '../header/info/FormHeaderContent';
 import InScroll from '../../containers/utils/InScroll';
-import { Icon } from '../../styles/Icon';
-import { Button, NavLinkButton } from '../../styles/Button';
+import { Button } from '../../styles/Button';
 import { MainZone } from '../../styles/Grid';
-import EditSchema, { LOCATIONS } from './buttons/editSchema';
+import { LOCATIONS } from './buttons/EditSchema';
+import EditSchema from '../../containers/form/buttons/EditSchema';
 
 const ACTION_STAY_FORM = 'stay_form';
 const ACTION_CALLBACK = 'callback';
@@ -105,7 +105,7 @@ export default function RootForm(props) {
 			permsWidget = <PermissionsForm table={table} recordId={recordId} />;
 		}
 
-		const editSchema = <EditSchema table={table} isGod={props.isGod} location={LOCATIONS.RECORD} />;
+		const editSchema = <EditSchema table={table} location={LOCATIONS.RECORD} />;
 
 		const previewProcessor = table && table.hasTemplate ? (
 			<PreviewRecord

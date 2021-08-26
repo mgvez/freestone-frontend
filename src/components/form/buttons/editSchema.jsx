@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Button, NavLinkButton } from '../../../styles/Button';
+import { NavLinkButton } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
 
 const BUTTON_LABEL = 'Edit Schema';
@@ -27,6 +27,8 @@ export default class EditSchema extends Component {
 		switch (this.props.location) {
 		case LOCATIONS.SUBFORM:
 			return <NavLinkButton to={editSchemaLink} small="true" round="true" bordered="true"><Icon icon="edit" side="left" /> {BUTTON_LABEL}</NavLinkButton>;
+		case LOCATIONS.RECORDS_LIST:
+			return <NavLinkButton to={editSchemaLink} round="true" bordered="true"><Icon icon="edit" side="left" /> {BUTTON_LABEL}</NavLinkButton>;
 		default:
 			return <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" /> {BUTTON_LABEL}</NavLinkButton>;
 		}
