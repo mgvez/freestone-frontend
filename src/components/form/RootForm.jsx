@@ -16,6 +16,7 @@ import InScroll from '../../containers/utils/InScroll';
 import { Icon } from '../../styles/Icon';
 import { Button, NavLinkButton } from '../../styles/Button';
 import { MainZone } from '../../styles/Grid';
+import EditSchema, { LOCATIONS } from './buttons/editSchema';
 
 const ACTION_STAY_FORM = 'stay_form';
 const ACTION_CALLBACK = 'callback';
@@ -104,13 +105,7 @@ export default function RootForm(props) {
 			permsWidget = <PermissionsForm table={table} recordId={recordId} />;
 		}
 
-		let editSchema = null;
-		if (props.isGod) {
-			const editSchemaLink = table ? `/edit/zva_table/${table.id}` : '';
-			if (editSchemaLink) {
-				editSchema = <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" /> Edit Schema</NavLinkButton>;
-			}
-		}
+		const editSchema = <EditSchema table={table} isGod={props.isGod} location={LOCATIONS.RECORD} />;
 
 		const previewProcessor = table && table.hasTemplate ? (
 			<PreviewRecord

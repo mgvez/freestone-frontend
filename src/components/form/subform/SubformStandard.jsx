@@ -25,6 +25,7 @@ export default class SubformStandard extends Component {
 		defaultViewType: PropTypes.string,
 		language: PropTypes.string,
 		isCollapsed: PropTypes.bool,
+		editSchema: PropTypes.func,
 		titleOverride: PropTypes.string,
 		descriptionAppend: PropTypes.string,
 		
@@ -79,6 +80,7 @@ export default class SubformStandard extends Component {
 
 	render() {
 		if (!this.props.table) return null;
+
 		if (this.props.table.type === TYPE_SUBFORM || this.props.table.type === TYPE_SUBFORM_GUID) {
 			const currentViewType = this.props.currentViewType || this.props.defaultViewType;
 			if (currentViewType === SUBFORM_VIEW_LIST) {
