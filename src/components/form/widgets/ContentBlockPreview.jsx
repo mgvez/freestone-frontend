@@ -111,7 +111,7 @@ export default function ContentBlockPreview({
 		case SUBFORM_PREVIEW_MODE_PREVIEWS: {
 			op = (
 				<React.Fragment>
-					<Panel ratio={1} h={contentHeight * MAX_SCALE}>
+					<Panel ratio={1} h={contentHeight}>
 						<IFrame scale={MAX_SCALE} reportHeight={setContentHeight}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
 						{isLoading && <Preloader />}
 					</Panel>
