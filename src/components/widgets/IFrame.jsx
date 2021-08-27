@@ -1,24 +1,20 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
 import styled from 'styled-components';
-import colors from '../../styles/Colors';
 
 const getIframeCss = props => {
-	const scale = props.scale || 0.3;
 	const pxHeight = props.pxHeight || 100;
-	const translatePrc = -(1 - scale) * 50;
-	const blowupPrc = 100 / scale;
 	return `
 		transformOrigin: 0 0;
 		border: 0;
-		width: 90%;
+		width: ${props.width ? `${props.width}px` : '100%'};
 		height: ${pxHeight}px;
 		max-width: 1920px;
 		display: block;
-		border: 1px red solid;
 		overflow: hidden;
+		border: 1px red solid;
 	`;
 };
 
@@ -31,7 +27,7 @@ export function IFrame(props) {
 	const setContentRef = (contentRef) => {
 		setMountNode(contentRef && contentRef.contentWindow && contentRef.contentWindow.document);
 	};
-	
+	console.log(props.width);
 	const { children, ...otherProps } = props;
 
 	const computeHeight = useCallback((e) => {
@@ -39,12 +35,11 @@ export function IFrame(props) {
 		const body = mountNode.body;
 		const html = body.parentNode;
 		mountNode.body.style.zoom = 1;
-		const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+		const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight) * props.scale;
 		mountNode.body.style.zoom = props.scale;
 
-		props.reportHeight(height * props.scale);
-		setContentHeight(height * props.scale);
-		console.log('%s => %s', contentHeight, height);
+		props.reportHeight(height);
+		setContentHeight(height);
 	}, [props.reportHeight, setContentHeight, mountNode, props.scale, contentHeight]);
 
 	useEffect(() => {
@@ -68,6 +63,7 @@ export function IFrame(props) {
 			pxHeight={contentHeight}
 			ref={setContentRef}
 			scrolling="no"
+			width={props.width}
 		>
 			{mountNode && createPortal(children, mountNode.body)}
 		</WidgetIframe>
@@ -77,5 +73,6 @@ export function IFrame(props) {
 IFrame.propTypes = {
 	children: PropTypes.any,
 	scale: PropTypes.number,
+	width: PropTypes.number,
 	reportHeight: PropTypes.func,
 };

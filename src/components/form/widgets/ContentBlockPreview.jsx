@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { Preloader } from '../../widgets/Preloader';
 import { IFrame } from '../../widgets/IFrame';
+import { useRect } from '../../../hooks/useRect';
 import { 
 	SUBFORM_PREVIEW_MODE_PREVIEWS,
 	SUBFORM_PREVIEW_MODE_MIXED,
@@ -18,9 +19,9 @@ export const Container = styled.div`
 	width: 100%;
 `;
 
-const getPanelCss = ({ ratio, h }) => `
+const getPanelCss = ({ ratio, height }) => `
 	position: relative;
-	${h && `height: ${h}px;`}
+	${height && `height: ${height}px;`}
 	width: calc(${ratio * 100}% - 3px);
 `;
 export const Panel = styled.div`${props => getPanelCss(props)}`;
@@ -32,6 +33,10 @@ export const Slider = styled.div`
 	border-left: 1px black solid;
 	cursor: col-resize;
 `;
+
+const SCREEN_WIDTHS = [
+	640, 720, 1440, 1920,
+];
 
 export default function ContentBlockPreview({
 	previewRecord,
@@ -47,6 +52,8 @@ export default function ContentBlockPreview({
 
 	const [ratio, setRatio] = useState(previewSettings.ratio);
 	const containerRef = useRef();
+	const [previewPanelRect, previewPanelRef] = useRect();
+	const [previewScreenW, setPreviewScreenW] = useState(SCREEN_WIDTHS[2]);
 
 	useEffect(() => {
 		const tid = setTimeout(() => {
@@ -100,23 +107,39 @@ export default function ContentBlockPreview({
 		};
 	}, [ratio, setPreviewWidth]);
 
+	const isFullPreviews = subPreviewMode === SUBFORM_PREVIEW_MODE_PREVIEWS;
+	const finalRatio = isFullPreviews ? 1 : ratio || DEFAULT_RATIO;
+	let previewScale = isFullPreviews ? MAX_SCALE : Math.min(MAX_SCALE, Math.max(MIN_SCALE, finalRatio));
 
-	const finalRatio = ratio || DEFAULT_RATIO;
-	const previewScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, finalRatio));
+	const [contentHeight, setContentHeight] = useState(0);
 
-	const [contentHeight, setContentHeight] = useState(100);
+	// how wide must the panel be to display desired screen width
+	const targetRatio = previewPanelRect.width / previewScreenW;
+	let targetPreviewW = null;
+	if (targetRatio > 1) {
+		targetPreviewW = previewScreenW;
+		previewScale = 1;
+	} else {
+		previewScale = targetRatio;
+	}
+	const previewPanel = (
+		<Panel ratio={finalRatio} height={contentHeight} ref={previewPanelRef}>
+			<IFrame
+				scale={previewScale}
+				width={targetPreviewW}
+				reportHeight={setContentHeight}
+			>
+				<div dangerouslySetInnerHTML={{ __html: previewHtml }} />
+			</IFrame>
+			{isLoading && <Preloader />}
+		</Panel>
+	);
+
 
 	let op;
 	switch (subPreviewMode) {
 		case SUBFORM_PREVIEW_MODE_PREVIEWS: {
-			op = (
-				<React.Fragment>
-					<Panel ratio={1} h={contentHeight}>
-						<IFrame scale={MAX_SCALE} reportHeight={setContentHeight}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
-						{isLoading && <Preloader />}
-					</Panel>
-				</React.Fragment>
-			);
+			op = previewPanel;
 			break;
 		}
 		case SUBFORM_PREVIEW_MODE_EDIT: {
@@ -127,10 +150,7 @@ export default function ContentBlockPreview({
 		default: {
 			op = (
 				<React.Fragment>
-					<Panel ratio={finalRatio}>
-						<IFrame scale={previewScale}><div dangerouslySetInnerHTML={{ __html: previewHtml }} /></IFrame>
-						{isLoading && <Preloader />}
-					</Panel>
+					{previewPanel}
 					<Slider onMouseDown={startDrag} />
 					<Panel ratio={1 - finalRatio}>
 						{form}
