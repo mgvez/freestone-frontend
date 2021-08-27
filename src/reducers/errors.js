@@ -3,15 +3,15 @@ import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middlewar
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 
 export default function(state = [], action) {
-	// console.log(action);
+	//console.log(action);
 	switch (action.type) {
 	case FREESTONE_API_FAILURE:
 	case FREESTONE_API_FATAL_FAILURE:
 		return [
 			...state,
 			{
-				message: action.error.responseText || action.error.statusText || action.error.response || action.error.message,
-				details: action.error.details,
+				message: action.error.message,
+				details: action.error.details || action.error.responseText || action.error.statusText || action.error.response,
 				isFatal: action.type === FREESTONE_API_FATAL_FAILURE,
 				redirectOnError: action.redirectOnError,
 			},
