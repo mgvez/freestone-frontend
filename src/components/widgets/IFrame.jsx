@@ -23,11 +23,12 @@ export const WidgetIframe = styled.iframe`${props => getIframeCss(props)}`;
 export function IFrame(props) {
 	const [mountNode, setMountNode] = useState(null);
 	const [contentHeight, setContentHeight] = useState(null);
+	const [viewportMeta] = useState(document.createElement('meta'));
 
 	const setContentRef = (contentRef) => {
 		setMountNode(contentRef && contentRef.contentWindow && contentRef.contentWindow.document);
 	};
-	console.log(props.width);
+
 	const { children, ...otherProps } = props;
 
 	const computeHeight = useCallback((e) => {
@@ -49,11 +50,16 @@ export function IFrame(props) {
 			imgs.forEach(img => {
 				img.addEventListener('load', computeHeight);
 			});
+			// viewportMeta.name = 'viewport';
+			// viewportMeta.content = 'width=1920, initial-scale=1';
+			// mountNode.head.appendChild(viewportMeta);
+
 			return () => {
 				imgs.forEach(img => {
 					img.removeEventListener('load', computeHeight);
 				});
 			};
+
 		}
 	}, [children, contentHeight, mountNode, props.scale]);
 
