@@ -104,6 +104,13 @@ export const FieldLabel = styled.div`
 	}
 `;
 
+export const WidgetField = styled.div`
+	padding: 10px;
+	margin: 0 0 0.7em;
+	background: ${colors.backgroundMainAccent};
+	border: 1px ${colors.borderFormAccent} solid;
+`;
+
 export const FieldDescription = styled.div`
 	display: block;
 	margin: 0 0.5em 0.7em;

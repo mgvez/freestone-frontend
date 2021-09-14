@@ -72,6 +72,7 @@ const colors = {
 	
 	backgroundForm: white,
 	borderForm: gray86,
+	borderFormAccent: gray76,
 
 	borderDark: gray54,
 	borderMedium: gray86,

@@ -35,8 +35,9 @@ export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM, TYPE_SUBFORM
 
 
 // if a field has this as its widget property, it must be displayed by the slugs widget
-export const SLUG_WIDGET_NAME = 'SLUG';
-export const TITLE_WIDGET_NAME = 'TITLE';
+export const SLUG_WIDGET_NAME = 'META_SLUG';
+export const TITLE_WIDGET_NAME = 'META_TITLE';
+export const STRUCTURED_WIDGET_NAME = 'META_STRUCTURED';
 
 
 export const SUBFORM_VIEW_TABBED = 'tabbed';

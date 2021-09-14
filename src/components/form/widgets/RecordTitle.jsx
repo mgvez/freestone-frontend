@@ -3,21 +3,12 @@ import PropTypes from 'prop-types';
 import { Preloader } from '../../widgets/Preloader';
 import TextInput from '../inputTypes/TextInput';
 import { Button } from '../../../styles/Button';
-import colors from '../../../styles/Colors';
-import { StyledField, FieldLabel, FieldDescription } from '../../../styles/Input';
-import { PromptWidget, Tooltip } from '../../../styles/Prompts';
-import { WarningMessage } from '../../../styles/Texts';
+import { WidgetField, FieldLabel, FieldDescription } from '../../../styles/Input';
 
 import styled from 'styled-components';
 
-const Widget = styled.div`
-	padding: 10px;
-	margin: 0 0 0.7em;
-	background: ${colors.backgroundMainAccent};
-	border: 1px ${colors.borderForm} solid;
-`;
 
-const PreviewUrlContainer = styled.div`
+const PreviewContainer = styled.div`
 	margin: 0.7em 0;
 	
 	height: 25px;
@@ -31,7 +22,7 @@ const PreviewUrlContainer = styled.div`
 		width: 0;
 	}
 `;
-const PreviewUrl = styled.div`
+const PreviewVal = styled.div`
 	font-weight: bold;
 	font-size: 1em;
 	em {
@@ -93,10 +84,10 @@ export default function RecordTitle({
 
 	// if the preview slug was not avaliable directly, warn the user that the orginal slug was not available
 	const currentTitleDisplay = workingTitle && (
-		<PreviewUrl>
+		<PreviewVal>
 			<em>Title Preview: </em>
 			{workingTitle}
-		</PreviewUrl>
+		</PreviewVal>
 	);
 
 	const onOverride = () => {
@@ -112,11 +103,11 @@ export default function RecordTitle({
 		}
 	};
 	return (
-		<Widget>
+		<WidgetField>
 			<FieldLabel>Title <em>(<span>{lang}</span>)</em></FieldLabel>
-			<PreviewUrlContainer>	
+			<PreviewContainer>	
 				{currentTitleDisplay || <div className="preloader"><Preloader size={25} /></div>}
-			</PreviewUrlContainer>
+			</PreviewContainer>
 			<EditorContainer>
 				{!useDefault && (
 					<React.Fragment>
@@ -129,8 +120,8 @@ export default function RecordTitle({
 			<FunctionsContainer>
 				<Button small onClick={onOverride}>{useDefault ? 'Edit' : 'Revert to default'}</Button>
 			</FunctionsContainer>
-			<FieldDescription>The url to the page is automatically built using a preconfigured pattern, but it can be overridden if the generated url is not suitable. The url needs to be validated on the backend in order to make sure it doesn't conflict with any other url and to remove special characters. You can see the resulting preview above.</FieldDescription>
-		</Widget>
+			<FieldDescription>The title will be parsed as a Twig template</FieldDescription>
+		</WidgetField>
 	);
 
 }
