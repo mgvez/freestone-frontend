@@ -7,35 +7,16 @@ import TextInput from '../inputTypes/TextInput';
 import { Button } from '../../../styles/Button';
 import colors from '../../../styles/Colors';
 import { WidgetField, FieldLabel, FieldDescription } from '../../../styles/Input';
+import { Tooltip } from '../../../styles/Prompts';
 
-
-const Tabs = styled.div`
-	display: flex;
-`;
-function getTabCss(props) {
-	return css`
-		border: 1px ${colors.borderFormAccent} solid;
-		font-size: 0.8em;
-		font-weight: bold;
-		margin-right: 4px;
-		min-width: 90px;
-		padding: 0.5em;
-		text-align: center;
-		cursor: pointer;
-		${props.active && `
-			border-color: white;
-			background: white;
-			cursor: default;
-		`}
-	`;
-}
-const Tab = styled.div`${props => getTabCss(props)}`;
 
 const PreviewContainer = styled.div`
+	height: 200px;
 
 	.preloader {
 		position: relative;
-		left: 0;
+		left: 50%;
+		top: 50%;
 		width: 0;
 	}
 `;
@@ -43,7 +24,7 @@ const PreviewVal = styled.pre`
 	padding: 1em;
 	margin-top: -1px;
 	font-size: 1em;
-	max-height: 200px;
+	height: 200px;
 	overflow: scroll;
 	border: 1px ${colors.borderFormAccent} solid;
 `;
@@ -58,11 +39,7 @@ const EditorContainer = styled.div`
 	align-items: center;
 	position: relative;
 	font-size: 1em;
-	.inputContainer {
-		input {
-			margin: 0 0 0 5px;
-		}
-	}
+	
 `;
 
 const DEBOUNCE_DELAY = 500; // ms
@@ -80,85 +57,76 @@ export default function RecordStructuredData({
 	if (!tableId) return null;
 	const [useDefault, setUseDefault] = useState(true);
 
-	const [isEditing, setIsEditing] = useState(false);
-	const toggleEditing = () => {
-		setIsEditing(!isEditing);
-	};
-
 	useEffect(() => {
-		let timeout;
 		if (record && !workingStructured) {
-			timeout = setTimeout(() => {
-				fetchWorkingStructured(tableId, lang, recordId, record, val);
-			}, DEBOUNCE_DELAY);
+			fetchWorkingStructured(tableId, lang, recordId, record, val);
 		}
 		if (val && useDefault) {
 			setUseDefault(false);
 		}
+	}, [tableId, recordId, record, val, workingStructured]);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			clearWorkingStructured(tableId, recordId, lang);
+		}, DEBOUNCE_DELAY);
 		return () => {
 			clearTimeout(timeout);
 		};
-	}, [tableId, recordId, record, val, workingStructured]);
+	}, [tableId, recordId, record, val]);
 
 	const onChangeVal = (a) => {
-		clearWorkingStructured(tableId, recordId, lang);
 		changeVal(a);
 	};
 
-	let content;
-	if (isEditing) {
-		const onOverride = () => {
-			const newUseDefault = !useDefault;
-			if (newUseDefault && val && !confirm('Are you sure you want to revert to the default value?')) return;
-	
-			setUseDefault(newUseDefault);
-			// when reverting back to default, clear this field's val
-			if (newUseDefault) {
-				changeVal('');
-				clearWorkingStructured(tableId, recordId, lang);
-			}
-		};
-		content = (
-			<React.Fragment>
-				<EditorContainer>
-					{!useDefault && (
-						<React.Fragment>
-							<div className="inputContainer">
-								<TextInput val={val || ''} size={50} changeVal={onChangeVal} />
-							</div>
-						</React.Fragment>
-					)}
-				</EditorContainer>
-				<FunctionsContainer>
-					<Button small onClick={onOverride}>{useDefault ? 'Override default value' : 'Revert to default'}</Button>
-				</FunctionsContainer>
-				<FieldDescription>The structured data will be parsed as a Twig template</FieldDescription>
-			</React.Fragment>
-		);
-	} else {
-		const currentPreviewDisplay = workingStructured && (
-			<React.Fragment>
+	let currentPreviewDisplay;
+	let currentPreviewError;
+	if (workingStructured) {
+		if (!workingStructured.error) {
+			currentPreviewDisplay = (
 				<PreviewVal>
-					{workingStructured}
+					{workingStructured.value}
 				</PreviewVal>
-			</React.Fragment>
-		);
-		content = (
-			<PreviewContainer>	
-				{currentPreviewDisplay || <div className="preloader"><Preloader size={25} /></div>}
-			</PreviewContainer>
-		);
+			);
+		} else {
+			currentPreviewError = (
+				<Tooltip error>
+					{workingStructured.error}
+				</Tooltip>
+			);
+		}
 	}
 
+	const onOverride = () => {
+		
+		const willUseDefault = !useDefault;
+		if (willUseDefault && val && !confirm('Are you sure you want to revert to the default value?')) return;
+
+		setUseDefault(willUseDefault);
+		// when reverting back to default, clear this field's val
+		if (willUseDefault) {
+			changeVal('');
+			clearWorkingStructured(tableId, recordId, lang);
+		} else {
+			changeVal(workingStructured && (workingStructured.raw || workingStructured.value));
+		}
+	};
 	return (
 		<WidgetField>
 			<FieldLabel>Structured data / Dynamic metas <em>(<span>{lang}</span>)</em></FieldLabel>
-			<Tabs>
-				<Tab active={!isEditing} onClick={isEditing ? toggleEditing : null}>Preview</Tab>
-				<Tab active={isEditing} onClick={!isEditing ? toggleEditing : null}>Edit</Tab>
-			</Tabs>
-			
-			{content}
+			<PreviewContainer>	
+				{currentPreviewDisplay || (!currentPreviewError && <div className="preloader"><Preloader size={25} /></div>)}
+			</PreviewContainer>
+			<EditorContainer>
+				{currentPreviewError}
+				{!useDefault && (
+					<TextInput val={val || ''} size={500} changeVal={onChangeVal} />
+				)}
+			</EditorContainer>
+			<FunctionsContainer>
+				<Button small onClick={onOverride}>{useDefault ? 'Edit' : 'Revert to default'}</Button>
+			</FunctionsContainer>
+			{!useDefault && <FieldDescription>The value will be parsed as a Twig template</FieldDescription>}
 		</WidgetField>
 	);
 
@@ -170,7 +138,11 @@ RecordStructuredData.propTypes = {
 	tableId: PropTypes.number,
 	recordId: PropTypes.string,
 	record: PropTypes.object,
-	workingStructured: PropTypes.string,
+	workingStructured: PropTypes.shape({
+		value: PropTypes.string,
+		raw: PropTypes.string,
+		error: PropTypes.string,
+	}),
 	fetchWorkingStructured: PropTypes.func,
 	clearWorkingStructured: PropTypes.func,
 	changeVal: PropTypes.func,

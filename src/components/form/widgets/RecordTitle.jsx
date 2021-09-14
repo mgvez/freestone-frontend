@@ -4,6 +4,7 @@ import { Preloader } from '../../widgets/Preloader';
 import TextInput from '../inputTypes/TextInput';
 import { Button } from '../../../styles/Button';
 import { WidgetField, FieldLabel, FieldDescription } from '../../../styles/Input';
+import { Tooltip } from '../../../styles/Prompts';
 
 import styled from 'styled-components';
 
@@ -40,11 +41,6 @@ const EditorContainer = styled.div`
 	align-items: center;
 	position: relative;
 	font-size: 1em;
-	.inputContainer {
-		input {
-			margin: 0 0 0 5px;
-		}
-	}
 `;
 
 const DEBOUNCE_DELAY = 500; // ms
@@ -63,58 +59,70 @@ export default function RecordTitle({
 	const [useDefault, setUseDefault] = useState(true);
 
 	useEffect(() => {
-		let timeout;
 		if (record && !workingTitle) {
-			timeout = setTimeout(() => {
-				fetchWorkingTitle(tableId, lang, recordId, record, val);
-			}, DEBOUNCE_DELAY);
+			fetchWorkingTitle(tableId, lang, recordId, record, val);
 		}
 		if (val && useDefault) {
 			setUseDefault(false);
 		}
+	}, [tableId, recordId, record, val, workingTitle]);
+
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			clearWorkingTitle(tableId, recordId, lang);
+		}, DEBOUNCE_DELAY);
 		return () => {
 			clearTimeout(timeout);
 		};
-	}, [tableId, recordId, record, val, workingTitle]);
+	}, [tableId, recordId, record, val]);
 
 	const onChangeVal = (a) => {
-		clearWorkingTitle(tableId, recordId, lang);
 		changeVal(a);
 	};
 
-	// if the preview slug was not avaliable directly, warn the user that the orginal slug was not available
-	const currentTitleDisplay = workingTitle && (
-		<PreviewVal>
-			<em>Title Preview: </em>
-			{workingTitle}
-		</PreviewVal>
-	);
+	let currentPreviewDisplay;
+	let currentPreviewError;
+	if (workingTitle) {
+		if (!workingTitle.error) {
+			currentPreviewDisplay = (
+				<PreviewVal>
+					<em>Title Preview: </em>
+					{workingTitle.value}
+				</PreviewVal>
+			);
+		} else {
+			currentPreviewError = (
+				<Tooltip error>
+					{workingTitle.error}
+				</Tooltip>
+			);
+		}
+	}
 
 	const onOverride = () => {
 		
-		const newUseDefault = !useDefault;
-		if (newUseDefault && val && !confirm('Are you sure you want to revert to the default title?')) return;
+		const willUseDefault = !useDefault;
+		if (willUseDefault && val && !confirm('Are you sure you want to revert to the default title?')) return;
 
-		setUseDefault(newUseDefault);
+		setUseDefault(willUseDefault);
 		// when reverting back to default, clear this field's val
-		if (newUseDefault) {
+		if (willUseDefault) {
 			changeVal('');
 			clearWorkingTitle(tableId, recordId, lang);
+		} else {
+			changeVal(workingTitle && (workingTitle.raw || workingTitle.value));
 		}
 	};
 	return (
 		<WidgetField>
 			<FieldLabel>Title <em>(<span>{lang}</span>)</em></FieldLabel>
 			<PreviewContainer>	
-				{currentTitleDisplay || <div className="preloader"><Preloader size={25} /></div>}
+				{currentPreviewDisplay || (!currentPreviewError && <div className="preloader"><Preloader size={25} /></div>)}
 			</PreviewContainer>
 			<EditorContainer>
+				{currentPreviewError}
 				{!useDefault && (
-					<React.Fragment>
-						<div className="inputContainer">
-							<TextInput val={val || ''} size={50} changeVal={onChangeVal} />
-						</div>
-					</React.Fragment>
+					<TextInput val={val || ''} size={50} changeVal={onChangeVal} />
 				)}
 			</EditorContainer>
 			<FunctionsContainer>
@@ -132,7 +140,11 @@ RecordTitle.propTypes = {
 	tableId: PropTypes.number,
 	recordId: PropTypes.string,
 	record: PropTypes.object,
-	workingTitle: PropTypes.string,
+	workingTitle: PropTypes.shape({
+		value: PropTypes.string,
+		raw: PropTypes.string,
+		error: PropTypes.string,
+	}),
 	fetchWorkingTitle: PropTypes.func,
 	clearWorkingTitle: PropTypes.func,
 	changeVal: PropTypes.func,
