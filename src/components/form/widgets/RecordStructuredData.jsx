@@ -56,6 +56,7 @@ export default function RecordStructuredData({
 }) {
 	if (!tableId) return null;
 	const [useDefault, setUseDefault] = useState(true);
+	console.log(record);
 
 	useEffect(() => {
 		if (record && !workingStructured) {
