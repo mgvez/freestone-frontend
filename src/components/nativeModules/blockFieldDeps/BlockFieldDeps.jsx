@@ -190,6 +190,7 @@ export default function BlockFieldDeps(props) {
 				// isDisplay = true;
 			}
 			const isSuggested = currentDependency && currentDependency.isSuggested;
+
 			return (
 				<React.Fragment key={key}>
 					<ItemCell>
@@ -295,7 +296,7 @@ export default function BlockFieldDeps(props) {
 
 				return (<div className={`tab ${activeClass}`} key={`typetoggle${type.id}`} onClick={onClick}>{type.name}</div>);
 			});
-			switches = table.dependingFields.map(field => getRow(field.name, field.displayLabel, field, activeType.id, activeType.name, field.childrenFields));
+			switches = table.dependingFields.map(field => getRow(`fid${field.id}`, field.displayLabel, field, activeType.id, activeType.name, field.childrenFields));
 
 			header = (
 				<Heading2>When content block type is <strong>{activeType.name}</strong>, display fields:</Heading2>
