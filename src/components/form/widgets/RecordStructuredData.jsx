@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
+
 import { Preloader } from '../../widgets/Preloader';
 import TextInput from '../inputTypes/TextInput';
 import { Button } from '../../../styles/Button';
+import colors from '../../../styles/Colors';
 import { WidgetField, FieldLabel, FieldDescription } from '../../../styles/Input';
 import { Tooltip } from '../../../styles/Prompts';
 
-import styled from 'styled-components';
-
 
 const PreviewContainer = styled.div`
-	margin: 0.7em 0;
-	
-	height: 25px;
-	display: flex;
-	align-items: center;
-	position: relative;
+	height: 200px;
 
 	.preloader {
 		position: relative;
-		left: 0;
+		left: 50%;
+		top: 50%;
 		width: 0;
 	}
 `;
-const PreviewVal = styled.div`
-	font-weight: bold;
+const PreviewVal = styled.pre`
+	padding: 1em;
+	margin-top: -1px;
 	font-size: 1em;
-	em {
-		font-weight: normal;
-	}
+	height: 200px;
+	overflow: scroll;
+	border: 1px ${colors.borderFormAccent} solid;
 `;
 
 const FunctionsContainer = styled.div`
@@ -41,35 +39,37 @@ const EditorContainer = styled.div`
 	align-items: center;
 	position: relative;
 	font-size: 1em;
+	
 `;
 
 const DEBOUNCE_DELAY = 500; // ms
-export default function RecordTitle({
+export default function RecordStructuredData({
 	tableId,
 	recordId,
 	record,	
-	fetchWorkingTitle,
-	workingTitle,
+	fetchWorkingStructured,
+	workingStructured,
 	val,
 	lang,
 	changeVal,
-	clearWorkingTitle,
+	clearWorkingStructured,
 }) {
 	if (!tableId) return null;
 	const [useDefault, setUseDefault] = useState(true);
+	console.log(record);
 
 	useEffect(() => {
-		if (record && !workingTitle) {
-			fetchWorkingTitle(tableId, lang, recordId, record, val);
+		if (record && !workingStructured) {
+			fetchWorkingStructured(tableId, lang, recordId, record, val);
 		}
 		if (val && useDefault) {
 			setUseDefault(false);
 		}
-	}, [tableId, recordId, record, val, workingTitle]);
+	}, [tableId, recordId, record, val, workingStructured]);
 
 	useEffect(() => {
 		const timeout = setTimeout(() => {
-			clearWorkingTitle(tableId, recordId, lang);
+			clearWorkingStructured(tableId, recordId, lang);
 		}, DEBOUNCE_DELAY);
 		return () => {
 			clearTimeout(timeout);
@@ -82,18 +82,17 @@ export default function RecordTitle({
 
 	let currentPreviewDisplay;
 	let currentPreviewError;
-	if (workingTitle) {
-		if (!workingTitle.error) {
+	if (workingStructured) {
+		if (!workingStructured.error) {
 			currentPreviewDisplay = (
 				<PreviewVal>
-					<em>Title Preview: </em>
-					{workingTitle.value}
+					{workingStructured.value}
 				</PreviewVal>
 			);
 		} else {
 			currentPreviewError = (
 				<Tooltip error>
-					{workingTitle.error}
+					{workingStructured.error}
 				</Tooltip>
 			);
 		}
@@ -102,50 +101,50 @@ export default function RecordTitle({
 	const onOverride = () => {
 		
 		const willUseDefault = !useDefault;
-		if (willUseDefault && val && !confirm('Are you sure you want to revert to the default title?')) return;
+		if (willUseDefault && val && !confirm('Are you sure you want to revert to the default value?')) return;
 
 		setUseDefault(willUseDefault);
 		// when reverting back to default, clear this field's val
 		if (willUseDefault) {
 			changeVal('');
-			clearWorkingTitle(tableId, recordId, lang);
+			clearWorkingStructured(tableId, recordId, lang);
 		} else {
-			changeVal(workingTitle && (workingTitle.raw || workingTitle.value));
+			changeVal(workingStructured && (workingStructured.raw || workingStructured.value));
 		}
 	};
 	return (
 		<WidgetField>
-			<FieldLabel>Title <em>(<span>{lang}</span>)</em></FieldLabel>
+			<FieldLabel>Structured data / Dynamic metas <em>(<span>{lang}</span>)</em></FieldLabel>
 			<PreviewContainer>	
 				{currentPreviewDisplay || (!currentPreviewError && <div className="preloader"><Preloader size={25} /></div>)}
 			</PreviewContainer>
 			<EditorContainer>
 				{currentPreviewError}
 				{!useDefault && (
-					<TextInput val={val || ''} size={50} changeVal={onChangeVal} />
+					<TextInput val={val || ''} size={500} changeVal={onChangeVal} />
 				)}
 			</EditorContainer>
 			<FunctionsContainer>
 				<Button small onClick={onOverride}>{useDefault ? 'Edit' : 'Revert to default'}</Button>
 			</FunctionsContainer>
-			<FieldDescription>The title will be parsed as a Twig template</FieldDescription>
+			{!useDefault && <FieldDescription>The value will be parsed as a Twig template</FieldDescription>}
 		</WidgetField>
 	);
 
 }
 
-RecordTitle.propTypes = {
+RecordStructuredData.propTypes = {
 	val: PropTypes.string,
 	lang: PropTypes.string,
 	tableId: PropTypes.number,
 	recordId: PropTypes.string,
 	record: PropTypes.object,
-	workingTitle: PropTypes.shape({
+	workingStructured: PropTypes.shape({
 		value: PropTypes.string,
 		raw: PropTypes.string,
 		error: PropTypes.string,
 	}),
-	fetchWorkingTitle: PropTypes.func,
-	clearWorkingTitle: PropTypes.func,
+	fetchWorkingStructured: PropTypes.func,
+	clearWorkingStructured: PropTypes.func,
 	changeVal: PropTypes.func,
 };

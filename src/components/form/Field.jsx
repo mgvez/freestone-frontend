@@ -8,6 +8,7 @@ import {
 	TYPE_MTM,
 	SLUG_WIDGET_NAME,
 	TITLE_WIDGET_NAME,
+	STRUCTURED_WIDGET_NAME,
 } from '../../freestone/schemaProps';
 
 import GenericFormField from './GenericFormField';
@@ -27,6 +28,7 @@ import AutocompleteInput from '../../containers/form/inputTypes/AutocompleteInpu
 
 import RecordSlug from '../../containers/form/widgets/RecordSlug';
 import RecordTitle from '../../containers/form/widgets/RecordTitle';
+import RecordStructuredData from '../../containers/form/widgets/RecordStructuredData';
 
 export default function Field(props) {
 
@@ -47,6 +49,7 @@ export default function Field(props) {
 	// console.log(`render input ${props.field.name} ${props.field.language}`);
 	let input;
 	let widget;
+
 	if (props.field.isUneditable) {
 		if (props.field.type === 'bool') {
 			input = <BoolInput key={key} fieldId={props.field.id} {...props} changeVal={changeVal} readonly />;
@@ -54,8 +57,8 @@ export default function Field(props) {
 			input = <NoEditInput key={key} {...props} />;
 		}
 	} else if (props.field.widget) {
+		// Meta widgets are in the metadata table, so the fields really are for the meta record's parent record
 		if (props.field.widget === SLUG_WIDGET_NAME) {
-			// Slugs widget is in the META table, so the slug really is for the meta record's parent record
 			widget = (
 				<RecordSlug
 					key={key}
@@ -67,9 +70,19 @@ export default function Field(props) {
 				/>
 			);
 		} else if (props.field.widget === TITLE_WIDGET_NAME) {
-			// Slugs widget is in the META table, so the slug really is for the meta record's parent record
 			widget = (
 				<RecordTitle
+					key={key}
+					tableId={props.parentTableId} 
+					recordId={props.parentRecordId}
+					val={props.val}
+					changeVal={changeVal}
+					lang={props.lang}
+				/>
+			);
+		} else if (props.field.widget === STRUCTURED_WIDGET_NAME) {
+			widget = (
+				<RecordStructuredData
 					key={key}
 					tableId={props.parentTableId} 
 					recordId={props.parentRecordId}

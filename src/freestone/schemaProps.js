@@ -29,14 +29,16 @@ export const TYPE_FILE = 'file';
 export const TYPE_DATETIME = 'datetime';
 export const TYPE_BOOL = 'bool';
 export const TYPE_ISPUBLISHED = 'ispublished';
+export const TYPE_PLACEHOLDER = 'placeholder';
 export const TYPE_LANGUAGE = 'language';
 
 export const TYPES_PARENT_LINK = [TYPE_SUBFORM, TYPE_OTO, TYPE_MTM, TYPE_SUBFORM_GUID, TYPE_OTO_GUID];
 
 
 // if a field has this as its widget property, it must be displayed by the slugs widget
-export const SLUG_WIDGET_NAME = 'SLUG';
-export const TITLE_WIDGET_NAME = 'TITLE';
+export const SLUG_WIDGET_NAME = 'META_SLUG';
+export const TITLE_WIDGET_NAME = 'META_TITLE';
+export const STRUCTURED_WIDGET_NAME = 'META_STRUCTURED';
 
 
 export const SUBFORM_VIEW_TABBED = 'tabbed';

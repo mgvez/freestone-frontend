@@ -82,35 +82,33 @@ export default class SingleRecord extends Component {
 		}
 	}
 
+	renderChild = child => {
+		return child.isDisplay ? (
+			<GridItem key={child.tableId} columns="12">
+				<Subform
+					tableId={child.tableId}
+					titleOverride={child.titleOverride}
+					descriptionAppend={child.descriptionAppend}
+					parentTableId={this.props.table.id}
+					parentRecordId={this.props.recordId}
+					language={this.props.language}
+				/>
+			</GridItem>
+		) : null;
+	}
 	renderChildren = children => {
-		return children && children.map(child => {
-			return child.isDisplay ? (
-				<GridItem key={child.tableId} columns="12">
-					<Subform
-						tableId={child.tableId}
-						titleOverride={child.titleOverride}
-						descriptionAppend={child.descriptionAppend}
-						parentTableId={this.props.table.id}
-						parentRecordId={this.props.recordId}
-						language={this.props.language}
-					/>
-				</GridItem>
-			) : null;
-		});
+		return children && children.map(this.renderChild);
 	}
 
 	renderField = (field, isAside = false) => {
-		// if (field.subformPlaceholder) {
-		// 	if (!isAside) {
-		// 		const child = this.props.children.find(candidate => candidate.tableId === field.subformPlaceholder);
-		// 		return this.renderChild(child);
-		// 	}
-		// 	return null;
-		// }
 
 		//if field is language-specific, display it only if the current language is the field's
 		//or we may have a field that contains the language for the whole record. If so, and record is children, hide labguage field (it is preset at record creation)
 		const isShowField = ((field.language && field.language === this.props.language) || !field.language) && (!this.props.isSubform || field.type !== TYPE_LANGUAGE);
+
+		// if this field is a placeholder and has a subform
+		if (isShowField && field.placeholdedSubform) return this.renderChild(field.placeholdedSubform);
+
 		return isShowField ? (<Field
 			key={field.id} 
 			field={field}

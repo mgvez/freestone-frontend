@@ -86,10 +86,10 @@ function parseDependencies(table, record) {
 
 //create groups according to separators
 function createFieldGroups(fields, children) {
-	const namedGroups = (fields || []).reduce((groups, curField) => {
+	const namedGroups = (fields || []).reduce((groups, curFieldRaw) => {
+		const curField = { ...curFieldRaw };
 		const isSeparator = curField.type === 'separator';
 		const isPlaceholder = !!curField.subformPlaceholder;
-
 		let curGroup = groups[groups.length - 1];
 		//new group when separator, or when current or previous field was a subfrom placeholder. Placeholders are always alone in their group
 		if (!curGroup || isSeparator) {
@@ -109,14 +109,16 @@ function createFieldGroups(fields, children) {
 
 		// 	child.hasPlaceholder = table && table.fields.find(field => field.subformPlaceholder === child.tableId);
 		const child = isPlaceholder && children && children.find(candidate => curField.subformPlaceholder === candidate.tableId);
+
 		//if childform in placeholded, remove it from list of unplaced subforms
 		if (child) {
 			child.hasPlaceholder = true;
-			curGroup.children.push(child);
+			// curGroup.children.push(child);
 			curGroup.isSeoMetadata = child.isSeoMetadata;
+			curField.placeholdedSubform = child;
 		}
 
-		if (!isSeparator && !isPlaceholder) {
+		if (!isSeparator) {
 
 			//only display displayable fields
 			if (!~['pri', 'ajax', 'order'].indexOf(curField.type) && (!curField.foreign || !~['mtm'].indexOf(curField.foreign.type)) && !curField.isHidden) {
@@ -245,7 +247,6 @@ function makeSelector(tableSchemaSelector, recordSelector, recordUnalteredSelect
 				}
 
 				mainGroups = createFieldGroups(table.fields, children).filter(g => g.children.length || g.fields.length || g.asideFields.length);
-				// console.log(mainGroups);
 
 				activeGroup = mainGroups.find(g => g.key === activeGroupKey) || mainGroups[0];
 

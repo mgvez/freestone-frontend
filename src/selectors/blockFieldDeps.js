@@ -3,8 +3,8 @@ import { schemaSelector } from './schema';
 import { routeSelector } from './route';
 
 
-import { TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER, TYPE_ISPUBLISHED, TYPE_LANGUAGE } from '../freestone/schemaProps';
-const INDEPENDENT_FIELD_TYPES = [TYPE_PRIMARY, TYPE_ORDER, TYPE_ISPUBLISHED, TYPE_LANGUAGE];
+import { TYPES_PARENT_LINK, TYPE_PRIMARY, TYPE_ORDER, TYPE_ISPUBLISHED, TYPE_LANGUAGE, TYPE_PLACEHOLDER } from '../freestone/schemaProps';
+const INDEPENDENT_FIELD_TYPES = [TYPE_PRIMARY, TYPE_ORDER, TYPE_ISPUBLISHED, TYPE_LANGUAGE, TYPE_PLACEHOLDER];
 
 const allDependenciesSelector = state => state.freestone.blockFieldDeps.dependencies;
 const configSelector = state => (state.freestone.blockFieldDeps.config || {});
@@ -25,7 +25,7 @@ const transformedSchemaSelector = createSelector(
 		});
 
 		const parseTable = (tableSchema, tableName) => {
-			// console.log(tableSchema);
+			console.log(tableSchema);
 			return tableSchema && Object.values(tableSchema.fields.map(field => {
 				if (field.foreign && ~TYPES_PARENT_LINK.indexOf(field.foreign.foreignType)) return null;
 				if (~INDEPENDENT_FIELD_TYPES.indexOf(field.type)) return null;

@@ -1,15 +1,20 @@
 
 import styled, { css } from 'styled-components';
 import colors from './Colors';
-import { triangle, hexToRgb } from './Utils';
+import { triangle, hexToRgb, lighten } from './Utils';
 
 
 const getTooltipCss = props => {
 	let tooltipBgColor;
 	let color = colors.white;
+	let fontWeight = 'normal';
 	if (props.warning) {
 		tooltipBgColor = '#ffde96';
 		color = '#93580a';
+	} else if (props.error) {
+		tooltipBgColor = '#deafa9';
+		color = '#8b2214';
+		fontWeight = 'bold';
 	} else {
 		tooltipBgColor = `rgba(${hexToRgb(colors.backgroundDark)}, 0.9)`;
 	}
@@ -19,6 +24,7 @@ const getTooltipCss = props => {
 		display: block;
 		background: ${tooltipBgColor};
 		font-size: 12px;
+		font-weight: ${fontWeight};
 		color: ${color};
 		padding: 10px;
 		line-height: 1.3;

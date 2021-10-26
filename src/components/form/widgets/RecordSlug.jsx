@@ -4,18 +4,11 @@ import { Preloader } from '../../widgets/Preloader';
 import TextInput from '../inputTypes/TextInput';
 import { Button } from '../../../styles/Button';
 import colors from '../../../styles/Colors';
-import { StyledField, FieldLabel, FieldDescription } from '../../../styles/Input';
+import { WidgetField, FieldLabel, FieldDescription } from '../../../styles/Input';
 import { PromptWidget, Tooltip } from '../../../styles/Prompts';
 import { WarningMessage } from '../../../styles/Texts';
 
 import styled from 'styled-components';
-
-const Widget = styled.div`
-	padding: 10px;
-	margin: 0 0 0.7em;
-	background: ${colors.backgroundMainAccent};
-	border: 1px ${colors.borderForm} solid;
-`;
 
 const PreviewUrlContainer = styled.div`
 	margin: 0.7em 0;
@@ -133,7 +126,7 @@ export default function RecordSlug({
 		}
 	};
 	return (
-		<Widget>
+		<WidgetField>
 			<FieldLabel>Permalink <em>(<span>{lang}</span>)</em></FieldLabel>
 			<PreviewUrlContainer>	
 				{currentSlugCandidateDisplay || <div className="preloader"><Preloader size={25} /></div>}
@@ -153,7 +146,7 @@ export default function RecordSlug({
 				<Button small onClick={onOverride}>{useDefault ? 'Edit' : 'Revert to default'}</Button>
 			</FunctionsContainer>
 			<FieldDescription>The url to the page is automatically built using a preconfigured pattern, but it can be overridden if the generated url is not suitable. The url needs to be validated on the backend in order to make sure it doesn't conflict with any other url and to remove special characters. You can see the resulting preview above.</FieldDescription>
-		</Widget>
+		</WidgetField>
 	);
 
 }

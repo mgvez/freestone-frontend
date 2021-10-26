@@ -104,6 +104,14 @@ export const FieldLabel = styled.div`
 	}
 `;
 
+export const WidgetField = styled.div`
+	padding: 10px;
+	margin: 0 0 0.7em;
+	background: ${colors.backgroundMainAccent};
+	border: 1px ${colors.borderFormAccent} solid;
+`;
+
+
 export const FieldDescription = styled.div`
 	display: block;
 	margin: 0 0.5em 0.7em;
@@ -164,11 +172,20 @@ function getCheckboxContainer(props) {
 			color: ${colors.accentPrimary};
 
 			position: absolute;
-				top: 9px;
-				left: 2.5px;
+				top: 10px;
+				left: 3.5px;
 
 			transform: translate(0, -50%);
 		}
+
+		${props.indeterminate && `
+			&:after {
+				display: block;
+				color: black;
+				content: '\f141';
+				opacity: 0.3;
+			}
+		`}
 	}
 	`;
 }
