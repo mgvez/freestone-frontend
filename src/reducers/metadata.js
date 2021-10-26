@@ -58,46 +58,46 @@ function receiveMetas(state, actionData) {
 
 const titles = (state = {}, action) => {
 	switch (action.type) {
-	case CLEAR_DATA: 
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case WORKING_TITLE_API.SUCCESS: 
-		return receiveMetas(state, action.data);
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return removeMetas(state, action.data.records);
-	case SET_FIELD_VALUE: 
-	case CLEAR_WORKING_TITLE: {
-		const { tableId, recordId, lang } = action.data;
-		return removeRecordMeta(state, tableId, recordId, lang);
-	}
-	default:
-		return state;
+		case CLEAR_DATA: 
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case WORKING_TITLE_API.SUCCESS: 
+			return receiveMetas(state, action.data);
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return removeMetas(state, action.data.records);
+		case SET_FIELD_VALUE: 
+		case CLEAR_WORKING_TITLE: {
+			const { tableId, recordId, lang } = action.data;
+			return removeRecordMeta(state, tableId, recordId, lang);
+		}
+		default:
+			return state;
 	}
 };
 
 // structured data field
 const structured = (state = {}, action) => {
 	switch (action.type) {
-	case CLEAR_DATA: 
-	case UNAUTHORIZED:
-	case LOGOUT_API.SUCCESS:
-	case LOGOUT_API.REQUEST:
-		return {};
-	case WORKING_STRUCTURED_API.SUCCESS: 
-		return receiveMetas(state, action.data);
-	case SAVE_RECORD_API.SUCCESS:
-	case DELETE_RECORD_API.SUCCESS:
-		return removeMetas(state, action.data.records);
-	case SET_FIELD_VALUE: 
-	case CLEAR_WORKING_STRUCTURED: {
-		const { tableId, recordId, lang } = action.data;
-		return removeRecordMeta(state, tableId, recordId, lang);
-	}
-	default:
-		return state;
+		case CLEAR_DATA: 
+		case UNAUTHORIZED:
+		case LOGOUT_API.SUCCESS:
+		case LOGOUT_API.REQUEST:
+			return {};
+		case WORKING_STRUCTURED_API.SUCCESS: 
+			return receiveMetas(state, action.data);
+		case SAVE_RECORD_API.SUCCESS:
+		case DELETE_RECORD_API.SUCCESS:
+			return removeMetas(state, action.data.records);
+		case SET_FIELD_VALUE: 
+		case CLEAR_WORKING_STRUCTURED: {
+			const { tableId, recordId, lang } = action.data;
+			return removeRecordMeta(state, tableId, recordId, lang);
+		}
+		default:
+			return state;
 	}
 };
 
