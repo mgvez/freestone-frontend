@@ -53,7 +53,7 @@ export default function ContentBlockPreview({
 	const [ratio, setRatio] = useState(previewSettings.ratio);
 	const containerRef = useRef();
 	const [previewPanelRect, previewPanelRef] = useRect();
-	const [previewScreenW, setPreviewScreenW] = useState(SCREEN_WIDTHS[3]);
+	const [previewScreenW, setPreviewScreenW] = useState(SCREEN_WIDTHS[2]);
 
 	useEffect(() => {
 		const tid = setTimeout(() => {
@@ -122,6 +122,7 @@ export default function ContentBlockPreview({
 	} else {
 		previewScale = targetRatio;
 	}
+	console.log('finalRatio %s scale %s', finalRatio, previewScale);
 
 	const previewPanel = (
 		<Panel ratio={finalRatio} height={contentHeight} ref={previewPanelRef}>
