@@ -10,8 +10,8 @@ import {
 	SUBFORM_PREVIEW_MODE_EDIT,
 } from '../../../freestone/schemaProps';
 
-const DEFAULT_RATIO = 0.3;
-const MIN_SCALE = 0.1;
+const DEFAULT_RATIO = 0.6;
+const MIN_SCALE = 0.4;
 const MAX_SCALE = 0.6;
 
 export const Container = styled.div`
@@ -122,6 +122,7 @@ export default function ContentBlockPreview({
 	} else {
 		previewScale = targetRatio;
 	}
+
 	const previewPanel = (
 		<Panel ratio={finalRatio} height={contentHeight} ref={previewPanelRef}>
 			<IFrame
