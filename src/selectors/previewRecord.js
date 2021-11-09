@@ -77,7 +77,7 @@ const childrenSelector = state => state.freestone.schema.children;
 const recordsSelector = state => state.freestone.recordForm.records;
 const mtmRecordsSelector = state => state.freestone.recordForm.mtmRecords;
 const makeRecordIdSelector = () => (state, props) => props.recordId;
-const makeLanguageSelector = () => (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
+// const makeLanguageSelector = () => (state, props) => { return props.lang ? props.lang : state.freestone.env.freestone.defaultLanguage; };
 
 function formatRecords(branch, allRecords, allTables, language) {
 	const { tableId, recordId, children } = branch;
@@ -118,7 +118,6 @@ function formatRecords(branch, allRecords, allTables, language) {
 export function previewUnsavedRecordMapStateToProps() {
 	const tableSchemaSelector = tableSchemaMapStateToProps();
 	const recordIdSelector = makeRecordIdSelector();
-	const languageSelector = makeLanguageSelector();
 	return createSelector(
 		[
 			tableSchemaSelector,
@@ -127,7 +126,7 @@ export function previewUnsavedRecordMapStateToProps() {
 			mtmRecordsSelector,
 			recordIdSelector,
 			childrenSelector,
-			languageSelector,
+			userViewLanguageSelector,
 			subPreviewModeSelector,
 			contentBlockPreviewSettingsSelector,
 		],
@@ -138,11 +137,13 @@ export function previewUnsavedRecordMapStateToProps() {
 			allMtmRecords,
 			recordId,
 			unfilteredChildren,
-			language,
+			userViewLanguage,
 			subPreviewModes,
 			previewSettings
 		) => {
 			const { tables } = allSchema;
+			const { language } = userViewLanguage;
+			console.log(language);
 			// a prop is added by the back on the content block's table to tell that it is previewable. Only the content_block s are configured to do so.
 			if (!table.isContentBlockPreviewable) return {};
 			const subPreviewMode = subPreviewModes && subPreviewModes[table.id];
@@ -153,6 +154,7 @@ export function previewUnsavedRecordMapStateToProps() {
 				previewRecord: JSON.stringify(previewRecord),
 				previewSettings,
 				records,
+				language,
 				subPreviewMode,
 			};
 		}

@@ -122,7 +122,7 @@ export default function ContentBlockPreview({
 	} else {
 		previewScale = targetRatio;
 	}
-	console.log('finalRatio %s scale %s', finalRatio, previewScale);
+	// console.log('finalRatio %s scale %s', finalRatio, previewScale);
 
 	const previewPanel = (
 		<Panel ratio={finalRatio} height={contentHeight} ref={previewPanelRef}>
