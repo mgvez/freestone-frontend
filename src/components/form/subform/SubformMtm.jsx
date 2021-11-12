@@ -131,15 +131,16 @@ export default function SubformMtm(props) {
 			<Subform>
 				<SubformHeader className="row">
 					<GridItem columns="8">
-						<FormHeaderContent table={table} titleOverride={props.titleOverride} descriptionAppend={props.descriptionAppend} />
+						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} />
 					</GridItem>
 					<GridItem columns="4" align="end" className="fcn">
-						<ToggleCollapse isCollapsed={props.isCollapsed} toggle={props.changeCollapsedState} />
+						{this.props.editSchema()}
+						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 					</GridItem>
 
 				</SubformHeader>
 
-				<Collapsable isCollapsed={props.isCollapsed}>{options}</Collapsable>
+				<Collapsable isCollapsed={this.props.isCollapsed}>{options}</Collapsable>
 
 			</Subform>
 		);
@@ -155,6 +156,7 @@ SubformMtm.propTypes = {
 	table: PropTypes.object,
 	records: PropTypes.array,
 	parentTableId: PropTypes.number,
+	editSchema: PropTypes.func,
 	parentRecordId: PropTypes.string,
 	mtmOptions: PropTypes.array,
 	isCollapsed: PropTypes.bool,

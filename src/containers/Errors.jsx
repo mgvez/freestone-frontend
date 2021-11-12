@@ -5,11 +5,10 @@ import Errors from '../components/Errors';
 
 import { clearErrors } from '../actions/errors';
 import { goTo } from '../actions/nav';
+import { errorsMapStateToProps } from '../selectors/Errors';
 
 export default connect(
-	state => {
-		return { errors: state.freestone.errors };
-	},
+	errorsMapStateToProps,
 	dispatch => bindActionCreators({ clearErrors, goTo }, dispatch)
 )(Errors);
 

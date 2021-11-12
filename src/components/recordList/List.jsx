@@ -21,6 +21,8 @@ import { Icon } from '../../styles/Icon';
 
 import FixedHeader from '../header/FixedHeader';
 import TableInfo from '../header/info/TableInfo';
+import { LOCATIONS } from '../form/buttons/EditSchema.jsx';
+import EditSchema from '../../containers/form/buttons/EditSchema';
 
 const LARGE_MINW_BREAKPOINT = 1024;
 
@@ -89,6 +91,8 @@ export default function List(props) {
 
 	let readyToScroll = false;
 
+	const editSchema = <EditSchema table={props.table} location={LOCATIONS.RECORDS_LIST} />;
+
 	const addButton = props.canAdd && !isQuickEdit && <Button key="add" onClick={addRecord} round><Icon icon="plus-circle" /> New record</Button>;
 	
 	const quickEditButton = props.table.isQuickEditable && (
@@ -152,7 +156,7 @@ export default function List(props) {
 
 			<FixedHeader
 				key={`list:${props.table.id}`}
-				buttons={() => [quickEditSaveButton, quickEditButton, addButton]}
+				buttons={() => [editSchema, quickEditSaveButton, quickEditButton, addButton]}
 				infos={(isFixed) => <TableInfo isLight={isFixed} table={props.table} />}
 			/>
 

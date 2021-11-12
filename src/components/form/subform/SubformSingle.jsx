@@ -34,6 +34,7 @@ export default function SubformSingle(props) {
 			<SubformHeader>
 				<FormHeaderContent table={props.table} titleOverride={props.titleOverride} descriptionAppend={props.descriptionAppend} language={props.language} />
 				<nav>
+					{props.editSchema()}
 					{addBtn}
 				</nav>
 			</SubformHeader>
@@ -64,5 +65,5 @@ SubformSingle.propTypes = {
 
 	language: PropTypes.string,
 	addRecord: PropTypes.string,
-
+	editSchema: PropTypes.func,
 };

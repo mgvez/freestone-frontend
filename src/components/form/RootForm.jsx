@@ -12,9 +12,11 @@ import RecordInfo from '../../containers/header/info/RecordInfo';
 
 import FixedHeader from '../header/FixedHeader';
 import FormHeaderContent from '../header/info/FormHeaderContent';
-import InScroll from '../../containers/utils/InScroll'; 
+import InScroll from '../../containers/utils/InScroll';
 import { Button } from '../../styles/Button';
 import { MainZone } from '../../styles/Grid';
+import { LOCATIONS } from './buttons/EditSchema';
+import EditSchema from '../../containers/form/buttons/EditSchema';
 
 const ACTION_STAY_FORM = 'stay_form';
 const ACTION_CALLBACK = 'callback';
@@ -103,6 +105,8 @@ export default function RootForm(props) {
 			permsWidget = <PermissionsForm table={table} recordId={recordId} />;
 		}
 
+		const editSchema = <EditSchema table={table} location={LOCATIONS.RECORD} />;
+
 		const previewProcessor = table && table.hasTemplate ? (
 			<PreviewRecord
 				key="preview"
@@ -131,6 +135,7 @@ export default function RootForm(props) {
 					</RecordInfo>
 				)}
 				popout={() => [
+					editSchema,
 					previewProcessor,
 					<LanguageToggler key="langtoggle" onChangeLang={props.isModal ? setStateLanguage : null} localLanguage={language} />,
 				]}
@@ -158,6 +163,7 @@ RootForm.propTypes = {
 		recordId: PropTypes.string,
 	}),
 
+	isGod: PropTypes.bool,
 	isModal: PropTypes.bool,
 	isEdited: PropTypes.bool,
 	isPreviewEdited: PropTypes.bool,

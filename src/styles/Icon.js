@@ -33,5 +33,5 @@ const StyledEm = styled.i`
 export const Icon = props => {
 	const { icon } = props;// eslint-disable-line
 	const { type } = props;// eslint-disable-line
-	return <StyledEm className={`${type || 'fa'} fa-${icon} icon ${props.cta && 'cta'} ${props.side || 'left'}`} />; // eslint-disable-line
+	return <StyledEm className={`${type || 'fa'} fa-${icon} icon ${props.cta && 'cta'} ${props.side || 'left'}`} style={props.style} />; // eslint-disable-line
 };

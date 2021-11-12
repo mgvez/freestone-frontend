@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 
 import Modal from 'react-modal';
 
-import customStyle from '../styles/Modal.js';
+import { transparentModal } from '../styles/Modal.js';
 import { Button } from '../styles/Button';
+import { ErrorCtn, ErrorHeading, ErrorContent, ContactAdminMessage, closeBtn, errorIcon } from '../styles/ErrorCtn';
+import { Heading4 } from '../styles/Texts.js';
+import SingleError from './SingleError.jsx';
+import { Icon } from '../styles/Icon.js';
 
 export default class Errors extends Component {
 	static propTypes = {
@@ -12,6 +16,7 @@ export default class Errors extends Component {
 
 		clearErrors: PropTypes.func,
 		goTo: PropTypes.func,
+		isGod: PropTypes.bool,
 	};
 
 	closeModal = () => {
@@ -33,23 +38,29 @@ export default class Errors extends Component {
 				ariaHideApp={false}
 				closeTimeoutMS={300}
 				contentLabel="."
-				style={customStyle}
+				style={transparentModal}
 			>
-				{
-					this.props.errors.map((err, index) => {
-						const { message, details } = err;
-						// console.log(err);
-						const nodes = [<div key={index} dangerouslySetInnerHTML={{ __html: message }} />];
-						if (details && typeof details === 'object') {
-							const detailsPrint = JSON.stringify(details, null, 2).replace(/\\t/g, '	').replace(/\\n/g, '\n').replace(/\\r/g, '');//this.printObject(details);
-							nodes.push(<pre key={`${index}_details`}>{detailsPrint}</pre>);
-						}
-						return nodes;
-					})
-				}
-
-				<Button onClick={this.closeModal}>Close</Button>
-
+				<ErrorCtn>
+					<ErrorHeading>
+						<Heading4><Icon style={errorIcon} icon="exclamation-circle" side="left" /> {this.props.errors.length === 1 ? 'An error has occured' : 'Errors have occured'}</Heading4>
+						<Button onClick={this.closeModal} style={closeBtn}><Icon icon="times" side="center" /></Button>
+					</ErrorHeading>
+					<ErrorContent>
+					{
+						this.props.errors.map((err, index) => {
+							const { message, details } = err;
+							// console.log(err);
+							return (
+								<SingleError message={message} errorDetails={details} key={index} isGod={this.props.isGod} />
+							);
+						})
+					}
+					{
+						!this.props.isGod &&
+							<ContactAdminMessage>Please contact your website’s administrator.</ContactAdminMessage>
+					}
+					</ErrorContent>
+				</ErrorCtn>
 			</Modal>
 		);
 	}

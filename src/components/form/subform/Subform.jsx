@@ -5,6 +5,8 @@ import { TYPE_MTM } from '../../../freestone/schemaProps';
 
 import SubformMtm from '../../../containers/form/subform/SubformMtm';
 import SubformStandard from '../../../containers/form/subform/SubformStandard';
+import { LOCATIONS } from '../buttons/EditSchema';
+import EditSchema from '../../../containers/form/buttons/EditSchema';
 
 export default class Subform extends Component {
 	static propTypes = {
@@ -20,6 +22,7 @@ export default class Subform extends Component {
 
 		fetchTable: PropTypes.func,
 		setSubformCollapsed: PropTypes.func,
+		isGod: PropTypes.bool,
 	};
 
 	componentDidMount() {
@@ -42,6 +45,7 @@ export default class Subform extends Component {
 
 	render() {
 		if (!this.props.table) return null;
+
 		if (this.props.table.type === TYPE_MTM) {
 			return (<SubformMtm
 				tableId={this.props.tableId}
@@ -51,6 +55,9 @@ export default class Subform extends Component {
 				changeCollapsedState={this.changeCollapsedState}
 				titleOverride={this.props.titleOverride}
 				descriptionAppend={this.props.descriptionAppend}
+				editSchema={() => [
+					<EditSchema table={this.props.table} location={LOCATIONS.SUBFORM} />,
+				]}
 			/>);
 		}
 		// console.log(`render ${this.props.tableId}`);
@@ -64,6 +71,9 @@ export default class Subform extends Component {
 			titleOverride={this.props.titleOverride}
 			descriptionAppend={this.props.descriptionAppend}
 			language={this.props.language}
+			editSchema={() => [
+				<EditSchema table={this.props.table} location={LOCATIONS.SUBFORM} />,
+			]}
 		/>);
 
 	}
