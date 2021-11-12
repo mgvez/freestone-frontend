@@ -38,7 +38,6 @@ export default class Save extends Component {
 		if (isError) {
 			msgDisplay = (<div>
 				<ErrorTitle>{this.props.saveState.status.msg}</ErrorTitle>
-				<ErrorMessage>{this.props.saveState.status.error}</ErrorMessage>
 				<Button onClick={this.props.cancelSave} danger="true"><Icon icon="pencil-alt" /> <span>Go back to form</span></Button>
 			</div>);
 		} else {

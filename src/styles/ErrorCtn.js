@@ -15,7 +15,7 @@ export const ErrorCtn = styled.div`
 
 export const ErrorContent = styled.div`
 	width: 100%;
-	overflow: scroll;
+
 
 	& > *:last-child > p:last-child {
 		margin-bottom: 0;
