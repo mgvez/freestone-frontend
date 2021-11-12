@@ -21,11 +21,10 @@ export function getFieldElements(table, fields, values, isQuickEdit, elementType
 			values[LABEL_PSEUDOFIELD_ALIAS]
 		);
 	}
-	// console.log(values);
-
 	return fields.map((field) => {
 		if (field.isGroup || field.type === 'order') return null;
 		let val = values[field.listAlias];
+		
 		let maxWidth;
 		if (field.type === TYPE_IMG || field.type === TYPE_FILE) {
 			val = (
@@ -55,6 +54,10 @@ export function getFieldElements(table, fields, values, isQuickEdit, elementType
 				/>
 			);
 		} else if (isQuickEdit) {
+			// for foreign fields, we need the true database value when editing, not the list display value which is the display of the foreign
+			if (field.foreign) {
+				val = values[field.alias];
+			}
 			val = <QuickeditField recordId={values[PRIKEY_ALIAS]} val={val} table={table} field={field} />;
 		}
 
