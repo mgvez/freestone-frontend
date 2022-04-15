@@ -1,17 +1,19 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { TYPE_MTM } from '../../../freestone/schemaProps';
 
 import SubformMtm from '../../../containers/form/subform/SubformMtm';
 import SubformStandard from '../../../containers/form/subform/SubformStandard';
+import { LOCATIONS } from '../buttons/EditSchema';
+import EditSchema from '../../../containers/form/buttons/EditSchema';
 
 export default function Subform(props) {
 
-	useState(() => {
+	useEffect(() => {
 		const { tableId } = props;
 		if (!props.table) props.fetchTable(tableId);
-	});
+	}, [props.table, props.tableId]);
 
 	const changeCollapsedState = useCallback(() => {
 		props.setSubformCollapsed(props.tableId, !props.isCollapsed);
@@ -27,6 +29,9 @@ export default function Subform(props) {
 			changeCollapsedState={changeCollapsedState}
 			titleOverride={props.titleOverride}
 			descriptionAppend={props.descriptionAppend}
+			editSchema={() => [
+				<EditSchema table={props.table} location={LOCATIONS.SUBFORM} />,
+			]}
 		/>);
 	}
 	// console.log(`render ${props.tableId}`);
@@ -40,6 +45,9 @@ export default function Subform(props) {
 		titleOverride={props.titleOverride}
 		descriptionAppend={props.descriptionAppend}
 		language={props.language}
+		editSchema={() => [
+			<EditSchema table={props.table} location={LOCATIONS.SUBFORM} />,
+		]}
 	/>);
 }
 

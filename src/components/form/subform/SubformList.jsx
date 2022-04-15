@@ -24,6 +24,7 @@ export default class SubformList extends Component {
 		highestOrder: PropTypes.number,
 		language: PropTypes.string,
 		isCollapsed: PropTypes.bool,
+		editSchema: PropTypes.func,
 		titleOverride: PropTypes.string,
 		descriptionAppend: PropTypes.string,
 		previewMode: PropTypes.string,
@@ -72,6 +73,7 @@ export default class SubformList extends Component {
 						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
 					</GridItem>
 					<GridItem columns="3" offset="10" className="fcn">
+						{this.props.editSchema()}
 						{changeViewBtn}
 						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 					</GridItem>

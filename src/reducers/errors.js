@@ -3,7 +3,7 @@ import { FREESTONE_API_FAILURE, FREESTONE_API_FATAL_FAILURE } from '../middlewar
 import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 
 export default function(state = [], action) {
-	// console.log(action);
+	//console.log(action);
 	switch (action.type) {
 		case FREESTONE_API_FAILURE:
 		case FREESTONE_API_FATAL_FAILURE:

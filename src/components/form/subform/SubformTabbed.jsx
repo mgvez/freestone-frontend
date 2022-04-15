@@ -28,6 +28,7 @@ export default function SubformTabbed(props) {
 					<FormHeaderContent table={props.table} titleOverride={props.titleOverride} descriptionAppend={props.descriptionAppend} language={props.language} />
 				</GridItem>
 				<GridItem columns="4" align="end" className="fcn">
+					{props.editSchema()}
 					{changeViewBtn}
 					<ToggleCollapse isCollapsed={props.isCollapsed} toggle={props.changeCollapsedState} />
 				</GridItem>
@@ -65,4 +66,5 @@ SubformTabbed.propTypes = {
 	previewMode: PropTypes.string,
 	changeCollapsedState: PropTypes.func,
 	isCollapsed: PropTypes.bool,
+	editSchema: PropTypes.func,
 };

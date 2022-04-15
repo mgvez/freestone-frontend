@@ -25,6 +25,7 @@ export default class SubformStacked extends Component {
 		descriptionAppend: PropTypes.string,
 		changeCollapsedState: PropTypes.func,
 		toggleShownRecord: PropTypes.func,
+		editSchema: PropTypes.func,
 
 		isCollapsed: PropTypes.bool,
 	};
@@ -48,6 +49,7 @@ export default class SubformStacked extends Component {
 						<FormHeaderContent table={this.props.table} titleOverride={this.props.titleOverride} descriptionAppend={this.props.descriptionAppend} language={this.props.language} />
 					</GridItem>
 					<GridItem columns="4" className="fcn">
+						{this.props.editSchema()}
 						{changeViewBtn}
 						<ToggleCollapse isCollapsed={this.props.isCollapsed} toggle={this.props.changeCollapsedState} />
 					</GridItem>
