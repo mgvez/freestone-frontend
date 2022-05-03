@@ -105,7 +105,7 @@ export default function RootForm(props) {
 			permsWidget = <PermissionsForm table={table} recordId={recordId} />;
 		}
 
-		const editSchema = <EditSchema table={table} location={LOCATIONS.RECORD} />;
+		const editSchema = <EditSchema key={`s_${table.id}`} table={table.id} location={LOCATIONS.RECORD} />;
 
 		const previewProcessor = table && table.hasTemplate ? (
 			<PreviewRecord

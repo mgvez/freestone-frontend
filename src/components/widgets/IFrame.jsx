@@ -14,7 +14,6 @@ const getIframeCss = props => {
 		max-width: 1920px;
 		display: block;
 		overflow: hidden;
-		border: 1px red solid;
 	`;
 };
 
@@ -22,7 +21,7 @@ export const WidgetIframe = styled.iframe`${props => getIframeCss(props)}`;
 
 export function IFrame(props) {
 	const [mountNode, setMountNode] = useState(null);
-	const [contentHeight, setContentHeight] = useState(null);
+	const [contentHeight, setContentHeight] = useState(1);
 	const [viewportMeta] = useState(document.createElement('meta'));
 
 	const setContentRef = (contentRef) => {
@@ -38,10 +37,17 @@ export function IFrame(props) {
 		mountNode.body.style.zoom = 1;
 		const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight) * props.scale;
 		mountNode.body.style.zoom = props.scale;
+		
+		const diff = Math.abs(height - contentHeight);
 
-		props.reportHeight(height);
-		setContentHeight(height);
+		// avoid eternal updates, make sure we have a significant height difference
+		if (diff > 5) {
+			props.reportHeight(height);
+			setContentHeight(height);
+		}
 	}, [props.reportHeight, setContentHeight, mountNode, props.scale, contentHeight]);
+
+	// console.log('h', contentHeight);
 
 	useEffect(() => {
 		if (mountNode && props.reportHeight) {

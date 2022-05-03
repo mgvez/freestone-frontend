@@ -11,7 +11,7 @@ import {
 } from '../../../freestone/schemaProps';
 
 const DEFAULT_RATIO = 0.6;
-const MIN_SCALE = 0.4;
+const MIN_SCALE = 0.3;
 const MAX_SCALE = 0.6;
 
 export const Container = styled.div`
@@ -21,7 +21,7 @@ export const Container = styled.div`
 
 const getPanelCss = ({ ratio, height }) => `
 	position: relative;
-	${height && `height: ${height}px;`}
+	${height ? `height: ${height}px;` : ''}
 	width: calc(${ratio * 100}% - 3px);
 `;
 export const Panel = styled.div`${props => getPanelCss(props)}`;
@@ -73,6 +73,7 @@ export default function ContentBlockPreview({
 		e.preventDefault();
 		const rect = containerRef.current.getBoundingClientRect();
 		const x = e.clientX - rect.left;
+		// console.log(x, rect.right - rect.left);
 		const targetRatio = x / (rect.right - rect.left);
 		setRatio(targetRatio);
 	}, [containerRef, setRatio]);
@@ -101,17 +102,22 @@ export default function ContentBlockPreview({
 		const debouncedSetRatio = () => {
 			setPreviewWidth(ratio);
 		};
-		const t = setTimeout(debouncedSetRatio, 100);
+		const t = setTimeout(debouncedSetRatio, 500);
 		return () => {
 			clearTimeout(t);
 		};
 	}, [ratio, setPreviewWidth]);
 
 	const isFullPreviews = subPreviewMode === SUBFORM_PREVIEW_MODE_PREVIEWS;
-	const finalRatio = isFullPreviews ? 1 : ratio || DEFAULT_RATIO;
-	let previewScale = isFullPreviews ? MAX_SCALE : Math.min(MAX_SCALE, Math.max(MIN_SCALE, finalRatio));
+	let finalRatio = isFullPreviews ? 1 : ratio || DEFAULT_RATIO;
+	finalRatio = Math.min(MAX_SCALE, Math.max(MIN_SCALE, finalRatio));
+	let previewScale = isFullPreviews ? MAX_SCALE : finalRatio;
 
 	const [contentHeight, setContentHeight] = useState(0);
+	console.log('render');
+	const updateHeight = useCallback((v) => {
+		if (v > contentHeight) setContentHeight(v);
+	}, [setContentHeight]);
 
 	// how wide must the panel be to display desired screen width
 	const targetRatio = previewPanelRect.width / previewScreenW;
@@ -122,14 +128,15 @@ export default function ContentBlockPreview({
 	} else {
 		previewScale = targetRatio;
 	}
-	// console.log('finalRatio %s scale %s', finalRatio, previewScale);
+	// console.log('targetRatio %s ', targetRatio);
+	console.log('finalRatio %s scale %s, w %s', finalRatio, previewScale, targetPreviewW);
 
-	const previewPanel = (
+	const previewPanel = previewHtml && (
 		<Panel ratio={finalRatio} height={contentHeight} ref={previewPanelRef}>
 			<IFrame
 				scale={previewScale || 1}
 				width={targetPreviewW}
-				reportHeight={setContentHeight}
+				reportHeight={updateHeight}
 			>
 				<div dangerouslySetInnerHTML={{ __html: previewHtml }} />
 			</IFrame>

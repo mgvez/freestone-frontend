@@ -10,6 +10,7 @@ import { StyledFieldGroup } from '../../styles/Input';
 import { Button } from '../../styles/Button';
 import SetVisibleTab from './buttons/SetVisibleTab';
 
+import ErrorBoundary from '../widgets/ErrorBoundary';
 import Subform from '../../containers/form/subform/Subform';
 import ContentBlockPreview from '../../containers/form/widgets/ContentBlockPreview';
 import DeleteRecord from '../../containers/form/buttons/DeleteRecord';
@@ -304,12 +305,14 @@ export default class SingleRecord extends Component {
 		// if this is a content block record, we display the preview next to it.
 		if (this.props.table.isContentBlockPreviewable && !this.props.isInactive && this.props.previewMode === SUBFORM_PREVIEW_MODE_MIXED) {
 			contentOutput = (
-				<ContentBlockPreview 
-					tableId={this.props.table.id}
-					recordId={this.props.recordId}
-					language={this.props.language}
-					form={form}
-				/>
+				<ErrorBoundary>
+					<ContentBlockPreview 
+						tableId={this.props.table.id}
+						recordId={this.props.recordId}
+						language={this.props.language}
+						form={form}
+					/>
+				</ErrorBoundary>
 			);
 		}
 

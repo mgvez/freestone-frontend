@@ -30,7 +30,7 @@ export default function Subform(props) {
 			titleOverride={props.titleOverride}
 			descriptionAppend={props.descriptionAppend}
 			editSchema={() => [
-				<EditSchema table={props.table} location={LOCATIONS.SUBFORM} />,
+				<EditSchema key={`s_${props.tableId}`} table={props.tableId} location={LOCATIONS.SUBFORM} />,
 			]}
 		/>);
 	}
@@ -46,7 +46,7 @@ export default function Subform(props) {
 		descriptionAppend={props.descriptionAppend}
 		language={props.language}
 		editSchema={() => [
-			<EditSchema table={props.table} location={LOCATIONS.SUBFORM} />,
+			<EditSchema key={`s_${props.tableId}`} table={props.tableId} location={LOCATIONS.SUBFORM} />,
 		]}
 	/>);
 }

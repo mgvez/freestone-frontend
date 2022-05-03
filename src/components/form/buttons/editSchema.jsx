@@ -25,12 +25,12 @@ export default class EditSchema extends Component {
 		const editSchemaLink = this.props.table ? `/edit/zva_table/${this.props.table.id}` : '';
 
 		switch (this.props.location) {
-		case LOCATIONS.SUBFORM:
-			return <NavLinkButton to={editSchemaLink} small="true" round="true" bordered="true"><Icon icon="edit" side="left" /> {BUTTON_LABEL}</NavLinkButton>;
-		case LOCATIONS.RECORDS_LIST:
-			return <NavLinkButton to={editSchemaLink} round="true" bordered="true"><Icon icon="edit" side="left" /> {BUTTON_LABEL}</NavLinkButton>;
-		default:
-			return <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" /> {BUTTON_LABEL}</NavLinkButton>;
+			case LOCATIONS.SUBFORM:
+				return <NavLinkButton to={editSchemaLink} small="true" round="true" bordered="true"><Icon icon="edit" side="left" /> {BUTTON_LABEL}</NavLinkButton>;
+			case LOCATIONS.RECORDS_LIST:
+				return <NavLinkButton to={editSchemaLink} round="true" bordered="true"><Icon icon="edit" side="left" /> {BUTTON_LABEL}</NavLinkButton>;
+			default:
+				return <NavLinkButton to={editSchemaLink} flat="true"><Icon icon="edit" /> {BUTTON_LABEL}</NavLinkButton>;
 		}
 	}
 }

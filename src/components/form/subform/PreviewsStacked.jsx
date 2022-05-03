@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ContentBlockPreview from '../../../containers/form/widgets/ContentBlockPreview';
+import ErrorBoundary from '../../widgets/ErrorBoundary';
 import ToggleCollapse from '../buttons/ToggleCollapse';
 import ChangeSubformView from '../../../containers/form/buttons/ChangeSubformView';
 import FormHeaderContent from '../../header/info/FormHeaderContent';
@@ -16,16 +17,18 @@ export default function PreviewsStacked(props) {
 
 	const getContent = () => { 
 		return props.childrenRecords.map((record, index) => (
-			<ContentBlockPreview 
-				tableId={props.table.id}
-				key={record.id}
-				recordId={record.id}
-				parentRecordId={props.parentRecordId}
-				parentTableId={props.parentTableId}
-				language={props.language}
-				previewMode={props.previewMode}
-				isSubform
-			/>
+			<ErrorBoundary>
+				<ContentBlockPreview 
+					tableId={props.table.id}
+					key={record.id}
+					recordId={record.id}
+					parentRecordId={props.parentRecordId}
+					parentTableId={props.parentTableId}
+					language={props.language}
+					previewMode={props.previewMode}
+					isSubform
+				/>
+			</ErrorBoundary>
 		));
 	};
 
