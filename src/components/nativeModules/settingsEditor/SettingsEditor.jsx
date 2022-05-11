@@ -5,18 +5,18 @@ import styled from 'styled-components';
 import AjaxModal from '../../widgets/AjaxModal';
 
 import { Button } from '../../../styles/Button';
-import colors from '../../../styles/Colors';
+
 import { Preloader } from '../../widgets/Preloader';
 import BoolInput from '../../form/inputTypes/BoolInput';
 import TextInput from '../../form/inputTypes/TextInput';
-import SaveContentBlockDependencies from '../../../containers/process/SaveContentBlockDependencies'; 
-import { TabsList, TabbedContainer, TabContentSection, Subform } from '../../../styles/Form';
+import SaveContentBlockDependencies from '../../../containers/process/SaveContentBlockDependencies';
 import Field from '../../form/GenericFormField';
 import { GridContainer, GridItem, MainZone, GridContainerStyle } from '../../../styles/Grid';
 
 import FixedHeader from '../../header/FixedHeader'; 
 
-import { Heading1, Heading2 } from '../../../styles/Texts';
+import { Heading1 } from '../../../styles/Texts';
+import { TabsList } from '../../../styles/Form';
 
 
 const Container = styled.div`
@@ -49,6 +49,7 @@ export default function SettingsEditor(props) {
 	useEffect(() => {
 		return () => {
 			if (saved.current) return;
+			// eslint-disable-next-line no-alert
 			const isLeaving = confirm('Changes have not been saved. Are you sure you want to leave and lose all your changes?');
 			if (isLeaving) {
 				props.closeSettings();

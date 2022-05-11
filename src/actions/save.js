@@ -80,7 +80,7 @@ export function saveQuickedit(table, builtRecords, onFinish) {
 			});
 		});
 
-		return onAllSaved.then(res => {
+		return onAllSaved.then(() => {
 			onFinish();
 			return dispatch({
 				type: FINISH_SAVE_QUICKEDIT,
@@ -187,7 +187,8 @@ export function swapOrder(tableName, recordId, direction, onComplete) {
 		}).then(() => {
 			if (onComplete) onComplete();
 		}).catch(e => {
-			console.log(e);	
+			// eslint-disable-next-line no-console
+			console.log(e);
 		});
 	};
 }

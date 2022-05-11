@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import { Preloader } from '../../widgets/Preloader';
 import TextInput from '../inputTypes/TextInput';
 import { Button } from '../../../styles/Button';
-import colors from '../../../styles/Colors';
 import { WidgetField, FieldLabel, FieldDescription } from '../../../styles/Input';
-import { PromptWidget, Tooltip } from '../../../styles/Prompts';
-import { WarningMessage } from '../../../styles/Texts';
+import { Tooltip } from '../../../styles/Prompts';
 
 import styled from 'styled-components';
 
@@ -116,6 +114,7 @@ export default function RecordSlug({
 	const onOverride = () => {
 		
 		const newUseDefault = !useDefault;
+		// eslint-disable-next-line no-alert
 		if (newUseDefault && val && !confirm('Are you sure you want to revert to the default URL?')) return;
 
 		setUseDefault(newUseDefault);

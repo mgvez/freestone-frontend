@@ -3,7 +3,6 @@ import { UNAUTHORIZED, LOGOUT_API } from '../actions/auth';
 import { SET_QUICKEDIT_FIELD_VALUE } from '../actions/record';
 import { SAVE_QUICKRECORD_API } from '../actions/save';
 import { CLEAR_DATA } from '../actions/dev';
-import { PRIKEY_ALIAS } from '../freestone/schemaProps';
 
 
 /**

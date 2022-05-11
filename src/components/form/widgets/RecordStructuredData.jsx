@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { Preloader } from '../../widgets/Preloader';
 import TextInput from '../inputTypes/TextInput';
@@ -56,7 +56,6 @@ export default function RecordStructuredData({
 }) {
 	if (!tableId) return null;
 	const [useDefault, setUseDefault] = useState(true);
-	console.log(record);
 
 	useEffect(() => {
 		if (record && !workingStructured) {
@@ -101,6 +100,7 @@ export default function RecordStructuredData({
 	const onOverride = () => {
 		
 		const willUseDefault = !useDefault;
+		// eslint-disable-next-line no-alert
 		if (willUseDefault && val && !confirm('Are you sure you want to revert to the default value?')) return;
 
 		setUseDefault(willUseDefault);

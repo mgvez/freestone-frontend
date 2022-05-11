@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Header, HeaderTexts } from '../../styles/Header';
 import { Button } from '../../styles/Button';
-import { Heading2, ErrorTitle, ErrorMessage } from '../../styles/Texts';
+import { Heading2, ErrorTitle } from '../../styles/Texts';
 import { Icon } from '../../styles/Icon';
 
 export default class Save extends Component {

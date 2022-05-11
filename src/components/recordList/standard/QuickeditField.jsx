@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { TYPE_IMG, TYPE_BANKIMG, TYPE_FILE } from '../../../freestone/schemaProps';
 import TextInput from '../../form/inputTypes/TextInput';
 import AutocompleteInput from '../../../containers/form/inputTypes/AutocompleteInput';
 

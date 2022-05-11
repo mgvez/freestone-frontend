@@ -7,7 +7,7 @@ import ReactDiffViewer from 'react-diff-viewer';
 import colors from '../../styles/Colors';
 import { Button } from '../../styles/Button';
 import customStyle from '../../styles/Modal';
-import { Heading2, Heading3 } from '../../styles/Texts';
+import { Heading2 } from '../../styles/Texts';
 
 const Wrapper = styled.div`
 	font-size: 0.8em;

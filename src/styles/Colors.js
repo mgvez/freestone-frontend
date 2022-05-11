@@ -12,7 +12,7 @@ const gray86 = '#d4d8d9';
 const gray93 = '#e7eaec';
 // const gray96 = '#f3f3f3';
 const gray97 = '#f6f6f6';
-const gray98 = '#fafafa';
+// const gray98 = '#fafafa';
 
 const teal62 = '#197caa';//'#19aa8d';
 const teal72 = '#00809c';//'#009c80';
@@ -31,7 +31,7 @@ const blue95 = '#eff2f5';
 const blue86 = '#ced9e3';
 const blue82 = '#bacedf';
 const blue54 = '#028cc0';
-const blue30 = '#404c55';
+// const blue30 = '#404c55';
 const blue26 = '#263b4e';
 const blue23 = '#293846';
 

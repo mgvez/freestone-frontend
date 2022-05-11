@@ -6,7 +6,6 @@ import Table from '../menu/Table';
 import Module from '../menu/Module';
 import Page from '../menu/Page';
 import NativeModule from '../menu/NativeModule';
-import { Heading2 } from '../../styles/Texts';
 import { Button } from '../../styles/Button';
 
 const Wrapper = styled.div`

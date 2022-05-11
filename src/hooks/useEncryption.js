@@ -8,7 +8,6 @@ const useEncryption = () => {
 		if (key) {
 			return content;
 		}
-		// eslint-disable-next-line no-console
 		console.log('decrypt', content);
 		return content;
 	};
