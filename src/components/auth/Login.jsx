@@ -138,6 +138,8 @@ export default class Login extends Component {
 		this.props.loginUser(username, password, remember, shouldInstall, siteName);
 	};
 
+	redirectUrl = encodeURIComponent(`${this.props.clientPath.replace(/\/$/, '')}:${window.location.port}/admin`);
+
 	render() {
 
 		const msgs = {
@@ -228,7 +230,7 @@ export default class Login extends Component {
 				{
 					this.props.ssoAdminURL && (
 						<div className="btns">
-							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${this.props.clientPath}/admin`)}`}>Log in with SSO</FlatTopButton>
+							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${this.redirectUrl}`}>Log in with SSO</FlatTopButton>
 						</div>
 					)
 				}
