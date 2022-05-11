@@ -138,14 +138,15 @@ export default class Login extends Component {
 		this.props.loginUser(username, password, remember, shouldInstall, siteName);
 	};
 
-	redirectUrl = encodeURIComponent(`${this.props.clientPath.replace(/\/$/, '')}:${window.location.port}/admin`);
-
 	render() {
 
 		const msgs = {
 			text: 'Please enter your credentials',
 			action: 'Submit',
 		};
+
+		const port = window.location.port ? `:${window.location.port}` : '';
+		const redirectUrl = encodeURIComponent(`${this.props.clientPath.replace(/\/$/, '')}${port}/admin`);
 
 		const opacityStyles = { opacity: this.props.isRequestPending ? '0.5' : '1' };
 
@@ -230,7 +231,7 @@ export default class Login extends Component {
 				{
 					this.props.ssoAdminURL && (
 						<div className="btns">
-							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${this.redirectUrl}`}>Log in with SSO</FlatTopButton>
+							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${redirectUrl}`}>Log in with SSO</FlatTopButton>
 						</div>
 					)
 				}
