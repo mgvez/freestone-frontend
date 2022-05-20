@@ -70,7 +70,7 @@ export function saveDependencies(dependencies, setMessage, onFinish) {
 			return new Promise(resolve => {
 				setTimeout(() => resolve(res), 2000);
 			});
-		}).then(res => {
+		}).then(() => {
 			onFinish();
 			return dispatch({
 				type: FINISH_SAVE_BLOCK_FIELD_DEP,

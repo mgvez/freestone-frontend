@@ -102,6 +102,7 @@ export default function RecordTitle({
 	const onOverride = () => {
 		
 		const willUseDefault = !useDefault;
+		// eslint-disable-next-line no-alert
 		if (willUseDefault && val && !confirm('Are you sure you want to revert to the default title?')) return;
 
 		setUseDefault(willUseDefault);

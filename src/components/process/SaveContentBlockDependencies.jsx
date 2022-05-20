@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Header, HeaderTexts } from '../../styles/Header';
 import { Heading2 } from '../../styles/Texts';
 
 export default function SaveContentBlockDependencies(props) {

@@ -25,7 +25,6 @@ const transformedSchemaSelector = createSelector(
 		});
 
 		const parseTable = (tableSchema, tableName) => {
-			console.log(tableSchema);
 			return tableSchema && Object.values(tableSchema.fields.map(field => {
 				if (field.foreign && ~TYPES_PARENT_LINK.indexOf(field.foreign.foreignType)) return null;
 				if (~INDEPENDENT_FIELD_TYPES.indexOf(field.type)) return null;
@@ -64,25 +63,6 @@ const transformedSchemaSelector = createSelector(
 	}
 );
 
-const dependenciesSelector = createSelector(
-	[allDependenciesSelector],
-	(dependencies) => {
-		if (!dependencies) return {};
-		const dependenciesByField = dependencies && dependencies.reduce((carry, dependency) => {
-			const { dependingFieldId, rule } = dependency;
-			carry[dependingFieldId] = carry[dependingFieldId] || {};
-			carry[dependingFieldId][rule] = dependency;
-			return carry;
-		}, {});
-
-		return {
-			dependencies,
-			dependenciesByField,
-		};
-	}
-);
-
-
 export const blockFieldDepsSelector = createSelector(
 	[configSelector, transformedSchemaSelector, allDependenciesSelector, routeSelector],
 	(config, table, dependencies, route) => {
@@ -91,7 +71,7 @@ export const blockFieldDepsSelector = createSelector(
 		// console.log(config);
 		const dependenciesByField = dependencies && dependencies.reduce(
 			(carry, dependency) => {
-				const { dependingFieldId, rule, isDisplay } = dependency;
+				const { dependingFieldId, rule } = dependency;
 				carry[dependingFieldId] = carry[dependingFieldId] || {};
 				carry[dependingFieldId][rule] = dependency;
 				return carry;

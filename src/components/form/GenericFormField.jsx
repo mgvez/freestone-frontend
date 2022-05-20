@@ -1,9 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { GridContainerStyle, GridItem } from '../../styles/Grid';
-import colors from '../../styles/Colors';
-import cssVars from '../../styles/Variables';
+import { GridItem } from '../../styles/Grid';
 import {
 	StyledField,
 	FieldLabel,

@@ -18,7 +18,6 @@ const Pagination = styled.ul`
 const Page = styled.li`
 	display: inline-block;
 	border: 1px solid ${colors.accentPrimary};
-	width: 35px;
 	text-align: center;
 
 	a {
@@ -66,7 +65,7 @@ export default class Paging extends Component {
 		} else if (label === 'next') {
 			display = <Icon icon="angle-right" side="center" />;
 		} else if (label === 'last') {
-			display = <Icon icon="-angle-double-right" side="center" />;
+			display = <Icon icon="angle-double-right" side="center" />;
 		} else {
 			display = label;
 		}

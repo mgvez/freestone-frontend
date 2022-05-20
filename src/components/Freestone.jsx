@@ -85,7 +85,8 @@ export default class Freestone extends Component {
 
 	}
 
-	componentDidUpdate(prevProps) {		
+	// eslint-disable-next-line no-unused-vars
+	componentDidUpdate(prevProps) {
 		this.redirectToSSOClient(this.props);
 
 		// at load of app, force an API call to revalidate the JWT if last validation is too old

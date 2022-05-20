@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import { TYPE_IMG, BANK_IMG_TABLE, BANK_PATH_ALIAS } from '../../../freestone/schemaProps';
+import { TYPE_IMG, BANK_IMG_TABLE } from '../../../freestone/schemaProps';
 
 import GenericFileInput from '../genericInputs/GenericFileInput';
 import CroppableBankImgInput from '../../../containers/form/genericInputs/CroppableBankImgInput';

@@ -6,7 +6,6 @@ import {
 	SET_BLOCK_MULTIPLE_FIELD_DEP,
 	CLOSE_BLOCK_FIELD_DEPS_API,
 	SAVE_BLOCK_FIELD_DEPS_API,
-	FINISH_SAVE_BLOCK_FIELD_DEP,
 	CLEAR_BLOCK_FIELD_DEP,
 } from '../actions/blockFieldDeps';
 import { CLEAR_DATA } from '../actions/dev';

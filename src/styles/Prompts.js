@@ -1,7 +1,7 @@
 
 import styled, { css } from 'styled-components';
 import colors from './Colors';
-import { triangle, hexToRgb, lighten } from './Utils';
+import { triangle, hexToRgb } from './Utils';
 
 
 const getTooltipCss = props => {

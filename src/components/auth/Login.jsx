@@ -145,6 +145,9 @@ export default class Login extends Component {
 			action: 'Submit',
 		};
 
+		const port = window.location.port ? `:${window.location.port}` : '';
+		const redirectUrl = encodeURIComponent(`${this.props.clientPath.replace(/\/$/, '')}${port}/admin`);
+
 		const opacityStyles = { opacity: this.props.isRequestPending ? '0.5' : '1' };
 
 		//si pas installé, on met des messages différents
@@ -228,7 +231,7 @@ export default class Login extends Component {
 				{
 					this.props.ssoAdminURL && (
 						<div className="btns">
-							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${encodeURIComponent(`${this.props.clientPath}/admin`)}`}>Log in with SSO</FlatTopButton>
+							<FlatTopButton href={`${this.props.ssoAdminURL}/?site_name=${this.props.siteName}&redirect_url=${redirectUrl}`}>Log in with SSO</FlatTopButton>
 						</div>
 					)
 				}

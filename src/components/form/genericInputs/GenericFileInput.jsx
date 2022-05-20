@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { SavedFileInput, getSavedInput, clearSavedInput } from '../../../freestone/fileInputs';
+import { SavedFileInput, clearSavedInput } from '../../../freestone/fileInputs';
 import FileThumbnail from '../../../containers/fileThumbnail/FileThumbnail';
 import Cropper from '../../images/Cropper';
 import RatioWarning from '../../images/RatioWarning';
@@ -10,7 +10,7 @@ import FileInfos from './FileInfos';
 import { TYPE_FILE, TYPE_IMG } from '../../../freestone/schemaProps';
 import { Button } from '../../../styles/Button';
 import { WarningMessage } from '../../../styles/Texts';
-import { THUMBNAIL_SIZE, IMAGE_MAX_SAFE_MP } from '../../../freestone/settings';
+import { IMAGE_MAX_SAFE_MP } from '../../../freestone/settings';
 import { Icon } from '../../../styles/Icon';
 import { useImageDimensions } from '../../../hooks/imageDimensions';
 

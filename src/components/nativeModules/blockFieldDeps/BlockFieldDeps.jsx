@@ -47,14 +47,13 @@ const DependenciesTable = styled.div`
 
 `;
 
-const ItemRow = styled.div`
-`;
 const ItemCell = styled.div`
 	padding: 2px;
 	display: flex;
 	align-items: center;
 	border-bottom: 1px ${colors.borderMedium} solid;
 `;
+
 const ItemLabel = styled.div`${props => `
 	font-weight: bold;
 	position: relative;
@@ -124,6 +123,7 @@ export default function BlockFieldDeps(props) {
 	useEffect(() => {
 		return () => {
 			if (saved.current) return;
+			// eslint-disable-next-line no-alert
 			const isLeaving = confirm('Changes have not been saved. Are you sure you want to leave and lose all your changes?');
 			if (isLeaving) {
 				props.closeDependencies();
