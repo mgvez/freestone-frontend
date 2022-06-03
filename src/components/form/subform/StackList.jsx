@@ -69,6 +69,7 @@ export default class StackList extends Component {
 					parentTableId={this.props.parentTableId}
 					highestOrder={this.props.highestOrder}
 					language={this.props.language}
+					nRecords={this.props.childrenRecords.length}
 				/>
 			</DragAndDrop>
 		</StackContainer>);

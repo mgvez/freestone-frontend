@@ -38,6 +38,7 @@ export default function TabList(props) {
 				parentTableId={props.parentTableId}
 				highestOrder={props.highestOrder}
 				language={props.language}
+				nRecords={props.childrenRecords.length}
 			/>
 		</DragAndDrop>
 	</TabsList>);
