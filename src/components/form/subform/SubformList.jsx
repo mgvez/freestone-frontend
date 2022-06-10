@@ -54,6 +54,7 @@ export default class SubformList extends Component {
 					parentTableId={this.props.parentTableId}
 					highestOrder={this.props.highestOrder}
 					language={this.props.language}
+					nRecords={this.props.childrenRecords.length}
 				/>
 			}
 		</Collapsable>);

@@ -5,7 +5,12 @@ import { Button } from '../../../styles/Button';
 import { Icon } from '../../../styles/Icon';
 
 export default function AddRecord(props) {
+	const { parentTableId } = props;
+	const { parentLink } = props.table;
+	const parentLinkDef = parentLink && parentLink[parentTableId];
+	console.log(parentLinkDef);
 
+	const maxSize = parentLinkDef && parentLinkDef.maxSize;
 
 	const addRecord = () => {
 		//if table has a language field, we need to add it as a default prop
@@ -27,6 +32,10 @@ export default function AddRecord(props) {
 		}
 	}, [props.autoAdd]);
 
+	if (maxSize && props.nRecords >= maxSize) {
+		return null;
+	}
+
 	return props.isTab ? <div onClick={addRecord} className="tab"><Icon icon="plus" side="center" /></div> : <Button onClick={addRecord} round="true"><Icon icon="plus" side="center" /></Button>;
 
 }
@@ -35,6 +44,7 @@ AddRecord.propTypes = {
 	table: PropTypes.object,
 	highestOrder: PropTypes.number,
 	parentTableId: PropTypes.number,
+	nRecords: PropTypes.number,
 	parentRecordId: PropTypes.string,
 	linkValue: PropTypes.string,
 	language: PropTypes.string,
