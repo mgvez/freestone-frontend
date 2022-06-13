@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { WarningMessage } from '../../styles/Texts';
 
 class ErrorBoundary extends React.Component {
 	constructor(props) {
@@ -14,13 +15,14 @@ class ErrorBoundary extends React.Component {
 
 	componentDidCatch(error, errorInfo) {
 		// You can also log the error to an error reporting service
+		console.log('Error caught by boundary', this.props.label);
 		console.log(error, errorInfo);
 	}
 
 	render() {
 		if (this.state.hasError) {
 			// You can render any custom fallback UI
-			return <h1>Something went wrong, see console.</h1>;
+			return <WarningMessage>Something went wrong with <strong>{this.props.label}</strong>, see console.</WarningMessage>;
 		}
 
 		return this.props.children; 
@@ -28,7 +30,12 @@ class ErrorBoundary extends React.Component {
 }
 
 ErrorBoundary.propTypes = {
+	label: PropTypes.string,
 	children: PropTypes.any,
+};
+ErrorBoundary.defaultProps = {
+	label: 'unknown',
+	children: null,
 };
 
 export default ErrorBoundary;

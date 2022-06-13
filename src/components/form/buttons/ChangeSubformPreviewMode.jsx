@@ -13,21 +13,21 @@ function cycle(current) {
 	switch (current) {
 		case SUBFORM_PREVIEW_MODE_EDIT:
 			return {
-				key: SUBFORM_PREVIEW_MODE_PREVIEWS,
-				label: 'Switch to Preview',
-				icon: 'eye',
-			};
-		case SUBFORM_PREVIEW_MODE_PREVIEWS:
-			return {
 				key: SUBFORM_PREVIEW_MODE_MIXED,
-				label: 'Switch to Side by side',
-				icon: 'columns',
+				label: 'Turn on preview',
+				icon: 'desktop',
 			};
+		// case SUBFORM_PREVIEW_MODE_PREVIEWS:
+		// 	return {
+		// 		key: SUBFORM_PREVIEW_MODE_MIXED,
+		// 		label: 'Switch to Side by side',
+		// 		icon: 'columns',
+		// 	};
 		case SUBFORM_PREVIEW_MODE_MIXED:
 		default:
 			return {
 				key: SUBFORM_PREVIEW_MODE_EDIT,
-				label: 'Switch to Edit',
+				label: 'turn off preview',
 				icon: 'pen',
 			};
 	}
@@ -41,7 +41,7 @@ export default function ChangeSubformPreviewMode(props) {
 
 
 	const toggled = cycle(props.previewMode);
-	return <Button onClick={setType} small="true" round="true" bordered="true"><Icon icon={toggled.icon} side="left" />{toggled.label}</Button>;
+	return <Button onClick={setType} small="true" round="true" bordered="true" title={toggled.label}><Icon icon={toggled.icon} side="center" /></Button>;
 
 }
 

@@ -17,7 +17,7 @@ export default function PreviewsStacked(props) {
 
 	const getContent = () => { 
 		return props.childrenRecords.map((record, index) => (
-			<ErrorBoundary>
+			<ErrorBoundary label={`Preview ${props.table.name} rec ${record.id}`}>
 				<ContentBlockPreview 
 					tableId={props.table.id}
 					key={record.id}

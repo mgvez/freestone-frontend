@@ -65,10 +65,12 @@ export const Subform = styled.section`
 	background: ${colors.backgroundMain};
 
 	.fcn {
-		text-align: right;
+		justify-content: flex-end;
+		gap: 10px;
+		display: flex;
 
-		button + button {
-			margin-left: 15px;
+		& button {
+			margin: 0;
 		}
 	}
 
