@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Modal from 'react-modal';
-import ReactDiffViewer from 'react-diff-viewer';
+import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer';
 
 import colors from '../../styles/Colors';
 import { Button } from '../../styles/Button';
@@ -54,62 +54,109 @@ const Changelog = (props) => {
 	const [hasFetched, setHasFetched] = useState(false);
 	const [changelog, setChangelog] = useState(null);
 
-	// console.log(props.values);
 
 	useEffect(() => {
 		if (!hasFetched) {
 			setHasFetched(true);
 			props.fetchChangelog(props.tableId, props.recordId).then(res => {
-				if (res.changelog) {
-					setChangelog(res.changelog);
-				}
+				setChangelog(res.changelog && res.changelog.sort((a, b) => {
+					return a.date < b.date ? 1 : -1;
+				}));
 			});
 		}
 	});
 
+	const revertSingle = (fieldId, value) => {
+		props.setFieldVal(props.tableId, props.recordId, fieldId, value);
+	};
+
+	const revertAll = (data) => {
+		// console.log(change);
+		props.table.fields.forEach(field => {
+			const fieldName = field.name;
+			const changeSet = data[fieldName];
+			if (changeSet) {
+				//the changeset is [orginal value , edited value]. When appplying a change, we want to reset the field to the original value
+				const orignalValue = changeSet[0];
+				props.setFieldVal(props.tableId, props.recordId, field.id, orignalValue);
+			}
+		});
+		props.onClose();
+	};
+
 	if (!hasFetched) return null;
+
+
+	const getDiffs = (data) => {
+		return props.table.fields.map(field => {
+			const key = field.name;
+			const diff = data[key];
+			if (!diff) return null;
+			const label = field.label + (field.language ? ` (${field.language})` : '');
+			let fieldDiff = null;
+			if (!Array.isArray(diff)) {
+				fieldDiff = (
+					<InsertField>
+						<InsertFieldName>
+							{label}
+						</InsertFieldName>
+						<InsertValue>{diff}</InsertValue>
+					</InsertField>
+				);
+			} else {
+				diff[0] = String(diff[0]);
+				diff[1] = String(diff[1]);
+				fieldDiff = (
+					<ChangeField>
+						<FieldTitle>
+							{label}
+							<Button tiny cta faded margin="0 4px" onClick={() => revertSingle(field.id, diff[0])}>Revert to original</Button>
+						</FieldTitle>
+						<ReactDiffViewer
+							oldValue={diff[0]}
+							newValue={diff[1]}
+							leftTitle="Original"
+							rightTitle="Edited"
+							compareMethod={DiffMethod.WORDS}
+							splitView
+						/>
+					</ChangeField>
+				);
+			}
+			return (
+				<React.Fragment key={key}>
+					{fieldDiff}
+				</React.Fragment>
+			);
+		});
+	};
+
+
+	const currentChangesGroup = props.currentChanges && (
+		<ChangeGroup key="current">
+			<ChangeTitle>
+				Current edit
+				<Button tiny margin="0 4px" onClick={() => revertAll(props.currentChanges)}>Revert all changes</Button>
+			</ChangeTitle>
+			{getDiffs(props.currentChanges)}
+		</ChangeGroup>
+	);
+
 	let content;
-	if (!changelog || !changelog.length) {
+	if ((!changelog || !changelog.length) && !currentChangesGroup) {
 		content = <Heading2>There is no log in the database for this record.</Heading2>;
 	} else {
 		content = (<div>
-			{changelog.map(change => {
+			{currentChangesGroup}
+			{changelog && changelog.map(change => {
 				const { data } = change;
-				const keys = Object.keys(data);
-				const diffs = keys.map(key => {
-					const diff = data[key];
-					let fieldDiff = null;
-					if (!Array.isArray(diff)) {
-						fieldDiff = (
-							<InsertField>
-								<InsertFieldName>{key}</InsertFieldName>
-								<InsertValue>{diff}</InsertValue>
-							</InsertField>
-						);
-					} else {
-						diff[0] = String(diff[0]);
-						diff[1] = String(diff[1]);
-						fieldDiff = (
-							<ChangeField>
-								<FieldTitle>{key}</FieldTitle>
-								<ReactDiffViewer
-									oldValue={diff[0]}
-									newValue={diff[1]}
-									splitView
-								/>
-							</ChangeField>
-						);
-					}
-					return (
-						<React.Fragment key={key}>
-							{fieldDiff}
-						</React.Fragment>
-					);
-				});
 				return (
 					<ChangeGroup key={change.id}>
-						<ChangeTitle>{change.action} on {change.date} by {change.user}</ChangeTitle>
-						{diffs}
+						<ChangeTitle>
+							{change.action} on {change.date} by {change.user}
+							<Button tiny margin="0 4px" onClick={() => revertAll(change.data)}>Revert all to original</Button>
+						</ChangeTitle>
+						{getDiffs(data)}
 					</ChangeGroup>
 				);
 			})}
@@ -134,9 +181,12 @@ const Changelog = (props) => {
 Changelog.propTypes = {
 	recordId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	tableId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+	table: PropTypes.object,
+	currentChanges: PropTypes.object,
 	values: PropTypes.array,
 	hasMoreRecords: PropTypes.bool,
 	fetchChangelog: PropTypes.func,
+	setFieldVal: PropTypes.func,
 	onClose: PropTypes.func,
 };
 export default Changelog;
