@@ -20,28 +20,13 @@ export default class DateInput extends Component {
 		this.props.changeVal(dateStr);
 	};
 
-	// onChangeTime = () => {
-	// 	this.onSelectDate(this.props.val);
-	// };
-
 	render() {
-		// console.log(`render input ${this.props.field.name}`);
-		
-		// console.log(val);
-
-		// let timeInputs;
-		// if (this.props.field.type === TYPE_DATETIME) {
-		// 	timeInputs = (<div>
-		// 		<input ref={el => this._hour = el} value={d && d.hour()} onChange={this.onChangeTime} placeholder="HH" size="2" /> h 
-		// 		<input ref={el => this._minute = el} value={d && d.minute()} onChange={this.onChangeTime} placeholder="MM" size="2" /> m 
-		// 		<input ref={el => this._second = el} value={d && d.second()} onChange={this.onChangeTime} placeholder="SS" size="2" /> s 
-		// 	</div>);
-		// }
 		let dateNative = null;
 		if (this.props.val && !~this.props.val.indexOf('0000-00-00')) {
 			const dateMoment = moment(this.props.val);
-			dateNative = dateMoment.toDate();
-			// console.log(parts);
+			if (dateMoment.isValid()) {
+				dateNative = dateMoment.toDate();
+			}
 		}
 
 		return (<div>
