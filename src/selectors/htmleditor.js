@@ -12,7 +12,10 @@ function makeSelector(currentFieldTypeSelector) {
 		[currentFieldTypeSelector, cssPathSelector, htmlEditorConfigSelector, clientPathSelector, routeSelector],
 		(fieldType, cssPath, htmlEditorConfig, clientPath, route) => {
 			const defaultConfig = fieldType === 'tinyhtml' ? TINYMCE_TINY_CONFIG : TINYMCE_CONFIG;
-			const clientConfig = htmlEditorConfig || {};
+			let clientConfig = htmlEditorConfig || {};
+			if (clientConfig[fieldType]) {
+				clientConfig = clientConfig[fieldType];
+			}
 			const tinymceConfig = {
 				...defaultConfig,
 				...clientConfig,
@@ -33,8 +36,10 @@ function makeSelector(currentFieldTypeSelector) {
 					...addedCss.map(p => `${clientPath}${p}`),
 				];
 			}
+
+			// MAKE SURE that TinyMce gets a different deep clone of the config for each editor
 			return {
-				tinymceConfig,
+				tinymceConfig: JSON.parse(JSON.stringify(tinymceConfig)),
 				route: route.route.pathname,
 			};
 		}

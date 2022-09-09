@@ -56,10 +56,10 @@ export const TINYMCE_TINY_CONFIG = {
 	theme: 'modern',
 	menubar: false,
 	statusbar: false,
-	resize: false,
+	resize: true,
 	forced_root_block: '',
 	height: '3em',
-	toolbar: 'bold italic | subscript superscript | freestoneLink | code',
+	toolbar: 'bold italic | subscript superscript | freestoneLink | styleselect | code',
 	plugins: [
 		'link',
 		'code',
@@ -96,6 +96,9 @@ export const TINYMCE_TINY_CONFIG = {
 	+ '|title],'
 	+ 'br[class|clear<all?left?none?right|id|style|title],'
 	+ 'span[align<center?justify?left?right|class|dir<ltr?rtl|id|lang|onclick|ondblclick|onkeydown'
+	+ '|onkeypress|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover'
+	+ '|onmouseup|style|title],'
+	+ 'div[align<center?justify?left?right|class|dir<ltr?rtl|id|lang|onclick|ondblclick|onkeydown'
 	+ '|onkeypress|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover'
 	+ '|onmouseup|style|title]',
 	force_br_newlines: true,
