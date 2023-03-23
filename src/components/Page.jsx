@@ -49,9 +49,9 @@ export default class Page extends Component {
 			}
 			// console.log(tableName, recordId, backUrl);
 
-			const hash = `__${this.props.id}`;
+			const hash = `${this.props.id}`;
 			this.props.setPageHash(hash, this.props.id, backUrl);
-			this.props.rememberListPage(tableName, recordId, { pathname: `page/${hash}` });
+			this.props.rememberListPage(tableName, recordId, { pathname: `/page/${hash}` });
 			if (message.data.command === 'duplicate') {
 				this.props.duplicateRecord(tableName, recordId);
 			} else {
